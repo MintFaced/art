@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // ─────────────────────────────────────────────────────────────
+  //  ASSET BASE URL — change this one line when you migrate storage
+  //
+  //  Current options:
+  //    Old site (temporary):   'https://mintface.art/assets'
+  //    Railway (same server):  '/assets'
+  //    Cloudflare R2:          'https://your-bucket.r2.dev/assets'
+  //    AWS S3 + CloudFront:    'https://your-cdn.cloudfront.net/assets'
+  //    Bunny.net:              'https://your-zone.b-cdn.net/assets'
+  // ─────────────────────────────────────────────────────────────
+  const ASSETS_BASE = 'https://mintface.art/assets';
+
+  // Rewrites all image src tokens once the DOM is ready — do not edit below
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('img[src^="ASSETS_BASE"]').forEach(img => {
+      img.src = img.src.replace(/.*ASSETS_BASE/, ASSETS_BASE);
+    });
+  });
+</script>
+<title>MintFace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Neue+Haas+Grotesk+Display+Pro:wght@400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0d0b;
+    --paper: #f2efe9;
+    --warm-mid: #b8b0a4;
+    --accent: #8b3a2a;
+    --accent-light: #c4705a;
+    --grid: #e2ddd6;
+    --mono: 'Space Mono', monospace;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Neue Haas Grotesk Display Pro', 'Helvetica Neue', Helvetica, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    mix-blend-mode: multiply;
+  }
+
+  .nav-logo {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 48px 80px;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(72px, 8vw, 130px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 1.1s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-statement {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.7;
+    max-width: 420px;
+    color: #4a4540;
+    border-left: 1px solid var(--accent);
+    padding-left: 20px;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 1.1s ease 0.8s forwards;
+  }
+
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--warm-mid);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .hero-right-inner {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1a1510 0%, #2d2820 50%, #0e0d0b 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Richter-esque abstract shape */
+  .hero-abstract {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .hero-abstract::before {
+    content: '';
+    position: absolute;
+    top: 15%; left: 10%;
+    width: 70%; height: 60%;
+    background: linear-gradient(147deg, #8b3a2a 0%, #c4705a 30%, #4a2a1a 70%, transparent 100%);
+    opacity: 0.4;
+    filter: blur(40px);
+    animation: breathe 8s ease-in-out infinite;
+  }
+
+  .hero-abstract::after {
+    content: '';
+    position: absolute;
+    top: 40%; left: 30%;
+    width: 50%; height: 50%;
+    background: linear-gradient(200deg, #b8a090 0%, transparent 60%);
+    opacity: 0.15;
+    filter: blur(60px);
+    animation: breathe 12s ease-in-out infinite reverse;
+  }
+
+  .hero-caption {
+    position: absolute;
+    bottom: 32px;
+    right: 40px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 48px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.5s forwards;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    animation: scanLine 2s ease 2s infinite;
+  }
+
+  .scroll-text {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: var(--grid);
+    margin: 0 48px;
+  }
+
+  /* ── BIO ── */
+  .bio-section {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 200px 1fr 320px;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .bio-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    padding-top: 8px;
+  }
+
+  .bio-text {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .bio-text p + p { margin-top: 1.4em; }
+
+  .bio-sidebar {
+    border-top: 1px solid var(--grid);
+    padding-top: 24px;
+  }
+
+  .bio-sidebar-item {
+    margin-bottom: 28px;
+  }
+
+  .bio-sidebar-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .bio-sidebar-value {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ── COLLECTIONS INTRO ── */
+  .collections-header {
+    padding: 100px 48px 60px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--grid);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(48px, 5vw, 80px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .section-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--warm-mid);
+  }
+
+  /* ── COLLECTION BLOCK ── */
+  .collection {
+    padding: 80px 48px;
+    border-bottom: 1px solid var(--grid);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+    transition: background 0.4s;
+  }
+
+  .collection:hover {
+    background: rgba(139, 58, 42, 0.02);
+  }
+
+  .collection-year {
+    position: absolute;
+    top: 80px;
+    right: 48px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--warm-mid);
+    text-transform: uppercase;
+  }
+
+  .collection-index {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .collection-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 64px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .collection-medium {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--warm-mid);
+    margin-bottom: 32px;
+  }
+
+  .collection-desc {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #3d3830;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+
+  .collection-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .link-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .link-primary:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .link-primary::after {
+    content: '↗';
+    font-size: 11px;
+  }
+
+  .edition-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 4px 10px;
+    display: inline-block;
+  }
+
+  .sold-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 3px 9px;
+    display: inline-block;
+  }
+
+  /* Collection right side: image grid */
+  .collection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .collection-grid.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .collection-img {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #2a2520;
+    position: relative;
+  }
+
+  .collection-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85);
+    transition: filter 0.5s, transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .collection-img:hover img {
+    filter: saturate(1);
+    transform: scale(1.03);
+  }
+
+  .collection-img-label {
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  /* Placeholder color blocks when images not available */
+  .color-block {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  /* ── PROVENANCE TABLE ── */
+  .provenance-section {
+    padding: 100px 48px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .provenance-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 32px;
+  }
+
+  .provenance-title {
+    font-family: var(--serif);
+    font-size: clamp(40px, 4vw, 64px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+  }
+
+  .provenance-intro {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(242,239,233,0.5);
+    max-width: 320px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .provenance-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .provenance-table thead tr {
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .provenance-table th {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.4);
+    text-align: left;
+    padding: 0 0 16px;
+    font-weight: 400;
+  }
+
+  .provenance-table th:not(:first-child) { padding-left: 32px; }
+
+  .provenance-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s;
+  }
+
+  .provenance-table tbody tr:hover {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .provenance-table td {
+    padding: 20px 0;
+    vertical-align: top;
+  }
+
+  .provenance-table td:not(:first-child) { padding-left: 32px; }
+
+  .prov-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--paper);
+  }
+
+  .prov-medium {
+    font-family: var(--serif);
+    font-size: 12px;
+    font-style: italic;
+    color: rgba(242,239,233,0.4);
+    margin-top: 2px;
+  }
+
+  .prov-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(242,239,233,0.5);
+  }
+
+  .prov-chain {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(242,239,233,0.5);
+  }
+
+  .prov-address {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--accent-light);
+    word-break: break-all;
+    max-width: 200px;
+  }
+
+  .prov-address a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .prov-address a:hover { text-decoration: underline; }
+
+  .prov-editions {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(242,239,233,0.6);
+  }
+
+  /* ── EXHIBITIONS ── */
+  .exhibitions-section {
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+  }
+
+  .exhibitions-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    padding-top: 8px;
+  }
+
+  .exhibition-list {
+    list-style: none;
+  }
+
+  .exhibition-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--grid);
+    align-items: baseline;
+  }
+
+  .exhibition-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .exhibition-name {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .exhibition-details {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--warm-mid);
+    margin-top: 4px;
+  }
+
+  /* ── PHILOSOPHY / FOOTER ── */
+  .philosophy-section {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    background: #0e0d0b;
+    color: var(--paper);
+  }
+
+  .philosophy-quote {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 58px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+  }
+
+  .philosophy-quote span {
+    color: var(--accent-light);
+  }
+
+  .philosophy-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .philosophy-connect {
+    margin-bottom: 48px;
+  }
+
+  .philosophy-connect-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.4);
+    margin-bottom: 20px;
+  }
+
+  .connect-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .connect-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--paper);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .connect-link:hover { color: var(--accent-light); }
+
+  .connect-link-icon {
+    width: 20px;
+    height: 1px;
+    background: currentColor;
+    display: inline-block;
+    transition: width 0.3s;
+  }
+
+  .connect-link:hover .connect-link-icon { width: 32px; }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 48px;
+  }
+
+  .footer-wordmark {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.3);
+  }
+
+  .footer-rights {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(242,239,233,0.2);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+    50% { transform: scale(1.1) translate(3%, -2%); opacity: 0.55; }
+  }
+
+  @keyframes scanLine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── CATALOG NAV ── */
+  .catalog-nav {
+    padding: 40px 48px;
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--grid);
+    overflow-x: auto;
+  }
+
+  .catalog-tab {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    padding: 10px 24px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .catalog-tab:hover, .catalog-tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 100px 24px 60px; }
+    .hero-right { height: 50vw; }
+
+    .bio-section { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+    .bio-label { display: none; }
+
+    .collections-header { padding: 60px 24px 40px; flex-direction: column; gap: 12px; }
+
+    .collection { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+    .collection-year { top: 24px; right: 24px; }
+
+    .provenance-section { padding: 80px 24px; }
+    .provenance-header { flex-direction: column; gap: 20px; }
+    .provenance-intro { text-align: left; max-width: 100%; }
+
+    .exhibitions-section { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+
+    .philosophy-section { grid-template-columns: 1fr; padding: 80px 24px; }
+
+    .catalog-nav { padding: 24px; }
+
+    .section-divider { margin: 0 24px; }
+
+    .scroll-indicator { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">MintFace</a>
+  <ul class="nav-links">
+    <li><a href="#bio">Biography</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#provenance">Provenance</a></li>
+    <li><a href="#exhibitions">Exhibitions</a></li>
+    <li><a href="#acquire">Acquire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">New Zealand — 2021–2025</div>
+    <h1 class="hero-title">Mint<br><em>Face</em></h1>
+    <p class="hero-statement">
+      As we live on the edge of believability,<br>
+      MintFace conjures placeholders<br>to guide our way.
+    </p>
+    <div class="hero-meta">Painting · AI · Generative · Photography · Illustration · Sculpture</div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="hero-abstract"></div>
+      <div class="hero-caption">Two Burdens — Painting — 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- BIO -->
+<section class="bio-section reveal" id="bio">
+  <div class="bio-label">Biography</div>
+  <div class="bio-text">
+    <p>MintFace works across painting, photography, generative code, and artificial intelligence — using each medium as a different pressure applied to the same question: what remains after you subtract the unnecessary?</p>
+    <p>Based in New Zealand, MintFace was among the early artists to tokenize work on the Ethereum blockchain, establishing a practice where ownership, provenance, and physical presence coexist without hierarchy. Collectors in Spain, Belgium, Switzerland, Australia and the United States hold paintings that began as NFTs and arrived, eventually, as objects on walls.</p>
+    <p>The work is deeply personal — structured around a father's desire to leave a trail of evidence: paintings, geodetic coordinates, metadata, inscriptions on Bitcoin. Things that might one day be found.</p>
+  </div>
+  <div class="bio-sidebar">
+    <div class="bio-sidebar-item">
+      <div class="bio-sidebar-label">Practice</div>
+      <div class="bio-sidebar-value">Multi-disciplinary — Painting, Photography, Generative Art, AI, Illustration</div>
+    </div>
+    <div class="bio-sidebar-item">
+      <div class="bio-sidebar-label">Active Since</div>
+      <div class="bio-sidebar-value">2021</div>
+    </div>
+    <div class="bio-sidebar-item">
+      <div class="bio-sidebar-label">Exhibitions</div>
+      <div class="bio-sidebar-value">NFT NYC 2024, The Line Gallery, New Zealand</div>
+    </div>
+    <div class="bio-sidebar-item">
+      <div class="bio-sidebar-label">Collections Held</div>
+      <div class="bio-sidebar-value">Spain, Belgium, Switzerland, Australia, United States</div>
+    </div>
+    <div class="bio-sidebar-item">
+      <div class="bio-sidebar-label">Blockchain</div>
+      <div class="bio-sidebar-value">Ethereum (ERC-721 / ERC-1155), Bitcoin Ordinals</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CATALOG NAV -->
+<div class="catalog-nav" id="collections">
+  <button class="catalog-tab active" onclick="filterCollection('all', this)">All Works</button>
+  <button class="catalog-tab" onclick="filterCollection('painting', this)">Painting</button>
+  <button class="catalog-tab" onclick="filterCollection('ai', this)">AI</button>
+  <button class="catalog-tab" onclick="filterCollection('generative', this)">Generative</button>
+  <button class="catalog-tab" onclick="filterCollection('illustration', this)">Illustration</button>
+  <button class="catalog-tab" onclick="filterCollection('photography', this)">Photography</button>
+</div>
+
+<div class="collections-header">
+  <h2 class="section-title">Collections<br><em style="font-style:italic;color:var(--accent)">2021–2025</em></h2>
+  <span class="section-count">15 Collections · 500+ Works</span>
+</div>
+
+<!-- COLLECTION: ARTIFICIAL FLOWERS -->
+<article class="collection reveal" data-type="painting ai" id="painting">
+  <div>
+    <div class="collection-year">2025</div>
+    <div class="collection-index">01 / 15</div>
+    <h2 class="collection-title">Artificial<br>Flowers</h2>
+    <div class="collection-medium">Painting / AI / Augmented Reality</div>
+    <p class="collection-desc">
+      Hand-painted flowers worked to completion, then offered to AI as source material. The machine returns its vision. The collision between the two — displayed simultaneously on the physical canvas via augmented reality — asks the only question that matters: who is the student, and who is the master?
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">22 × 1/1</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://opensea.io/collection/artificial-flower" class="link-primary" target="_blank">View on OpenSea</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid three-col">
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery09/b7b4367e.jpg" alt="Daffodil Season" loading="lazy"><div class="collection-img-label">Daffodil Season</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery09/8887f92f.jpg" alt="Banana Zone" loading="lazy"><div class="collection-img-label">Banana Zone</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery09/a8f10857.jpg" alt="Flax Feeding Season" loading="lazy"><div class="collection-img-label">Flax Feeding</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery09/e2f8cc11.jpg" alt="Re: Growth" loading="lazy"><div class="collection-img-label">Re: Growth</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery09/1692b1e2.jpg" alt="Solar Reaching" loading="lazy"><div class="collection-img-label">Solar Reaching</div></div>
+      <div class="collection-img" style="background:#1a1510; display:flex; align-items:center; justify-content:center;"><div style="font-family:var(--mono);font-size:8px;letter-spacing:0.15em;color:rgba(255,255,255,0.2);text-align:center;">AR<br>ACTIVATED</div></div>
+    </div>
+  </div>
+</article>
+
+<!-- COLLECTION: PATRIMORA -->
+<article class="collection reveal" data-type="generative" id="generative">
+  <div>
+    <div class="collection-year">2025</div>
+    <div class="collection-index">02 / 15</div>
+    <h2 class="collection-title">Patrimora</h2>
+    <div class="collection-medium">Generative Art — On-chain</div>
+    <p class="collection-desc">
+      Inspired by <em>senbazuru</em> — the Japanese tradition of folding 1,000 origami cranes. Named for a word MintFace coined: <em>patrimora</em> — a legacy delayed in its realization. A memorial to a son growing up without a father, threaded through the motif of cranes, thought to represent long life.
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">1/1 + 469 editions</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://patrimora.com" class="link-primary" target="_blank">patrimora.com</a>
+      <a href="https://highlight.xyz/mint/ethereum:0xEabffdE679Fe5F0b835771aeA36d90C1ce7502d8" class="link-primary" target="_blank">Mint</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid">
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery06/d4e407e0.jpg" alt="Patrimora #134" loading="lazy"><div class="collection-img-label">#134</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery06/3d97415e.jpg" alt="Patrimora #140" loading="lazy"><div class="collection-img-label">#140</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery06/3b43d000.jpg" alt="Patrimora #142" loading="lazy"><div class="collection-img-label">#142</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery06/9f4303b9.jpg" alt="Patrimora #149" loading="lazy"><div class="collection-img-label">#149</div></div>
+    </div>
+    <div style="margin-top: 16px; font-family: var(--mono); font-size: 9px; color: var(--warm-mid); letter-spacing: 0.15em;">
+      Traits: Twombly · Rothko · Pollock · Mintface · Tricksta · Firstlady
+    </div>
+  </div>
+</article>
+
+<!-- COLLECTION: TWO BURDENS -->
+<article class="collection reveal" data-type="painting">
+  <div>
+    <div class="collection-year">2024</div>
+    <div class="collection-index">03 / 15</div>
+    <h2 class="collection-title">Two<br>Burdens</h2>
+    <div class="collection-medium">Oil on Canvas — 36 works</div>
+    <p class="collection-desc">
+      The inner and outer burdens we all carry. The surface is worked over and over — adding, subtracting, adding, subtracting — until an intensity presents itself. Influenced by Richter's later work, but where Richter sought to remove the human hand, here the mindset is active, not indifferent. The intermediation between thought and paint is everything.
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      Acquired by collectors in Spain, Belgium, Switzerland, Australia and the USA. Exhibited at NFT NYC 2024 and The Line, New Zealand.
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">36 × 1/1</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://twoburdens.com" class="link-primary" target="_blank">twoburdens.com</a>
+      <a href="https://opensea.io/collection/two-burdens" class="link-primary" target="_blank">OpenSea</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid three-col">
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery03/a2db99b9.jpg" alt="Beyond the Meadow" loading="lazy"><div class="collection-img-label">Beyond the Meadow</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery03/55a2a111.jpg" alt="Cascade" loading="lazy"><div class="collection-img-label">Cascade</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery03/9696fbca.jpg" alt="Laceration" loading="lazy"><div class="collection-img-label">Laceration</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery03/5818dd6f.jpg" alt="Salvation" loading="lazy"><div class="collection-img-label">Salvation</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery03/92558574.jpg" alt="The Grotto" loading="lazy"><div class="collection-img-label">The Grotto</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery03/b82e657c.jpg" alt="Untitled III" loading="lazy"><div class="collection-img-label">Untitled III</div></div>
+    </div>
+  </div>
+</article>
+
+<!-- COLLECTION: RECURSIVE MIND -->
+<article class="collection reveal" data-type="illustration" id="illustration">
+  <div>
+    <div class="collection-year">2023</div>
+    <div class="collection-index">04 / 15</div>
+    <h2 class="collection-title">Recursive<br>Mind</h2>
+    <div class="collection-medium">Illustration — Photoshop — Bitcoin Ordinals</div>
+    <p class="collection-desc">
+      Endless thought patterns looping to infinity. Pixels pushed until they break. What remains becomes the art — a study in deletion, in removal, in sitting with what is left after pressure subsides.
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      No AI. All hand-drawn in Photoshop — a tool used almost without interruption since age 13. The works sat in a folder for two years before being inscribed as Ordinals on Bitcoin: an extraordinarily expensive act that binds their longevity to Bitcoin's longevity.
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">13 × 1/1</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://rrrecursive.com" class="link-primary" target="_blank">rrrecursive.com</a>
+      <a href="https://gamma.io/ordinals/collections/recursive-mind/items" class="link-primary" target="_blank">View on Gamma</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid">
+      <div class="collection-img" style="aspect-ratio: 4/3;"><img src="ASSETS_BASE/images/gallery04/3f9f3457.jpg" alt="The Crucible" loading="lazy"><div class="collection-img-label">The Crucible</div></div>
+      <div class="collection-img" style="aspect-ratio: 4/3;"><img src="ASSETS_BASE/images/gallery04/86a24aee.jpg" alt="Lost in Sound" loading="lazy"><div class="collection-img-label">Lost in Sound</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery04/1a982a3c.jpg" alt="Dark Summer" loading="lazy"><div class="collection-img-label">Dark Summer</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery04/a264f33e.jpg" alt="Day at the Park" loading="lazy"><div class="collection-img-label">Day at the Park</div></div>
+    </div>
+  </div>
+</article>
+
+<!-- COLLECTION: GEODETICA -->
+<article class="collection reveal" data-type="ai" id="neural">
+  <div>
+    <div class="collection-year">2022</div>
+    <div class="collection-index">05 / 15</div>
+    <h2 class="collection-title">Geodetica</h2>
+    <div class="collection-medium">AI — Midjourney — 100 works</div>
+    <p class="collection-desc">
+      Geodetica documents the shortest visual path between human and machine — the geodetic line of creative intent. Each of 100 unique works traces a direct route: from imagination to output, without the weight of physical media to negotiate.
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">100 × 1/1</span>
+      <span class="sold-badge" style="margin-left:8px;">Sold Out</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://opensea.io/collection/geodetica" class="link-primary" target="_blank">View on OpenSea</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid three-col">
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery05/f5877be5.jpg" alt="Strength at its Core" loading="lazy"><div class="collection-img-label">Strength at its Core</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery05/821e3f06.jpg" alt="Look Around You" loading="lazy"><div class="collection-img-label">Look Around You</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery05/7106056c.jpg" alt="A Son Points Something Out" loading="lazy"><div class="collection-img-label">A Son Points Out</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery05/73ac44e8.jpg" alt="Face to Face with a Geodetic Moment" loading="lazy"><div class="collection-img-label">Face to Face</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery05/5185aed4.jpg" alt="Goodnight Moon" loading="lazy"><div class="collection-img-label">Goodnight Moon</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery05/f5877be5.jpg" alt="Geodetica" loading="lazy"></div>
+    </div>
+  </div>
+</article>
+
+<!-- COLLECTION: ROADS & RIVERS -->
+<article class="collection reveal" data-type="photography" id="photography">
+  <div>
+    <div class="collection-year">2022</div>
+    <div class="collection-index">06 / 15</div>
+    <h2 class="collection-title">Roads<br>& Rivers</h2>
+    <div class="collection-medium">Photography — Aerial — North Island, NZ</div>
+    <p class="collection-desc">
+      Roads are for travelling. Rivers go with the flow. When the two overlap, you get to decide which way you go. MintFace drove the North Island of New Zealand — post-pandemic, little traffic, the freedom of open roads — photographing bridges.
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      Seven of the 36 bridges were washed away in Cyclone Gabrielle, February 2023. The collection sparked conversations about memory, crossing, where people were going and why it mattered. Featured in the NZ Herald.
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">36 × 1/1</span>
+      <span class="sold-badge" style="margin-left:8px;">Sold Out</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://opensea.io/collection/roads-and-rivers" class="link-primary" target="_blank">View on OpenSea</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid">
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery13/22d825b9.jpg" alt="Bridge #2" loading="lazy"><div class="collection-img-label">Bridge #2</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery13/aaed9b72.jpg" alt="Bridge #5" loading="lazy"><div class="collection-img-label">Bridge #5</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery13/d442fe2f.jpg" alt="Bridge #9" loading="lazy"><div class="collection-img-label">Bridge #9</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery13/0a59cd92.jpg" alt="Bridge #22" loading="lazy"><div class="collection-img-label">Bridge #22</div></div>
+    </div>
+  </div>
+</article>
+
+<!-- COLLECTION: GEODETIC MOMENTS -->
+<article class="collection reveal" data-type="photography">
+  <div>
+    <div class="collection-year">2021</div>
+    <div class="collection-index">07 / 15</div>
+    <h2 class="collection-title">Geodetic<br>Moments</h2>
+    <div class="collection-medium">Photography — Pukekura Hill, New Plymouth</div>
+    <p class="collection-desc">
+      A study of one location, one hill, walked at different times of day and night throughout 2021. Each photograph is accompanied by metadata — direction faced, time of day, notable objects — recorded on the blockchain. A record of physical presence, left for a son to find.
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      If he finds the geodetic marker on Pukekura Hill, he can probably find me.
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">100 × 1/1</span>
+      <span class="sold-badge" style="margin-left:8px;">Sold Out</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://opensea.io/collection/geodetic-moments" class="link-primary" target="_blank">View on OpenSea</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid three-col">
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery07/20552bb7.jpg" alt="Geodetic Moments #1" loading="lazy"><div class="collection-img-label">#1</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery07/0bfffe62.jpg" alt="Geodetic Moments #23" loading="lazy"><div class="collection-img-label">#23</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery07/1c3a5565.jpg" alt="Geodetic Moments #77" loading="lazy"><div class="collection-img-label">#77</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery07/0fa10346.jpg" alt="Geodetic Moments #84" loading="lazy"><div class="collection-img-label">#84</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery07/bee0a1ed.jpg" alt="Geodetic Moments #87" loading="lazy"><div class="collection-img-label">#87</div></div>
+      <div class="collection-img"><img src="ASSETS_BASE/images/gallery07/5f266be2.jpg" alt="Geodetic Moments #96" loading="lazy"><div class="collection-img-label">#96</div></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROVENANCE -->
+<section class="provenance-section reveal" id="provenance">
+  <div class="provenance-header">
+    <h2 class="provenance-title">Provenance<br><em style="font-style:italic">& Chain Records</em></h2>
+    <p class="provenance-intro">All artworks are tokenized. Tokens create transferrable ownership rights — without the need for a gallery.</p>
+  </div>
+  <table class="provenance-table">
+    <thead>
+      <tr>
+        <th>Collection</th>
+        <th>Year</th>
+        <th>Editions</th>
+        <th>Chain</th>
+        <th>Contract</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="prov-name">Artificial Flowers</div><div class="prov-medium">Neural Painting / AR</div></td>
+        <td class="prov-year">2025</td>
+        <td class="prov-editions">21 × 1/1</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0xd64ac59835a9951f34472239ba70b44c5bebe90d" target="_blank">0xd64ac5…be90d</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">FROGDNA</div><div class="prov-medium">Painting</div></td>
+        <td class="prov-year">2025</td>
+        <td class="prov-editions">1 work · 88 editions</td>
+        <td class="prov-chain">Bitcoin · Ordinals</td>
+        <td class="prov-address"><a href="https://tokenscan.io/asset/FROGDNA" target="_blank">FROGDNA</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Patrimora</div><div class="prov-medium">Generative Art</div></td>
+        <td class="prov-year">2025</td>
+        <td class="prov-editions">1/1 + 469 editions</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0xEabffdE679Fe5F0b835771aeA36d90C1ce7502d8" target="_blank">0xEabffd…502d8</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">ID Please</div><div class="prov-medium">Illustration</div></td>
+        <td class="prov-year">2025</td>
+        <td class="prov-editions">1/1 + 328 editions</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0x33fd426905f149f8376e227d0c9d3340aad17af1" target="_blank">0x33fd42…7af1</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Recursive Mind</div><div class="prov-medium">Illustration</div></td>
+        <td class="prov-year">2023–25</td>
+        <td class="prov-editions">13 × 1/1</td>
+        <td class="prov-chain">Bitcoin · Ordinals</td>
+        <td class="prov-address"><a href="https://gamma.io/mintface/collected?sort=oldest_listings" target="_blank">146688a…b95i0</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Two Burdens</div><div class="prov-medium">Painting</div></td>
+        <td class="prov-year">2024</td>
+        <td class="prov-editions">36 × 1/1</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0xe1d1f99505a13d20b25d5ef32280771d7eb5ed09" target="_blank">0xe1d1f9…ed09</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Geodetic World</div><div class="prov-medium">Pure AI</div></td>
+        <td class="prov-year">2023</td>
+        <td class="prov-editions">95 × 1/1</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0xe16c77a770c6de5439f617e6e2f9fd46bb15d396" target="_blank">0xe16c77…d396</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Roads & Rivers</div><div class="prov-medium">Photography</div></td>
+        <td class="prov-year">2022</td>
+        <td class="prov-editions">36 × 1/1 + 162 ed.</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0x18bd004e13258f569cedfbb537ba329e4730ee67" target="_blank">0x18bd00…ee67</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Geodetic On-Chain</div><div class="prov-medium">Illustration</div></td>
+        <td class="prov-year">2022</td>
+        <td class="prov-editions">5 works · 2×100 ed.</td>
+        <td class="prov-chain">Ethereum · ERC-1155</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4" target="_blank">0x7b5ccc…ce4</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Geodetica</div><div class="prov-medium">Pure AI</div></td>
+        <td class="prov-year">2022</td>
+        <td class="prov-editions">100 × 1/1 · Sold Out</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0xf6f44f3dde8ea78a3f49f78eeca339ffa17b2933" target="_blank">0xf6f44f…2933</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Geodetic Memory</div><div class="prov-medium">Photography</div></td>
+        <td class="prov-year">2022</td>
+        <td class="prov-editions">1 work · 823 editions</td>
+        <td class="prov-chain">Ethereum · ERC-1155</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0xa81f8083072f192948dcae38da5c0c6073da979c" target="_blank">0xa81f80…979c</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Geodetic Illusions</div><div class="prov-medium">Neural Painting</div></td>
+        <td class="prov-year">2022</td>
+        <td class="prov-editions">87 × 1/1</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0x38bae13b27222900c32ec28ab28b54cd61196045" target="_blank">0x38bae1…6045</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">Geodetic Moments</div><div class="prov-medium">Photography</div></td>
+        <td class="prov-year">2021</td>
+        <td class="prov-editions">100 × 1/1 · Sold Out</td>
+        <td class="prov-chain">Ethereum · ERC-1155</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0x495f947276749ce646f68ac8c248420045cb7b5e" target="_blank">0x495f94…b7b5e</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">1/1s on Foundation</div><div class="prov-medium">Photography</div></td>
+        <td class="prov-year">2021</td>
+        <td class="prov-editions">7 × 1/1</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://foundation.app/@mintface" target="_blank">Foundation</a></td>
+      </tr>
+      <tr>
+        <td><div class="prov-name">City vs Nature</div><div class="prov-medium">Photography — Genesis</div></td>
+        <td class="prov-year">2021</td>
+        <td class="prov-editions">1 work · 5 editions</td>
+        <td class="prov-chain">Ethereum · ERC-1155</td>
+        <td class="prov-address"><a href="https://og.rarible.com/token/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:518231" target="_blank">Rarible</a></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- EXHIBITIONS -->
+<section class="exhibitions-section reveal" id="exhibitions">
+  <div class="exhibitions-label">Exhibition<br>History</div>
+  <ul class="exhibition-list">
+    <li class="exhibition-item">
+      <div class="exhibition-year">2025</div>
+      <div>
+        <div class="exhibition-name">Roads & Rivers — The Line</div>
+        <div class="exhibition-details">The Line Gallery, New Zealand · September 2025 · Featured NZ Herald</div>
+      </div>
+    </li>
+    <li class="exhibition-item">
+      <div class="exhibition-year">2024</div>
+      <div>
+        <div class="exhibition-name">Two Burdens — NFT NYC</div>
+        <div class="exhibition-details">NFT NYC, New York · June 2024 · Solo exhibition debut</div>
+      </div>
+    </li>
+    <li class="exhibition-item">
+      <div class="exhibition-year">2024</div>
+      <div>
+        <div class="exhibition-name">Two Burdens — The Line</div>
+        <div class="exhibition-details">The Line Gallery, New Zealand · Ongoing</div>
+      </div>
+    </li>
+    <li class="exhibition-item">
+      <div class="exhibition-year">2021–</div>
+      <div>
+        <div class="exhibition-name">Tokenized Works — Ongoing</div>
+        <div class="exhibition-details">OpenSea · Foundation · Gamma · Highlight · Rarible</div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- PHILOSOPHY + FOOTER -->
+<footer class="philosophy-section" id="acquire">
+  <div>
+    <p class="philosophy-quote">
+      As we live on the edge of believability, MintFace conjures <span>placeholders</span> to guide our way.
+    </p>
+  </div>
+  <div class="philosophy-right">
+    <div class="philosophy-connect">
+      <div class="philosophy-connect-label">Connect</div>
+      <div class="connect-links">
+        <a href="mailto:mintface@digitalartisteconomy.com" class="connect-link">
+          <span class="connect-link-icon"></span>
+          Email
+        </a>
+        <a href="https://x.com/mintface" class="connect-link" target="_blank">
+          <span class="connect-link-icon"></span>
+          X / Twitter
+        </a>
+        <a href="https://instagram.com/thelinegallery" class="connect-link" target="_blank">
+          <span class="connect-link-icon"></span>
+          Instagram
+        </a>
+        <a href="https://opensea.io/mintface" class="connect-link" target="_blank">
+          <span class="connect-link-icon"></span>
+          OpenSea
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-wordmark">MintFace Art — mintface.art</div>
+      <div class="footer-rights">Rights are for the untokenized.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger child reveals in collection
+  document.querySelectorAll('.collection.reveal').forEach((col, i) => {
+    col.style.transitionDelay = '0s';
+  });
+
+  // Collection filter
+  function filterCollection(type, btn) {
+    document.querySelectorAll('.catalog-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.collection').forEach(col => {
+      if (type === 'all') {
+        col.style.display = '';
+      } else {
+        const types = col.dataset.type || '';
+        col.style.display = types.includes(type) ? '' : 'none';
+      }
+    });
+  }
+
+  // Smooth nav appearance
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(242,239,233,0.92)';
+      nav.style.backdropFilter = 'blur(12px)';
+      nav.style.boxShadow = '0 1px 0 rgba(0,0,0,0.06)';
+      nav.style.mixBlendMode = 'normal';
+    } else {
+      nav.style.background = '';
+      nav.style.backdropFilter = '';
+      nav.style.boxShadow = '';
+      nav.style.mixBlendMode = 'multiply';
+    }
+  });
+</script>
+</body>
+</html>
