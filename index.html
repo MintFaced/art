@@ -963,7 +963,10 @@
     <h2 class="collection-title">Artificial<br>Flowers</h2>
     <div class="collection-medium">Painting / AI / Augmented Reality</div>
     <p class="collection-desc">
-      Hand-painted flowers worked to completion, then offered to AI as source material. The machine returns its vision. The collision between the two — displayed simultaneously on the physical canvas via augmented reality — asks the only question that matters: who is the student, and who is the master?
+      Hand-painted flowers worked to completion, then offered to AI as source material. The machine returns its vision — displayed on the physical canvas via augmented reality. It asks the only question that matters: who is the student, and who is the master?
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      Each physical painting becomes a trigger for the tokenized work to play. Collectors standing before the canvas experience both visions simultaneously, comparing and contrasting the two.
     </p>
     <div style="margin-bottom:24px;">
       <span class="edition-badge">22 × 1/1</span>
@@ -992,7 +995,10 @@
     <h2 class="collection-title">Patrimora</h2>
     <div class="collection-medium">Generative Art — On-chain</div>
     <p class="collection-desc">
-      Inspired by <em>senbazuru</em> — the Japanese tradition of folding 1,000 origami cranes. Named for a word MintFace coined: <em>patrimora</em> — a legacy delayed in its realization. A memorial to a son growing up without a father, threaded through the motif of cranes, thought to represent long life.
+      Inspired by <em>senbazuru</em> — the Japanese tradition of folding 1,000 origami cranes. Named for a word MintFace coined: <em>patrimora</em> — a legacy delayed in its realization. A memorial to a son growing up without a father, through the motif of cranes.
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      Cranes are thought to represent long life. The name means an inheritance delayed by history, culture, or generation — something owed, not yet received.
     </p>
     <div style="margin-bottom:24px;">
       <span class="edition-badge">1/1 + 469 editions</span>
@@ -1020,7 +1026,7 @@
     <h2 class="collection-title">Two<br>Burdens</h2>
     <div class="collection-medium">Oil on Canvas — 36 works</div>
     <p class="collection-desc">
-      The inner and outer burdens we all carry. The surface is worked over and over — adding, subtracting, adding, subtracting — until an intensity presents itself. Influenced by Richter's later work, but where Richter sought to remove the human hand, here the mindset is active, not indifferent. The intermediation between thought and paint is everything.
+      The inner and outer burdens we all carry. The surface is worked over and over — adding, subtracting, adding, subtracting — until an intensity presents itself. Influenced by Richter's later squeegee works, but the mindset here is active, not indifferent.
     </p>
     <p class="collection-desc" style="margin-top:16px;">
       Acquired by collectors in Spain, Belgium, Switzerland, Australia and the USA. Exhibited at NFT NYC 2024 and The Line, New Zealand.
@@ -1053,10 +1059,10 @@
     <h2 class="collection-title">Recursive<br>Mind</h2>
     <div class="collection-medium">Illustration — Photoshop — Bitcoin Ordinals</div>
     <p class="collection-desc">
-      Endless thought patterns looping to infinity. Pixels pushed until they break. What remains becomes the art — a study in deletion, in removal, in sitting with what is left after pressure subsides.
+      Endless thought patterns looping to infinity. Pixels pushed until they break. What remains becomes the art — a study in deletion, removal, and sitting with what is left after the pressure finally subsides.
     </p>
     <p class="collection-desc" style="margin-top:16px;">
-      No AI. All hand-drawn in Photoshop — a tool used almost without interruption since age 13. The works sat in a folder for two years before being inscribed as Ordinals on Bitcoin: an extraordinarily expensive act that binds their longevity to Bitcoin's longevity.
+      No AI. All hand-drawn in Photoshop since age 13. Inscribed as Ordinals on Bitcoin — an expensive act that binds their longevity to Bitcoin's own.
     </p>
     <div style="margin-bottom:24px;">
       <span class="edition-badge">13 × 1/1</span>
@@ -1085,7 +1091,10 @@
     <h2 class="collection-title">Geodetica</h2>
     <div class="collection-medium">AI — Midjourney — 100 works</div>
     <p class="collection-desc">
-      Geodetica documents the shortest visual path between human and machine — the geodetic line of creative intent. Each of 100 unique works traces a direct route: from imagination to output, without the weight of physical media to negotiate.
+      Geodetica documents the shortest visual path between human and machine — the geodetic line of creative intent. Each of 100 unique works traces a direct route from imagination to output, without the weight of physical media to negotiate.
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      Made entirely in Midjourney at a time when the technology was new and the conversation between artist and algorithm felt genuinely uncharted. Sold out.
     </p>
     <div style="margin-bottom:24px;">
       <span class="edition-badge">100 × 1/1</span>
@@ -1144,12 +1153,12 @@
     <div class="collection-year">2021</div>
     <div class="collection-index">07 / 15</div>
     <h2 class="collection-title">Geodetic<br>Moments</h2>
-    <div class="collection-medium">Photography — Pukekura Hill, New Plymouth</div>
+    <div class="collection-medium">Photography — Pukekura Hill, Taradale</div>
     <p class="collection-desc">
-      A study of one location, one hill, walked at different times of day and night throughout 2021. Each photograph is accompanied by metadata — direction faced, time of day, notable objects — recorded on the blockchain. A record of physical presence, left for a son to find.
+      A study of one location, one hill, walked at different times of day and night throughout 2021. Each photograph is accompanied by metadata — direction faced, time of day, notable objects — recorded permanently on the blockchain.
     </p>
     <p class="collection-desc" style="margin-top:16px;">
-      If he finds the geodetic marker on Pukekura Hill, he can probably find me.
+      A record of physical presence, left for a son to find. If he finds the geodetic marker on Pukekura Hill, he can probably find me.
     </p>
     <div style="margin-bottom:24px;">
       <span class="edition-badge">100 × 1/1</span>
@@ -1396,7 +1405,7 @@
         col.style.display = '';
       } else {
         const types = col.dataset.type || '';
-        col.style.display = types.includes(type) ? '' : 'none';
+        col.style.display = types.split(' ').includes(type) ? '' : 'none';
       }
     });
   }
