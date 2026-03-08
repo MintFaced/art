@@ -670,15 +670,50 @@
     gap: 2px;
   }
 
-  .collectors-deep-card {
-    padding: 24px;
-    border: 1px solid rgba(242,239,233,0.07);
-    background: rgba(242,239,233,0.02);
+  .collectors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid rgba(242,239,233,0.06);
   }
 
-  .collectors-deep-card--cta {
-    border-color: rgba(196,112,90,0.2);
-    background: rgba(139,58,42,0.06);
+  .collectors-list-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 160px;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(242,239,233,0.06);
+  }
+
+  .collectors-list-addr {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(242,239,233,0.5);
+  }
+
+  .collectors-list-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .cdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .collectors-list-n {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.25);
+    text-align: right;
   }
 
   .collectors-deep-name {
@@ -687,28 +722,6 @@
     letter-spacing: 0.08em;
     color: var(--paper);
     margin-bottom: 12px;
-  }
-
-  .collectors-deep-dots {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 10px;
-  }
-
-  .cdot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .collectors-deep-sub {
-    font-family: var(--serif);
-    font-size: 13px;
-    font-style: italic;
-    color: rgba(242,239,233,0.4);
-    line-height: 1.5;
-    margin-bottom: 10px;
   }
 
   .collectors-deep-n {
@@ -1616,9 +1629,9 @@
       <div class="collectors-bar-row">
         <div class="collectors-bar-name">Geodetic Moments</div>
         <div class="collectors-bar-track">
-          <div class="collectors-bar-fill" style="width:100%;background:rgba(168,232,122,0.5)"></div>
+          <div class="collectors-bar-fill" style="width:37%;background:rgba(168,232,122,0.5)"></div>
         </div>
-        <div class="collectors-bar-count">187</div>
+        <div class="collectors-bar-count">69</div>
       </div>
       <div class="collectors-bar-row">
         <div class="collectors-bar-name">Editions</div>
@@ -1667,27 +1680,32 @@
 
   <!-- Deep collectors — those with the most cross-collection breadth -->
   <div class="collectors-deep">
-    <div class="collectors-deep-label">Collectors across the full terrain — holding 5 or more collections</div>
-    <div class="collectors-deep-grid">
-      <div class="collectors-deep-card">
-        <div class="collectors-deep-name">0x6e42…9773</div>
-        <div class="collectors-deep-dots"><span class="cdot" style="background:rgba(232,122,158,0.7)" title="Flowers"></span><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
-        <div class="collectors-deep-n">7 of 8 collections · full terrain</div>
+    <div class="collectors-deep-label">Collectors holding 5 or more collections</div>
+    <div class="collectors-list">
+      <div class="collectors-list-row">
+        <div class="collectors-list-addr">0xd40b…a180</div>
+        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(232,122,158,0.7)" title="Artificial Flowers"></span><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
+        <div class="collectors-list-n">7 of 8 — full terrain</div>
       </div>
-      <div class="collectors-deep-card">
-        <div class="collectors-deep-name">0xd40b…2dbd</div>
-        <div class="collectors-deep-dots"><span class="cdot" style="background:rgba(232,122,158,0.7)" title="Flowers"></span><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
-        <div class="collectors-deep-n">7 of 8 collections · full terrain</div>
+      <div class="collectors-list-row">
+        <div class="collectors-list-addr">0x0b3b…c872</div>
+        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span></div>
+        <div class="collectors-list-n">5 collections</div>
       </div>
-      <div class="collectors-deep-card">
-        <div class="collectors-deep-name">4 collectors</div>
-        <div class="collectors-deep-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads"></span></div>
-        <div class="collectors-deep-n">5 collections each</div>
+      <div class="collectors-list-row">
+        <div class="collectors-list-addr">0x13ee…458c</div>
+        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
+        <div class="collectors-list-n">5 collections</div>
       </div>
-      <div class="collectors-deep-card collectors-deep-card--cta">
-        <div class="collectors-deep-name">112 collectors</div>
-        <div class="collectors-deep-sub">hold works across<br>multiple collections</div>
-        <div class="collectors-deep-n">cross-terrain</div>
+      <div class="collectors-list-row">
+        <div class="collectors-list-addr">0x2d92…2e37</div>
+        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span></div>
+        <div class="collectors-list-n">5 collections</div>
+      </div>
+      <div class="collectors-list-row">
+        <div class="collectors-list-addr">0x8be5…2fd8</div>
+        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span></div>
+        <div class="collectors-list-n">5 collections</div>
       </div>
     </div>
   </div>
@@ -1695,7 +1713,7 @@
   <!-- CTA -->
   <div class="collectors-cta">
     <a href="https://collectors.mintface.art" target="_blank" class="collectors-cta-link">
-      <span class="collectors-cta-label">Explore the Collector Terrain</span>
+      <span class="collectors-cta-label">Explore Collector Terrain</span>
       <span class="collectors-cta-arrow">→</span>
     </a>
     <div class="collectors-cta-sub">Interactive map · Connect your wallet · See your place in the terrain</div>
