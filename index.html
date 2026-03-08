@@ -2100,9 +2100,9 @@
   // ── ACQUIRE — fetch floor + supply from OpenSea ──
   const ACQUIRE_COLLECTIONS = [
     { id: 'artificial-flowers', name: 'Artificial Flowers', medium: 'Neural Painting', slug: 'artificial-flower',     color: '#e87a9e', total: 21  },
-    { id: 'patrimora',          name: 'Patrimora',          medium: 'Generative',      slug: null, link: 'https://highlight.xyz/mint/ethereum:0xEabffdE679Fe5F0b835771aeA36d90C1ce7502d8', color: '#7a9ee8', total: 469, mintOpen: true },
+    { id: 'patrimora',          name: 'Patrimora',          medium: 'Generative',      slug: null, link: 'https://highlight.xyz/mint/ethereum:0xEabffdE679Fe5F0b835771aeA36d90C1ce7502d8', color: '#7a9ee8', total: 469, mintOpen: true, staticFloor: '0.03 ETH' },
     { id: 'two-burdens',        name: 'Two Burdens',        medium: 'Painting',        slug: 'two-burdens',           color: '#e8c97a', total: 36  },
-    { id: 'recursive-mind',     name: 'Recursive Mind',     medium: 'Illustration',    slug: null,                    color: '#c47ae8', total: 8,  link: 'https://gamma.io/ordinals/collections/recursive-mind/items' },
+    { id: 'recursive-mind',     name: 'Recursive Mind',     medium: 'Illustration',    slug: null,                    color: '#c47ae8', total: 8,  link: 'https://gamma.io/ordinals/collections/recursive-mind/items', staticListed: '8 available', staticFloor: '0.018 BTC' },
     { id: 'geodetica',          name: 'Geodetica',          medium: 'Pure AI',         slug: 'geodetica',             color: '#7ae8c4', total: 100 },
     { id: 'roads-rivers',       name: 'Roads & Rivers',     medium: 'Photography',     slug: 'roads-and-rivers',      color: '#e8a87a', total: 40  },
     { id: 'geodetic-moments',   name: 'Moments',            medium: 'Photography',     slug: 'geodetic-moments',      color: '#a8e87a', total: 100 },
@@ -2115,8 +2115,8 @@
     grid.innerHTML = '';
     ACQUIRE_COLLECTIONS.forEach(col => {
       const d = data[col.id] || {};
-      const floor = d.floor != null ? (d.floor === 0 ? 'Offer' : d.floor.toFixed(3) + ' ETH') : '—';
-      const listed = d.listed != null ? d.listed : '—';
+      const floor = col.staticFloor ?? (d.floor != null ? (d.floor === 0 ? 'Offer' : d.floor.toFixed(3) + ' ETH') : '—');
+      const listed = col.staticListed ?? (d.listed != null ? d.listed : '—');
       const link = col.link || `https://opensea.io/collection/${col.slug}`;
 
       const card = document.createElement('a');
@@ -2135,8 +2135,8 @@
             <div class="acquire-card-stat-value" style="color:var(--accent)">Mint Open</div>
           </div>
           <div class="acquire-card-stat">
-            <div class="acquire-card-stat-label">Platform</div>
-            <div class="acquire-card-stat-value">Highlight.xyz</div>
+            <div class="acquire-card-stat-label">Mint Price</div>
+            <div class="acquire-card-stat-value">${floor}</div>
           </div>` : `
           <div class="acquire-card-stat">
             <div class="acquire-card-stat-label">Floor Price</div>
@@ -2144,7 +2144,7 @@
           </div>
           <div class="acquire-card-stat">
             <div class="acquire-card-stat-label">Listed</div>
-            <div class="acquire-card-stat-value${listed === '—' ? ' loading' : ''}">${listed === '—' ? listed : listed + ' available'}</div>
+            <div class="acquire-card-stat-value${listed === '—' ? ' loading' : ''}">${typeof listed === 'string' && listed.includes('available') ? listed : listed === '—' ? listed : listed + ' available'}</div>
           </div>`}
           <div class="acquire-card-stat">
             <div class="acquire-card-stat-label">Total Supply</div>
