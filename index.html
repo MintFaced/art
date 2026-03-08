@@ -835,10 +835,64 @@
     border-bottom-color: var(--accent);
   }
 
+  /* ── BURGER MENU ── */
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .nav-burger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--paper);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .mobile-menu a:hover { color: var(--accent); }
+
   /* ── RESPONSIVE ── */
 
-
   @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-burger { display: flex; }
+
+    nav { padding: 20px 24px; }
+
     .hero { grid-template-columns: 1fr; min-height: auto; }
     .hero-left { padding: 100px 24px 60px; }
     .hero-right { height: 50vw; }
@@ -851,9 +905,18 @@
     .collection { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
     .collection-year { top: 24px; right: 24px; }
 
-    .provenance-section { padding: 80px 24px; }
+    .provenance-section { padding: 80px 24px; overflow: hidden; }
     .provenance-header { flex-direction: column; gap: 20px; }
     .provenance-intro { text-align: left; max-width: 100%; }
+
+    .provenance-table { table-layout: fixed; width: 100%; }
+    .provenance-table th,
+    .provenance-table td { padding-left: 0 !important; padding-right: 8px; }
+    .provenance-table th:nth-child(3),
+    .provenance-table td:nth-child(3),
+    .provenance-table th:nth-child(4),
+    .provenance-table td:nth-child(4) { display: none; }
+    .prov-address { max-width: 100%; font-size: 8px; word-break: break-all; overflow-wrap: anywhere; }
 
     .exhibitions-section { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
 
@@ -869,6 +932,15 @@
 </head>
 <body>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#bio" onclick="closeMobileMenu()">Biography</a>
+  <a href="#collections" onclick="closeMobileMenu()">Collections</a>
+  <a href="#provenance" onclick="closeMobileMenu()">Provenance</a>
+  <a href="#exhibitions" onclick="closeMobileMenu()">Exhibitions</a>
+  <a href="#acquire" onclick="closeMobileMenu()">Acquire</a>
+</div>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">MintFace</a>
@@ -879,7 +951,23 @@
     <li><a href="#exhibitions">Exhibitions</a></li>
     <li><a href="#acquire">Acquire</a></li>
   </ul>
+  <button class="nav-burger" id="burgerBtn" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('burgerBtn');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('burgerBtn').classList.remove('open');
+  }
+</script>
 
 <!-- HERO -->
 <section class="hero">
