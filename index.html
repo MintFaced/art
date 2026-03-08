@@ -509,6 +509,273 @@
     inset: 0;
   }
 
+  /* ── COLLECTORS SECTION ── */
+  .collectors-section {
+    padding: 120px 80px;
+    background: var(--ink);
+    color: var(--paper);
+    border-top: 1px solid rgba(242,239,233,0.08);
+  }
+
+  .collectors-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .collectors-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 12px;
+  }
+
+  .collectors-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--paper);
+    margin: 0;
+  }
+
+  .collectors-title em {
+    font-style: italic;
+    color: rgba(242,239,233,0.5);
+  }
+
+  .collectors-meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(242,239,233,0.4);
+    line-height: 1.8;
+  }
+
+  /* Stats row */
+  .collectors-stats {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 72px;
+    padding: 32px 0;
+    border-top: 1px solid rgba(242,239,233,0.08);
+    border-bottom: 1px solid rgba(242,239,233,0.08);
+  }
+
+  .collectors-stat {
+    flex: 1;
+    text-align: center;
+  }
+
+  .collectors-stat-div {
+    width: 1px;
+    height: 40px;
+    background: rgba(242,239,233,0.1);
+  }
+
+  .collectors-stat-n {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300;
+    color: var(--paper);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .collectors-stat-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.35);
+  }
+
+  /* Depth bars */
+  .collectors-depth {
+    margin-bottom: 72px;
+  }
+
+  .collectors-depth-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.3);
+    margin-bottom: 20px;
+  }
+
+  .collectors-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .collectors-bar-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 40px;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .collectors-bar-name {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(242,239,233,0.5);
+    text-align: right;
+  }
+
+  .collectors-bar-track {
+    height: 2px;
+    background: rgba(242,239,233,0.06);
+    position: relative;
+    overflow: visible;
+  }
+
+  .collectors-bar-fill {
+    height: 100%;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .collectors-bar-count {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: rgba(242,239,233,0.3);
+  }
+
+  /* Deep collectors */
+  .collectors-deep {
+    margin-bottom: 64px;
+  }
+
+  .collectors-deep-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.3);
+    margin-bottom: 24px;
+  }
+
+  .collectors-deep-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .collectors-deep-card {
+    padding: 24px;
+    border: 1px solid rgba(242,239,233,0.07);
+    background: rgba(242,239,233,0.02);
+  }
+
+  .collectors-deep-card--cta {
+    border-color: rgba(196,112,90,0.2);
+    background: rgba(139,58,42,0.06);
+  }
+
+  .collectors-deep-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--paper);
+    margin-bottom: 12px;
+  }
+
+  .collectors-deep-dots {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .cdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .collectors-deep-sub {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(242,239,233,0.4);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .collectors-deep-n {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.25);
+  }
+
+  /* CTA */
+  .collectors-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(242,239,233,0.08);
+  }
+
+  .collectors-cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    padding: 16px 32px;
+    border: 1px solid rgba(242,239,233,0.2);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .collectors-cta-link:hover {
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+  }
+
+  .collectors-cta-arrow {
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .collectors-cta-link:hover .collectors-cta-arrow { transform: translateX(4px); }
+
+  .collectors-cta-sub {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.25);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .collectors-section { padding: 80px 24px; }
+    .collectors-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .collectors-meta { text-align: left; }
+    .collectors-stats { flex-wrap: wrap; gap: 24px; }
+    .collectors-stat-div { display: none; }
+    .collectors-stat { flex: 1 1 40%; text-align: left; }
+    .collectors-bar-row { grid-template-columns: 110px 1fr 32px; }
+    .collectors-deep-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── PROVENANCE TABLE ── */
   .provenance-section {
     padding: 100px 48px;
@@ -937,6 +1204,7 @@
   <a href="#bio" onclick="closeMobileMenu()">Biography</a>
   <a href="#collections" onclick="closeMobileMenu()">Collections</a>
   <a href="#provenance" onclick="closeMobileMenu()">Provenance</a>
+  <a href="#collectors" onclick="closeMobileMenu()">Collectors</a>
   <a href="#exhibitions" onclick="closeMobileMenu()">Exhibitions</a>
   <a href="#acquire" onclick="closeMobileMenu()">Acquire</a>
 </div>
@@ -948,6 +1216,7 @@
     <li><a href="#bio">Biography</a></li>
     <li><a href="#collections">Collections</a></li>
     <li><a href="#provenance">Provenance</a></li>
+    <li><a href="#collectors">Collectors</a></li>
     <li><a href="#exhibitions">Exhibitions</a></li>
     <li><a href="#acquire">Acquire</a></li>
   </ul>
@@ -1302,6 +1571,138 @@
 </article>
 
 <!-- PROVENANCE -->
+
+<!-- ── COLLECTORS ── -->
+<section class="collectors-section reveal" id="collectors">
+
+  <div class="collectors-header">
+    <div>
+      <div class="collectors-eyebrow">Collector Terrain</div>
+      <h2 class="collectors-title">The People<br><em>Who Hodl</em></h2>
+    </div>
+    <div class="collectors-meta">
+      <div>409 wallets · 8 collections · 5 years</div>
+      <div>spanning 12 countries</div>
+    </div>
+  </div>
+
+  <!-- Stat bar -->
+  <div class="collectors-stats">
+    <div class="collectors-stat">
+      <div class="collectors-stat-n">409</div>
+      <div class="collectors-stat-label">Collectors</div>
+    </div>
+    <div class="collectors-stat-div"></div>
+    <div class="collectors-stat">
+      <div class="collectors-stat-n">112</div>
+      <div class="collectors-stat-label">Hold Multiple Collections</div>
+    </div>
+    <div class="collectors-stat-div"></div>
+    <div class="collectors-stat">
+      <div class="collectors-stat-n">8</div>
+      <div class="collectors-stat-label">Collections</div>
+    </div>
+    <div class="collectors-stat-div"></div>
+    <div class="collectors-stat">
+      <div class="collectors-stat-n">2021</div>
+      <div class="collectors-stat-label">First Collector</div>
+    </div>
+  </div>
+
+  <!-- Collection depth bars -->
+  <div class="collectors-depth">
+    <div class="collectors-depth-label">Collection depth — holders per series</div>
+    <div class="collectors-bars">
+      <div class="collectors-bar-row">
+        <div class="collectors-bar-name">Geodetic Moments</div>
+        <div class="collectors-bar-track">
+          <div class="collectors-bar-fill" style="width:100%;background:rgba(168,232,122,0.5)"></div>
+        </div>
+        <div class="collectors-bar-count">187</div>
+      </div>
+      <div class="collectors-bar-row">
+        <div class="collectors-bar-name">Editions</div>
+        <div class="collectors-bar-track">
+          <div class="collectors-bar-fill" style="width:85%;background:rgba(122,196,232,0.5)"></div>
+        </div>
+        <div class="collectors-bar-count">159</div>
+      </div>
+      <div class="collectors-bar-row">
+        <div class="collectors-bar-name">Geodetica</div>
+        <div class="collectors-bar-track">
+          <div class="collectors-bar-fill" style="width:52%;background:rgba(122,232,196,0.5)"></div>
+        </div>
+        <div class="collectors-bar-count">98</div>
+      </div>
+      <div class="collectors-bar-row">
+        <div class="collectors-bar-name">Roads &amp; Rivers</div>
+        <div class="collectors-bar-track">
+          <div class="collectors-bar-fill" style="width:44%;background:rgba(232,168,122,0.5)"></div>
+        </div>
+        <div class="collectors-bar-count">83</div>
+      </div>
+      <div class="collectors-bar-row">
+        <div class="collectors-bar-name">Patrimora</div>
+        <div class="collectors-bar-track">
+          <div class="collectors-bar-fill" style="width:20%;background:rgba(122,158,232,0.5)"></div>
+        </div>
+        <div class="collectors-bar-count">38</div>
+      </div>
+      <div class="collectors-bar-row">
+        <div class="collectors-bar-name">Two Burdens</div>
+        <div class="collectors-bar-track">
+          <div class="collectors-bar-fill" style="width:7%;background:rgba(232,201,122,0.5)"></div>
+        </div>
+        <div class="collectors-bar-count">14</div>
+      </div>
+      <div class="collectors-bar-row">
+        <div class="collectors-bar-name">Artificial Flowers</div>
+        <div class="collectors-bar-track">
+          <div class="collectors-bar-fill" style="width:2%;background:rgba(232,122,158,0.5)"></div>
+        </div>
+        <div class="collectors-bar-count">4</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deep collectors — those with the most cross-collection breadth -->
+  <div class="collectors-deep">
+    <div class="collectors-deep-label">Collectors across the full terrain — holding 5 or more collections</div>
+    <div class="collectors-deep-grid">
+      <div class="collectors-deep-card">
+        <div class="collectors-deep-name">0x6e42…9773</div>
+        <div class="collectors-deep-dots"><span class="cdot" style="background:rgba(232,122,158,0.7)" title="Flowers"></span><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
+        <div class="collectors-deep-n">7 of 8 collections · full terrain</div>
+      </div>
+      <div class="collectors-deep-card">
+        <div class="collectors-deep-name">0xd40b…2dbd</div>
+        <div class="collectors-deep-dots"><span class="cdot" style="background:rgba(232,122,158,0.7)" title="Flowers"></span><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
+        <div class="collectors-deep-n">7 of 8 collections · full terrain</div>
+      </div>
+      <div class="collectors-deep-card">
+        <div class="collectors-deep-name">4 collectors</div>
+        <div class="collectors-deep-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads"></span></div>
+        <div class="collectors-deep-n">5 collections each</div>
+      </div>
+      <div class="collectors-deep-card collectors-deep-card--cta">
+        <div class="collectors-deep-name">112 collectors</div>
+        <div class="collectors-deep-sub">hold works across<br>multiple collections</div>
+        <div class="collectors-deep-n">cross-terrain</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="collectors-cta">
+    <a href="https://collectors.mintface.art" target="_blank" class="collectors-cta-link">
+      <span class="collectors-cta-label">Explore the Collector Terrain</span>
+      <span class="collectors-cta-arrow">→</span>
+    </a>
+    <div class="collectors-cta-sub">Interactive map · Connect your wallet · See your place in the terrain</div>
+  </div>
+
+</section>
+
 <section class="provenance-section reveal" id="provenance">
   <div class="provenance-header">
     <h2 class="provenance-title">Provenance<br><em style="font-style:italic">& Chain Records</em></h2>
