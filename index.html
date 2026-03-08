@@ -1147,12 +1147,41 @@
     color: var(--paper);
   }
 
+  .philosophy-left {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .footer-identity {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer-pfp {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(242,239,233,0.12);
+    flex-shrink: 0;
+  }
+
+  .footer-logo {
+    height: 28px;
+    width: auto;
+    opacity: 0.85;
+    /* logo has black bg — invert so it renders on dark footer */
+    filter: brightness(0) invert(1);
+  }
+
   .philosophy-quote {
     font-family: var(--serif);
-    font-size: clamp(32px, 4vw, 58px);
+    font-size: clamp(22px, 2.8vw, 38px);
     font-weight: 300;
     font-style: italic;
-    line-height: 1.2;
+    line-height: 1.3;
     letter-spacing: -0.02em;
     color: var(--paper);
   }
@@ -1184,6 +1213,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 32px;
   }
 
   .connect-link {
@@ -1209,6 +1239,72 @@
   }
 
   .connect-link:hover .connect-link-icon { width: 32px; }
+
+  .footer-signup {
+    margin-top: 4px;
+  }
+
+  .footer-signup-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.3);
+    margin-bottom: 10px;
+  }
+
+  .footer-signup-form {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(242,239,233,0.2);
+    padding-bottom: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .footer-signup-form:focus-within {
+    border-color: rgba(242,239,233,0.5);
+  }
+
+  .footer-signup-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    flex: 1;
+    padding: 0;
+  }
+
+  .footer-signup-input::placeholder {
+    color: rgba(242,239,233,0.2);
+  }
+
+  .footer-signup-btn {
+    background: transparent;
+    border: none;
+    color: rgba(242,239,233,0.4);
+    font-family: var(--mono);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 0 0 8px;
+    transition: color 0.2s;
+  }
+
+  .footer-signup-btn:hover { color: var(--paper); }
+
+  .footer-signup-confirm {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--accent-light);
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .footer-signup-confirm.show { opacity: 1; }
 
   .footer-bottom {
     display: flex;
@@ -1376,7 +1472,8 @@
 
     .exhibitions-section { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
 
-    .philosophy-section { grid-template-columns: 1fr; padding: 80px 24px; }
+    .philosophy-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    .footer-logo { height: 22px; }
 
     .catalog-nav { padding: 24px; }
 
@@ -2062,7 +2159,11 @@
 
 <!-- PHILOSOPHY + FOOTER -->
 <footer class="philosophy-section">
-  <div>
+  <div class="philosophy-left">
+    <div class="footer-identity">
+      <img src="https://pub-40b0b488cd5b4b6597427eb295d7ca63.r2.dev/assets/mintface_pfp.jpg" alt="MintFace" class="footer-pfp">
+      <img src="https://pub-40b0b488cd5b4b6597427eb295d7ca63.r2.dev/assets/MintFace_Logo_White.png" alt="MintFace" class="footer-logo">
+    </div>
     <p class="philosophy-quote">
       As we live on the edge of believability, MintFace conjures <span>placeholders</span> to guide our way.
     </p>
@@ -2077,7 +2178,7 @@
         </a>
         <a href="https://x.com/mintface" class="connect-link" target="_blank">
           <span class="connect-link-icon"></span>
-          X / Twitter
+          X
         </a>
         <a href="https://instagram.com/thelinegallery" class="connect-link" target="_blank">
           <span class="connect-link-icon"></span>
@@ -2088,9 +2189,20 @@
           OpenSea
         </a>
       </div>
+
+      <!-- Email signup -->
+      <div class="footer-signup">
+        <div class="footer-signup-label">Meld Minds</div>
+        <form class="footer-signup-form" onsubmit="handleSignup(event)">
+          <input type="email" class="footer-signup-input" placeholder="your@email.com" required>
+          <button type="submit" class="footer-signup-btn">→</button>
+        </form>
+        <div class="footer-signup-confirm" id="signup-confirm">You're in the terrain.</div>
+      </div>
     </div>
+
     <div class="footer-bottom">
-      <div class="footer-wordmark">MintFace Art — mintface.art</div>
+      <div class="footer-wordmark">mintface.art</div>
       <div class="footer-rights">Rights are for the untokenized.</div>
     </div>
   </div>
@@ -2210,6 +2322,18 @@
   }
 
   fetchCollectionStats();
+
+  // Email signup
+  function handleSignup(e) {
+    e.preventDefault();
+    const input = e.target.querySelector('input');
+    const confirm = document.getElementById('signup-confirm');
+    // mailto fallback — swap for a real endpoint (Mailchimp, Resend etc) when ready
+    window.location.href = `mailto:mintface@digitalartisteconomy.com?subject=Newsletter%20Signup&body=${encodeURIComponent(input.value)}`;
+    input.value = '';
+    confirm.classList.add('show');
+    setTimeout(() => confirm.classList.remove('show'), 4000);
+  }
 
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
