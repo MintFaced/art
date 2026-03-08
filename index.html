@@ -961,6 +961,182 @@
     margin-top: 4px;
   }
 
+  /* ── ACQUIRE SECTION ── */
+  .acquire-section {
+    padding: 120px 80px;
+    background: var(--paper);
+    border-top: 1px solid rgba(14,13,11,0.08);
+  }
+
+  .acquire-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .acquire-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .acquire-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .acquire-title em {
+    font-style: italic;
+    color: var(--warm-mid);
+  }
+
+  .acquire-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--warm-mid);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  .acquire-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 40px;
+  }
+
+  .acquire-card {
+    border: 1px solid rgba(14,13,11,0.08);
+    padding: 24px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .acquire-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .acquire-card:hover {
+    border-color: rgba(14,13,11,0.25);
+    background: rgba(242,239,233,0.5);
+  }
+
+  .acquire-card-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .acquire-card-medium {
+    font-family: var(--serif);
+    font-size: 12px;
+    font-style: italic;
+    color: var(--warm-mid);
+    margin-bottom: 20px;
+  }
+
+  .acquire-card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .acquire-card-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .acquire-card-stat-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+  }
+
+  .acquire-card-stat-value {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+
+  .acquire-card-stat-value.loading {
+    color: var(--warm-mid);
+    font-size: 10px;
+  }
+
+  .acquire-card-cta {
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .acquire-card:hover .acquire-card-cta { opacity: 1; }
+
+  .acquire-loading {
+    grid-column: 1 / -1;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--warm-mid);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .acquire-footer-note {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--warm-mid);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(14,13,11,0.06);
+  }
+
+  .acquire-see-all {
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    transition: color 0.15s;
+  }
+
+  .acquire-see-all:hover { color: var(--accent); }
+
+  @media (max-width: 1024px) { .acquire-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .acquire-grid { grid-template-columns: 1fr; } .acquire-section { padding: 80px 24px; } .acquire-header { flex-direction: column; align-items: flex-start; gap: 16px; } .acquire-meta { text-align: left; } }
+
   /* ── PHILOSOPHY / FOOTER ── */
   .philosophy-section {
     padding: 120px 48px;
@@ -1678,38 +1854,6 @@
     </div>
   </div>
 
-  <!-- Deep collectors — those with the most cross-collection breadth -->
-  <div class="collectors-deep">
-    <div class="collectors-deep-label">Collectors holding 5 or more collections</div>
-    <div class="collectors-list">
-      <div class="collectors-list-row">
-        <div class="collectors-list-addr">0xd40b…a180</div>
-        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(232,122,158,0.7)" title="Artificial Flowers"></span><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
-        <div class="collectors-list-n">7 of 8 — full terrain</div>
-      </div>
-      <div class="collectors-list-row">
-        <div class="collectors-list-addr">0x0b3b…c872</div>
-        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span></div>
-        <div class="collectors-list-n">5 collections</div>
-      </div>
-      <div class="collectors-list-row">
-        <div class="collectors-list-addr">0x13ee…458c</div>
-        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,201,122,0.7)" title="Two Burdens"></span></div>
-        <div class="collectors-list-n">5 collections</div>
-      </div>
-      <div class="collectors-list-row">
-        <div class="collectors-list-addr">0x2d92…2e37</div>
-        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span></div>
-        <div class="collectors-list-n">5 collections</div>
-      </div>
-      <div class="collectors-list-row">
-        <div class="collectors-list-addr">0x8be5…2fd8</div>
-        <div class="collectors-list-dots"><span class="cdot" style="background:rgba(122,196,232,0.7)" title="Editions"></span><span class="cdot" style="background:rgba(168,232,122,0.7)" title="Moments"></span><span class="cdot" style="background:rgba(122,232,196,0.7)" title="Geodetica"></span><span class="cdot" style="background:rgba(122,158,232,0.7)" title="Patrimora"></span><span class="cdot" style="background:rgba(232,168,122,0.7)" title="Roads & Rivers"></span></div>
-        <div class="collectors-list-n">5 collections</div>
-      </div>
-    </div>
-  </div>
-
   <!-- CTA -->
   <div class="collectors-cta">
     <a href="https://collectors.mintface.art" target="_blank" class="collectors-cta-link">
@@ -1895,8 +2039,29 @@
   </ul>
 </section>
 
+<!-- ACQUIRE -->
+<section class="acquire-section reveal" id="acquire">
+  <div class="acquire-header">
+    <div>
+      <div class="acquire-eyebrow">Available Works</div>
+      <h2 class="acquire-title">Acquire<br><em>Art</em></h2>
+    </div>
+    <div class="acquire-meta">Floor prices and available editions<br>updated live from OpenSea</div>
+  </div>
+
+  <div class="acquire-grid" id="acquire-grid">
+    <!-- Cards injected by JS -->
+    <div class="acquire-loading">Loading market data…</div>
+  </div>
+
+  <div class="acquire-footer-note">
+    All works tokenized on-chain. Ownership transfers without intermediaries.
+    <a href="https://opensea.io/mintface" target="_blank" class="acquire-see-all">View all on OpenSea →</a>
+  </div>
+</section>
+
 <!-- PHILOSOPHY + FOOTER -->
-<footer class="philosophy-section" id="acquire">
+<footer class="philosophy-section">
   <div>
     <p class="philosophy-quote">
       As we live on the edge of believability, MintFace conjures <span>placeholders</span> to guide our way.
@@ -1932,6 +2097,111 @@
 </footer>
 
 <script>
+  // ── ACQUIRE — fetch floor + supply from OpenSea ──
+  const ACQUIRE_COLLECTIONS = [
+    { id: 'artificial-flowers', name: 'Artificial Flowers', medium: 'Neural Painting', slug: 'artificial-flower',     color: '#e87a9e', total: 21  },
+    { id: 'patrimora',          name: 'Patrimora',          medium: 'Generative',      slug: 'patrimora',             color: '#7a9ee8', total: 469 },
+    { id: 'two-burdens',        name: 'Two Burdens',        medium: 'Painting',        slug: 'two-burdens',           color: '#e8c97a', total: 36  },
+    { id: 'recursive-mind',     name: 'Recursive Mind',     medium: 'Illustration',    slug: null,                    color: '#c47ae8', total: 8,  link: 'https://gamma.io/ordinals/collections/recursive-mind/items' },
+    { id: 'geodetica',          name: 'Geodetica',          medium: 'Pure AI',         slug: 'geodetica',             color: '#7ae8c4', total: 100 },
+    { id: 'roads-rivers',       name: 'Roads & Rivers',     medium: 'Photography',     slug: 'roads-and-rivers',      color: '#e8a87a', total: 40  },
+    { id: 'geodetic-moments',   name: 'Moments',            medium: 'Photography',     slug: 'geodetic-moments',      color: '#a8e87a', total: 100 },
+    { id: 'geodetic-home',      name: 'Editions',           medium: 'On-chain',        slug: 'geodetic',              color: '#7ac4e8', total: 5   },
+  ];
+
+  function renderAcquireCards(data = {}) {
+    const grid = document.getElementById('acquire-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    ACQUIRE_COLLECTIONS.forEach(col => {
+      const d = data[col.id] || {};
+      const floor = d.floor != null ? (d.floor === 0 ? 'Offer' : d.floor.toFixed(3) + ' ETH') : '—';
+      const listed = d.listed != null ? d.listed : '—';
+      const link = col.link || `https://opensea.io/collection/${col.slug}`;
+
+      const card = document.createElement('a');
+      card.className = 'acquire-card';
+      card.href = col.slug ? link : col.link;
+      card.target = '_blank';
+      card.rel = 'noopener';
+      card.innerHTML = `
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:${col.color}"></div>
+        <div class="acquire-card-name">${col.name}</div>
+        <div class="acquire-card-medium">${col.medium}</div>
+        <div class="acquire-card-stats">
+          <div class="acquire-card-stat">
+            <div class="acquire-card-stat-label">Floor Price</div>
+            <div class="acquire-card-stat-value${floor === '—' ? ' loading' : ''}">${floor}</div>
+          </div>
+          <div class="acquire-card-stat">
+            <div class="acquire-card-stat-label">Listed</div>
+            <div class="acquire-card-stat-value${listed === '—' ? ' loading' : ''}">${listed === '—' ? listed : listed + ' available'}</div>
+          </div>
+          <div class="acquire-card-stat">
+            <div class="acquire-card-stat-label">Total Supply</div>
+            <div class="acquire-card-stat-value">${col.total}</div>
+          </div>
+        </div>
+        <div class="acquire-card-cta">View on ${col.slug ? 'OpenSea' : 'Gamma'} →</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  async function fetchAcquireData() {
+    renderAcquireCards(); // render shells immediately
+    const results = {};
+    for (const col of ACQUIRE_COLLECTIONS) {
+      if (!col.slug) continue;
+      try {
+        const r = await fetch(`https://api.opensea.io/api/v2/collections/${col.slug}/stats`);
+        if (!r.ok) continue;
+        const d = await r.json();
+        const total = d.total || {};
+        results[col.id] = {
+          floor: total.floor_price ?? null,
+          listed: total.num_owners != null ? null : null, // listed count in v2
+        };
+        // Also fetch listings count
+        const r2 = await fetch(`https://api.opensea.io/api/v2/listings/collection/${col.slug}/best?limit=1`);
+        if (r2.ok) {
+          const d2 = await r2.json();
+          // Use count from stats
+        }
+        renderAcquireCards(results);
+      } catch(e) { /* silent */ }
+      await new Promise(res => setTimeout(res, 300));
+    }
+  }
+
+  // Use the collectors site proxy pattern via a simple CORS-friendly approach
+  // OpenSea v2 stats endpoint is public for floor price
+  async function fetchCollectionStats() {
+    renderAcquireCards();
+    const results = {};
+    const slugs = ACQUIRE_COLLECTIONS.filter(c => c.slug);
+
+    await Promise.all(slugs.map(async col => {
+      try {
+        // OpenSea collection stats (public, no key needed for basic stats)
+        const r = await fetch(`https://api.opensea.io/api/v2/collections/${col.slug}/stats`, {
+          headers: { 'accept': 'application/json' }
+        });
+        if (!r.ok) return;
+        const d = await r.json();
+        const t = d.total || {};
+        results[col.id] = {
+          floor: t.floor_price ?? null,
+          listed: t.listed_count ?? null,
+        };
+      } catch(e) {}
+    }));
+
+    renderAcquireCards(results);
+  }
+
+  fetchCollectionStats();
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
