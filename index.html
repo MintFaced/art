@@ -1761,6 +1761,27 @@
 
 <!-- PROVENANCE -->
 
+<!-- ACQUIRE -->
+<section class="acquire-section reveal" id="acquire">
+  <div class="acquire-header">
+    <div>
+      <div class="acquire-eyebrow">Available Works</div>
+      <h2 class="acquire-title">Acquire<br><em>Art</em></h2>
+    </div>
+    <div class="acquire-meta">Floor prices and available editions<br>updated live from OpenSea</div>
+  </div>
+
+  <div class="acquire-grid" id="acquire-grid">
+    <!-- Cards injected by JS -->
+    <div class="acquire-loading">Loading market data…</div>
+  </div>
+
+  <div class="acquire-footer-note">
+    All works tokenized on-chain. Ownership transfers without intermediaries.
+    <a href="https://opensea.io/mintface" target="_blank" class="acquire-see-all">View all on OpenSea →</a>
+  </div>
+</section>
+
 <!-- ── COLLECTORS ── -->
 <section class="collectors-section reveal" id="collectors">
 
@@ -1770,9 +1791,8 @@
       <h2 class="collectors-title">The People<br><em>Who Hodl</em></h2>
     </div>
     <div class="collectors-meta">
-      <div>409 wallets · 8 collections · 5 years</div>
-      <div>spanning 12 countries</div>
-    </div>
+      <div>409 patrons · 8 collections · 5 years</div>
+          </div>
   </div>
 
   <!-- Stat bar -->
@@ -2039,26 +2059,6 @@
   </ul>
 </section>
 
-<!-- ACQUIRE -->
-<section class="acquire-section reveal" id="acquire">
-  <div class="acquire-header">
-    <div>
-      <div class="acquire-eyebrow">Available Works</div>
-      <h2 class="acquire-title">Acquire<br><em>Art</em></h2>
-    </div>
-    <div class="acquire-meta">Floor prices and available editions<br>updated live from OpenSea</div>
-  </div>
-
-  <div class="acquire-grid" id="acquire-grid">
-    <!-- Cards injected by JS -->
-    <div class="acquire-loading">Loading market data…</div>
-  </div>
-
-  <div class="acquire-footer-note">
-    All works tokenized on-chain. Ownership transfers without intermediaries.
-    <a href="https://opensea.io/mintface" target="_blank" class="acquire-see-all">View all on OpenSea →</a>
-  </div>
-</section>
 
 <!-- PHILOSOPHY + FOOTER -->
 <footer class="philosophy-section">
@@ -2100,7 +2100,7 @@
   // ── ACQUIRE — fetch floor + supply from OpenSea ──
   const ACQUIRE_COLLECTIONS = [
     { id: 'artificial-flowers', name: 'Artificial Flowers', medium: 'Neural Painting', slug: 'artificial-flower',     color: '#e87a9e', total: 21  },
-    { id: 'patrimora',          name: 'Patrimora',          medium: 'Generative',      slug: 'patrimora',             color: '#7a9ee8', total: 469 },
+    { id: 'patrimora',          name: 'Patrimora',          medium: 'Generative',      slug: null, link: 'https://highlight.xyz/mint/ethereum:0xEabffdE679Fe5F0b835771aeA36d90C1ce7502d8', color: '#7a9ee8', total: 469, mintOpen: true },
     { id: 'two-burdens',        name: 'Two Burdens',        medium: 'Painting',        slug: 'two-burdens',           color: '#e8c97a', total: 36  },
     { id: 'recursive-mind',     name: 'Recursive Mind',     medium: 'Illustration',    slug: null,                    color: '#c47ae8', total: 8,  link: 'https://gamma.io/ordinals/collections/recursive-mind/items' },
     { id: 'geodetica',          name: 'Geodetica',          medium: 'Pure AI',         slug: 'geodetica',             color: '#7ae8c4', total: 100 },
@@ -2121,7 +2121,7 @@
 
       const card = document.createElement('a');
       card.className = 'acquire-card';
-      card.href = col.slug ? link : col.link;
+      card.href = col.link || link;
       card.target = '_blank';
       card.rel = 'noopener';
       card.innerHTML = `
@@ -2129,6 +2129,15 @@
         <div class="acquire-card-name">${col.name}</div>
         <div class="acquire-card-medium">${col.medium}</div>
         <div class="acquire-card-stats">
+          ${col.mintOpen ? `
+          <div class="acquire-card-stat">
+            <div class="acquire-card-stat-label">Status</div>
+            <div class="acquire-card-stat-value" style="color:var(--accent)">Mint Open</div>
+          </div>
+          <div class="acquire-card-stat">
+            <div class="acquire-card-stat-label">Platform</div>
+            <div class="acquire-card-stat-value">Highlight.xyz</div>
+          </div>` : `
           <div class="acquire-card-stat">
             <div class="acquire-card-stat-label">Floor Price</div>
             <div class="acquire-card-stat-value${floor === '—' ? ' loading' : ''}">${floor}</div>
@@ -2136,13 +2145,13 @@
           <div class="acquire-card-stat">
             <div class="acquire-card-stat-label">Listed</div>
             <div class="acquire-card-stat-value${listed === '—' ? ' loading' : ''}">${listed === '—' ? listed : listed + ' available'}</div>
-          </div>
+          </div>`}
           <div class="acquire-card-stat">
             <div class="acquire-card-stat-label">Total Supply</div>
             <div class="acquire-card-stat-value">${col.total}</div>
           </div>
         </div>
-        <div class="acquire-card-cta">View on ${col.slug ? 'OpenSea' : 'Gamma'} →</div>
+        <div class="acquire-card-cta">${col.mintOpen ? 'Mint on Highlight' : col.slug ? 'View on OpenSea' : 'View on Gamma'} →</div>
       `;
       grid.appendChild(card);
     });
@@ -2181,12 +2190,12 @@
     const results = {};
     const slugs = ACQUIRE_COLLECTIONS.filter(c => c.slug);
 
+    // Proxy via collectors site API to avoid CORS
+    const PROXY = 'https://mintface-collectors.vercel.app/api/opensea';
+
     await Promise.all(slugs.map(async col => {
       try {
-        // OpenSea collection stats (public, no key needed for basic stats)
-        const r = await fetch(`https://api.opensea.io/api/v2/collections/${col.slug}/stats`, {
-          headers: { 'accept': 'application/json' }
-        });
+        const r = await fetch(`${PROXY}?path=collections/${col.slug}/stats`);
         if (!r.ok) return;
         const d = await r.json();
         const t = d.total || {};
