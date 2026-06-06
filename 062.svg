@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Sonic Adventure · Thirty-Two-Bit Tableau XVII">
+  <title>Sonic Adventure · Thirty-Two-Bit Tableau XVII</title>
+  <desc>1/1 pixel painting · color palette derived from a 1998 Sega game.</desc>
+
+  <defs>
+    <pattern id="scanPattern" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="4" height="2" fill="rgba(0,0,0,0)"/>
+      <rect x="0" y="2" width="4" height="2" fill="rgba(0,0,0,0.45)"/>
+    </pattern>
+    <radialGradient id="vig" cx="50%" cy="50%" r="70%">
+      <stop offset="60%" stop-color="rgb(0,0,0)" stop-opacity="0"/>
+      <stop offset="100%" stop-color="rgb(0,0,0)" stop-opacity="0.45"/>
+    </radialGradient>
+    <radialGradient id="rim" cx="50%" cy="50%" r="55%">
+      <stop offset="70%" stop-color="rgb(0,0,0)" stop-opacity="0"/>
+      <stop offset="100%" stop-color="rgb(203,2,178)" stop-opacity="0.18"/>
+    </radialGradient>
+  </defs>
+
+  <style><![CDATA[
+    /* PER-PIXEL TWITCH — ambient, always running */
+    .px {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: twitch 0.9s steps(2) infinite;
+    }
+    @keyframes twitch {
+      0%, 100% { transform: scale(1.000); filter: brightness(1.00); }
+      50%      { transform: scale(1.015); filter: brightness(1.12); }
+    }
+    .px:nth-child(12n+0) { animation-delay: 0.00s; animation-duration: 0.90s; }
+    .px:nth-child(12n+1) { animation-delay: 0.08s; animation-duration: 0.85s; }
+    .px:nth-child(12n+2) { animation-delay: 0.16s; animation-duration: 0.95s; }
+    .px:nth-child(12n+3) { animation-delay: 0.24s; animation-duration: 0.80s; }
+    .px:nth-child(12n+4) { animation-delay: 0.04s; animation-duration: 1.00s; }
+    .px:nth-child(12n+5) { animation-delay: 0.28s; animation-duration: 0.88s; }
+    .px:nth-child(12n+6) { animation-delay: 0.14s; animation-duration: 0.92s; }
+    .px:nth-child(12n+7) { animation-delay: 0.36s; animation-duration: 0.86s; }
+    .px:nth-child(12n+8) { animation-delay: 0.06s; animation-duration: 0.94s; }
+    .px:nth-child(12n+9) { animation-delay: 0.32s; animation-duration: 0.82s; }
+    .px:nth-child(12n+10) { animation-delay: 0.20s; animation-duration: 0.98s; }
+    .px:nth-child(12n+11) { animation-delay: 0.40s; animation-duration: 0.84s; }
+
+    /* RGB GLITCH LOOP — whole-grid channel separation */
+    .ch-cyan {
+      mix-blend-mode: screen;
+      opacity: 0.45;
+      animation: glitchCyan 0.5s steps(3) infinite;
+    }
+    .ch-red {
+      mix-blend-mode: screen;
+      opacity: 0.40;
+      animation: glitchRed 0.5s steps(3) infinite;
+    }
+    @keyframes glitchCyan {
+      0%, 100% { transform: translate(0, 0); }
+      33%      { transform: translate(-3px, 0); }
+      66%      { transform: translate(1px, 0); }
+    }
+    @keyframes glitchRed {
+      0%, 100% { transform: translate(0, 0); }
+      33%      { transform: translate(3px, 0); }
+      66%      { transform: translate(-1px, 0); }
+    }
+
+    /* SCANLINES — scrolling vertically */
+    .scanlines {
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      animation: scanScroll 8s linear infinite;
+    }
+    @keyframes scanScroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(8px); }
+    }
+
+    /* SWEEP BAND — slow phosphor sweep */
+    .sweep {
+      pointer-events: none;
+      animation: sweepDown 6s linear infinite;
+    }
+    @keyframes sweepDown {
+      0%   { transform: translateY(-100%); opacity: 0.0; }
+      10%  { opacity: 0.5; }
+      90%  { opacity: 0.5; }
+      100% { transform: translateY(100%); opacity: 0.0; }
+    }
+
+    .vignette, .rim, .ghost { pointer-events: none; }
+  ]]></style>
+
+  <!-- Deep CRT background -->
+  <rect width="1600" height="800" fill="#080210"/>
+
+  <!-- Cyan channel ghost — drifts left -->
+  <g class="ch-cyan">
+    <rect class="ghost" x="0" y="0" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="200" y="0" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="400" y="0" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="600" y="0" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="800" y="0" width="200" height="200" fill="#A85820"/>
+    <rect class="ghost" x="1000" y="0" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="1200" y="0" width="200" height="200" fill="#A85820"/>
+    <rect class="ghost" x="1400" y="0" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="0" y="200" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="200" y="200" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="400" y="200" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="600" y="200" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="800" y="200" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="1000" y="200" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="1200" y="200" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="1400" y="200" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="0" y="400" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="200" y="400" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="400" y="400" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="600" y="400" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="800" y="400" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="1000" y="400" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="1200" y="400" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="1400" y="400" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="0" y="600" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="200" y="600" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="400" y="600" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="600" y="600" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="800" y="600" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="1000" y="600" width="200" height="200" fill="#A85820"/>
+    <rect class="ghost" x="1200" y="600" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="1400" y="600" width="200" height="200" fill="#A85820"/>
+  </g>
+
+  <!-- Red channel ghost — drifts right -->
+  <g class="ch-red">
+    <rect class="ghost" x="0" y="0" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="200" y="0" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="400" y="0" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="600" y="0" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="800" y="0" width="200" height="200" fill="#A85820"/>
+    <rect class="ghost" x="1000" y="0" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="1200" y="0" width="200" height="200" fill="#A85820"/>
+    <rect class="ghost" x="1400" y="0" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="0" y="200" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="200" y="200" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="400" y="200" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="600" y="200" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="800" y="200" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="1000" y="200" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="1200" y="200" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="1400" y="200" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="0" y="400" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="200" y="400" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="400" y="400" width="200" height="200" fill="#F8C040"/>
+    <rect class="ghost" x="600" y="400" width="200" height="200" fill="#0070D8"/>
+    <rect class="ghost" x="800" y="400" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="1000" y="400" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="1200" y="400" width="200" height="200" fill="#E83020"/>
+    <rect class="ghost" x="1400" y="400" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="0" y="600" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="200" y="600" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="400" y="600" width="200" height="200" fill="#88C8E8"/>
+    <rect class="ghost" x="600" y="600" width="200" height="200" fill="#F8E098"/>
+    <rect class="ghost" x="800" y="600" width="200" height="200" fill="#48B048"/>
+    <rect class="ghost" x="1000" y="600" width="200" height="200" fill="#A85820"/>
+    <rect class="ghost" x="1200" y="600" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="ghost" x="1400" y="600" width="200" height="200" fill="#A85820"/>
+  </g>
+
+  <!-- Primary layer — carries per-pixel twitch -->
+  <g class="primary">
+    <rect class="px" x="0" y="0" width="200" height="200" fill="#F8E098"/>
+    <rect class="px" x="200" y="0" width="200" height="200" fill="#88C8E8"/>
+    <rect class="px" x="400" y="0" width="200" height="200" fill="#F8E098"/>
+    <rect class="px" x="600" y="0" width="200" height="200" fill="#88C8E8"/>
+    <rect class="px" x="800" y="0" width="200" height="200" fill="#A85820"/>
+    <rect class="px" x="1000" y="0" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="px" x="1200" y="0" width="200" height="200" fill="#A85820"/>
+    <rect class="px" x="1400" y="0" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="px" x="0" y="200" width="200" height="200" fill="#0070D8"/>
+    <rect class="px" x="200" y="200" width="200" height="200" fill="#F8C040"/>
+    <rect class="px" x="400" y="200" width="200" height="200" fill="#0070D8"/>
+    <rect class="px" x="600" y="200" width="200" height="200" fill="#F8C040"/>
+    <rect class="px" x="800" y="200" width="200" height="200" fill="#88C8E8"/>
+    <rect class="px" x="1000" y="200" width="200" height="200" fill="#E83020"/>
+    <rect class="px" x="1200" y="200" width="200" height="200" fill="#48B048"/>
+    <rect class="px" x="1400" y="200" width="200" height="200" fill="#E83020"/>
+    <rect class="px" x="0" y="400" width="200" height="200" fill="#F8C040"/>
+    <rect class="px" x="200" y="400" width="200" height="200" fill="#0070D8"/>
+    <rect class="px" x="400" y="400" width="200" height="200" fill="#F8C040"/>
+    <rect class="px" x="600" y="400" width="200" height="200" fill="#0070D8"/>
+    <rect class="px" x="800" y="400" width="200" height="200" fill="#E83020"/>
+    <rect class="px" x="1000" y="400" width="200" height="200" fill="#48B048"/>
+    <rect class="px" x="1200" y="400" width="200" height="200" fill="#E83020"/>
+    <rect class="px" x="1400" y="400" width="200" height="200" fill="#48B048"/>
+    <rect class="px" x="0" y="600" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="px" x="200" y="600" width="200" height="200" fill="#F8E098"/>
+    <rect class="px" x="400" y="600" width="200" height="200" fill="#88C8E8"/>
+    <rect class="px" x="600" y="600" width="200" height="200" fill="#F8E098"/>
+    <rect class="px" x="800" y="600" width="200" height="200" fill="#48B048"/>
+    <rect class="px" x="1000" y="600" width="200" height="200" fill="#A85820"/>
+    <rect class="px" x="1200" y="600" width="200" height="200" fill="#FCFCFC"/>
+    <rect class="px" x="1400" y="600" width="200" height="200" fill="#A85820"/>
+  </g>
+
+  <!-- Scrolling scanlines -->
+  <g class="scanlines">
+    <rect x="0" y="-8" width="1600" height="816" fill="url(#scanPattern)"/>
+  </g>
+
+  <!-- Slow phosphor sweep band -->
+  <g class="sweep">
+    <rect x="0" y="0" width="1600" height="200" fill="rgba(255,255,255,0.06)"/>
+  </g>
+
+  <!-- Magenta rim glow -->
+  <rect class="rim" width="1600" height="800" fill="url(#rim)"/>
+
+  <!-- Vignette -->
+  <rect class="vignette" width="1600" height="800" fill="url(#vig)"/>
+</svg>

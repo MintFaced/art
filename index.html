@@ -501,6 +501,30 @@
     pointer-events: none;
   }
 
+  /* Inline animated SVG cells (PixelArcade) */
+  .collection-img svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .collection-img:hover svg { transform: scale(1.03); }
+  .collection-img .bit-tag {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 2;
+  }
+
   /* Placeholder color blocks when images not available */
   .color-block {
     width: 100%;
@@ -1585,13 +1609,14 @@
 
 <div class="collections-header" id="collections">
   <h2 class="section-title">Collections<br><em style="font-style:italic;color:var(--accent)">2021–2025</em></h2>
-  <span class="section-count">15 Collections · 500+ Works</span>
+  <span class="section-count">16 Collections · 500+ Works</span>
 </div>
 
 <!-- CATALOG NAV -->
 <div class="catalog-nav">
   <button class="catalog-tab active" onclick="filterCollection('all', this)">All Works</button>
   <button class="catalog-tab" onclick="filterCollection('painting', this)">Painting</button>
+  <button class="catalog-tab" onclick="filterCollection('pixel', this)">Pixel</button>
   <button class="catalog-tab" onclick="filterCollection('ai', this)">AI</button>
   <button class="catalog-tab" onclick="filterCollection('generative', this)">Generative</button>
   <button class="catalog-tab" onclick="filterCollection('illustration', this)">Illustration</button>
@@ -1599,11 +1624,45 @@
   <button class="catalog-tab" onclick="filterCollection('sculpture', this)">Sculpture</button>
 </div>
 
+<!-- COLLECTION: PIXELARCADE -->
+<article class="collection reveal" data-type="pixel painting" id="pixelarcade">
+  <div>
+    <div class="collection-year">2026</div>
+    <div class="collection-index">01 / 16</div>
+    <h2 class="collection-title">Pixel<br>Arcade</h2>
+    <div class="collection-medium">Acrylic on Panel / Pixel / Tokenized</div>
+    <p class="collection-desc">
+      Arcade games reduced to their most essential form: pixels. Each work winnows a game down to its canonical on-screen palette, arranged into a fixed grid and hand-painted — shifting context from childhood game to fine artwork. A study in pixels across three eras: <em>8-bit</em>, <em>16-bit</em> and <em>32-bit</em>.
+    </p>
+    <p class="collection-desc" style="margin-top:16px;">
+      The reduction is a debt to Mondrian, who pulled nature down to lines and primary squares. The third work in a lineage that runs through <em>Seize and Share</em> and reached master-work scale with FROGDNA — extended here across 64 games and three generations of arcade history.
+    </p>
+    <div style="margin-bottom:24px;">
+      <span class="edition-badge">64 × 1/1</span>
+    </div>
+    <div class="collection-links">
+      <a href="https://pixelarcade.art/collection" class="link-primary" target="_blank">View Collection</a>
+      <a href="https://pixelarcade.art/mint" class="link-primary" target="_blank">Mint — from 0.05 ETH</a>
+      <a href="https://opensea.io/collection/pixelarcade-" class="link-primary" target="_blank">OpenSea</a>
+    </div>
+  </div>
+  <div>
+    <div class="collection-grid three-col">
+      <div class="collection-img"><span class="bit-tag">8-bit</span><img src="pixelarcade/007.svg" alt="Frogger · Eight-Bit Study No. 7" loading="lazy"><div class="collection-img-label">07 · Frogger</div></div>
+      <div class="collection-img"><span class="bit-tag">16-bit</span><img src="pixelarcade/032.svg" alt="Wonder Boy · Sixteen-Bit Composition XV" loading="lazy"><div class="collection-img-label">32 · Wonder Boy</div></div>
+      <div class="collection-img"><span class="bit-tag">32-bit</span><img src="pixelarcade/062.svg" alt="Sonic Adventure · Thirty-Two-Bit Tableau XVII" loading="lazy"><div class="collection-img-label">62 · Sonic Adventure</div></div>
+    </div>
+    <div style="margin-top: 16px; font-family: var(--mono); font-size: 9px; color: var(--warm-mid); letter-spacing: 0.15em;">
+      Palettes sampled from canonical arcade hardware · 1981–1998
+    </div>
+  </div>
+</article>
+
 <!-- COLLECTION: ARTIFICIAL FLOWERS -->
 <article class="collection reveal" data-type="painting" id="painting">
   <div>
     <div class="collection-year">2025</div>
-    <div class="collection-index">01 / 15</div>
+    <div class="collection-index">02 / 16</div>
     <h2 class="collection-title">Artificial<br>Flowers</h2>
     <div class="collection-medium">Painting / AI / Augmented Reality</div>
     <p class="collection-desc">
@@ -1635,7 +1694,7 @@
 <article class="collection reveal" data-type="generative" id="generative">
   <div>
     <div class="collection-year">2025</div>
-    <div class="collection-index">02 / 15</div>
+    <div class="collection-index">03 / 16</div>
     <h2 class="collection-title">Patrimora</h2>
     <div class="collection-medium">Generative Art — On-chain</div>
     <p class="collection-desc">
@@ -1666,7 +1725,7 @@
 <article class="collection reveal" data-type="painting">
   <div>
     <div class="collection-year">2024</div>
-    <div class="collection-index">03 / 15</div>
+    <div class="collection-index">04 / 16</div>
     <h2 class="collection-title">Two<br>Burdens</h2>
     <div class="collection-medium">Oil on Canvas — 36 works</div>
     <p class="collection-desc">
@@ -1699,7 +1758,7 @@
 <article class="collection reveal" data-type="illustration" id="illustration">
   <div>
     <div class="collection-year">2023</div>
-    <div class="collection-index">04 / 15</div>
+    <div class="collection-index">05 / 16</div>
     <h2 class="collection-title">Recursive<br>Mind</h2>
     <div class="collection-medium">Illustration — Photoshop — Bitcoin Ordinals</div>
     <p class="collection-desc">
@@ -1731,7 +1790,7 @@
 
   <div>
     <div class="collection-year">2022</div>
-    <div class="collection-index">05 / 15</div>
+    <div class="collection-index">06 / 16</div>
     <h2 class="collection-title">Geodetica</h2>
     <div class="collection-medium">AI — Midjourney — 100 works</div>
     <p class="collection-desc">
@@ -1764,7 +1823,7 @@
 <article class="collection reveal" data-type="photography" id="photography">
   <div>
     <div class="collection-year">2022</div>
-    <div class="collection-index">06 / 15</div>
+    <div class="collection-index">07 / 16</div>
     <h2 class="collection-title">Roads<br>& Rivers</h2>
     <div class="collection-medium">Photography — Aerial — North Island, NZ</div>
     <p class="collection-desc">
@@ -1795,7 +1854,7 @@
 <article class="collection reveal" data-type="photography">
   <div>
     <div class="collection-year">2021</div>
-    <div class="collection-index">07 / 15</div>
+    <div class="collection-index">08 / 16</div>
     <h2 class="collection-title">Geodetic<br>Moments</h2>
     <div class="collection-medium">Photography — Pukekura Hill, Taradale</div>
     <p class="collection-desc">
@@ -1828,7 +1887,7 @@
 <article class="collection reveal" data-type="sculpture" id="sculpture">
   <div>
     <div class="collection-year">2025</div>
-    <div class="collection-index">08 / 15</div>
+    <div class="collection-index">09 / 16</div>
     <h2 class="collection-title">Geodetic<br>Home</h2>
     <div class="collection-medium">Paint on Timber Sculpture — Cultural Object</div>
     <p class="collection-desc">
@@ -1999,6 +2058,13 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><div class="prov-name">PixelArcade</div><div class="prov-medium">Acrylic / Pixel / Tokenized</div></td>
+        <td class="prov-year">2026</td>
+        <td class="prov-editions">64 × 1/1</td>
+        <td class="prov-chain">Ethereum · ERC-721</td>
+        <td class="prov-address"><a href="https://etherscan.io/address/0x97536ecc25ae0a7abade7c2bba1925ca6eba30e8" target="_blank">0x97536e…ba30e8</a></td>
+      </tr>
       <tr>
         <td><div class="prov-name">Artificial Flowers</div><div class="prov-medium">Neural Painting / AR</div></td>
         <td class="prov-year">2025</td>
@@ -2212,6 +2278,7 @@
 <script>
   // ── ACQUIRE — fetch floor + supply from OpenSea ──
   const ACQUIRE_COLLECTIONS = [
+    { id: 'pixelarcade',        name: 'PixelArcade',        medium: 'Pixel Painting',  slug: 'pixelarcade-', link: 'https://pixelarcade.art/mint', color: '#cb02b2', total: 64, mintOpen: true, staticFloor: '0.05 ETH', ctaLabel: 'Mint on pixelarcade.art' },
     { id: 'artificial-flowers', name: 'Artificial Flowers', medium: 'Neural Painting', slug: 'artificial-flower',     color: '#e87a9e', total: 21  },
     { id: 'patrimora',          name: 'Patrimora',          medium: 'Generative',      slug: null, link: 'https://highlight.xyz/mint/ethereum:0xEabffdE679Fe5F0b835771aeA36d90C1ce7502d8', color: '#7a9ee8', total: 469, mintOpen: true, staticFloor: '0.03 ETH' },
     { id: 'two-burdens',        name: 'Two Burdens',        medium: 'Painting',        slug: 'two-burdens',           color: '#e8c97a', total: 36  },
@@ -2264,7 +2331,7 @@
             <div class="acquire-card-stat-value">${col.total}</div>
           </div>
         </div>
-        <div class="acquire-card-cta">${col.mintOpen ? 'Mint on Highlight' : col.slug ? 'View on OpenSea' : 'View on Gamma'} →</div>
+        <div class="acquire-card-cta">${col.ctaLabel ? col.ctaLabel : col.mintOpen ? 'Mint on Highlight' : col.slug ? 'View on OpenSea' : 'View on Gamma'} →</div>
       `;
       grid.appendChild(card);
     });
