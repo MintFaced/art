@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MintFace — Projects</title>
+<meta name="description" content="Things MintFace has shipped. Non-art technical credentials — built, deployed, live.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0d0b;
+    --paper: #f2efe9;
+    --warm-mid: #b8b0a4;
+    --accent: #8b3a2a;
+    --accent-light: #c4705a;
+    --grid: #e2ddd6;
+    --mono: 'Space Mono', monospace;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* dark surface tokens — this page is the "ledger" side of the site */
+    --line: rgba(242,239,233,0.10);
+    --line-soft: rgba(242,239,233,0.06);
+    --paper-40: rgba(242,239,233,0.40);
+    --paper-50: rgba(242,239,233,0.50);
+    --paper-60: rgba(242,239,233,0.60);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    transition: background 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
+  }
+
+  .nav-logo {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-links a.current { opacity: 1; color: var(--accent-light); }
+
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-burger span {
+    width: 22px; height: 1px;
+    background: var(--paper);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+  .mobile-menu a {
+    font-family: var(--sans);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    opacity: 0.7;
+  }
+
+  /* ── HEADER ── */
+  .proj-hero {
+    padding: 180px 48px 56px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .proj-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 24px;
+  }
+
+  .proj-title {
+    font-family: var(--serif);
+    font-size: clamp(56px, 7vw, 110px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+  .proj-title em { font-style: italic; color: var(--accent-light); }
+
+  .proj-intro {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--paper-50);
+    max-width: 320px;
+    text-align: right;
+    border-right: 1px solid var(--accent);
+    padding-right: 20px;
+  }
+
+  /* ── TABLE / LEDGER ── */
+  .ledger {
+    padding: 0 48px 40px;
+  }
+
+  .ledger-head {
+    display: grid;
+    grid-template-columns: 1.7fr 0.5fr 1.5fr 0.7fr 32px;
+    gap: 32px;
+    padding: 28px 0 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ledger-head span {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--paper-40);
+  }
+
+  .row {
+    border-bottom: 1px solid var(--line-soft);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .row:hover { background: rgba(242,239,233,0.03); }
+  .row.open { background: rgba(242,239,233,0.04); }
+
+  .row-summary {
+    display: grid;
+    grid-template-columns: 1.7fr 0.5fr 1.5fr 0.7fr 32px;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+  }
+
+  .cell-project { display: flex; flex-direction: column; }
+  .proj-name {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 400;
+    color: var(--paper);
+    line-height: 1.1;
+  }
+  .proj-role {
+    font-family: var(--serif);
+    font-size: 12px;
+    font-style: italic;
+    color: var(--paper-40);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  .cell-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--paper-50);
+  }
+
+  .cell-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-60);
+    border: 1px solid var(--line);
+    padding: 3px 7px;
+    white-space: nowrap;
+  }
+
+  .cell-status { display: flex; align-items: center; gap: 8px; }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--accent-light);
+  }
+  .status-live .dot { background: #5fa86a; box-shadow: 0 0 8px rgba(95,168,106,0.6); }
+  .status-mainnet .dot { background: #5fa86a; box-shadow: 0 0 8px rgba(95,168,106,0.6); }
+  .status-beta .dot { background: #c9a227; }
+  .status-shipped .dot { background: var(--accent-light); }
+  .status-text {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper-60);
+  }
+
+  .chevron {
+    width: 32px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--paper-40);
+    transition: transform 0.25s, color 0.2s;
+  }
+  .row.open .chevron { transform: rotate(90deg); color: var(--accent-light); }
+  .row:hover .chevron { color: var(--accent-light); }
+
+  /* ── EXPANDED DETAIL ── */
+  .row-detail {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+  .row.open .row-detail { grid-template-rows: 1fr; }
+  .row-detail-inner {
+    overflow: hidden;
+  }
+  .detail-pad {
+    padding: 4px 0 32px;
+    display: grid;
+    grid-template-columns: 1.7fr 2.7fr;
+    gap: 32px;
+    max-width: 100%;
+  }
+
+  .detail-scope {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    line-height: 1.7;
+  }
+
+  .detail-body {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--paper-60);
+  }
+
+  .detail-links {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .link-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    border-bottom: 1px solid var(--paper);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .link-primary:hover { color: var(--accent-light); border-color: var(--accent-light); }
+  .link-primary::after { content: '↗'; font-size: 11px; }
+
+  .detail-proof {
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    color: var(--paper-40);
+    word-break: break-all;
+  }
+  .detail-proof a { color: var(--accent-light); text-decoration: none; }
+  .detail-proof a:hover { text-decoration: underline; }
+  .detail-proof .proof-label {
+    color: var(--paper-40);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-right: 10px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 80px 48px 60px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .foot-wordmark {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--paper);
+  }
+  .foot-rights {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--paper-40);
+    margin-top: 6px;
+  }
+  .foot-links { display: flex; gap: 24px; }
+  .foot-links a {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper-50);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .foot-links a:hover { color: var(--accent-light); }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .nav-burger { display: flex; }
+
+    .proj-hero {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+      padding: 130px 24px 40px;
+    }
+    .proj-intro { text-align: left; border-right: none; border-left: 1px solid var(--accent); padding-right: 0; padding-left: 16px; max-width: 100%; }
+
+    .ledger { padding: 0 24px 40px; }
+    .ledger-head { display: none; }
+
+    .row-summary {
+      grid-template-columns: 1fr 28px;
+      gap: 12px;
+      padding: 22px 0;
+      align-items: start;
+    }
+    .cell-year { display: none; }
+    .cell-stack { margin-top: 10px; }
+    .cell-project { grid-row: 1; }
+    .cell-status { grid-row: 1; grid-column: 1; justify-content: flex-start; margin-top: 2px; }
+    /* stack name, status, tags in left column */
+    .row-summary {
+      grid-template-columns: 1fr 28px;
+    }
+    .cell-project { order: 1; }
+    .cell-status { order: 2; margin-top: 8px; }
+    .cell-stack { order: 3; }
+    .row-summary { display: flex; flex-wrap: wrap; }
+    .cell-project { flex: 1 1 100%; }
+    .cell-status { flex: 1 1 auto; }
+    .chevron { flex: 0 0 28px; position: absolute; right: 24px; }
+    .row { position: relative; }
+    .cell-stack { flex: 1 1 100%; }
+
+    .detail-pad { grid-template-columns: 1fr; gap: 16px; }
+    .foot-wordmark { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#bio" onclick="closeMobileMenu()">Biography</a>
+  <a href="/#collections" onclick="closeMobileMenu()">Collections</a>
+  <a href="/#provenance" onclick="closeMobileMenu()">Provenance</a>
+  <a href="/#collectors" onclick="closeMobileMenu()">Collectors</a>
+  <a href="/projects" onclick="closeMobileMenu()">Projects</a>
+  <a href="/#acquire" onclick="closeMobileMenu()">Acquire</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">MintFace</a>
+  <ul class="nav-links">
+    <li><a href="/#bio">Biography</a></li>
+    <li><a href="/#collections">Collections</a></li>
+    <li><a href="/#provenance">Provenance</a></li>
+    <li><a href="/#collectors">Collectors</a></li>
+    <li><a href="/projects" class="current">Projects</a></li>
+    <li><a href="/#acquire">Acquire</a></li>
+  </ul>
+  <button class="nav-burger" id="burgerBtn" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HEADER -->
+<header class="proj-hero">
+  <div>
+    <div class="proj-eyebrow">Shipping Record — 2024–2026</div>
+    <h1 class="proj-title">Built<br><em>&amp; Shipped</em></h1>
+  </div>
+  <p class="proj-intro">Beyond the paintings — the platforms, contracts and tools shipped to production. Click any row to open it up.</p>
+</header>
+
+<!-- LEDGER -->
+<section class="ledger">
+  <div class="ledger-head">
+    <span>Project</span>
+    <span>Year</span>
+    <span>Stack</span>
+    <span>Status</span>
+    <span></span>
+  </div>
+  <div id="rows"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="foot-wordmark">mintface.art</div>
+    <div class="foot-rights">Credentials through shipping.</div>
+  </div>
+  <div class="foot-links">
+    <a href="/">← Back to art</a>
+    <a href="https://x.com/mintface" target="_blank">X</a>
+    <a href="https://github.com/MintFaced" target="_blank">GitHub</a>
+    <a href="mailto:mintface@digitalartisteconomy.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  // ── PROJECT DATA ──────────────────────────────────────────────
+  // To add a project: copy a block, fill the fields.
+  // status: 'mainnet' | 'live' | 'beta' | 'shipped'  (drives the dot colour)
+  // links:  array of { label, url }
+  // proof:  optional { label, url } OR { label, text }
+  const PROJECTS = [
+    {
+      name: 'PixelArcade',
+      year: '2026',
+      role: 'Creative Director, Lead Dev & Designer · contract by @yungwknd',
+      scope: 'Four arcade games to accompany 64 PixelArcade paintings',
+      stack: ['Next.js 16', 'React 19', 'TS', 'wagmi', 'viem', 'RainbowKit', 'SIWE', 'Upstash', 'Resend'],
+      status: 'mainnet',
+      statusLabel: 'Mainnet Live',
+      detail: 'A study in pixels across three mediums — traditional, digital past and digital future: acrylic on panel, CRT screens, and tokenized art. 64 hand-painted 1/1 pixel works on Ethereum with a companion mint platform. Built the wildpixel completion mechanism — on-chain ownership checks, SIWE auth, Pinata/IPFS pinning.',
+      links: [
+        { label: 'Site', url: 'https://pixelarcade.art/' },
+        { label: 'Play', url: 'https://pixelarcade.art/game' },
+        { label: 'Repo', url: 'https://github.com/MintFaced/pixel-arcade' },
+        { label: 'Contract', url: 'https://etherscan.io/address/0x97536ecc25ae0a7abade7c2bba1925ca6eba30e8' },
+        { label: 'OpenSea', url: 'https://opensea.io/collection/pixelarcade-' }
+      ],
+      proof: { label: 'Contract', text: '0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8', url: 'https://etherscan.io/address/0x97536ecc25ae0a7abade7c2bba1925ca6eba30e8' }
+    },
+    {
+      name: 'TX6900',
+      year: '2025',
+      role: 'Solo build',
+      scope: '7-chapter browser arcade game',
+      stack: ['JS', 'Canvas', 'Vercel'],
+      status: 'live',
+      statusLabel: 'Live',
+      detail: 'Seven chapters, each with distinct mechanics and real art assets. Gamepad / controller support, and XNouns NFT sprite compositing via direct IPFS layer compositing.',
+      links: [
+        { label: 'Play', url: 'https://pixelarcade.art/tx6900' }
+      ],
+      proof: null
+    },
+    {
+      name: 'The Line',
+      year: '2026',
+      role: 'Solo build',
+      scope: 'Directory site for up to 1000 crypto artists',
+      stack: ['Next.js 15', 'React 18', 'TS', 'Tailwind', 'Privy', 'Stream', 'Anthropic SDK', 'd3-force', 'Framer Motion', 'Upstash', 'Resend'],
+      status: 'live',
+      statusLabel: 'Live',
+      detail: 'The live directory for up to 1000 artists who tokenize their work. Token-gated live chat, art submission, art streaming to gallery screens, an artist badge embed and collector discovery tools.',
+      links: [
+        { label: 'Site', url: 'https://www.theline.wtf/' }
+      ],
+      proof: { label: 'Collection', text: 'The Line Guardians', url: 'https://opensea.io/collection/the-line-guardians' }
+    },
+    {
+      name: 'MEMEAMP',
+      year: '2025',
+      role: 'Creative Director · support dev (@brookr 6529, @gh0stt_dev frontend)',
+      scope: 'Digital music player for AI-generated music',
+      stack: ['Solidity', 'IPFS', 'SIWE', 'JS'],
+      status: 'shipped',
+      statusLabel: 'Shipped',
+      detail: 'MEMEAMP reinterpreted the Memeamp player for a post-AI-generated music landscape. Each song is streamable, with the expected play / rewind / next-track controls. The player also doubles as a voting application for its own promotion within the 6529 Network.',
+      links: [
+        { label: 'Play', url: 'https://play.memeamp.com/' }
+      ],
+      proof: null
+    },
+    {
+      name: 'meme6529',
+      year: '2026',
+      role: 'Solo build',
+      scope: 'Re-meme any 6529 meme from June 2022 onward',
+      stack: ['Next.js 15', 'React 19', 'TS', 'Reown AppKit', 'ethers v6', 'Stripe'],
+      status: 'live',
+      statusLabel: 'Live · pushes to 6529 Wave',
+      detail: 'A tool to easily re-meme the full 6529 meme catalogue (June 2022 onward) and push the result directly into the 6529 Wave.',
+      links: [
+        { label: 'Site', url: 'https://meme6529.com' }
+      ],
+      proof: { label: 'Wave', text: '6529 re-meme wave', url: 'https://6529.io/waves/aa3f4882-1b99-408e-9edf-8cdafb4577cb' }
+    },
+    {
+      name: 'CheckID',
+      year: '2024',
+      role: 'Rebuild & integration (2026)',
+      scope: 'Email-only onboarding to 6529 — Gnosis SAFE + ENS provisioning',
+      stack: ['Next.js 15', 'React 19', 'TS', 'Reown AppKit', 'ethers v6', 'Privy', 'Safe protocol-kit', 'Vercel Postgres', 'AWS S3', 'Stripe'],
+      status: 'beta',
+      statusLabel: 'Live (Beta)',
+      detail: 'An onboarding tool to reserve a name on the 6529 Network and link it to both a wallet and a digital art vault — entered via email alone, with a Gnosis SAFE set up and an ENS name provisioned behind the scenes.',
+      links: [
+        { label: 'Site', url: 'https://www.checkid.io' }
+      ],
+      proof: null
+    },
+    {
+      name: 'Collectors Data Viz',
+      year: '2026',
+      role: 'Solo build',
+      scope: 'Map the relationship between MintFace collections and collectors',
+      stack: ['Node 24'],
+      status: 'live',
+      statusLabel: 'Live',
+      detail: 'A fully interactive Networked Collectors Map (NCM) of every MintFace collector — visualising who holds what across the collections.',
+      links: [
+        { label: 'Site', url: 'https://collectors.mintface.art/' }
+      ],
+      proof: null
+    },
+    {
+      name: 'Art Labels',
+      year: '2026',
+      role: 'Solo build',
+      scope: 'Generate gallery art labels for The Line',
+      stack: ['Vite', 'React 18', 'TS', 'Tailwind', 'jsPDF'],
+      status: 'beta',
+      statusLabel: 'Live (Beta)',
+      detail: 'A label-creator tool that enables fast generation of printable art labels for The Line gallery — wall text out to PDF in seconds.',
+      links: [
+        { label: 'Site', url: 'https://artlabels.nz/' }
+      ],
+      proof: null
+    }
+  ];
+
+  // ── RENDER ────────────────────────────────────────────────────
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  function renderRows() {
+    const html = PROJECTS.map((p, i) => {
+      const tags = p.stack.map(t => `<span class="tag">${esc(t)}</span>`).join('');
+      const links = p.links.map(l =>
+        `<a class="link-primary" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`
+      ).join('');
+      let proof = '';
+      if (p.proof) {
+        const val = p.proof.url
+          ? `<a href="${esc(p.proof.url)}" target="_blank" rel="noopener">${esc(p.proof.text)}</a>`
+          : esc(p.proof.text);
+        proof = `<div class="detail-proof"><span class="proof-label">${esc(p.proof.label)}</span>${val}</div>`;
+      }
+      return `
+        <div class="row reveal status-${esc(p.status)}" data-index="${i}">
+          <div class="row-summary" onclick="toggleRow(${i})">
+            <div class="cell-project">
+              <span class="proj-name">${esc(p.name)}</span>
+              <span class="proj-role">${esc(p.role)}</span>
+            </div>
+            <div class="cell-year">${esc(p.year)}</div>
+            <div class="cell-stack">${tags}</div>
+            <div class="cell-status"><span class="dot"></span><span class="status-text">${esc(p.statusLabel)}</span></div>
+            <div class="chevron">›</div>
+          </div>
+          <div class="row-detail">
+            <div class="row-detail-inner">
+              <div class="detail-pad">
+                <div class="detail-scope">${esc(p.scope)}</div>
+                <div>
+                  <div class="detail-body">${esc(p.detail)}</div>
+                  <div class="detail-links">${links}</div>
+                  ${proof}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+    document.getElementById('rows').innerHTML = html;
+
+    // reveal observer
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, k) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = (e.target.dataset.index % 4 * 0.06) + 's';
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.row.reveal').forEach(el => obs.observe(el));
+  }
+
+  function toggleRow(i) {
+    const row = document.querySelector(`.row[data-index="${i}"]`);
+    row.classList.toggle('open');
+  }
+
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('burgerBtn').classList.toggle('open');
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('burgerBtn').classList.remove('open');
+  }
+
+  // nav background on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(14,13,11,0.85)';
+      nav.style.backdropFilter = 'blur(12px)';
+      nav.style.boxShadow = '0 1px 0 rgba(255,255,255,0.06)';
+    } else {
+      nav.style.background = '';
+      nav.style.backdropFilter = '';
+      nav.style.boxShadow = '';
+    }
+  });
+
+  renderRows();
+</script>
+</body>
+</html>
