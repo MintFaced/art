@@ -525,6 +525,30 @@
     z-index: 2;
   }
 
+  /* PixelArcade stacked layout: 2-up 8-bit row + full-width wide rows */
+  .pa-stack { display: flex; flex-direction: column; gap: 3px; }
+  .pa-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+  .pa-wide {
+    aspect-ratio: auto;
+    overflow: hidden;
+    background: #080210;
+    position: relative;
+    line-height: 0;
+  }
+  .pa-wide img,
+  .pa-wide svg {
+    position: static;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    filter: saturate(0.9);
+    transition: filter 0.5s, transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .pa-wide:hover img,
+  .pa-wide:hover svg { filter: saturate(1); transform: scale(1.02); }
+
   /* Placeholder color blocks when images not available */
   .color-block {
     width: 100%;
@@ -1647,10 +1671,14 @@
     </div>
   </div>
   <div>
-    <div class="collection-grid three-col">
-      <div class="collection-img"><span class="bit-tag">8-bit</span><img src="007.svg" alt="Frogger · Eight-Bit Study No. 7" loading="lazy"><div class="collection-img-label">07 · Frogger</div></div>
-      <div class="collection-img"><span class="bit-tag">16-bit</span><img src="032.svg" alt="Wonder Boy · Sixteen-Bit Composition XV" loading="lazy"><div class="collection-img-label">32 · Wonder Boy</div></div>
-      <div class="collection-img"><span class="bit-tag">32-bit</span><img src="062.svg" alt="Sonic Adventure · Thirty-Two-Bit Tableau XVII" loading="lazy"><div class="collection-img-label">62 · Sonic Adventure</div></div>
+    <div class="pa-stack">
+      <div class="pa-row-2">
+        <div class="collection-img"><span class="bit-tag">8-bit</span><img src="pixelarcade/007.svg" alt="Frogger · Eight-Bit Study No. 7" loading="lazy"><div class="collection-img-label">07 · Frogger</div></div>
+        <div class="collection-img"><span class="bit-tag">8-bit</span><img src="pixelarcade/011.svg" alt="Galaga · Eight-Bit Study No. 11" loading="lazy"><div class="collection-img-label">11 · Galaga</div></div>
+      </div>
+      <div class="pa-wide"><span class="bit-tag">16-bit</span><img src="pixelarcade/032.svg" alt="Wonder Boy · Sixteen-Bit Composition XV" loading="lazy"><div class="collection-img-label">32 · Wonder Boy</div></div>
+      <div class="pa-wide"><span class="bit-tag">16-bit</span><img src="pixelarcade/019.svg" alt="Paperboy · Sixteen-Bit Composition II" loading="lazy"><div class="collection-img-label">19 · Paperboy</div></div>
+      <div class="pa-wide"><span class="bit-tag">32-bit</span><img src="pixelarcade/062.svg" alt="Sonic Adventure · Thirty-Two-Bit Tableau XVII" loading="lazy"><div class="collection-img-label">62 · Sonic Adventure</div></div>
     </div>
     <div style="margin-top: 16px; font-family: var(--mono); font-size: 9px; color: var(--warm-mid); letter-spacing: 0.15em;">
       Palettes sampled from canonical arcade hardware · 1981–1998
