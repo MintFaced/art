@@ -558,6 +558,107 @@
   }
 
   /* ── COLLECTORS SECTION ── */
+  /* ── EXHIBITION (gallery photos) ── */
+  .exhibition-section {
+    padding: 120px 0 0;
+    background: var(--ink);
+    color: var(--paper);
+    border-top: 1px solid rgba(242,239,233,0.08);
+  }
+  .exhibition-header {
+    padding: 0 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+  }
+  .exhibition-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 12px;
+  }
+  .exhibition-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--paper);
+    margin: 0;
+  }
+  .exhibition-title em { font-style: italic; color: rgba(242,239,233,0.5); }
+  .exhibition-meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(242,239,233,0.45);
+    line-height: 1.8;
+  }
+  .exhibition-room {
+    padding: 0 80px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 1px solid rgba(242,239,233,0.08);
+    padding-bottom: 16px;
+    margin-top: 64px;
+  }
+  .exhibition-room:first-of-type { margin-top: 0; }
+  .exhibition-room-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--paper);
+  }
+  .exhibition-room-note {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,239,233,0.4);
+  }
+  .exhibition-strip {
+    display: grid;
+    gap: 3px;
+    margin-top: 20px;
+    padding: 0 3px;
+  }
+  .exhibition-strip.cols-2 { grid-template-columns: 1fr 1fr; }
+  .exhibition-strip.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .exhibition-photo {
+    position: relative;
+    overflow: hidden;
+    background: #16130f;
+  }
+  .exhibition-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.92);
+    transition: filter 0.5s, transform 0.9s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  .exhibition-photo:hover img { filter: saturate(1); transform: scale(1.03); }
+  .exhibition-photo.tall { aspect-ratio: 3/4; }
+  .exhibition-photo.wide { aspect-ratio: 4/3; }
+  .exhibition-hero img {
+    width: 100%;
+    display: block;
+    filter: saturate(0.92);
+  }
+  .exhibition-caption {
+    padding: 24px 80px 0;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: rgba(242,239,233,0.4);
+    line-height: 1.8;
+  }
+
   .collectors-section {
     padding: 120px 80px;
     background: var(--ink);
@@ -1519,6 +1620,13 @@
 
     .exhibitions-section { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
 
+    .exhibition-section { padding: 80px 0 0; }
+    .exhibition-header { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .exhibition-meta { text-align: left; }
+    .exhibition-room { padding: 0 24px 16px; }
+    .exhibition-caption { padding: 20px 24px 0; }
+    .exhibition-strip.cols-2, .exhibition-strip.cols-3 { grid-template-columns: 1fr; }
+
     .philosophy-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
     .footer-logo { height: 22px; }
 
@@ -1672,10 +1780,7 @@
   </div>
   <div>
     <div class="pa-stack">
-      <div class="pa-row-2">
-        <div class="collection-img"><span class="bit-tag">8-bit</span><img src="pixelarcade/007.svg" alt="Frogger · Eight-Bit Study No. 7" loading="lazy"><div class="collection-img-label">07 · Frogger</div></div>
-        <div class="collection-img"><span class="bit-tag">8-bit</span><img src="pixelarcade/011.svg" alt="Galaga · Eight-Bit Study No. 11" loading="lazy"><div class="collection-img-label">11 · Galaga</div></div>
-      </div>
+      <div class="pa-wide"><span class="bit-tag">8-bit</span><img src="pixelarcade/011.svg" alt="Galaga · Eight-Bit Study No. 11" loading="lazy"><div class="collection-img-label">11 · Galaga</div></div>
       <div class="pa-wide"><span class="bit-tag">16-bit</span><img src="pixelarcade/032.svg" alt="Wonder Boy · Sixteen-Bit Composition XV" loading="lazy"><div class="collection-img-label">32 · Wonder Boy</div></div>
       <div class="pa-wide"><span class="bit-tag">16-bit</span><img src="pixelarcade/019.svg" alt="Paperboy · Sixteen-Bit Composition II" loading="lazy"><div class="collection-img-label">19 · Paperboy</div></div>
       <div class="pa-wide"><span class="bit-tag">32-bit</span><img src="pixelarcade/062.svg" alt="Sonic Adventure · Thirty-Two-Bit Tableau XVII" loading="lazy"><div class="collection-img-label">62 · Sonic Adventure</div></div>
@@ -1976,6 +2081,47 @@
   </div>
 </article>
 
+<!-- EXHIBITION -->
+<section class="exhibition-section reveal" id="exhibition">
+  <div class="exhibition-header">
+    <div>
+      <div class="exhibition-eyebrow">Current Exhibition</div>
+      <h2 class="exhibition-title">PixelArcade <em>— The Line</em></h2>
+    </div>
+    <div class="exhibition-meta">
+      The Line Gallery · New Zealand<br>
+      318 · 2026
+    </div>
+  </div>
+
+  <div class="exhibition-hero">
+    <img src="exhibition/maingallery-16bit-front.jpg" alt="PixelArcade 16-bit composition at The Line Gallery" loading="lazy">
+  </div>
+
+  <div class="exhibition-room">
+    <span class="exhibition-room-name">Main Gallery</span>
+    <span class="exhibition-room-note">PixelArcade · the pixels</span>
+  </div>
+  <div class="exhibition-strip cols-3">
+    <div class="exhibition-photo tall"><img src="exhibition/maingallery-arcade.jpg" alt="PixelArcade arcade screen and pixel panels, Main Gallery" loading="lazy"></div>
+    <div class="exhibition-photo tall"><img src="exhibition/maingallery-panels.jpg" alt="PixelArcade pixel panels installed, Main Gallery" loading="lazy"></div>
+    <div class="exhibition-photo tall"><img src="exhibition/maingallery-16bit-angle.jpg" alt="16-bit composition with palette label, Main Gallery" loading="lazy"></div>
+  </div>
+
+  <div class="exhibition-room">
+    <span class="exhibition-room-name">Stock Room</span>
+    <span class="exhibition-room-note">Paintings · the canvases</span>
+  </div>
+  <div class="exhibition-strip cols-2">
+    <div class="exhibition-photo wide"><img src="exhibition/stockroom-flowers.jpg" alt="Flower paintings, Stock Room" loading="lazy"></div>
+    <div class="exhibition-photo wide"><img src="exhibition/stockroom-abstracts.jpg" alt="Abstract paintings, Stock Room" loading="lazy"></div>
+  </div>
+
+  <div class="exhibition-caption">
+    PixelArcade at The Line, 318 · Hastings, New Zealand · 2026 — pixels in the Main Gallery, paintings in the Stock Room
+  </div>
+</section>
+
 <!-- PROVENANCE -->
 
 <!-- ACQUIRE -->
@@ -2245,6 +2391,13 @@
 <section class="exhibitions-section reveal" id="exhibitions">
   <div class="exhibitions-label">Exhibition<br>History</div>
   <ul class="exhibition-list">
+    <li class="exhibition-item">
+      <div class="exhibition-year">2026</div>
+      <div>
+        <div class="exhibition-name">PixelArcade — The Line</div>
+        <div class="exhibition-details">The Line Gallery, New Zealand</div>
+      </div>
+    </li>
     <li class="exhibition-item">
       <div class="exhibition-year">2026</div>
       <div>
