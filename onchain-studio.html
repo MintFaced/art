@@ -550,17 +550,35 @@ function pixelize(img,opts){
       push(x+1,y,7/16);push(x-1,y+1,3/16);push(x,y+1,5/16);push(x+1,y+1,1/16);
     }
   }
-  // run-length merge per row -> minimal rect count; integer coords
+  // 2D greedy rectangle cover -> far fewer rects than per-row run-length (lossless).
+  // For each uncovered cell: extend right to the widest same-color run, then extend that
+  // strip downward as far as every row beneath matches, emit one rect, mark covered.
   const cell=10, dimW=W*cell, dimH=H*cell;
+  const covered=new Uint8Array(W*H);
   let rects="";
   for(let y=0;y<H;y++){
-    let x=0;
-    while(x<W){
-      const a=assign[y*W+x];
-      let x2=x; while(x2+1<W && assign[y*W+x2+1]===a) x2++;
-      const X=x*cell, RW=(x2-x+1)*cell, Y=y*cell;
-      rects+=`<rect x="${X}" y="${Y}" width="${RW}" height="${cell}" fill="${hex[a]}"/>`;
-      x=x2+1;
+    for(let x=0;x<W;x++){
+      const i0=y*W+x;
+      if(covered[i0]) continue;
+      const a=assign[i0];
+      // widest horizontal run of this color, not yet covered
+      let w=1;
+      while(x+w<W && assign[i0+w]===a && !covered[i0+w]) w++;
+      // tallest this w-wide strip can grow downward (every cell same color & uncovered)
+      let h=1;
+      grow: for(let yy=y+1; yy<H; yy++){
+        const base=yy*W+x;
+        for(let xx=0; xx<w; xx++){
+          if(assign[base+xx]!==a || covered[base+xx]) break grow;
+        }
+        h++;
+      }
+      // mark the whole w×h block covered
+      for(let yy=y; yy<y+h; yy++){
+        const base=yy*W+x;
+        for(let xx=0; xx<w; xx++) covered[base+xx]=1;
+      }
+      rects+=`<rect x="${x*cell}" y="${y*cell}" width="${w*cell}" height="${h*cell}" fill="${hex[a]}"/>`;
     }
   }
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${dimW} ${dimH}" shape-rendering="crispEdges">${rects}</svg>`;
