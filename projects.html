@@ -514,6 +514,38 @@
   // proof:  optional { label, url } OR { label, text }
   const PROJECTS = [
     {
+      name: 'On-Chain Studio for Artists',
+      year: '2026',
+      role: 'Solo build',
+      scope: 'Browser tool that deploys art as fully on-chain NFTs — no Arweave, no IPFS, no server',
+      stack: ['HTML', 'JS', 'solc-js', 'Solidity 0.8.28', 'OpenZeppelin v5.2.0', 'EIP-2981', 'Reown AppKit'],
+      status: 'mainnet',
+      statusLabel: 'Mainnet Live',
+      detail: 'A single-file tool that turns an uploaded image into a pixelized SVG and deploys it as a 1/1 (ERC-721) or fixed-supply edition (ERC-1155) living entirely inside its own smart contract. Compiles Solidity in the browser — pinned to a soljson-v0.8.28 build pulled from Arweave, so the whole toolchain is permanent and serverless — bakes small art into the constructor or writes large art on-chain in chunks, sets an artist-configurable royalty, and emits a Standard-JSON file for one-click Etherscan verification. Pixelizer uses k-means colour quantization, a lossless 2D rectangle-cover, and an optional transparent-background cut-out to keep art small enough to live on-chain.',
+      links: [
+        { label: 'Site', url: 'https://mintface.art/onchain-studio' },
+        { label: 'Example Contract', url: 'https://etherscan.io/address/0xa59f33d2b133de3f341c22f8fed38ab8caef1998' },
+        { label: 'Example Art', url: 'https://opensea.io/item/ethereum/0xa59f33d2b133de3f341c22f8fed38ab8caef1998/0' },
+        { label: 'Compiler on Arweave', url: 'https://rt4nt6renjg7hyhel4nj4dteguqxgog6odqqj7c6f3modis5cvra.arweave.net/jPjZ-iRqTfPg5F8ang5kNSFzON5w4QT8Xi7Y4aJdFWI' }
+      ],
+      proof: { label: 'Example', text: 'Geodetic Sculpture — proof-of-work, fully on-chain 1/1', url: 'https://etherscan.io/address/0xa59f33d2b133de3f341c22f8fed38ab8caef1998' }
+    },
+    {
+      name: 'On-Chain Camouflage',
+      year: '2026',
+      role: 'Solo build',
+      scope: 'Single-file tool for generative camouflage SVGs deployed fully on-chain',
+      stack: ['HTML', 'JS', 'solc-js', 'Solidity 0.8.28', 'OpenZeppelin', 'Arweave'],
+      status: 'shipped',
+      statusLabel: 'Shipped · 6529 Meme card',
+      detail: 'A single-file generative tool that creates camouflage-pattern SVG art and deploys it as a fully on-chain ERC-721, with in-browser Solidity compilation and chunked on-chain storage for larger pieces. Each use deploys its own fresh contract. Runs from Arweave and submitted as a 6529 Meme card.',
+      links: [
+        { label: 'Play', url: 'https://b2tixfyiydh6x3yz6cx6liun23xaxsqe3zryap5j2kjloy4vh4sa.arweave.net/DqaLlwjAz-vvGfCv5aKN1u4LygTeY4A_qdKSt2OVPyQ' },
+        { label: '6529 Card', url: 'https://6529.io/waves/b38288e6-ca9d-45ce-8323-3dc5e094f04e?drop=4f9bf9ab-5965-48b0-97a3-0184c6f4a131' }
+      ],
+      proof: { label: '6529', text: 'Submitted as a 6529 Meme card', url: 'https://6529.io/waves/b38288e6-ca9d-45ce-8323-3dc5e094f04e?drop=4f9bf9ab-5965-48b0-97a3-0184c6f4a131' }
+    },
+    {
       name: 'PixelArcade',
       year: '2026',
       role: 'Creative Director, Lead Dev & Designer · contract by @yungwknd',
