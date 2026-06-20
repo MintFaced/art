@@ -1334,15 +1334,15 @@ render();
         const data = "0x"+sel+ encUint(32) + arg.tail;
         // appendSVG now just pushes this chunk onto an array — cost depends only on this
         // piece (new-storage SSTORE ≈ per-word, plus calldata), NOT on how much is already
-        // stored. Model that flat cost, then let eth_estimateGas refine with headroom.
-        const gasModel = Math.ceil(piece.length*700 + 120000);
-        let gasHex = "0x"+gasModel.toString(16);
+        // stored. ~8KB chunk measures ~5.6M gas, so model generously then add headroom.
+        const gasModel = Math.ceil(piece.length*760 + 400000);
+        let useGas = Math.ceil(gasModel*1.25);               // headroom even on the fallback path
         try{
-          const est = await window.ethereum.request({method:"eth_estimateGas", params:[{from, to:addr, data, gas:gasHex}]});
-          // use the larger of our model and the node estimate, +25% headroom
-          const estN = parseInt(est,16), useN = Math.ceil(Math.max(estN, gasModel)*1.25);
-          gasHex = "0x"+useN.toString(16);
-        }catch(e){ /* estimate can fail on state-dependent calls; fall back to model */ }
+          const est = await window.ethereum.request({method:"eth_estimateGas", params:[{from, to:addr, data, gas:"0x"+(gasModel*2).toString(16)}]});
+          const estN = parseInt(est,16);
+          useGas = Math.ceil(Math.max(estN, gasModel)*1.25); // larger of node estimate / model, +25%
+        }catch(e){ /* estimate can fail on state-dependent calls; keep the padded model */ }
+        const gasHex = "0x"+useGas.toString(16);
         log("Signature "+(stepIdx+1)+"/"+steps.length+" — adding art part "+(i+1)+"/"+total+"…");
         let txHash;
         try{ txHash = await window.ethereum.request({method:"eth_sendTransaction", params:[{from, to:addr, data, gas:gasHex}]}); }
