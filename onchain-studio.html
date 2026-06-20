@@ -934,6 +934,10 @@ render();
   // Bake only when the single deploy tx stays well under the ~16.7M estimation cap and
   // leaves block-limit headroom. ~11M gas ≈ 13KB SVG. Bigger art uses the chunked path.
   const SAFE_BAKE_GAS = 11_000_000;
+  // Per-append chunk size. Smaller chunks keep each appendSVG tx well under the gas cap.
+  // appendSVG does string.concat(_svg, chunk), which re-stores the whole _svg each call,
+  // so the real cost grows with the running on-chain size — budget for that below.
+  const CHUNK = 8000;
   const NETS = {
     sepolia: { chainId: "0xaa36a7", label: "Sepolia", explorer: "https://sepolia.etherscan.io" },
     mainnet: { chainId: "0x1",      label: "Ethereum", explorer: "https://etherscan.io" }
@@ -1188,9 +1192,8 @@ render();
 
   function buildSteps(d){
     // returns an array of {label, sub} describing each wallet signature
-    const steps=[{label:"Deploy contract", sub: d.method==="bake" ? "Creates your ERC-721 with the art baked in" : "Creates your ERC-721 (art added next)"}];
+    const steps=[{label:"Deploy contract", sub: d.method==="bake" ? ("Creates your "+(DEPLOY_MODE==="1155"?"ERC-1155":"ERC-721")+" with the art baked in") : ("Creates your "+(DEPLOY_MODE==="1155"?"ERC-1155":"ERC-721")+" (art added next)")}];
     if(d.method==="chunk"){
-      const CHUNK=12000;
       const svg=curSVG();
       const total=Math.ceil(svg.length/CHUNK);
       for(let i=0;i<total;i++) steps.push({label:`Add art — part ${i+1} of ${total}`, sub:"Writes a slice of the SVG into the contract"});
@@ -1206,7 +1209,7 @@ render();
     } else {
       html=`<p style="margin-bottom:6px">Your art is large, so it's written on-chain in pieces. This mint needs <b>${steps.length} wallet signatures</b>, one after another — keep your wallet open and approve each:</p>`;
     }
-    html+=steps.map((s,i)=>`<div class="sp-step${i<activeIdx?' done':i===activeIdx?' active':''}"><div class="n">${i<activeIdx?'✓':i+1}</div><div class="t">${s.label}<small>${s.sub}</small></div></div>`).join("");
+    html+=steps.map((s,i)=>`<div class="sp-step${i<activeIdx?' done':i===activeIdx?' active':''}"><div class="n">${i<activeIdx?'✓':i}</div><div class="t">${s.label}<small>${s.sub}</small></div></div>`).join("");
     if(steps.length>1) html+=`<p style="margin-top:8px;color:var(--mute);font-size:11px">If you stop partway, the contract still exists but the art will be incomplete — you can resume.</p>`;
     body.innerHTML=html;
   }
@@ -1319,7 +1322,7 @@ render();
 
     // ---- STEPS 2..N: append chunks ----
     if(d.method==="chunk"){
-      const CHUNK=12000, sel="cad6f2a9";
+      const sel="cad6f2a9";
       const total = Math.ceil(svg.length/CHUNK);
       // which chunk to start from (resume)
       const startChunk = (RESUME && existingAddr) ? RESUME.nextChunk : 0;
@@ -1329,7 +1332,18 @@ render();
         const piece = svg.slice(i*CHUNK, i*CHUNK+CHUNK);
         const arg = encStr(piece);
         const data = "0x"+sel+ encUint(32) + arg.tail;
-        const gasHex = "0x"+Math.ceil(piece.length*900 + 200000).toString(16);
+        // appendSVG re-stores the entire existing _svg plus this piece, so gas scales with
+        // the running on-chain length (alreadyStored), not just the new piece. Budget for
+        // both, with headroom, then let the wallet's own estimate refine via eth_estimateGas.
+        const alreadyStored = i*CHUNK;
+        const gasModel = Math.ceil((alreadyStored + piece.length)*120 + piece.length*640 + 250000);
+        let gasHex = "0x"+gasModel.toString(16);
+        try{
+          const est = await window.ethereum.request({method:"eth_estimateGas", params:[{from, to:addr, data, gas:gasHex}]});
+          // use the larger of our model and the node estimate, +25% headroom
+          const estN = parseInt(est,16), useN = Math.ceil(Math.max(estN, gasModel)*1.25);
+          gasHex = "0x"+useN.toString(16);
+        }catch(e){ /* estimate can fail on state-dependent calls; fall back to model */ }
         log("Signature "+(stepIdx+1)+"/"+steps.length+" — adding art part "+(i+1)+"/"+total+"…");
         let txHash;
         try{ txHash = await window.ethereum.request({method:"eth_sendTransaction", params:[{from, to:addr, data, gas:gasHex}]}); }
@@ -1369,7 +1383,7 @@ render();
       return;
     }
     const total = steps.length-1;
-    RESUME = { from, addr, svg, ex, nextChunk, totalChunks: total, name };
+    RESUME = { from, addr, svg, ex, nextChunk, totalChunks: total, name, chunk: CHUNK };
     $("resume_body").innerHTML =
       `<p><b>${name}</b> was deployed at <a href="${ex}/address/${addr}" target="_blank" rel="noopener" style="color:var(--accent)">${addr.slice(0,10)}…${addr.slice(-6)}</a>, but ${nextChunk}/${total} art parts are written. `+
       `Until you finish, the token will render blank/partial. Resume to add the remaining ${total-nextChunk} part(s).</p>`;
@@ -1470,6 +1484,13 @@ render();
   // resume an interrupted chunked mint
   $("resume_go").onclick = async ()=>{
     if(!RESUME) return;
+    // If the chunk size changed since this partial deploy (e.g. a tool update), the byte
+    // offsets no longer line up — resuming would write the wrong slices. Refuse cleanly.
+    if(RESUME.chunk && RESUME.chunk !== CHUNK){
+      log("This unfinished mint was started with a different chunk size, so it can't be safely resumed. Deploy fresh instead — recompile and Mint again.", "em");
+      RESUME=null;
+      return;
+    }
     $("d_resume").style.display="none";
     $("d_deploy").disabled=true;
     try{
