@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onramp by MintFace — Identity onboarding for your community</title>
+<meta name="description" content="Done-for-you wallet and identity onboarding for NFT communities and brands. Email to wallet to ENS to vault. Gas and payments handled. Live in a week.">
+<style>
+  :root{
+    --bg:#0B0B0E;
+    --bg-raised:#131318;
+    --line:#23232B;
+    --text:#EDEDE8;
+    --muted:#8A8A95;
+    --steel:#6B7280;
+    --accent:#3DF49E;
+    --accent-dim:#1c6b48;
+    --mono:'SFMono-Regular',ui-monospace,'JetBrains Mono','Menlo',monospace;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--sans);line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a{color:inherit;text-decoration:none}
+
+  /* nav */
+  nav{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,11,14,.82);backdrop-filter:blur(12px);z-index:50}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-family:var(--mono);font-size:14px;letter-spacing:.04em;font-weight:600}
+  .brand .dim{color:var(--muted)}
+  .nav-cta{font-family:var(--mono);font-size:13px;border:1px solid var(--line);padding:8px 16px;border-radius:4px;transition:.2s}
+  .nav-cta:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* hero */
+  .hero{padding:80px 0 64px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+  .hero h1{font-size:clamp(34px,6vw,60px);line-height:1.04;letter-spacing:-.02em;font-weight:700;max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--muted)}
+  .hero .sub{margin-top:24px;font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:54ch;line-height:1.5}
+  .hero .sub b{color:var(--text);font-weight:600}
+
+  /* pipeline */
+  .pipeline{margin-top:48px;border:1px solid var(--line);border-radius:8px;background:var(--bg-raised);overflow:hidden}
+  .pipeline-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,244,158,.5)}70%{box-shadow:0 0 0 8px rgba(61,244,158,0)}100%{box-shadow:0 0 0 0 rgba(61,244,158,0)}}
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch}
+  .flow-step{flex:1;min-width:140px;padding:24px 20px;border-right:1px solid var(--line);position:relative}
+  .flow-step:last-child{border-right:none}
+  .flow-step .k{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.08em}
+  .flow-step .v{font-family:var(--mono);font-size:16px;margin-top:8px;color:var(--text)}
+  .flow-step .note{font-size:12px;color:var(--muted);margin-top:6px}
+  .flow-step.done .v{color:var(--accent)}
+  .arrow{color:var(--steel);align-self:center;font-family:var(--mono);padding:0 2px}
+
+  /* generic section */
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
+  .sec-label{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);margin-bottom:16px}
+  h2{font-size:clamp(26px,4vw,38px);letter-spacing:-.02em;line-height:1.1;font-weight:700;max-width:20ch}
+  .lead{color:var(--muted);font-size:18px;margin-top:16px;max-width:60ch}
+
+  /* problem grid */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:40px}
+  .cell{background:var(--bg);padding:28px 24px}
+  .cell h3{font-size:16px;font-family:var(--mono);color:var(--accent);margin-bottom:10px;font-weight:600}
+  .cell p{color:var(--muted);font-size:15px}
+
+  /* steps */
+  .steps{margin-top:40px;display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .step{background:var(--bg);display:grid;grid-template-columns:64px 1fr;gap:20px;padding:28px 24px;align-items:start}
+  .step .num{font-family:var(--mono);font-size:13px;color:var(--steel);padding-top:3px}
+  .step h3{font-size:18px;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:15px}
+
+  /* pricing */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  .tier{border:1px solid var(--line);border-radius:10px;padding:28px 24px;background:var(--bg-raised);display:flex;flex-direction:column}
+  .tier.feature{border-color:var(--accent-dim);box-shadow:0 0 0 1px var(--accent-dim),0 0 40px -20px var(--accent)}
+  .tier .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
+  .tier.feature .tag{color:var(--accent)}
+  .tier .price{font-family:var(--mono);font-size:30px;margin:14px 0 4px;letter-spacing:-.01em}
+  .tier .price small{font-size:14px;color:var(--muted)}
+  .tier .recur{font-family:var(--mono);font-size:14px;color:var(--accent);margin-bottom:14px}
+  .tier ul{list-style:none;margin:16px 0 24px;flex:1}
+  .tier li{font-size:14px;color:var(--muted);padding:7px 0 7px 22px;position:relative;border-top:1px solid var(--line)}
+  .tier li:first-child{border-top:none}
+  .tier li::before{content:"+";position:absolute;left:0;color:var(--accent);font-family:var(--mono)}
+  .tier .btn{font-family:var(--mono);font-size:13px;text-align:center;padding:11px;border-radius:5px;border:1px solid var(--line);transition:.2s}
+  .tier .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .tier.feature .btn{background:var(--accent);color:#04130b;border-color:var(--accent);font-weight:600}
+  .tier.feature .btn:hover{background:#5ff7b1}
+  .price-note{font-family:var(--mono);font-size:12px;color:var(--steel);margin-top:20px;text-align:center}
+
+  /* trust / custody */
+  .trust{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .trust .panel{border:1px solid var(--line);border-radius:8px;padding:24px;background:var(--bg-raised);font-family:var(--mono);font-size:13px;line-height:1.7}
+  .trust .panel .ln{display:flex;gap:10px;padding:4px 0;color:var(--muted)}
+  .trust .panel .ln .y{color:var(--accent)}
+  .trust .panel .ln .n{color:#f4673d}
+
+  /* who */
+  .logos{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .logos span{font-family:var(--mono);font-size:13px;color:var(--muted);border:1px solid var(--line);padding:8px 14px;border-radius:100px}
+
+  /* cta */
+  .final{text-align:center;padding:88px 0}
+  .final h2{margin:0 auto}
+  .final .lead{margin:16px auto 32px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .big-cta{display:inline-block;font-family:var(--mono);font-size:15px;background:var(--accent);color:#04130b;font-weight:600;padding:15px 36px;border-radius:6px;transition:.2s}
+  .big-cta:hover{background:#5ff7b1;transform:translateY(-1px)}
+  .big-cta.alt{background:transparent;color:var(--text);border:1px solid var(--line)}
+  .big-cta.alt:hover{background:transparent;border-color:var(--accent);color:var(--accent)}
+  .alt-cta{display:block;margin-top:18px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .alt-cta a{color:var(--accent)}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;font-family:var(--mono);font-size:12px;color:var(--steel)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media(max-width:760px){
+    .grid2{grid-template-columns:1fr}
+    .tiers{grid-template-columns:1fr}
+    .trust{grid-template-columns:1fr;gap:24px}
+    .flow-step{border-right:none;border-bottom:1px solid var(--line)}
+    .flow-step:last-child{border-bottom:none}
+    .arrow{display:none}
+    .hero{padding:56px 0 48px}
+  }
+  @media(prefers-reduced-motion:reduce){.dot{animation:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="brand">ONRAMP <span class="dim">by MintFace</span></a>
+    <a href="#pricing" class="nav-cta">Pricing</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Identity onboarding · not a fiat ramp</div>
+    <h1>Turn your followers into wallet&#8209;holders. <em>In a week.</em></h1>
+    <p class="sub">Onramp is done-for-you onboarding for NFT communities and brands. Your members go from <b>email</b> to a real <b>wallet</b>, <b>ENS name</b>, and <b>vault</b> — no seed phrases, no extensions, gas and card payments handled. Built on the CheckID stack already live on Network 6529.</p>
+
+    <div class="pipeline">
+      <div class="pipeline-head"><span class="dot"></span> live onboarding flow</div>
+      <div class="flow">
+        <div class="flow-step done">
+          <div class="k">01 / INPUT</div>
+          <div class="v">email</div>
+          <div class="note">No app. No wallet. Just an email.</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-step done">
+          <div class="k">02 / WALLET</div>
+          <div class="v">0xA1b2…9F</div>
+          <div class="note">Non-custodial, created in the background.</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-step done">
+          <div class="k">03 / NAME</div>
+          <div class="v">you.eth</div>
+          <div class="note">Readable identity, linked to their profile.</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-step done">
+          <div class="k">04 / VAULT</div>
+          <div class="v">Safe ✓</div>
+          <div class="note">Optional secure vault for what matters.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">The problem</div>
+    <h2>Your audience is bigger than your holder count.</h2>
+    <p class="lead">The gap between "follows you" and "holds your NFT" is a wallet they never set up. Every drop loses the people who bounce at seed phrases, gas, and browser extensions.</p>
+    <div class="grid2">
+      <div class="cell"><h3>📉 The drop-off is the onboarding</h3><p>Most communities lose the majority of interested newcomers before they ever hold a token. The blocker isn't interest — it's the 12-step wallet setup.</p></div>
+      <div class="cell"><h3>🧱 You shouldn't have to build this</h3><p>Email-to-wallet, gas abstraction, ENS registration, Safe deployment, card checkout. Each is a project. Together they're a quarter of engineering you don't have.</p></div>
+      <div class="cell"><h3>🔐 Custody is a liability you don't want</h3><p>Get the non-custodial boundary wrong and you're holding other people's keys. Onramp is non-custodial by design — members control their own wallets.</p></div>
+      <div class="cell"><h3>✅ It already works</h3><p>This isn't a prototype. The stack is live on Network 6529 with real users, Stripe checkout, and gas covered. Onramp points it at your community.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">How it works</div>
+    <h2>You bring the community. I bring the rails.</h2>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><div><h3>🎨 Scope &amp; brand</h3><p>We pick what your members get — wallet, name, vault — and skin the flow in your brand. Your domain, your colours, your copy.</p></div></div>
+      <div class="step"><div class="num">02</div><div><h3>🚀 I deploy</h3><p>White-labelled CheckID pointed at your community. Email login, non-custodial wallet creation, ENS, optional Safe vault, gas covered, Stripe or crypto checkout.</p></div></div>
+      <div class="step"><div class="num">03</div><div><h3>🟢 You go live</h3><p>Members onboard in about 30 seconds, from a link in your Discord, mint page, or site. You watch holders go up instead of bounce.</p></div></div>
+      <div class="step"><div class="num">04</div><div><h3>🛠️ I keep it running</h3><p>On the managed tier I host it, monitor it, and handle upgrades. You never touch infrastructure.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-label">Pricing</div>
+    <h2>Fixed price. Live in a week.</h2>
+    <p class="lead">Done-for-you. No "contact for quote." You know the number before you book.</p>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tag">Launch</div>
+        <div class="price">$1,500 <small>one-off</small></div>
+        <ul>
+          <li>White-labelled onboarding on your domain</li>
+          <li>Email → wallet → ENS → optional vault</li>
+          <li>Your branding, gas covered</li>
+          <li>Stripe + crypto checkout</li>
+          <li>Live in one week</li>
+        </ul>
+        <a class="btn" href="#book">Book Launch</a>
+      </div>
+      <div class="tier feature">
+        <div class="tag">Launch + Managed</div>
+        <div class="price">$1,500 <small>setup</small></div>
+        <div class="recur">+ $200 / month</div>
+        <ul>
+          <li>Everything in Launch</li>
+          <li>I host, monitor &amp; maintain it</li>
+          <li>Upgrades &amp; fixes handled</li>
+          <li>You never touch infrastructure</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="btn" href="#book">Start Managed</a>
+      </div>
+      <div class="tier">
+        <div class="tag">Custom</div>
+        <div class="price">from $3,000</div>
+        <ul>
+          <li>Bespoke flows &amp; deep branding</li>
+          <li>Integration with your existing stack</li>
+          <li>Custom contracts / vault logic</li>
+          <li>For Safe / ENS-grade requirements</li>
+          <li>Scoped to your build</li>
+        </ul>
+        <a class="btn" href="#book">Talk specs</a>
+      </div>
+    </div>
+    <p class="price-note">Prices in USD. Pay by card or crypto. Most builds ship inside 7 days of scope sign-off.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">Custody &amp; trust</div>
+    <h2>Non-custodial by design.</h2>
+    <p class="lead">For the technical reader: here's exactly where the line sits. You're not handing anyone your members' keys — including me.</p>
+    <div class="trust" style="margin-top:40px">
+      <div class="panel">
+        <div class="ln"><span class="y">✓</span> Members control their own wallets</div>
+        <div class="ln"><span class="y">✓</span> Keys exportable any time</div>
+        <div class="ln"><span class="y">✓</span> Non-custodial provider for key creation</div>
+        <div class="ln"><span class="y">✓</span> Safe vault pattern for high-value storage</div>
+        <div class="ln"><span class="y">✓</span> On-chain, verifiable identity</div>
+        <div class="ln"><span class="n">✗</span> We never see or store private keys</div>
+        <div class="ln"><span class="n">✗</span> No custody of member funds or NFTs</div>
+        <div class="ln"><span class="n">✗</span> No password to phish</div>
+      </div>
+      <div>
+        <p class="lead" style="margin-top:0">Built by an approved 6529 Memes artist who has run security audits on deployed NFT contracts. The custody boundary is the product — getting it right is the whole point.</p>
+        <p class="lead">Every engagement starts with a one-page "what we do / don't hold" disclosure so your legal and your community both know exactly where they stand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">Who it's for</div>
+    <h2>NFT communities and brands onboarding the next 10,000.</h2>
+    <p class="lead">If you have an audience that's bigger than your holder base, Onramp closes the gap. Already shaped for PFP communities, art projects, and brands testing tokenised collectibles.</p>
+    <div class="logos">
+      <span>PFP communities</span>
+      <span>Art &amp; 1/1 projects</span>
+      <span>CC0 communities</span>
+      <span>DAOs</span>
+      <span>Brands testing collectibles</span>
+      <span>6529-native projects</span>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="book">
+  <div class="wrap">
+    <h2>Tell me about your community.</h2>
+    <p class="lead">One message with your community size and what you want members to walk away with. I'll come back with scope, timeline, and a fixed price.</p>
+    <div class="cta-row">
+      <a class="big-cta" href="https://x.com/mintface">DM @mintface on X →</a>
+      <a class="big-cta alt" href="https://6529.io/MintFace">DM @mintface on 6529 →</a>
+    </div>
+    <span class="alt-cta">or email <a href="mailto:mintface@digitalartisteconomy.com">mintface@digitalartisteconomy.com</a> · see the <a href="https://demo.checkid.io">live demo →</a></span>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>ONRAMP by MintFace — built on the CheckID stack</span>
+    <span>Powered by Network 6529 · Non-custodial</span>
+  </div>
+</footer>
+
+</body>
+</html>
