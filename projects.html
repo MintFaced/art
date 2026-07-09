@@ -513,6 +513,90 @@
   // links:  array of { label, url }
   // proof:  optional { label, url } OR { label, text }
   const PROJECTS = [
+      {
+    name: 'StoryAddict',
+    year: '2026',
+    role: 'Prompted with EmblemAI · Solo build',
+    scope: 'An AI writes your book a page at a time — you pay per page, only while it grips you',
+    stack: ['Node.js', 'Express', 'Vanilla JS', 'SQLite', 'OpenRouter · Claude 4.5', 'USDC', 'Base', 'x402', 'ethers'],
+    status: 'mainnet',
+    statusLabel: 'Mainnet Live',
+    detail: 'Describe a story — genre, reading age, and dials for surprise, pacing, tone and weirdness — and an AI writes it lazily, one page at a time, each page ending on a hook, so the author only earns when you turn the page. Page one is free; every page after is $0.03 in USDC on Base, drawn from prepaid credits unlocked by a single wallet signature — no per-page signing. A wrap-up off-ramp lands a three-page ending at milestones, or read forever, and download unlocked pages as EPUB or HTML. Ships a native x402 endpoint so AI agents can pay per page too.',
+    links: [
+      { label: 'Site', url: 'https://build-fc87ee90aece1fda29cb13c3.emblem.build/pub/main/storyaddict/' }
+    ],
+    proof: { label: 'x402', text: 'Pages are agent-payable via a native x402 endpoint on Base' }
+  },
+  {
+    name: 'MemePrint',
+    year: '2026',
+    role: 'Prompted with EmblemAI · Solo build',
+    scope: 'A calmer DexScreener — watch memecoins, share your picks, swap with a 0.1% fee',
+    stack: ['Node.js', 'Express', 'Vanilla JS', 'SQLite', 'DexScreener', 'GeckoTerminal', 'Jupiter', '0x', 'Solana', 'Base', 'Ethereum'],
+    status: 'mainnet',
+    statusLabel: 'Mainnet Live · Custom Domain',
+    detail: 'A cut-down, easier memecoin screener: search a token and get one calm card — price, 24-hour change, volume, liquidity, sparkline. Connect a wallet, claim a @handle, and turn your watchlist into a shareable public page you can post straight to X. Swaps route through Jupiter on Solana and 0x on Ethereum and Base, each carrying a 0.1% platform fee collected cleanly in wSOL or ETH. Lives on its own domain.',
+    links: [
+      { label: 'Site', url: 'https://memeprint.app' }
+    ],
+    proof: { label: 'Fee', text: '0.1% swap fee, live across Solana, Ethereum and Base' }
+  },
+  {
+    name: 'Wurd',
+    year: '2026',
+    role: 'Prompted with EmblemAI · Solo build',
+    scope: 'A radar for .eth word-names whose ENS release premium has decayed under 1 ETH',
+    stack: ['Node.js', 'Express', 'Vanilla JS', 'SQLite', 'ENS', 'Ethereum', '$EMBLEM'],
+    status: 'shipped',
+    statusLabel: 'Shipped',
+    detail: 'Surfaces desirable four-to-six-letter dictionary .eth names whose temporary ENS release premium has decayed below 1 ETH — the moment to register — ranked by a meaning-and-value ontology. An $EMBLEM-gated premium radar floats the best drops to the top first.',
+    links: [
+      { label: 'Site', url: 'https://build-fc87ee90aece1fda29cb13c3.emblem.build/pub/main/wurd/' }
+    ],
+    proof: { label: 'Gated', text: '$EMBLEM-token-gated premium radar' }
+  },
+  {
+    name: 'Pepe Picker',
+    year: '2026',
+    role: 'Prompted with EmblemAI · Solo build',
+    scope: 'Provably-fair NFT raffles — a committed drand round picks the winner',
+    stack: ['Node.js', 'Express', 'Vanilla JS', 'SQLite', 'drand', 'NFT'],
+    status: 'shipped',
+    statusLabel: 'Shipped',
+    detail: 'Verifiable random giveaways with no way to rig the outcome: entrants become lily pads, and the winner is drawn by a publicly committed drand randomness-beacon round, so anyone can audit the result after the fact. Pepe hops across the pond to reveal it.',
+    links: [
+      { label: 'Site', url: 'https://build-fc87ee90aece1fda29cb13c3.emblem.build/pub/main/pepe-pond/' }
+    ],
+    proof: { label: 'Verifiable', text: 'Winner drawn by a committed drand beacon round' }
+  },
+  {
+    name: 'Ransom $Ansem Game',
+    year: '2026',
+    role: 'Prompted with EmblemAI · Solo build',
+    scope: 'A degen heist game — pay the $ANSEM ransom, or storm the hideout',
+    stack: ['Node.js', 'Express', 'Vanilla JS', 'Solana', '$ANSEM'],
+    status: 'shipped',
+    statusLabel: 'Shipped',
+    detail: 'A playful memecoin game built around $ANSEM: meet a ransom demand and either pay up or rally the crowd to storm the hideout.',
+    links: [
+      { label: 'Site', url: 'https://build-fc87ee90aece1fda29cb13c3.emblem.build/pub/main/ransom-ansem/' }
+    ]
+  },
+  {
+    name: 'WherePepe',
+    year: '2026',
+    role: 'Prompted with EmblemAI · Solo build',
+    scope: 'The cheapest-location price tracker for Rare Pepe &amp; Fake Rare',
+    stack: ['Next.js', 'React', 'TypeScript', 'Counterparty', 'Emblem Vault', 'Bitcoin'],
+    status: 'live',
+    statusLabel: 'Live · wherepepe.com',
+    detail: 'Compares Rare Pepe and Fake Rare floor prices across venues — native Counterparty against wrapped Emblem Vault — so you always find the cheapest place to buy. Holder-gated chat and profiles keep the community close.',
+    links: [
+      { label: 'Site', url: 'https://wherepepe.com' }
+    ],
+    proof: { label: 'Cross-venue', text: 'Counterparty vs Emblem Vault floor comparison' }
+  },
+
     {
       name: 'On-Chain Studio for Artists',
       year: '2026',
