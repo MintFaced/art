@@ -1,0 +1,13 @@
+{
+  "_note": "Source of truth for work that is not on chain yet. scripts/add-work.mjs appends here, then rebuilds catalog.json and the site data. Everything else in the catalog is read from the chain.",
+  "collection": {
+    "slug": "recent-work",
+    "title": "Recent Work",
+    "group": "recent",
+    "medium": "Painting",
+    "physical": true,
+    "statement": "Latest paintings.",
+    "notes": "Not yet minted. Each work is tokenized on purchase, so the collector's wallet is the first owner written to chain."
+  },
+  "works": []
+}

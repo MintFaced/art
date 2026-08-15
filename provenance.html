@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provenance ... MintFace</title>
+<meta name="description" content="Chain records for every MintFace collection.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:1400px;margin:0 auto;padding:60px 28px 0;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:28px}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,8vw,92px);line-height:.95;margin:0;letter-spacing:-.02em}
+h1 em{font-style:italic;display:block;font-size:.58em;color:var(--muted)}
+.intro{font-family:var(--serif);font-size:clamp(19px,2vw,23px);line-height:1.45;color:#3a362f;max-width:420px;margin:0}
+
+.wrap{max-width:1400px;margin:0 auto;padding:44px 28px 0}
+table{width:100%;border-collapse:collapse}
+thead tr{border-bottom:1px solid var(--ink)}
+th{
+  text-align:left;font-weight:400;padding:0 0 12px;vertical-align:bottom;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+th:not(:first-child),td:not(:first-child){padding-left:28px}
+tbody tr{border-bottom:1px solid var(--rule)}
+tbody tr:hover{background:#f4f1ec}
+td{padding:15px 0;vertical-align:top;font-size:14px}
+.name{font-family:var(--serif);font-size:20px;line-height:1.2}
+.name a{text-decoration:none}
+.name a:hover{text-decoration:underline;text-underline-offset:3px}
+.medium{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.year,.chain,.ed{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.ed{white-space:normal}
+.addr a{font-family:var(--mono);font-size:11.5px;text-decoration:none;border-bottom:1px solid var(--rule);color:var(--muted)}
+.addr a:hover{color:var(--ink);border-color:var(--ink)}
+.avail{display:block;margin-top:5px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.wallets{max-width:1400px;margin:0 auto;padding:60px 28px 0}
+.wallets h2{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.w .l{font-family:var(--serif);font-size:19px}
+.w .a{font-family:var(--mono);font-size:11.5px;color:var(--muted);word-break:break-all;margin-top:5px;line-height:1.7}
+.w .r{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:6px}
+
+.note{max-width:1400px;margin:0 auto;padding:54px 28px 110px;font-size:13px;color:var(--faint);max-width:640px}
+
+@media(max-width:900px){
+  .wgrid{grid-template-columns:1fr}
+  th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4){display:none}
+  th:not(:first-child),td:not(:first-child){padding-left:14px}
+}
+@media(max-width:560px){
+  .mast{padding:34px 20px 0}
+  .wrap,.wallets,.note{padding-left:20px;padding-right:20px}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/">MintFace</a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/vault">The Vault</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+const short = (a) => a.slice(0, 8) + '...' + a.slice(-6);
+
+const ROUTES = { genesis: '/genesis', '2022-10k': '/10k', 'the-vault': '/vault' };
+const href = (c) => ROUTES[c.slug] || `/c/${encodeURIComponent(c.slug)}`;
+
+function editions(c) {
+  const n = c.counts;
+  const total = n.works || n.child_works || 0;
+  const minted = n.editions_minted || n.editions;
+  const unique = n.unique_works != null ? n.unique_works : (minted ? 0 : total);
+  const edWorks = n.edition_works || (minted && !n.unique_works ? 1 : 0);
+  if (!minted) return `${total} &times; 1/1`;
+  if (!unique) return `${edWorks === 1 ? '1 work' : edWorks + ' works'} &middot; ${minted} editions`;
+  return edWorks === 1
+    ? `${unique} &times; 1/1 &middot; 1 edition of ${minted}`
+    : `${unique} &times; 1/1 &middot; ${edWorks} editions, ${minted} minted`;
+}
+
+function contractCell(c, k) {
+  if (!k) return '<span class="pending">Off chain</span>';
+  if (k.address) {
+    const t = String(k.token_id == null ? '' : k.token_id);
+    const tok = t && t.length > 12 ? t.slice(0, 6) + '...' + t.slice(-4) : t;
+    const label = tok ? `${short(k.address)} &middot; #${e(tok)}` : short(k.address);
+    return `<a href="https://etherscan.io/address/${e(k.address)}" target="_blank" rel="noopener">${label}</a>`;
+  }
+  if (k.asset) return `<a href="https://cp20.tokenscan.io/asset/${e(k.asset)}" target="_blank" rel="noopener">${e(k.asset)}</a>`;
+  if (k.wallet) {
+    const u = (c.links && c.links.gamma) || `https://ordinals.com/address/${k.wallet}`;
+    return `<a href="${e(u)}" target="_blank" rel="noopener">${short(k.wallet)}</a>`;
+  }
+  return '<span class="pending">Off chain</span>';
+}
+
+function chainCell(k) {
+  if (!k) return '';
+  const chain = k.chain === 'bitcoin' ? 'Bitcoin' : 'Ethereum';
+  return `${chain}${k.standard ? ' &middot; ' + e(k.standard) : ''}`;
+}
+
+const yearKey = (c) => {
+  const m = String(c.year || '').match(/(\d{4})/g);
+  return m ? Number(m[m.length - 1]) : 0;
+};
+
+(async function () {
+  try {
+    const [meta, idx] = await Promise.all([
+      fetch('/data/f/provenance.json').then((r) => r.json()),
+      MF.index(),
+    ]);
+    // a collection can live on more than one contract, so each gets its own line
+    const rows = [];
+    for (const c of idx.collections) {
+      if (!(c.contracts || []).length) continue;
+      if (!(c.counts.works || c.counts.child_works)) continue;
+      c.contracts.forEach((k, i) => rows.push({ c, k, first: i === 0 }));
+    }
+    rows.sort((a, b) => yearKey(b.c) - yearKey(a.c) || a.c.title.localeCompare(b.c.title) || (a.first ? -1 : 1));
+
+    const w = idx._meta.artist_wallets || {};
+    const wallets = [
+      { l: 'mintface.eth', a: w['mintface.eth'], r: 'Contracts deployed here. Works held here are available.' },
+      { l: 'ryanj.eth', a: w['ryanj.eth'], r: 'The genesis mint, the Foundation 1/1s, the OpenSea storefront works.' },
+      { l: 'mintestate.eth', a: w['mintestate.eth'], r: 'The vault. Not for sale.' },
+      { l: 'Ordinals', a: w.bitcoin_ordinals, r: 'Recursive Mind, inscribed on Bitcoin.' },
+      { l: 'Counterparty', a: w.bitcoin_counterparty, r: 'FROGDNA, issued on Bitcoin.' },
+    ].filter((x) => x.a);
+
+    document.getElementById('main').innerHTML = `
+      <div class="mast">
+        <h1>${e(meta.title)}${meta.subtitle ? `<em>${e(meta.subtitle)}</em>` : ''}</h1>
+        ${meta.intro ? `<p class="intro">${e(meta.intro)}</p>` : ''}
+      </div>
+
+      <div class="wrap">
+        <table>
+          <thead><tr>
+            <th>Collection</th><th>Year</th><th>Editions</th><th>Chain</th><th>Contract</th>
+          </tr></thead>
+          <tbody>
+            ${rows.map(({ c, k, first }) => {
+              const a = MF.availability(c);
+              return `<tr>
+                <td>
+                  <div class="name"><a href="${href(c)}">${e(c.title)}</a></div>
+                  <div class="medium">${e(k.role || c.medium || '')}</div>
+                </td>
+                <td class="year">${first ? e(c.year || '') : ''}</td>
+                <td class="ed">${first ? editions(c) : e(k.name || '')}
+                  ${first && a.badge ? `<span class="avail">${e(a.badge)}</span>` : first && a.available ? `<span class="avail"><span class="dot available"></span> ${a.available} available</span>` : ''}
+                </td>
+                <td class="chain">${chainCell(k)}</td>
+                <td class="addr">${contractCell(c, k)}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="wallets">
+        <h2>Wallets</h2>
+        <div class="wgrid">
+          ${wallets.map((x) => `<div class="w">
+            <div class="l">${e(x.l)}</div>
+            <div class="a">${e(x.a)}</div>
+            <div class="r">${e(x.r)}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+
+      ${meta.note ? `<p class="note">${e(meta.note)}</p>` : ''}`;
+  } catch (err) {
+    document.getElementById('main').innerHTML = '<div class="loading">Could not load the chain records</div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

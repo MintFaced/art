@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MintFace</title>
+<meta name="description" content="A feature by MintFace.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MintFace">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* ---------- masthead ---------- */
+.mast{max-width:1100px;margin:0 auto;padding:60px 28px 20px;text-align:center}
+.kicker{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(52px,11vw,132px);line-height:.92;margin:0;letter-spacing:-.02em}
+.standfirst{
+  font-family:var(--serif);font-size:clamp(21px,2.6vw,29px);line-height:1.42;color:#3a362f;
+  max-width:680px;margin:30px auto 0;
+}
+.credit{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:26px}
+.mast-rule{width:44px;height:1px;background:var(--rule);margin:52px auto 0}
+
+/* ---------- prose ---------- */
+.prose{max-width:660px;margin:0 auto;padding:0 28px}
+.prose p{font-family:var(--serif);font-size:clamp(20px,2.2vw,24px);line-height:1.62;color:#221f1a;margin:34px 0}
+.prose p.lead{font-size:clamp(25px,3vw,34px);line-height:1.38;color:var(--ink);margin:52px 0}
+.prose p.close{font-size:clamp(23px,2.8vw,30px);line-height:1.42;margin:64px 0 0;color:var(--ink)}
+.prose strong{font-weight:500}
+.prose a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.prose a:hover{border-color:var(--ink)}
+
+/* ---------- works in the flow ---------- */
+.plate{margin:74px 0}
+.plate .shot{background:#f2efe9;text-align:center}
+.plate .shot img{width:100%;height:auto;opacity:0;transition:opacity .6s ease}
+.plate .shot img.in{opacity:1}
+.plate.single{max-width:1240px;margin-left:auto;margin-right:auto;padding:0 28px}
+.plate.single .shot img{max-height:88vh;width:auto;margin:0 auto}
+.cap{
+  max-width:660px;margin:16px auto 0;padding:0 28px;display:flex;gap:16px;flex-wrap:wrap;
+  align-items:baseline;justify-content:center;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;
+}
+.cap a{text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
+.cap a:hover{border-color:var(--ink);color:var(--ink)}
+.strip{max-width:1500px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.strip a{display:block;text-decoration:none}
+.strip .shot{aspect-ratio:1/1;overflow:hidden}
+.strip img{width:100%;height:100%;object-fit:cover}
+.strip .t{font-family:var(--serif);font-size:15px;line-height:1.25;margin-top:9px;color:#3a362f}
+.strip a:hover .t{text-decoration:underline;text-underline-offset:3px}
+
+.tail{max-width:660px;margin:0 auto;padding:80px 28px 110px;text-align:center}
+.tail a{margin:0 14px}
+
+@media(max-width:900px){.strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){
+  .mast{padding:34px 20px 14px}
+  .prose{padding:0 20px}
+  .plate{margin:52px 0}
+  .plate.single{padding:0}
+  .strip{grid-template-columns:repeat(2,1fr);gap:12px;padding:0 20px}
+  .cap{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/">MintFace</a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+
+function which() {
+  const m = location.pathname.match(/^\/(genesis|10k)\/?$/);
+  if (m) return m[1];
+  return new URLSearchParams(location.search).get('f') || 'genesis';
+}
+
+// the only markup the prose needs: emphasis and links
+function fmt(text) {
+  return e(text)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[(.+?)\]\((\/[^)\s]*)\)/g, '<a href="$2">$1</a>');
+}
+
+const CHAIN = {
+  ethereum: 'Ethereum',
+  bitcoin: 'Bitcoin',
+};
+
+function plateCaption(work) {
+  const d = work.digital || {};
+  const bits = [];
+  if (work.title) bits.push(work.title);
+  const minted = work.minted_onchain || work.minted;
+  if (minted) bits.push('Minted ' + MF.date(minted));
+  if (work.platform) bits.push(work.platform);
+  else if (d.standard) bits.push(d.standard);
+  if (work.edition && work.edition.type === 'edition') {
+    const n = work.edition.minted || work.edition.of;
+    if (n) bits.push(`${n} editions`);
+  }
+  return bits;
+}
+
+function plate(work) {
+  if (!work) return '';
+  const caption = plateCaption(work);
+  return `<div class="plate single">
+    <div class="shot">${MF.img(work, 1600)}</div>
+    <div class="cap">
+      ${caption.map((c) => `<span>${e(c)}</span>`).join('')}
+      <a href="/w/${encodeURIComponent(work.id)}">The work</a>
+    </div>
+  </div>`;
+}
+
+function strip(works, block) {
+  const items = works.filter(Boolean);
+  if (!items.length) return '';
+  return `<div class="plate">
+    <div class="strip">
+      ${items.map((w) => {
+        return `<a href="/w/${encodeURIComponent(w.id)}">
+          <div class="shot">${MF.img(w, 520)}</div>
+          <div class="t">${e(w.title || 'Untitled')}</div>
+        </a>`;
+      }).join('')}
+    </div>
+    <div class="cap">
+      ${block.caption ? `<span>${e(block.caption)}</span>` : ''}
+      ${block.more ? `<a href="${e(block.more.href)}">${e(block.more.label)}</a>` : ''}
+    </div>
+  </div>`;
+}
+
+async function resolve(ids) {
+  const out = [];
+  for (const id of ids) {
+    const hit = await MF.work(id);
+    if (hit) out.push(hit.work);
+  }
+  return out;
+}
+
+async function render(feature) {
+  document.title = `${feature.title} ... MintFace`;
+  if (feature.standfirst) document.querySelector('meta[name="description"]').setAttribute('content', feature.standfirst);
+
+  const parts = [`<div class="mast">
+    ${feature.kicker ? `<div class="kicker">${e(feature.kicker)}</div>` : ''}
+    <h1>${e(feature.title)}</h1>
+    ${feature.standfirst ? `<p class="standfirst">${fmt(feature.standfirst)}</p>` : ''}
+    ${feature.credit ? `<div class="credit">${e(feature.credit)}</div>` : ''}
+    <div class="mast-rule"></div>
+  </div>`];
+
+  let prose = [];
+  const flushProse = () => {
+    if (prose.length) parts.push(`<div class="prose">${prose.join('')}</div>`);
+    prose = [];
+  };
+
+  for (const b of feature.blocks) {
+    if (b.type === 'p' || b.type === 'lead' || b.type === 'close') {
+      prose.push(`<p class="${b.type === 'p' ? '' : b.type}">${fmt(b.text)}</p>`);
+      continue;
+    }
+    flushProse();
+    if (b.type === 'work') {
+      const hit = await MF.work(b.id);
+      parts.push(plate(hit && hit.work));
+    } else if (b.type === 'works') {
+      parts.push(strip(await resolve(b.ids), b));
+    }
+  }
+  flushProse();
+
+  parts.push(`<div class="tail">
+    <a class="smallcaps" href="/collections">All collections</a>
+    <a class="smallcaps" href="${feature.slug === 'genesis' ? '/10k' : '/genesis'}">${feature.slug === 'genesis' ? 'Next: the 10k Project' : 'Back to Genesis'}</a>
+  </div>`);
+
+  document.getElementById('main').innerHTML = parts.join('');
+}
+
+(async function () {
+  try {
+    const feature = await fetch(`/data/f/${which()}.json`).then((r) => r.json());
+    await render(feature);
+  } catch (err) {
+    document.getElementById('main').innerHTML = '<div class="loading">Could not load this story</div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

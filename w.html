@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MintFace</title>
+<meta name="description" content="Work by MintFace.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MintFace">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* ---------- image ---------- */
+.stage{padding:6px 28px 0;text-align:center}
+.stage img,.stage video{
+  max-height:86vh;width:auto;margin:0 auto;
+  box-shadow:0 1px 0 rgba(0,0,0,.04);
+}
+.stage .frame{display:inline-block;max-width:100%}
+.motion{margin-top:16px}
+.ghost{
+  background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;
+  padding:11px 22px;font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+}
+.ghost:hover{border-color:var(--ink);color:var(--ink)}
+.motion-frame iframe{width:min(900px,100%);height:min(70vh,640px);border:1px solid var(--rule);background:#fff}
+.motion-frame video{max-height:70vh}
+.motion-label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+
+/* ---------- column ---------- */
+.col{max-width:680px;margin:0 auto;padding:54px 28px 120px}
+h1{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(34px,5.2vw,52px);line-height:1.08;
+  margin:0 0 6px;letter-spacing:-.005em;
+}
+.byline{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
+.byline a{text-decoration:none;border-bottom:1px solid var(--rule)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--rule);margin-bottom:0}
+.tab{
+  background:none;border:0;padding:0 0 12px;cursor:pointer;
+  font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);position:relative;
+}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab[aria-selected="true"]::after{
+  content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--ink);
+}
+.panel{padding:26px 0 0}
+.panel[hidden]{display:none}
+.statement{font-family:var(--serif);font-size:20px;line-height:1.55;color:#2c2924;margin:0;white-space:pre-line}
+.statement.none{font-family:var(--sans);font-size:13px;color:var(--faint)}
+
+/* ---------- detail rows ---------- */
+.rows{width:100%;border-collapse:collapse}
+.rows tr{border-bottom:1px solid var(--rule)}
+.rows tr:last-child{border-bottom:0}
+.rows th{
+  text-align:left;font-weight:400;padding:13px 0;width:38%;vertical-align:top;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.rows td{padding:13px 0;vertical-align:top;font-size:14px}
+.rows td.mono{font-family:var(--mono);font-size:11.5px;word-break:break-all;line-height:1.9}
+
+/* ---------- fold ---------- */
+details{border-top:1px solid var(--rule)}
+details summary{
+  list-style:none;cursor:pointer;padding:15px 0;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  display:flex;justify-content:space-between;align-items:center;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:'+';font-family:var(--mono);font-size:13px;color:var(--faint)}
+details[open] summary::after{content:'–'}
+details summary:hover{color:var(--ink)}
+.fold-body{padding:0 0 20px}
+.fold-body p{margin:0 0 10px;font-size:14px;color:#3a372f}
+.chain-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
+.chain-links a{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
+.chain-links a:hover{color:var(--ink);border-color:var(--ink)}
+
+/* ---------- pricing ---------- */
+.pricing{margin-top:46px;border-top:1px solid var(--ink);padding-top:20px}
+.pricing-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.pricing-head .smallcaps{color:var(--ink)}
+.cur{display:flex;gap:14px}
+.cur button{
+  background:none;border:0;padding:0;cursor:pointer;font-family:var(--sans);
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+}
+.cur button[aria-pressed="true"]{color:var(--ink)}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--rule)}
+.price-row:last-of-type{border-bottom:0}
+.price-row .what{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.price-row .amount{font-family:var(--serif);font-size:27px;font-weight:300}
+.converted{font-size:11px;color:var(--faint);margin-top:8px}
+.poa{font-family:var(--serif);font-size:22px;color:var(--muted);padding:8px 0}
+
+/* ---------- action ---------- */
+.action{margin-top:34px}
+.btn{
+  display:block;width:100%;padding:19px 20px;background:var(--ink);color:var(--paper);
+  border:0;cursor:pointer;font-family:var(--sans);
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;
+}
+.btn:hover{background:#2c2924}
+.state{display:flex;align-items:baseline;gap:10px;padding:18px 0;border-top:1px solid var(--rule)}
+.state .word{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+.state .sub{font-size:13px;color:var(--muted)}
+.note{font-family:var(--serif);font-size:19px;line-height:1.5;color:#2c2924;margin:12px 0 0}
+.holders{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.9}
+
+
+@media(max-width:640px){
+  .bar{padding:18px 20px}
+  .stage{padding:2px 0 0}
+  .stage img,.stage video{max-height:none;width:100%}
+  .col{padding:38px 20px 90px}
+  .rows th{width:44%}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/">MintFace</a>
+  <a class="smallcaps" id="up" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+
+function workId() {
+  const m = location.pathname.match(/^\/w\/(.+?)\/?$/);
+  if (m) return decodeURIComponent(m[1]);
+  return new URLSearchParams(location.search).get('id') || '';
+}
+
+// preview aid: /w/{id}?px=2400,9800,11500 fills digital,painting,both until Ryan overlays real prices
+function previewPrices() {
+  const px = new URLSearchParams(location.search).get('px');
+  if (!px) return null;
+  const [digital, painting, both] = px.split(',').map((n) => (n === '' ? null : Number(n)));
+  return { digital: digital ?? null, painting: painting ?? null, both: both ?? null };
+}
+
+function detailRows(work, collection) {
+  const d = work.digital || {};
+  const p = work.physical || {};
+  const rows = [];
+  const st = MF.STATUS[work.status] || { label: work.status, dot: '' };
+
+  rows.push(['Availability', `<span class="dot ${st.dot}"></span> ${e(st.label)}`]);
+
+  const year = MF.year(work, collection);
+  if (year) rows.push(['Year', e(year)]);
+  const medium = work.medium || collection.medium;
+  if (medium) rows.push(['Medium', e(medium)]);
+  if (work.derivative_of) rows.push(['After', e(work.derivative_of)]);
+  if (work.meme_card) rows.push(['Meme card', e([work.meme_card, work.meme_season ? 'season ' + work.meme_season : null].filter(Boolean).join(' ... '))]);
+  if (work.sequence) rows.push(['Sequence', e(work.sequence)]);
+  if (work.keyword || work.age) rows.push(['Motif', e([work.keyword, work.age].filter(Boolean).join(' ... '))]);
+  if (d.chain === 'bitcoin' && d.inscribed === false) rows.push(['Inscription', '<span class="pending">Not yet inscribed</span>']);
+  if (d.minted === false) rows.push(['Provenance', 'Tokenized on purchase']);
+
+  const dims = [p.width_cm, p.height_cm].filter(Boolean);
+  if (dims.length) {
+    const depth = p.depth_cm ? ` x ${p.depth_cm}` : '';
+    rows.push(['Dimensions', `${dims.join(' x ')}${depth} cm`]);
+  } else if (collection.physical) {
+    rows.push(['Dimensions', '<span class="pending">Listed on request</span>']);
+  }
+
+  if (work.edition) {
+    const size = work.edition.minted || work.edition.of || work.edition.live;
+    if (work.edition.type === 'edition' && size) {
+      const bits = [`Edition of ${size}`];
+      if (work.wrapped) bits.push(`${work.wrapped.total} wrapped on Ethereum`);
+      if (work.edition.live && work.edition.live !== work.edition.minted) bits.push(`${work.edition.live} held today`);
+      rows.push(['Edition', e(bits.join(' ... '))]);
+    } else if (work.edition.type !== 'edition') {
+      rows.push(['Edition', 'Unique 1/1']);
+    }
+  }
+
+  if (d.image_details && d.image_details.width) {
+    rows.push(['Resolution', `${d.image_details.width} x ${d.image_details.height} ${e(d.image_details.format || '')}`]);
+  }
+  if (MF.animationUrl(work)) rows.push(['Motion', 'Yes, plays under the still']);
+
+  return `<table class="rows">${rows.map(([k, v]) => `<tr><th>${e(k)}</th><td>${v}</td></tr>`).join('')}</table>`;
+}
+
+function provenanceFold(work) {
+  const d = work.digital || {};
+  if (d.minted === false) {
+    return `<details>
+      <summary>Provenance</summary>
+      <div class="fold-body">
+        <p>Not minted yet. This work is tokenized at the moment it sells, on ${e(d.chain === 'bitcoin' ? 'Bitcoin' : 'Ethereum')}${d.standard ? ' as ' + e(d.standard) : ''}, so the first owner written to chain is the collector rather than the artist.</p>
+        <p>The token and the painting travel together. The certificate references both.</p>
+      </div>
+    </details>`;
+  }
+  const rows = [];
+  if (d.chain) rows.push(['Chain', d.chain === 'ethereum' ? 'Ethereum' : 'Bitcoin']);
+  if (d.standard) rows.push(['Standard', d.standard]);
+  if (d.contract) rows.push(['Contract', `<span class="mono-inline">${e(d.contract)}</span>`, true]);
+  if (work.token_ids && work.token_ids.length > 1) {
+    const ids = work.token_ids.map(Number).filter((n) => !isNaN(n)).sort((a, b) => a - b);
+    rows.push(['Token IDs', ids.length ? `${ids.length} tokens, #${ids[0]} to #${ids[ids.length - 1]}` : `${work.token_ids.length} tokens`]);
+  } else if (d.token_id) {
+    rows.push(['Token ID', e(d.token_id)]);
+  }
+  if (d.inscription_id) rows.push(['Inscription', e(d.inscription_id), true]);
+  else if (d.chain === 'bitcoin' && d.inscribed === false) rows.push(['Inscription', '<span class="pending">Not yet inscribed</span>']);
+  if (d.inscription_number != null) rows.push(['Inscription number', e(String(d.inscription_number))]);
+  if (d.asset) rows.push(['Asset', e(d.asset)]);
+  if (work.wrapped) {
+    rows.push(['Wrapped on Ethereum', `${work.wrapped.total} of the edition, ${work.wrapped.artist_held} still with the artist`]);
+    rows.push(['Vault contract', e(work.wrapped.contract), true]);
+    rows.push(['Vault token', e(work.wrapped.token_id), true]);
+  }
+  const minted = work.minted_onchain || work.minted || d.genesis_timestamp;
+  if (minted) rows.push(['Minted', e(MF.date(minted))]);
+  const links = MF.links(work);
+  return `
+    <details>
+      <summary>Provenance</summary>
+      <div class="fold-body">
+        <table class="rows">
+          ${rows.map(([k, v, mono]) => `<tr><th>${e(k)}</th><td class="${mono ? 'mono' : ''}">${v}</td></tr>`).join('')}
+        </table>
+        ${links.length ? `<div class="chain-links">${links.map(([t, u]) => `<a href="${e(u)}" target="_blank" rel="noopener">${e(t)}</a>`).join('')}</div>` : ''}
+      </div>
+    </details>`;
+}
+
+function shippingFold(collection, meta) {
+  if (!collection.physical) return '';
+  return `
+    <details>
+      <summary>Shipping</summary>
+      <div class="fold-body"><p>${e(meta.shipping || 'Worldwide. Boxing, crating and freight included in painting price.')}</p></div>
+    </details>`;
+}
+
+function pricingBlock(work, collection) {
+  const prices = previewPrices() || work.pricing_nzd || {};
+  const rows = [];
+  if (collection.physical) {
+    if (prices.digital != null) rows.push(['Digital', prices.digital]);
+    if (prices.painting != null) rows.push(['Painting', prices.painting]);
+    if (prices.both != null) rows.push(['Both together', prices.both]);
+  } else if (prices.digital != null) {
+    rows.push(['Digital', prices.digital]);
+  }
+
+  if (!rows.length) {
+    return `<div class="pricing">
+      <div class="pricing-head"><span class="smallcaps">Price</span></div>
+      <div class="poa">On application</div>
+    </div>`;
+  }
+
+  return `<div class="pricing">
+    <div class="pricing-head">
+      <span class="smallcaps">Price</span>
+      <div class="cur" id="cur">
+        <button data-c="NZD" aria-pressed="true">NZD</button>
+        <button data-c="USD" aria-pressed="false">USD</button>
+        <button data-c="ETH" aria-pressed="false">ETH</button>
+      </div>
+    </div>
+    ${rows.map(([what, nzd]) => `
+      <div class="price-row">
+        <span class="what">${e(what)}</span>
+        <span class="amount" data-nzd="${nzd}">$${Math.round(nzd).toLocaleString('en-NZ')}</span>
+      </div>`).join('')}
+    <div class="converted" id="converted" hidden></div>
+  </div>`;
+}
+
+function actionBlock(work, collection) {
+  const s = work.status;
+  const hasPrice = !!(previewPrices() || (work.pricing_nzd && (work.pricing_nzd.digital != null || work.pricing_nzd.painting != null || work.pricing_nzd.both != null)));
+
+  if (s === 'available') {
+    return `<div class="action"><button class="btn" id="acquire">${hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork'}</button></div>`;
+  }
+  if (s === 'reserved') {
+    const until = MF.date(work.reserve && work.reserve.expires);
+    return `<div class="action"><div class="state"><span class="dot reserved"></span>
+      <span class="word">Reserved${until ? ' until ' + e(until) : ''}</span></div></div>`;
+  }
+  if (s === 'acquired') {
+    const name = MF.collectorName(work.collector);
+    const when = work.collector && work.collector.acquired ? MF.date(work.collector.acquired, { month: 'long', year: 'numeric' }) : null;
+    return `<div class="action">
+      <div class="state"><span class="dot acquired"></span>
+        <span class="word">Collected by ${e(name || 'a private collector')}</span>
+        ${when ? `<span class="sub">${e(when)}</span>` : ''}</div>
+      ${work.collector && work.collector.note ? `<p class="note">${e(work.collector.note)}</p>` : ''}
+    </div>`;
+  }
+  if (s === 'vaulted') {
+    return `<div class="action">
+      <div class="state"><span class="dot vaulted"></span><span class="word">Vaulted ... mintestate.eth</span></div>
+      <p class="note">Held for at least ten years, then passed down through the MintFace bloodline.</p>
+      <div style="margin-top:14px"><a class="smallcaps" href="/vault">The vault</a></div>
+    </div>`;
+  }
+  if (s === 'sold_out') {
+    const ed = work.edition || {};
+    return `<div class="action">
+      <div class="state"><span class="dot acquired"></span><span class="word">Sold out</span>
+        ${ed.minted ? `<span class="sub">${ed.minted} minted${ed.live && ed.live !== ed.minted ? ', ' + ed.live + ' held today' : ''}</span>` : ''}</div>
+    </div>`;
+  }
+  if (s === 'uninscribed') {
+    return `<div class="action">
+      <button class="btn" id="acquire">Enquire to have inscribed</button>
+      <div class="state"><span class="dot uninscribed"></span>
+        <span class="word">Not yet inscribed</span>
+        <span class="sub">Part of the canon, waiting on Bitcoin</span></div>
+    </div>`;
+  }
+  if (s === 'burned') {
+    return `<div class="action"><div class="state"><span class="dot burned"></span><span class="word">Burned</span>
+      <span class="sub">Returned to the zero address</span></div></div>`;
+  }
+  return '';
+}
+
+function holdersBlock(work) {
+  if (!work.holders || work.holders.length < 2) return '';
+  const named = work.holders.filter((h) => h.display_name || h.ens).slice(0, 12);
+  if (!named.length) return '';
+  return `<details>
+    <summary>Collectors</summary>
+    <div class="fold-body">
+      <div class="holders">${named.map((h) => e(h.display_name || h.ens)).join('<br>')}${work.holders.length > named.length ? `<br><span class="pending">and ${work.holders.length - named.length} more</span>` : ''}</div>
+    </div>
+  </details>`;
+}
+
+function motionKind(url) {
+  if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return 'video';
+  if (/\.(gif|webp|png|jpe?g|avif)(\?|$)/i.test(url)) return 'image';
+  return 'live'; // html renderers, AR scenes, generative pieces
+}
+
+function stage(work) {
+  const img = MF.imageUrl(work);
+  const anim = MF.animationUrl(work);
+  const kind = anim ? motionKind(anim) : null;
+  return `<div class="stage">
+    <div class="frame">
+      ${MF.img(work, 1600, { eager: true })}
+      ${anim ? `<div class="motion" id="motion" data-url="${e(anim)}" data-kind="${kind}">
+        <div class="motion-label">${kind === 'live' ? 'Living version' : 'Motion'}</div>
+        ${kind === 'image'
+          ? `<img src="${e(anim)}" alt="${e((work.title || 'Work') + ', in motion')}" loading="lazy">`
+          : `<button class="ghost" id="play">${kind === 'video' ? 'Play' : 'Open the living version'}</button>`}
+      </div>` : ''}
+    </div>
+  </div>`;
+}
+
+function wireMotion() {
+  const btn = document.getElementById('play');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const box = document.getElementById('motion');
+    const url = box.dataset.url;
+    const holder = document.createElement('div');
+    holder.className = 'motion-frame';
+    holder.innerHTML = box.dataset.kind === 'video'
+      ? `<video src="${e(url)}" controls autoplay playsinline loop></video>`
+      : `<iframe src="${e(url)}" title="Living version" loading="lazy" allow="accelerometer; camera; gyroscope; xr-spatial-tracking; fullscreen" sandbox="allow-scripts allow-same-origin"></iframe>`;
+    btn.replaceWith(holder);
+  });
+}
+
+// some contracts title a work with the mint number alone
+function displayTitle(work, collection) {
+  const t = (work.title || '').trim();
+  if (!t) return 'Untitled';
+  return /^#?\d+$/.test(t) ? `${collection.title} ${t.startsWith('#') ? t : '#' + t}` : t;
+}
+
+function render(work, collection, meta) {
+  const shown = displayTitle(work, collection);
+  document.title = `${shown} ... MintFace`;
+  const up = document.getElementById('up');
+  up.textContent = collection.title;
+  up.href = `/c/${collection.slug}`;
+
+  const desc = work.statement || work.subtitle || '';
+  document.querySelector('meta[name="description"]').setAttribute('content', desc.slice(0, 180) || `${work.title} by MintFace.`);
+
+  document.getElementById('main').innerHTML = `
+    ${stage(work)}
+    <div class="col">
+      <h1>${e(shown)}</h1>
+      <div class="byline">${[collection.title, work.sequence, MF.year(work, collection)].filter(Boolean).map(e).join(' &middot; ')}</div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tab-desc" aria-selected="true" aria-controls="panel-desc">Description</button>
+        <button class="tab" role="tab" id="tab-det" aria-selected="false" aria-controls="panel-det">Details</button>
+      </div>
+
+      <div class="panel" id="panel-desc" role="tabpanel" aria-labelledby="tab-desc">
+        ${desc
+          ? `<p class="statement">${e(desc)}</p>`
+          : `<p class="statement none">No statement recorded for this work yet.</p>`}
+      </div>
+
+      <div class="panel" id="panel-det" role="tabpanel" aria-labelledby="tab-det" hidden>
+        ${detailRows(work, collection)}
+      </div>
+
+      <div style="margin-top:30px">
+        ${provenanceFold(work)}
+        ${holdersBlock(work)}
+        ${shippingFold(collection, meta)}
+      </div>
+
+      ${pricingBlock(work, collection)}
+      ${actionBlock(work, collection)}
+    </div>`;
+
+  wireTabs();
+  wireMotion();
+  wireCurrency();
+  wireAcquire(work, collection);
+}
+
+function wireTabs() {
+  const tabs = [...document.querySelectorAll('.tab')];
+  tabs.forEach((t) => t.addEventListener('click', () => {
+    tabs.forEach((x) => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on));
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+  }));
+}
+
+async function wireCurrency() {
+  const bar = document.getElementById('cur');
+  if (!bar) return;
+  const fx = await MF.fx();
+  const note = document.getElementById('converted');
+  bar.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button');
+    if (!b) return;
+    const c = b.dataset.c;
+    [...bar.querySelectorAll('button')].forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    document.querySelectorAll('.amount').forEach((el) => {
+      const nzd = Number(el.dataset.nzd);
+      el.textContent = MF.money(nzd, c, fx) || 'Rate unavailable';
+    });
+    note.hidden = c === 'NZD';
+    if (c !== 'NZD') note.textContent = 'Converted from NZD, updated hourly.';
+  });
+}
+
+function wireAcquire(work, collection) {
+  const b = document.getElementById('acquire');
+  if (!b) return;
+  b.addEventListener('click', () => {
+    const subject = encodeURIComponent(
+      work.status === 'uninscribed'
+        ? `Inscription enquiry ... ${work.title} ... ${collection.title}`
+        : `${work.title} ... ${collection.title}`);
+    location.href = `mailto:ryan@mintface.art?subject=${subject}`;
+  });
+}
+
+(async function () {
+  const id = workId();
+  try {
+    const hit = await MF.work(id);
+    if (!hit) {
+      document.getElementById('main').innerHTML = `<div class="loading">Work not found</div>`;
+      return;
+    }
+    const idx = await MF.index();
+    render(hit.work, hit.collection, idx._meta || {});
+  } catch (err) {
+    document.getElementById('main').innerHTML = `<div class="loading">Could not load this work</div>`;
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

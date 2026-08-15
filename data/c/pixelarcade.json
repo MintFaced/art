@@ -1,0 +1,2673 @@
+{
+ "slug": "pixelarcade",
+ "title": "PixelArcade",
+ "group": "core",
+ "year": "2026",
+ "medium": "Acrylic / Pixel / Tokenized",
+ "physical": true,
+ "statement": null,
+ "links": {
+  "site": "https://pixelarcade.art"
+ },
+ "notes": "Physical claim mechanic ... 63 of 64 tokens held by the PixelArcade contract.",
+ "counts": {
+  "works": 64,
+  "available": 63,
+  "acquired": 1,
+  "series": {
+   "eight_bit_studies": 17,
+   "sixteen_bit_compositions": 28,
+   "thirty_two_bit_tableaux": 19,
+   "wildpixel": 4
+  }
+ },
+ "contracts": [
+  {
+   "chain": "ethereum",
+   "standard": "ERC-721",
+   "address": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+   "name": "PixelArcade",
+   "deployed": "2026-06-01T20:54:23.000000Z",
+   "deployer": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+   "holders": "3"
+  }
+ ],
+ "works": [
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-1",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 1",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Pitfall! (1982), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "1",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/001.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-2",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 2",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Lunar Lander (1979), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "2",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/002.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-3",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 3",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Breakout (1976), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "3",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/003.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-4",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 4",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Missile Command (1980), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "4",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/004.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-5",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 5",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Asteroids (1979), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "5",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/005.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-6",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 6",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Mario Bros. (1983), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "6",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/006.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-7",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 7",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Frogger (1981), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "7",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/007.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-8",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 8",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Pac-Man (1980), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "8",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/008.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-9",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 9",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Pole Position (1982), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "9",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/009.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-10",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 10",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Defender (1981), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "10",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/010.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-11",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 11",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Galaga (1981), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "11",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/011.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-12",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 12",
+   "statement": "Wildpixel is a special 1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from any arcade game you choose, arranged into a fixed grid via simulated annealing. A physical painting is available in the colors you chose to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "12",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/012.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-13",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 13",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Donkey Kong (arcade) (1981), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "13",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/013.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-14",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 14",
+   "statement": "Wildpixel is a special 1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from any arcade game you choose, arranged into a fixed grid via simulated annealing. A physical painting is available in the colors you chose to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "14",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/014.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-15",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 15",
+   "statement": "Wildpixel is a special 1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from any arcade game you choose, arranged into a fixed grid via simulated annealing. A physical painting is available in the colors you chose to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "15",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/015.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-16",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 16",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Dig Dug (1982), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "16",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/016.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-17",
+   "collection": "pixelarcade",
+   "title": "Eight-Bit Study No. 17",
+   "statement": "Wildpixel is a special 1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from any arcade game you choose, arranged into a fixed grid via simulated annealing. A physical painting is available in the colors you chose to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "17",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/017.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-18",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition I",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Double Dragon (1987), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "18",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/018.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-19",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition II",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Paperboy (1985), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "19",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/019.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-20",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition III",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Rampage (1986), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "20",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/020.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-21",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition IV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Street Fighter II (1991), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "21",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/021.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-22",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition V",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Sonic the Hedgehog (1991), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "22",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/022.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-23",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition VI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Golden Axe (1989), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "23",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/023.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-24",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition VII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Mortal Kombat (1992), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "24",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/024.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-25",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition VIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Zelda: A Link to the Past (1991), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "25",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/025.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-26",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition IX",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Donkey Kong Country (1994), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "26",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/026.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-27",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition X",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Virtua Racing (1992), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "27",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/027.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-28",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Prince of Persia (1989), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "28",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/028.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-29",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Ghouls 'n Ghosts (1988), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "29",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/029.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-30",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Moonwalker (1990), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "30",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/030.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-31",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XIV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Pinball Illusions (1995), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "31",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/031.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-32",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Wonder Boy (1986), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "32",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/032.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-33",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XVI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Wings (1990), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "33",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/033.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-34",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XVII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Indiana Jones & Last Crusade (1989), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "34",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/034.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-35",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XVIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Secret of Monkey Island (1990), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "35",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/035.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-36",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XIX",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Wing Commander (1990), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "36",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/036.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-37",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XX",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Wolfenstein 3D (1992), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "37",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/037.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-38",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Ultima VII (1992), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "38",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/038.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-39",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Doom (1993), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "39",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/039.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-40",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of SimCity 2000 (1993), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "40",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/040.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-41",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXIV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Lemmings (1991), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "41",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/041.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-42",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Civilization (1991), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "42",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/042.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-43",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXVI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of X-Wing (1993), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "43",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/043.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-44",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXVII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Theme Park (1994), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "44",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/044.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-45",
+   "collection": "pixelarcade",
+   "title": "Sixteen-Bit Composition XXVIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Dune II (1992), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "45",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/045.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-46",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau I",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Tekken 3 (1997), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "46",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/046.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-47",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau II",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Crash Bandicoot (1996), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "47",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/047.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-48",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau III",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Wipeout (1995), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "48",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/048.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-49",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau IV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Metal Gear Solid (1998), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "49",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/049.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-50",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau V",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of GoldenEye 007 (1997), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "50",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/050.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-51",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau VI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Tomb Raider (1996), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "51",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/051.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-52",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau VII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Final Fantasy VII (1997), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "52",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/052.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-53",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau VIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Resident Evil (1996), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "53",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/053.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-54",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau IX",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Super Mario 64 (1996), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "54",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/054.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-55",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau X",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Gran Turismo (1997), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "55",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/055.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-56",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Quake (1996), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "56",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/056.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-57",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Diablo (1996), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "57",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/057.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-58",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Half-Life (1998), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "58",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/058.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "acquired",
+   "held_by": null,
+   "listed_on": null,
+   "reserve": null,
+   "collector": {
+    "address": "0xCc3B37EeB73143e6D2a547058118Fe25561A4eb2",
+    "ens": "0xunix.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-06-17T05:04:11.000000Z"
+   }
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-59",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XIV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of StarCraft (1998), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "59",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/059.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-60",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XV",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Age of Empires (1997), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "60",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/060.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-61",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XVI",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Tony Hawk's Pro Skater (1999), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "61",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/061.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-62",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XVII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Sonic Adventure (1998), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "62",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/062.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-63",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XVIII",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Pokémon Red/Blue (1996), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "63",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/063.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-06-02T03:47:59.000000Z",
+   "mint_tx": "0xb0694b1579111cd33bf87d7933f6041a85f89adc8637254a951bc3578b836c7d",
+   "id": "pixelarcade-64",
+   "collection": "pixelarcade",
+   "title": "Thirty-Two-Bit Tableau XIX",
+   "statement": "1/1 pixel painting from PixelArcade by MintFace. Eight colors sampled from the canonical on-screen palette of Quake III Arena (1999), arranged into a fixed grid via simulated annealing. A physical painting is available to commission for NFT holders via the on-chain claim mechanic.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x97536ECC25Ae0A7ABAde7C2Bba1925CA6Eba30E8",
+    "token_id": "64",
+    "image": "https://dweb.link/ipfs/bafybeia7mxdez5unj7c7ugziul7wthagmhkquasxptlq5qqrtszc4p24su/064.svg",
+    "animation": null,
+    "image_details": null,
+    "external_url": "https://pixelarcade.art"
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "PixelArcade contract",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  }
+ ],
+ "facets": {
+  "availability": {
+   "available": 63,
+   "acquired": 1
+  }
+ }
+}

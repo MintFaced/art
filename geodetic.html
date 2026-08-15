@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Geodetic Collections ... MintFace</title>
+<meta name="description" content="The Geodetic Collections by MintFace.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:1100px;margin:0 auto;padding:56px 28px 18px;text-align:center}
+.kicker{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,8.4vw,104px);line-height:.95;margin:0;letter-spacing:-.02em}
+.standfirst{font-family:var(--serif);font-size:clamp(20px,2.4vw,27px);line-height:1.45;color:#3a362f;max-width:680px;margin:28px auto 0}
+.mast-rule{width:44px;height:1px;background:var(--rule);margin:48px auto 0}
+
+.set{max-width:1500px;margin:0 auto;padding:0 28px 40px}
+.chapter{padding:64px 0 10px;border-bottom:1px solid var(--rule)}
+.chapter:last-child{border-bottom:0}
+.chead{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 22px;margin-bottom:26px}
+.chead h2{font-family:var(--serif);font-weight:300;font-size:clamp(30px,4.2vw,48px);line-height:1.05;margin:0;letter-spacing:-.01em}
+.chead h2 a{text-decoration:none}
+.chead h2 a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.cmeta{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px;align-items:baseline}
+.badge{border:1px solid var(--rule);padding:3px 9px}
+.cstatement{font-family:var(--serif);font-size:clamp(19px,2vw,23px);line-height:1.5;color:#3a362f;margin:0 0 26px;max-width:640px;flex-basis:100%}
+.all{margin-left:auto}
+
+.row{display:grid;grid-template-columns:repeat(6,1fr);gap:20px}
+.row a,.row .cell{display:block;text-decoration:none}
+.row .shot{background:#f2efe9;aspect-ratio:1/1;overflow:hidden}
+.row img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
+.row img.in{opacity:1}
+.row .t{font-family:var(--serif);font-size:16px;line-height:1.25;margin-top:9px}
+.row .s{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.row a:hover .t{text-decoration:underline;text-underline-offset:3px}
+.skel .shot{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+.annex{max-width:1500px;margin:0 auto;padding:20px 28px 90px}
+.annex > h2{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;margin:0 0 24px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.annex .chead h2{font-size:clamp(24px,3vw,32px)}
+.annex .row{grid-template-columns:repeat(8,1fr);gap:14px}
+.annex .row .t{font-size:14px}
+
+@media(max-width:1200px){.row{grid-template-columns:repeat(4,1fr)}.annex .row{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:820px){.row{grid-template-columns:repeat(3,1fr);gap:14px}.annex .row{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){
+  .mast{padding:32px 20px 12px}
+  .set,.annex{padding-left:20px;padding-right:20px}
+  .row,.annex .row{grid-template-columns:repeat(2,1fr);gap:12px}
+  .chapter{padding-top:44px}
+  .all{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/">MintFace</a>
+  <a class="smallcaps" href="/collections">All collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+const PER_ROW = 6;
+const ANNEX_ROW = 8;
+
+function meta(c) {
+  const bits = [];
+  if (c.year) bits.push(c.year);
+  if (c.medium) bits.push(c.medium);
+  bits.push(`${c.counts.works} ${c.counts.works === 1 ? 'work' : 'works'}`);
+  if (c.counts.editions_minted) bits.push(`${c.counts.editions_minted} editions`);
+  const out = bits.map((b) => `<span>${e(b)}</span>`);
+  const a = MF.availability(c);
+  if (a.badge) out.push(`<span class="badge">${e(a.badge)}</span>`);
+  if (a.available) out.push(`<span><span class="dot available"></span> ${a.available} available</span>`);
+  return out.join('');
+}
+
+function chapter(c, opts) {
+  const n = (opts && opts.n) || PER_ROW;
+  return `<section class="chapter" data-slug="${e(c.slug)}" data-n="${n}">
+    <div class="chead">
+      <h2><a href="/c/${encodeURIComponent(c.slug)}">${e(c.title)}</a></h2>
+      <div class="cmeta">${meta(c)}</div>
+      <a class="smallcaps all" href="/c/${encodeURIComponent(c.slug)}">${c.counts.works === 1 ? 'The work' : 'All ' + c.counts.works + ' works'}</a>
+      ${c.statement ? `<p class="cstatement">${e(c.statement)}</p>` : ''}
+    </div>
+    <div class="row skel" data-row>
+      ${Array.from({ length: Math.min(n, c.counts.works) }, () => '<div class="cell"><div class="shot"></div></div>').join('')}
+    </div>
+  </section>`;
+}
+
+// available first, so browsing runs into what can be bought
+function pick(works, n) {
+  const rank = (w) => (w.status === 'available' ? 0 : w.status === 'uninscribed' ? 1 : w.status === 'vaulted' ? 3 : w.status === 'burned' ? 4 : 2);
+  return [...works]
+    .filter((w) => w.digital && w.digital.image)
+    .sort((a, b) => rank(a) - rank(b))
+    .slice(0, n);
+}
+
+async function fillRow(section) {
+  const slug = section.dataset.slug;
+  const row = section.querySelector('[data-row]');
+  try {
+    const col = await MF.collection(slug);
+    const works = pick(col.works || [], Number(section.dataset.n));
+    row.classList.remove('skel');
+    row.innerHTML = works.map((w) => {
+      const st = MF.STATUS[w.status] || { label: w.status, dot: '' };
+      const title = /^#?\d+$/.test((w.title || '').trim())
+        ? `${col.title} ${w.title.startsWith('#') ? w.title : '#' + w.title}`
+        : (w.title || 'Untitled');
+      return `<a href="/w/${encodeURIComponent(w.id)}">
+        <div class="shot">${MF.img(w, 520, { alt: title })}</div>
+        <div class="t">${e(title)}</div>
+        <div class="s"><span class="dot ${st.dot}"></span> ${e(st.label)}</div>
+      </a>`;
+    }).join('');
+  } catch (err) {
+    row.remove();
+    console.error(err);
+  }
+}
+
+(async function () {
+  try {
+    const [set, idx] = await Promise.all([
+      fetch('/data/f/geodetic.json').then((r) => r.json()),
+      MF.index(),
+    ]);
+    const by = Object.fromEntries(idx.collections.map((c) => [c.slug, c]));
+    const main = set.order.map((s) => by[s]).filter(Boolean);
+    const annex = (set.annex ? set.annex.slugs : []).map((s) => by[s]).filter(Boolean);
+
+    document.getElementById('main').innerHTML = `
+      <div class="mast">
+        ${set.kicker ? `<div class="kicker">${e(set.kicker)}</div>` : ''}
+        <h1>${e(set.title)}</h1>
+        ${set.standfirst ? `<p class="standfirst">${e(set.standfirst)}</p>` : ''}
+        <div class="mast-rule"></div>
+      </div>
+      <div class="set">${main.map((c) => chapter(c)).join('')}</div>
+      ${annex.length ? `<div class="annex">
+        <h2>${e(set.annex.title || 'Studies')}</h2>
+        ${annex.map((c) => chapter(c, { n: ANNEX_ROW })).join('')}
+      </div>` : ''}`;
+
+    // rows load as they come into view, so the page opens on one small index fetch
+    const io = new IntersectionObserver((entries, obs) => {
+      for (const x of entries) {
+        if (!x.isIntersecting) continue;
+        obs.unobserve(x.target);
+        fillRow(x.target);
+      }
+    }, { rootMargin: '600px' });
+    document.querySelectorAll('.chapter').forEach((s) => io.observe(s));
+  } catch (err) {
+    document.getElementById('main').innerHTML = '<div class="loading">Could not load the geodetic set</div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>
