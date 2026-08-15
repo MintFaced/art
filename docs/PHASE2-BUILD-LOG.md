@@ -111,9 +111,20 @@ The collection card, the group ordering and the route map moved into `mintface.j
 
 State list: Available / Reserved / Acquired / Vaulted / Sold Out / Uninscribed, plus Burned for the 44 tokens that went to the zero address.
 
+**Checkout** ... five paths from one slide-over, documented in `docs/CHECKOUT.md`.
+
+- Step one is what (digital, painting, both, from the catalog prices), step two is how (card NZD, card USD, Ethereum, Bitcoin for FROGDNA, or a fortnight's hold). Single-price works skip step one.
+- Stripe Checkout Sessions for both card paths, dynamic payment methods, prices read server side so the browser cannot set its own. USD converts from NZD at the hour's rate.
+- Fulfilment is in the webhook, not the success page, handling completed and async succeeded, gated on payment status, with async failed putting the work back on sale.
+- Sale state commits to `data/state.json` through the GitHub API and the pages overlay it on the static catalog, so a sale shows without a catalog rebuild. Every sale has an author, a time and a diff.
+- Ethereum: the buyer pays mintface.eth from their own wallet, the function verifies the transaction on chain, and the token is transferred by hand afterwards. No key on the server.
+- Reserve is free for a fortnight, with Resend emails on hold, at day twelve, and on release, driven by a daily cron.
+- Stripe and Resend are provisioned through the Vercel Marketplace and connected to the project. The webhook endpoint is registered and its signing secret stored.
+- Still needs a `GITHUB_TOKEN` with contents write, or holds and sales return a clear 503 telling the buyer to email.
+
 ## Next, in order
 
-1. Checkout: Stripe NZD, Stripe USD, Reserve, ETH, plus the FROGDNA BTC path.
+1. Nothing. Every page and flow in the brief is built.
 
 ## Before launch
 

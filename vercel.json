@@ -22,5 +22,11 @@
       "source": "/10k",
       "destination": "/f.html"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/reserves",
+      "schedule": "0 19 * * *"
+    }
   ]
 }

@@ -139,6 +139,15 @@ details summary:hover{color:var(--ink)}
   <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
 </footer>
 
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" aria-hidden="true" aria-label="Acquire">
+  <header>
+    <span class="smallcaps">Acquire</span>
+    <button class="close" id="sheetClose" aria-label="Close">&times;</button>
+  </header>
+  <div class="body" id="sheetBody"></div>
+</aside>
+
 <script src="/mintface.js"></script>
 <script>
 const e = MF.escape;
@@ -447,6 +456,7 @@ function render(work, collection, meta) {
   wireMotion();
   wireCurrency();
   wireAcquire(work, collection);
+  thanksIfPaid();
 }
 
 function wireTabs() {
@@ -479,16 +489,246 @@ async function wireCurrency() {
   });
 }
 
+/* ---------------- acquire ---------------- */
+
+const SHEET = {
+  el: () => document.getElementById('sheet'),
+  body: () => document.getElementById('sheetBody'),
+  open() {
+    this.el().classList.add('open');
+    this.el().setAttribute('aria-hidden', 'false');
+    document.getElementById('scrim').classList.add('open');
+  },
+  close() {
+    this.el().classList.remove('open');
+    this.el().setAttribute('aria-hidden', 'true');
+    document.getElementById('scrim').classList.remove('open');
+  },
+};
+
+let ACQ = { work: null, collection: null, what: null, fx: null };
+
+function optionsFor(work, collection) {
+  const p = { ...(work.pricing_nzd || {}), ...(previewPrices() || {}) };
+  const out = [];
+  if (p.digital != null) out.push({ key: 'digital', label: 'Digital', nzd: p.digital, sub: 'The token, transferred to your wallet' });
+  if (collection.physical && p.painting != null) out.push({ key: 'painting', label: 'Painting', nzd: p.painting, sub: 'The physical work, shipped worldwide' });
+  if (collection.physical && p.both != null) out.push({ key: 'both', label: 'Both together', nzd: p.both, sub: 'Painting and token, one provenance' });
+  return out;
+}
+
+function money(nzd) {
+  return '$' + Math.round(nzd).toLocaleString('en-NZ');
+}
+
+function stepWhat() {
+  const opts = optionsFor(ACQ.work, ACQ.collection);
+  if (opts.length === 1) { ACQ.what = opts[0].key; return stepHow(); }
+  SHEET.body().innerHTML = `
+    <h2>${e(ACQ.work.title || 'Untitled')}</h2>
+    <div class="which">${e(ACQ.collection.title)}</div>
+    <div class="step">What would you like</div>
+    ${opts.map((o) => `<button class="choice" data-what="${o.key}" aria-pressed="false">
+      <span class="what">${e(o.label)}<span class="sub">${e(o.sub)}</span></span>
+      <span class="amt">${money(o.nzd)}</span>
+    </button>`).join('')}
+    <p class="note">Prices are New Zealand dollars. Shipping, crating and freight are included.</p>`;
+  SHEET.body().querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => {
+    ACQ.what = b.dataset.what;
+    stepHow();
+  }));
+}
+
+function stepHow() {
+  const opts = optionsFor(ACQ.work, ACQ.collection);
+  const chosen = opts.find((o) => o.key === ACQ.what) || opts[0];
+  const frog = ACQ.work.wrapped || ACQ.work.digital?.asset === 'FROGDNA';
+  SHEET.body().innerHTML = `
+    <h2>${e(ACQ.work.title || 'Untitled')}</h2>
+    <div class="which">${e(chosen.label)} &middot; ${money(chosen.nzd)}</div>
+    <div class="step">How would you like to pay</div>
+    <button class="choice" data-how="nzd"><span class="what">Card, New Zealand dollars<span class="sub">Stripe checkout</span></span><span class="amt">${money(chosen.nzd)}</span></button>
+    <button class="choice" data-how="usd"><span class="what">Card, US dollars<span class="sub">Converted at today's rate</span></span><span class="amt" id="usdAmt">...</span></button>
+    <button class="choice" data-how="eth"><span class="what">Ethereum<span class="sub">From your wallet to mintface.eth</span></span><span class="amt" id="ethAmt">...</span></button>
+    ${frog ? `<button class="choice" data-how="btc"><span class="what">Bitcoin<span class="sub">Counterparty, arranged directly</span></span><span class="amt">&rarr;</span></button>` : ''}
+    <button class="choice" data-how="reserve"><span class="what">Reserve for a fortnight<span class="sub">No payment, no obligation</span></span><span class="amt">14 days</span></button>
+    <p class="note">${ACQ.work.digital && ACQ.work.digital.minted === false
+      ? 'This work is not minted yet. It is tokenized when it sells, so your wallet is the first owner written to chain.'
+      : 'The token is transferred by hand after payment, usually within a day.'}</p>`;
+
+  MF.fx().then((fx) => {
+    ACQ.fx = fx;
+    const usd = MF.money(chosen.nzd, 'USD', fx);
+    const eth = MF.money(chosen.nzd, 'ETH', fx);
+    const u = document.getElementById('usdAmt'); if (u) u.textContent = usd || 'unavailable';
+    const t = document.getElementById('ethAmt'); if (t) t.textContent = eth || 'unavailable';
+  });
+
+  SHEET.body().querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => {
+    const how = b.dataset.how;
+    if (how === 'nzd' || how === 'usd') return stripeCheckout(how.toUpperCase());
+    if (how === 'reserve') return stepReserve();
+    if (how === 'eth') return stepEth(chosen);
+    if (how === 'btc') return stepBtc();
+  }));
+}
+
+async function stripeCheckout(currency) {
+  SHEET.body().innerHTML = '<p class="ok">Opening the checkout...</p>';
+  try {
+    const r = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, currency }),
+    });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || 'could not start the checkout');
+    location.href = j.url;
+  } catch (err) {
+    SHEET.body().innerHTML = `<p class="ok">That did not work.</p><p class="err">${e(err.message)}</p>
+      <p class="note">Email ryan@mintface.art and it will be sorted by hand.</p>`;
+  }
+}
+
+function stepReserve() {
+  SHEET.body().innerHTML = `
+    <h2>Hold it for a fortnight</h2>
+    <div class="which">${e(ACQ.work.title || 'Untitled')}</div>
+    <p class="note">Nothing is charged. The work shows as reserved and quietly returns if the fortnight passes.</p>
+    <div class="step">Where to reach you</div>
+    <input id="resName" type="text" placeholder="Name" autocomplete="name">
+    <input id="resEmail" type="email" placeholder="Email" autocomplete="email" required>
+    <button class="choice go" id="resGo"><span class="what">Hold it</span><span class="amt">14 days</span></button>
+    <div id="resErr"></div>`;
+  document.getElementById('resGo').addEventListener('click', async () => {
+    const name = document.getElementById('resName').value.trim();
+    const email = document.getElementById('resEmail').value.trim();
+    const err = document.getElementById('resErr');
+    err.innerHTML = '';
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.innerHTML = '<p class="err">An email address, so the reminder can reach you.</p>'; return; }
+    try {
+      const r = await fetch('/api/reserve', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ workId: ACQ.work.id, name, email }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || 'could not hold it');
+      const until = MF.date(j.expires);
+      SHEET.body().innerHTML = `<p class="ok">Held for you until ${e(until)}.</p>
+        <p class="note">A note is on its way to ${e(email)}. Reply to it whenever you are ready, or let the fortnight pass and it lifts on its own.</p>`;
+    } catch (e2) {
+      err.innerHTML = `<p class="err">${e(e2.message)}</p>`;
+    }
+  });
+}
+
+function stepEth(chosen) {
+  const to = '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180';
+  const eth = ACQ.fx && ACQ.fx.eth ? chosen.nzd * ACQ.fx.eth : null;
+  SHEET.body().innerHTML = `
+    <h2>Pay with Ethereum</h2>
+    <div class="which">${e(chosen.label)} &middot; ${eth ? eth.toFixed(4) + ' ETH' : money(chosen.nzd)}</div>
+    <p class="note">The payment goes to mintface.eth from your own wallet. Nothing here can move your funds or your tokens.</p>
+    <div class="step">To</div>
+    <p class="mono-line">${e(to)}</p>
+    ${window.ethereum ? '<button class="choice go" id="ethGo"><span class="what">Connect wallet and pay</span><span class="amt">' + (eth ? eth.toFixed(4) + ' ETH' : '') + '</span></button>' : ''}
+    <div class="step">Or paste the transaction</div>
+    <input id="ethTx" type="text" placeholder="0x transaction hash" spellcheck="false">
+    <button class="choice go" id="ethConfirm"><span class="what">I have sent it</span><span class="amt">&rarr;</span></button>
+    <div id="ethErr"></div>
+    <p class="note">Once the transaction confirms, the work shows as collected. Ryan transfers the token by hand, hardware signed, usually within a day.</p>`;
+
+  const confirm = async (txHash) => {
+    const err = document.getElementById('ethErr');
+    err.innerHTML = '<p class="note">Checking the chain...</p>';
+    try {
+      const r = await fetch('/api/eth-payment', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, txHash }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || 'could not verify that payment');
+      SHEET.body().innerHTML = `<p class="ok">Received, thank you.</p>
+        <p class="note">${j.paid ? j.paid.toFixed(4) + ' ETH' : 'Payment'} confirmed on chain. Ryan will transfer the token to the wallet that paid, and will be in touch about anything physical.</p>`;
+    } catch (e2) {
+      err.innerHTML = `<p class="err">${e(e2.message)}</p>`;
+    }
+  };
+
+  const go = document.getElementById('ethGo');
+  if (go) go.addEventListener('click', async () => {
+    const err = document.getElementById('ethErr');
+    try {
+      if (!eth) throw new Error('the rate is not available, paste a transaction hash instead');
+      const [from] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const wei = '0x' + BigInt(Math.round(eth * 1e18)).toString(16);
+      const txHash = await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [{ from, to, value: wei }],
+      });
+      document.getElementById('ethTx').value = txHash;
+      await confirm(txHash);
+    } catch (e2) {
+      err.innerHTML = `<p class="err">${e(e2.message || 'the wallet declined')}</p>`;
+    }
+  });
+  document.getElementById('ethConfirm').addEventListener('click', () => {
+    const tx = document.getElementById('ethTx').value.trim();
+    if (!/^0x[0-9a-fA-F]{64}$/.test(tx)) {
+      document.getElementById('ethErr').innerHTML = '<p class="err">That does not look like a transaction hash.</p>';
+      return;
+    }
+    confirm(tx);
+  });
+}
+
+function stepBtc() {
+  const asset = ACQ.work.digital?.asset || 'FROGDNA';
+  SHEET.body().innerHTML = `
+    <h2>Pay with Bitcoin</h2>
+    <div class="which">${e(asset)} &middot; Counterparty</div>
+    <p class="note">The native asset lives on Bitcoin as a Counterparty issuance, so this one is arranged directly rather than through a checkout.</p>
+    <div class="step">What happens</div>
+    <p class="note">Email ryan@mintface.art and you will get the address, the exact amount and a time to send it. The asset transfers to your Bitcoin address once the payment confirms. Same work, same provenance, no wrapper.</p>
+    <button class="choice go" id="btcMail"><span class="what">Email about ${e(asset)}</span><span class="amt">&rarr;</span></button>
+    <p class="note">If you would rather pay in ETH, the wrapped edition on Ethereum is the same asset inside an EmblemVault, and goes through the wallet flow instead.</p>`;
+  document.getElementById('btcMail').addEventListener('click', () => {
+    location.href = `mailto:ryan@mintface.art?subject=${encodeURIComponent(asset + ' ... paying in Bitcoin')}`;
+  });
+}
+
 function wireAcquire(work, collection) {
   const b = document.getElementById('acquire');
   if (!b) return;
+  const priced = optionsFor(work, collection).length > 0;
   b.addEventListener('click', () => {
-    const subject = encodeURIComponent(
-      work.status === 'uninscribed'
-        ? `Inscription enquiry ... ${work.title} ... ${collection.title}`
-        : `${work.title} ... ${collection.title}`);
-    location.href = `mailto:ryan@mintface.art?subject=${subject}`;
+    if (!priced) {
+      const subject = encodeURIComponent(
+        work.status === 'uninscribed'
+          ? `Inscription enquiry ... ${work.title} ... ${collection.title}`
+          : `${work.title} ... ${collection.title}`);
+      location.href = `mailto:ryan@mintface.art?subject=${subject}`;
+      return;
+    }
+    ACQ = { work, collection, what: null, fx: ACQ.fx };
+    SHEET.open();
+    stepWhat();
   });
+  document.getElementById('sheetClose').addEventListener('click', () => SHEET.close());
+  document.getElementById('scrim').addEventListener('click', () => SHEET.close());
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') SHEET.close(); });
+}
+
+// coming back from Stripe: the webhook does the fulfilling, this only says thank you
+function thanksIfPaid() {
+  const paid = new URLSearchParams(location.search).get('paid');
+  if (!paid) return;
+  SHEET.open();
+  SHEET.body().innerHTML = `<h2>Thank you</h2>
+    <p class="ok">Your payment went through.</p>
+    <p class="note">A confirmation is on its way. The work will show as collected here shortly, and Ryan will be in touch about the token and anything physical.</p>`;
 }
 
 (async function () {

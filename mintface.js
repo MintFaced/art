@@ -18,6 +18,35 @@ const MF = {
   /* ---------- data ---------- */
   _index: null,
   _collections: {},
+  _state: null,
+
+  // What has happened since the last catalog rebuild: sales, holds, releases.
+  // Written by the functions in api/ and committed back to the repo.
+  async state() {
+    if (this._state) return this._state;
+    this._state = await fetch('/data/state.json', { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : { works: {} }))
+      .catch(() => ({ works: {} }));
+    return this._state;
+  },
+
+  applyState(work, state) {
+    const s = state && state.works && state.works[work.id];
+    if (!s) return work;
+    const out = { ...work, status: s.status || work.status };
+    if (s.reserve) out.reserve = { expires: s.reserve.expires };
+    if (s.collector) {
+      out.collector = {
+        address: s.collector.address || null,
+        ens: s.collector.ens || null,
+        display_name: s.collector.display_name || null,
+        note: s.collector.note || null,
+        acquired: s.collector.acquired || null,
+      };
+    }
+    if (s.status === 'available') { out.reserve = null; out.collector = null; }
+    return out;
+  },
 
   async index() {
     if (!this._index) this._index = await fetch('/data/index.json').then((r) => r.json());
@@ -26,7 +55,15 @@ const MF = {
 
   async collection(slug) {
     if (!this._collections[slug]) {
-      this._collections[slug] = await fetch(`/data/c/${slug}.json`).then((r) => r.json());
+      const [col, state] = await Promise.all([
+        fetch(`/data/c/${slug}.json`).then((r) => r.json()),
+        this.state(),
+      ]);
+      col.works = (col.works || []).map((w) => this.applyState(w, state));
+      if (col.children) {
+        for (const ch of col.children) ch.works = (ch.works || []).map((w) => this.applyState(w, state));
+      }
+      this._collections[slug] = col;
     }
     return this._collections[slug];
   },
