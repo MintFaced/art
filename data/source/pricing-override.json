@@ -1,17 +1,17 @@
 {
-  "_note": "NZD is master everywhere. These two collections are listed in ETH on chain, so the ETH figure was converted once at the rate below and rounded clean. The site quotes ETH live from the NZD price like every other work.",
-  "converted_at": {
-    "rate_nzd_per_eth": 3189.77,
-    "at": "2026-08-16T09:05:32.547Z"
-  },
-  "collections": {
-    "geodetic-moments": {
-      "digital": 320,
-      "listed_eth": 0.1
-    },
-    "geodetica": {
-      "digital": 160,
-      "listed_eth": 0.05
-    }
-  }
+ "_note": "NZD is master everywhere. These collections are quoted to collectors in ETH, so each ETH figure was converted once at the rate below and rounded to a clean number. The site then quotes ETH back from the NZD price live, like every other work, so the stored figure never drifts.",
+ "converted_at": {
+  "rate_nzd_per_eth": 3178.48,
+  "source": "coinbase ETH-NZD spot",
+  "at": "2026-08-17T00:00:00.000Z"
+ },
+ "rounding": "nearest 10 NZD",
+ "collections": {
+  "geodetic-world": { "digital": 160, "listed_eth": 0.05 },
+  "geodetica": { "digital": 160, "listed_eth": 0.05 },
+  "geodetic-moments": { "digital": 160, "listed_eth": 0.05 },
+  "geodetic-home": { "digital": 160, "listed_eth": 0.05 },
+  "geodetic-memory": { "digital": 160, "listed_eth": 0.05 },
+  "geodetic-illusions": { "digital": 30, "listed_eth": 0.009 }
+ }
 }

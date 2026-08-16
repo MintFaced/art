@@ -11,6 +11,12 @@ fs.mkdirSync(DATA + '/c', { recursive: true });
 const normTitle = (t) => (t || '').replace(/\s*#\s*\d+(\s*\/\s*\d+)?\s*$/, '').trim();
 const key = (w) => `${normTitle(w.title)}|${w.digital?.image || ''}`;
 
+// Genre and group live in an overlay rather than the build, so reclassifying a
+// collection does not mean re-reading the chain.
+// no try/catch: a missing or broken overlay should stop the split, not quietly
+// produce a site with no genres on it
+const META = JSON.parse(fs.readFileSync(ROOT + 'data/source/collection-meta.json', 'utf8')).collections;
+
 // The recovered Geodetic Moment Light is the face of the on-chain set, whether
 // or not it happens to be for sale.
 const COVER_OVERRIDE = { 'geodetic-onchain': 'geodetic-onchain-1' };
@@ -28,6 +34,9 @@ function collapse(works) {
     const t = normTitle(g[0].title);
     if (g.length < 4 || !t || !g[0].digital?.image) { out.push(...g); continue; }
     const first = g[0];
+    // the set is offered at the price of the copy that is actually for sale,
+    // which is rarely the first token minted
+    const seller = g.find((w) => w.status === 'available') || first;
     const holders = g.map((w) => ({
       token_id: w.digital?.token_id,
       status: w.status,
@@ -41,6 +50,11 @@ function collapse(works) {
     const vaulted = holders.filter((h) => h.status === 'vaulted').length;
     out.push({
       ...first,
+      pricing_nzd: seller.pricing_nzd || first.pricing_nzd,
+      pricing_eth: seller.pricing_eth || first.pricing_eth,
+      listed_eth: seller.listed_eth != null ? seller.listed_eth : first.listed_eth,
+      priced_in: seller.priced_in || first.priced_in,
+      offers: seller.offers || first.offers,
       title: t,
       id: `${first.collection}-${t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`,
       edition: { type: 'edition', minted: g.length, live: live.length, burned: g.length - live.length, artist_held: artistHeld, vaulted },
@@ -148,8 +162,10 @@ for (const col of cat.collections) {
   const uniqueWorks = live.length - editionWorks.length;
   const childWorks = (col.children || []).reduce((n, ch) => n + (ch.works || []).length, 0);
 
+  const meta = META[col.slug] || {};
   index.collections.push({
-    slug: col.slug, title: col.title, group: col.group, year: col.year || null, medium: col.medium || null,
+    slug: col.slug, title: col.title, group: meta.group || col.group, year: col.year || null,
+    medium: col.medium || null, genre: meta.genre || null,
     physical: !!col.physical, statement: col.statement || null, sold_out: col.sold_out || false,
     counts: { works: works.length, ...tally, ...(editionsMinted ? { editions_minted: editionsMinted, edition_works: editionWorks.length } : {}), ...(uniqueWorks ? { unique_works: uniqueWorks } : {}), ...(childWorks ? { child_works: childWorks } : {}) },
     cover: cover ? { id: cover.id, image: cover.digital?.image || null, assets: cover.assets || null, orientation: cover.orientation || null } : null,
