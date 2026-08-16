@@ -362,6 +362,22 @@ function shippingFold(collection, meta) {
 }
 
 function pricingBlock(work, collection) {
+  if (pricedInETH(work)) {
+    const opts = optionsFor(work, collection);
+    if (!opts.length) {
+      return `<div class="pricing"><div class="pricing-head"><span class="smallcaps">Price</span></div>
+        <div class="poa">On application</div></div>`;
+    }
+    const eth = work.pricing_eth.digital;
+    return `<div class="pricing">
+      <div class="pricing-head"><span class="smallcaps">Price</span></div>
+      <div class="price-row">
+        <span class="what">Digital</span>
+        <span class="amount" data-eth="${eth}">${eth} ETH</span>
+      </div>
+      <div class="converted" id="converted">Listed in ETH. <span id="ethNzd">Converting...</span></div>
+    </div>`;
+  }
   // the same list the Acquire flow offers, so the page cannot advertise a
   // painting that has already gone
   const rows = optionsFor(work, collection).map((o) => [o.label, o.nzd]);
@@ -583,6 +599,20 @@ function wireTabs() {
 }
 
 async function wireCurrency() {
+  const ethAmount = document.querySelector('.amount[data-eth]');
+  if (ethAmount) {
+    const fx = await MF.fx();
+    const eth = Number(ethAmount.dataset.eth);
+    const nzd = fx.eth ? eth / fx.eth : null;
+    const usd = nzd != null && fx.usd ? nzd * fx.usd : null;
+    const line = document.getElementById('ethNzd');
+    if (line) {
+      line.textContent = nzd != null
+        ? `About $${Math.round(nzd).toLocaleString('en-NZ')} NZD${usd != null ? `, US$${Math.round(usd).toLocaleString('en-US')}` : ''} at today's rate.`
+        : 'Rate unavailable just now.';
+    }
+  }
+
   const bar = document.getElementById('cur');
   if (!bar) return;
   const fx = await MF.fx();
@@ -687,8 +717,23 @@ function startCountdown(onExpire) {
 
 // What is on offer is decided at import time and recorded on the work, so the
 // page and the checkout cannot drift apart or reason about it differently.
+// A work is priced in one currency and converted into the others. Most are NZD;
+// Geodetic Moments and Geodetica are listed in ETH, so that is their price and
+// the NZD figure is the one that moves.
+function pricedInETH(work) {
+  return work.priced_in === 'ETH' && work.pricing_eth && work.pricing_eth.digital != null;
+}
+
 function optionsFor(work, collection) {
   const preview = previewPrices();
+  if (pricedInETH(work) && !preview) {
+    const rate = rateFor('ETH');   // ETH per one NZD
+    const nzd = rate ? work.pricing_eth.digital / rate : null;
+    return (work.offers && work.offers.digital === false) ? [] : [{
+      key: 'digital', label: 'Digital', eth: work.pricing_eth.digital, nzd,
+      sub: 'The token, transferred to your wallet',
+    }];
+  }
   const p = { ...(work.pricing_nzd || {}), ...(preview || {}) };
   const ph = work.physical || {};
   const o = work.offers || null;
@@ -710,8 +755,27 @@ function optionsFor(work, collection) {
 }
 
 function money(nzd) {
+  if (nzd == null || !isFinite(nzd)) return null;
   return '$' + Math.round(nzd).toLocaleString('en-NZ');
 }
+
+// An option knows what it is priced in. Everything else is converted from that.
+function amountIn(option, currency) {
+  const ethRate = rateFor('ETH');           // ETH per one NZD
+  const usdRate = rateFor('USD');
+  if (option.eth != null) {
+    if (currency === 'ETH') return option.eth.toFixed(4) + ' ETH';
+    const nzd = ethRate ? option.eth / ethRate : null;
+    if (currency === 'NZD') return money(nzd);
+    return nzd != null && usdRate ? 'US$' + Math.round(nzd * usdRate).toLocaleString('en-US') : null;
+  }
+  if (currency === 'NZD') return money(option.nzd);
+  if (currency === 'USD') return usdRate ? 'US$' + Math.round(option.nzd * usdRate).toLocaleString('en-US') : null;
+  return ethRate ? (option.nzd * ethRate).toFixed(4) + ' ETH' : null;
+}
+
+// what the buyer is actually asked to agree to, in the currency it is priced in
+const headlinePrice = (option) => amountIn(option, option.eth != null ? 'ETH' : 'NZD');
 
 function stepWhat() {
   const opts = optionsFor(ACQ.work, ACQ.collection);
@@ -722,7 +786,7 @@ function stepWhat() {
     <div class="step">What would you like</div>
     ${opts.map((o) => `<button class="choice" data-what="${o.key}" aria-pressed="false">
       <span class="what">${e(o.label)}<span class="sub">${e(o.sub)}</span></span>
-      <span class="amt">${money(o.nzd)}</span>
+      <span class="amt">${e(headlinePrice(o) || '...')}</span>
     </button>`).join('')}
     <p class="note">Prices are New Zealand dollars. Shipping, crating and freight are included.</p>`;
   SHEET.body().querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => {
@@ -743,9 +807,9 @@ function stepHow() {
   const frog = ACQ.work.wrapped || ACQ.work.digital?.asset === 'FROGDNA';
   SHEET.body().innerHTML = `
     <h2>${e(ACQ.work.title || 'Untitled')}</h2>
-    <div class="which">${e(chosen.label)} &middot; ${money(chosen.nzd)}</div>
+    <div class="which">${e(chosen.label)} &middot; ${e(headlinePrice(chosen) || '...')}</div>
     <div class="step">How would you like to pay</div>
-    <button class="choice" data-how="nzd"><span class="what">Card, New Zealand dollars<span class="sub">Stripe checkout</span></span><span class="amt">${money(chosen.nzd)}</span></button>
+    <button class="choice" data-how="nzd"><span class="what">Card, New Zealand dollars<span class="sub">${chosen.eth != null ? "Converted at today's rate" : 'Stripe checkout'}</span></span><span class="amt" id="nzdAmt">...</span></button>
     <button class="choice" data-how="usd"><span class="what">Card, US dollars<span class="sub">Converted at today's rate</span></span><span class="amt" id="usdAmt">...</span></button>
     <button class="choice" data-how="eth"><span class="what">Ethereum<span class="sub">From your wallet to mintface.eth</span></span><span class="amt" id="ethAmt">...</span></button>
     ${frog ? `<button class="choice" data-how="btc"><span class="what">Bitcoin<span class="sub">Counterparty, arranged directly</span></span><span class="amt">&rarr;</span></button>` : ''}
@@ -756,12 +820,10 @@ function stepHow() {
     ${heldStrip()}`;
 
   const paintAmounts = () => {
-    const usdRate = rateFor('USD');
-    const ethRate = rateFor('ETH');
-    const u = document.getElementById('usdAmt');
-    if (u) u.textContent = usdRate ? 'US$' + Math.round(chosen.nzd * usdRate).toLocaleString('en-US') : 'unavailable';
-    const t = document.getElementById('ethAmt');
-    if (t) t.textContent = ethRate ? (chosen.nzd * ethRate).toFixed(4) + ' ETH' : 'unavailable';
+    for (const [id, cur] of [['nzdAmt', 'NZD'], ['usdAmt', 'USD'], ['ethAmt', 'ETH']]) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = amountIn(chosen, cur) || 'unavailable';
+    }
   };
   MF.fx().then((fx) => { ACQ.fx = fx; paintAmounts(); });
   paintAmounts();
@@ -837,10 +899,10 @@ function stepReserve() {
 function stepEth(chosen) {
   const to = '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180';
   const ethRate = rateFor('ETH');
-  const eth = ethRate ? chosen.nzd * ethRate : null;
+  const eth = chosen.eth != null ? chosen.eth : (ethRate ? chosen.nzd * ethRate : null);
   SHEET.body().innerHTML = `
     <h2>Pay with Ethereum</h2>
-    <div class="which">${e(chosen.label)} &middot; ${money(chosen.nzd)}</div>
+    <div class="which">${e(chosen.label)} &middot; ${e(headlinePrice(chosen) || '')}</div>
     <p class="note">The payment goes to mintface.eth from your own wallet. Nothing here can move your funds or your tokens.</p>
     <div class="step">Amount</div>
     <p class="ok">${eth ? eth.toFixed(4) + ' ETH' : 'rate unavailable'}</p>
@@ -907,7 +969,7 @@ async function stepBtc(chosen) {
     <div class="which">${e(asset)} &middot; Counterparty</div>
     <p class="note">The native asset lives on Bitcoin as a Counterparty issuance, so this one settles directly rather than through a checkout.</p>
     <div class="step">Amount</div>
-    <p class="ok" id="btcAmt">${money(chosen.nzd)}</p>
+    <p class="ok" id="btcAmt">${e(headlinePrice(chosen) || '...')}</p>
     <div class="step">Send to</div>
     <p class="mono-line" id="btcAddr">Loading the address...</p>
     <div class="step">Then</div>
@@ -922,15 +984,16 @@ async function stepBtc(chosen) {
   });
 
   const locked = rateFor('BTC');
-  if (locked) {
-    document.getElementById('btcAmt').textContent = `${(chosen.nzd * locked).toFixed(6)} BTC  ${money(chosen.nzd)}`;
+  const nzdFor = chosen.eth != null ? (rateFor('ETH') ? chosen.eth / rateFor('ETH') : null) : chosen.nzd;
+  if (locked && nzdFor != null) {
+    document.getElementById('btcAmt').textContent = `${(nzdFor * locked).toFixed(6)} BTC  ${money(nzdFor)}`;
   }
   try {
     const r = await fetch('/api/pay-details?chain=bitcoin').then((x) => x.json());
     const addr = document.getElementById('btcAddr');
     addr.textContent = r.address || 'Address on request, email below and it comes straight back.';
-    if (!locked && r.rate) {
-      document.getElementById('btcAmt').textContent = `${(chosen.nzd * r.rate).toFixed(6)} BTC  ${money(chosen.nzd)}`;
+    if (!locked && r.rate && nzdFor != null) {
+      document.getElementById('btcAmt').textContent = `${(nzdFor * r.rate).toFixed(6)} BTC  ${money(nzdFor)}`;
     }
   } catch (err) {
     document.getElementById('btcAddr').textContent = 'Address on request, email below and it comes straight back.';

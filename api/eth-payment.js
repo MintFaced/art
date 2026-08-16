@@ -1,4 +1,4 @@
-import { findWork, priceNZD, useRequestOrigin } from './_lib/data.js';
+import { findWork, priceNZD, priceETH, useRequestOrigin } from './_lib/data.js';
 import { writeWorkState, workState, stateConfigured } from './_lib/state.js';
 import { send } from './_lib/email.js';
 import { readQuote } from './_lib/quote.js';
@@ -70,14 +70,24 @@ export async function POST(request) {
   if ((tx.to || '').toLowerCase() !== RECEIVE) return json({ error: 'that payment did not go to mintface.eth' }, 400);
 
   const paidEth = Number(BigInt(tx.value)) / 1e18;
-  const nzd = priceNZD(hit.work, what || 'digital');
-  if (!nzd) return json({ error: 'no price set for that option' }, 409);
+
+  // where the price is already in ETH there is nothing to convert, so no quote
+  // is needed and no rate can move underneath it
+  const fixedEth = priceETH(hit.work, what || 'digital');
+  if (fixedEth) {
+    if (paidEth < fixedEth * (1 - TOLERANCE_QUOTED)) {
+      return json({ error: `that is ${paidEth.toFixed(4)} ETH, the work is ${fixedEth} ETH` }, 400);
+    }
+  }
+
+  const nzd = fixedEth ? null : priceNZD(hit.work, what || 'digital');
+  if (!fixedEth && !nzd) return json({ error: 'no price set for that option' }, 409);
 
   // The rate is whatever was locked when the slide-over opened. A quote counts as
   // live if it had not expired when the block was mined, so a payment sent inside
   // the window is honoured even if it confirms after it.
   let rate = null;
-  if (quote) {
+  if (!fixedEth && quote) {
     let minedAt = Date.now();
     try {
       const block = await rpc('eth_getBlockByNumber', [tx.blockNumber, false]);
@@ -90,12 +100,13 @@ export async function POST(request) {
       return json({ error: err.message }, 409);
     }
   }
-  if (!rate) rate = await ethPerNzd();
-
-  const expected = nzd * rate;
-  const tolerance = quote ? TOLERANCE_QUOTED : TOLERANCE_LIVE;
-  if (paidEth < expected * (1 - tolerance)) {
-    return json({ error: `that is ${paidEth.toFixed(4)} ETH, the work was quoted at ${expected.toFixed(4)} ETH` }, 400);
+  if (!fixedEth) {
+    if (!rate) rate = await ethPerNzd();
+    const expected = nzd * rate;
+    const tolerance = quote ? TOLERANCE_QUOTED : TOLERANCE_LIVE;
+    if (paidEth < expected * (1 - tolerance)) {
+      return json({ error: `that is ${paidEth.toFixed(4)} ETH, the work was quoted at ${expected.toFixed(4)} ETH` }, 400);
+    }
   }
 
   await writeWorkState(workId, {

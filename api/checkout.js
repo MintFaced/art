@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { findWork, priceNZD, siteOrigin, useRequestOrigin } from './_lib/data.js';
+import { findWork, priceNZD, priceETH, siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { nzdToUsd, toMinorUnits } from './_lib/fx.js';
 import { readQuote } from './_lib/quote.js';
 import { workState, claimWork, stateConfigured } from './_lib/state.js';
@@ -72,14 +72,30 @@ export async function POST(request) {
     return json({ error: 'this work has no painting' }, 400);
   }
 
-  const nzd = priceNZD(work, what);
+  const eth = priceETH(work, what);
+  let nzd = priceNZD(work, what);
+  let ethRate = null;
+
+  // a work listed in ETH needs the locked rate to reach a card amount at all
+  if (eth) {
+    if (!quote) return json({ error: 'this work is priced in ETH, so it needs a live quote' }, 409);
+    try {
+      const q = readQuote(quote, { workId });
+      ethRate = q.rates?.eth || null;
+      quoteId = q.id;
+    } catch (err) {
+      return json({ error: err.message }, 409);
+    }
+    if (!ethRate) return json({ error: 'no ETH rate in that quote' }, 409);
+    nzd = eth / ethRate;
+  }
   if (!nzd) return json({ error: 'no price set for that option' }, 409);
 
   // a quote issued when the slide-over opened is honoured for its full life, so
   // the figure on the button is the figure on the card
   let usdRate = null;
   let quoteId = null;
-  if (cur === 'USD' && quote) {
+  if (cur === 'USD' && quote && !priceETH(work, what)) {
     try {
       const q = readQuote(quote, { workId });
       if (q.rates?.usd) { usdRate = q.rates.usd; quoteId = q.id; }
@@ -113,7 +129,7 @@ export async function POST(request) {
     success_url: `${origin}/w/${encodeURIComponent(workId)}?paid={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/w/${encodeURIComponent(workId)}`,
     client_reference_id: workId,
-    metadata: { workId, what, collection: collection.slug, price_nzd: String(nzd), currency: cur, ...(quoteId ? { quote: quoteId } : {}) },
+    metadata: { workId, what, collection: collection.slug, price_nzd: String(Math.round(nzd * 100) / 100), currency: cur, ...(eth ? { price_eth: String(eth) } : {}), ...(quoteId ? { quote: quoteId } : {}) },
     integration_identifier: IDENTIFIER,
     billing_address_collection: 'required',
     phone_number_collection: { enabled: physical },

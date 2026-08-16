@@ -584,6 +584,28 @@ const other_works = [];
   other_works.push({ note: 'Roads & Rivers name groups: ' + Object.entries(rrGroups).map(([k, v]) => `${k} (${v.length})`).join(', ') });
 }
 
+// Some collections are listed in ETH, so the ETH figure is the price and the
+// NZD shown is converted from it.
+{
+  const path = ROOT + 'data/source/pricing-eth.json';
+  if (fs.existsSync(path)) {
+    const eth = R(path).collections || {};
+    let n = 0;
+    for (const c of collections) {
+      const p = eth[c.slug];
+      if (!p) continue;
+      for (const w of c.works || []) {
+        if (w.status !== 'available') continue;
+        w.pricing_eth = { ...p };
+        w.priced_in = 'ETH';
+        w.offers = { digital: p.digital != null, painting: false, both: false };
+        n++;
+      }
+    }
+    if (n) console.log('eth pricing applied to', n, 'works');
+  }
+}
+
 // Ryan's hand data: prices, dimensions, collector names. Merged over the chain
 // so rebuilding from chain never loses it.
 {

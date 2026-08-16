@@ -48,11 +48,19 @@ export async function findWork(id) {
   return work ? { work, collection: col, meta: idx._meta } : null;
 }
 
-// what: digital | painting | both. Prices are NZD and live in the catalog only,
-// never in the request, so a tampered client cannot set its own price.
+// what: digital | painting | both. Prices live in the catalog only, never in the
+// request, so a tampered client cannot set its own.
 export function priceNZD(work, what) {
   const p = work.pricing_nzd || {};
   const v = p[what];
+  return typeof v === 'number' && v > 0 ? v : null;
+}
+
+// Some collections are listed in ETH. There the ETH figure is the price and the
+// card currencies are converted from it, which is the reverse of everything else.
+export function priceETH(work, what) {
+  if (work.priced_in !== 'ETH') return null;
+  const v = (work.pricing_eth || {})[what];
   return typeof v === 'number' && v > 0 ? v : null;
 }
 
