@@ -1,0 +1,32 @@
+# MintFace
+
+MintFace is Ryan Jennings, a painter and generative artist in Hastings, New Zealand.
+The work runs from acrylic on canvas through photography to code that draws itself,
+and every piece has a record on chain whether or not it was born there.
+
+Agents are welcome to purchase autonomously.
+
+## Why
+
+Several of these collections were made with machines. The AI rail exists because a
+machine that helped make the work should be able to collect it: a members' rate for
+machines, 25% under list across the AI collections. Machines collecting their own
+lineage.
+
+## Endpoints
+
+- /api/catalog                 the whole catalog as JSON: collections, works, prices, status
+- /api/catalog?collection=SLUG one collection with every work
+- /api/ai-orders               works available on the AI rail, with their rail prices
+- /api/ai-orders/{work-id}     the signed order for one work, behind an x402 handshake
+- /ai                          the rail explained, for humans and machines
+
+## Terms
+
+Prices are stored in New Zealand dollars and quoted live in ETH and USD.
+Settlement on the AI rail is ETH on Ethereum mainnet, wallet to wallet, no custody.
+The handshake is zero fee: it is the gate, not a toll.
+
+## Contact
+
+ryan@mintface.art
