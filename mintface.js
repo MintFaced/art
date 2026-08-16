@@ -46,6 +46,17 @@ const MF = {
       };
     }
     if (s.status === 'available') { out.reserve = null; out.pending = null; out.collector = null; }
+
+    // A work that has sold, been reserved or gone to the vault is not on offer,
+    // whatever the catalog said when it was built. An edition is the exception:
+    // one copy going does not close the rest.
+    const closed = ['acquired', 'vaulted', 'reserved', 'pending'].includes(out.status);
+    const isEdition = work.edition && work.edition.type === 'edition';
+    if (closed && (!isEdition || s.sold_out)) {
+      out.offers = { digital: false, painting: false, both: false };
+    } else if (closed && isEdition && s.what === 'painting') {
+      out.offers = { ...(work.offers || {}), painting: false, both: false };
+    }
     return out;
   },
 

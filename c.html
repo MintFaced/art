@@ -118,9 +118,12 @@ function matches(w) {
 function tile(w, collection) {
   const href = w.id ? `/w/${encodeURIComponent(w.id)}` : null;
   const st = MF.STATUS[w.status] || { label: w.status || 'On record', dot: '' };
-  const price = w.pricing_nzd && w.pricing_nzd.digital != null
-    ? '$' + Math.round(w.pricing_nzd.digital).toLocaleString('en-NZ')
-    : null;
+  const o = w.offers;
+  const p = w.pricing_nzd || {};
+  const onOffer = o
+    ? (o.digital ? p.digital : o.painting ? p.painting : o.both ? p.both : null)
+    : (w.status === 'available' ? p.digital : null);
+  const price = onOffer != null ? '$' + Math.round(onOffer).toLocaleString('en-NZ') : null;
   const title = /^#?\d+$/.test((w.title || '').trim())
     ? `${collection.title} ${w.title.startsWith('#') ? w.title : '#' + w.title}`
     : (w.title || 'Untitled');
@@ -163,15 +166,30 @@ function applyFilters() {
 }
 
 function filterBar(collection) {
-  const facets = collection.facets || {};
-  const keys = Object.keys(facets).filter((k) => valueOf[k]);
+  const declared = collection.facets || {};
+  const keys = Object.keys(declared).filter((k) => valueOf[k]);
   if (!keys.length || collection.works.length <= 12) return '';
+
+  // recount against live state, so a work sold this morning is not still
+  // sitting in the Available tally
+  const facets = {};
+  for (const k of keys) {
+    const counts = {};
+    for (const w of collection.works) {
+      const v = valueOf[k](w);
+      if (v == null) continue;
+      counts[v] = (counts[v] || 0) + 1;
+    }
+    if (Object.keys(counts).length > 1) facets[k] = counts;
+  }
+  const live = Object.keys(facets);
+  if (!live.length) return '';
   return `<div class="filters">
     <div class="filter-row">
-      ${keys.map((k) => `<button data-facet="${k}" aria-expanded="false">${e(FACET_LABELS[k] || k)}</button>`).join('')}
+      ${live.map((k) => `<button data-facet="${k}" aria-expanded="false">${e(FACET_LABELS[k] || k)}</button>`).join('')}
       <button class="clear" hidden>Clear</button>
     </div>
-    ${keys.map((k) => `<div class="options" data-for="${k}">
+    ${live.map((k) => `<div class="options" data-for="${k}">
       ${Object.entries(facets[k]).sort((a, b) => b[1] - a[1]).map(([v, n]) =>
         `<button class="opt" data-facet="${k}" data-value="${e(v)}" aria-pressed="false">${e(VALUE_LABELS[v] || v)}<span class="n">${n}</span></button>`).join('')}
     </div>`).join('')}

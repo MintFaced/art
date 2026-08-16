@@ -60,6 +60,13 @@ async function release(session, why) {
     `Hold lifted: ${workId}, ${why}`);
 }
 
+// One of a kind, or any purchase including the painting. An edition can be sold
+// again tomorrow, so a sale records itself without closing the work.
+function closesTheWork(work, what) {
+  if (what === 'painting' || what === 'both') return true;
+  return !(work && work.edition && work.edition.type === 'edition');
+}
+
 async function fulfil(session) {
   const workId = session.metadata?.workId || session.client_reference_id;
   if (!workId) return;
@@ -67,18 +74,22 @@ async function fulfil(session) {
   const hit = await findWork(workId);
   const title = hit?.work?.title || workId;
   const what = session.metadata?.what || 'digital';
+  const closes = closesTheWork(hit?.work, what);
   const amount = (session.amount_total || 0) / 100;
   const currency = (session.currency || 'nzd').toUpperCase();
   const email = session.customer_details?.email || null;
   const address = session.customer_details?.address || null;
   const shipping = address
     ? [session.customer_details?.name, address.line1, address.line2, address.city, address.state, address.postal_code, address.country]
-        .filter(Boolean).join('\n')
+        .filter(Boolean)
+        .filter((line, i, all) => line !== all[i - 1])
+        .join('\n')
     : null;
 
   await writeWorkState(workId, {
-    status: 'acquired',
+    status: closes ? 'acquired' : 'available',
     what,
+    sold_out: closes,
     paid: { amount, currency, session: session.id, at: new Date().toISOString() },
     collector: { email, display_name: null, ens: null, note: null, acquired: new Date().toISOString() },
     token_transfer: 'pending',

@@ -95,6 +95,18 @@ The buyer pays mintface.eth from their own wallet, either through the connect bu
 
 FROGDNA is a Counterparty asset on Bitcoin, and 30 of the 88 are wrapped in an EmblemVault on Ethereum. So its work page offers both: the ETH flow buys a wrapped edition through the wallet, and the Bitcoin option opens an email, because a Counterparty transfer is arranged by hand. Same work, same provenance, no wrapper.
 
+## What a sale does
+
+`checkout.session.completed` arrives, the signature is checked, and the work is written to `data/state.json` through the GitHub API. That commit triggers a deploy, and the work reads as collected about a minute later. Two emails go out from `art@mintface.art`: a receipt to the buyer saying what they bought and what happens next, and a note to Ryan with the amount, the path, the buyer and the shipping address where there is one.
+
+A sale only closes a work that is one of a kind, or any purchase that includes the painting. An edition can be sold again tomorrow, so its sale is recorded without closing the work: FROGDNA's painting has gone while its 88 digital editions stay on sale.
+
+Live state has the last word over the catalog. A work that has sold, been reserved or gone to the vault stops being on offer, whatever the catalog said when it was built, and the collection grids recount their filters against the same live state rather than the counts baked in at split time.
+
+Tested three ways, digital only, painting, and both together: the hold, the sale, the ledger commit, both emails, and the work flipping to collected with the price gone from its page and its grid tile. Also tested: a completed session that is still unpaid does not fulfil, the same session fulfils once the money clears, and a forged signature is refused.
+
+The card leg itself needs a browser. A Checkout Session only mints its PaymentIntent when the hosted form is submitted, so a 4242 payment cannot be driven from a script. Everything downstream of it was exercised on the real session object.
+
 ## Share previews
 
 `/w/:id` is served by `api/w.js`, which fetches the static work page and writes the work's own title, description and image into the head before it goes out. A shared link previews the art rather than the site. Cached for five minutes at the edge, and it falls back to the plain page if the catalog cannot be read.
