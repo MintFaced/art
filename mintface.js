@@ -101,6 +101,16 @@ const MF = {
   // local assets win when present, chain metadata is the fallback
   // R2 first when it holds the master, then a reliable mirror of the same bytes,
   // then whatever the chain metadata points at
+  // A raw hash inside a data URI is read as a fragment, so the browser throws
+  // away everything after it and the picture never arrives. Costly to find, so
+  // it gets caught here rather than trusted upstream.
+  safeData(url) {
+    if (typeof url !== 'string' || !url.startsWith('data:')) return url;
+    const comma = url.indexOf(',');
+    if (comma < 0) return url;
+    return url.slice(0, comma + 1) + url.slice(comma + 1).replace(/#/g, '%23');
+  },
+
   imageUrl(work) {
     if (work.assets && work.assets.image) return `${ASSETS_BASE}/${work.assets.image}`;
     // image_source is a URL to the same bytes somewhere more reliable; anything
@@ -114,7 +124,7 @@ const MF = {
   originUrl(work) {
     const src = work.digital?.image_source;
     if (typeof src === 'string' && /^(https?:)?\/\//.test(src)) return src;
-    return work.digital?.image || work.image || null;
+    return this.safeData(work.digital?.image || work.image || null);
   },
 
   originAnimationUrl(work) {
@@ -162,9 +172,12 @@ const MF = {
     // some works are a video rather than a picture of one
     if (this.isVideo(master)) {
       const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
-      const vOrigin = this.originAnimationUrl(work) || this.originUrl(work);
-      const vFallback = vOrigin && vOrigin !== master ? ` data-fallback="${this.escape(vOrigin)}"` : '';
-      return `<video src="${this.escape(master)}" aria-label="${alt}" class="in"${vFallback}`
+      const light = work.assets && work.assets.animation_display
+        ? `${ASSETS_BASE}/${work.assets.animation_display}` : master;
+      const vChain = [master, this.masterAnimationUrl(work), this.originAnimationUrl(work), this.originUrl(work)]
+        .filter((u, i, a) => u && u !== light && a.indexOf(u) === i);
+      const vFallback = vChain.length ? ` data-fallback="${this.escape(vChain.join(' | '))}"` : '';
+      return `<video src="${this.escape(light)}" aria-label="${alt}" class="in"${vFallback}`
         + ` controls playsinline loop preload="metadata"${o.eager ? ' autoplay muted' : ''}`
         + ` onerror="MF.mediaFallback(this)"></video>`;
     }
@@ -220,6 +233,14 @@ const MF = {
   },
 
   animationUrl(work) {
+    // the transcoded copy starts playing straight away, the master does not
+    if (work.assets && work.assets.animation_display) return `${ASSETS_BASE}/${work.assets.animation_display}`;
+    if (work.assets && work.assets.animation) return `${ASSETS_BASE}/${work.assets.animation}`;
+    return work.digital?.animation || null;
+  },
+
+  // the master film, for the fallback chain
+  masterAnimationUrl(work) {
     if (work.assets && work.assets.animation) return `${ASSETS_BASE}/${work.assets.animation}`;
     return work.digital?.animation || null;
   },
@@ -281,7 +302,10 @@ const MF = {
 
   collectionCard(c) {
     const e = this.escape;
-    const cover = c.cover && c.cover.image ? { digital: { image: c.cover.image }, title: c.title } : null;
+    // the card is the whole page's weight, so it reads from the mirror too
+    const cover = c.cover && (c.cover.image || c.cover.assets)
+      ? { digital: { image: c.cover.image }, assets: c.cover.assets || null, title: c.title }
+      : null;
     const n = c.counts.works || c.counts.child_works || 0;
     const bits = [c.year, `${n} ${n === 1 ? 'work' : 'works'}`].filter(Boolean);
     if (c.counts.editions_minted) bits.push(`${c.counts.editions_minted} editions`);

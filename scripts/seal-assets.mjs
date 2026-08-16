@@ -43,8 +43,12 @@ async function verify(key) {
 }
 
 const EXTS = ['jpg', 'png', 'svg', 'webp', 'gif', 'tif', 'avif', 'mp4', 'webm', 'mov'];
+const maybe = (key) => (inBucket.has(key) ? key : null);
 const findKey = (slug, id, kind) => {
   for (const ext of EXTS) {
+    // the still display copy is always webp, the film copy is mp4 and is
+    // looked up by name, so never let one answer for the other
+    if (kind === 'display' && ext !== 'webp') continue;
     const k = `${slug}/${id}-${kind}.${ext}`;
     if (inBucket.has(k)) return k;
   }
@@ -70,8 +74,8 @@ async function lane() {
   while (cursor < jobs.length) {
     const { w, slug, id } = jobs[cursor++];
     const found = {};
-    for (const [field, kind] of [['display', 'display'], ['image', 'image'], ['animation', 'animation']]) {
-      const key = findKey(slug, id, kind);
+    for (const [field, kind] of [['display', 'display'], ['image', 'image'], ['animation', 'animation'], ['animation_display', 'display-video']]) {
+      const key = kind === 'display-video' ? maybe(`${slug}/${id}-display.mp4`) : findKey(slug, id, kind);
       if (!key) continue;
       const v = await verify(key);
       if (v.ok) found[field] = key;
@@ -92,20 +96,27 @@ await Promise.all(Array.from({ length: 12 }, lane));
 // The members are the same file at the same URL, which is why they collapsed,
 // so match them on that URL rather than on an id that was never shared.
 const originToAssets = new Map();
+// a film has its own source URL, so edition members match on that separately
+const filmToKey = new Map();
 const splitJobs = [];
 for (const slug of readdirSync('data/c').filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', ''))) {
   let split;
   try { split = JSON.parse(readFileSync(`data/c/${slug}.json`, 'utf8')); } catch { continue; }
   for (const sw of split.works || []) {
     const src = sw.digital?.image_source || sw.digital?.image || sw.image;
-    if (typeof src === 'string') splitJobs.push({ slug, id: sw.id, src });
+    const film = sw.digital?.animation;
+    if (typeof src === 'string' || typeof film === 'string') splitJobs.push({ slug, id: sw.id, src, film });
   }
 }
 let splitCursor = 0;
 async function splitLane() {
   while (splitCursor < splitJobs.length) {
-    const { slug, id, src } = splitJobs[splitCursor++];
-    if (originToAssets.has(src)) continue;
+    const { slug, id, src, film } = splitJobs[splitCursor++];
+    if (typeof film === 'string' && !filmToKey.has(film)) {
+      const k = maybe(`${slug}/${id}-display.mp4`);
+      if (k && (await verify(k)).ok) filmToKey.set(film, k);
+    }
+    if (!src || originToAssets.has(src)) continue;
     const found = {};
     for (const [field, kind] of [['display', 'display'], ['image', 'image']]) {
       const key = findKey(slug, id, kind);
@@ -119,10 +130,19 @@ await Promise.all(Array.from({ length: 16 }, splitLane));
 let shared = 0;
 for (const u of report.untouched) {
   const assets = u.src ? originToAssets.get(u.src) : null;
-  if (!assets) continue;
-  u.work.assets = { ...(u.work.assets || {}), ...assets };
+  const film = u.work.digital?.animation;
+  const filmKey = typeof film === 'string' ? filmToKey.get(film) : null;
+  if (!assets && !filmKey) continue;
+  u.work.assets = { ...(u.work.assets || {}), ...(assets || {}), ...(filmKey ? { animation_display: filmKey } : {}) };
   u.shared = true;
   shared++;
+}
+// members that already matched on their still may still be missing their film
+for (const { w } of jobs) {
+  const film = w.digital?.animation;
+  if (!w.assets || typeof film !== 'string' || w.assets.animation_display) continue;
+  const filmKey = filmToKey.get(film);
+  if (filmKey) w.assets.animation_display = filmKey;
 }
 report.untouched = report.untouched.filter((u) => !u.shared);
 console.log(`${shared} edition members pointed at the file their set already mirrors`);

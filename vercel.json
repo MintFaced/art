@@ -1,6 +1,15 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/derive-assets.js": {
+      "maxDuration": 300,
+      "memory": 3008
+    },
+    "api/warm-assets.js": {
+      "maxDuration": 300
+    }
+  },
   "rewrites": [
     {
       "source": "/",
@@ -13,6 +22,10 @@
     {
       "source": "/c/frogdna",
       "destination": "/f"
+    },
+    {
+      "source": "/c/patrimora",
+      "destination": "/patrimora"
     },
     {
       "source": "/c/:slug",
