@@ -146,12 +146,19 @@ function heroMarkup(work, collection, pool) {
     const st = MF.STATUS[work.status] || { label: work.status, dot: '' };
     const offers = work.offers || {};
     const p = work.pricing_nzd || {};
-    const price = offers.both && p.both != null ? p.both
-      : offers.painting && p.painting != null ? p.painting
-      : offers.digital && p.digital != null ? p.digital
-      : null;
+    // a work listed in ETH shows the figure it is listed in
+    let price = null;
+    if (work.priced_in === 'ETH' && work.pricing_eth && work.pricing_eth.digital != null && offers.digital) {
+      price = `${work.pricing_eth.digital} ETH`;
+    } else {
+      const nzd = offers.both && p.both != null ? p.both
+        : offers.painting && p.painting != null ? p.painting
+        : offers.digital && p.digital != null ? p.digital
+        : null;
+      if (nzd != null) price = `$${Math.round(nzd).toLocaleString('en-NZ')}`;
+    }
     tail = `<span><span class="dot ${st.dot}"></span> ${e(st.label)}</span>`
-      + (price != null ? `<span class="price">$${Math.round(price).toLocaleString('en-NZ')}</span>` : '');
+      + (price ? `<span class="price">${e(price)}</span>` : '');
   }
 
   return `<a href="/w/${encodeURIComponent(work.id)}">

@@ -120,10 +120,15 @@ function tile(w, collection) {
   const st = MF.STATUS[w.status] || { label: w.status || 'On record', dot: '' };
   const o = w.offers;
   const p = w.pricing_nzd || {};
-  const onOffer = o
-    ? (o.digital ? p.digital : o.painting ? p.painting : o.both ? p.both : null)
-    : (w.status === 'available' ? p.digital : null);
-  const price = onOffer != null ? '$' + Math.round(onOffer).toLocaleString('en-NZ') : null;
+  let price = null;
+  if (w.priced_in === 'ETH' && w.pricing_eth && w.pricing_eth.digital != null && o && o.digital) {
+    price = `${w.pricing_eth.digital} ETH`;
+  } else {
+    const onOffer = o
+      ? (o.digital ? p.digital : o.painting ? p.painting : o.both ? p.both : null)
+      : (w.status === 'available' ? p.digital : null);
+    if (onOffer != null) price = '$' + Math.round(onOffer).toLocaleString('en-NZ');
+  }
   const title = /^#?\d+$/.test((w.title || '').trim())
     ? `${collection.title} ${w.title.startsWith('#') ? w.title : '#' + w.title}`
     : (w.title || 'Untitled');
