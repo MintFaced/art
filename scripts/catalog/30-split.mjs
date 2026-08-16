@@ -11,6 +11,10 @@ fs.mkdirSync(DATA + '/c', { recursive: true });
 const normTitle = (t) => (t || '').replace(/\s*#\s*\d+(\s*\/\s*\d+)?\s*$/, '').trim();
 const key = (w) => `${normTitle(w.title)}|${w.digital?.image || ''}`;
 
+// The recovered Geodetic Moment Light is the face of the on-chain set, whether
+// or not it happens to be for sale.
+const COVER_OVERRIDE = { 'geodetic-onchain': 'geodetic-onchain-1' };
+
 // collapse rule: 4+ works in one collection sharing a title and an image are one edition set
 function collapse(works) {
   const groups = new Map();
@@ -128,8 +132,11 @@ for (const col of cat.collections) {
 
   const tally = {};
   for (const w of works) tally[w.status] = (tally[w.status] || 0) + 1;
+  // some collections are known by one work rather than by whatever is for sale
+  const chosen = COVER_OVERRIDE[col.slug];
   // lead with something a collector can actually buy
-  const cover = works.find((w) => w.status === 'available' && w.digital?.image)
+  const cover = (chosen && works.find((w) => w.id === chosen))
+    || works.find((w) => w.status === 'available' && w.digital?.image)
     || works.find((w) => w.digital?.image)
     || works[0]
     || null;
@@ -145,7 +152,7 @@ for (const col of cat.collections) {
     slug: col.slug, title: col.title, group: col.group, year: col.year || null, medium: col.medium || null,
     physical: !!col.physical, statement: col.statement || null, sold_out: col.sold_out || false,
     counts: { works: works.length, ...tally, ...(editionsMinted ? { editions_minted: editionsMinted, edition_works: editionWorks.length } : {}), ...(uniqueWorks ? { unique_works: uniqueWorks } : {}), ...(childWorks ? { child_works: childWorks } : {}) },
-    cover: cover ? { id: cover.id, image: cover.digital?.image || null, orientation: cover.orientation || null } : null,
+    cover: cover ? { id: cover.id, image: cover.digital?.image || null, assets: cover.assets || null, orientation: cover.orientation || null } : null,
     contracts: col.contracts || null,
     links: col.links || null,
     notes: col.notes || null,
