@@ -10,11 +10,14 @@
       "maxDuration": 300
     }
   },
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/",
-      "destination": "/home"
-    },
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
     {
       "source": "/w/:id",
       "destination": "/api/w"
