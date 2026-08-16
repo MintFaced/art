@@ -530,6 +530,7 @@ function render(work, collection, meta) {
   wireTabs();
   wireMotion();
   wireCurrency();
+  wireSheetClose();
   wireAcquire(work, collection);
   thanksIfPaid();
 }
@@ -900,6 +901,15 @@ async function stepBtc(chosen) {
   }
 }
 
+// closing the panel is wired on its own, so it works whether the panel was
+// opened by the Acquire button or by coming back from Stripe
+function wireSheetClose() {
+  const shut = () => { clearInterval(QUOTE_TIMER); SHEET.close(); };
+  document.getElementById('sheetClose').addEventListener('click', shut);
+  document.getElementById('scrim').addEventListener('click', shut);
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') shut(); });
+}
+
 function wireAcquire(work, collection) {
   const b = document.getElementById('acquire');
   if (!b) return;
@@ -918,10 +928,6 @@ function wireAcquire(work, collection) {
     stepWhat();
     lockQuote();
   });
-  const shut = () => { clearInterval(QUOTE_TIMER); SHEET.close(); };
-  document.getElementById('sheetClose').addEventListener('click', shut);
-  document.getElementById('scrim').addEventListener('click', shut);
-  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') SHEET.close(); });
 }
 
 // coming back from Stripe: the webhook does the fulfilling, this only says thank you
@@ -931,7 +937,13 @@ function thanksIfPaid() {
   SHEET.open();
   SHEET.body().innerHTML = `<h2>Thank you</h2>
     <p class="ok">Your payment went through.</p>
-    <p class="note">A confirmation is on its way. The work will show as collected here shortly, and Ryan will be in touch about the token and anything physical.</p>`;
+    <p class="note">A confirmation is on its way. The work will show as collected here shortly, and Ryan will be in touch about the token and anything physical.</p>
+    <button class="choice go" id="thanksDone"><span class="what">Back to the work</span><span class="amt">&rarr;</span></button>`;
+  document.getElementById('thanksDone').addEventListener('click', () => {
+    SHEET.close();
+    // drop the ?paid= so a refresh does not thank them twice
+    history.replaceState(null, '', location.pathname);
+  });
 }
 
 (async function () {

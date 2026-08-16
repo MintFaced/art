@@ -88,6 +88,8 @@ async function fulfil(session) {
 
   await writeWorkState(workId, {
     status: closes ? 'acquired' : 'available',
+    pending: null,
+    note: null,
     what,
     sold_out: closes,
     paid: { amount, currency, session: session.id, at: new Date().toISOString() },
