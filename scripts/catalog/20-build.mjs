@@ -649,25 +649,49 @@ const other_works = [];
   other_works.push({ note: 'Roads & Rivers name groups: ' + Object.entries(rrGroups).map(([k, v]) => `${k} (${v.length})`).join(', ') });
 }
 
-// Some collections are listed in ETH, so the ETH figure is the price and the
-// NZD shown is converted from it.
+// Images repaired by hand where the chain data is damaged. Always carries a note,
+// so a repair is never presented as chain truth.
 {
-  const path = ROOT + 'data/source/pricing-eth.json';
+  const path = ROOT + 'data/source/recovered-images.json';
   if (fs.existsSync(path)) {
-    const eth = R(path).collections || {};
+    const rec = R(path).works || {};
     let n = 0;
     for (const c of collections) {
-      const p = eth[c.slug];
+      for (const w of c.works || []) {
+        const r = rec[w.id];
+        if (!r) continue;
+        if (r.image) w.digital.image = r.image;
+        w.digital.image_note = r.note || null;
+        w.digital.image_recovered = true;
+        delete w.digital.image_broken;
+        n++;
+      }
+    }
+    if (n) console.log('recovered images applied to', n, 'works');
+  }
+}
+
+// Two collections are listed in ETH on chain. NZD is master here, so the figure
+// was converted once and rounded clean; the site quotes ETH live from it like
+// every other work.
+{
+  const path = ROOT + 'data/source/pricing-override.json';
+  if (fs.existsSync(path)) {
+    const src = R(path);
+    const per = src.collections || {};
+    let n = 0;
+    for (const c of collections) {
+      const p = per[c.slug];
       if (!p) continue;
       for (const w of c.works || []) {
         if (w.status !== 'available') continue;
-        w.pricing_eth = { ...p };
-        w.priced_in = 'ETH';
+        w.pricing_nzd = { ...(w.pricing_nzd || {}), digital: p.digital };
+        if (p.listed_eth) w.listed_eth = p.listed_eth;
         w.offers = { digital: p.digital != null, painting: false, both: false };
         n++;
       }
     }
-    if (n) console.log('eth pricing applied to', n, 'works');
+    if (n) console.log('price override applied to', n, 'works');
   }
 }
 

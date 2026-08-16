@@ -337,6 +337,7 @@ function provenanceFold(work) {
     rows.push(['Vault contract', e(work.wrapped.contract), true]);
     rows.push(['Vault token', e(work.wrapped.token_id), true]);
   }
+  if (d.image_note) rows.push(['Image', `<span class="pending">${e(d.image_note)}</span>`]);
   const minted = work.minted_onchain || work.minted || d.genesis_timestamp;
   if (minted) rows.push(['Minted', e(MF.date(minted))]);
   const links = MF.links(work);
@@ -579,6 +580,7 @@ function render(work, collection, meta) {
       ${actionBlock(work, collection)}
     </div>`;
 
+  MF.progress.watch(document.getElementById('main'));
   wireTabs();
   wireMotion();
   wireCurrency();

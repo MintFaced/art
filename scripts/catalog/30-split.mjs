@@ -81,12 +81,25 @@ function facets(works) {
     if (Object.keys(counts).length > 1) f[key] = counts;
   };
   distinct('availability', (w) => w.status);
+  distinct('year', (w) => {
+    const m = w.minted_onchain || w.minted || w.digital?.genesis_timestamp;
+    const y = w.year || (m ? new Date(m).getFullYear() : null);
+    return y ? String(y) : null;
+  });
+  distinct('medium', (w) => w.medium || null);
+  distinct('price', (w) => {
+    const p = w.pricing_nzd || {};
+    const v = [p.both, p.painting, p.digital].find((x) => typeof x === 'number' && x > 0);
+    if (v == null) return null;
+    if (v < 500) return 'under-500';
+    if (v < 1500) return '500-1500';
+    if (v < 5000) return '1500-5000';
+    return 'over-5000';
+  });
   // only offer orientation when most of the collection can answer it
   const known = works.filter((w) => w.orientation).length;
   if (known / Math.max(works.length, 1) >= 0.7) distinct('orientation', (w) => w.orientation);
   distinct('edition', (w) => (w.edition && w.edition.type === 'edition' ? 'edition' : 'unique'));
-  const priced = works.filter((w) => w.pricing_nzd && w.pricing_nzd.digital != null).length;
-  if (priced) f.price = { priced, unpriced: works.length - priced };
   return f;
 }
 

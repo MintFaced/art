@@ -224,6 +224,7 @@ async function hero(home, idx) {
       </div>`);
 
     await hero(home, idx);
+    MF.progress.watch(document.getElementById('main'));
   } catch (err) {
     document.getElementById('main').innerHTML = '<div class="loading">Could not load</div>';
     console.error(err);

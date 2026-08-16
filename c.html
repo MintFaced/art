@@ -40,6 +40,20 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-
 .opt[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .opt .n{opacity:.6;margin-left:7px}
 .count{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:18px 0 0}
+.states{
+  max-width:1500px;margin:0 auto;padding:24px 28px 0;display:flex;gap:0;flex-wrap:wrap;
+  border-top:1px solid var(--rule);
+}
+.states button{
+  background:none;border:1px solid var(--rule);border-right-width:0;cursor:pointer;
+  padding:9px 16px;font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+.states button:last-child{border-right-width:1px}
+.states button:hover{color:var(--ink)}
+.states button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.states button .n{margin-left:9px;opacity:.55}
+.states + .filters{border-top:0;padding-top:18px}
 
 /* ---------- grid ---------- */
 .grid{max-width:1500px;margin:0 auto;padding:14px 28px 40px;column-count:4;column-gap:34px}
@@ -84,12 +98,22 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-
 const e = MF.escape;
 const BATCH = 48;
 
-const FACET_LABELS = { availability: 'Availability', orientation: 'Orientation', edition: 'Edition', price: 'Price' };
+const FACET_LABELS = { orientation: 'Orientation', edition: 'Edition', price: 'Price', year: 'Year', medium: 'Medium' };
 const VALUE_LABELS = {
-  available: 'Available', acquired: 'Collected', vaulted: 'Vaulted', sold_out: 'Sold out',
+  available: 'Available', acquired: 'Collected', collected: 'Collected', vaulted: 'Vaulted', sold_out: 'Sold out',
   uninscribed: 'Not yet inscribed', burned: 'Burned', reserved: 'Reserved',
   portrait: 'Portrait', landscape: 'Landscape', square: 'Square',
-  unique: 'Unique 1/1', edition: 'Edition', priced: 'Priced', unpriced: 'On application',
+  unique: 'Unique 1/1', edition: 'Edition',
+  'under-500': 'Under $500', '500-1500': '$500 to $1,500', '1500-5000': '$1,500 to $5,000', 'over-5000': 'Over $5,000',
+};
+
+// the order a buyer thinks in, not alphabetical
+const PRICE_ORDER = ['under-500', '500-1500', '1500-5000', 'over-5000'];
+const STATE_ORDER = ['available', 'collected', 'vaulted'];
+const STATE_MATCH = {
+  available: (w) => w.status === 'available' || w.status === 'uninscribed',
+  collected: (w) => w.status === 'acquired' || w.status === 'sold_out',
+  vaulted: (w) => w.status === 'vaulted',
 };
 
 function slug() {
@@ -100,14 +124,32 @@ function slug() {
 
 const valueOf = {
   availability: (w) => w.status,
+  year: (w) => {
+    const m = w.minted_onchain || w.minted || w.digital?.genesis_timestamp;
+    const y = w.year || (m ? new Date(m).getFullYear() : null);
+    return y ? String(y) : null;
+  },
+  medium: (w) => w.medium || null,
   orientation: (w) => w.orientation || null,
   edition: (w) => (w.edition && w.edition.type === 'edition' ? 'edition' : 'unique'),
-  price: (w) => (w.pricing_nzd && w.pricing_nzd.digital != null ? 'priced' : 'unpriced'),
+  price: (w) => {
+    const p = w.pricing_nzd || {};
+    const v = [p.both, p.painting, p.digital].find((x) => typeof x === 'number' && x > 0);
+    if (v == null) return null;
+    if (v < 500) return 'under-500';
+    if (v < 1500) return '500-1500';
+    if (v < 5000) return '1500-5000';
+    return 'over-5000';
+  },
 };
+
+// the state control is its own thing, not one of the folded facets
+let STATE = 'all';
 
 const active = {}; // facet -> Set of values
 
 function matches(w) {
+  if (STATE !== 'all' && !STATE_MATCH[STATE](w)) return false;
   for (const [facet, set] of Object.entries(active)) {
     if (!set.size) continue;
     if (!set.has(valueOf[facet](w))) return false;
@@ -161,6 +203,7 @@ function paint(reset) {
   if (count) count.textContent =
     `${filtered.length} ${filtered.length === 1 ? 'work' : 'works'}${filtered.length !== COLLECTION.works.length ? ' of ' + COLLECTION.works.length : ''}`;
   document.getElementById('sentinel').hidden = shown >= filtered.length;
+  MF.progress.watch(grid);
 }
 
 function applyFilters() {
@@ -170,9 +213,20 @@ function applyFilters() {
   if (clear) clear.hidden = Object.values(active).every((s) => !s.size);
 }
 
+function stateControl(works) {
+  const counts = {};
+  for (const k of STATE_ORDER) counts[k] = works.filter(STATE_MATCH[k]).length;
+  const live = STATE_ORDER.filter((k) => counts[k]);
+  if (live.length < 2) return '';
+  return `<div class="states" id="states">
+    <button data-state="all" aria-pressed="true">All<span class="n">${works.length}</span></button>
+    ${live.map((k) => `<button data-state="${k}" aria-pressed="false">${e(VALUE_LABELS[k] || k)}<span class="n">${counts[k]}</span></button>`).join('')}
+  </div>`;
+}
+
 function filterBar(collection) {
   const declared = collection.facets || {};
-  const keys = Object.keys(declared).filter((k) => valueOf[k]);
+  const keys = Object.keys(declared).filter((k) => valueOf[k] && k !== 'availability');
   if (!keys.length || collection.works.length <= 12) return '';
 
   // recount against live state, so a work sold this morning is not still
@@ -195,11 +249,27 @@ function filterBar(collection) {
       <button class="clear" hidden>Clear</button>
     </div>
     ${live.map((k) => `<div class="options" data-for="${k}">
-      ${Object.entries(facets[k]).sort((a, b) => b[1] - a[1]).map(([v, n]) =>
+      ${Object.entries(facets[k]).sort((a, b) => {
+        if (k === 'price') return PRICE_ORDER.indexOf(a[0]) - PRICE_ORDER.indexOf(b[0]);
+        if (k === 'year') return Number(b[0]) - Number(a[0]);
+        return b[1] - a[1];
+      }).map(([v, n]) =>
         `<button class="opt" data-facet="${k}" data-value="${e(v)}" aria-pressed="false">${e(VALUE_LABELS[v] || v)}<span class="n">${n}</span></button>`).join('')}
     </div>`).join('')}
     <div class="count" id="count"></div>
   </div>`;
+}
+
+function wireStates() {
+  const bar = document.getElementById('states');
+  if (!bar) return;
+  bar.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button');
+    if (!b) return;
+    STATE = b.dataset.state;
+    [...bar.querySelectorAll('button')].forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    applyFilters();
+  });
 }
 
 function wireFilters() {
@@ -253,6 +323,7 @@ function render(collection) {
       ${collection.statement ? `<p class="statement">${e(collection.statement)}</p>` : ''}
       ${collection.tokenize_on_purchase && collection.notes ? `<p class="minting">${e(collection.notes)}</p>` : ''}
     </div>
+    ${stateControl(collection.works)}
     ${filterBar(collection)}
     <div class="grid" id="grid"></div>
     ${collection.works.length ? '' : '<div class="loading">Nothing here yet</div>'}
@@ -261,6 +332,7 @@ function render(collection) {
   if (!document.getElementById('count')) {
     document.getElementById('grid').insertAdjacentHTML('beforebegin', '<div class="count" style="max-width:1500px;margin:0 auto;padding:0 28px" id="count"></div>');
   }
+  wireStates();
   wireFilters();
   applyFilters();
 

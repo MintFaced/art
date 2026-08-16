@@ -28,6 +28,24 @@ img{max-width:100%;display:block}
 .foot{padding:0 28px 60px;text-align:center}
 .foot a{margin:0 14px}
 .loading{padding:90px 28px;text-align:center;color:var(--faint);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+
+/* a hairline and a number. Nothing spins. */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:1px;z-index:60;
+  background:transparent;pointer-events:none;
+  opacity:0;transition:opacity .4s ease;
+}
+.progress.on{opacity:1}
+.progress .fill{
+  height:100%;width:0;background:var(--ink);
+  transition:width .28s cubic-bezier(.4,0,.2,1);
+}
+.progress .pct{
+  position:absolute;top:12px;right:28px;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+  font-variant-numeric:tabular-nums;
+}
+@media(max-width:560px){.progress .pct{right:20px}}
 .pending{color:var(--faint)}
 .shot.empty{min-height:120px}
 

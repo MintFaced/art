@@ -3,7 +3,7 @@
 /* ─────────────────────────────────────────────────────────────
    ASSET BASE URL ... change this one line when storage moves
    ───────────────────────────────────────────────────────────── */
-const ASSETS_BASE = 'https://pub-40b0b488cd5b4b6597427eb295d7ca63.r2.dev/assets';
+const ASSETS_BASE = 'https://assets.mintface.art';
 
 /* ─────────────────────────────────────────────────────────────
    THUMBNAIL SOURCE ... change this one line when R2 holds thumbs
@@ -231,7 +231,7 @@ const MF = {
   },
 
   // features and the vault have their own pages, everything else is a grid
-  ROUTES: { genesis: '/genesis', '2022-10k': '/10k', 'the-vault': '/vault' },
+  ROUTES: { genesis: '/genesis', '2022-10k': '/10k', 'the-vault': '/vault', frogdna: '/c/frogdna' },
 
   collectionHref(c) {
     return this.ROUTES[c.slug] || `/c/${encodeURIComponent(c.slug)}`;
@@ -334,6 +334,64 @@ const MF = {
     }
     if (work.mint_tx && !isSet) out.push(['Mint transaction', `https://etherscan.io/tx/${work.mint_tx}`]);
     return out;
+  },
+
+  /* ---------- loading ---------- */
+  // A hairline across the top and a small percentage. It counts the artwork,
+  // not the page: images are what people wait for here.
+  progress: {
+    el: null, total: 0, done: 0,
+
+    mount() {
+      if (this.el) return this.el;
+      const d = document.createElement('div');
+      d.className = 'progress';
+      d.innerHTML = '<div class="fill"></div><div class="pct"></div>';
+      document.body.appendChild(d);
+      this.el = d;
+      return d;
+    },
+
+    watch(root) {
+      const imgs = [...(root || document).querySelectorAll('img, object.live, video')];
+      const pending = imgs.filter((n) => !(n.tagName === 'IMG' && n.complete));
+      if (pending.length < 2) return;          // not worth telling anyone about
+      this.mount().classList.add('on');
+      this.total = pending.length;
+      this.done = 0;
+      this.paint();
+      for (const n of pending) {
+        const tick = () => this.tick();
+        n.addEventListener('load', tick, { once: true });
+        n.addEventListener('error', tick, { once: true });
+        if (n.tagName === 'VIDEO') n.addEventListener('loadeddata', tick, { once: true });
+      }
+      // never leave the bar hanging on a source that answers slowly
+      clearTimeout(this._giveUp);
+      this._giveUp = setTimeout(() => this.finish(), 15000);
+    },
+
+    tick() {
+      this.done += 1;
+      this.paint();
+      if (this.done >= this.total) setTimeout(() => this.finish(), 260);
+    },
+
+    paint() {
+      if (!this.el) return;
+      const pct = this.total ? Math.min(100, Math.round((this.done / this.total) * 100)) : 0;
+      this.el.querySelector('.fill').style.width = pct + '%';
+      this.el.querySelector('.pct').textContent = pct + '%';
+    },
+
+    finish() {
+      clearTimeout(this._giveUp);
+      if (!this.el) return;
+      this.el.querySelector('.fill').style.width = '100%';
+      this.el.querySelector('.pct').textContent = '';
+      this.el.classList.remove('on');
+      this.total = this.done = 0;
+    },
   },
 
   escape(s) {

@@ -11,6 +11,10 @@
       "destination": "/api/w"
     },
     {
+      "source": "/c/frogdna",
+      "destination": "/f"
+    },
+    {
       "source": "/c/:slug",
       "destination": "/c"
     },
@@ -20,6 +24,10 @@
     },
     {
       "source": "/10k",
+      "destination": "/f"
+    },
+    {
+      "source": "/frogdna",
       "destination": "/f"
     }
   ],

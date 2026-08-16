@@ -28,6 +28,10 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(52px,11vw,132px);lin
 .prose p{font-family:var(--serif);font-size:clamp(20px,2.2vw,24px);line-height:1.62;color:#221f1a;margin:34px 0}
 .prose p.lead{font-size:clamp(25px,3vw,34px);line-height:1.38;color:var(--ink);margin:52px 0}
 .prose p.close{font-size:clamp(23px,2.8vw,30px);line-height:1.42;margin:64px 0 0;color:var(--ink)}
+.prose h2.chapter{
+  font-family:var(--sans);font-weight:400;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);margin:76px 0 0;padding-bottom:12px;border-bottom:1px solid var(--rule);
+}
 .prose strong{font-weight:500}
 .prose a{text-decoration:none;border-bottom:1px solid var(--rule)}
 .prose a:hover{border-color:var(--ink)}
@@ -52,6 +56,18 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(52px,11vw,132px);lin
 .strip img{width:100%;height:100%;object-fit:cover}
 .strip .t{font-family:var(--serif);font-size:15px;line-height:1.25;margin-top:9px;color:#3a362f}
 .strip a:hover .t{text-decoration:underline;text-underline-offset:3px}
+
+.buy{margin-top:76px;border-top:1px solid var(--ink);padding-top:20px}
+.buy-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0 18px}
+.buy-row .what{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.buy-row .amt{font-family:var(--serif);font-size:27px}
+.buy .btn{
+  display:block;width:100%;padding:19px 20px;background:var(--ink);color:var(--paper);
+  border:0;cursor:pointer;font-family:var(--sans);text-decoration:none;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;
+}
+.buy .btn:hover{background:#2c2924}
+.buy .note{font-size:12px;color:var(--muted);line-height:1.7;margin:16px 0 0}
 
 .tail{max-width:660px;margin:0 auto;padding:80px 28px 110px;text-align:center}
 .tail a{margin:0 14px}
@@ -87,7 +103,8 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(52px,11vw,132px);lin
 const e = MF.escape;
 
 function which() {
-  const m = location.pathname.match(/^\/(genesis|10k)\/?$/);
+  const m = location.pathname.match(/^\/(genesis|10k|frogdna)\/?$/)
+    || location.pathname.match(/^\/c\/(frogdna)\/?$/);
   if (m) return m[1];
   return new URLSearchParams(location.search).get('f') || 'genesis';
 }
@@ -98,6 +115,8 @@ function fmt(text) {
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\[(.+?)\]\((\/[^)\s]*)\)/g, '<a href="$2">$1</a>');
 }
+
+let FEATURE_WORK = null;
 
 const CHAIN = {
   ethereum: 'Ethereum',
@@ -183,7 +202,14 @@ async function render(feature) {
       continue;
     }
     flushProse();
-    if (b.type === 'work') {
+    if (b.type === 'heading') {
+      parts.push(`<div class="prose"><h2 class="chapter">${fmt(b.text)}</h2></div>`);
+    } else if (b.type === 'image') {
+      parts.push(`<div class="plate single">
+        <div class="shot"><img src="${e(b.src)}" alt="${e(b.caption || feature.title)}" loading="lazy" decoding="async" onload="this.classList.add('in')"></div>
+        ${b.caption ? `<div class="cap"><span>${e(b.caption)}</span></div>` : ''}
+      </div>`);
+    } else if (b.type === 'work') {
       const hit = await MF.work(b.id);
       parts.push(plate(hit && hit.work));
     } else if (b.type === 'works') {
@@ -192,12 +218,32 @@ async function render(feature) {
   }
   flushProse();
 
+  if (feature.checkout) {
+    const hit = await MF.work(feature.checkout);
+    if (hit) {
+      const w = hit.work;
+      const eth = w.wrapped ? `${w.wrapped.artist_held} of the wrapped editions are still with the artist` : null;
+      const price = w.pricing_nzd && w.pricing_nzd.digital != null
+        ? `$${Math.round(w.pricing_nzd.digital).toLocaleString('en-NZ')}`
+        : null;
+      parts.push(`<div class="prose buy">
+        <div class="buy-row">
+          <span class="what">The digital work</span>
+          ${price ? `<span class="amt">${e(price)}</span>` : ''}
+        </div>
+        <a class="btn" href="/w/${encodeURIComponent(w.id)}">Acquire this artwork</a>
+        <p class="note">Eighty-eight editions on Bitcoin as a Counterparty asset${eth ? `, and ${e(eth)} on Ethereum` : ''}. Paying in Bitcoin is arranged directly; the wrapped edition goes through the wallet.</p>
+      </div>`);
+    }
+  }
+
   parts.push(`<div class="tail">
     <a class="smallcaps" href="/collections">All collections</a>
     <a class="smallcaps" href="${feature.slug === 'genesis' ? '/10k' : '/genesis'}">${feature.slug === 'genesis' ? 'Next: the 10k Project' : 'Back to Genesis'}</a>
   </div>`);
 
   document.getElementById('main').innerHTML = parts.join('');
+  MF.progress.watch(document.getElementById('main'));
 }
 
 (async function () {

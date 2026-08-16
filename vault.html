@@ -167,6 +167,7 @@ function chapter(group) {
         <p>The same wallet holds ${other} works by other artists, collected rather than made.</p>
         <div class="rest">${rest.map(e).join(' &middot; ')}</div>
       </div>` : ''}`;
+    MF.progress.watch(document.getElementById('main'));
   } catch (err) {
     document.getElementById('main').innerHTML = '<div class="loading">Could not load the vault</div>';
     console.error(err);
