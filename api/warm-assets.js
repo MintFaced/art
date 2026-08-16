@@ -8,15 +8,16 @@ import { putObject, alreadyThere, r2Configured } from './_lib/r2.js';
 const PUBLIC = process.env.ASSETS_PUBLIC_BASE || 'https://assets.mintface.art';
 const json = (b, s = 200) => new Response(JSON.stringify(b, null, 1), { status: s, headers: { 'content-type': 'application/json' } });
 
+// what the server says it is beats what the URL implies: several of these
+// masters are TIFFs behind an extensionless arweave URL
+const BY_TYPE = [
+  [/svg/, 'svg'], [/png/, 'png'], [/gif/, 'gif'], [/webp/, 'webp'], [/avif/, 'avif'],
+  [/tiff/, 'tif'], [/mp4/, 'mp4'], [/webm/, 'webm'], [/quicktime|mov/, 'mov'], [/jpe?g/, 'jpg'],
+];
 const extFor = (type, url) => {
+  for (const [re, ext] of BY_TYPE) if (re.test(type)) return ext;
   const m = (url.match(/\.([a-z0-9]{2,4})(\?|#|$)/i) || [])[1];
-  if (m) return m.toLowerCase();
-  if (/svg/.test(type)) return 'svg';
-  if (/png/.test(type)) return 'png';
-  if (/gif/.test(type)) return 'gif';
-  if (/mp4/.test(type)) return 'mp4';
-  if (/webp/.test(type)) return 'webp';
-  return 'jpg';
+  return m ? m.toLowerCase() : 'bin';
 };
 
 export async function GET(request) {
@@ -54,7 +55,10 @@ export async function GET(request) {
         if (budget <= 0) break;
         const idPart = w.id || `${slug}-${w.token_id || 'x'}`;
         const guessKey = `${slug}/${idPart}-${kind}`;
-        if (await alreadyThere(PUBLIC, `${guessKey}.jpg`) || await alreadyThere(PUBLIC, `${guessKey}.svg`)) {
+        const exts = ['jpg', 'tif', 'png', 'svg', 'gif', 'webp', 'mp4'];
+        let found = false;
+        for (const ext of exts) { if (await alreadyThere(PUBLIC, `${guessKey}.${ext}`)) { found = true; break; } }
+        if (found) {
           skipped.push(idPart);
           continue;
         }
