@@ -29,7 +29,7 @@ Drop into docs/. Work on the rebuild branch. Sequence is deliberate... run top t
 - Collector display names: five real names came through (K Jensen, Liza, S & A Novak). The rest of the sheet repeated the wallet address, so those still show as ENS or a short address. Anonymity list still open.
 - /projects decision: 301 to / or rebuild in new design with footer link
 - BTC address signing confirmed by Ryan before live
-- Image source decision: R2 bucket (ASSETS_BASE switch) or chain/IPFS for launch
+- Image source decision: R2 bucket (ASSETS_BASE switch) or chain/IPFS for launch. PixelArcade is settled: its SVGs come from the pixel-arcade repo via jsDelivr, since IPFS was unreachable and the works animate. The arweave collections are still on chain and have been reliable.
 
 ## Pre-launch (from LAUNCH-CHECKLIST.md, condensed)
 

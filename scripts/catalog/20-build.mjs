@@ -97,12 +97,16 @@ const tally = (works) => {
 const load = (key) => R(`raw/${key}.json`);
 const meta = (key) => cmeta[key] || {};
 
-function dedicated({ slug, title, group, year, medium, physical, statement, links, contractKey, filter, notes, aliases, sold_out, editionRule, series }) {
+function dedicated({ slug, title, group, year, medium, physical, statement, links, contractKey, filter, notes, aliases, sold_out, editionRule, series, afterEach }) {
   const { contract, items } = load(contractKey);
   const cm = meta(contractKey);
   TTKEY = contractKey;
   const sel = filter ? items.filter(filter) : items;
-  const works = sel.map((i) => workFrom(i, { collection: slug, contract: contract.address, standard: contract.type, editionType: editionRule ? editionRule(i) : '1/1' }));
+  const works = sel.map((i) => {
+    const w = workFrom(i, { collection: slug, contract: contract.address, standard: contract.type, editionType: editionRule ? editionRule(i) : '1/1' });
+    if (afterEach) afterEach(w, i);
+    return w;
+  });
   TTKEY = null;
   const t = tally(works);
   stats[slug] = t;
@@ -117,9 +121,19 @@ function dedicated({ slug, title, group, year, medium, physical, statement, link
   return works;
 }
 
+// The PixelArcade works are SVGs that animate themselves. The chain points at
+// IPFS, which is slow to unreliable, so the site reads them from the project's
+// own public repo instead. Same bytes, checked against the copies in this one.
+const PIXELARCADE_SVG = (tokenId) =>
+  `https://cdn.jsdelivr.net/gh/MintFaced/pixel-arcade@main/public/svg/${String(tokenId).padStart(3, '0')}.svg`;
+
 // ---- CORE ----
 dedicated({ slug: 'pixelarcade', title: 'PixelArcade', group: 'core', year: '2026', medium: 'Acrylic / Pixel / Tokenized', physical: true,
   statement: seed.collections.find(c=>c.slug==='pixelarcade').statement, links: { site: 'https://pixelarcade.art' }, contractKey: 'pixelarcade',
+  afterEach: (work, inst) => {
+    work.digital.image_source = PIXELARCADE_SVG(inst.id);
+    work.digital.image_source_note = 'mirror of the on-chain SVG, served from the project repo';
+  },
   notes: 'Physical claim mechanic — 63 of 64 tokens held by the PixelArcade contract.',
   series: (items) => ({
     eight_bit_studies: items.filter((i) => /Eight-Bit Study/i.test(i.metadata?.name || '')).length,

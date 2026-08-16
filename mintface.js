@@ -97,9 +97,11 @@ const MF = {
 
   /* ---------- assets ---------- */
   // local assets win when present, chain metadata is the fallback
+  // R2 first when it holds the master, then a reliable mirror of the same bytes,
+  // then whatever the chain metadata points at
   imageUrl(work) {
     if (work.assets && work.assets.image) return `${ASSETS_BASE}/${work.assets.image}`;
-    return work.digital?.image || work.image || null;
+    return work.digital?.image_source || work.digital?.image || work.image || null;
   },
   // hosts that already serve sized images, or that the proxy cannot reach
   THUMB_BYPASS: ['i.seadn.io', 'lh3.googleusercontent.com', 'highlight-creator-assets.highlight.xyz'],
