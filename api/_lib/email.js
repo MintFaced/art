@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 
 const KEY = process.env.RESEND_API_KEY;
-const FROM = process.env.EMAIL_FROM || 'MintFace <ryan@mintface.art>';
+const FROM = process.env.EMAIL_FROM || 'MintFace <art@mintface.art>';
 const BCC = process.env.EMAIL_BCC || null;
 
 const resend = KEY ? new Resend(KEY) : null;
@@ -68,7 +68,7 @@ MintFace`,
     subject: `Sold ... ${title}`,
     text: `${title} sold.
 
-What: ${what}
+What: ${what === 'both' ? 'the painting and the digital work' : what === 'painting' ? 'the painting' : 'the digital work'}
 Paid: ${amount} ${currency}
 Buyer: ${email || 'no email on the session'}
 ${shipping ? `Ship to:\n${shipping}\n` : ''}

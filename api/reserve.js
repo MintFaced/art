@@ -13,7 +13,7 @@ const looksLikeEmail = (s) => typeof s === 'string' && /^[^@\s]+@[^@\s]+\.[^@\s]
 export async function POST(request) {
   useRequestOrigin(request);
   if (!stateConfigured()) {
-    return json({ error: 'sale state is not configured yet, email ryan@mintface.art and it will be handled by hand' }, 503);
+    return json({ error: 'sale state is not configured yet, email art@mintface.art and it will be handled by hand' }, 503);
   }
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400); }

@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { findWork, useRequestOrigin } from './_lib/data.js';
-import { writeWorkState } from './_lib/state.js';
+import { writeWorkState, workState } from './_lib/state.js';
 import { send, templates } from './_lib/email.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-07-29.dahlia' });
@@ -30,15 +30,12 @@ export async function POST(request) {
         await fulfil(session);
         break;
       }
-      case 'checkout.session.async_payment_failed': {
-        const session = event.data.object;
-        const workId = session.metadata?.workId || session.client_reference_id;
-        if (workId) {
-          await writeWorkState(workId, { status: 'available', note: 'payment failed, back on sale' },
-            `Payment failed for ${workId}, back on sale`);
-        }
+      case 'checkout.session.async_payment_failed':
+        await release(event.data.object, 'payment failed');
         break;
-      }
+      case 'checkout.session.expired':
+        await release(event.data.object, 'checkout abandoned');
+        break;
       default:
         break;
     }
@@ -49,6 +46,18 @@ export async function POST(request) {
   }
 
   return new Response('ok', { status: 200 });
+}
+
+// Only lift a hold that belongs to this session. A later buyer may already have
+// claimed the work, and their hold must not be cleared by an older timeout.
+async function release(session, why) {
+  const workId = session.metadata?.workId || session.client_reference_id;
+  if (!workId) return;
+  const live = await workState(workId);
+  if (!live || live.status !== 'pending') return;
+  if (live.pending?.session && live.pending.session !== session.id) return;
+  await writeWorkState(workId, { status: 'available', pending: null, note: why },
+    `Hold lifted: ${workId}, ${why}`);
 }
 
 async function fulfil(session) {

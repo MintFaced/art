@@ -35,6 +35,7 @@ const MF = {
     if (!s) return work;
     const out = { ...work, status: s.status || work.status };
     if (s.reserve) out.reserve = { expires: s.reserve.expires };
+    if (s.pending) out.pending = { expires: s.pending.expires };
     if (s.collector) {
       out.collector = {
         address: s.collector.address || null,
@@ -44,7 +45,7 @@ const MF = {
         acquired: s.collector.acquired || null,
       };
     }
-    if (s.status === 'available') { out.reserve = null; out.collector = null; }
+    if (s.status === 'available') { out.reserve = null; out.pending = null; out.collector = null; }
     return out;
   },
 
@@ -167,6 +168,7 @@ const MF = {
   STATUS: {
     available: { label: 'Available', dot: 'available' },
     reserved: { label: 'Reserved', dot: 'reserved' },
+    pending: { label: 'At the checkout', dot: 'reserved' },
     acquired: { label: 'Collected', dot: 'acquired' },
     vaulted: { label: 'Vaulted', dot: 'vaulted' },
     sold_out: { label: 'Sold out', dot: 'acquired' },

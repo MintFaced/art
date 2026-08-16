@@ -38,6 +38,7 @@ img{max-width:100%;display:block}
 .dot.acquired{background:var(--faint)}
 .dot.burned{background:var(--rule)}
 .dot.uninscribed{background:transparent;box-shadow:inset 0 0 0 1px var(--muted)}
+.dot.reserved{background:transparent;box-shadow:inset 0 0 0 1px var(--dot-available)}
 
 @media(max-width:640px){
   .bar{padding:18px 20px}

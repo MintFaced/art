@@ -189,8 +189,21 @@ function detailRows(work, collection) {
   if (dims.length) {
     const depth = p.depth_cm ? ` x ${p.depth_cm}` : '';
     rows.push(['Dimensions', `${dims.join(' x ')}${depth} cm`]);
-  } else if (collection.physical) {
+  } else if (collection.physical && p.exists !== false) {
     rows.push(['Dimensions', '<span class="pending">Listed on request</span>']);
+  }
+  // one row for the painting: where it is, and how it comes
+  if (collection.physical) {
+    if (p.exists === false) {
+      rows.push(['Painting', '<span class="pending">Digital only, no physical work</span>']);
+    } else {
+      const bits = [];
+      if (p.sold && work.status !== 'vaulted') bits.push(p.collector ? `With ${p.collector}` : 'With a collector');
+      if (p.ready_to_hang) bits.push('Ready to hang');
+      if (p.framed) bits.push('Framed'); else if (p.framed === false) bits.push('Unframed');
+      if (p.certificate) bits.push('Certificate of authenticity');
+      if (bits.length) rows.push(['Painting', e(bits.join(' ... '))]);
+    }
   }
 
   if (work.edition) {
@@ -268,15 +281,9 @@ function shippingFold(collection, meta) {
 }
 
 function pricingBlock(work, collection) {
-  const prices = previewPrices() || work.pricing_nzd || {};
-  const rows = [];
-  if (collection.physical) {
-    if (prices.digital != null) rows.push(['Digital', prices.digital]);
-    if (prices.painting != null) rows.push(['Painting', prices.painting]);
-    if (prices.both != null) rows.push(['Both together', prices.both]);
-  } else if (prices.digital != null) {
-    rows.push(['Digital', prices.digital]);
-  }
+  // the same list the Acquire flow offers, so the page cannot advertise a
+  // painting that has already gone
+  const rows = optionsFor(work, collection).map((o) => [o.label, o.nzd]);
 
   if (!rows.length) {
     return `<div class="pricing">
@@ -305,15 +312,32 @@ function pricingBlock(work, collection) {
 
 function actionBlock(work, collection) {
   const s = work.status;
-  const hasPrice = !!(previewPrices() || (work.pricing_nzd && (work.pricing_nzd.digital != null || work.pricing_nzd.painting != null || work.pricing_nzd.both != null)));
+  const hasPrice = optionsFor(work, collection).length > 0;
 
   if (s === 'available') {
     return `<div class="action"><button class="btn" id="acquire">${hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork'}</button></div>`;
+  }
+  // the painting has gone but editions of the digital work remain
+  if (s === 'acquired' && hasPrice) {
+    const name = MF.collectorName(work.collector) || (work.physical && work.physical.collector);
+    return `<div class="action">
+      <div class="state"><span class="dot acquired"></span>
+        <span class="word">Painting collected${name ? ' by ' + e(name) : ''}</span></div>
+      <button class="btn" id="acquire" style="margin-top:14px">Acquire the digital work</button>
+    </div>`;
   }
   if (s === 'reserved') {
     const until = MF.date(work.reserve && work.reserve.expires);
     return `<div class="action"><div class="state"><span class="dot reserved"></span>
       <span class="word">Reserved${until ? ' until ' + e(until) : ''}</span></div></div>`;
+  }
+  if (s === 'pending') {
+    return `<div class="action">
+      <div class="state"><span class="dot reserved"></span>
+        <span class="word">At the checkout</span>
+        <span class="sub">Someone is paying for this one</span></div>
+      <p class="note">Holds last half an hour at most. If it does not go through the work comes straight back.</p>
+    </div>`;
   }
   if (s === 'acquired') {
     const name = MF.collectorName(work.collector);
@@ -506,14 +530,94 @@ const SHEET = {
   },
 };
 
-let ACQ = { work: null, collection: null, what: null, fx: null };
+let ACQ = { work: null, collection: null, what: null, fx: null, quote: null };
+let QUOTE_TIMER = null;
 
+// The rate is locked when the slide-over opens and honoured for its full life.
+// Nothing on screen moves under the buyer while they are deciding.
+async function lockQuote() {
+  try {
+    const r = await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ workId: ACQ.work.id }),
+    });
+    if (!r.ok) throw new Error('no quote');
+    ACQ.quote = await r.json();
+  } catch {
+    ACQ.quote = null; // fall back to the hourly rates, and say so
+  }
+  return ACQ.quote;
+}
+
+const quoteLive = () => ACQ.quote && Date.now() < ACQ.quote.expires;
+
+// crypto and USD figures come from the locked rates while a quote is live
+function rateFor(currency) {
+  if (quoteLive()) {
+    const r = ACQ.quote.rates || {};
+    if (currency === 'ETH') return r.eth;
+    if (currency === 'BTC') return r.btc;
+    if (currency === 'USD') return r.usd;
+  }
+  const fx = ACQ.fx || {};
+  if (currency === 'ETH') return fx.eth;
+  if (currency === 'USD') return fx.usd;
+  return null;
+}
+
+function heldStrip() {
+  return '<div class="held" id="held"></div>';
+}
+
+function startCountdown(onExpire) {
+  clearInterval(QUOTE_TIMER);
+  const el = document.getElementById('held');
+  if (!el) return;
+  const tick = () => {
+    if (!ACQ.quote) {
+      el.innerHTML = '<span>Rates refresh hourly</span>';
+      return;
+    }
+    const left = ACQ.quote.expires - Date.now();
+    if (left <= 0) {
+      clearInterval(QUOTE_TIMER);
+      el.classList.add('stale');
+      el.innerHTML = '<span>The quote has expired</span><button id="requote">Take a fresh rate</button>';
+      const b = document.getElementById('requote');
+      if (b) b.addEventListener('click', async () => { await lockQuote(); if (onExpire) onExpire(); });
+      return;
+    }
+    const m = Math.floor(left / 60000);
+    const sec = Math.floor((left % 60000) / 1000);
+    el.classList.remove('stale');
+    el.innerHTML = `<span>Rate held</span><span>${m}:${String(sec).padStart(2, '0')}</span>`;
+  };
+  tick();
+  QUOTE_TIMER = setInterval(tick, 1000);
+}
+
+// What is on offer is decided at import time and recorded on the work, so the
+// page and the checkout cannot drift apart or reason about it differently.
 function optionsFor(work, collection) {
-  const p = { ...(work.pricing_nzd || {}), ...(previewPrices() || {}) };
+  const preview = previewPrices();
+  const p = { ...(work.pricing_nzd || {}), ...(preview || {}) };
+  const ph = work.physical || {};
+  const o = work.offers || null;
+  const allow = (key, fallback) => (preview ? true : o ? o[key] === true : fallback);
+  const paintingFallback = collection.physical && ph.exists !== false && ph.sold !== true;
+
   const out = [];
-  if (p.digital != null) out.push({ key: 'digital', label: 'Digital', nzd: p.digital, sub: 'The token, transferred to your wallet' });
-  if (collection.physical && p.painting != null) out.push({ key: 'painting', label: 'Painting', nzd: p.painting, sub: 'The physical work, shipped worldwide' });
-  if (collection.physical && p.both != null) out.push({ key: 'both', label: 'Both together', nzd: p.both, sub: 'Painting and token, one provenance' });
+  if (p.digital != null && allow('digital', true)) out.push({ key: 'digital', label: 'Digital', nzd: p.digital, sub: 'The token, transferred to your wallet' });
+  if (p.painting != null && allow('painting', paintingFallback)) out.push({ key: 'painting', label: 'Painting', nzd: p.painting, sub: 'The physical work, shipped worldwide' });
+  if (p.both != null && allow('both', paintingFallback)) out.push({
+    key: 'both',
+    label: work.painting_included ? 'Painting and token' : 'Both together',
+    nzd: p.both,
+    sub: work.painting_included
+      ? 'The painting comes with the token, no extra cost'
+      : 'Painting and token, one provenance',
+  });
   return out;
 }
 
@@ -539,6 +643,12 @@ function stepWhat() {
   }));
 }
 
+// the fortnight, said once, as a date rather than a count
+function untilDate(days) {
+  const d = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+  return d.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
+}
+
 function stepHow() {
   const opts = optionsFor(ACQ.work, ACQ.collection);
   const chosen = opts.find((o) => o.key === ACQ.what) || opts[0];
@@ -551,25 +661,30 @@ function stepHow() {
     <button class="choice" data-how="usd"><span class="what">Card, US dollars<span class="sub">Converted at today's rate</span></span><span class="amt" id="usdAmt">...</span></button>
     <button class="choice" data-how="eth"><span class="what">Ethereum<span class="sub">From your wallet to mintface.eth</span></span><span class="amt" id="ethAmt">...</span></button>
     ${frog ? `<button class="choice" data-how="btc"><span class="what">Bitcoin<span class="sub">Counterparty, arranged directly</span></span><span class="amt">&rarr;</span></button>` : ''}
-    <button class="choice" data-how="reserve"><span class="what">Reserve for a fortnight<span class="sub">No payment, no obligation</span></span><span class="amt">14 days</span></button>
+    <button class="choice" data-how="reserve"><span class="what">Reserve<span class="sub">No payment, no obligation</span></span><span class="amt" id="resUntil">until ${e(untilDate(14))}</span></button>
     <p class="note">${ACQ.work.digital && ACQ.work.digital.minted === false
       ? 'This work is not minted yet. It is tokenized when it sells, so your wallet is the first owner written to chain.'
-      : 'The token is transferred by hand after payment, usually within a day.'}</p>`;
+      : 'The token is transferred by hand after payment, usually within a day.'}</p>
+    ${heldStrip()}`;
 
-  MF.fx().then((fx) => {
-    ACQ.fx = fx;
-    const usd = MF.money(chosen.nzd, 'USD', fx);
-    const eth = MF.money(chosen.nzd, 'ETH', fx);
-    const u = document.getElementById('usdAmt'); if (u) u.textContent = usd || 'unavailable';
-    const t = document.getElementById('ethAmt'); if (t) t.textContent = eth || 'unavailable';
-  });
+  const paintAmounts = () => {
+    const usdRate = rateFor('USD');
+    const ethRate = rateFor('ETH');
+    const u = document.getElementById('usdAmt');
+    if (u) u.textContent = usdRate ? 'US$' + Math.round(chosen.nzd * usdRate).toLocaleString('en-US') : 'unavailable';
+    const t = document.getElementById('ethAmt');
+    if (t) t.textContent = ethRate ? (chosen.nzd * ethRate).toFixed(4) + ' ETH' : 'unavailable';
+  };
+  MF.fx().then((fx) => { ACQ.fx = fx; paintAmounts(); });
+  paintAmounts();
+  startCountdown(() => { paintAmounts(); });
 
   SHEET.body().querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => {
     const how = b.dataset.how;
     if (how === 'nzd' || how === 'usd') return stripeCheckout(how.toUpperCase());
     if (how === 'reserve') return stepReserve();
     if (how === 'eth') return stepEth(chosen);
-    if (how === 'btc') return stepBtc();
+    if (how === 'btc') return stepBtc(chosen);
   }));
 }
 
@@ -579,14 +694,22 @@ async function stripeCheckout(currency) {
     const r = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, currency }),
+      body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, currency, quote: quoteLive() ? ACQ.quote.quote : null }),
     });
     const j = await r.json();
     if (!r.ok) throw new Error(j.error || 'could not start the checkout');
     location.href = j.url;
   } catch (err) {
-    SHEET.body().innerHTML = `<p class="ok">That did not work.</p><p class="err">${e(err.message)}</p>
-      <p class="note">Email ryan@mintface.art and it will be sorted by hand.</p>`;
+    const busy = /at the checkout|busy/i.test(err.message);
+    SHEET.body().innerHTML = busy
+      ? `<h2>Someone is at the checkout</h2>
+         <p class="ok">This one is held while another buyer finishes paying.</p>
+         <p class="note">Holds last half an hour at most. If they do not go through with it the work comes straight back, so it is worth looking again shortly.</p>
+         <button class="choice go" id="retry"><span class="what">Try again</span><span class="amt">&rarr;</span></button>`
+      : `<p class="ok">That did not work.</p><p class="err">${e(err.message)}</p>
+         <p class="note">Email art@mintface.art and it will be sorted by hand.</p>`;
+    const again = document.getElementById('retry');
+    if (again) again.addEventListener('click', () => stepHow());
   }
 }
 
@@ -594,11 +717,11 @@ function stepReserve() {
   SHEET.body().innerHTML = `
     <h2>Hold it for a fortnight</h2>
     <div class="which">${e(ACQ.work.title || 'Untitled')}</div>
-    <p class="note">Nothing is charged. The work shows as reserved and quietly returns if the fortnight passes.</p>
+    <p class="note">Nothing is charged. The work shows as reserved until ${e(untilDate(14))} and quietly returns if the fortnight passes.</p>
     <div class="step">Where to reach you</div>
     <input id="resName" type="text" placeholder="Name" autocomplete="name">
     <input id="resEmail" type="email" placeholder="Email" autocomplete="email" required>
-    <button class="choice go" id="resGo"><span class="what">Hold it</span><span class="amt">14 days</span></button>
+    <button class="choice go" id="resGo"><span class="what">Hold it</span><span class="amt">until ${e(untilDate(14))}</span></button>
     <div id="resErr"></div>`;
   document.getElementById('resGo').addEventListener('click', async () => {
     const name = document.getElementById('resName').value.trim();
@@ -625,19 +748,24 @@ function stepReserve() {
 
 function stepEth(chosen) {
   const to = '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180';
-  const eth = ACQ.fx && ACQ.fx.eth ? chosen.nzd * ACQ.fx.eth : null;
+  const ethRate = rateFor('ETH');
+  const eth = ethRate ? chosen.nzd * ethRate : null;
   SHEET.body().innerHTML = `
     <h2>Pay with Ethereum</h2>
-    <div class="which">${e(chosen.label)} &middot; ${eth ? eth.toFixed(4) + ' ETH' : money(chosen.nzd)}</div>
+    <div class="which">${e(chosen.label)} &middot; ${money(chosen.nzd)}</div>
     <p class="note">The payment goes to mintface.eth from your own wallet. Nothing here can move your funds or your tokens.</p>
-    <div class="step">To</div>
-    <p class="mono-line">${e(to)}</p>
+    <div class="step">Amount</div>
+    <p class="ok">${eth ? eth.toFixed(4) + ' ETH' : 'rate unavailable'}</p>
+    <div class="step">Send to</div>
+    <p class="mono-line">mintface.eth<br>${e(to)}</p>
     ${window.ethereum ? '<button class="choice go" id="ethGo"><span class="what">Connect wallet and pay</span><span class="amt">' + (eth ? eth.toFixed(4) + ' ETH' : '') + '</span></button>' : ''}
     <div class="step">Or paste the transaction</div>
     <input id="ethTx" type="text" placeholder="0x transaction hash" spellcheck="false">
     <button class="choice go" id="ethConfirm"><span class="what">I have sent it</span><span class="amt">&rarr;</span></button>
     <div id="ethErr"></div>
-    <p class="note">Once the transaction confirms, the work shows as collected. Ryan transfers the token by hand, hardware signed, usually within a day.</p>`;
+    <p class="note">Once the transaction confirms, the work shows as collected. Ryan transfers the token by hand, hardware signed, usually within a day.</p>
+    ${heldStrip()}`;
+  startCountdown(() => stepEth(chosen));
 
   const confirm = async (txHash) => {
     const err = document.getElementById('ethErr');
@@ -646,7 +774,7 @@ function stepEth(chosen) {
       const r = await fetch('/api/eth-payment', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, txHash }),
+        body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, txHash, quote: ACQ.quote ? ACQ.quote.quote : null }),
       });
       const j = await r.json();
       if (!r.ok) throw new Error(j.error || 'could not verify that payment');
@@ -684,19 +812,41 @@ function stepEth(chosen) {
   });
 }
 
-function stepBtc() {
+async function stepBtc(chosen) {
   const asset = ACQ.work.digital?.asset || 'FROGDNA';
   SHEET.body().innerHTML = `
     <h2>Pay with Bitcoin</h2>
     <div class="which">${e(asset)} &middot; Counterparty</div>
-    <p class="note">The native asset lives on Bitcoin as a Counterparty issuance, so this one is arranged directly rather than through a checkout.</p>
-    <div class="step">What happens</div>
-    <p class="note">Email ryan@mintface.art and you will get the address, the exact amount and a time to send it. The asset transfers to your Bitcoin address once the payment confirms. Same work, same provenance, no wrapper.</p>
+    <p class="note">The native asset lives on Bitcoin as a Counterparty issuance, so this one settles directly rather than through a checkout.</p>
+    <div class="step">Amount</div>
+    <p class="ok" id="btcAmt">${money(chosen.nzd)}</p>
+    <div class="step">Send to</div>
+    <p class="mono-line" id="btcAddr">Loading the address...</p>
+    <div class="step">Then</div>
+    <p class="note">Email the transaction and the Bitcoin address you would like ${e(asset)} sent to. The asset transfers once the payment confirms, usually the same day.</p>
     <button class="choice go" id="btcMail"><span class="what">Email about ${e(asset)}</span><span class="amt">&rarr;</span></button>
-    <p class="note">If you would rather pay in ETH, the wrapped edition on Ethereum is the same asset inside an EmblemVault, and goes through the wallet flow instead.</p>`;
+    <p class="note">If you would rather pay in ETH, the wrapped edition on Ethereum is the same asset inside an EmblemVault and goes through the wallet flow instead.</p>
+    ${heldStrip()}`;
+  startCountdown(() => stepBtc(chosen));
+
   document.getElementById('btcMail').addEventListener('click', () => {
-    location.href = `mailto:ryan@mintface.art?subject=${encodeURIComponent(asset + ' ... paying in Bitcoin')}`;
+    location.href = `mailto:art@mintface.art?subject=${encodeURIComponent(asset + ' ... paying in Bitcoin')}`;
   });
+
+  const locked = rateFor('BTC');
+  if (locked) {
+    document.getElementById('btcAmt').textContent = `${(chosen.nzd * locked).toFixed(6)} BTC  ${money(chosen.nzd)}`;
+  }
+  try {
+    const r = await fetch('/api/pay-details?chain=bitcoin').then((x) => x.json());
+    const addr = document.getElementById('btcAddr');
+    addr.textContent = r.address || 'Address on request, email below and it comes straight back.';
+    if (!locked && r.rate) {
+      document.getElementById('btcAmt').textContent = `${(chosen.nzd * r.rate).toFixed(6)} BTC  ${money(chosen.nzd)}`;
+    }
+  } catch (err) {
+    document.getElementById('btcAddr').textContent = 'Address on request, email below and it comes straight back.';
+  }
 }
 
 function wireAcquire(work, collection) {
@@ -712,12 +862,14 @@ function wireAcquire(work, collection) {
       location.href = `mailto:ryan@mintface.art?subject=${subject}`;
       return;
     }
-    ACQ = { work, collection, what: null, fx: ACQ.fx };
+    ACQ = { work, collection, what: null, fx: ACQ.fx, quote: null };
     SHEET.open();
     stepWhat();
+    lockQuote();
   });
-  document.getElementById('sheetClose').addEventListener('click', () => SHEET.close());
-  document.getElementById('scrim').addEventListener('click', () => SHEET.close());
+  const shut = () => { clearInterval(QUOTE_TIMER); SHEET.close(); };
+  document.getElementById('sheetClose').addEventListener('click', shut);
+  document.getElementById('scrim').addEventListener('click', shut);
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') SHEET.close(); });
 }
 
