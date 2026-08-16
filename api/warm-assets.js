@@ -43,6 +43,9 @@ export async function GET(request) {
 
   const only = url.searchParams.get('collection');
   const limit = Number(url.searchParams.get('limit') || 40);
+  // works already dealt with, so a long collection does not re-check its whole
+  // head on every pass
+  const offset = Number(url.searchParams.get('offset') || 0);
   const dryRun = url.searchParams.get('dry') === '1';
 
   const idx = await siteIndex();
@@ -50,19 +53,24 @@ export async function GET(request) {
 
   const done = [], skipped = [], failed = [];
   let budget = limit;
+  let cursor = only ? offset : 0;
 
   for (const slug of slugs) {
     if (budget <= 0) break;
     const col = await fetch(`${siteOrigin()}/data/c/${slug}.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
     if (!col) continue;
 
-    for (const w of col.works || []) {
+    const works = (col.works || []).slice(only ? offset : 0);
+    let seen = only ? offset : 0;
+    for (const w of works) {
       if (budget <= 0) break;
+      seen++;
       const targets = [
         ['image', w.digital?.image_source || w.digital?.image || w.image],
         ['animation', w.digital?.animation],
       ].filter(([, u]) => typeof u === 'string' && /^https?:\/\//.test(u));
 
+      cursor = seen;
       for (const [kind, src] of targets) {
         if (budget <= 0) break;
         const idPart = w.id || `${slug}-${w.token_id || 'x'}`;
@@ -96,6 +104,7 @@ export async function GET(request) {
     warmed: done.length,
     skipped: skipped.length,
     failed: failed.length,
+    next_offset: cursor,
     budget_left: budget,
     done: done.slice(0, 30),
     failures: failed.slice(0, 30),
