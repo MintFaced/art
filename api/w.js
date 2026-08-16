@@ -6,11 +6,22 @@ import { findWork, useRequestOrigin, siteOrigin } from './_lib/data.js';
 const esc = (s) => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+const ASSETS = process.env.ASSETS_PUBLIC_BASE || 'https://assets.mintface.art';
 const THUMB = 'https://images.weserv.nl/?url={url}&w=1200&output=jpg&q=82';
 const preview = (url) => {
   if (!url || url.startsWith('data:')) return null;
   if (url.startsWith('/')) return null;
   return THUMB.replace('{url}', encodeURIComponent(url.replace(/^https?:\/\//, '')));
+};
+
+// What a scraper should be handed. A display copy is already the right size and
+// on our own domain, so it goes out as is. Anything else still goes through the
+// resizer, because some of these masters are ninety megabytes.
+const previewFor = (work) => {
+  const a = work.assets || {};
+  if (a.display) return `${ASSETS}/${a.display}`;
+  if (a.image && /\.(jpe?g|png|webp|gif)$/i.test(a.image)) return preview(`${ASSETS}/${a.image}`);
+  return preview(work.digital?.image_source || work.digital?.image || work.image);
 };
 
 export async function GET(request) {
@@ -32,8 +43,7 @@ export async function GET(request) {
       : null;
     const bits = [collection.title, work.year || collection.year, price].filter(Boolean);
     const description = (work.statement || bits.join(' &middot; ') || `${title} by MintFace`).slice(0, 200);
-    // same source order the page uses: a mirror of the bytes beats the chain URL
-    const image = preview(work.digital?.image_source || work.digital?.image || work.image);
+    const image = previewFor(work);
     const url = `${origin}/w/${encodeURIComponent(work.id)}`;
 
     const meta = [
