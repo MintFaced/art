@@ -79,8 +79,11 @@ Branch: `rebuild`. Running record of what exists and the decisions behind it.
 **Home** ... `home.html`, served at `/` by a rewrite in `vercel.json`. The old `index.html` is untouched on disk, so the swap at launch is deleting one rewrite line or renaming the file, not a rebuild.
 
 - Full bleed hero, one work per visit, capped at 84vh with the caption underneath rather than over the art. Title, collection, availability, and the price when there is one. The whole thing links to the work.
-- `data/f/home.json` holds the hero list. Put five to eight work ids in `hero` and it rotates through them. Tested and working.
-- While that list is empty the hero falls back to a collection cover picked at random from anything with available work. It is a placeholder, not a curation, and it is marked as such in the file.
+- `data/f/home.json` holds two pools: `hero_collected` and `hero_available`. A visit takes one work from one pool, and the pools alternate visit to visit, so a collected work and an available one take turns. Falls back to a coin toss where localStorage is unavailable.
+- A collected hero names the collector, since that is the point of showing it: "Collected by S & A Novak". Where there is no attribution it reads "Collected", and a vaulted work reads "Vaulted" rather than pretending the vault is a collector.
+- An available hero shows availability and the price, taking whichever of both, painting or digital is actually on offer.
+- Every pick is checked against live state before it renders, so a work that has sold since the list was written drops out of the available pool on its own. If the available pool empties the collected pool carries the page.
+- While both pools are empty the hero falls back to a collection cover picked at random from anything with available work. It is a placeholder, not a curation, and it is marked as such in the file.
 - Covers now prefer an available work over the first work in a collection, on the home page, the collections index and every card on the site. Browsing runs into what can be bought, which is the locked decision behind inline prices.
 - Then the wordmark, the work count off the catalog, and the collections as a quiet grid in the same groups as `/collections`, with the geodetic set link and Studies and Archive annexed.
 - Footer is exhibitions, provenance, the vault, contact. Nothing else.

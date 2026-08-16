@@ -23,7 +23,7 @@ Drop into docs/. Work on the rebuild branch. Sequence is deliberate... run top t
 ## Ryan inputs (merge as they arrive, don't wait)
 
 - ~~NZD prices per work~~ Imported 16 Aug from `mintface paintings data.xlsx`: 78 works priced, 83 with dimensions. Acquire is live on PixelArcade (all 64), Artificial Flowers (13) and FROGDNA. Two Burdens came through with no prices, so those still read "Enquire".
-- Hero ids → data/f/home.json
+- Hero ids → `data/f/home.json`, now two pools: `hero_collected` and `hero_available`. They alternate per visit. Collected heroes name the collector, available heroes show the price. Both empty for now, so the placeholder cover stands.
 - ~~Physical dimensions + ready-to-hang/framed/certificate~~ Imported. Five paintings are marked as already with a collector, four Artificial Flowers as digital only.
 - One-line statements: PixelArcade, Artificial Flowers, Patrimora, FROGDNA, Recursive Mind
 - Collector display names: five real names came through (K Jensen, Liza, S & A Novak). The rest of the sheet repeated the wallet address, so those still show as ENS or a short address. Anonymity list still open.

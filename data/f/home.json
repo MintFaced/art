@@ -1,6 +1,7 @@
 {
   "slug": "home",
-  "hero": [],
-  "hero_note": "Put five to eight work ids here and the hero rotates through them, one per visit. While it is empty the page falls back to one available work picked from each collection cover, which is a placeholder, not a curation.",
+  "hero_collected": [],
+  "hero_available": [],
+  "hero_note": "Two curated pools of work ids. Each visit shows one work, alternating between the pools so a collected work and an available one take turns. Collected heroes name the collector, which is the point of showing them. Available heroes show availability and price. If everything in hero_available sells, the page falls back to the collected pool on its own. While both are empty a collection cover stands in, which is a placeholder, not a curation.",
   "hero_fallback": true
 }

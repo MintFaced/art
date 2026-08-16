@@ -91,24 +91,75 @@
 <script>
 const e = MF.escape;
 
-// one work per visit, from the curated list when there is one
-function pickHero(ids) {
-  return ids.length ? ids[Math.floor(Math.random() * ids.length)] : null;
+// Two pools, taking turns. A collected work is worth showing for the collector
+// as much as the art, so it gets its own caption.
+const POOL_KEY = 'mf_hero_pool';
+
+function nextPool(home) {
+  const collected = home.hero_collected || [];
+  const available = home.hero_available || [];
+  if (!collected.length && !available.length) return null;
+  if (!collected.length) return 'available';
+  if (!available.length) return 'collected';
+  try {
+    const last = localStorage.getItem(POOL_KEY);
+    const pick = last === 'available' ? 'collected' : 'available';
+    localStorage.setItem(POOL_KEY, pick);
+    return pick;
+  } catch {
+    return Math.random() < 0.5 ? 'collected' : 'available';
+  }
 }
 
-function heroMarkup(work, collection) {
+const shuffled = (list) => [...list].sort(() => Math.random() - 0.5);
+
+// a hero has to still be what the pool says it is: work sells, and the state
+// overlay knows before the curated list does
+const stillFits = (work, pool) => (pool === 'available'
+  ? work.status === 'available'
+  : work.status === 'acquired' || work.status === 'vaulted');
+
+async function fromPool(home, pool) {
+  const ids = shuffled(pool === 'available' ? (home.hero_available || []) : (home.hero_collected || []));
+  for (const id of ids.slice(0, 6)) {
+    const hit = await MF.work(id);
+    if (hit && stillFits(hit.work, pool)) return { ...hit, pool };
+  }
+  return null;
+}
+
+function heroMarkup(work, collection, pool) {
   const title = /^#?\d+$/.test((work.title || '').trim())
     ? `${collection.title} ${work.title.startsWith('#') ? work.title : '#' + work.title}`
     : (work.title || 'Untitled');
-  const st = MF.STATUS[work.status] || { label: work.status, dot: '' };
-  const p = work.pricing_nzd && work.pricing_nzd.digital != null ? work.pricing_nzd.digital : null;
+
+  let tail;
+  if (pool === 'collected') {
+    if (work.status === 'vaulted') {
+      // the vault is not a collector, and says so in its own words
+      tail = '<span><span class="dot vaulted"></span> Vaulted</span>';
+    } else {
+      const name = MF.collectorName(work.collector) || (work.physical && work.physical.collector);
+      tail = name ? `<span>Collected by ${e(name)}</span>` : '<span>Collected</span>';
+    }
+  } else {
+    const st = MF.STATUS[work.status] || { label: work.status, dot: '' };
+    const offers = work.offers || {};
+    const p = work.pricing_nzd || {};
+    const price = offers.both && p.both != null ? p.both
+      : offers.painting && p.painting != null ? p.painting
+      : offers.digital && p.digital != null ? p.digital
+      : null;
+    tail = `<span><span class="dot ${st.dot}"></span> ${e(st.label)}</span>`
+      + (price != null ? `<span class="price">$${Math.round(price).toLocaleString('en-NZ')}</span>` : '');
+  }
+
   return `<a href="/w/${encodeURIComponent(work.id)}">
     <div class="shot">${MF.img(work, 1600, { eager: true, alt: title })}</div>
     <div class="cap">
       <span class="title">${e(title)}</span>
       <span>${e(collection.title)}</span>
-      <span><span class="dot ${st.dot}"></span> ${e(st.label)}</span>
-      ${p != null ? `<span class="price">$${Math.round(p).toLocaleString('en-NZ')}</span>` : ''}
+      ${tail}
     </div>
   </a>`;
 }
@@ -116,18 +167,22 @@ function heroMarkup(work, collection) {
 async function hero(home, idx) {
   const el = document.getElementById('hero');
 
-  let id = pickHero(home.hero || []);
-  if (id) {
-    const hit = await MF.work(id);
-    if (hit) { el.innerHTML = heroMarkup(hit.work, hit.collection); return; }
+  const first = nextPool(home);
+  if (first) {
+    // if the available pool has sold out, the collected pool carries the page
+    const order = first === 'available' ? ['available', 'collected'] : ['collected', 'available'];
+    for (const pool of order) {
+      const hit = await fromPool(home, pool);
+      if (hit) { el.innerHTML = heroMarkup(hit.work, hit.collection, pool); return; }
+    }
   }
 
-  // no curated list yet: fall back to a collection cover, clearly provisional
-  const pool = idx.collections.filter((c) => c.cover && c.cover.image && c.counts.available && c.group !== 'archive');
-  if (!pool.length) { el.remove(); return; }
-  const c = pool[Math.floor(Math.random() * pool.length)];
+  // nothing curated yet: a collection cover stands in, clearly provisional
+  const covers = idx.collections.filter((c) => c.cover && c.cover.image && c.counts.available && c.group !== 'archive');
+  if (!covers.length) { el.remove(); return; }
+  const c = covers[Math.floor(Math.random() * covers.length)];
   const hit = await MF.work(c.cover.id);
-  if (hit) el.innerHTML = heroMarkup(hit.work, hit.collection);
+  if (hit) el.innerHTML = heroMarkup(hit.work, hit.collection, 'available');
   else el.remove();
 }
 
