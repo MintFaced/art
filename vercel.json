@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/home.html"
+      "destination": "/home"
     },
     {
       "source": "/w/:id",
@@ -12,15 +12,15 @@
     },
     {
       "source": "/c/:slug",
-      "destination": "/c.html"
+      "destination": "/c"
     },
     {
       "source": "/genesis",
-      "destination": "/f.html"
+      "destination": "/f"
     },
     {
       "source": "/10k",
-      "destination": "/f.html"
+      "destination": "/f"
     }
   ],
   "crons": [
