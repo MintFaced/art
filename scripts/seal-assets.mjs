@@ -4,7 +4,7 @@
 // is actually in the bucket, checks each object is really there and really an
 // image, and writes the key onto the work. Anything that fails a check keeps
 // its origin URL and is listed in the report.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 
 const PUBLIC = process.env.ASSETS_PUBLIC_BASE || 'https://assets.mintface.art';
 const ORIGIN = process.env.SEAL_ORIGIN || 'https://art-git-rebuild-mintfaceds-projects.vercel.app';
@@ -27,8 +27,11 @@ async function verify(key) {
   if (checked.has(key)) return checked.get(key);
   let out = { ok: false, why: 'not checked' };
   try {
-    const r = await fetch(`${PUBLIC}/${key}`, { method: 'HEAD' });
-    const len = Number(r.headers.get('content-length') || 0);
+    // ask for it uncompressed, or the CDN brotlis anything text shaped and
+    // drops content-length, which reads as an empty file
+    const r = await fetch(`${PUBLIC}/${key}`, { method: 'HEAD', headers: { 'accept-encoding': 'identity' } });
+    // the listing is the uncompressed truth, the header is the confirmation
+    const len = Number(r.headers.get('content-length') || 0) || inBucket.get(key) || 0;
     const type = (r.headers.get('content-type') || '').split(';')[0];
     if (!r.ok) out = { ok: false, why: `HEAD ${r.status}` };
     else if (!(len > MIN_BYTES)) out = { ok: false, why: `only ${len} bytes` };
@@ -61,7 +64,7 @@ for (const col of catalog.collections) {
 }
 console.log(`${jobs.length} works to consider`);
 
-const report = { patched: [], partial: [], untouched: [], rejected: [] };
+const report = { patched: [], partial: [], untouched: [], rejected: [], withDisplay: [] };
 let cursor = 0;
 async function lane() {
   while (cursor < jobs.length) {
@@ -74,26 +77,67 @@ async function lane() {
       if (v.ok) found[field] = key;
       else report.rejected.push({ id, key, why: v.why });
     }
-    if (!Object.keys(found).length) { report.untouched.push(id); continue; }
+    if (!Object.keys(found).length) { report.untouched.push({ id, slug, work: w, src: w.digital?.image_source || w.digital?.image || w.image || null }); continue; }
     w.assets = { ...(w.assets || {}), ...found };
+    if (found.display) report.withDisplay.push(id);
     // a display copy without its master is fine, the origin is still the truth
-    if (found.image) report.patched.push(id);
+    if (found.image || found.animation) report.patched.push(id);
     else report.partial.push(id);
   }
 }
 await Promise.all(Array.from({ length: 12 }, lane));
 
-writeFileSync('catalog.json', JSON.stringify(catalog, null, 1));
-writeFileSync('docs/ASSETS-REPORT.json', JSON.stringify({
+// Editions collapse in the split, so the warm run only ever saw one work per
+// set and keyed it under a synthetic id that does not exist in the catalog.
+// The members are the same file at the same URL, which is why they collapsed,
+// so match them on that URL rather than on an id that was never shared.
+const originToAssets = new Map();
+for (const slug of readdirSync('data/c').filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', ''))) {
+  let split;
+  try { split = JSON.parse(readFileSync(`data/c/${slug}.json`, 'utf8')); } catch { continue; }
+  for (const sw of split.works || []) {
+    const src = sw.digital?.image_source || sw.digital?.image || sw.image;
+    if (typeof src !== 'string' || originToAssets.has(src)) continue;
+    const found = {};
+    for (const [field, kind] of [['display', 'display'], ['image', 'image']]) {
+      const key = findKey(slug, sw.id, kind);
+      if (key && (await verify(key)).ok) found[field] = key;
+    }
+    if (Object.keys(found).length) originToAssets.set(src, found);
+  }
+}
+
+let shared = 0;
+for (const u of report.untouched) {
+  const assets = u.src ? originToAssets.get(u.src) : null;
+  if (!assets) continue;
+  u.work.assets = { ...(u.work.assets || {}), ...assets };
+  u.shared = true;
+  shared++;
+}
+report.untouched = report.untouched.filter((u) => !u.shared);
+console.log(`${shared} edition members pointed at the file their set already mirrors`);
+
+const dry = process.argv.includes('--dry');
+if (!dry) writeFileSync('catalog.json', JSON.stringify(catalog, null, 1));
+else console.log('dry run, catalog not written');
+if (!dry) writeFileSync('docs/ASSETS-REPORT.json', JSON.stringify({
   bucket_objects: inBucket.size,
   bucket_bytes: listing.bytes,
   works_considered: jobs.length,
   patched: report.patched.length,
+  with_display_copy: report.withDisplay.length,
   display_only: report.partial.length,
+  shared_with_edition_sibling: shared,
   untouched: report.untouched.length,
+  untouched_by_collection: report.untouched.reduce((a, u) => { a[u.slug] = (a[u.slug] || 0) + 1; return a; }, {}),
+  untouched_sample: report.untouched.slice(0, 30).map((u) => ({ id: u.id, src: String(u.src).slice(0, 90) })),
   rejected: report.rejected.length,
   rejected_detail: report.rejected.slice(0, 60),
 }, null, 1));
 
-console.log(`patched ${report.patched.length}, display only ${report.partial.length}, untouched ${report.untouched.length}, rejected ${report.rejected.length}`);
+console.log(`patched ${report.patched.length} (${report.withDisplay.length} with a display copy), display only ${report.partial.length}, untouched ${report.untouched.length}, rejected ${report.rejected.length}`);
 for (const r of report.rejected.slice(0, 10)) console.log(`  reject ${r.key} ... ${r.why}`);
+const byCol = report.untouched.reduce((a, u) => { a[u.slug] = (a[u.slug] || 0) + 1; return a; }, {});
+console.log('untouched by collection:');
+for (const [k, v] of Object.entries(byCol).sort((a, b) => b[1] - a[1])) console.log(`  ${String(v).padStart(4)}  ${k}`);
