@@ -187,11 +187,16 @@ dedicated({ slug: 'geodetic-illusions', title: 'Geodetic Illusions', group: 'geo
   statement: 'Preparation studies.', contractKey: 'geodetic-ai', filter: (i) => /Dark hearts of kings/i.test(i.metadata?.description || ''),
   notes: 'Shares contract with Hidden Landscapes.' });
 
+// The storefront keeps its metadata off chain, behind the endpoint uri() names,
+// so the image and the traits are fetched separately by 29-storefront-metadata.
+const STOREFRONT_META = fs.existsSync('raw/storefront-metadata.json') ? R('raw/storefront-metadata.json') : {};
+
 // Geodetic Moments — OpenSea shared storefront, creator ryanj.eth
 {
   const detail = R('raw/os-detail.json');
   const gm = detail.filter((t) => /^Geodetic (Moment|Marker)/i.test(t.name || ''));
   const works = gm.map((t) => {
+    const sf = STOREFRONT_META[t.id] || {};
     const holder = (t.holders || [])[0] || {};
     const c = holder.address ? classify(holder.address, holder.ens)
       : classify(t.last_transfer?.to, t.last_transfer?.to_ens);
@@ -199,10 +204,18 @@ dedicated({ slug: 'geodetic-illusions', title: 'Geodetic Illusions', group: 'geo
     const md = t.metadata || {};
     const num = Number((t.name || '').match(/#(\d+)/)?.[1] || 0);
     return {
-      id: `geodetic-moments-${num || t.index}`, collection: 'geodetic-moments', title: clean(t.name), statement: clean(md.description) || null,
-      attributes: Array.isArray(md.attributes) && md.attributes.length ? md.attributes : null,
+      id: `geodetic-moments-${num || t.index}`, collection: 'geodetic-moments',
+      title: clean(t.name) || clean(sf.name), statement: clean(sf.description) || clean(md.description) || null,
+      attributes: (sf.attributes && sf.attributes.length ? sf.attributes : null)
+        || (Array.isArray(md.attributes) && md.attributes.length ? md.attributes : null),
       edition: { type: '1/1' },
-      digital: { chain: 'ethereum', standard: 'ERC-1155', contract: '0x495f947276749Ce646f68AC8c248420045cb7b5e', token_id: t.id, opensea_index: t.index, image: t.image || md.image || null, animation: t.animation || null, external_url: md.external_url || null },
+      digital: {
+        chain: 'ethereum', standard: 'ERC-1155', contract: '0x495f947276749Ce646f68AC8c248420045cb7b5e',
+        token_id: t.id, opensea_index: t.index,
+        image: sf.image || t.image || md.image || null,
+        animation: sf.animation_url || t.animation || null,
+        external_url: md.external_url || null,
+      },
       physical: { exists: null }, pricing_nzd: { digital: null, painting: null, both: null },
       status: c.status, held_by: c.held_by || null, collector: c.collector,
       minted_onchain: t.first_transfer?.ts || null, last_transfer: t.last_transfer?.ts || null,

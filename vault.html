@@ -76,6 +76,23 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(48px,10vw,120px);lin
 <script>
 const e = MF.escape;
 
+// Editions of one artwork are still one artwork on a wall. Same rule as the
+// edition collapse: a normalised title and the same image is the same piece.
+const normTitle = (t) => (t || '').replace(/\s*#\s*\d+(\s*\/\s*\d+)?\s*$/, '').trim();
+
+function dedupe(works) {
+  const groups = new Map();
+  for (const w of works) {
+    const key = `${normTitle(w.display_title || w.title)}|${w.image || ''}`;
+    if (!groups.has(key)) groups.set(key, { ...w, held: 0, token_ids: [] });
+    const g = groups.get(key);
+    g.held += Number(w.qty || 1);
+    g.token_ids.push(w.token_id);
+    if (!g.id && w.id) g.id = w.id;   // link to a work page if any copy has one
+  }
+  return [...groups.values()];
+}
+
 function tile(w, collectionTitle) {
   const href = w.id ? `/w/${encodeURIComponent(w.id)}` : null;
   const raw = (w.display_title || w.title || '').trim();
@@ -86,7 +103,7 @@ function tile(w, collectionTitle) {
   const body = `<div class="frame"><div class="shot">${img}</div></div>
     <div class="cap">
       <div class="t">${e(title)}</div>
-      <div class="v"><span class="dot vaulted"></span> Vaulted${w.qty > 1 ? ' &middot; ' + w.qty + ' held' : ''}</div>
+      <div class="v"><span class="dot vaulted"></span> Vaulted${w.held > 1 ? ' &middot; held &times; ' + w.held : ''}</div>
     </div>`;
   return href ? `<a href="${href}">${body}</a>` : `<div class="cell">${body}</div>`;
 }
@@ -95,7 +112,7 @@ function chapter(group) {
   return `<section class="chapter">
     <div class="chead">
       <h2>${group.slug ? `<a href="/c/${encodeURIComponent(group.slug)}">${e(group.title)}</a>` : e(group.title)}</h2>
-      <div class="cmeta">${group.works.length} ${group.works.length === 1 ? 'work' : 'works'}</div>
+      <div class="cmeta">${group.works.length} ${group.works.length === 1 ? 'work' : 'works'}${group.tokens > group.works.length ? ` &middot; ${group.tokens} tokens` : ''}</div>
       ${group.slug ? `<a class="smallcaps all" href="/c/${encodeURIComponent(group.slug)}">The collection</a>` : ''}
     </div>
     <div class="grid">${group.works.map((w) => tile(w, group.title)).join('')}</div>
@@ -122,6 +139,11 @@ function chapter(group) {
       }
       groups.get(key).works.push(w);
     }
+    // one card per artwork, however many editions of it are held
+    for (const g of groups.values()) {
+      g.tokens = g.works.reduce((n, w) => n + Number(w.qty || 1), 0);
+      g.works = dedupe(g.works);
+    }
     const list = [...groups.values()].sort((a, b) => {
       const ia = a.slug ? order.indexOf(a.slug) : 999;
       const ib = b.slug ? order.indexOf(b.slug) : 999;
@@ -137,7 +159,7 @@ function chapter(group) {
         <div class="kicker">${e(vault.wallet || 'mintestate.eth')}</div>
         <h1>${e(vault.title)}</h1>
         <p class="intent">${e(vault.intent || vault.statement || '')}</p>
-        <div class="held">${vault.works.length} works held</div>
+        <div class="held">${vault.works.reduce((n, w) => n + Number(w.qty || 1), 0)} tokens, ${new Set(vault.works.map((w) => `${normTitle(w.display_title || w.title)}|${w.image || ''}`)).size} works</div>
         <div class="mast-rule"></div>
       </div>
       <div class="set">${list.map(chapter).join('')}</div>

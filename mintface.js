@@ -104,7 +104,7 @@ const MF = {
     return work.digital?.image_source || work.digital?.image || work.image || null;
   },
   // hosts that already serve sized images, or that the proxy cannot reach
-  THUMB_BYPASS: ['i.seadn.io', 'lh3.googleusercontent.com', 'highlight-creator-assets.highlight.xyz'],
+  THUMB_BYPASS: ['lh3.googleusercontent.com', 'highlight-creator-assets.highlight.xyz'],
 
   // grids ask for a width, masters are far too heavy to browse
   thumbUrl(work, width) {
