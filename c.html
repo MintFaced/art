@@ -133,6 +133,8 @@ const STATE_MATCH = {
 };
 
 function slug() {
+  // the studio door has its own address
+  if (/^\/recent\/?$/.test(location.pathname)) return 'recent-work';
   const m = location.pathname.match(/^\/c\/(.+?)\/?$/);
   if (m) return decodeURIComponent(m[1]);
   return new URLSearchParams(location.search).get('slug') || '';

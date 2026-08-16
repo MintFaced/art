@@ -1,3 +1,4 @@
+import { describeWhat } from './data.js';
 import { Resend } from 'resend';
 
 const KEY = process.env.RESEND_API_KEY;
@@ -68,7 +69,7 @@ MintFace`,
     subject: `Sold ... ${title}`,
     text: `${title} sold.
 
-What: ${what === 'both' ? 'the painting and the digital work' : what === 'painting' ? 'the painting' : 'the digital work'}
+What: ${describeWhat(what)}
 Paid: ${amount} ${currency}
 Buyer: ${email || 'no email on the session'}
 ${shipping ? `Ship to:\n${shipping}\n` : ''}

@@ -16,6 +16,7 @@ const key = (w) => `${normTitle(w.title)}|${w.digital?.image || ''}`;
 // no try/catch: a missing or broken overlay should stop the split, not quietly
 // produce a site with no genres on it
 const META = JSON.parse(fs.readFileSync(ROOT + 'data/source/collection-meta.json', 'utf8')).collections;
+const CONFIG = JSON.parse(fs.readFileSync(ROOT + 'data/source/config.json', 'utf8'));
 
 // The recovered Geodetic Moment Light is the face of the on-chain set, whether
 // or not it happens to be for sale.
@@ -124,6 +125,8 @@ function facets(works) {
 const index = {
   _meta: { ...cat._meta, split_generated: new Date().toISOString(), note: 'Browse index. Work records live in data/c/{slug}.json.' },
   groups: cat.groups,
+  // decisions the site needs at render time, not chain data
+  config: { framing_fee_nzd: CONFIG.framing_fee_nzd, framing_fee_quoted: CONFIG.framing_fee_quoted },
   collections: [],
   work_index: {},
   exhibition_history: cat.exhibition_history,
@@ -135,13 +138,27 @@ for (const col of cat.collections) {
   const raw = col.works || [];
   totalBefore += raw.length;
   const collapsible = raw.length && raw.every((w) => w.digital);
-  const works = (collapsible ? collapse(raw) : raw)
+  // the newest paint goes at the top of the studio door
+  const ordered = col.slug === 'recent-work'
+    ? [...raw].sort((a, b) => String(b.added || b.year || '').localeCompare(String(a.added || a.year || '')))
+    : raw;
+  const works = (collapsible ? collapse(ordered) : ordered)
     .map(stripHeavy)
     .map(withOrientation)
     .sort((a, b) => (a.digital && b.digital ? numericId(a) - numericId(b) : 0));
   totalAfter += works.length;
 
-  const file = { ...col, facets: facets(works), works };
+  const meta0 = META[col.slug] || {};
+  const file = {
+    ...col,
+    group: meta0.group || col.group,
+    genre: meta0.genre || null,
+    ...(meta0.framing ? { framing: true } : {}),
+    // the work page needs the fee without a second fetch
+    ...(meta0.framing ? { framing_fee_nzd: CONFIG.framing_fee_nzd, framing_fee_quoted: CONFIG.framing_fee_quoted } : {}),
+    facets: facets(works),
+    works,
+  };
   files.push(file);
 
   const tally = {};
@@ -166,6 +183,7 @@ for (const col of cat.collections) {
   index.collections.push({
     slug: col.slug, title: col.title, group: meta.group || col.group, year: col.year || null,
     medium: col.medium || null, genre: meta.genre || null,
+    framing: meta.framing === true || undefined,
     physical: !!col.physical, statement: col.statement || null, sold_out: col.sold_out || false,
     counts: { works: works.length, ...tally, ...(editionsMinted ? { editions_minted: editionsMinted, edition_works: editionWorks.length } : {}), ...(uniqueWorks ? { unique_works: uniqueWorks } : {}), ...(childWorks ? { child_works: childWorks } : {}) },
     cover: cover ? { id: cover.id, image: cover.digital?.image || null, assets: cover.assets || null, orientation: cover.orientation || null } : null,

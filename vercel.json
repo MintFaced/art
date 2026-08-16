@@ -19,6 +19,10 @@
   ],
   "rewrites": [
     {
+      "source": "/s/:key",
+      "destination": "/api/studio"
+    },
+    {
       "source": "/w/:id",
       "destination": "/api/w"
     },
@@ -29,6 +33,10 @@
     {
       "source": "/c/patrimora",
       "destination": "/patrimora"
+    },
+    {
+      "source": "/recent",
+      "destination": "/c"
     },
     {
       "source": "/c/:slug",

@@ -47,7 +47,7 @@
    "collector display_name + note",
    "statements marked null"
   ],
-  "split_generated": "2026-08-16T23:18:42.081Z"
+  "split_generated": "2026-08-16T23:50:45.261Z"
  },
  "groups": [
   {
@@ -84,6 +84,10 @@
    "title": "Archive"
   }
  ],
+ "config": {
+  "framing_fee_nzd": 850,
+  "framing_fee_quoted": "US$500"
+ },
  "collections": [
   {
    "slug": "pixelarcade",
@@ -1073,7 +1077,8 @@
    "group": "recent",
    "year": null,
    "medium": "Painting",
-   "genre": null,
+   "genre": "Painting",
+   "framing": true,
    "physical": true,
    "statement": "Latest paintings.",
    "sold_out": false,

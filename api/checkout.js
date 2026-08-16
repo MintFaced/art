@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { findWork, priceNZD, priceETH, siteOrigin, useRequestOrigin } from './_lib/data.js';
+import { findWork, priceNZD, priceETH, includesPainting, siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { nzdToUsd, toMinorUnits } from './_lib/fx.js';
 import { readQuote } from './_lib/quote.js';
 import { workState, claimWork, stateConfigured } from './_lib/state.js';
@@ -13,6 +13,8 @@ const WHAT = {
   digital: 'Digital work',
   painting: 'Painting',
   both: 'Painting and digital work together',
+  painting_framed: 'Painting, framed',
+  both_framed: 'Painting and digital work together, framed',
 };
 
 const json = (body, status = 200) =>
@@ -28,7 +30,7 @@ const HOLD_MINUTES = Number(process.env.CHECKOUT_HOLD_MINUTES || 30);
 // One of a kind, or any purchase that includes the painting. Editions can be
 // sold to as many people as there are editions, so they are not held.
 function isOneOfAKind(work, what) {
-  if (what === 'painting' || what === 'both') return true;
+  if (includesPainting(what)) return true;
   return !(work.edition && work.edition.type === 'edition');
 }
 
@@ -68,12 +70,12 @@ export async function POST(request) {
       : `this work is ${status}` }, 409);
   }
 
-  if ((what === 'painting' || what === 'both') && !collection.physical) {
+  if (includesPainting(what) && !collection.physical) {
     return json({ error: 'this work has no painting' }, 400);
   }
 
   const eth = priceETH(work, what);
-  let nzd = priceNZD(work, what);
+  let nzd = priceNZD(work, what, collection);
   let ethRate = null;
 
   // a work listed in ETH needs the locked rate to reach a card amount at all
@@ -106,7 +108,7 @@ export async function POST(request) {
   const amount = cur === 'NZD' ? nzd : nzd * (usdRate || (await nzdToUsd()));
   const origin = siteOrigin();
   const title = work.title || 'Untitled';
-  const physical = what === 'painting' || what === 'both';
+  const physical = includesPainting(what);
 
   const holdUntil = Math.floor(Date.now() / 1000) + HOLD_MINUTES * 60;
 

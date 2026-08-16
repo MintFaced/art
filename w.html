@@ -120,6 +120,12 @@ details summary:hover{color:var(--ink)}
 .choice[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
 .choice .what{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
 .choice .amt{font-family:var(--font-mono);font-weight:400;font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* what the fee is, said once, quietly, beside what it is added to */
+.choice .add{
+  display:block;font-family:var(--font-mono);font-weight:400;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  margin-top:5px;font-variant-numeric:tabular-nums;
+}
 .choice .sub{display:block;font-size:11px;letter-spacing:0;text-transform:none;color:var(--muted);margin-top:3px}
 .choice[aria-pressed="true"] .sub{color:rgba(250,249,246,.7)}
 .sheet .go{margin-top:8px}
@@ -156,6 +162,10 @@ details summary:hover{color:var(--ink)}
 .price-row .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .price-row .amount{font-family:var(--font-mono);font-weight:400;font-size:24px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .converted{font-family:var(--font-mono);font-weight:400;font-size:11px;color:var(--faint);margin-top:8px;font-variant-numeric:tabular-nums}
+.framed-note{
+  font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin-top:12px;font-variant-numeric:tabular-nums;
+}
 .poa{font-family:var(--font-sans);font-size:22px;color:var(--muted);padding:8px 0}
 
 /* ---------- action ---------- */
@@ -395,7 +405,16 @@ function pricingBlock(work, collection) {
   }
   // the same list the Acquire flow offers, so the page cannot advertise a
   // painting that has already gone
-  const rows = optionsFor(work, collection).map((o) => [o.label, o.nzd]);
+  // framing is an add-on chosen at the point of buying, not a fourth and fifth
+  // price to read on the way past
+  const all = optionsFor(work, collection);
+  const rows = all.filter((o) => !o.framed).map((o) => [
+    o.key === 'painting' ? 'Painting' : o.label,
+    o.nzd,
+  ]);
+  const framedNote = all.some((o) => o.framed) && collection.framing_fee_quoted
+    ? `Framing available, +${collection.framing_fee_quoted}`
+    : null;
 
   if (!rows.length) {
     return `<div class="pricing">
@@ -414,6 +433,7 @@ function pricingBlock(work, collection) {
         <span class="what">${e(what)}</span>
         <span class="amount" data-nzd="${nzd}">$${Math.round(nzd).toLocaleString('en-NZ')}</span>
       </div>`).join('')}
+    ${framedNote ? `<div class="framed-note">${e(framedNote)}</div>` : ''}
     <div class="converted" id="converted" hidden></div>
   </div>`;
 }
@@ -756,23 +776,53 @@ function optionsFor(work, collection) {
   const allow = (key, fallback) => (preview ? true : o ? o[key] === true : fallback);
   const paintingFallback = collection.physical && ph.exists !== false && ph.sold !== true;
 
+  // framing is never a stored price. It is the painting price plus one fee,
+  // so there is nothing to keep in step when a painting is repriced.
+  const fee = collection.framing ? Number(collection.framing_fee_nzd) || 0 : 0;
+  const quoted = collection.framing_fee_quoted || null;
+
   const out = [];
   if (p.digital != null && allow('digital', true)) out.push({ key: 'digital', label: 'Digital', nzd: p.digital, sub: 'The token, transferred to your wallet' });
-  if (p.painting != null && allow('painting', paintingFallback)) out.push({ key: 'painting', label: 'Painting', nzd: p.painting, sub: 'The physical work, shipped worldwide' });
-  if (p.both != null && allow('both', paintingFallback)) out.push({
-    key: 'both',
-    label: work.painting_included ? 'Painting and token' : 'Both together',
-    nzd: p.both,
-    sub: work.painting_included
-      ? 'The painting comes with the token, no extra cost'
-      : 'Painting and token, one provenance',
-  });
+  if (p.painting != null && allow('painting', paintingFallback)) {
+    out.push({
+      key: 'painting',
+      label: fee ? 'Painting, unframed' : 'Painting',
+      nzd: p.painting,
+      sub: 'The physical work, shipped worldwide',
+    });
+    if (fee) out.push({
+      key: 'painting_framed',
+      label: 'Painting, framed',
+      nzd: p.painting + fee,
+      framed: true,
+      sub: 'Framed here before it ships',
+      extra: quoted ? `Framing +${quoted}` : null,
+    });
+  }
+  if (p.both != null && allow('both', paintingFallback)) {
+    out.push({
+      key: 'both',
+      label: work.painting_included ? 'Painting and token' : 'Both together',
+      nzd: p.both,
+      sub: work.painting_included
+        ? 'The painting comes with the token, no extra cost'
+        : 'Painting and token, one provenance',
+    });
+    if (fee) out.push({
+      key: 'both_framed',
+      label: work.painting_included ? 'Painting and token, framed' : 'Both together, framed',
+      nzd: p.both + fee,
+      framed: true,
+      sub: 'Painting and token, framed before it ships',
+      extra: quoted ? `Framing +${quoted}` : null,
+    });
+  }
   return out;
 }
 
 function money(nzd) {
   if (nzd == null || !isFinite(nzd)) return null;
-  return '$' + Math.round(nzd).toLocaleString('en-NZ');
+  return 'NZ$' + Math.round(nzd).toLocaleString('en-NZ');
 }
 
 // An option knows what it is priced in. Everything else is converted from that.
@@ -791,7 +841,8 @@ function amountIn(option, currency) {
 }
 
 // what the buyer is actually asked to agree to, in the currency it is priced in
-const headlinePrice = (option) => amountIn(option, option.eth != null ? 'ETH' : 'NZD');
+const headlinePrice = (option) =>
+  amountIn(option, option.eth != null ? 'ETH' : MF.currency());
 
 function stepWhat() {
   const opts = optionsFor(ACQ.work, ACQ.collection);
@@ -801,14 +852,26 @@ function stepWhat() {
     <div class="which">${e(ACQ.collection.title)}</div>
     <div class="step">What would you like</div>
     ${opts.map((o) => `<button class="choice" data-what="${o.key}" aria-pressed="false">
-      <span class="what">${e(o.label)}<span class="sub">${e(o.sub)}</span></span>
+      <span class="what">${e(o.label)}<span class="sub">${e(o.sub)}</span>${o.extra ? `<span class="add">${e(o.extra)}</span>` : ''}</span>
       <span class="amt">${e(headlinePrice(o) || '...')}</span>
     </button>`).join('')}
-    <p class="note">Prices are New Zealand dollars. Shipping, crating and freight are included.</p>`;
+    <p class="note">Shipping, crating and freight are included.</p>`;
   SHEET.body().querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => {
     ACQ.what = b.dataset.what;
     stepHow();
   }));
+  // a price in the viewer's currency needs a rate, so fill the figures in as
+  // soon as one arrives rather than leaving three dots on the button
+  if (opts.some((o) => headlinePrice(o) == null)) {
+    MF.fx().then((fx) => {
+      ACQ.fx = fx;
+      SHEET.body().querySelectorAll('.choice').forEach((b) => {
+        const o = opts.find((x) => x.key === b.dataset.what);
+        const amt = b.querySelector('.amt');
+        if (o && amt) amt.textContent = headlinePrice(o) || '...';
+      });
+    });
+  }
 }
 
 // the fortnight, said once, as a date rather than a count

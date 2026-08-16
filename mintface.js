@@ -67,7 +67,58 @@ const MF = {
     return this._index;
   },
 
+  // Recent Work is not on chain and there is no build step, so the file the
+  // studio writes is the file the site reads. Everything else comes from the
+  // split, which is generated from the chain.
+  shapeRecent(src, index) {
+    const col = { ...(src.collection || {}), slug: 'recent-work' };
+    const meta = (index && index.collections || []).find((c) => c.slug === 'recent-work') || {};
+    const works = (src.works || [])
+      .filter((w) => w.hidden !== true)
+      .sort((a, b) => String(b.added || '').localeCompare(String(a.added || '')))
+      .map((w) => {
+        const p = w.pricing_nzd || {};
+        const offers = {
+          digital: p.digital != null && p.digital > 0,
+          painting: p.painting != null && p.painting > 0,
+          both: p.both != null && p.both > 0,
+        };
+        return {
+          id: w.id,
+          collection: 'recent-work',
+          title: w.title,
+          year: w.year || null,
+          medium: w.medium || col.medium || null,
+          statement: w.statement || null,
+          status: w.status || 'available',
+          pricing_nzd: p,
+          offers,
+          physical: { exists: true, dimensions: w.dimensions || null },
+          digital: { minted: false, chain: 'ethereum', standard: 'ERC-721', image: w.image || null },
+          edition: w.edition && w.edition !== '1/1' ? { type: 'edition', label: w.edition } : null,
+          notes_internal: undefined,
+          added: w.added || null,
+        };
+      });
+    const cfg = (index && index.config) || {};
+    return {
+      ...meta, ...col, works,
+      ...(meta.framing ? { framing: true, framing_fee_nzd: cfg.framing_fee_nzd, framing_fee_quoted: cfg.framing_fee_quoted } : {}),
+    };
+  },
+
   async collection(slug) {
+    if (slug === 'recent-work' && !this._collections[slug]) {
+      const [src, index, state] = await Promise.all([
+        fetch('/data/source/recent-work.json').then((r) => r.json()),
+        this.index(),
+        this.state(),
+      ]);
+      const col = this.shapeRecent(src, index);
+      col.works = col.works.map((w) => this.applyState(w, state));
+      this._collections[slug] = col;
+      return col;
+    }
     if (!this._collections[slug]) {
       const [col, state] = await Promise.all([
         fetch(`/data/c/${slug}.json`).then((r) => r.json()),
@@ -84,8 +135,14 @@ const MF = {
 
   async work(id) {
     const idx = await this.index();
-    const slug = idx.work_index[id];
-    if (!slug) return null;
+    let slug = idx.work_index[id];
+    // a work published from the studio is not in the generated index yet
+    if (!slug) {
+      const recent = await this.collection('recent-work').catch(() => null);
+      const hit = recent && (recent.works || []).find((w) => w.id === id);
+      if (hit) return { work: hit, collection: recent };
+      return null;
+    }
     const col = await this.collection(slug);
     let work = (col.works || []).find((w) => w.id === id);
     if (!work && col.children) {

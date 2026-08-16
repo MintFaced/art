@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { findWork, useRequestOrigin } from './_lib/data.js';
+import { findWork, useRequestOrigin, includesPainting, describeWhat } from './_lib/data.js';
 import { writeWorkState, workState } from './_lib/state.js';
 import { send, templates } from './_lib/email.js';
 
@@ -63,7 +63,7 @@ async function release(session, why) {
 // One of a kind, or any purchase including the painting. An edition can be sold
 // again tomorrow, so a sale records itself without closing the work.
 function closesTheWork(work, what) {
-  if (what === 'painting' || what === 'both') return true;
+  if (includesPainting(what)) return true;
   return !(work && work.edition && work.edition.type === 'edition');
 }
 
@@ -107,10 +107,10 @@ async function fulfil(session) {
       subject: `Thank you ... ${title}`,
       text: `Your payment for ${title} has gone through.
 
-What: ${what === 'both' ? 'the painting and the digital work' : what === 'painting' ? 'the painting' : 'the digital work'}
+What: ${describeWhat(what)}
 Paid: ${amount} ${currency}
 
-${what === 'digital' ? 'The token will be transferred to your wallet by hand, usually within a day. Reply with the address you would like it sent to.' : 'Ryan will be in touch within a day to arrange crating and freight, and to take the wallet address for the token.'}
+${!includesPainting(what) ? 'The token will be transferred to your wallet by hand, usually within a day. Reply with the address you would like it sent to.' : 'Ryan will be in touch within a day to arrange crating and freight, and to take the wallet address for the token.'}
 
 Ryan
 MintFace`,
