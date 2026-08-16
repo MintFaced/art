@@ -133,7 +133,8 @@ const MF = {
     // default.
     if (o.live && this.isSVG(this.imageUrl(work))) {
       const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
-      return `<object type="image/svg+xml" data="${this.escape(this.imageUrl(work))}" aria-label="${alt}" class="live">`
+      const ratio = work.digital && work.digital.aspect_ratio;
+      return `<object type="image/svg+xml" data="${this.escape(this.imageUrl(work))}" aria-label="${alt}" class="live"${ratio ? ` style="aspect-ratio:${this.escape(ratio)}"` : ''}>`
         + `<img src="${this.escape(thumb)}" alt="${alt}" loading="eager" decoding="async" onload="this.classList.add('in')">`
         + `</object>`;
     }

@@ -1,6 +1,6 @@
 # Import report
 
-From `mintface paintings data.xlsx`, read 16/08/2026, 7:16:51 pm.
+From `mintface paintings data.xlsx`, read 16/08/2026, 7:23:46 pm.
 
 123 rows, 89 priced, 100 with dimensions, 6 collector names, 24 paintings already with a collector, 7 statuses taken from the sheet over the chain, 9 where the painting comes with the digital work.
 

@@ -124,6 +124,9 @@ function dedicated({ slug, title, group, year, medium, physical, statement, link
 // The PixelArcade works are SVGs that animate themselves. The chain points at
 // IPFS, which is slow to unreliable, so the site reads them from the project's
 // own public repo instead. Same bytes, checked against the copies in this one.
+// an object element has no intrinsic size, so each work carries its own shape
+const PIXELARCADE_ASPECT = fs.existsSync('raw/pixelarcade-aspect.json') ? R('raw/pixelarcade-aspect.json') : {};
+
 const PIXELARCADE_SVG = (tokenId) =>
   `https://cdn.jsdelivr.net/gh/MintFaced/pixel-arcade@main/public/svg/${String(tokenId).padStart(3, '0')}.svg`;
 
@@ -133,6 +136,7 @@ dedicated({ slug: 'pixelarcade', title: 'PixelArcade', group: 'core', year: '202
   afterEach: (work, inst) => {
     work.digital.image_source = PIXELARCADE_SVG(inst.id);
     work.digital.image_source_note = 'mirror of the on-chain SVG, served from the project repo';
+    if (PIXELARCADE_ASPECT[inst.id]) work.digital.aspect_ratio = PIXELARCADE_ASPECT[inst.id];
   },
   notes: 'Physical claim mechanic — 63 of 64 tokens held by the PixelArcade contract.',
   series: (items) => ({
