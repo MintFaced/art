@@ -109,11 +109,26 @@ const MF = {
     if (typeof src === 'string' && /^(https?:)?\/\//.test(src)) return src;
     return work.digital?.image || work.image || null;
   },
+  // where the bytes actually live according to the chain, ignoring our mirror.
+  // R2 is a convenience; this is the work.
+  originUrl(work) {
+    const src = work.digital?.image_source;
+    if (typeof src === 'string' && /^(https?:)?\/\//.test(src)) return src;
+    return work.digital?.image || work.image || null;
+  },
+
+  originAnimationUrl(work) {
+    return work.digital?.animation || null;
+  },
+
   // hosts that already serve sized images, or that the proxy cannot reach
   THUMB_BYPASS: ['lh3.googleusercontent.com', 'highlight-creator-assets.highlight.xyz'],
 
   // grids ask for a width, masters are far too heavy to browse
   thumbUrl(work, width) {
+    // a display copy is already the right size, sending it through a resizer
+    // would only add a hop
+    if (work.assets && work.assets.display) return `${ASSETS_BASE}/${work.assets.display}`;
     if (work.assets && work.assets.thumb) return `${ASSETS_BASE}/${work.assets.thumb}`;
     const url = this.imageUrl(work);
     if (!url) return null;
@@ -147,29 +162,56 @@ const MF = {
     // some works are a video rather than a picture of one
     if (this.isVideo(master)) {
       const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
-      return `<video src="${this.escape(master)}" aria-label="${alt}" class="in"`
-        + ` controls playsinline loop preload="metadata"${o.eager ? ' autoplay muted' : ''}></video>`;
+      const vOrigin = this.originAnimationUrl(work) || this.originUrl(work);
+      const vFallback = vOrigin && vOrigin !== master ? ` data-fallback="${this.escape(vOrigin)}"` : '';
+      return `<video src="${this.escape(master)}" aria-label="${alt}" class="in"${vFallback}`
+        + ` controls playsinline loop preload="metadata"${o.eager ? ' autoplay muted' : ''}`
+        + ` onerror="MF.mediaFallback(this)"></video>`;
     }
     if (o.live && this.isSVG(master)) {
       const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
       const ratio = work.digital && work.digital.aspect_ratio;
+      const svgOrigin = this.originUrl(work);
+      const inner = svgOrigin && svgOrigin !== master
+        ? `<object type="image/svg+xml" data="${this.escape(svgOrigin)}" aria-label="${alt}" class="live">`
+          + `<img src="${this.escape(thumb)}" alt="${alt}" loading="eager" decoding="async" onload="this.classList.add('in')">`
+          + `</object>`
+        : `<img src="${this.escape(thumb)}" alt="${alt}" loading="eager" decoding="async" onload="this.classList.add('in')">`;
       return `<object type="image/svg+xml" data="${this.escape(master)}" aria-label="${alt}" class="live"${ratio ? ` style="aspect-ratio:${this.escape(ratio)}"` : ''}>`
-        + `<img src="${this.escape(thumb)}" alt="${alt}" loading="eager" decoding="async" onload="this.classList.add('in')">`
+        + inner
         + `</object>`;
     }
     const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
-    const fallback = master && master !== thumb ? ` data-fallback="${this.escape(master)}"` : '';
+    // display copy, then the master we mirrored, then wherever the chain says
+    // it lives. Losing R2 should cost speed, not the picture.
+    const chain = [master, this.originUrl(work)]
+      .filter((u, i, a) => u && u !== thumb && a.indexOf(u) === i);
+    const fallback = chain.length ? ` data-fallback="${this.escape(chain.join(' | '))}"` : '';
     return `<img src="${this.escape(thumb)}" alt="${alt}"${fallback}`
       + ` loading="${o.eager ? 'eager' : 'lazy'}" decoding="async"`
       + (o.eager ? ' fetchpriority="high"' : '')
       + ` onload="this.classList.add('in')" onerror="MF.imgFallback(this)"${o.cls ? ` class="${o.cls}"` : ''}>`;
   },
 
+  // walks the chain one step at a time, so each source gets its own attempt
+  nextSource(el) {
+    const left = (el.getAttribute('data-fallback') || '').split(' | ').filter(Boolean);
+    const next = left.shift();
+    if (!next) { el.removeAttribute('data-fallback'); return null; }
+    if (left.length) el.setAttribute('data-fallback', left.join(' | '));
+    else el.removeAttribute('data-fallback');
+    return next;
+  },
+
+  mediaFallback(el) {
+    const next = this.nextSource(el);
+    if (next) el.src = next;
+  },
+
   imgFallback(el) {
-    const fb = el.getAttribute('data-fallback');
-    if (fb && !el.src.endsWith(fb)) {
-      el.removeAttribute('data-fallback');
-      el.src = fb;
+    const next = this.nextSource(el);
+    if (next) {
+      el.src = next;
       return;
     }
     const shot = el.parentElement;
