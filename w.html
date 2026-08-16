@@ -7,9 +7,8 @@
 <meta name="description" content="Work by MintFace.">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="MintFace">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
 <style>
 /* ---------- image ---------- */
@@ -27,7 +26,7 @@
 .motion{margin-top:16px}
 .ghost{
   background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;
-  padding:11px 22px;font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  padding:11px 22px;font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
 }
 .ghost:hover{border-color:var(--ink);color:var(--ink)}
 .motion-frame iframe{width:min(900px,100%);height:min(70vh,640px);border:1px solid var(--rule);background:#fff}
@@ -38,7 +37,7 @@
 :root{--measure:624px}   /* 680 column less its 28px gutters, so art and text line up */
 .col{max-width:680px;margin:0 auto;padding:54px 28px 120px}
 h1{
-  font-family:var(--serif);font-weight:300;
+  font-family:var(--font-sans);font-weight:400;
   font-size:clamp(34px,5.2vw,52px);line-height:1.08;
   margin:0 0 6px;letter-spacing:-.005em;
 }
@@ -47,9 +46,9 @@ h1{
 
 /* ---------- tabs ---------- */
 .tabs{display:flex;gap:26px;border-bottom:1px solid var(--rule);margin-bottom:0}
-.tab{
+.tab{font-family:var(--font-sans);font-weight:500;
   background:none;border:0;padding:0 0 12px;cursor:pointer;
-  font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);position:relative;
 }
 .tab[aria-selected="true"]{color:var(--ink)}
@@ -58,22 +57,22 @@ h1{
 }
 .panel{padding:26px 0 0}
 .panel[hidden]{display:none}
-.statement{font-family:var(--serif);font-size:20px;line-height:1.55;color:#2c2924;margin:0;white-space:pre-line}
-.statement.none{font-family:var(--sans);font-size:13px;color:var(--faint)}
+.statement{font-family:var(--font-sans);font-weight:400;font-size:17px;line-height:1.6;color:#2c2924;margin:0;white-space:pre-line}
+.statement.none{font-family:var(--font-sans);font-size:13px;color:var(--faint)}
 
 /* ---------- detail rows ---------- */
 .rows{width:100%;border-collapse:collapse}
 .rows tr{border-bottom:1px solid var(--rule)}
 .rows tr:last-child{border-bottom:0}
-.rows th{
+.rows th{font-family:var(--font-sans);font-weight:500;
   text-align:left;font-weight:400;padding:13px 0;width:38%;vertical-align:top;
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
 }
-.rows td{padding:13px 0;vertical-align:top;font-size:14px}
-.rows td.mono{font-family:var(--mono);font-size:11.5px;word-break:break-all;line-height:1.9}
+.rows td{padding:13px 0;vertical-align:top;font-size:13px;font-family:var(--font-mono);font-weight:400;font-variant-numeric:tabular-nums;line-height:1.75}
+.rows td.mono{font-size:11.5px;word-break:break-all;line-height:1.9}
 
 .rows.traits th{width:52%}
-.rows.traits td{text-align:right;font-size:13px}
+.rows.traits td{text-align:right;font-size:12.5px}
 .swatch{
   display:inline-block;width:9px;height:9px;margin-right:8px;
   border:1px solid var(--rule);vertical-align:baseline;
@@ -87,7 +86,7 @@ details summary{
   display:flex;justify-content:space-between;align-items:center;
 }
 details summary::-webkit-details-marker{display:none}
-details summary::after{content:'+';font-family:var(--mono);font-size:13px;color:var(--faint)}
+details summary::after{content:'+';font-family:var(--font-mono);font-size:13px;color:var(--faint)}
 details[open] summary::after{content:'–'}
 details summary:hover{color:var(--ink)}
 .fold-body{padding:0 0 20px}
@@ -106,32 +105,32 @@ details summary:hover{color:var(--ink)}
 }
 .sheet.open{transform:none}
 .sheet header{display:flex;justify-content:space-between;align-items:baseline;padding:24px 28px 0}
-.sheet .close{background:none;border:0;cursor:pointer;font-family:var(--mono);font-size:16px;color:var(--muted);padding:0;line-height:1}
+.sheet .close{background:none;border:0;cursor:pointer;font-family:var(--font-mono);font-size:16px;color:var(--muted);padding:0;line-height:1}
 .sheet .close:hover{color:var(--ink)}
 .sheet .body{padding:22px 28px 40px;overflow-y:auto;flex:1}
-.sheet h2{font-family:var(--serif);font-weight:300;font-size:30px;line-height:1.1;margin:6px 0 4px}
+.sheet h2{font-family:var(--font-sans);font-weight:400;font-size:30px;line-height:1.1;margin:6px 0 4px}
 .sheet .which{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:26px}
 .step{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:26px 0 12px}
 .choice{
   display:flex;justify-content:space-between;align-items:baseline;gap:14px;width:100%;
   background:none;border:1px solid var(--rule);cursor:pointer;padding:15px 16px;margin-bottom:9px;
-  font-family:var(--sans);text-align:left;color:var(--ink);
+  font-family:var(--font-sans);text-align:left;color:var(--ink);
 }
 .choice:hover{border-color:var(--ink)}
 .choice[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
 .choice .what{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
-.choice .amt{font-family:var(--serif);font-size:21px;white-space:nowrap}
+.choice .amt{font-family:var(--font-mono);font-weight:400;font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .choice .sub{display:block;font-size:11px;letter-spacing:0;text-transform:none;color:var(--muted);margin-top:3px}
 .choice[aria-pressed="true"] .sub{color:rgba(250,249,246,.7)}
 .sheet .go{margin-top:8px}
 .sheet .note{font-size:12px;color:var(--muted);line-height:1.7;margin:16px 0 0}
 .sheet input{
   width:100%;padding:13px 14px;border:1px solid var(--rule);background:transparent;
-  font-family:var(--sans);font-size:14px;color:var(--ink);margin-bottom:9px;border-radius:0;
+  font-family:var(--font-sans);font-size:14px;color:var(--ink);margin-bottom:9px;border-radius:0;
 }
 .sheet input:focus{outline:none;border-color:var(--ink)}
 .sheet .err{font-size:12px;color:#8b3a2a;margin-top:12px}
-.sheet .ok{font-family:var(--serif);font-size:20px;line-height:1.45;color:#2c2924}
+.sheet .ok{font-family:var(--font-mono);font-weight:400;font-size:17px;line-height:1.45;color:#2c2924;font-variant-numeric:tabular-nums}
 .held{
   display:flex;justify-content:space-between;align-items:baseline;gap:12px;
   border-top:1px solid var(--rule);margin-top:18px;padding-top:12px;
@@ -139,12 +138,12 @@ details summary:hover{color:var(--ink)}
 }
 .held.stale{color:#8b3a2a}
 .held button{
-  background:none;border:0;padding:0;cursor:pointer;font-family:var(--sans);
+  background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-sans);font-weight:500;
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);
   border-bottom:1px solid var(--rule);
 }
 .held button:hover{border-color:var(--ink)}
-.mono-line{font-family:var(--mono);font-size:11.5px;word-break:break-all;color:var(--muted);line-height:1.9}
+.mono-line{font-family:var(--font-mono);font-size:11.5px;word-break:break-all;color:var(--muted);line-height:1.9}
 @media(max-width:560px){.sheet{width:100%}}
 
 /* ---------- pricing ---------- */
@@ -153,29 +152,31 @@ details summary:hover{color:var(--ink)}
 .pricing-head .smallcaps{color:var(--ink)}
 .cur{display:flex;gap:14px}
 .cur button{
-  background:none;border:0;padding:0;cursor:pointer;font-family:var(--sans);
-  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+  background:none;border:0;padding:0;cursor:pointer;
+  font-family:var(--font-mono);font-weight:400;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  font-variant-numeric:tabular-nums;
 }
 .cur button[aria-pressed="true"]{color:var(--ink)}
 .price-row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--rule)}
 .price-row:last-of-type{border-bottom:0}
-.price-row .what{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.price-row .amount{font-family:var(--serif);font-size:27px;font-weight:300}
-.converted{font-size:11px;color:var(--faint);margin-top:8px}
-.poa{font-family:var(--serif);font-size:22px;color:var(--muted);padding:8px 0}
+.price-row .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.price-row .amount{font-family:var(--font-mono);font-weight:400;font-size:24px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.converted{font-family:var(--font-mono);font-weight:400;font-size:11px;color:var(--faint);margin-top:8px;font-variant-numeric:tabular-nums}
+.poa{font-family:var(--font-sans);font-size:22px;color:var(--muted);padding:8px 0}
 
 /* ---------- action ---------- */
 .action{margin-top:34px}
 .btn{
   display:block;width:100%;padding:19px 20px;background:var(--ink);color:var(--paper);
-  border:0;cursor:pointer;font-family:var(--sans);
+  border:0;cursor:pointer;font-family:var(--font-sans);
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;
 }
 .btn:hover{background:#2c2924}
 .state{display:flex;align-items:baseline;gap:10px;padding:18px 0;border-top:1px solid var(--rule)}
-.state .word{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
-.state .sub{font-size:13px;color:var(--muted)}
-.note{font-family:var(--serif);font-size:19px;line-height:1.5;color:#2c2924;margin:12px 0 0}
+.state .word{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.state .sub{font-family:var(--font-mono);font-weight:400;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.note{font-family:var(--font-sans);font-weight:400;font-size:16px;line-height:1.55;color:#2c2924;margin:12px 0 0}
 .holders{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.9}
 
 
@@ -184,14 +185,14 @@ details summary:hover{color:var(--ink)}
   .stage{padding:2px 20px 0}
   .stage img,.stage video{max-height:none;width:100%}
   .col{padding:38px 20px 90px}
-  .rows th{width:44%}
+  .rows th{font-family:var(--font-sans);font-weight:500;width:44%}
 }
 </style>
 </head>
 <body>
 
 <header class="bar">
-  <a class="wordmark" href="/">MintFace</a>
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
   <a class="smallcaps" id="up" href="/collections">Collections</a>
 </header>
 
@@ -201,6 +202,7 @@ details summary:hover{color:var(--ink)}
   <a class="smallcaps" href="/exhibitions">Exhibitions</a>
   <a class="smallcaps" href="/provenance">Provenance</a>
   <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
 </footer>
 
 <div class="scrim" id="scrim"></div>

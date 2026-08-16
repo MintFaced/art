@@ -7,9 +7,8 @@
 <meta name="description" content="Paintings, photographs and tokenized work by MintFace.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MintFace">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
 <style>
 /* ---------- hero ---------- */
@@ -20,18 +19,20 @@
 .hero img.in{opacity:1}
 .hero .cap{
   display:flex;gap:16px;justify-content:center;align-items:baseline;flex-wrap:wrap;
-  margin-top:20px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  margin-top:20px;font-family:var(--font-sans);font-weight:500;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
 }
-.hero .title{font-family:var(--serif);font-size:23px;letter-spacing:0;text-transform:none;color:var(--ink)}
+.hero .cap .state{font-family:var(--font-mono);font-weight:400;letter-spacing:.1em;font-variant-numeric:tabular-nums}
+.hero .title{font-family:var(--font-sans);font-weight:400;font-size:21px;letter-spacing:-.01em;text-transform:none;color:var(--ink)}
 .hero a:hover .title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
-.hero .price{font-family:var(--serif);font-size:19px;letter-spacing:0;text-transform:none;color:var(--ink)}
+.hero .price{font-family:var(--font-mono);font-weight:400;font-size:16px;letter-spacing:0;text-transform:none;color:var(--ink);font-variant-numeric:tabular-nums}
 
 .wordmark-big{
   max-width:1500px;margin:0 auto;padding:66px 28px 0;
   display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
 }
-.wordmark-big h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,9vw,110px);line-height:.9;margin:0;letter-spacing:-.025em}
-.wordmark-big .sub{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);max-width:330px;line-height:2}
+.wordmark-big h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(42px,8vw,96px);line-height:.92;margin:0;letter-spacing:-.035em}
+.wordmark-big .sub{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);max-width:330px;line-height:2}
 
 /* ---------- collections ---------- */
 .wrap{max-width:1500px;margin:0 auto;padding:44px 28px 40px}
@@ -48,9 +49,9 @@
 .card .shot{background:#f2efe9;aspect-ratio:1/1;overflow:hidden}
 .card img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
 .card img.in{opacity:1}
-.card .t{font-family:var(--serif);font-size:24px;line-height:1.2;margin-top:12px}
-.card .m{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px;display:flex;gap:12px;flex-wrap:wrap;align-items:baseline}
-.card .s{font-family:var(--serif);font-size:17px;color:#514c44;margin-top:8px;line-height:1.4}
+.card .t{font-family:var(--font-sans);font-weight:400;font-size:20px;line-height:1.25;margin-top:12px;letter-spacing:-.01em}
+.card .m{font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;align-items:baseline;font-variant-numeric:tabular-nums}
+.card .s{font-family:var(--font-sans);font-weight:400;font-size:14px;color:#514c44;margin-top:8px;line-height:1.5}
 .card:hover .t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .badge{border:1px solid var(--rule);padding:3px 8px}
 .annex .cards{grid-template-columns:repeat(6,1fr);gap:24px}
@@ -72,7 +73,7 @@
 <body>
 
 <header class="bar">
-  <a class="wordmark" href="/">MintFace</a>
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
   <a class="smallcaps" href="/collections">Collections</a>
 </header>
 
@@ -85,6 +86,7 @@
   <a class="smallcaps" href="/provenance">Provenance</a>
   <a class="smallcaps" href="/vault">The Vault</a>
   <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
 </footer>
 
 <script src="/mintface.js"></script>
@@ -137,10 +139,10 @@ function heroMarkup(work, collection, pool) {
   if (pool === 'collected') {
     if (work.status === 'vaulted') {
       // the vault is not a collector, and says so in its own words
-      tail = '<span><span class="dot vaulted"></span> Vaulted</span>';
+      tail = '<span class="state"><span class="dot vaulted"></span> Vaulted</span>';
     } else {
       const name = MF.collectorName(work.collector) || (work.physical && work.physical.collector);
-      tail = name ? `<span>Collected by ${e(name)}</span>` : '<span>Collected</span>';
+      tail = name ? `<span class="state">Collected by ${e(name)}</span>` : '<span class="state">Collected</span>';
     }
   } else {
     const st = MF.STATUS[work.status] || { label: work.status, dot: '' };
@@ -157,7 +159,7 @@ function heroMarkup(work, collection, pool) {
         : null;
       if (nzd != null) price = `$${Math.round(nzd).toLocaleString('en-NZ')}`;
     }
-    tail = `<span><span class="dot ${st.dot}"></span> ${e(st.label)}</span>`
+    tail = `<span class="state"><span class="dot ${st.dot}"></span> ${e(st.label)}</span>`
       + (price ? `<span class="price">${e(price)}</span>` : '');
   }
 

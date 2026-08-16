@@ -7,21 +7,20 @@
 <meta name="description" content="Where the work has been shown.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MintFace">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
 <style>
 .mast{max-width:900px;margin:0 auto;padding:60px 28px 8px}
-h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,9vw,104px);line-height:.95;margin:0;letter-spacing:-.02em}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,92px);line-height:.96;margin:0;letter-spacing:-.035em}
 .mast-rule{width:44px;height:1px;background:var(--rule);margin:46px 0 0}
 
 .timeline{max-width:900px;margin:0 auto;padding:0 28px 110px}
 .year-group{display:grid;grid-template-columns:120px 1fr;gap:0 40px;padding:40px 0;border-bottom:1px solid var(--rule)}
 .year-group:last-child{border-bottom:0}
-.year{font-family:var(--serif);font-size:clamp(30px,4vw,44px);font-weight:300;line-height:1;color:var(--ink)}
+.year{font-family:var(--font-mono);font-size:clamp(24px,3.2vw,34px);font-weight:400;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .shows{display:flex;flex-direction:column;gap:26px}
-.show .t{font-family:var(--serif);font-size:clamp(22px,2.6vw,29px);line-height:1.25}
+.show .t{font-family:var(--font-sans);font-weight:400;font-size:clamp(18px,2.1vw,23px);line-height:1.3;letter-spacing:-.015em}
 .show .v{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:7px;line-height:1.9}
 .show .note{font-size:13px;color:var(--muted);margin-top:6px}
 .show a{text-decoration:none;border-bottom:1px solid var(--rule)}
@@ -38,7 +37,7 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,9vw,104px);line
 <body>
 
 <header class="bar">
-  <a class="wordmark" href="/">MintFace</a>
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
   <a class="smallcaps" href="/collections">Collections</a>
 </header>
 
@@ -48,6 +47,7 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,9vw,104px);line
   <a class="smallcaps" href="/provenance">Provenance</a>
   <a class="smallcaps" href="/vault">The Vault</a>
   <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
 </footer>
 
 <script src="/mintface.js"></script>

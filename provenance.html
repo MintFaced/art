@@ -7,15 +7,14 @@
 <meta name="description" content="Chain records for every MintFace collection.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MintFace">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
 <style>
 .mast{max-width:1400px;margin:0 auto;padding:60px 28px 0;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:28px}
-h1{font-family:var(--serif);font-weight:300;font-size:clamp(44px,8vw,92px);line-height:.95;margin:0;letter-spacing:-.02em}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.2vw,82px);line-height:.96;margin:0;letter-spacing:-.035em}
 h1 em{font-style:italic;display:block;font-size:.58em;color:var(--muted)}
-.intro{font-family:var(--serif);font-size:clamp(19px,2vw,23px);line-height:1.45;color:#3a362f;max-width:420px;margin:0}
+.intro{font-family:var(--font-sans);font-weight:400;font-size:clamp(16px,1.75vw,18px);line-height:1.6;color:#3a362f;max-width:420px;margin:0}
 
 .wrap{max-width:1400px;margin:0 auto;padding:44px 28px 0}
 table{width:100%;border-collapse:collapse}
@@ -28,21 +27,21 @@ th:not(:first-child),td:not(:first-child){padding-left:28px}
 tbody tr{border-bottom:1px solid var(--rule)}
 tbody tr:hover{background:#f4f1ec}
 td{padding:15px 0;vertical-align:top;font-size:14px}
-.name{font-family:var(--serif);font-size:20px;line-height:1.2}
+.name{font-family:var(--font-sans);font-weight:400;font-size:17px;line-height:1.25;letter-spacing:-.01em}
 .name a{text-decoration:none}
 .name a:hover{text-decoration:underline;text-underline-offset:3px}
 .medium{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .year,.chain,.ed{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .ed{white-space:normal}
-.addr a{font-family:var(--mono);font-size:11.5px;text-decoration:none;border-bottom:1px solid var(--rule);color:var(--muted)}
+.addr a{font-family:var(--font-mono);font-size:11.5px;text-decoration:none;border-bottom:1px solid var(--rule);color:var(--muted)}
 .addr a:hover{color:var(--ink);border-color:var(--ink)}
 .avail{display:block;margin-top:5px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 
 .wallets{max-width:1400px;margin:0 auto;padding:60px 28px 0}
 .wallets h2{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
 .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.w .l{font-family:var(--serif);font-size:19px}
-.w .a{font-family:var(--mono);font-size:11.5px;color:var(--muted);word-break:break-all;margin-top:5px;line-height:1.7}
+.w .l{font-family:var(--font-sans);font-weight:400;font-size:16px;letter-spacing:-.01em}
+.w .a{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);word-break:break-all;margin-top:5px;line-height:1.7}
 .w .r{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:6px}
 
 .note{max-width:1400px;margin:0 auto;padding:54px 28px 110px;font-size:13px;color:var(--faint);max-width:640px}
@@ -61,7 +60,7 @@ td{padding:15px 0;vertical-align:top;font-size:14px}
 <body>
 
 <header class="bar">
-  <a class="wordmark" href="/">MintFace</a>
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
   <a class="smallcaps" href="/collections">Collections</a>
 </header>
 
@@ -71,6 +70,7 @@ td{padding:15px 0;vertical-align:top;font-size:14px}
   <a class="smallcaps" href="/exhibitions">Exhibitions</a>
   <a class="smallcaps" href="/vault">The Vault</a>
   <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
 </footer>
 
 <script src="/mintface.js"></script>

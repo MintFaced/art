@@ -7,24 +7,23 @@
 <meta name="description" content="A collection by MintFace.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MintFace">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
 <style>
 /* ---------- head ---------- */
 .head{max-width:1500px;margin:0 auto;padding:34px 28px 30px}
-h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-height:1;margin:0 0 12px;letter-spacing:-.01em}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px);line-height:1.02;margin:0 0 12px;letter-spacing:-.03em}
 .meta{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;flex-wrap:wrap;gap:16px;align-items:center}
 .badge{border:1px solid var(--rule);padding:4px 10px;color:var(--muted)}
-.statement{font-family:var(--serif);font-size:clamp(20px,2.4vw,26px);line-height:1.45;color:#2c2924;margin:22px 0 0;max-width:620px}
+.statement{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,1.9vw,20px);line-height:1.55;color:#2c2924;margin:22px 0 0;max-width:620px}
 .minting{font-size:13px;color:var(--muted);margin:14px 0 0;max-width:560px}
 
 /* ---------- filters ---------- */
 .filters{max-width:1500px;margin:0 auto;padding:26px 28px 0;border-top:1px solid var(--rule)}
 .filter-row{display:flex;flex-wrap:wrap;gap:26px;align-items:baseline}
 .filter-row button{
-  background:none;border:0;padding:0;cursor:pointer;font-family:var(--sans);
+  background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-sans);
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
 }
 .filter-row button:hover,.filter-row button[aria-expanded="true"]{color:var(--ink)}
@@ -34,19 +33,19 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-
 .options.open{display:flex}
 .opt{
   background:none;border:1px solid var(--rule);cursor:pointer;padding:7px 14px;
-  font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  font-family:var(--font-sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
 }
 .opt:hover{border-color:var(--ink);color:var(--ink)}
 .opt[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .opt .n{opacity:.6;margin-left:7px}
-.count{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:18px 0 0}
+.count{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:18px 0 0;font-variant-numeric:tabular-nums}
 .states{
   max-width:1500px;margin:0 auto;padding:24px 28px 0;display:flex;gap:0;flex-wrap:wrap;
   border-top:1px solid var(--rule);
 }
 .states button{
   background:none;border:1px solid var(--rule);border-right-width:0;cursor:pointer;
-  padding:9px 16px;font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;
+  padding:9px 16px;font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--muted);
 }
 .states button:last-child{border-right-width:1px}
@@ -62,9 +61,9 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-
 .tile img,.tile video{width:100%;height:auto;transition:opacity .5s ease;opacity:0}
 .tile img,.tile video.in{opacity:1}
 .tile .cap{padding:11px 2px 0}
-.tile .t{font-family:var(--serif);font-size:19px;line-height:1.25}
+.tile .t{font-family:var(--font-sans);font-weight:400;font-size:16px;line-height:1.3;letter-spacing:-.01em}
 .tile .sub{display:flex;gap:9px;align-items:baseline;margin-top:3px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.tile .price{font-family:var(--serif);font-size:17px;letter-spacing:0;text-transform:none;color:var(--ink)}
+.tile .price{font-family:var(--font-mono);font-weight:400;font-size:14px;letter-spacing:0;text-transform:none;color:var(--ink);font-variant-numeric:tabular-nums}
 .tile:hover .t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .sentinel{height:10px}
 .more{text-align:center;padding:0 28px 70px}
@@ -81,7 +80,7 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-
 <body>
 
 <header class="bar">
-  <a class="wordmark" href="/">MintFace</a>
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
   <a class="smallcaps" href="/collections">All collections</a>
 </header>
 
@@ -91,6 +90,7 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-
   <a class="smallcaps" href="/exhibitions">Exhibitions</a>
   <a class="smallcaps" href="/provenance">Provenance</a>
   <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
 </footer>
 
 <script src="/mintface.js"></script>
