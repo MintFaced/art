@@ -63,7 +63,11 @@
     "note": null,
     "acquired": null
    },
-   "feature_group": "foundation"
+   "feature_group": "foundation",
+   "assets": {
+    "display": "genesis/foundation-91070-display.webp",
+    "image": "genesis/foundation-91070-image.jpg"
+   }
   },
   {
    "id": "foundation-91077",
@@ -98,7 +102,11 @@
     "note": null,
     "acquired": null
    },
-   "feature_group": "foundation"
+   "feature_group": "foundation",
+   "assets": {
+    "display": "genesis/foundation-91077-display.webp",
+    "image": "genesis/foundation-91077-image.jpg"
+   }
   },
   {
    "id": "foundation-91080",
@@ -127,7 +135,11 @@
    "held_by": "Foundation market escrow",
    "listed_on": "Foundation",
    "collector": null,
-   "feature_group": "foundation"
+   "feature_group": "foundation",
+   "assets": {
+    "display": "genesis/foundation-91080-display.webp",
+    "image": "genesis/foundation-91080-image.jpg"
+   }
   },
   {
    "id": "foundation-105105",
@@ -162,7 +174,11 @@
     "note": null,
     "acquired": null
    },
-   "feature_group": "foundation"
+   "feature_group": "foundation",
+   "assets": {
+    "display": "genesis/foundation-105105-display.webp",
+    "image": "genesis/foundation-105105-image.jpg"
+   }
   },
   {
    "id": "foundation-109050",
@@ -253,6 +269,10 @@
    "collector": null,
    "links": {
     "rarible": "https://rarible.com/token/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:518231"
+   },
+   "assets": {
+    "display": "genesis/city-vs-nature-display.webp",
+    "image": "genesis/city-vs-nature-image.jpg"
    }
   }
  ],
@@ -325,6 +345,10 @@
       "display_name": null,
       "note": null,
       "acquired": null
+     },
+     "assets": {
+      "display": "genesis/foundation-91077-display.webp",
+      "image": "genesis/foundation-91077-image.jpg"
      }
     },
     {
@@ -415,6 +439,10 @@
       "display_name": null,
       "note": null,
       "acquired": null
+     },
+     "assets": {
+      "display": "genesis/foundation-105105-display.webp",
+      "image": "genesis/foundation-105105-image.jpg"
      }
     },
     {
@@ -443,7 +471,11 @@
      "status": "available",
      "held_by": "Foundation market escrow",
      "listed_on": "Foundation",
-     "collector": null
+     "collector": null,
+     "assets": {
+      "display": "genesis/foundation-91080-display.webp",
+      "image": "genesis/foundation-91080-image.jpg"
+     }
     },
     {
      "id": "foundation-91070",
@@ -477,6 +509,10 @@
       "display_name": null,
       "note": null,
       "acquired": null
+     },
+     "assets": {
+      "display": "genesis/foundation-91070-display.webp",
+      "image": "genesis/foundation-91070-image.jpg"
      }
     }
    ]

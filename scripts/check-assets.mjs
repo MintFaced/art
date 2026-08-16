@@ -19,7 +19,7 @@ const resolve = (w) => {
   };
 };
 
-const bad = [], mixed = [], missing = [];
+const bad = [], mixed = [], missing = [], local = [];
 let checked = 0, works = 0;
 
 async function head(url) {
@@ -36,6 +36,8 @@ for (const slug of slugs) {
   let list = col.works || [];
   if (sample) list = list.slice(0, sample);
   for (const w of list) {
+    // a burned work has nothing to show and the grids drop it
+    if (w.status === 'burned') continue;
     works++;
     const r = resolve(w);
     // what the grid asks for first, and what a work page shows
@@ -43,6 +45,8 @@ for (const slug of slugs) {
     if (!urls.length && !r.animation) { missing.push(`${slug}/${w.id}`); continue; }
     for (const u of urls) {
       if (u.startsWith('http://')) mixed.push({ id: w.id, url: u });
+      // a site relative path is a file in this repo, not something to fetch
+      if (u.startsWith('/')) { local.push({ id: w.id, url: u }); continue; }
       queue.push({ slug, id: w.id, url: u });
     }
   }
@@ -62,6 +66,7 @@ await Promise.all(Array.from({ length: 16 }, lane));
 console.log(`${works} works, ${checked} urls checked`);
 console.log(`served from the mirror: ${queue.filter((q) => q.url.startsWith(ASSETS)).length}`);
 console.log(`plain http (mixed content): ${mixed.length}`);
+console.log(`served from this repo: ${local.length}${local.length ? ` (${local.map((l) => l.url).join(', ')})` : ''}`);
 console.log(`no image at all: ${missing.length}${missing.length ? ` (${missing.slice(0, 6).join(', ')})` : ''}`);
 console.log(`did not answer 200: ${bad.length}`);
 const byCol = {};

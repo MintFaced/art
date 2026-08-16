@@ -92,20 +92,29 @@ await Promise.all(Array.from({ length: 12 }, lane));
 // The members are the same file at the same URL, which is why they collapsed,
 // so match them on that URL rather than on an id that was never shared.
 const originToAssets = new Map();
+const splitJobs = [];
 for (const slug of readdirSync('data/c').filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', ''))) {
   let split;
   try { split = JSON.parse(readFileSync(`data/c/${slug}.json`, 'utf8')); } catch { continue; }
   for (const sw of split.works || []) {
     const src = sw.digital?.image_source || sw.digital?.image || sw.image;
-    if (typeof src !== 'string' || originToAssets.has(src)) continue;
-    const found = {};
-    for (const [field, kind] of [['display', 'display'], ['image', 'image']]) {
-      const key = findKey(slug, sw.id, kind);
-      if (key && (await verify(key)).ok) found[field] = key;
-    }
-    if (Object.keys(found).length) originToAssets.set(src, found);
+    if (typeof src === 'string') splitJobs.push({ slug, id: sw.id, src });
   }
 }
+let splitCursor = 0;
+async function splitLane() {
+  while (splitCursor < splitJobs.length) {
+    const { slug, id, src } = splitJobs[splitCursor++];
+    if (originToAssets.has(src)) continue;
+    const found = {};
+    for (const [field, kind] of [['display', 'display'], ['image', 'image']]) {
+      const key = findKey(slug, id, kind);
+      if (key && (await verify(key)).ok) found[field] = key;
+    }
+    if (Object.keys(found).length && !originToAssets.has(src)) originToAssets.set(src, found);
+  }
+}
+await Promise.all(Array.from({ length: 16 }, splitLane));
 
 let shared = 0;
 for (const u of report.untouched) {
