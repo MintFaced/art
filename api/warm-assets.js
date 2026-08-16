@@ -104,9 +104,22 @@ export async function GET(request) {
         }
         budget--;
         if (dryRun) { done.push({ id: idPart, kind, src, key: guessKey }); continue; }
+        // one gateway being slow or down is not the file being gone, so an
+        // ipfs source gets a second gateway before it counts as a failure
+        const attempts = [src];
+        const cid = src.match(/\/ipfs\/(.+)$/);
+        if (cid && !/\/\/ipfs\.io\//.test(src)) attempts.push(`https://ipfs.io/ipfs/${cid[1]}`);
         try {
-          const res = await fetch(src, { headers: { accept: 'image/*,video/*,*/*' } });
-          if (!res.ok) throw new Error(`origin ${res.status}`);
+          let res, lastWhy;
+          for (const attempt of attempts) {
+            try {
+              res = await fetch(attempt, { headers: { accept: 'image/*,video/*,*/*' } });
+              if (res.ok) break;
+              lastWhy = `origin ${res.status}`;
+              res = null;
+            } catch (e) { lastWhy = String(e.message || e); res = null; }
+          }
+          if (!res) throw new Error(lastWhy || 'no gateway answered');
           const type = res.headers.get('content-type') || '';
           const buf = Buffer.from(await res.arrayBuffer());
           if (!buf.length) throw new Error('empty body');
