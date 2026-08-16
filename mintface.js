@@ -9,7 +9,9 @@ const ASSETS_BASE = 'https://pub-40b0b488cd5b4b6597427eb295d7ca63.r2.dev/assets'
    THUMBNAIL SOURCE ... change this one line when R2 holds thumbs
    '' turns proxying off and grids load the full master files
    ───────────────────────────────────────────────────────────── */
-const THUMB_PROXY = 'https://images.weserv.nl/?url={url}&w={w}&output=webp&q=80';
+// n=-1 keeps every frame, so an animated source stays animated. It costs a
+// still image nothing: the bytes come back byte for byte the same.
+const THUMB_PROXY = 'https://images.weserv.nl/?url={url}&w={w}&output=webp&q=80&n=-1';
 
 const MF = {
   ASSETS_BASE,
@@ -101,7 +103,11 @@ const MF = {
   // then whatever the chain metadata points at
   imageUrl(work) {
     if (work.assets && work.assets.image) return `${ASSETS_BASE}/${work.assets.image}`;
-    return work.digital?.image_source || work.digital?.image || work.image || null;
+    // image_source is a URL to the same bytes somewhere more reliable; anything
+    // that is not a URL is a credit and must not be treated as one
+    const src = work.digital?.image_source;
+    if (typeof src === 'string' && /^(https?:)?\/\//.test(src)) return src;
+    return work.digital?.image || work.image || null;
   },
   // hosts that already serve sized images, or that the proxy cannot reach
   THUMB_BYPASS: ['lh3.googleusercontent.com', 'highlight-creator-assets.highlight.xyz'],
@@ -112,14 +118,20 @@ const MF = {
     const url = this.imageUrl(work);
     if (!url) return null;
     if (!THUMB_PROXY || url.startsWith('data:') || url.startsWith('/')) return url;
+    if (this.isVideo(url)) return url;   // a proxy cannot make a still of a film
     if (this.THUMB_BYPASS.some((h) => url.includes(h))) return url;
     return THUMB_PROXY
       .replace('{url}', encodeURIComponent(url.replace(/^https?:\/\//, '')))
       .replace('{w}', String(width || 600));
   },
 
+  isVideo(url) {
+    return typeof url === 'string' && /\.(mp4|webm|mov)(\?|#|$)/i.test(url);
+  },
+
   isSVG(url) {
-    return typeof url === 'string' && /\.svg(\?|#|$)/i.test(url);
+    if (typeof url !== 'string') return false;
+    return /\.svg(\?|#|$)/i.test(url) || url.startsWith('data:image/svg+xml');
   },
 
   // an <img> that falls back to the master if the thumbnail source fails
@@ -127,18 +139,24 @@ const MF = {
     const o = opts || {};
     const thumb = this.thumbUrl(work, width);
     if (!thumb) return '';
+    const master = this.imageUrl(work);
     // The animated version is the work, so the work page loads the SVG itself and
     // lets its own stylesheet run. If that source is unreachable, the browser
     // renders the child instead: a proxied still, which is the fallback, not the
     // default.
-    if (o.live && this.isSVG(this.imageUrl(work))) {
+    // some works are a video rather than a picture of one
+    if (this.isVideo(master)) {
+      const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
+      return `<video src="${this.escape(master)}" aria-label="${alt}" class="in"`
+        + ` controls playsinline loop preload="metadata"${o.eager ? ' autoplay muted' : ''}></video>`;
+    }
+    if (o.live && this.isSVG(master)) {
       const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
       const ratio = work.digital && work.digital.aspect_ratio;
-      return `<object type="image/svg+xml" data="${this.escape(this.imageUrl(work))}" aria-label="${alt}" class="live"${ratio ? ` style="aspect-ratio:${this.escape(ratio)}"` : ''}>`
+      return `<object type="image/svg+xml" data="${this.escape(master)}" aria-label="${alt}" class="live"${ratio ? ` style="aspect-ratio:${this.escape(ratio)}"` : ''}>`
         + `<img src="${this.escape(thumb)}" alt="${alt}" loading="eager" decoding="async" onload="this.classList.add('in')">`
         + `</object>`;
     }
-    const master = this.imageUrl(work);
     const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
     const fallback = master && master !== thumb ? ` data-fallback="${this.escape(master)}"` : '';
     return `<img src="${this.escape(thumb)}" alt="${alt}"${fallback}`

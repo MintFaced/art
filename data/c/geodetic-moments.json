@@ -8,14 +8,15 @@
  "sold_out": true,
  "statement": "Look to the horizon and measure where you stand.",
  "counts": {
-  "works": 78,
+  "works": 100,
   "expected": 100,
-  "enumerated_note": "Lazy-minted on the OpenSea shared storefront; only tokens with on-chain history are discoverable. 78 of 100 located.",
+  "never_minted": 22,
   "acquired": 53,
   "vaulted": 10,
-  "available": 14,
+  "available": 36,
   "burned": 1
  },
+ "notes": "Lazy minted on the OpenSea shared storefront. The ones never sold have no chain record at all, so they are read from OpenSea and are tokenized on purchase like the recent paintings.",
  "first_onchain_transfer": "2021-10-02T07:26:24.000000Z",
  "contracts": [
   {
@@ -677,6 +678,93 @@
    "last_transfer": "2022-02-17T14:01:50.000000Z"
   },
   {
+   "id": "geodetic-moments-10",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moments #10",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look forward and see what’s possible.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Thursday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Time",
+     "value": "4:29 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Bright"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559504167954284545",
+    "opensea_index": 33,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/26fb07264a407f34c519ea1b9a0ca1/7b26fb07264a407f34c519ea1b9a0ca1.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
    "id": "geodetic-moments-11",
    "collection": "geodetic-moments",
    "title": "Geodetic Moment #11",
@@ -851,6 +939,97 @@
    },
    "minted_onchain": "2022-04-22T12:14:37.000000Z",
    "last_transfer": "2022-04-22T12:14:37.000000Z"
+  },
+  {
+   "id": "geodetic-moments-13",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #13",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Sunday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "5:18 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Clear"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559507466489167873",
+    "opensea_index": 36,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/9ca6263e8c028d86b616f74355a8e6/229ca6263e8c028d86b616f74355a8e6.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
   },
   {
    "id": "geodetic-moments-14",
@@ -1719,6 +1898,188 @@
    "last_transfer": "2022-11-08T03:02:47.000000Z"
   },
   {
+   "id": "geodetic-moments-24",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #24",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look forward and see what’s possible.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Friday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Time",
+     "value": "5:34 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Perfect"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Forwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559519561117073409",
+    "opensea_index": 47,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/eb3446d4bf4124b6461689da67a89b/81eb3446d4bf4124b6461689da67a89b.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-25",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #25",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Father's Day"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "5:01 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Clear"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559520660628701185",
+    "opensea_index": 48,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/eaf294c9f91673dade391f2dcab2ff/b0eaf294c9f91673dade391f2dcab2ff.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
    "id": "geodetic-moments-26",
    "collection": "geodetic-moments",
    "title": "Geodetic Moment #26",
@@ -1805,6 +2166,188 @@
    },
    "minted_onchain": "2023-11-04T02:21:59.000000Z",
    "last_transfer": "2023-11-04T02:21:59.000000Z"
+  },
+  {
+   "id": "geodetic-moments-27",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #27",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look forward and see what’s possible.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Tuesday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Time",
+     "value": "2:11 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Gloomy"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Forwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559522859651956737",
+    "opensea_index": 50,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/83c903422ef3b372fbc50618a25626/1c83c903422ef3b372fbc50618a25626.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-28",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #28",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Tuesday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "2:11 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Gloomy"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559523959163584513",
+    "opensea_index": 51,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/a7d02bdb57ff01c2f7831b94c1064e/cea7d02bdb57ff01c2f7831b94c1064e.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
   },
   {
    "id": "geodetic-moments-29",
@@ -1981,6 +2524,188 @@
    },
    "minted_onchain": "2022-02-18T19:20:13.000000Z",
    "last_transfer": "2022-02-18T19:20:13.000000Z"
+  },
+  {
+   "id": "geodetic-moments-31",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #31",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look forward and see what’s possible.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Sunday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Time",
+     "value": "11:24 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Clear"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Forwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559527257698467841",
+    "opensea_index": 54,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/1d70875bd219110244640e1ace1fc4/af1d70875bd219110244640e1ace1fc4.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-32",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #32",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Sunday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "11:25 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Clear"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559528357210095617",
+    "opensea_index": 55,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/37216024ace4eeef792fc34c8d1b9f/d837216024ace4eeef792fc34c8d1b9f.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
   },
   {
    "id": "geodetic-moments-33",
@@ -2595,6 +3320,101 @@
    "last_transfer": "2022-02-17T11:09:08.000000Z"
   },
   {
+   "id": "geodetic-moments-40",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #40",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Friday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Yes",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "gm 7:06 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunrise",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Clear"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559537153303117825",
+    "opensea_index": 63,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/99cb83688cf6845f44d47ecf15d035/8c99cb83688cf6845f44d47ecf15d035.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
    "id": "geodetic-moments-41",
    "collection": "geodetic-moments",
    "title": "Geodetic Marker #41",
@@ -2774,6 +3594,805 @@
    }
   },
   {
+   "id": "geodetic-moments-43",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #43",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Saturday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "gm 7:35 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunrise",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Stunning"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559540451838001153",
+    "opensea_index": 66,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/f9db870b5bfac4e839812c7b1cd56f/8af9db870b5bfac4e839812c7b1cd56f.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-44",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #44",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look forward and see what’s possible.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Saturday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Rare",
+     "value": "Dog"
+    },
+    {
+     "trait_type": "Time",
+     "value": "7:33 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Stunning"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Forwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559541551349628929",
+    "opensea_index": 67,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/c37381dae9b9ddf1f927565dc44016/a6c37381dae9b9ddf1f927565dc44016.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-45",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #45",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Sunday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "3:47 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Grey"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559563541582184449",
+    "opensea_index": 87,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/4a16b1aec774ad8be54973667d61f3/f74a16b1aec774ad8be54973667d61f3.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-46",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #46",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Sunday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "3:46 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Gray"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559564641093812225",
+    "opensea_index": 88,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/fd5659d9cedb23705e79aa83828402/55fd5659d9cedb23705e79aa83828402.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-47",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #47",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Friday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "6:52 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunrise",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Heavenly"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559565740605440001",
+    "opensea_index": 89,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/4df97bec484d9a50e2b296c73597bd/da4df97bec484d9a50e2b296c73597bd.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-48",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #48",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look forward and see what’s possible.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Friday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Time",
+     "value": "6:58 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Heavenly"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Forwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559566840117067777",
+    "opensea_index": 90,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/1f8c04318d7001c00bded08a66f936/2c1f8c04318d7001c00bded08a66f936.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-49",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #49",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Monday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "1:31 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Early summer"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559567939628695553",
+    "opensea_index": 91,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/70184c0f737fe572c29773ff03bf00/7170184c0f737fe572c29773ff03bf00.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-50",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Marker #50",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look forward and see what’s possible.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Monday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Time",
+     "value": "1:31 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Early Summer"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Forwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559569039140323329",
+    "opensea_index": 92,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/bfc23dd91787c3565bed09afe177cf/81bfc23dd91787c3565bed09afe177cf.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-51",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #51",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Wednesday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "8:55 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunrise",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Brilliant"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559571238163578881",
+    "opensea_index": 94,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/fada99af4844149cef9bbfe4588a4b/12fada99af4844149cef9bbfe4588a4b.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
    "id": "geodetic-moments-52",
    "collection": "geodetic-moments",
    "title": "Geodetic Moment #52",
@@ -2860,6 +4479,93 @@
    },
    "minted_onchain": "2022-04-22T04:36:21.000000Z",
    "last_transfer": "2022-04-22T04:36:21.000000Z"
+  },
+  {
+   "id": "geodetic-moments-53",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #53",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Friday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "2:50 PM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunset",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Thunderstorm"
+    },
+    {
+     "trait_type": "Direction",
+     "value": "Backwards"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "No"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559573437186834433",
+    "opensea_index": 96,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/c910c463886e09a98e3e0a85954881/c8c910c463886e09a98e3e0a85954881.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
   },
   {
    "id": "geodetic-moments-54",
@@ -3200,6 +4906,172 @@
    },
    "minted_onchain": "2022-04-21T10:11:04.000000Z",
    "last_transfer": "2024-05-28T03:25:11.000000Z"
+  },
+  {
+   "id": "geodetic-moments-58",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #58",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Saturday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "City",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Time",
+     "value": "6:25 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sunrise",
+     "value": "Yes"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Still"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559578934744973313",
+    "opensea_index": 101,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/02b280427f2bc2d0ccf8042ed678f0/d002b280427f2bc2d0ccf8042ed678f0.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  },
+  {
+   "id": "geodetic-moments-59",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moment #59",
+   "statement": "Look to the horizon and measure where you stand. Geodetic Moments explores how small shifts in our position can dramatically change what we see. Look back and see how far you've come.",
+   "attributes": [
+    {
+     "trait_type": "Day",
+     "value": "Saturday"
+    },
+    {
+     "trait_type": "Sea",
+     "value": "No"
+    },
+    {
+     "trait_type": "Sun",
+     "value": "No"
+    },
+    {
+     "trait_type": "City",
+     "value": "No"
+    },
+    {
+     "trait_type": "Time",
+     "value": "6:32 AM"
+    },
+    {
+     "trait_type": "Stars",
+     "value": "No"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "No"
+    },
+    {
+     "trait_type": "People",
+     "value": "No"
+    },
+    {
+     "trait_type": "Weather",
+     "value": "Clear"
+    },
+    {
+     "trait_type": "Geodetic Marker",
+     "value": "Yes"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559580034256601089",
+    "opensea_index": 102,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/70cff4b92fc348fbd1f7ea7cb9b595/d970cff4b92fc348fbd1f7ea7cb9b595.jpeg",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
   },
   {
    "id": "geodetic-moments-60",
@@ -6721,13 +8593,55 @@
    "collector": null,
    "minted_onchain": "2022-11-08T03:01:11.000000Z",
    "last_transfer": "2022-11-08T03:01:11.000000Z"
+  },
+  {
+   "id": "geodetic-moments-312",
+   "collection": "geodetic-moments",
+   "title": "Geodetic Moments by MintFace",
+   "statement": null,
+   "attributes": null,
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+    "token_id": "100151078309057675366159992497543003968848618159963270405575559810931698434049",
+    "opensea_index": 312,
+    "image": "https://raw2.seadn.io/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/c03eff2eca1f0e2605280423bdf90f/7cc03eff2eca1f0e2605280423bdf90f.png",
+    "animation": null,
+    "minted": false,
+    "tokenize_on_purchase": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "ryanj.eth",
+   "collector": null,
+   "never_minted": true,
+   "pricing_eth": {
+    "digital": 0.1
+   },
+   "priced_in": "ETH",
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
   }
  ],
  "facets": {
   "availability": {
    "acquired": 53,
    "vaulted": 10,
-   "available": 14,
+   "available": 36,
    "burned": 1
   }
  }

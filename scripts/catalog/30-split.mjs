@@ -149,10 +149,12 @@ for (const col of cat.collections) {
 // the vault lists tokens by contract and id, so point each one at its work page
 const byToken = new Map();
 const titleById = new Map();
+const imageById = new Map();
 for (const f of files) {
   for (const w of f.works) {
     if (!w.id || !w.digital) continue;
     if (w.title) titleById.set(w.id, w.title);
+    if (w.digital.image) imageById.set(w.id, w.digital.image);
     const c = w.digital.contract;
     if (!c) { if (w.wrapped && w.wrapped.contract) byToken.set(`${w.wrapped.contract.toLowerCase()}:${w.wrapped.token_id}`, w.id); continue; }
     const ids = w.token_ids && w.token_ids.length ? w.token_ids : [w.digital.token_id];
@@ -169,6 +171,9 @@ for (const f of files) {
       w.id = hit;
       const t = titleById.get(hit);
       if (t && t !== w.title) w.display_title = t;
+      // the holdings snapshot can hold an image URL that has since died
+      const img = imageById.get(hit);
+      if (img && img !== w.image) w.image = img;
       linkedVault++;
     }
   }

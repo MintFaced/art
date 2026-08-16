@@ -190,6 +190,9 @@ dedicated({ slug: 'geodetic-illusions', title: 'Geodetic Illusions', group: 'geo
 // The storefront keeps its metadata off chain, behind the endpoint uri() names,
 // so the image and the traits are fetched separately by 29-storefront-metadata.
 const STOREFRONT_META = fs.existsSync('raw/storefront-metadata.json') ? R('raw/storefront-metadata.json') : {};
+// the whole storefront index space, including tokens that were never minted on
+// chain and so are invisible to any indexer
+const STOREFRONT_SCAN = fs.existsSync('raw/storefront-scan.json') ? R('raw/storefront-scan.json') : {};
 
 // Geodetic Moments — OpenSea shared storefront, creator ryanj.eth
 {
@@ -221,11 +224,43 @@ const STOREFRONT_META = fs.existsSync('raw/storefront-metadata.json') ? R('raw/s
       minted_onchain: t.first_transfer?.ts || null, last_transfer: t.last_transfer?.ts || null,
     };
   }).sort((a, b) => (Number(a.id.split('-').pop()) - Number(b.id.split('-').pop())));
+  // works that only OpenSea knows about: lazy minted, never transferred, so no
+  // chain record exists and nobody has bought them
+  const seen = new Set(works.map((w) => String(w.digital.token_id)));
+  for (const rec of Object.values(STOREFRONT_SCAN)) {
+    if (!/^Geodetic (Moment|Marker)/i.test(rec.name || '')) continue;
+    if (seen.has(String(rec.token_id))) continue;
+    const num = Number((rec.name.match(/#(\d+)/) || [])[1] || 0);
+    works.push({
+      id: `geodetic-moments-${num || rec.index}`,
+      collection: 'geodetic-moments',
+      title: clean(rec.name),
+      statement: clean(rec.description) || null,
+      attributes: rec.attributes && rec.attributes.length ? rec.attributes : null,
+      edition: { type: '1/1' },
+      digital: {
+        chain: 'ethereum', standard: 'ERC-1155',
+        contract: '0x495f947276749Ce646f68AC8c248420045cb7b5e',
+        token_id: rec.token_id, opensea_index: rec.index,
+        image: rec.image || null, animation: rec.animation_url || null,
+        minted: false,
+        tokenize_on_purchase: true,
+      },
+      physical: { exists: null }, pricing_nzd: { digital: null, painting: null, both: null },
+      status: 'available',
+      held_by: 'ryanj.eth',
+      collector: null,
+      never_minted: true,
+    });
+  }
+  works.sort((a, b) => Number(a.id.split('-').pop()) - Number(b.id.split('-').pop()));
+
   const t = tally(works); stats['geodetic-moments'] = t;
   const firsts = works.map(w=>w.minted_onchain).filter(Boolean).sort();
   push({ slug: 'geodetic-moments', title: 'Geodetic Moments', group: 'geodetic', year: '2021', medium: 'Photography', physical: false, sold_out: true,
     statement: 'Look to the horizon and measure where you stand.',
-    counts: { works: works.length, expected: 100, enumerated_note: 'Lazy-minted on the OpenSea shared storefront; only tokens with on-chain history are discoverable. 78 of 100 located.', ...t },
+    counts: { works: works.length, expected: 100, never_minted: works.filter((w) => w.never_minted).length, ...t },
+    notes: 'Lazy minted on the OpenSea shared storefront. The ones never sold have no chain record at all, so they are read from OpenSea and are tokenized on purchase like the recent paintings.',
     first_onchain_transfer: firsts[0] || null,
     contracts: [{ chain: 'ethereum', standard: 'ERC-1155', address: '0x495f947276749Ce646f68AC8c248420045cb7b5e', name: 'OpenSea Shared Storefront', creator_wallet: 'ryanj.eth' }],
     works });
@@ -247,10 +282,27 @@ const STOREFRONT_META = fs.existsSync('raw/storefront-metadata.json') ? R('raw/s
     works });
 }
 
+// Blockscout truncates metadata at 4096 characters, which cuts a fully on chain
+// SVG in half, so these are read from the token's own uri().
+const ONCHAIN_SVG = fs.existsSync('raw/onchain-svg.json') ? R('raw/onchain-svg.json') : {};
+
 // Geodetic On-Chain + Geodetic Home (shared 1155)
 {
   const { contract, items } = R('raw/geodetic-home-onchain.json');
-  const mk = (i, slug) => edition1155(i, { collection: slug, contract: contract.address });
+  const mk = (i, slug) => {
+    const w = edition1155(i, { collection: slug, contract: contract.address });
+    const chain = ONCHAIN_SVG[i.id];
+    if (chain) {
+      if (chain.image) w.digital.image = chain.image;
+      else if (chain.image_broken) {
+        w.digital.image = null;
+        w.digital.image_note = 'the SVG stored on chain for this token is incomplete';
+      }
+      if (chain.attributes) w.attributes = chain.attributes;
+      if (chain.description && !w.statement) w.statement = clean(chain.description);
+    }
+    return w;
+  };
   const home = items.filter((i) => /^Geodetic Home/i.test(i.metadata?.name || '')).map((i) => mk(i, 'geodetic-home'));
   const onchain = items.filter((i) => !/^Geodetic Home/i.test(i.metadata?.name || '')).map((i) => mk(i, 'geodetic-onchain'));
   const cm = meta('geodetic-onchain');
@@ -298,12 +350,12 @@ dedicated({ slug: 'wallet', title: 'WALLΞT', group: 'ai-studies', year: '2022',
             inscription_id: ins.id, inscription_number: ins.inscription_number, sat: ins.sat,
             content_type: ins.content_type, content_length: ins.content_length,
             genesis_height: ins.genesis_height, genesis_timestamp: ins.genesis_timestamp,
-            image: w.site_image, image_source: 'rrrecursive.com',
+            image: w.site_image, image_credit: 'rrrecursive.com',
             content_url: `https://ordinals.com/content/${ins.id}`,
           }
         : {
             chain: 'bitcoin', standard: 'Ordinals', inscribed: false,
-            inscription_id: null, image: w.site_image, image_source: 'rrrecursive.com',
+            inscription_id: null, image: w.site_image, image_credit: 'rrrecursive.com',
           },
       links: ins
         ? { ordinals: `https://ordinals.com/inscription/${ins.id}`, gamma: `https://gamma.io/inscription/${ins.id}`, site: 'https://rrrecursive.com' }

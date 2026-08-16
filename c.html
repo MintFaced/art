@@ -45,8 +45,8 @@ h1{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,68px);line-
 .grid{max-width:1500px;margin:0 auto;padding:14px 28px 40px;column-count:4;column-gap:34px}
 .tile{break-inside:avoid;margin:0 0 34px;display:block;text-decoration:none}
 .tile .shot{background:#f2efe9;overflow:hidden}
-.tile img{width:100%;height:auto;transition:opacity .5s ease;opacity:0}
-.tile img.in{opacity:1}
+.tile img,.tile video{width:100%;height:auto;transition:opacity .5s ease;opacity:0}
+.tile img,.tile video.in{opacity:1}
 .tile .cap{padding:11px 2px 0}
 .tile .t{font-family:var(--serif);font-size:19px;line-height:1.25}
 .tile .sub{display:flex;gap:9px;align-items:baseline;margin-top:3px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -274,6 +274,10 @@ function render(collection) {
   const s = slug();
   try {
     const collection = await MF.collection(s);
+    // a token sent to the zero address is not part of the collection any more
+    if (collection && collection.works) {
+      collection.works = collection.works.filter((w) => w.status !== 'burned');
+    }
     if (!collection || !collection.works) {
       document.getElementById('main').innerHTML = '<div class="loading">Collection not found</div>';
       return;
