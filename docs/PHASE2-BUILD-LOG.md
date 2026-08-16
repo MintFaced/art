@@ -122,6 +122,12 @@ State list: Available / Reserved / Acquired / Vaulted / Sold Out / Uninscribed, 
 - Stripe and Resend are provisioned through the Vercel Marketplace and connected to the project. The webhook endpoint is registered and its signing secret stored.
 - Still needs a `GITHUB_TOKEN` with contents write, or holds and sales return a clear 503 telling the buyer to email.
 
+**Spreadsheet import** ... `scripts/import-sheet.mjs` reads `docs/mintface paintings data.xlsx` and writes `data/source/overlay.json`, which the catalog builder merges over the chain data. Hand data survives a rebuild from chain, the same way Recent Work does.
+
+- 123 rows read, all matching a catalog id. 78 priced, 83 with dimensions, 5 collector names, 5 paintings already with a collector, 4 works digital only.
+- A painting that has sold is no longer offered. The pricing block and the Acquire flow read one list, so the page cannot advertise something that has gone: FROGDNA now shows Digital $150 alone, with "With S & A Novak" against the painting.
+- The sheet and the chain disagree on four works, and both are right: the painting sold, the token did not. The chain still decides the token's status; the sheet records where the painting went.
+
 ## Next, in order
 
 1. Nothing. Every page and flow in the brief is built.

@@ -1,0 +1,2673 @@
+{
+  "_note": "Hand data from the pricing spreadsheet. Status and Collector here override the chain. The builder merges this, so a rebuild keeps it.",
+  "source": "mintface paintings data.xlsx",
+  "imported": "2026-08-16T05:57:52.008Z",
+  "works": {
+    "two-burdens-1": {
+      "physical": {
+        "sold": true,
+        "collector": "jonnypickles.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-2": {
+      "physical": {
+        "sold": true,
+        "collector": "davidkibler.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-3": {
+      "physical": {
+        "sold": true,
+        "collector": "dsanches-vault.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-4": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-5": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-6": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 80,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-7": {
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 80,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-8": {
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "sold": true,
+        "collector": "firstladyart.eth"
+      },
+      "status": "acquired",
+      "collector_display_name": "firstladyart.eth",
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-9": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 80,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-10": {
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-11": {
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "sold": true
+      },
+      "status": "vaulted",
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-12": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-13": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-14": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-15": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-16": {
+      "physical": {
+        "sold": true,
+        "collector": "apocalypseart.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-17": {
+      "physical": {
+        "sold": true,
+        "collector": "lostwisdom.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-18": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-19": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-20": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-21": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-22": {
+      "physical": {
+        "sold": true,
+        "collector": "burnasso.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-23": {
+      "painting_included": true,
+      "pricing_nzd": {
+        "digital": null,
+        "painting": null,
+        "both": 3000
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.5,
+        "platform": null
+      }
+    },
+    "two-burdens-24": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-25": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-26": {
+      "physical": {
+        "sold": true,
+        "collector": "lostwisdom.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-27": {
+      "pricing_nzd": {
+        "digital": 300,
+        "painting": null,
+        "both": null
+      },
+      "offers": {
+        "digital": true,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.1,
+        "platform": null
+      }
+    },
+    "two-burdens-28": {
+      "pricing_nzd": {
+        "digital": 300,
+        "painting": null,
+        "both": null
+      },
+      "offers": {
+        "digital": true,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.1,
+        "platform": null
+      }
+    },
+    "two-burdens-29": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-30": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-31": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-32": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-33": {
+      "physical": {
+        "sold": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-34": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-35": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": true,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "two-burdens-36": {
+      "physical": {
+        "sold": true,
+        "collector": "dsanches-vault.eth"
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-1": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 80,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-2": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 80,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-3": {
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "certificate": true,
+        "sold": true,
+        "collector": "K Jensen"
+      },
+      "status": "acquired",
+      "collector_display_name": "K Jensen",
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-4": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-5": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-6": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "certificate": true,
+        "sold": true,
+        "collector": "Liza"
+      },
+      "status": "acquired",
+      "collector_display_name": "Liza",
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-7": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-8": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-9": {
+      "physical": {
+        "exists": true,
+        "width_cm": 80,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-10": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": null,
+        "both": null
+      },
+      "physical": {
+        "exists": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      },
+      "notes": "no physical available"
+    },
+    "artificial-flowers-11": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-12": {
+      "physical": {
+        "exists": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      },
+      "notes": "no physical available"
+    },
+    "artificial-flowers-13": {
+      "physical": {
+        "exists": true,
+        "width_cm": 40,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-14": {
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true,
+        "sold": true,
+        "collector": "K Jensen"
+      },
+      "status": "acquired",
+      "collector_display_name": "K Jensen",
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-15": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 80,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-16": {
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true,
+        "sold": true,
+        "collector": "K Jensen"
+      },
+      "status": "acquired",
+      "collector_display_name": "K Jensen",
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      }
+    },
+    "artificial-flowers-17": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-18": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": null,
+        "both": null
+      },
+      "physical": {
+        "exists": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      },
+      "notes": "no physical available"
+    },
+    "artificial-flowers-19": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": null,
+        "both": null
+      },
+      "physical": {
+        "exists": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      },
+      "notes": "no physical available"
+    },
+    "artificial-flowers-20": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 80,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-21": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "artificial-flowers-22": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1250,
+        "both": 1400
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 120,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.05,
+        "platform": null
+      }
+    },
+    "pixelarcade-1": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-2": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-3": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-4": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-5": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-6": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-7": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-8": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-9": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-10": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-11": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-12": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-13": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-14": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-15": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-16": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-17": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 800,
+        "both": 950
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 60,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-18": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-19": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-20": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-21": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-22": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-23": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-24": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-25": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-26": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-27": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-28": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-29": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-30": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-31": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-32": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-33": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-34": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-35": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-36": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-37": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-38": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-39": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-40": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-41": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-42": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-43": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-44": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-45": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 1600,
+        "both": 1750
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 30,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-46": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-47": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-48": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-49": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-50": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-51": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-52": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-53": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-54": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-55": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-56": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-57": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-58": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-59": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-60": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-61": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-62": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-63": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "pixelarcade-64": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 3200,
+        "both": 3350
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true
+      },
+      "offers": {
+        "digital": true,
+        "painting": true,
+        "both": true
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      }
+    },
+    "frogdna-1": {
+      "pricing_nzd": {
+        "digital": 150,
+        "painting": 5000,
+        "both": null
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 165,
+        "depth_cm": 1,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true,
+        "sold": true,
+        "collector": "S & A Novak"
+      },
+      "status": "acquired",
+      "collector_display_name": "S & A Novak",
+      "offers": {
+        "digital": true,
+        "painting": false,
+        "both": false
+      },
+      "listing": {
+        "eth": 0.03,
+        "platform": null
+      },
+      "notes": "1/1 physical, 88 digital editions"
+    }
+  }
+}

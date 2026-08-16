@@ -1,7 +1,7 @@
 {
  "_meta": {
   "version": "1.0.0",
-  "generated": "2026-08-15T02:50:49.035Z",
+  "generated": "2026-08-16T05:57:46.814Z",
   "generated_by": "Phase 1 chain enumeration ... Blockscout v2, Ethereum RPC, ordinals.com, Counterparty (xchain.io/tokenscan.io)",
   "note": "Browse index. Work records live in data/c/{slug}.json.",
   "assets_base": "https://mintface.art/assets",
@@ -47,7 +47,7 @@
    "collector display_name + note",
    "statements marked null"
   ],
-  "split_generated": "2026-08-15T10:41:52.806Z"
+  "split_generated": "2026-08-16T05:57:52.124Z"
  },
  "groups": [
   {
@@ -134,9 +134,9 @@
    "sold_out": false,
    "counts": {
     "works": 22,
-    "available": 15,
+    "available": 11,
+    "acquired": 9,
     "vaulted": 2,
-    "acquired": 5,
     "unique_works": 22
    },
    "cover": {
@@ -208,9 +208,9 @@
    "sold_out": false,
    "counts": {
     "works": 36,
-    "acquired": 16,
-    "vaulted": 3,
-    "available": 17,
+    "acquired": 17,
+    "vaulted": 4,
+    "available": 15,
     "unique_works": 36
    },
    "cover": {
@@ -732,7 +732,7 @@
    "sold_out": false,
    "counts": {
     "works": 1,
-    "available": 1,
+    "acquired": 1,
     "editions_minted": 88,
     "edition_works": 1
    },
@@ -972,9 +972,15 @@
    "statement": "Latest paintings.",
    "sold_out": false,
    "counts": {
-    "works": 0
+    "works": 1,
+    "available": 1,
+    "unique_works": 1
    },
-   "cover": null,
+   "cover": {
+    "id": "recent-still-water-2",
+    "image": null,
+    "orientation": null
+   },
    "contracts": null,
    "links": null,
    "notes": "Not yet minted. Each work is tokenized on purchase, so the collector's wallet is the first owner written to chain.",
@@ -1857,7 +1863,8 @@
   "seize-and-share-rememes-3252": "seize-and-share",
   "seize-and-share-freedom-to-tweet-3255": "seize-and-share",
   "seize-and-share-dreaming-honey-3257": "seize-and-share",
-  "undefined": "the-vault"
+  "undefined": "the-vault",
+  "recent-still-water-2": "recent-work"
  },
  "exhibition_history": [
   {

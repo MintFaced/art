@@ -561,6 +561,34 @@ const other_works = [];
   other_works.push({ note: 'Roads & Rivers name groups: ' + Object.entries(rrGroups).map(([k, v]) => `${k} (${v.length})`).join(', ') });
 }
 
+// Ryan's hand data: prices, dimensions, collector names. Merged over the chain
+// so rebuilding from chain never loses it.
+{
+  const path = ROOT + 'data/source/overlay.json';
+  if (fs.existsSync(path)) {
+    const ov = R(path);
+    let touched = 0;
+    for (const c of collections) {
+      for (const w of c.works || []) {
+        const e = (ov.works || {})[w.id];
+        if (!e) continue;
+        touched++;
+        if (e.pricing_nzd) w.pricing_nzd = { ...(w.pricing_nzd || {}), ...e.pricing_nzd };
+        if (e.physical) w.physical = { ...(w.physical || {}), ...e.physical };
+        if (e.offers) w.offers = e.offers;
+        if (e.painting_included) w.painting_included = true;
+        if (e.listing) w.listing = e.listing;
+        if (e.notes) w.hand_notes = e.notes;
+        if (e.status) { if (w.status_chain == null) w.status_chain = w.status; w.status = e.status; }
+        if (e.collector_display_name) {
+          w.collector = { ...(w.collector || { address: null, ens: null, note: null, acquired: null }), display_name: e.collector_display_name };
+        }
+      }
+    }
+    console.log('overlay applied to', touched, 'works');
+  }
+}
+
 const catalog = {
   _meta: {
     version: '1.0.0',

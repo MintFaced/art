@@ -50,25 +50,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 80,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "landscape"
   },
   {
@@ -97,25 +106,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 80,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "square"
   },
   {
@@ -144,25 +162,39 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
+    "exists": true,
+    "width_cm": 60,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
     "framed": null,
-    "certificate": null,
-    "packaging": "Ships boxed/crated, freight included"
+    "certificate": true,
+    "packaging": "Ships boxed/crated, freight included",
+    "sold": true,
+    "collector": "K Jensen"
    },
    "pricing_nzd": {
     "digital": null,
     "painting": null,
     "both": null
    },
-   "status": "available",
+   "status": "acquired",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": null,
+    "ens": null,
+    "note": null,
+    "acquired": null,
+    "display_name": "K Jensen"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
+   },
+   "status_chain": "available",
    "orientation": "square"
   },
   {
@@ -191,25 +223,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 40,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "vaulted",
    "held_by": "mintestate.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "portrait"
   },
   {
@@ -238,25 +279,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 40,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "vaulted",
    "held_by": "mintestate.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "portrait"
   },
   {
@@ -285,25 +335,39 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
+    "exists": true,
+    "width_cm": 40,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
     "framed": null,
-    "certificate": null,
-    "packaging": "Ships boxed/crated, freight included"
+    "certificate": true,
+    "packaging": "Ships boxed/crated, freight included",
+    "sold": true,
+    "collector": "Liza"
    },
    "pricing_nzd": {
     "digital": null,
     "painting": null,
     "both": null
    },
-   "status": "available",
+   "status": "acquired",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": null,
+    "ens": null,
+    "note": null,
+    "acquired": null,
+    "display_name": "Liza"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
+   },
+   "status_chain": "available",
    "orientation": "portrait"
   },
   {
@@ -332,25 +396,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 40,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "square"
   },
   {
@@ -379,13 +452,13 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 40,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
@@ -403,6 +476,11 @@
     "display_name": null,
     "note": null,
     "acquired": "2025-10-11T07:23:11.000000Z"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
    },
    "orientation": "portrait"
   },
@@ -432,13 +510,13 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 80,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
@@ -456,6 +534,11 @@
     "display_name": null,
     "note": null,
     "acquired": "2025-10-11T07:23:11.000000Z"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
    },
    "orientation": "portrait"
   },
@@ -485,17 +568,17 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
+    "exists": false,
     "width_cm": null,
     "height_cm": null,
     "depth_cm": null,
     "ready_to_hang": null,
     "framed": null,
-    "certificate": null,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
+    "digital": 150,
     "painting": null,
     "both": null
    },
@@ -504,6 +587,16 @@
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
+   "hand_notes": "no physical available",
    "orientation": "landscape"
   },
   {
@@ -532,13 +625,13 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 40,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
@@ -556,6 +649,11 @@
     "display_name": null,
     "note": null,
     "acquired": "2025-10-11T07:23:11.000000Z"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
    },
    "orientation": "portrait"
   },
@@ -585,13 +683,13 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
+    "exists": false,
     "width_cm": null,
     "height_cm": null,
     "depth_cm": null,
     "ready_to_hang": null,
     "framed": null,
-    "certificate": null,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
@@ -610,6 +708,12 @@
     "note": null,
     "acquired": "2025-10-13T06:23:35.000000Z"
    },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
+   },
+   "hand_notes": "no physical available",
    "orientation": "portrait"
   },
   {
@@ -638,13 +742,13 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 40,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
@@ -662,6 +766,11 @@
     "display_name": null,
     "note": null,
     "acquired": "2025-10-11T00:55:35.000000Z"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
    },
    "orientation": "portrait"
   },
@@ -691,25 +800,39 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
-    "packaging": "Ships boxed/crated, freight included"
+    "exists": true,
+    "width_cm": 60,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
+    "packaging": "Ships boxed/crated, freight included",
+    "sold": true,
+    "collector": "K Jensen"
    },
    "pricing_nzd": {
     "digital": null,
     "painting": null,
     "both": null
    },
-   "status": "available",
+   "status": "acquired",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": null,
+    "ens": null,
+    "note": null,
+    "acquired": null,
+    "display_name": "K Jensen"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
+   },
+   "status_chain": "available",
    "orientation": "square"
   },
   {
@@ -738,25 +861,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 80,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "portrait"
   },
   {
@@ -785,25 +917,39 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
-    "packaging": "Ships boxed/crated, freight included"
+    "exists": true,
+    "width_cm": 60,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
+    "packaging": "Ships boxed/crated, freight included",
+    "sold": true,
+    "collector": "K Jensen"
    },
    "pricing_nzd": {
     "digital": null,
     "painting": null,
     "both": null
    },
-   "status": "available",
+   "status": "acquired",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": null,
+    "ens": null,
+    "note": null,
+    "acquired": null,
+    "display_name": "K Jensen"
+   },
+   "offers": {
+    "digital": false,
+    "painting": false,
+    "both": false
+   },
+   "status_chain": "available",
    "orientation": "portrait"
   },
   {
@@ -832,25 +978,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 60,
+    "height_cm": 60,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "square"
   },
   {
@@ -879,17 +1034,17 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
+    "exists": false,
     "width_cm": null,
     "height_cm": null,
     "depth_cm": null,
     "ready_to_hang": null,
     "framed": null,
-    "certificate": null,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
+    "digital": 150,
     "painting": null,
     "both": null
    },
@@ -898,6 +1053,16 @@
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
+   "hand_notes": "no physical available",
    "orientation": "square"
   },
   {
@@ -926,17 +1091,17 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
+    "exists": false,
     "width_cm": null,
     "height_cm": null,
     "depth_cm": null,
     "ready_to_hang": null,
     "framed": null,
-    "certificate": null,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
+    "digital": 150,
     "painting": null,
     "both": null
    },
@@ -945,6 +1110,16 @@
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
+   "hand_notes": "no physical available",
    "orientation": "landscape"
   },
   {
@@ -973,25 +1148,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 80,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "portrait"
   },
   {
@@ -1020,25 +1204,34 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 60,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "portrait"
   },
   {
@@ -1067,38 +1260,51 @@
     "external_url": null
    },
    "physical": {
-    "exists": null,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null,
-    "ready_to_hang": null,
-    "framed": null,
-    "certificate": null,
+    "exists": true,
+    "width_cm": 60,
+    "height_cm": 120,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
-    "both": null
+    "digital": 150,
+    "painting": 1250,
+    "both": 1400
    },
    "status": "available",
    "held_by": "mintface.eth",
    "listed_on": null,
    "reserve": null,
    "collector": null,
+   "offers": {
+    "digital": true,
+    "painting": true,
+    "both": true
+   },
+   "listing": {
+    "eth": 0.05,
+    "platform": null
+   },
    "orientation": "portrait"
   }
  ],
  "facets": {
   "availability": {
-   "available": 15,
-   "vaulted": 2,
-   "acquired": 5
+   "available": 11,
+   "acquired": 9,
+   "vaulted": 2
   },
   "orientation": {
    "landscape": 3,
    "square": 6,
    "portrait": 13
+  },
+  "price": {
+   "priced": 13,
+   "unpriced": 9
   }
  }
 }

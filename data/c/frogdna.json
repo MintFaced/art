@@ -140,16 +140,21 @@
    },
    "physical": {
     "exists": true,
-    "width_cm": null,
-    "height_cm": null,
-    "depth_cm": null
+    "width_cm": 120,
+    "height_cm": 165,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
+    "sold": true,
+    "collector": "S & A Novak"
    },
    "pricing_nzd": {
-    "digital": null,
-    "painting": null,
+    "digital": 150,
+    "painting": 5000,
     "both": null
    },
-   "status": "available",
+   "status": "acquired",
    "buy_paths": [
     "stripe_nzd",
     "stripe_usd",
@@ -373,8 +378,31 @@
      "qty": 1,
      "status": "acquired"
     }
-   ]
+   ],
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   },
+   "listing": {
+    "eth": 0.03,
+    "platform": null
+   },
+   "hand_notes": "1/1 physical, 88 digital editions",
+   "collector": {
+    "address": null,
+    "ens": null,
+    "note": null,
+    "acquired": null,
+    "display_name": "S & A Novak"
+   },
+   "status_chain": "available"
   }
  ],
- "facets": {}
+ "facets": {
+  "price": {
+   "priced": 1,
+   "unpriced": 0
+  }
+ }
 }
