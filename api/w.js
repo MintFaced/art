@@ -32,7 +32,8 @@ export async function GET(request) {
       : null;
     const bits = [collection.title, work.year || collection.year, price].filter(Boolean);
     const description = (work.statement || bits.join(' &middot; ') || `${title} by MintFace`).slice(0, 200);
-    const image = preview(work.digital?.image || work.image);
+    // same source order the page uses: a mirror of the bytes beats the chain URL
+    const image = preview(work.digital?.image_source || work.digital?.image || work.image);
     const url = `${origin}/w/${encodeURIComponent(work.id)}`;
 
     const meta = [
