@@ -1,5 +1,5 @@
 import { siteIndex, useRequestOrigin, siteOrigin } from './_lib/data.js';
-import { putObject, alreadyThere, r2Configured } from './_lib/r2.js';
+import { putObject, deleteObject, alreadyThere, r2Configured } from './_lib/r2.js';
 
 // Walks the catalog, pulls every artwork from wherever it currently lives, and
 // puts a copy in R2 keyed by work id. IPFS and marketplace CDNs are too slow and
@@ -28,6 +28,18 @@ export async function GET(request) {
   const given = (request.headers.get('authorization') || `Bearer ${url.searchParams.get('key') || ''}`).replace(/^Bearer\s+/, '');
   if (!allowed.length || !allowed.includes(given)) return new Response('no', { status: 401 });
   if (!r2Configured()) return json({ error: 'R2 is not configured' }, 503);
+
+  // purge takes a comma separated list of keys, for clearing a bad run
+  const purge = url.searchParams.get('purge');
+  if (purge) {
+    const keys = purge.split(',').map((k) => k.trim()).filter(Boolean);
+    const gone = [], stuck = [];
+    for (const k of keys) {
+      try { await deleteObject(k); gone.push(k); }
+      catch (e) { stuck.push({ key: k, why: String(e.message || e) }); }
+    }
+    return json({ deleted: gone, failed: stuck });
+  }
 
   const only = url.searchParams.get('collection');
   const limit = Number(url.searchParams.get('limit') || 40);
