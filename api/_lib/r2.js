@@ -24,9 +24,14 @@ function signingKey(date) {
 /**
  * Shared SigV4 signing for a single request against the bucket.
  */
-function signed(method, key, body, contentType) {
+function signed(method, key, body, contentType, query) {
   const host = `${ACCOUNT}.r2.cloudflarestorage.com`;
-  const path = `/${BUCKET}/${key.split('/').map(encodeURIComponent).join('/')}`;
+  const path = key === ''
+    ? `/${BUCKET}`
+    : `/${BUCKET}/${key.split('/').map(encodeURIComponent).join('/')}`;
+  // S3 wants the query sorted by key and encoded its own way
+  const qs = Object.keys(query || {}).sort()
+    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(query[k])}`).join('&');
   const now = new Date();
   const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, '');
   const date = amzDate.slice(0, 8);
@@ -36,12 +41,12 @@ function signed(method, key, body, contentType) {
   if (contentType) headers['content-type'] = contentType;
   const signedHeaders = Object.keys(headers).sort().join(';');
   const canonicalHeaders = Object.keys(headers).sort().map((h) => `${h}:${headers[h]}\n`).join('');
-  const canonical = [method, path, '', canonicalHeaders, signedHeaders, payloadHash].join('\n');
+  const canonical = [method, path, qs, canonicalHeaders, signedHeaders, payloadHash].join('\n');
   const scope = `${date}/${REGION}/${SERVICE}/aws4_request`;
   const toSign = ['AWS4-HMAC-SHA256', amzDate, scope, sha256(canonical)].join('\n');
   const signature = createHmac('sha256', signingKey(date)).update(toSign).digest('hex');
   return {
-    url: `https://${host}${path}`,
+    url: `https://${host}${path}${qs ? `?${qs}` : ''}`,
     headers: {
       ...headers,
       authorization: `AWS4-HMAC-SHA256 Credential=${KEY}/${scope}, SignedHeaders=${signedHeaders}, Signature=${signature}`,
@@ -95,6 +100,34 @@ export async function putObject(key, body, contentType) {
   });
   if (!res.ok) throw new Error(`r2 put ${res.status}: ${(await res.text()).slice(0, 200)}`);
   return key;
+}
+
+/**
+ * Every key in the bucket with its size. R2 pages at 1000, so this follows the
+ * continuation token until it runs out. Used to survey what a warm run actually
+ * put there, which is how you find out you have been storing 30MB masters.
+ */
+export async function listObjects(prefix = '') {
+  if (!r2Configured()) throw new Error('R2 is not configured');
+  const out = [];
+  let token;
+  do {
+    const query = { 'list-type': '2', 'max-keys': '1000' };
+    if (prefix) query.prefix = prefix;
+    if (token) query['continuation-token'] = token;
+    const { url, headers } = signed('GET', '', '', undefined, query);
+    const res = await fetch(url, { headers });
+    if (!res.ok) throw new Error(`r2 list ${res.status}: ${(await res.text()).slice(0, 160)}`);
+    const xml = await res.text();
+    for (const m of xml.matchAll(/<Contents>([\s\S]*?)<\/Contents>/g)) {
+      const key = (m[1].match(/<Key>([\s\S]*?)<\/Key>/) || [])[1];
+      const size = Number((m[1].match(/<Size>(\d+)<\/Size>/) || [])[1] || 0);
+      if (key) out.push({ key: key.replace(/&amp;/g, '&'), size });
+    }
+    token = (xml.match(/<NextContinuationToken>([\s\S]*?)<\/NextContinuationToken>/) || [])[1];
+    if (!/<IsTruncated>true<\/IsTruncated>/.test(xml)) token = null;
+  } while (token);
+  return out;
 }
 
 // Cheap existence check against the public domain, so a warm run can skip what

@@ -1,5 +1,5 @@
 import { siteIndex, useRequestOrigin, siteOrigin } from './_lib/data.js';
-import { putObject, deleteObject, alreadyThere, r2Configured } from './_lib/r2.js';
+import { putObject, deleteObject, listObjects, alreadyThere, r2Configured } from './_lib/r2.js';
 
 // Walks the catalog, pulls every artwork from wherever it currently lives, and
 // puts a copy in R2 keyed by work id. IPFS and marketplace CDNs are too slow and
@@ -39,6 +39,26 @@ export async function GET(request) {
       catch (e) { stuck.push({ key: k, why: String(e.message || e) }); }
     }
     return json({ deleted: gone, failed: stuck });
+  }
+
+  // survey mode: what is actually in the bucket, and how big
+  if (url.searchParams.get('list')) {
+    const all = await listObjects(url.searchParams.get('prefix') || '');
+    const bytes = all.reduce((n, o) => n + o.size, 0);
+    const byCollection = {};
+    for (const o of all) {
+      const slug = o.key.split('/')[0];
+      const c = (byCollection[slug] ||= { objects: 0, bytes: 0 });
+      c.objects++;
+      c.bytes += o.size;
+    }
+    return json({
+      objects: all.length,
+      bytes,
+      largest: [...all].sort((a, b) => b.size - a.size).slice(0, 40),
+      by_collection: byCollection,
+      keys: url.searchParams.get('keys') ? all.map((o) => `${o.key} ${o.size}`) : undefined,
+    });
   }
 
   const only = url.searchParams.get('collection');
