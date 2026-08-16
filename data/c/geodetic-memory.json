@@ -73,7 +73,7 @@
     "packaging": "Ships boxed/crated, freight included"
    },
    "pricing_nzd": {
-    "digital": null,
+    "digital": 160,
     "painting": null,
     "both": null
    },
@@ -85,6 +85,12 @@
    "assets": {
     "display": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
     "image": "geodetic-memory/geodetic-memory-geodetic-memory-image.png"
+   },
+   "listed_eth": 0.05,
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
    },
    "token_ids": [
     "838",

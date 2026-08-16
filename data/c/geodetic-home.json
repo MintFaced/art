@@ -48,7 +48,7 @@
     "exists": null
    },
    "pricing_nzd": {
-    "digital": null,
+    "digital": 160,
     "painting": null,
     "both": null
    },
@@ -143,6 +143,12 @@
    "assets": {
     "display": "geodetic-home/geodetic-home-5-display.webp",
     "image": "geodetic-home/geodetic-home-5-image.png"
+   },
+   "listed_eth": 0.05,
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
    }
   }
  ],

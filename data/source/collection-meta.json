@@ -1,0 +1,23 @@
+{
+ "_note": "Genre is what a collection is, in the language a viewer would use, and is not the same as medium: PixelArcade's medium is acrylic on panel, its genre is painting and design. Group overrides move a collection between areas without touching the build. Both are applied during the split, so a catalog rebuild does not have to run to change them.",
+ "collections": {
+  "pixelarcade": { "genre": "Painting / Design" },
+  "artificial-flowers": { "genre": "Painting / AI" },
+  "patrimora": { "genre": "Generative" },
+  "frogdna": { "genre": "Painting / Design" },
+  "two-burdens": { "genre": "Painting" },
+  "recursive-mind": { "genre": "Design" },
+  "hidden-landscapes": { "genre": "AI" },
+  "roads-and-rivers": { "genre": "Photography" },
+  "geodetic-onchain": { "genre": "Design" },
+  "geodetic-world": { "genre": "AI" },
+  "geodetica": { "genre": "AI" },
+  "geodetic-moments": { "genre": "Photography" },
+  "geodetic-home": { "genre": "Sculpture" },
+  "geodetic-memory": { "genre": "Photography / AI" },
+  "geodetic-illusions": { "genre": "AI" },
+  "genesis": { "genre": "Photography" },
+  "2022-10k": { "genre": "Design" },
+  "id-please": { "group": "archive" }
+ }
+}

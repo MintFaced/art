@@ -267,10 +267,76 @@ const MF = {
 
   money(nzd, currency, fx) {
     if (nzd == null) return null;
-    if (currency === 'NZD') return '$' + Math.round(nzd).toLocaleString('en-NZ');
-    if (currency === 'USD') return fx.usd ? 'US$' + Math.round(nzd * fx.usd).toLocaleString('en-US') : null;
-    if (currency === 'ETH') return fx.eth ? (nzd * fx.eth).toFixed(2) + ' ETH' : null;
+    const f = fx || {};
+    if (currency === 'NZD') return 'NZ$' + Math.round(nzd).toLocaleString('en-NZ');
+    if (currency === 'USD') return f.usd ? 'US$' + Math.round(nzd * f.usd).toLocaleString('en-US') : null;
+    if (currency === 'ETH') {
+      if (!f.eth) return null;
+      const eth = nzd * f.eth;
+      // two decimals hides a nine thousandth of an ether, which is a real price here
+      const dp = eth >= 1 ? 2 : eth >= 0.1 ? 3 : 4;
+      return Number(eth.toFixed(dp)) + ' ETH';
+    }
     return null;
+  },
+
+  /* ---------- what the viewer is shown ----------
+     NZD is what everything is stored and settled in. This is only the currency
+     a price is read in, and it follows the viewer from page to page. */
+  CURRENCIES: ['USD', 'NZD', 'ETH'],
+  DEFAULT_CURRENCY: 'USD',
+
+  currency() {
+    try {
+      const c = localStorage.getItem('mf_cur');
+      return this.CURRENCIES.includes(c) ? c : this.DEFAULT_CURRENCY;
+    } catch { return this.DEFAULT_CURRENCY; }
+  },
+
+  setCurrency(c) {
+    if (!this.CURRENCIES.includes(c)) return;
+    try { localStorage.setItem('mf_cur', c); } catch { /* private window, this page only */ }
+    window.dispatchEvent(new CustomEvent('mf:currency', { detail: c }));
+  },
+
+  // the control itself, so every page offers the same one
+  currencyBar(id) {
+    const c = this.currency();
+    return `<div class="cur" id="${id || 'cur'}" role="group" aria-label="Currency">`
+      + this.CURRENCIES.map((x) =>
+        `<button data-c="${x}" aria-pressed="${x === c}">${x}</button>`).join('')
+      + '</div>';
+  },
+
+  // repaint anything carrying a stored NZD figure
+  async paintPrices(root) {
+    const fx = await this.fx();
+    const c = this.currency();
+    for (const el of (root || document).querySelectorAll('[data-nzd]')) {
+      const nzd = Number(el.dataset.nzd);
+      const out = this.money(nzd, c, fx);
+      if (out) el.textContent = out;
+    }
+    return { fx, currency: c };
+  },
+
+  // one wiring for every currency control on a page
+  wireCurrencyBar(el, after) {
+    if (!el) return;
+    el.addEventListener('click', (ev) => {
+      const b = ev.target.closest('button');
+      if (!b) return;
+      this.setCurrency(b.dataset.c);
+    });
+    window.addEventListener('mf:currency', async (ev) => {
+      for (const bar of document.querySelectorAll('.cur')) {
+        for (const x of bar.querySelectorAll('button')) {
+          x.setAttribute('aria-pressed', String(x.dataset.c === ev.detail));
+        }
+      }
+      await this.paintPrices();
+      if (after) after(ev.detail);
+    });
   },
 
   /* ---------- display ---------- */
@@ -307,7 +373,7 @@ const MF = {
       ? { digital: { image: c.cover.image }, assets: c.cover.assets || null, title: c.title }
       : null;
     const n = c.counts.works || c.counts.child_works || 0;
-    const bits = [c.year, `${n} ${n === 1 ? 'work' : 'works'}`].filter(Boolean);
+    const bits = [c.year, c.genre, `${n} ${n === 1 ? 'work' : 'works'}`].filter(Boolean);
     if (c.counts.editions_minted) bits.push(`${c.counts.editions_minted} editions`);
     const a = this.availability(c);
     return `<a class="card" href="${this.collectionHref(c)}">
@@ -322,9 +388,14 @@ const MF = {
     </a>`;
   },
 
+  // The record so far, kept here rather than in the page so one edit changes it
+  // everywhere it is quoted.
+  SALES_LINE: 'Highest sale 8.2 ETH (328 ed.) \u00b7 av. edition 0.03 ETH \u00b7 av. 1/1 0.3 ETH',
+
   // groups, in the order the catalog gives them, with the locked geodetic run
   groupOrder: {
-    core: ['pixelarcade', 'artificial-flowers', 'patrimora', 'frogdna', 'id-please', 'two-burdens', 'recursive-mind', 'hidden-landscapes', 'roads-and-rivers'],
+    core: ['pixelarcade', 'artificial-flowers', 'patrimora', 'frogdna', 'two-burdens', 'recursive-mind', 'hidden-landscapes', 'roads-and-rivers'],
+    archive: ['seize-and-share', 'id-please'],
     geodetic: ['geodetic-onchain', 'geodetic-world', 'geodetica', 'geodetic-moments', 'geodetic-home', 'geodetic-memory'],
     'ai-studies': ['visual-language', 'panoptic', 'wallet'],
     feature: ['genesis', '2022-10k'],
@@ -420,8 +491,17 @@ const MF = {
 
     watch(root) {
       const imgs = [...(root || document).querySelectorAll('img, object.live, video')];
-      const pending = imgs.filter((n) => !(n.tagName === 'IMG' && n.complete));
-      if (pending.length < 2) return;          // not worth telling anyone about
+      // Two things never resolve and would hold the bar open forever: a lazy
+      // tile that is not scrolled to yet, and the still inside an <object>,
+      // which a browser only loads if the object itself fails.
+      const pending = imgs.filter((n) => {
+        if (n.loading === 'lazy') return false;
+        // anything nested inside an <object> is that object's fallback, and a
+        // browser only loads fallback content when the object itself fails
+        if (n.parentElement && n.parentElement.closest('object')) return false;
+        return !(n.tagName === 'IMG' && n.complete);
+      });
+      if (!pending.length) return;
       this.mount().classList.add('on');
       this.total = pending.length;
       this.done = 0;
@@ -434,7 +514,7 @@ const MF = {
       }
       // never leave the bar hanging on a source that answers slowly
       clearTimeout(this._giveUp);
-      this._giveUp = setTimeout(() => this.finish(), 15000);
+      this._giveUp = setTimeout(() => this.finish(), 8000);
     },
 
     tick() {

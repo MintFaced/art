@@ -150,14 +150,7 @@ details summary:hover{color:var(--ink)}
 .pricing{margin-top:46px;border-top:1px solid var(--ink);padding-top:20px}
 .pricing-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .pricing-head .smallcaps{color:var(--ink)}
-.cur{display:flex;gap:14px}
-.cur button{
-  background:none;border:0;padding:0;cursor:pointer;
-  font-family:var(--font-mono);font-weight:400;
-  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
-  font-variant-numeric:tabular-nums;
-}
-.cur button[aria-pressed="true"]{color:var(--ink)}
+
 .price-row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--rule)}
 .price-row:last-of-type{border-bottom:0}
 .price-row .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
@@ -173,6 +166,19 @@ details summary:hover{color:var(--ink)}
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;
 }
 .btn:hover{background:#2c2924}
+/* who holds it, directly under the byline it belongs with */
+.collected{margin-top:12px;margin-bottom:26px}
+.collected .who{
+  font-family:var(--font-mono);font-weight:400;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.collected .when{
+  font-family:var(--font-mono);font-weight:400;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  font-variant-numeric:tabular-nums;margin-top:4px;
+}
+
 .state{display:flex;align-items:baseline;gap:10px;padding:18px 0;border-top:1px solid var(--rule)}
 .state .word{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-variant-numeric:tabular-nums}
 .state .sub{font-family:var(--font-mono);font-weight:400;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -355,7 +361,12 @@ function provenanceFold(work) {
     </details>`;
 }
 
-function shippingFold(collection, meta) {
+// once a work is collected there is nothing to quote and nothing to send, so
+// the listing furniture comes off the page entirely
+const isCollected = (work) => work.status === 'acquired';
+
+function shippingFold(collection, meta, work) {
+  if (isCollected(work)) return '';
   if (!collection.physical) return '';
   return `
     <details>
@@ -365,6 +376,7 @@ function shippingFold(collection, meta) {
 }
 
 function pricingBlock(work, collection) {
+  if (isCollected(work)) return '';
   if (pricedInETH(work)) {
     const opts = optionsFor(work, collection);
     if (!opts.length) {
@@ -395,11 +407,7 @@ function pricingBlock(work, collection) {
   return `<div class="pricing">
     <div class="pricing-head">
       <span class="smallcaps">Price</span>
-      <div class="cur" id="cur">
-        <button data-c="NZD" aria-pressed="true">NZD</button>
-        <button data-c="USD" aria-pressed="false">USD</button>
-        <button data-c="ETH" aria-pressed="false">ETH</button>
-      </div>
+      ${MF.currencyBar('cur')}
     </div>
     ${rows.map(([what, nzd]) => `
       <div class="price-row">
@@ -440,14 +448,10 @@ function actionBlock(work, collection) {
     </div>`;
   }
   if (s === 'acquired') {
-    const name = MF.collectorName(work.collector);
-    const when = work.collector && work.collector.acquired ? MF.date(work.collector.acquired, { month: 'long', year: 'numeric' }) : null;
-    return `<div class="action">
-      <div class="state"><span class="dot acquired"></span>
-        <span class="word">Collected by ${e(name || 'a private collector')}</span>
-        ${when ? `<span class="sub">${e(when)}</span>` : ''}</div>
-      ${work.collector && work.collector.note ? `<p class="note">${e(work.collector.note)}</p>` : ''}
-    </div>`;
+    // the collector now reads under the title, so all that is left here is
+    // anything the collector wanted said
+    if (!(work.collector && work.collector.note)) return '';
+    return `<div class="action"><p class="note">${e(work.collector.note)}</p></div>`;
   }
   if (s === 'vaulted') {
     return `<div class="action">
@@ -535,6 +539,18 @@ function displayTitle(work, collection) {
   return /^#?\d+$/.test(t) ? `${collection.title} ${t.startsWith('#') ? t : '#' + t}` : t;
 }
 
+function collectedLine(work) {
+  if (!isCollected(work)) return '';
+  const name = MF.collectorName(work.collector);
+  const when = work.collector && work.collector.acquired
+    ? MF.date(work.collector.acquired, { month: 'long', year: 'numeric' })
+    : null;
+  return `<div class="collected">
+    <div class="who"><span class="dot acquired"></span> Collected by ${e(name || 'a private collector')}</div>
+    ${when ? `<div class="when">${e(when)}</div>` : ''}
+  </div>`;
+}
+
 function render(work, collection, meta) {
   const shown = displayTitle(work, collection);
   const traits = traitsOf(work);
@@ -551,6 +567,7 @@ function render(work, collection, meta) {
     <div class="col">
       <h1>${e(shown)}</h1>
       <div class="byline">${[collection.title, work.sequence, MF.year(work, collection)].filter(Boolean).map(e).join(' &middot; ')}</div>
+      ${collectedLine(work)}
 
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" id="tab-desc" aria-selected="true" aria-controls="panel-desc">Description</button>
@@ -575,7 +592,7 @@ function render(work, collection, meta) {
       <div style="margin-top:30px">
         ${provenanceFold(work)}
         ${holdersBlock(work)}
-        ${shippingFold(collection, meta)}
+        ${shippingFold(collection, meta, work)}
       </div>
 
       ${pricingBlock(work, collection)}
@@ -619,20 +636,15 @@ async function wireCurrency() {
 
   const bar = document.getElementById('cur');
   if (!bar) return;
-  const fx = await MF.fx();
   const note = document.getElementById('converted');
-  bar.addEventListener('click', (ev) => {
-    const b = ev.target.closest('button');
-    if (!b) return;
-    const c = b.dataset.c;
-    [...bar.querySelectorAll('button')].forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    document.querySelectorAll('.amount').forEach((el) => {
-      const nzd = Number(el.dataset.nzd);
-      el.textContent = MF.money(nzd, c, fx) || 'Rate unavailable';
-    });
+  const sayRate = (c) => {
+    if (!note) return;
     note.hidden = c === 'NZD';
-    if (c !== 'NZD') note.textContent = 'Converted from NZD, updated hourly.';
-  });
+    if (c !== 'NZD') note.textContent = 'Converted from New Zealand dollars, updated hourly.';
+  };
+  const { currency } = await MF.paintPrices();
+  sayRate(currency);
+  MF.wireCurrencyBar(bar, sayRate);
 }
 
 /* ---------------- acquire ---------------- */

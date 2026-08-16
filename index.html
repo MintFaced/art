@@ -31,7 +31,14 @@
   max-width:1500px;margin:0 auto;padding:66px 28px 0;
   display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
 }
-.wordmark-big h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(42px,8vw,96px);line-height:.92;margin:0;letter-spacing:-.035em}
+.wordmark-big h1{margin:0;line-height:0}
+.wordmark-big h1 img{width:clamp(230px,42vw,520px);height:auto;display:block}
+/* what the work has actually done, in the same register as the rest */
+.figures{
+  font-family:var(--font-mono);font-weight:400;
+  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);
+  font-variant-numeric:tabular-nums;line-height:2;margin-top:18px;max-width:420px;
+}
 .wordmark-big .sub{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);max-width:330px;line-height:2}
 
 /* ---------- collections ---------- */
@@ -92,6 +99,8 @@
 <script src="/mintface.js"></script>
 <script>
 const e = MF.escape;
+// rates held here so the hero can be written in the read currency first time
+let HERO_FX = {};
 
 // Two pools, taking turns. A collected work is worth showing for the collector
 // as much as the art, so it gets its own caption.
@@ -150,6 +159,7 @@ function heroMarkup(work, collection, pool) {
     const p = work.pricing_nzd || {};
     // a work listed in ETH shows the figure it is listed in
     let price = null;
+    let priceNzd = null;
     if (work.priced_in === 'ETH' && work.pricing_eth && work.pricing_eth.digital != null && offers.digital) {
       price = `${work.pricing_eth.digital} ETH`;
     } else {
@@ -157,10 +167,13 @@ function heroMarkup(work, collection, pool) {
         : offers.painting && p.painting != null ? p.painting
         : offers.digital && p.digital != null ? p.digital
         : null;
-      if (nzd != null) price = `$${Math.round(nzd).toLocaleString('en-NZ')}`;
+      if (nzd != null) priceNzd = nzd;
     }
     tail = `<span class="state"><span class="dot ${st.dot}"></span> ${e(st.label)}</span>`
-      + (price ? `<span class="price">${e(price)}</span>` : '');
+      + (priceNzd != null
+        // the code sits with the figure, so nobody has to guess whose dollars
+        ? `<span class="price" data-nzd="${priceNzd}">${e(MF.money(priceNzd, MF.currency(), HERO_FX) || '')}</span>`
+        : price ? `<span class="price">${e(price)}</span>` : '');
   }
 
   return `<a href="/w/${encodeURIComponent(work.id)}">
@@ -175,6 +188,7 @@ function heroMarkup(work, collection, pool) {
 
 async function hero(home, idx) {
   const el = document.getElementById('hero');
+  try { HERO_FX = await MF.fx(); } catch { /* the figure falls back to nothing */ }
 
   const first = nextPool(home);
   if (first) {
@@ -207,12 +221,13 @@ async function hero(home, idx) {
 
     document.getElementById('main').insertAdjacentHTML('beforeend', `
       <div class="wordmark-big">
-        <h1>MintFace</h1>
+        <h1><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></h1>
         <div class="sub">
           ${works.toLocaleString('en-NZ')} works on record<br>
           Painting, photography, AI and code<br>
           New Zealand
         </div>
+        <div class="figures">${MF.escape(MF.SALES_LINE)}</div>
       </div>
       <div class="wrap">
         ${groups.map((g) => {

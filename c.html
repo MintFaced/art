@@ -22,6 +22,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 /* ---------- filters ---------- */
 .filters{max-width:1500px;margin:0 auto;padding:26px 28px 0;border-top:1px solid var(--rule)}
 .filter-row{display:flex;flex-wrap:wrap;gap:26px;align-items:baseline}
+.filter-row .cur{margin-left:auto}
 .filter-row button{
   background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-sans);
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
@@ -104,8 +105,23 @@ const VALUE_LABELS = {
   uninscribed: 'Not yet inscribed', burned: 'Burned', reserved: 'Reserved',
   portrait: 'Portrait', landscape: 'Landscape', square: 'Square',
   unique: 'Unique 1/1', edition: 'Edition',
-  'under-500': 'Under $500', '500-1500': '$500 to $1,500', '1500-5000': '$1,500 to $5,000', 'over-5000': 'Over $5,000',
 };
+
+// the bands are NZD thresholds; their labels are written in the read currency
+const PRICE_BANDS = {
+  'under-500': [null, 500], '500-1500': [500, 1500], '1500-5000': [1500, 5000], 'over-5000': [5000, null],
+};
+let FX = {};
+function bandLabel(key) {
+  const band = PRICE_BANDS[key];
+  if (!band) return key;
+  const c = MF.currency();
+  const [lo, hi] = band.map((n) => (n == null ? null : MF.money(n, c, FX)));
+  if (lo && hi) return `${lo} to ${hi}`;
+  if (hi) return `Under ${hi}`;
+  if (lo) return `Over ${lo}`;
+  return key;
+}
 
 // the order a buyer thinks in, not alphabetical
 const PRICE_ORDER = ['under-500', '500-1500', '1500-5000', 'over-5000'];
@@ -163,13 +179,14 @@ function tile(w, collection) {
   const o = w.offers;
   const p = w.pricing_nzd || {};
   let price = null;
+  let nzd = null;
   if (w.priced_in === 'ETH' && w.pricing_eth && w.pricing_eth.digital != null && o && o.digital) {
     price = `${w.pricing_eth.digital} ETH`;
   } else {
     const onOffer = o
       ? (o.digital ? p.digital : o.painting ? p.painting : o.both ? p.both : null)
       : (w.status === 'available' ? p.digital : null);
-    if (onOffer != null) price = '$' + Math.round(onOffer).toLocaleString('en-NZ');
+    if (onOffer != null) nzd = onOffer;
   }
   const title = /^#?\d+$/.test((w.title || '').trim())
     ? `${collection.title} ${w.title.startsWith('#') ? w.title : '#' + w.title}`
@@ -183,7 +200,9 @@ function tile(w, collection) {
       <div class="sub">
         <span><span class="dot ${st.dot}"></span> ${e(st.label)}</span>
         ${w.derivative_of ? `<span>After ${e(w.derivative_of)}</span>` : ''}
-        ${price ? `<span class="price">${e(price)}</span>` : ''}
+        ${nzd != null
+          ? `<span class="price" data-nzd="${nzd}">${e(MF.money(nzd, MF.currency(), FX) || '')}</span>`
+          : price ? `<span class="price">${e(price)}</span>` : ''}
       </div>
     </div>
   ${close}`;
@@ -226,8 +245,8 @@ function stateControl(works) {
 
 function filterBar(collection) {
   const declared = collection.facets || {};
-  const keys = Object.keys(declared).filter((k) => valueOf[k] && k !== 'availability');
-  if (!keys.length || collection.works.length <= 12) return '';
+  const enough = collection.works.length > 12;
+  const keys = enough ? Object.keys(declared).filter((k) => valueOf[k] && k !== 'availability') : [];
 
   // recount against live state, so a work sold this morning is not still
   // sitting in the Available tally
@@ -242,11 +261,13 @@ function filterBar(collection) {
     if (Object.keys(counts).length > 1) facets[k] = counts;
   }
   const live = Object.keys(facets);
-  if (!live.length) return '';
+  // the currency control shows even where there is nothing to filter on, so a
+  // price is always readable in the viewer's own money
   return `<div class="filters">
     <div class="filter-row">
       ${live.map((k) => `<button data-facet="${k}" aria-expanded="false">${e(FACET_LABELS[k] || k)}</button>`).join('')}
-      <button class="clear" hidden>Clear</button>
+      ${live.length ? '<button class="clear" hidden>Clear</button>' : ''}
+      ${MF.currencyBar('cur')}
     </div>
     ${live.map((k) => `<div class="options" data-for="${k}">
       ${Object.entries(facets[k]).sort((a, b) => {
@@ -254,7 +275,7 @@ function filterBar(collection) {
         if (k === 'year') return Number(b[0]) - Number(a[0]);
         return b[1] - a[1];
       }).map(([v, n]) =>
-        `<button class="opt" data-facet="${k}" data-value="${e(v)}" aria-pressed="false">${e(VALUE_LABELS[v] || v)}<span class="n">${n}</span></button>`).join('')}
+        `<button class="opt" data-facet="${k}" data-value="${e(v)}" aria-pressed="false">${e(k === 'price' ? bandLabel(v) : (VALUE_LABELS[v] || v))}<span class="n">${n}</span></button>`).join('')}
     </div>`).join('')}
     <div class="count" id="count"></div>
   </div>`;
@@ -334,6 +355,14 @@ function render(collection) {
   }
   wireStates();
   wireFilters();
+  // changing currency rewrites the band labels as well as the prices
+  MF.wireCurrencyBar(document.getElementById('cur'), () => {
+    for (const btn of document.querySelectorAll('.opt[data-facet="price"]')) {
+      const n = btn.querySelector('.n');
+      btn.textContent = bandLabel(btn.dataset.value);
+      if (n) btn.appendChild(n);
+    }
+  });
   applyFilters();
 
   const io = new IntersectionObserver((entries) => {
@@ -345,7 +374,12 @@ function render(collection) {
 (async function () {
   const s = slug();
   try {
-    const collection = await MF.collection(s);
+    // rates first, so prices and bands are written in the read currency rather
+    // than flashing New Zealand dollars and correcting themselves
+    const [collection] = await Promise.all([
+      MF.collection(s),
+      MF.fx().then((fx) => { FX = fx; }).catch(() => {}),
+    ]);
     // a token sent to the zero address is not part of the collection any more
     if (collection && collection.works) {
       collection.works = collection.works.filter((w) => w.status !== 'burned');
