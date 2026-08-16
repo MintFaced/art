@@ -1,7 +1,7 @@
 {
  "_meta": {
   "version": "1.0.0",
-  "generated": "2026-08-16T05:57:46.814Z",
+  "generated": "2026-08-16T07:03:36.059Z",
   "generated_by": "Phase 1 chain enumeration ... Blockscout v2, Ethereum RPC, ordinals.com, Counterparty (xchain.io/tokenscan.io)",
   "note": "Browse index. Work records live in data/c/{slug}.json.",
   "assets_base": "https://mintface.art/assets",
@@ -47,7 +47,7 @@
    "collector display_name + note",
    "statements marked null"
   ],
-  "split_generated": "2026-08-16T05:57:52.124Z"
+  "split_generated": "2026-08-16T07:03:58.643Z"
  },
  "groups": [
   {
@@ -972,15 +972,9 @@
    "statement": "Latest paintings.",
    "sold_out": false,
    "counts": {
-    "works": 1,
-    "available": 1,
-    "unique_works": 1
+    "works": 0
    },
-   "cover": {
-    "id": "recent-still-water-2",
-    "image": null,
-    "orientation": null
-   },
+   "cover": null,
    "contracts": null,
    "links": null,
    "notes": "Not yet minted. Each work is tokenized on purchase, so the collector's wallet is the first owner written to chain.",
@@ -1863,8 +1857,7 @@
   "seize-and-share-rememes-3252": "seize-and-share",
   "seize-and-share-freedom-to-tweet-3255": "seize-and-share",
   "seize-and-share-dreaming-honey-3257": "seize-and-share",
-  "undefined": "the-vault",
-  "recent-still-water-2": "recent-work"
+  "undefined": "the-vault"
  },
  "exhibition_history": [
   {

@@ -92,6 +92,12 @@ The collection card, the group ordering and the route map moved into `mintface.j
 
 **Shared stylesheet** ... `mintface.css` now holds the tokens, chrome and availability dots. Each page keeps only its own layout rules inline.
 
+**Traits** ... a third tab on the work page, after Description and Details, in the same table language: small caps names, values right aligned, a swatch beside anything that is a hex colour. It appears only where the token metadata carries attributes, so PixelArcade gets 23 rows and Two Burdens gets no tab at all.
+
+The attributes were on chain the whole time. The enumeration read them; the catalog builder dropped them on the floor. 711 of 1,090 works carry them now, across PixelArcade, Geodetica, Geodetic World, Geodetic Illusions, Hidden Landscapes, Visual Language, Panoptic, Patrimora, Artificial Flowers, Roads & Rivers and the Seize And Share archive.
+
+**Animated SVG** ... PixelArcade's works are SVGs that animate themselves with CSS keyframes, no script. The work page now loads the SVG in an `object` so its own stylesheet runs, with a proxied still as the child the browser falls back to. The animated version is the work; the still is the fallback. Grids keep the proxied still, since 48 live SVGs is a different proposition to one.
+
 ## Decisions taken during the build
 
 - **Motion is typed, not guessed.** Artificial Flowers animation URLs are `text/html`, Patrimora renders from an irys HTML page. Video extensions get a `<video>`, image extensions render inline, everything else is a click-to-load sandboxed iframe labelled "Open the living version". Nothing heavy loads until asked.
@@ -99,6 +105,7 @@ The collection card, the group ordering and the route map moved into `mintface.j
 - **Collapsed editions link to the contract**, not to one token, and show "156 tokens, #30 to #191" rather than a single token id.
 - **The old provenance table had a collection the catalog did not: ID Please.** Chased it down while rebuilding the table. It is Meme Card 362, season 11, in The Memes by 6529, minted 27 August 2025, 328 editions across 232 holders, none held by your wallets. A MintFace work inside someone else's shared collection, the same shape as the Foundation 1/1s. Now enumerated and in the catalog as its own collection in the core group, with a note that placement is your call. Phase 1 missed it because it was not in the seed.
 - **Sold out and available are not opposites here.** Geodetica, Geodetic Moments and Geodetic Home are flagged sold out in the seed, and all three still hold works in your wallets: 13, 14 and 1. A "Sold out" badge over a grid of buyable work is a lie to a collector, so `MF.availability()` now reads it as "Mint sold out" plus the live available count whenever both are true, and plain "Sold out" only when nothing is available. Same reading on the set page, the collection pages and the index. If the intent was that those works are not for sale, the fix is in the data: move them to mintestate.eth and they become vaulted. as "Burned ... returned to the zero address". 44 of them exist, mostly Roads & Rivers.
+- **PixelArcade has no `animation_url`, and that is correct.** The metadata carries name, description, image, external_url, art_title and attributes, and the image is an SVG that animates itself. What was missing was the attributes, and the proxy flattening the SVG into a webp.
 - **Images fall back rather than break.** Thumbnails try the proxy, drop to the master on error, and remove themselves if that fails too. Hosts that already serve sized images are skipped entirely: OpenSea's CDN, Google's, Highlight's. That matters for Geodetic Moments, whose images live on OpenSea's CDN rather than anywhere you control. Those are the works most in need of R2 masters.
 - **Grids need thumbnails and the masters are unusable for browsing.** One Two Burdens JPEG is 15 MB. `MF.thumbUrl()` routes grid images through a resizing proxy set on one line in `mintface.js`, which turns that 15 MB into a 240 KB webp. When R2 holds real thumbs, put the path in the work's `assets.thumb` and the proxy is bypassed. Setting `THUMB_PROXY` to an empty string turns it off entirely.
 

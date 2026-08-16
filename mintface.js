@@ -116,11 +116,25 @@ const MF = {
       .replace('{w}', String(width || 600));
   },
 
+  isSVG(url) {
+    return typeof url === 'string' && /\.svg(\?|#|$)/i.test(url);
+  },
+
   // an <img> that falls back to the master if the thumbnail source fails
   img(work, width, opts) {
     const o = opts || {};
     const thumb = this.thumbUrl(work, width);
     if (!thumb) return '';
+    // The animated version is the work, so the work page loads the SVG itself and
+    // lets its own stylesheet run. If that source is unreachable, the browser
+    // renders the child instead: a proxied still, which is the fallback, not the
+    // default.
+    if (o.live && this.isSVG(this.imageUrl(work))) {
+      const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
+      return `<object type="image/svg+xml" data="${this.escape(this.imageUrl(work))}" aria-label="${alt}" class="live">`
+        + `<img src="${this.escape(thumb)}" alt="${alt}" loading="eager" decoding="async" onload="this.classList.add('in')">`
+        + `</object>`;
+    }
     const master = this.imageUrl(work);
     const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
     const fallback = master && master !== thumb ? ` data-fallback="${this.escape(master)}"` : '';

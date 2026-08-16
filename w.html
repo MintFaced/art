@@ -18,6 +18,10 @@
   max-height:86vh;width:auto;margin:0 auto;
   box-shadow:0 1px 0 rgba(0,0,0,.04);
 }
+/* an SVG work runs live, so it needs a box to run in */
+.stage object.live{
+  display:block;width:min(1100px,100%);aspect-ratio:2/1;max-height:86vh;margin:0 auto;
+}
 .stage .frame{display:inline-block;max-width:100%}
 .motion{margin-top:16px}
 .ghost{
@@ -65,6 +69,13 @@ h1{
 }
 .rows td{padding:13px 0;vertical-align:top;font-size:14px}
 .rows td.mono{font-family:var(--mono);font-size:11.5px;word-break:break-all;line-height:1.9}
+
+.rows.traits th{width:52%}
+.rows.traits td{text-align:right;font-size:13px}
+.swatch{
+  display:inline-block;width:9px;height:9px;margin-right:8px;
+  border:1px solid var(--rule);vertical-align:baseline;
+}
 
 /* ---------- fold ---------- */
 details{border-top:1px solid var(--rule)}
@@ -277,6 +288,23 @@ function detailRows(work, collection) {
   return `<table class="rows">${rows.map(([k, v]) => `<tr><th>${e(k)}</th><td>${v}</td></tr>`).join('')}</table>`;
 }
 
+// Traits come off chain as they were written, in their own order.
+function traitsOf(work) {
+  const a = work.attributes || work.digital?.attributes;
+  return Array.isArray(a) ? a.filter((t) => t && (t.trait_type || t.name) && t.value != null && t.value !== '') : [];
+}
+
+function traitRows(traits) {
+  return `<table class="rows traits">${traits.map((t) => {
+    const name = t.trait_type || t.name;
+    const isColour = /^#[0-9a-f]{3,8}$/i.test(String(t.value));
+    const value = isColour
+      ? `<span class="swatch" style="background:${e(String(t.value))}"></span>${e(String(t.value))}`
+      : e(String(t.value));
+    return `<tr><th>${e(name)}</th><td>${value}</td></tr>`;
+  }).join('')}</table>`;
+}
+
 function provenanceFold(work) {
   const d = work.digital || {};
   if (d.minted === false) {
@@ -453,7 +481,7 @@ function stage(work) {
   const kind = anim ? motionKind(anim) : null;
   return `<div class="stage">
     <div class="frame">
-      ${MF.img(work, 1600, { eager: true })}
+      ${MF.img(work, 1600, { eager: true, live: true })}
       ${anim ? `<div class="motion" id="motion" data-url="${e(anim)}" data-kind="${kind}">
         <div class="motion-label">${kind === 'live' ? 'Living version' : 'Motion'}</div>
         ${kind === 'image'
@@ -488,6 +516,7 @@ function displayTitle(work, collection) {
 
 function render(work, collection, meta) {
   const shown = displayTitle(work, collection);
+  const traits = traitsOf(work);
   document.title = `${shown} ... MintFace`;
   const up = document.getElementById('up');
   up.textContent = collection.title;
@@ -505,6 +534,7 @@ function render(work, collection, meta) {
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" id="tab-desc" aria-selected="true" aria-controls="panel-desc">Description</button>
         <button class="tab" role="tab" id="tab-det" aria-selected="false" aria-controls="panel-det">Details</button>
+        ${traits.length ? '<button class="tab" role="tab" id="tab-traits" aria-selected="false" aria-controls="panel-traits">Traits</button>' : ''}
       </div>
 
       <div class="panel" id="panel-desc" role="tabpanel" aria-labelledby="tab-desc">
@@ -516,6 +546,10 @@ function render(work, collection, meta) {
       <div class="panel" id="panel-det" role="tabpanel" aria-labelledby="tab-det" hidden>
         ${detailRows(work, collection)}
       </div>
+
+      ${traits.length ? `<div class="panel" id="panel-traits" role="tabpanel" aria-labelledby="tab-traits" hidden>
+        ${traitRows(traits)}
+      </div>` : ''}
 
       <div style="margin-top:30px">
         ${provenanceFold(work)}

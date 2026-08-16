@@ -36,7 +36,9 @@ function workFrom(inst, { collection, contract, chain = 'ethereum', standard = '
   const dims = md.image_details || {};
   const tt = (TTKEY && TT[TTKEY] && TT[TTKEY][inst.id]) || null;
   if (c.collector && tt) c.collector.acquired = tt.last_transfer || null;
+  const attributes = Array.isArray(md.attributes) && md.attributes.length ? md.attributes : null;
   return {
+    attributes,
     minted_onchain: tt ? tt.minted : null,
     mint_tx: tt ? tt.mint_tx : null,
     transfers: tt ? tt.transfers : null,
@@ -180,6 +182,7 @@ dedicated({ slug: 'geodetic-illusions', title: 'Geodetic Illusions', group: 'geo
     const num = Number((t.name || '').match(/#(\d+)/)?.[1] || 0);
     return {
       id: `geodetic-moments-${num || t.index}`, collection: 'geodetic-moments', title: clean(t.name), statement: clean(md.description) || null,
+      attributes: Array.isArray(md.attributes) && md.attributes.length ? md.attributes : null,
       edition: { type: '1/1' },
       digital: { chain: 'ethereum', standard: 'ERC-1155', contract: '0x495f947276749Ce646f68AC8c248420045cb7b5e', token_id: t.id, opensea_index: t.index, image: t.image || md.image || null, animation: t.animation || null, external_url: md.external_url || null },
       physical: { exists: null }, pricing_nzd: { digital: null, painting: null, both: null },
@@ -346,6 +349,7 @@ dedicated({ slug: 'wallet', title: 'WALLΞT', group: 'ai-studies', year: '2022',
   const attr = (k) => (t.attributes || []).find((a) => a.trait_type === k)?.value;
   const work = {
     id: 'id-please-362', collection: 'id-please', title: clean(t.name), statement: clean(t.description) || null,
+    attributes: Array.isArray(t.attributes) && t.attributes.length ? t.attributes : null,
     edition: { type: 'edition', minted: t.supply, holders: holders.length, artist_held: artistHeld, vaulted },
     minted_onchain: t.minted, mint_tx: t.mint_tx, platform: 'The Memes by 6529',
     digital: { chain: 'ethereum', standard: 'ERC-1155', contract: t.contract, token_id: t.token_id, image: t.image, animation: t.animation, attributes: t.attributes },
@@ -472,6 +476,7 @@ dedicated({ slug: 'wallet', title: 'WALLΞT', group: 'ai-studies', year: '2022',
       derivative_of: attr(first, 'Artist'),
       meme_card: attr(first, 'Meme Card'),
       meme_season: attr(first, 'Meme Season'),
+      attributes: Array.isArray(first.metadata?.attributes) && first.metadata.attributes.length ? first.metadata.attributes : null,
       edition: { type: 'edition', minted: g.items.length, holders: owners.size, artist_held: artistHeld, vaulted },
       digital: { chain: 'ethereum', standard: 'ERC-721', contract: contract.address, token_id: ids[0], image: g.img || null, animation: first.animation_url || null },
       token_ids: ids,

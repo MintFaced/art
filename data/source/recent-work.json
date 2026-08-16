@@ -9,37 +9,5 @@
     "statement": "Latest paintings.",
     "notes": "Not yet minted. Each work is tokenized on purchase, so the collector's wallet is the first owner written to chain."
   },
-  "works": [
-    {
-      "id": "recent-still-water-2",
-      "title": "Still Water",
-      "year": 2026,
-      "medium": "Acrylic on canvas",
-      "added": "2026-08-16",
-      "assets": {
-        "image": "recent/2026-still-water.jpg"
-      },
-      "digital": {
-        "chain": "ethereum",
-        "standard": "ERC-721",
-        "minted": false,
-        "tokenize_on_purchase": true
-      },
-      "physical": {
-        "exists": true,
-        "width_cm": 120,
-        "height_cm": 90,
-        "depth_cm": 4,
-        "ready_to_hang": true,
-        "framed": false,
-        "certificate": true
-      },
-      "pricing_nzd": {
-        "digital": 1800,
-        "painting": 6400,
-        "both": 7600
-      },
-      "status": "available"
-    }
-  ]
+  "works": []
 }
