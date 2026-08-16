@@ -1,12 +1,21 @@
 {
   "_note": "Live sale state, written by the Vercel functions in api/ and committed back here. The static catalog is the record of the work; this is the record of what has happened to it since the last catalog rebuild.",
-  "updated": "2026-08-16T12:24:35.907Z",
+  "updated": "2026-08-16T23:49:36.076Z",
   "works": {
     "two-burdens-9": {
       "status": "available",
       "pending": null,
       "updated": "2026-08-16T12:24:35.907Z",
       "note": "checkout abandoned"
+    },
+    "studio-test-painting": {
+      "status": "pending",
+      "pending": {
+        "session": "cs_test_a1GPYdQQyJt82QswYG0rZhnH6WFG5E3UmKzE02o6l8EP4I7dY3NaJEaUrJ",
+        "what": "digital",
+        "expires": "2026-08-17T00:19:35.000Z"
+      },
+      "updated": "2026-08-16T23:49:36.076Z"
     }
   }
 }
