@@ -22,9 +22,10 @@ const extFor = (type, url) => {
 export async function GET(request) {
   useRequestOrigin(request);
   const url = new URL(request.url);
-  const secret = process.env.CRON_SECRET;
-  const given = request.headers.get('authorization') || `Bearer ${url.searchParams.get('key') || ''}`;
-  if (!secret || given !== `Bearer ${secret}`) return new Response('no', { status: 401 });
+  // WARM_KEY exists so this can be run without handing out the cron secret
+  const allowed = [process.env.CRON_SECRET, process.env.WARM_KEY].filter(Boolean);
+  const given = (request.headers.get('authorization') || `Bearer ${url.searchParams.get('key') || ''}`).replace(/^Bearer\s+/, '');
+  if (!allowed.length || !allowed.includes(given)) return new Response('no', { status: 401 });
   if (!r2Configured()) return json({ error: 'R2 is not configured' }, 503);
 
   const only = url.searchParams.get('collection');
