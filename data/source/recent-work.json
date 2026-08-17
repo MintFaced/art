@@ -429,17 +429,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/you-am-i.jpg",
       "aspect": 0.5625,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 3000,
+        "both": 3000
       },
-      "added": "2026-08-17T00:18:00.000Z"
+      "added": "2026-08-17T00:18:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:07:32.919Z"
     },
     {
       "id": "the-blood-of-martyrs",
