@@ -322,10 +322,19 @@
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 3000,
+        "both": 3000
       },
-      "added": "2026-08-17T00:13:00.000Z"
+      "added": "2026-08-17T00:13:00.000Z",
+      "statement": null,
+      "dimensions": {
+        "w": 120,
+        "h": 60,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:43:04.336Z"
     },
     {
       "id": "the-throngs-gathered",
