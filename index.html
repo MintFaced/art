@@ -91,8 +91,14 @@
 .recent-rows .wrap-head + .rows{margin-bottom:34px}
 .recent-rows .rows + .wrap-head{margin-top:10px}
 /* the hero and its three, stacked, each solved on its own */
-.prow + .prow{margin-top:14px}
 .jcentre{justify-content:center}
+/* the composed block: primary left, the stack right, one rectangle */
+.cblock{display:flex;align-items:flex-start}
+.ccol{display:flex;flex-direction:column}
+.cprimary,.ccol{flex:0 0 auto}
+/* on a phone it is simply one after another, primary first */
+.block-stacked .jitem{display:block;width:100%;margin-bottom:14px}
+.block-stacked .jshot{width:100%;height:auto}
 .wrap-head{max-width:1500px;margin:0 auto;padding:0 28px}
 .wrap-head h2{
   font-family:var(--font-sans);font-weight:500;
@@ -291,12 +297,9 @@ async function fillRecent() {
   if (!pixel.length) { if (pixelEl) pixelEl.remove(); if (heads[1]) heads[1].remove(); return; }
   const hero = pixel.find((w) => w.id === PIXEL_HERO) || pixel[0];
   const rest = pixel.filter((w) => w !== hero);
-  // one large, three supporting, each still at its own ratio
-  pixelEl.innerHTML = '<div class="prow" id="pixelHero"></div><div class="prow" id="pixelRest"></div>';
-  MF.paintRows(document.getElementById('pixelHero'), [hero], { target: 470, targetSmall: 300, gutter: 10, maxPerRow: 1, capHeight: true, center: true });
-  if (rest.length) {
-    MF.paintRows(document.getElementById('pixelRest'), rest, { target: 210, targetSmall: 140, gutter: 10, maxPerRow: 3, capHeight: true, center: true });
-  }
+  // the portrait carries the height on the left, the three strips stack on its
+  // right, and the four make one rectangle
+  MF.paintComposed(pixelEl, hero, rest, { gutter: 10, stackBelow: 760 });
 }
 
 async function fillVault() {

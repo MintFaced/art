@@ -239,6 +239,62 @@ const MF = {
     return this.img(work, o.width || 1600, { ...o, eager: true, live: true, alt: o.alt });
   },
 
+  /* ---------- packing ----------
+     Justified rows fill greedily in order, which always leaves the last row
+     short. Given that the order of a wall is a composition rather than a
+     chronology, the works are dealt into rows instead: pick how many rows the
+     set wants at the target height, then balance the ratios across them so
+     every row fills the measure. Chronology yields to composition. */
+  pack(items, width, opts) {
+    const o = opts || {};
+    const target = o.target || 340;
+    const gutter = o.gutter == null ? 10 : o.gutter;
+    const maxPerRow = o.maxPerRow || 5;
+    const list = items.map((it, i) => ({ ...it, _i: i, _a: it.aspect > 0 ? it.aspect : 1 }));
+    if (!list.length) return [];
+
+    const totalAspect = list.reduce((n, it) => n + it._a, 0);
+    // a row of aspect sum s sits at height (width - gutters) / s, so the set
+    // wants about this many rows to land near the target height
+    let rowCount = Math.max(1, Math.round((totalAspect * target) / width));
+    rowCount = Math.min(rowCount, Math.ceil(list.length / 1), Math.max(1, Math.ceil(list.length / 1)));
+    // never ask for more rows than there are works, or fewer than fit per row
+    rowCount = Math.max(rowCount, Math.ceil(list.length / maxPerRow));
+    rowCount = Math.min(rowCount, list.length);
+
+    // deal the widest first into whichever row is currently narrowest, which
+    // balances the ratio sums and so evens the heights
+    const rows = Array.from({ length: rowCount }, () => ({ items: [], sum: 0 }));
+    for (const it of [...list].sort((a, b) => b._a - a._a)) {
+      const open = rows.filter((r) => r.items.length < maxPerRow);
+      const into = (open.length ? open : rows).reduce((a, b) => (a.sum <= b.sum ? a : b));
+      into.items.push(it);
+      into.sum += it._a;
+    }
+
+    const packed = rows.filter((r) => r.items.length).map((r) => {
+      // within a row keep the order the works came in, so it is not sorted by
+      // shape on the page
+      const inRow = r.items.sort((a, b) => a._i - b._i);
+      const height = (width - gutter * (inRow.length - 1)) / r.sum;
+      return { items: inRow, height, sum: r.sum };
+    });
+    // rows in the order their earliest work came in
+    packed.sort((a, b) => a.items[0]._i - b.items[0]._i);
+
+    return packed.map((r) => {
+      // a row that would have to be wildly taller or shorter than the rest is
+      // not worth forcing to the full width; it keeps the target and centres
+      const wild = r.height > target * 1.7 || r.height < target * 0.55;
+      const height = wild ? Math.min(target, r.height) : r.height;
+      return {
+        items: r.items.map((it) => ({ ...it, w: it._a * height, h: height })),
+        height,
+        centre: wild,
+      };
+    });
+  },
+
   /* ---------- justified rows ----------
      Cropping a painting to a square is a decision about the painting. These
      rows keep every ratio and solve for a shared height instead: fill a row
@@ -274,6 +330,72 @@ const MF = {
       ...r,
       items: r.items.map((it) => ({ ...it, w: (it.aspect > 0 ? it.aspect : 1) * r.height, h: r.height })),
     }));
+  },
+
+  /* ---------- a composed block ----------
+     One primary on the left carrying the full height, a column of works
+     stacked on its right whose heights sum to the same. Solved rather than
+     guessed: with primary ratio p, gutter g and column ratios a[], the column
+     width r satisfies r * sum(1/a) = H - g*(n-1), and p*H + g + r = W. */
+  composed(primary, supporting, width, opts) {
+    const o = opts || {};
+    const g = o.gutter == null ? 10 : o.gutter;
+    const p = primary.aspect > 0 ? primary.aspect : 1;
+    const a = supporting.map((s) => (s.aspect > 0 ? s.aspect : 1));
+    const k = a.reduce((n, x) => n + 1 / x, 0);
+    const gaps = g * (a.length - 1);
+    let H = (width - g + (gaps * 1) / k) / (p + 1 / k);
+    if (o.maxHeight && H > o.maxHeight) H = o.maxHeight;
+    const r = (H - gaps) / k;
+    return {
+      height: H,
+      primary: { ...primary, w: p * H, h: H },
+      column: supporting.map((s, i) => ({ ...s, w: r, h: r / a[i] })),
+      width: p * H + g + r,
+      gutter: g,
+    };
+  },
+
+  // the block as markup, with a stacked fallback the CSS takes over on a phone
+  paintComposed(el, primary, supporting, opts) {
+    if (!el || !primary) return;
+    const o = opts || {};
+    const draw = () => {
+      const cs = getComputedStyle(el);
+      const width = el.clientWidth - parseFloat(cs.paddingLeft || 0) - parseFloat(cs.paddingRight || 0);
+      if (!(width > 0)) return;
+      const stack = width < (o.stackBelow || 760);
+      if (stack) {
+        el.classList.add('block-stacked');
+        el.innerHTML = [primary, ...supporting].map((it) => this.blockItem(it, null, width)).join('');
+      } else {
+        el.classList.remove('block-stacked');
+        const b = this.composed(primary, supporting, width, o);
+        el.innerHTML = `<div class="cblock" style="gap:${b.gutter}px">`
+          + `<div class="cprimary">${this.blockItem(b.primary, b.primary.w, b.primary.h)}</div>`
+          + `<div class="ccol" style="gap:${b.gutter}px">`
+          + b.column.map((it) => this.blockItem(it, it.w, it.h)).join('')
+          + `</div></div>`;
+      }
+      this.progress.watch(el);
+    };
+    draw();
+    let t;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
+  },
+
+  blockItem(it, w, h) {
+    const title = this.escape(it.title || 'Untitled');
+    const href = it.id ? `/w/${encodeURIComponent(it.id)}` : null;
+    const size = w ? ` style="width:${w.toFixed(2)}px"` : '';
+    const shot = w
+      ? `<div class="jshot" style="width:${w.toFixed(2)}px;height:${h.toFixed(2)}px">`
+      : `<div class="jshot" style="aspect-ratio:${it.aspect > 0 ? it.aspect : 1}">`;
+    const inner = `${shot}${this.img(it, Math.round((w || 900) * 2), { alt: it.title })}</div>`
+      + `<div class="jcap">${title}</div>`;
+    return href
+      ? `<a class="jitem"${size} href="${href}">${inner}</a>`
+      : `<div class="jitem"${size}>${inner}</div>`;
   },
 
   // Four works from the vault, no two the same piece. The vault holds editions,
@@ -317,8 +439,12 @@ const MF = {
       if (!(width > 0)) return;
       const gutter = o.gutter == null ? 10 : o.gutter;
       const target = width < 700 ? (o.targetSmall || 200) : (o.target || 340);
-      const rows = this.justify(works, width, { ...o, target, gutter });
-      el.innerHTML = rows.map((r) => `<div class="jrow${o.center ? ' jcentre' : ''}" style="gap:${gutter}px">`
+      // packing is the rule: rows are filled by composition rather than by the
+      // order works happen to have been added
+      const rows = o.mode === 'justify'
+        ? this.justify(works, width, { ...o, target, gutter })
+        : this.pack(works, width, { ...o, target, gutter });
+      el.innerHTML = rows.map((r) => `<div class="jrow${o.center || r.centre ? ' jcentre' : ''}" style="gap:${gutter}px">`
         + r.items.map((it) => {
           const href = it.id ? `/w/${encodeURIComponent(it.id)}` : null;
           const title = this.escape(it.title || 'Untitled');
