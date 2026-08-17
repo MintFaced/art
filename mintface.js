@@ -87,6 +87,9 @@ const MF = {
           id: w.id,
           collection: 'recent-work',
           title: w.title,
+          group: w.group || 'painting',
+          aspect: w.aspect || null,
+          orientation: w.orientation || null,
           year: w.year || null,
           medium: w.medium || col.medium || null,
           statement: w.statement || null,
@@ -236,6 +239,41 @@ const MF = {
     return this.img(work, o.width || 1600, { ...o, eager: true, live: true, alt: o.alt });
   },
 
+  /* ---------- justified rows ----------
+     Cropping a painting to a square is a decision about the painting. These
+     rows keep every ratio and solve for a shared height instead: fill a row
+     until it is wide enough, then scale that row to the exact width. */
+  justify(items, width, opts) {
+    const o = opts || {};
+    const target = o.target || 340;
+    const gutter = o.gutter == null ? 10 : o.gutter;
+    const maxPerRow = o.maxPerRow || 5;
+    const rows = [];
+    let row = [];
+    let sum = 0;
+    for (const it of items) {
+      const a = it.aspect > 0 ? it.aspect : 1;
+      row.push(it);
+      sum += a;
+      const height = (width - gutter * (row.length - 1)) / sum;
+      if (height <= target || row.length >= maxPerRow) {
+        rows.push({ items: row, height });
+        row = [];
+        sum = 0;
+      }
+    }
+    // a last short row keeps the target height rather than stretching to fill,
+    // which would blow one painting up to twice the size of its neighbours
+    if (row.length) {
+      const height = Math.min(target, (width - gutter * (row.length - 1)) / sum);
+      rows.push({ items: row, height, partial: true });
+    }
+    return rows.map((r) => ({
+      ...r,
+      items: r.items.map((it) => ({ ...it, w: (it.aspect > 0 ? it.aspect : 1) * r.height, h: r.height })),
+    }));
+  },
+
   // Four works from the vault, no two the same piece. The vault holds editions,
   // so without the same collapse the page shows one artwork four times.
   async vaultPreview(n) {
@@ -262,6 +300,37 @@ const MF = {
       else rest.push(w);
     }
     return [...first, ...rest].slice(0, want);
+  },
+
+  // Paint a set of works as justified rows into an element, and keep them
+  // justified when the window changes.
+  paintRows(el, works, opts) {
+    if (!el) return;
+    const o = opts || {};
+    const draw = () => {
+      const width = el.clientWidth;
+      if (!width) return;
+      const gutter = o.gutter == null ? 10 : o.gutter;
+      const target = width < 700 ? (o.targetSmall || 200) : (o.target || 340);
+      const rows = this.justify(works, width, { ...o, target, gutter });
+      el.innerHTML = rows.map((r) => `<div class="jrow" style="gap:${gutter}px">`
+        + r.items.map((it) => {
+          const href = it.id ? `/w/${encodeURIComponent(it.id)}` : null;
+          const title = this.escape(it.title || 'Untitled');
+          const inner = `<div class="jshot" style="width:${it.w.toFixed(2)}px;height:${it.h.toFixed(2)}px">`
+            + this.img(it, Math.round(it.w * 2), { alt: it.title })
+            + `</div><div class="jcap">${title}</div>`;
+          return href
+            ? `<a class="jitem" style="width:${it.w.toFixed(2)}px" href="${href}">${inner}</a>`
+            : `<div class="jitem" style="width:${it.w.toFixed(2)}px">${inner}</div>`;
+        }).join('')
+        + '</div>').join('');
+      this.progress.watch(el);
+    };
+    draw();
+    // rows are solved for a width, so they have to be solved again when it moves
+    let t;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
   },
 
   // one tile of a vaulted work, which is a record rather than an offer

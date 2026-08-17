@@ -76,6 +76,29 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   .head{padding:26px 20px 24px}
   .filters{padding:22px 20px 0}
 }
+
+/* ---------- justified rows ---------- */
+.rows{max-width:1500px;margin:0 auto;padding:0 28px}
+.jrow{display:flex;margin-bottom:10px}
+.jitem{display:block;text-decoration:none;flex:0 0 auto}
+.jshot{background:#f2efe9;overflow:hidden}
+.jitem img,.jitem video{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s ease}
+.jitem img.in,.jitem video.in{opacity:1}
+.jcap{
+  font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-top:7px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.jitem:hover .jcap{color:var(--ink)}
+.recent-set{margin:0 0 54px}
+.wrap-head{max-width:1500px;margin:0 auto;padding:0 28px}
+.wrap-head h2{
+  font-family:var(--font-sans);font-weight:500;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 22px;padding-bottom:12px;border-bottom:1px solid var(--rule);
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.wrap-head h2 .n{font-family:var(--font-mono);font-weight:400;color:var(--faint);font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -324,6 +347,35 @@ function wireFilters() {
   });
 }
 
+// Recent Work is shown as rows rather than a grid, because these are
+// photographs of paintings at whatever shape the painting is, and the set reads
+// better whole than cropped square.
+const RECENT_GROUPS = [
+  { id: 'painting', title: 'Paintings' },
+  { id: 'pixel', title: 'Pixel paintings' },
+];
+
+function recentGroups(collection) {
+  const by = {};
+  for (const w of collection.works || []) (by[w.group || 'painting'] ||= []).push(w);
+  const known = RECENT_GROUPS.filter((g) => (by[g.id] || []).length);
+  // anything the manifest calls something else still gets shown
+  const other = Object.keys(by).filter((k) => !RECENT_GROUPS.some((g) => g.id === k));
+  return [...known, ...other.map((k) => ({ id: k, title: k }))]
+    .map((g) => `<section class="recent-set">
+      <div class="wrap-head"><h2>${e(g.title)}<span class="n">${(by[g.id] || []).length}</span></h2></div>
+      <div class="rows" data-group="${e(g.id)}"></div>
+    </section>`).join('');
+}
+
+function paintRecent(collection) {
+  const by = {};
+  for (const w of collection.works || []) (by[w.group || 'painting'] ||= []).push(w);
+  for (const el of document.querySelectorAll('.rows[data-group]')) {
+    MF.paintRows(el, by[el.dataset.group] || [], { target: 360, targetSmall: 200, gutter: 10 });
+  }
+}
+
 function render(collection) {
   COLLECTION = collection;
   document.title = `${collection.title} ... MintFace`;
@@ -346,14 +398,18 @@ function render(collection) {
       ${collection.statement ? `<p class="statement">${e(collection.statement)}</p>` : ''}
       ${collection.tokenize_on_purchase && collection.notes ? `<p class="minting">${e(collection.notes)}</p>` : ''}
     </div>
-    ${stateControl(collection.works)}
-    ${filterBar(collection)}
-    <div class="grid" id="grid"></div>
+    ${collection.slug === 'recent-work' ? '' : stateControl(collection.works)}
+    ${collection.slug === 'recent-work' ? '' : filterBar(collection)}
+    ${collection.slug === 'recent-work' ? recentGroups(collection) : '<div class="grid" id="grid"></div>'}
     ${collection.works.length ? '' : '<div class="loading">Nothing here yet</div>'}
     <div class="sentinel" id="sentinel"></div>`;
 
   if (!document.getElementById('count')) {
     document.getElementById('grid').insertAdjacentHTML('beforebegin', '<div class="count" style="max-width:1500px;margin:0 auto;padding:0 28px" id="count"></div>');
+  }
+  if (collection.slug === 'recent-work') {
+    paintRecent(collection);
+    return;
   }
   wireStates();
   wireFilters();
