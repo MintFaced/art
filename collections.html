@@ -45,13 +45,15 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .feature .card .t{font-size:26px;margin-top:14px}
 .feature .card .s{font-size:15px}
 
-/* the vault shows work rather than a card about work */
-.vault .cards{grid-template-columns:repeat(4,1fr);gap:var(--gap)}
+/* the vault shows work rather than a card about work, on the same measure as
+   the other two asides */
+.vault .cards{grid-template-columns:repeat(4,1fr);gap:24px;max-width:var(--measure3)}
 .vault .card .shot{background:#f2efe9}
-.vault .card .t{font-size:16px}
+.vault .card .t{font-size:16px;margin-top:10px}
+.vault .card .m{font-size:9.5px;gap:9px}
 
 @media(max-width:1200px){
-  .studies .cards,.feature .cards{max-width:100%}
+  .studies .cards,.feature .cards,.vault .cards{max-width:100%}
 }
 @media(max-width:820px){
   .studies .cards{grid-template-columns:repeat(2,1fr)}
