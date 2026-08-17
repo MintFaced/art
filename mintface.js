@@ -96,7 +96,14 @@ const MF = {
           status: w.status || 'available',
           pricing_nzd: p,
           offers,
-          physical: { exists: true, dimensions: w.dimensions || null },
+          // the details table reads width_cm and height_cm, so the studio's
+          // w/h/d is unpacked here rather than left nested where nothing looks
+          physical: {
+            exists: true,
+            width_cm: w.dimensions?.w ?? null,
+            height_cm: w.dimensions?.h ?? null,
+            depth_cm: w.dimensions?.d ?? null,
+          },
           digital: { minted: false, chain: 'ethereum', standard: 'ERC-721', image: w.image || null },
           edition: w.edition && w.edition !== '1/1' ? { type: 'edition', label: w.edition } : null,
           notes_internal: undefined,

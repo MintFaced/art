@@ -58,7 +58,6 @@ h1{
 .panel{padding:26px 0 0}
 .panel[hidden]{display:none}
 .statement{font-family:var(--font-sans);font-weight:400;font-size:17px;line-height:1.6;color:#2c2924;margin:0;white-space:pre-line}
-.statement.none{font-family:var(--font-sans);font-size:13px;color:var(--faint)}
 
 /* ---------- detail rows ---------- */
 .rows{width:100%;border-collapse:collapse}
@@ -269,8 +268,8 @@ function detailRows(work, collection) {
 
   const dims = [p.width_cm, p.height_cm].filter(Boolean);
   if (dims.length) {
-    const depth = p.depth_cm ? ` x ${p.depth_cm}` : '';
-    rows.push(['Dimensions', `${dims.join(' x ')}${depth} cm`]);
+    const depth = p.depth_cm ? ` \u00d7 ${p.depth_cm}` : '';
+    rows.push(['Dimensions', `${dims.join(' \u00d7 ')}${depth} cm`]);
   } else if (collection.physical && p.exists !== false) {
     rows.push(['Dimensions', '<span class="pending">Listed on request</span>']);
   }
@@ -593,18 +592,16 @@ function render(work, collection, meta) {
       ${collectedLine(work)}
 
       <div class="tabs" role="tablist">
-        <button class="tab" role="tab" id="tab-desc" aria-selected="true" aria-controls="panel-desc">Description</button>
-        <button class="tab" role="tab" id="tab-det" aria-selected="false" aria-controls="panel-det">Details</button>
+        ${desc ? '<button class="tab" role="tab" id="tab-desc" aria-selected="true" aria-controls="panel-desc">Description</button>' : ''}
+        <button class="tab" role="tab" id="tab-det" aria-selected="${desc ? 'false' : 'true'}" aria-controls="panel-det">Details</button>
         ${traits.length ? '<button class="tab" role="tab" id="tab-traits" aria-selected="false" aria-controls="panel-traits">Traits</button>' : ''}
       </div>
 
-      <div class="panel" id="panel-desc" role="tabpanel" aria-labelledby="tab-desc">
-        ${desc
-          ? `<p class="statement">${e(desc)}</p>`
-          : `<p class="statement none">No statement recorded for this work yet.</p>`}
-      </div>
+      ${desc ? `<div class="panel" id="panel-desc" role="tabpanel" aria-labelledby="tab-desc">
+        <p class="statement">${e(desc)}</p>
+      </div>` : ''}
 
-      <div class="panel" id="panel-det" role="tabpanel" aria-labelledby="tab-det" hidden>
+      <div class="panel" id="panel-det" role="tabpanel" aria-labelledby="tab-det"${desc ? ' hidden' : ''}>
         ${detailRows(work, collection)}
       </div>
 

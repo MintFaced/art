@@ -81,8 +81,9 @@ export async function POST(request) {
       id,
       title: String(w.title).trim(),
       year: String(w.year || new Date().getFullYear()),
-      medium: String(w.medium || 'Acrylic on canvas').trim(),
+      medium: String(w.medium || 'Acrylic on timber').trim(),
       edition: String(w.edition || '1/1').trim(),
+      statement: w.statement ? String(w.statement).trim() : null,
       dimensions: {
         w: Number(w.dimensions.w), h: Number(w.dimensions.h),
         ...(Number(w.dimensions.d) > 0 ? { d: Number(w.dimensions.d) } : {}),

@@ -61,6 +61,12 @@ export async function findWork(id) {
       const shaped = {
         ...hit,
         collection: 'recent-work',
+        physical: {
+          exists: true,
+          width_cm: hit.dimensions?.w ?? null,
+          height_cm: hit.dimensions?.h ?? null,
+          depth_cm: hit.dimensions?.d ?? null,
+        },
         status: hit.status || 'available',
         offers: {
           digital: p.digital > 0,
