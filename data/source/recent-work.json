@@ -289,17 +289,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/sharm-el-sheikh.jpg",
       "aspect": 2.0101,
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 2000,
+        "both": 2000
       },
-      "added": "2026-08-17T00:12:00.000Z"
+      "added": "2026-08-17T00:12:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 60,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:05:59.749Z"
     },
     {
       "id": "striving-upward",
