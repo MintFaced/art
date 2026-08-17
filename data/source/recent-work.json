@@ -35,17 +35,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on wood",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/cycle-of-silence.jpg",
       "aspect": 0.6663,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 2500,
+        "both": 2500
       },
-      "added": "2026-08-17T00:01:00.000Z"
+      "added": "2026-08-17T00:01:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:01:03.839Z"
     },
     {
       "id": "adoration-of-the-pixel-3",
