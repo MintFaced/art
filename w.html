@@ -374,6 +374,9 @@ function provenanceFold(work) {
 // once a work is collected there is nothing to quote and nothing to send, so
 // the listing furniture comes off the page entirely
 const isCollected = (work) => work.status === 'acquired';
+// a vaulted work is held for at least a decade. Quoting it, even as "on
+// application", invites an offer that is not going to be taken.
+const isPriceless = (work) => isCollected(work) || work.status === 'vaulted';
 
 function shippingFold(collection, meta, work) {
   if (isCollected(work)) return '';
@@ -386,7 +389,7 @@ function shippingFold(collection, meta, work) {
 }
 
 function pricingBlock(work, collection) {
-  if (isCollected(work)) return '';
+  if (isPriceless(work)) return '';
   if (pricedInETH(work)) {
     const opts = optionsFor(work, collection);
     if (!opts.length) {

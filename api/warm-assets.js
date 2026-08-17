@@ -20,6 +20,10 @@ const extFor = (type, url) => {
   return m ? m.toLowerCase() : 'bin';
 };
 
+export async function POST(request) {
+  return GET(request);
+}
+
 export async function GET(request) {
   useRequestOrigin(request);
   const url = new URL(request.url);
@@ -28,6 +32,20 @@ export async function GET(request) {
   const given = (request.headers.get('authorization') || `Bearer ${url.searchParams.get('key') || ''}`).replace(/^Bearer\s+/, '');
   if (!allowed.length || !allowed.includes(given)) return new Response('no', { status: 401 });
   if (!r2Configured()) return json({ error: 'R2 is not configured' }, 503);
+
+  // put takes a body and stores it at a key. The warm run pulls from a URL,
+  // but a painting photographed this morning is only on a laptop.
+  if (request.method === 'POST' && url.searchParams.get('put')) {
+    const key = url.searchParams.get('put');
+    if (!/^[a-z0-9][a-z0-9/_.-]{2,120}$/i.test(key)) return json({ error: 'that is not a key' }, 400);
+    const type = request.headers.get('content-type') || 'application/octet-stream';
+    if (!/^(image|video)\//.test(type)) return json({ error: 'images and video only' }, 415);
+    const buf = Buffer.from(await request.arrayBuffer());
+    if (!buf.length) return json({ error: 'empty body' }, 400);
+    if (buf.length > 25 * 1024 * 1024) return json({ error: 'over 25MB' }, 413);
+    await putObject(key, buf, type.split(';')[0]);
+    return json({ ok: true, key, bytes: buf.length, url: `${PUBLIC}/${key}` });
+  }
 
   // purge takes a comma separated list of keys, for clearing a bad run
   const purge = url.searchParams.get('purge');
