@@ -88,6 +88,8 @@
 .jitem:hover .jcap{color:var(--ink)}
 .rows-more{max-width:1500px;margin:0 auto;padding:18px 28px 0}
 .recent-rows{margin:0 0 62px}
+.recent-rows .wrap-head + .rows{margin-bottom:34px}
+.recent-rows .rows + .wrap-head{margin-top:10px}
 .wrap-head{max-width:1500px;margin:0 auto;padding:0 28px}
 .wrap-head h2{
   font-family:var(--font-sans);font-weight:500;
@@ -246,18 +248,29 @@ function heroMarkup(work, collection, pool) {
   </a>`;
 }
 
-// All of the recent work, pixel paintings included: they are recent work first
-// and PixelArcade adjacent second. Nineteen of them at hero height would bury
-// the collections, so the rows run shorter here than on /recent.
+// Two runs: the paintings, then the pixel paintings. Nineteen works at the
+// height they run on /recent would bury the collections, so the rows are
+// shorter here.
 async function fillRecent() {
-  const el = document.getElementById('recentRows');
   const section = document.getElementById('recentSection');
-  if (!el) return;
+  const heads = section ? [...section.querySelectorAll('.wrap-head')] : [];
   let col = null;
   try { col = await MF.collection('recent-work'); } catch { /* nothing published yet */ }
   const works = (col && col.works) || [];
   if (!works.length) { if (section) section.remove(); return; }
-  MF.paintRows(el, works, { target: 170, targetSmall: 120, gutter: 8, maxPerRow: 7 });
+
+  const opts = { target: 170, targetSmall: 120, gutter: 8, maxPerRow: 7 };
+  const sets = [
+    ['recentRows', works.filter((w) => (w.group || 'painting') === 'painting')],
+    ['pixelRows', works.filter((w) => w.group === 'pixel')],
+  ];
+  sets.forEach(([id, list], i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    // a set with nothing in it takes its heading with it
+    if (!list.length) { el.remove(); if (heads[i]) heads[i].remove(); return; }
+    MF.paintRows(el, list, opts);
+  });
 }
 
 async function fillVault() {
@@ -329,6 +342,8 @@ async function hero(home, idx) {
       <section class="group recent-rows" id="recentSection">
         <div class="wrap-head"><h2>Recent Paintings</h2></div>
         <div class="rows" id="recentRows"></div>
+        <div class="wrap-head"><h2>PixelArcade paintings</h2></div>
+        <div class="rows" id="pixelRows"></div>
         <div class="rows-more"><a class="smallcaps" href="/recent">All recent work</a></div>
       </section>
 

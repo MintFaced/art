@@ -19,14 +19,15 @@
       "medium": "Acrylic on canvas",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/8-bit-pixel-arcade.jpg",
-      "aspect": 1.3333,
-      "orientation": "landscape",
+      "aspect": 0.75,
+      "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
         "painting": null,
         "both": null
       },
-      "added": "2026-08-17T00:00:00.000Z"
+      "added": "2026-08-17T00:00:00.000Z",
+      "rotated": "90cw"
     },
     {
       "id": "cycle-of-silence",
@@ -282,8 +283,8 @@
     },
     {
       "id": "the-watch-anyway",
-      "title": "The Watch Anyway",
-      "title_from_manifest": true,
+      "title": "They Watch Anyway",
+      "title_from_manifest": false,
       "group": "painting",
       "year": "2026",
       "medium": "Acrylic on canvas",
