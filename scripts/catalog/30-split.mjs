@@ -155,6 +155,7 @@ for (const col of cat.collections) {
     ...col,
     group: meta0.group || col.group,
     genre: meta0.genre || null,
+    ...(meta0.statement ? { statement: meta0.statement } : {}),
     ...(meta0.framing ? { framing: true } : {}),
     // the work page needs the fee without a second fetch
     ...(meta0.framing ? { framing_fee_nzd: CONFIG.framing_fee_nzd, framing_fee_quoted: CONFIG.framing_fee_quoted } : {}),
@@ -188,7 +189,8 @@ for (const col of cat.collections) {
     // a card wants one line; the page keeps whatever it already had
     card_statement: meta.card_statement || null,
     framing: meta.framing === true || undefined,
-    physical: !!col.physical, statement: col.statement || null, sold_out: col.sold_out || false,
+    physical: !!col.physical, statement: meta.statement || col.statement || null,
+    sold_out: col.sold_out || false,
     counts: { works: works.length, ...tally, ...(editionsMinted ? { editions_minted: editionsMinted, edition_works: editionWorks.length } : {}), ...(uniqueWorks ? { unique_works: uniqueWorks } : {}), ...(childWorks ? { child_works: childWorks } : {}) },
     cover: cover ? { id: cover.id, image: cover.digital?.image || null, assets: cover.assets || null, orientation: cover.orientation || null } : null,
     contracts: col.contracts || null,
