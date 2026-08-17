@@ -359,17 +359,25 @@
       "title_from_manifest": false,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/the-watch-anyway.jpg",
       "aspect": 1.5047,
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 1500,
+        "both": 1500
       },
-      "added": "2026-08-17T00:15:00.000Z"
+      "added": "2026-08-17T00:15:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 80,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:07:15.430Z"
     },
     {
       "id": "walking-with-a-burst-spleen",
