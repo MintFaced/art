@@ -562,6 +562,213 @@ const MF = {
     return work.digital?.animation || null;
   },
 
+  /* ---------- zoom ----------
+     A painting is brushwork, and a 700px thumbnail is not the work. Clicking
+     the art opens it on the same paper the site is made of: no dark overlay,
+     no chrome, no caption. The image, and the room it needs. */
+  zoom: {
+    el: null, img: null, work: null,
+    scale: 1, min: 1, max: 8, x: 0, y: 0,
+    _drag: null, _pinch: null, _lastTap: 0, _lastAt: null, _moved: false,
+
+    // the largest copy worth sending. A master can be ninety megabytes, so its
+    // size is asked for before it is fetched.
+    CAP_BYTES: 24 * 1024 * 1024,
+
+    mount() {
+      if (this.el) return this.el;
+      const d = document.createElement('div');
+      d.className = 'zoom';
+      d.setAttribute('aria-hidden', 'true');
+      d.innerHTML = '<img alt="">';
+      document.body.appendChild(d);
+      this.el = d;
+      this.img = d.querySelector('img');
+      this.wire();
+      return d;
+    },
+
+    async open(work, from) {
+      this.mount();
+      this.work = work;
+      this.scale = 1; this.x = 0; this.y = 0;
+      // whatever is already on screen shows instantly, from cache
+      this.img.src = from || MF.thumbUrl(work, 1600) || MF.imageUrl(work);
+      this.img.alt = work.title || 'Work by MintFace';
+      this.apply();
+      this.el.classList.add('on');
+      this.el.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const big = this.best(work);
+      // still the same work, and worth swapping for
+      if (big && this.el.classList.contains('on') && this.work === work && big !== this.img.src) {
+        const pre = new Image();
+        pre.onload = () => {
+          if (this.el.classList.contains('on') && this.work === work) this.img.src = big;
+        };
+        pre.src = big;
+      }
+    },
+
+    /* The biggest copy worth sending, decided without asking the bucket
+       anything: assets.mintface.art answers no CORS headers, so a HEAD from
+       here is refused and an image load is not.
+
+       A work photographed for the studio has one file in R2 and it is already
+       web sized, so it is sent whole. A work mirrored from chain has its master
+       there, and a master can be ninety megabytes, so its detail comes through
+       the resizer at a size a screen can use. */
+    best(work) {
+      const a = work.assets || {};
+      if (a.image) {
+        const master = `${ASSETS_BASE}/${a.image}`;
+        if (MF.isVideo(master) || MF.isSVG(master)) return null;
+        return MF.thumbUrl({ ...work, assets: { ...a, display: null, thumb: null } }, 3000);
+      }
+      const own = MF.imageUrl(work);
+      if (!own || own.startsWith('data:') || MF.isVideo(own) || MF.isSVG(own)) return null;
+      return own;
+    },
+
+    close() {
+      if (!this.el) return;
+      this.el.classList.remove('on', 'zoomed');
+      this.el.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      this.work = null;
+      // back to rest, so the next work does not open half zoomed and off centre
+      this.scale = 1; this.x = 0; this.y = 0;
+      this.img.style.transform = '';
+      this.img.removeAttribute('src');
+    },
+
+    apply() {
+      this.img.style.transform = `translate(${this.x}px, ${this.y}px) scale(${this.scale})`;
+      this.el.classList.toggle('zoomed', this.scale > 1.01);
+    },
+
+    // zoom about a point, so the thing under the finger stays under the finger
+    to(scale, cx, cy) {
+      const next = Math.max(this.min, Math.min(this.max, scale));
+      const r = this.el.getBoundingClientRect();
+      const px = cx - r.width / 2 - this.x;
+      const py = cy - r.height / 2 - this.y;
+      const k = next / this.scale;
+      this.x -= px * (k - 1);
+      this.y -= py * (k - 1);
+      this.scale = next;
+      if (this.scale <= 1.01) { this.x = 0; this.y = 0; this.scale = 1; }
+      this.apply();
+    },
+
+    wire() {
+      const el = this.el;
+
+      // a click on the ground closes; a drag that happens to end on the ground
+      // is not a click, and closing on it would make panning unusable
+      el.addEventListener('click', (ev) => {
+        if (this._moved) { this._moved = false; return; }
+        if (ev.target === el) this.close();
+      });
+      document.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape' && this.el && this.el.classList.contains('on')) this.close();
+      });
+
+      el.addEventListener('wheel', (ev) => {
+        ev.preventDefault();
+        this.to(this.scale * (ev.deltaY < 0 ? 1.14 : 1 / 1.14), ev.clientX, ev.clientY);
+      }, { passive: false });
+
+      el.addEventListener('pointerdown', (ev) => {
+        if (ev.pointerType === 'touch') return;
+        this._drag = { x: ev.clientX, y: ev.clientY, ox: this.x, oy: this.y, moved: false };
+        el.setPointerCapture(ev.pointerId);
+      });
+      el.addEventListener('pointermove', (ev) => {
+        if (ev.pointerType === 'touch') return;
+        if (!this._drag) return;
+        const dx = ev.clientX - this._drag.x;
+        const dy = ev.clientY - this._drag.y;
+        if (Math.abs(dx) + Math.abs(dy) > 3) { this._drag.moved = true; this._moved = true; }
+        if (this.scale > 1.01) { this.x = this._drag.ox + dx; this.y = this._drag.oy + dy; this.apply(); }
+      });
+      el.addEventListener('pointerup', (ev) => {
+        // touch has its own handlers below. Without this the pointer path
+        // consumes the drag that touchstart set and zooms in, and the double
+        // tap that follows then zooms straight back out.
+        if (ev.pointerType === 'touch') return;
+        const d = this._drag;
+        this._drag = null;
+        // a click on the picture that was not a drag closes at rest, zooms otherwise
+        if (d && !d.moved && ev.target === this.img && this.scale <= 1.01) {
+          this.to(2.4, ev.clientX, ev.clientY);
+        }
+      });
+
+      // touch: pinch to zoom, one finger to pan, double tap to zoom to a point
+      el.addEventListener('touchstart', (ev) => {
+        if (ev.touches.length === 2) {
+          const [a, b] = ev.touches;
+          this._pinch = {
+            d: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY),
+            s: this.scale,
+            cx: (a.clientX + b.clientX) / 2,
+            cy: (a.clientY + b.clientY) / 2,
+          };
+        } else if (ev.touches.length === 1) {
+          const t = ev.touches[0];
+          this._drag = { x: t.clientX, y: t.clientY, ox: this.x, oy: this.y, moved: false };
+          // a double tap is two taps close in time and in place. Three
+          // hundred milliseconds is tighter than a thumb, and without the
+          // distance check two taps at opposite corners would count as one.
+          const now = Date.now();
+          const near = this._lastAt
+            && Math.hypot(t.clientX - this._lastAt.x, t.clientY - this._lastAt.y) < 44;
+          if (now - this._lastTap < 400 && near) {
+            ev.preventDefault();
+            this.to(this.scale > 1.01 ? 1 : 2.6, t.clientX, t.clientY);
+            this._lastTap = 0;
+            this._lastAt = null;
+            this._drag = null;
+          } else {
+            this._lastTap = now;
+            this._lastAt = { x: t.clientX, y: t.clientY };
+          }
+        }
+      }, { passive: false });
+
+      el.addEventListener('touchmove', (ev) => {
+        if (this._pinch && ev.touches.length === 2) {
+          ev.preventDefault();
+          const [a, b] = ev.touches;
+          const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+          this.to(this._pinch.s * (d / this._pinch.d), this._pinch.cx, this._pinch.cy);
+        } else if (this._drag && ev.touches.length === 1 && this.scale > 1.01) {
+          ev.preventDefault();
+          const t = ev.touches[0];
+          this.x = this._drag.ox + (t.clientX - this._drag.x);
+          this.y = this._drag.oy + (t.clientY - this._drag.y);
+          this._drag.moved = true;
+          this.apply();
+        }
+      }, { passive: false });
+
+      el.addEventListener('touchend', (ev) => {
+        if (!ev.touches.length) { this._pinch = null; this._drag = null; }
+      });
+    },
+  },
+
+  // A still can be looked into. A film or a living SVG is already doing
+  // something, and taking it over would take that away.
+  zoomable(work) {
+    const url = this.imageUrl(work);
+    if (!url) return false;
+    if (this.isVideo(url) || this.isSVG(url)) return false;
+    if (this.animationUrl(work) && this.isVideo(this.animationUrl(work))) return false;
+    return true;
+  },
+
   /* ---------- money ---------- */
   FX_TTL: 60 * 60 * 1000,
 
