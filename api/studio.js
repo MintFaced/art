@@ -4,7 +4,12 @@ import { STUDIO_PATH, studioConfigured } from './_lib/studio.js';
 // so an unknown path returns nothing at all. The password is still the lock;
 // this only keeps the door from being found.
 export async function GET(request) {
-  const key = decodeURIComponent((new URL(request.url).pathname.match(/^\/s\/(.+?)\/?$/) || [])[1] || '');
+  // Reachable two ways: /s/{path} explicitly, and a bare /{path}, which is the
+  // address a person actually types. The bare form is a catch-all, so anything
+  // that is not the secret has to leave here as a plain 404.
+  const pathname = new URL(request.url).pathname;
+  const m = pathname.match(/^\/s\/(.+?)\/?$/) || pathname.match(/^\/([^/]+?)\/?$/);
+  const key = decodeURIComponent((m || [])[1] || '');
   if (!studioConfigured() || !key || key !== STUDIO_PATH) {
     return new Response('Not found', { status: 404, headers: { 'content-type': 'text/plain' } });
   }
