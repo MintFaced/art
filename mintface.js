@@ -257,7 +257,9 @@ const MF = {
       sum += a;
       const height = (width - gutter * (row.length - 1)) / sum;
       if (height <= target || row.length >= maxPerRow) {
-        rows.push({ items: row, height });
+        // A row of one would otherwise be stretched to the full measure, which
+        // for a portrait work means something taller than the screen.
+        rows.push({ items: row, height: o.capHeight ? Math.min(target, height) : height });
         row = [];
         sum = 0;
       }
@@ -316,7 +318,7 @@ const MF = {
       const gutter = o.gutter == null ? 10 : o.gutter;
       const target = width < 700 ? (o.targetSmall || 200) : (o.target || 340);
       const rows = this.justify(works, width, { ...o, target, gutter });
-      el.innerHTML = rows.map((r) => `<div class="jrow" style="gap:${gutter}px">`
+      el.innerHTML = rows.map((r) => `<div class="jrow${o.center ? ' jcentre' : ''}" style="gap:${gutter}px">`
         + r.items.map((it) => {
           const href = it.id ? `/w/${encodeURIComponent(it.id)}` : null;
           const title = this.escape(it.title || 'Untitled');

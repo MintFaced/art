@@ -90,6 +90,9 @@
 .recent-rows{margin:0 0 62px}
 .recent-rows .wrap-head + .rows{margin-bottom:34px}
 .recent-rows .rows + .wrap-head{margin-top:10px}
+/* the hero and its three, stacked, each solved on its own */
+.prow + .prow{margin-top:14px}
+.jcentre{justify-content:center}
 .wrap-head{max-width:1500px;margin:0 auto;padding:0 28px}
 .wrap-head h2{
   font-family:var(--font-sans);font-weight:500;
@@ -259,18 +262,41 @@ async function fillRecent() {
   const works = (col && col.works) || [];
   if (!works.length) { if (section) section.remove(); return; }
 
-  const opts = { target: 170, targetSmall: 120, gutter: 8, maxPerRow: 7 };
-  const sets = [
-    ['recentRows', works.filter((w) => (w.group || 'painting') === 'painting')],
-    ['pixelRows', works.filter((w) => w.group === 'pixel')],
-  ];
-  sets.forEach(([id, list], i) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    // a set with nothing in it takes its heading with it
-    if (!list.length) { el.remove(); if (heads[i]) heads[i].remove(); return; }
-    MF.paintRows(el, list, opts);
+  // The four that carry the set here. The rest are on /recent; this is a
+  // highlight, not an index.
+  const PIXEL_PICK = ['adoration-of-the-pixel-3', 'golden-axe-pixel-arcade', 'lunar-lander-and-breakout', 'wonder-boy-pixel-arcade'];
+  const PIXEL_HERO = 'adoration-of-the-pixel-3';
+
+  // Under a PixelArcade heading, repeating PixelArcade in every caption says
+  // nothing. Display only: the work's own page keeps its canonical title.
+  const shortTitle = (w) => ({
+    ...w,
+    title: (w.title || '').replace(/\s*pixel\s*arcade\s*/gi, ' ').replace(/\s{2,}/g, ' ').trim() || w.title,
   });
+
+  const paintings = works.filter((w) => (w.group || 'painting') === 'painting');
+  const pixel = PIXEL_PICK
+    .map((id) => works.find((w) => w.id === id))
+    .filter(Boolean)
+    .map(shortTitle);
+
+  const paintingsEl = document.getElementById('recentRows');
+  if (!paintings.length) { if (paintingsEl) paintingsEl.remove(); if (heads[0]) heads[0].remove(); }
+  else {
+    // taller rows and fewer to a row: these are paintings, to be looked at
+    MF.paintRows(paintingsEl, paintings, { target: 300, targetSmall: 190, gutter: 10, maxPerRow: 5 });
+  }
+
+  const pixelEl = document.getElementById('pixelRows');
+  if (!pixel.length) { if (pixelEl) pixelEl.remove(); if (heads[1]) heads[1].remove(); return; }
+  const hero = pixel.find((w) => w.id === PIXEL_HERO) || pixel[0];
+  const rest = pixel.filter((w) => w !== hero);
+  // one large, three supporting, each still at its own ratio
+  pixelEl.innerHTML = '<div class="prow" id="pixelHero"></div><div class="prow" id="pixelRest"></div>';
+  MF.paintRows(document.getElementById('pixelHero'), [hero], { target: 470, targetSmall: 300, gutter: 10, maxPerRow: 1, capHeight: true, center: true });
+  if (rest.length) {
+    MF.paintRows(document.getElementById('pixelRest'), rest, { target: 210, targetSmall: 140, gutter: 10, maxPerRow: 3, capHeight: true, center: true });
+  }
 }
 
 async function fillVault() {
