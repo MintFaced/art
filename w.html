@@ -623,12 +623,26 @@ function render(work, collection, meta) {
     </div>`;
 
   MF.progress.watch(document.getElementById('main'));
+  wireZoom(work);
   wireTabs();
   wireMotion();
   wireCurrency();
   wireSheetClose();
   wireAcquire(work, collection);
   thanksIfPaid();
+}
+
+function wireZoom(work) {
+  // a film or a living SVG is already doing something; taking it over with a
+  // lightbox would take that away
+  if (!MF.zoomable(work)) return;
+  const img = document.querySelector('.stage .frame img');
+  if (!img) return;
+  img.classList.add('zoomable');
+  img.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    MF.zoom.open(work, img.currentSrc || img.src);
+  });
 }
 
 function wireTabs() {

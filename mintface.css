@@ -100,6 +100,25 @@ img{max-width:100%;display:block}
 }
 .cur button[aria-pressed="true"]{color:var(--ink)}
 
+/* ---------- zoom ----------
+   The site is light, so the lightbox is light. No scrim, no chrome, no
+   caption: the same paper the work hangs on, and the work. */
+.zoom{
+  position:fixed;inset:0;z-index:90;background:var(--paper);
+  display:none;align-items:center;justify-content:center;overflow:hidden;
+  cursor:zoom-in;touch-action:none;
+}
+.zoom.on{display:flex}
+.zoom.zoomed{cursor:grab}
+.zoom.zoomed:active{cursor:grabbing}
+.zoom img{
+  max-width:96vw;max-height:96vh;width:auto;height:auto;display:block;
+  transform-origin:center center;will-change:transform;
+  -webkit-user-select:none;user-select:none;-webkit-user-drag:none;
+}
+/* the only hint that the work opens */
+.zoomable{cursor:zoom-in}
+
 /* a hairline and a number. Nothing spins. */
 .progress{
   position:fixed;top:0;left:0;right:0;height:1px;z-index:60;
