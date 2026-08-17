@@ -244,14 +244,17 @@ function heroMarkup(work, collection, pool) {
   </a>`;
 }
 
-// the newest six, whatever shape they are
+// the newest six paintings. The pixel works are paintings too, but they have
+// their own set on /recent and reading as one run here is the point.
 async function fillRecent() {
   const el = document.getElementById('recentRows');
   const section = document.getElementById('recentSection');
   if (!el) return;
   let col = null;
   try { col = await MF.collection('recent-work'); } catch { /* nothing published yet */ }
-  const works = (col && col.works || []).slice(0, 6);
+  const works = (col && col.works || [])
+    .filter((w) => (w.group || 'painting') === 'painting')
+    .slice(0, 6);
   if (!works.length) { if (section) section.remove(); return; }
   MF.paintRows(el, works, { target: 340, targetSmall: 190, gutter: 10 });
 }
