@@ -333,17 +333,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/the-throngs-gathered.jpg",
       "aspect": 0.67,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 3000,
+        "both": 3000
       },
-      "added": "2026-08-17T00:14:00.000Z"
+      "added": "2026-08-17T00:14:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:06:54.775Z"
     },
     {
       "id": "the-watch-anyway",
