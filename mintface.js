@@ -216,6 +216,66 @@ const MF = {
     return /\.svg(\?|#|$)/i.test(url) || url.startsWith('data:image/svg+xml');
   },
 
+  // The hero should show a work the way its own page does: a living SVG plays,
+  // a film plays, and everything else is a picture. Otherwise the front page
+  // advertises a still of something that moves.
+  heroMedia(work, opts) {
+    const o = opts || {};
+    const alt = this.escape(o.alt != null ? o.alt : work.title || 'Work by MintFace');
+    const anim = this.animationUrl(work);
+    const master = this.imageUrl(work);
+    // a film that is not already what imageUrl returns still belongs on the hero
+    if (anim && this.isVideo(anim) && !this.isVideo(master)) {
+      const origin = this.originAnimationUrl(work);
+      const chain = [this.masterAnimationUrl(work), origin]
+        .filter((u, i, a) => u && u !== anim && a.indexOf(u) === i);
+      return `<video src="${this.escape(anim)}" aria-label="${alt}" class="in"`
+        + (chain.length ? ` data-fallback="${this.escape(chain.join(' | '))}"` : '')
+        + ` autoplay muted loop playsinline preload="metadata" onerror="MF.mediaFallback(this)"></video>`;
+    }
+    return this.img(work, o.width || 1600, { ...o, eager: true, live: true, alt: o.alt });
+  },
+
+  // Four works from the vault, no two the same piece. The vault holds editions,
+  // so without the same collapse the page shows one artwork four times.
+  async vaultPreview(n) {
+    const col = await fetch('/data/c/the-vault.json').then((r) => r.json()).catch(() => null);
+    if (!col) return [];
+    const norm = (t) => (t || '').replace(/\s*#\s*\d+(\s*\/\s*\d+)?\s*$/, '').trim().toLowerCase();
+    const want = n || 4;
+    const seenPiece = new Set();
+    const seenImage = new Set();
+    const seenSet = new Set();
+    const first = [];
+    const rest = [];
+    for (const w of col.works || []) {
+      const image = w.assets && (w.assets.display || w.assets.image) ? (w.assets.display || w.assets.image) : w.image;
+      if (!image) continue;
+      const piece = `${norm(w.display_title || w.title)}|${w.image || ''}`;
+      if (seenPiece.has(piece) || seenImage.has(image)) continue;
+      seenPiece.add(piece);
+      seenImage.add(image);
+      // a preview of a vault should look like a vault, not like one collection
+      // three times over
+      const set = String(w.id || '').replace(/-\d+$/, '') || 'other';
+      if (!seenSet.has(set)) { seenSet.add(set); first.push(w); }
+      else rest.push(w);
+    }
+    return [...first, ...rest].slice(0, want);
+  },
+
+  // one tile of a vaulted work, which is a record rather than an offer
+  vaultTile(w) {
+    const title = (w.display_title || w.title || 'Untitled').trim();
+    const shaped = { digital: { image: w.image }, assets: w.assets, title };
+    const href = w.id ? `/w/${encodeURIComponent(w.id)}` : '/vault';
+    return `<a class="card" href="${href}">
+      <div class="shot">${this.img(shaped, 600, { alt: title })}</div>
+      <div class="t">${this.escape(title)}</div>
+      <div class="m"><span><span class="dot vaulted"></span> Vaulted</span></div>
+    </a>`;
+  },
+
   // an <img> that falls back to the master if the thumbnail source fails
   img(work, width, opts) {
     const o = opts || {};
@@ -460,7 +520,7 @@ const MF = {
     core: ['pixelarcade', 'artificial-flowers', 'patrimora', 'frogdna', 'two-burdens', 'recursive-mind', 'hidden-landscapes', 'roads-and-rivers'],
     archive: ['seize-and-share', 'id-please'],
     geodetic: ['geodetic-onchain', 'geodetic-world', 'geodetica', 'geodetic-moments', 'geodetic-home', 'geodetic-memory'],
-    'ai-studies': ['visual-language', 'panoptic', 'wallet'],
+    studies: ['visual-language', 'panoptic', 'wallet', 'geodetic-illusions'],
     feature: ['genesis', '2022-10k'],
   },
 
@@ -473,13 +533,28 @@ const MF = {
     });
   },
 
+  // The studies were split across two groups for no reason a reader would know.
+  // They are four studies.
+  STUDIES: { into: 'studies', title: 'Studies', from: ['ai-studies', 'geodetic-studies'] },
+
   groupsWithCollections(idx) {
     const by = {};
     for (const c of idx.collections) {
       if (!(c.counts.works || c.counts.child_works)) continue;
-      (by[c.group] = by[c.group] || []).push(c);
+      const g = this.STUDIES.from.includes(c.group) ? this.STUDIES.into : c.group;
+      (by[g] = by[g] || []).push(c);
     }
-    return idx.groups
+    const groups = idx.groups.filter((g) => !this.STUDIES.from.includes(g.id));
+    // the merged group sits where the first of its parts used to
+    const at = idx.groups.findIndex((g) => this.STUDIES.from.includes(g.id));
+    const merged = { id: this.STUDIES.into, title: this.STUDIES.title };
+    if (at >= 0) {
+      const before = idx.groups.slice(0, at).filter((g) => !this.STUDIES.from.includes(g.id)).length;
+      groups.splice(before, 0, merged);
+    } else {
+      groups.push(merged);
+    }
+    return groups
       .map((g) => ({ ...g, collections: this.sortGroup(g.id, by[g.id] || []) }))
       .filter((g) => g.collections.length);
   },

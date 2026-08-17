@@ -32,6 +32,32 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .card:hover .t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .badge{border:1px solid var(--rule);padding:3px 8px}
 .annex .cards{grid-template-columns:repeat(6,1fr);gap:24px}
+/* Three main cards wide. Studies fit four small ones into that measure,
+   Features fit two large ones, so both read as asides to the main run
+   without either drifting off its own grid. */
+.wrap{--gap:34px;--measure3:calc(75% - var(--gap) / 4)}
+.studies .cards{grid-template-columns:repeat(4,1fr);gap:24px;max-width:var(--measure3)}
+.studies .card .t{font-size:16px;margin-top:10px}
+.studies .card .s{display:none}
+.studies .card .m{font-size:9.5px;gap:9px}
+
+.feature .cards{grid-template-columns:repeat(2,1fr);gap:var(--gap);max-width:var(--measure3)}
+.feature .card .t{font-size:26px;margin-top:14px}
+.feature .card .s{font-size:15px}
+
+/* the vault shows work rather than a card about work */
+.vault .cards{grid-template-columns:repeat(4,1fr);gap:var(--gap)}
+.vault .card .shot{background:#f2efe9}
+.vault .card .t{font-size:16px}
+
+@media(max-width:1200px){
+  .studies .cards,.feature .cards{max-width:100%}
+}
+@media(max-width:820px){
+  .studies .cards{grid-template-columns:repeat(2,1fr)}
+  .feature .cards{grid-template-columns:repeat(2,1fr)}
+  .vault .cards{grid-template-columns:repeat(2,1fr)}
+}
 .annex .card .t{font-size:19px}
 .annex .card .s{display:none}
 @media(max-width:1200px){.cards{grid-template-columns:repeat(3,1fr)}.annex .cards{grid-template-columns:repeat(4,1fr)}}
@@ -59,19 +85,37 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 <script>
 const e = MF.escape;
 
+async function fillVault() {
+  const el = document.getElementById('vaultCards');
+  if (!el) return;
+  const works = await MF.vaultPreview(4);
+  if (!works.length) { document.getElementById('vaultSection').remove(); return; }
+  el.innerHTML = works.map((w) => MF.vaultTile(w)).join('');
+  MF.progress.watch(el);
+}
+
 (async function () {
   try {
     const idx = await MF.index();
     const html = MF.groupsWithCollections(idx).map((g) => {
-      const annex = g.id === 'geodetic-studies' || g.id === 'archive';
+      const annex = g.id === 'archive';
       const setLink = g.id === 'geodetic' ? '<a class="smallcaps" href="/geodetic">The set as one page</a>' : '';
-      return `<section class="group ${annex ? 'annex' : ''}">
+      // the vault is a place, so it shows what is in it rather than a card about it
+      if (g.id === 'vault') {
+        return `<section class="group vault" id="vaultSection">
+          <h2>${e(g.title)}<a class="smallcaps" href="/vault">Everything held</a></h2>
+          <div class="cards" id="vaultCards"></div>
+        </section>`;
+      }
+      const cls = g.id === 'studies' ? 'studies' : g.id === 'feature' ? 'feature' : (annex ? 'annex' : '');
+      return `<section class="group ${cls}">
         <h2>${e(g.title)}${setLink}</h2>
         <div class="cards">${g.collections.map((c) => MF.collectionCard(c)).join('')}</div>
       </section>`;
     }).join('');
 
     document.getElementById('main').innerHTML = `<div class="wrap"><h1>Collections</h1>${html}</div>`;
+    fillVault();
   } catch (err) {
     document.getElementById('main').innerHTML = '<div class="loading">Could not load the collections</div>';
     console.error(err);
