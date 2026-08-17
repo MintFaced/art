@@ -35,25 +35,33 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on wood",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/cycle-of-silence.jpg",
       "aspect": 0.6663,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 2500,
+        "both": 2500
       },
-      "added": "2026-08-17T00:01:00.000Z"
+      "added": "2026-08-17T00:01:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:01:03.839Z"
     },
     {
       "id": "adoration-of-the-pixel-3",
-      "title": "Adoration Of The Pixel 3",
+      "title": "Adoration Of The Pixel Triptych",
       "title_from_manifest": true,
       "group": "pixel",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/adoration-of-the-pixel-3.jpg",
       "aspect": 0.75,
@@ -63,7 +71,15 @@
         "painting": null,
         "both": null
       },
-      "added": "2026-08-17T00:02:00.000Z"
+      "added": "2026-08-17T00:02:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:03:12.876Z"
     },
     {
       "id": "double-dragon-pixelarcade",
@@ -89,17 +105,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/floating-forward-for-answers.jpg",
       "aspect": 2.0408,
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 1500,
+        "both": 1500
       },
-      "added": "2026-08-17T00:04:00.000Z"
+      "added": "2026-08-17T00:04:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 60,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:03:49.674Z"
     },
     {
       "id": "golden-axe-pixel-arcade",
@@ -125,17 +149,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/licoricing.jpg",
       "aspect": 0.5625,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 3000,
+        "both": 3000
       },
-      "added": "2026-08-17T00:06:00.000Z"
+      "added": "2026-08-17T00:06:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:04:11.412Z"
     },
     {
       "id": "lunar-lander-and-breakout",
@@ -143,17 +175,25 @@
       "title_from_manifest": true,
       "group": "pixel",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/lunar-lander-and-breakout.jpg",
       "aspect": 1.3333,
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 1600,
+        "both": 1600
       },
-      "added": "2026-08-17T00:07:00.000Z"
+      "added": "2026-08-17T00:07:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 300,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:04:45.366Z"
     },
     {
       "id": "map-is-not-territorial",
@@ -161,17 +201,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/map-is-not-territorial.jpg",
       "aspect": 0.4979,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 2500,
+        "both": 2500
       },
-      "added": "2026-08-17T00:08:00.000Z"
+      "added": "2026-08-17T00:08:00.000Z",
+      "dimensions": {
+        "w": 60,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:05:10.169Z"
     },
     {
       "id": "neon-pastoral",
@@ -204,10 +252,18 @@
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 2000,
+        "both": 2000
       },
-      "added": "2026-08-17T00:10:00.000Z"
+      "added": "2026-08-17T00:10:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 80,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:05:35.913Z"
     },
     {
       "id": "perspective",
@@ -233,17 +289,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/sharm-el-sheikh.jpg",
       "aspect": 2.0101,
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 2000,
+        "both": 2000
       },
-      "added": "2026-08-17T00:12:00.000Z"
+      "added": "2026-08-17T00:12:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 60,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:05:59.749Z"
     },
     {
       "id": "striving-upward",
@@ -269,17 +333,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/the-throngs-gathered.jpg",
       "aspect": 0.67,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 3000,
+        "both": 3000
       },
-      "added": "2026-08-17T00:14:00.000Z"
+      "added": "2026-08-17T00:14:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:06:54.775Z"
     },
     {
       "id": "the-watch-anyway",
@@ -287,17 +359,25 @@
       "title_from_manifest": false,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/the-watch-anyway.jpg",
       "aspect": 1.5047,
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 1500,
+        "both": 1500
       },
-      "added": "2026-08-17T00:15:00.000Z"
+      "added": "2026-08-17T00:15:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 80,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:07:15.430Z"
     },
     {
       "id": "walking-with-a-burst-spleen",
@@ -305,17 +385,25 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/walking-with-a-burst-spleen.jpg",
       "aspect": 0.6577,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 6000,
+        "both": 6000
       },
-      "added": "2026-08-17T00:16:00.000Z"
+      "added": "2026-08-17T00:16:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:06:31.340Z"
     },
     {
       "id": "wonder-boy-pixel-arcade",
@@ -341,23 +429,31 @@
       "title_from_manifest": true,
       "group": "painting",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/you-am-i.jpg",
       "aspect": 0.5625,
       "orientation": "portrait",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 3000,
+        "both": 3000
       },
-      "added": "2026-08-17T00:18:00.000Z"
+      "added": "2026-08-17T00:18:00.000Z",
+      "dimensions": {
+        "w": 80,
+        "h": 120,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:07:32.919Z"
     },
     {
       "id": "the-blood-of-martyrs",
       "title": "The Blood of Martyrs",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "dimensions": {
         "w": 80,
@@ -373,13 +469,13 @@
       "image": "https://assets.mintface.art/recent/work-mswq0dl6.jpg",
       "notes": null,
       "added": "2026-08-17T04:16:03.515Z",
-      "updated": "2026-08-17T04:16:03.515Z"
+      "updated": "2026-08-17T23:07:45.530Z"
     },
     {
       "id": "gen-o",
       "title": "Gen-O",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber (framed)",
       "edition": "1/1",
       "dimensions": {
         "w": 60,
@@ -395,31 +491,7 @@
       "image": "https://assets.mintface.art/recent/work-mswq36ri.jpg",
       "notes": null,
       "added": "2026-08-17T04:17:51.381Z",
-      "updated": "2026-08-17T04:17:51.381Z"
-    },
-    {
-      "id": "statement-probe",
-      "title": "Statement Probe",
-      "year": "2026",
-      "medium": "Acrylic on timber",
-      "edition": "1/1",
-      "statement": "A line about the work, entered from the studio.",
-      "dimensions": {
-        "w": 120,
-        "h": 90,
-        "d": 2,
-        "unit": "cm"
-      },
-      "pricing_nzd": {
-        "digital": null,
-        "painting": null,
-        "both": null
-      },
-      "image": "https://assets.mintface.art/recent/gen-o.jpg",
-      "notes": null,
-      "hidden": true,
-      "added": "2026-08-17T23:25:57.064Z",
-      "updated": "2026-08-17T23:25:57.064Z"
+      "updated": "2026-08-17T23:07:58.791Z"
     }
   ]
 }

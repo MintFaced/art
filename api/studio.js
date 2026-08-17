@@ -107,7 +107,10 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
   </div>
   <p class="note">Leave a price blank to hide that option. All three blank reads as Enquire.</p>
 
-  <label><span class="lab">Medium</span><input id="medium" value="Acrylic on canvas"></label>
+  <label><span class="lab">Statement</span>
+    <textarea id="statement" rows="3" placeholder="Optional. Shown under Description on the work page."></textarea></label>
+
+  <label><span class="lab">Medium</span><input id="medium" value="Acrylic on timber"></label>
 
   <label><span class="lab">Edition</span>
     <select id="editionKind">
@@ -249,6 +252,7 @@ $('pub').addEventListener('click', async () => {
     medium: $('medium').value.trim(),
     edition,
     hidden: $('hidden').checked,
+    statement: $('statement').value.trim() || null,
     dimensions: { w: num('dw'), h: num('dh'), d: num('dd') },
     pricing_nzd: { digital: num('pDigital'), painting: num('pPainting'), both: num('pBoth') },
     image: IMAGE,
@@ -277,9 +281,9 @@ function reset() {
   $('cancel').classList.add('hidden');
   $('shot').classList.add('hidden');
   $('upSay').textContent = '';
-  ['title', 'dw', 'dh', 'dd', 'pDigital', 'pPainting', 'pBoth', 'notes', 'editionFree', 'editionOf'].forEach((id) => { $(id).value = ''; });
+  ['title', 'dw', 'dh', 'dd', 'pDigital', 'pPainting', 'pBoth', 'notes', 'statement', 'editionFree', 'editionOf'].forEach((id) => { $(id).value = ''; });
   $('hidden').checked = false;
-  $('medium').value = 'Acrylic on canvas';
+  $('medium').value = 'Acrylic on timber';
   $('editionKind').value = '1/1';
   $('editionFreeWrap').classList.add('hidden');
   $('editionOfWrap').classList.add('hidden');
@@ -308,7 +312,8 @@ function edit(w) {
   $('cancel').classList.remove('hidden');
   $('title').value = w.title || '';
   $('year').value = w.year || '';
-  $('medium').value = w.medium || 'Acrylic on canvas';
+  $('medium').value = w.medium || 'Acrylic on timber';
+  $('statement').value = w.statement || '';
   const d = w.dimensions || {};
   $('dw').value = d.w ?? ''; $('dh').value = d.h ?? ''; $('dd').value = d.d ?? '';
   const p = w.pricing_nzd || {};
