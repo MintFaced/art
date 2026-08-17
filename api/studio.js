@@ -61,6 +61,9 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
 .item .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 .item button{background:none;border:0;cursor:pointer;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0}
 .hidden{display:none}
+.row-toggle{display:flex;align-items:center;gap:10px;margin-top:22px}
+.row-toggle input{width:auto;-webkit-appearance:checkbox;appearance:checkbox}
+.row-toggle .lab{margin:0}
 </style>
 </head>
 <body>
@@ -107,7 +110,12 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
       <option value="edition">Edition of N</option>
       <option value="other">Other</option>
     </select></label>
+  <label class="hidden" id="editionOfWrap"><span class="lab">Edition of</span>
+    <input type="number" id="editionOf" inputmode="numeric" min="2" placeholder="25"></label>
   <label class="hidden" id="editionFreeWrap"><span class="lab">Edition detail</span><input id="editionFree"></label>
+
+  <label class="row-toggle"><input type="checkbox" id="hidden">
+    <span class="lab">Hide from the site</span></label>
 
   <label><span class="lab">Year</span><input id="year" inputmode="numeric"></label>
   <label><span class="lab">Notes, private</span><textarea id="notes" rows="2"></textarea></label>
@@ -141,7 +149,10 @@ $('in').addEventListener('click', async () => {
 $('pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('in').click(); });
 
 $('editionKind').addEventListener('change', () => {
-  $('editionFreeWrap').classList.toggle('hidden', $('editionKind').value === '1/1');
+  const k = $('editionKind').value;
+  $('editionOfWrap').classList.toggle('hidden', k !== 'edition');
+  $('editionFreeWrap').classList.toggle('hidden', k !== 'other');
+  check();
 });
 
 // resize on the phone, so a 12MP photograph does not travel at full size
@@ -195,6 +206,8 @@ function problems() {
   if (!$('title').value.trim()) bad.push('a title');
   if (!(num('dw') > 0) || !(num('dh') > 0)) bad.push('width and height');
   if (!IMAGE) bad.push('a photograph');
+  if ($('editionKind').value === 'edition' && !(num('editionOf') > 1)) bad.push('how many in the edition');
+  if ($('editionKind').value === 'other' && !$('editionFree').value.trim()) bad.push('the edition detail');
   const d = num('pDigital'), p = num('pPainting'), b = num('pBoth');
   for (const [k, v] of [['digital', d], ['painting', p], ['both', b]]) {
     if (v != null && !(v > 0)) bad.push('a sensible ' + k + ' price');
@@ -213,7 +226,7 @@ function check() {
   $('say').className = 'note';
   $('say').textContent = bad.length ? 'Still needs ' + bad.join(', ') + '.' : '';
 }
-['title', 'dw', 'dh', 'dd', 'pDigital', 'pPainting', 'pBoth'].forEach((id) =>
+['title', 'dw', 'dh', 'dd', 'pDigital', 'pPainting', 'pBoth', 'editionOf', 'editionFree'].forEach((id) =>
   $(id).addEventListener('input', check));
 
 $('pub').addEventListener('click', async () => {
@@ -221,12 +234,16 @@ $('pub').addEventListener('click', async () => {
   $('say').className = 'note';
   $('say').textContent = 'Publishing...';
   const kind = $('editionKind').value;
+  const edition = kind === '1/1' ? '1/1'
+    : kind === 'edition' ? 'Edition of ' + num('editionOf')
+    : ($('editionFree').value.trim() || 'Edition');
   const work = {
     id: EDITING,
     title: $('title').value.trim(),
     year: $('year').value.trim(),
     medium: $('medium').value.trim(),
-    edition: kind === '1/1' ? '1/1' : $('editionFree').value.trim() || 'Edition',
+    edition,
+    hidden: $('hidden').checked,
     dimensions: { w: num('dw'), h: num('dh'), d: num('dd') },
     pricing_nzd: { digital: num('pDigital'), painting: num('pPainting'), both: num('pBoth') },
     image: IMAGE,
@@ -255,10 +272,12 @@ function reset() {
   $('cancel').classList.add('hidden');
   $('shot').classList.add('hidden');
   $('upSay').textContent = '';
-  ['title', 'dw', 'dh', 'dd', 'pDigital', 'pPainting', 'pBoth', 'notes', 'editionFree'].forEach((id) => { $(id).value = ''; });
+  ['title', 'dw', 'dh', 'dd', 'pDigital', 'pPainting', 'pBoth', 'notes', 'editionFree', 'editionOf'].forEach((id) => { $(id).value = ''; });
+  $('hidden').checked = false;
   $('medium').value = 'Acrylic on canvas';
   $('editionKind').value = '1/1';
   $('editionFreeWrap').classList.add('hidden');
+  $('editionOfWrap').classList.add('hidden');
   check();
 }
 
@@ -290,11 +309,17 @@ function edit(w) {
   const p = w.pricing_nzd || {};
   $('pDigital').value = p.digital ?? ''; $('pPainting').value = p.painting ?? ''; $('pBoth').value = p.both ?? '';
   $('notes').value = w.notes || '';
-  if (w.edition && w.edition !== '1/1') {
+  const of = /^Edition of (\d+)$/.exec(w.edition || '');
+  if (of) {
+    $('editionKind').value = 'edition';
+    $('editionOfWrap').classList.remove('hidden');
+    $('editionOf').value = of[1];
+  } else if (w.edition && w.edition !== '1/1') {
     $('editionKind').value = 'other';
     $('editionFreeWrap').classList.remove('hidden');
     $('editionFree').value = w.edition;
   }
+  $('hidden').checked = w.hidden === true;
   if (w.image) { $('shotImg').src = w.image; $('shot').classList.remove('hidden'); }
   check();
   window.scrollTo({ top: 0, behavior: 'smooth' });
