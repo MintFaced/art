@@ -85,7 +85,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .strips{display:flex;flex-direction:column;height:190px;width:100%}
 .strip{width:100%;position:relative}
 .strip.red::after{
-  content:"16";position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  content:attr(data-n);position:absolute;right:6px;top:50%;transform:translateY(-50%);
   font-family:var(--font-mono);font-size:9px;color:#fff;letter-spacing:.08em;
 }
 .preview-note{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:9px}
@@ -229,8 +229,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
    changes the drawing is unchanged from it on purpose. */
 
 const RED_LINE = '#d32011';
-const RED_LINE_INDEX = 15;   // the 16th strip counting from the bottom
 const RED_LINE_H = 12;
+// the 16th strip up from the base, as long as there are enough strips for that
+// to sit in the bottom third
+const RED_LINE_NOMINAL = 16;
+const RED_LINE_MIN_STRIPS = 48;
 
 const INTENSITY = {
   low:    { label: 'Low',    strips: '~23', sizes: [24],        rate: 650,  daysPerM: 0.67, note: '24mm bands' },
@@ -329,8 +332,32 @@ function mulberry32(a) {
 const streamFor = (seed, idx, salt) =>
   mulberry32((Math.imul(seed, 0x9e3779b1) ^ Math.imul(idx + 1, 0x85ebca6b) ^ Math.imul(salt, 0xc2b2ae35)) >>> 0);
 
-// built from the bottom up, to exactly the height asked for
+/* Where the red line goes.
+
+   It is the 16th strip up from the base. On a short wall, or at Low, there are
+   not enough strips for the 16th to still be near the bottom, so it goes a
+   third of the way up instead, rounded to the nearest strip.
+
+   The count is not known until the strips exist, so it is estimated by running
+   the generator on a fixed seed and the reference palette, whatever palette the
+   viewer is actually using. That keeps the position a function of the wall and
+   the intensity alone: regenerating re-rolls every colour and height, adding or
+   dropping colours changes the whole wall, and the red line does not move. */
+function redLineIndex(intensityKey, heightMM) {
+  const est = layStrips(DEFAULT_PALETTE, intensityKey, heightMM, 1, 0.7, -1).length;
+  if (est >= RED_LINE_MIN_STRIPS) return RED_LINE_NOMINAL - 1;
+  const third = Math.max(1, Math.round(est / 3));
+  return Math.min(est - 1, third - 1);
+}
+
 function generateStrips(palette, intensityKey, heightMM, seed, vib) {
+  const idx = redLineIndex(intensityKey, heightMM);
+  return layStrips(palette, intensityKey, heightMM, seed, vib, idx);
+}
+
+// built from the bottom up, to exactly the height asked for. redIndex of -1
+// lays the wall with no red line, which is how the count is estimated.
+function layStrips(palette, intensityKey, heightMM, seed, vib, redIndex) {
   const sizes = INTENSITY[intensityKey].sizes;
   const maxW = Math.max(...palette.map((p) => p.w));
   const strips = [];
@@ -338,7 +365,7 @@ function generateStrips(palette, intensityKey, heightMM, seed, vib) {
   const minSize = Math.min(...sizes);
   while (sum < heightMM - 0.01) {
     const idx = strips.length;
-    if (idx === RED_LINE_INDEX && heightMM - sum >= RED_LINE_H) {
+    if (idx === redIndex && heightMM - sum >= RED_LINE_H) {
       strips.push({ hex: RED_LINE, h: RED_LINE_H, red: true });
       sum += RED_LINE_H;
       continue;
@@ -380,9 +407,10 @@ function draw() {
 
   // the preview runs top down, so the last strip generated is the top one
   const total = S.strips.reduce((n, s) => n + s.h, 0) || 1;
+  const redAt = S.strips.findIndex((x) => x.red) + 1;
   $('strips').innerHTML = [...S.strips].reverse().map((s) =>
-    `<div class="strip${s.red ? ' red' : ''}" style="background:${e(s.hex)};flex:0 0 ${(s.h / total * 100).toFixed(4)}%"></div>`).join('');
-  $('previewNote').textContent = `${S.strips.length} strips ... preview not to scale`;
+    `<div class="strip${s.red ? ' red' : ''}"${s.red ? ` data-n="${redAt}"` : ''} style="background:${e(s.hex)};flex:0 0 ${(s.h / total * 100).toFixed(4)}%"></div>`).join('');
+  $('previewNote').textContent = `${S.strips.length} strips ... red line at ${redAt} from base ... preview not to scale`;
 
   $('swatches').innerHTML = S.palette.map((c) =>
     `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(c.hex)} ... tap to drop"></button>`).join('')
@@ -405,6 +433,7 @@ function draw() {
 
 function specText() {
   const conf = INTENSITY[S.intensity];
+  const redAt = S.strips.findIndex((x) => x.red) + 1;
   const factor = S.heightMM / 550;
   const price = conf.rate * S.widthM * factor;
   const days = conf.daysPerM * S.widthM * factor;
@@ -413,10 +442,11 @@ function specText() {
     `${S.widthM}m x ${S.heightMM}mm | intensity ${conf.label} (${conf.note}) | sequence ${Math.round(S.vib * 100)}/100 calm-to-vibrant | ${S.strips.length} strips`,
     `price ${fmt(price)} NZD (${fmt(conf.rate)}/m at 550mm, height factor ${factor.toFixed(2)}) | est ${days.toFixed(1)} days on site`,
     `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
+    `RED LINE: STRIP ${redAt} OF ${S.strips.length} FROM BASE`,
     '',
     'strips, bottom up:',
     ...S.strips.map((s, i) =>
-      `${String(i + 1).padStart(2)}  ${s.hex}  ${String(s.h).padStart(2)}mm${s.red ? '  RED LINE (16th from bottom)' : ''}`),
+      `${String(i + 1).padStart(2)}  ${s.hex}  ${String(s.h).padStart(2)}mm${s.red ? `  RED LINE (strip ${redAt} of ${S.strips.length} from base)` : ''}`),
   ].join('\n');
 }
 
