@@ -404,12 +404,14 @@ function render(collection) {
     ${collection.works.length ? '' : '<div class="loading">Nothing here yet</div>'}
     <div class="sentinel" id="sentinel"></div>`;
 
-  if (!document.getElementById('count')) {
-    document.getElementById('grid').insertAdjacentHTML('beforebegin', '<div class="count" style="max-width:1500px;margin:0 auto;padding:0 28px" id="count"></div>');
-  }
+  // Recent Work has rows rather than a grid, so none of the grid furniture
+  // below applies to it
   if (collection.slug === 'recent-work') {
     paintRecent(collection);
     return;
+  }
+  if (!document.getElementById('count')) {
+    document.getElementById('grid').insertAdjacentHTML('beforebegin', '<div class="count" style="max-width:1500px;margin:0 auto;padding:0 28px" id="count"></div>');
   }
   wireStates();
   wireFilters();

@@ -308,8 +308,11 @@ const MF = {
     if (!el) return;
     const o = opts || {};
     const draw = () => {
-      const width = el.clientWidth;
-      if (!width) return;
+      // the box has padding, and the rows are laid out inside it, so solving
+      // for clientWidth overshoots by exactly that padding
+      const cs = getComputedStyle(el);
+      const width = el.clientWidth - parseFloat(cs.paddingLeft || 0) - parseFloat(cs.paddingRight || 0);
+      if (!(width > 0)) return;
       const gutter = o.gutter == null ? 10 : o.gutter;
       const target = width < 700 ? (o.targetSmall || 200) : (o.target || 340);
       const rows = this.justify(works, width, { ...o, target, gutter });
