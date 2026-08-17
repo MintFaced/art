@@ -19,6 +19,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/stripe-webhook",
+      "destination": "/api/webhook"
+    },
+    {
       "source": "/s/:key",
       "destination": "/api/studio"
     },
