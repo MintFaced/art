@@ -47,6 +47,19 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
 .ends{width:100%;border-collapse:collapse;margin-top:18px}
 .ends td{padding:11px 0;border-bottom:1px solid var(--rule);vertical-align:top;font-size:13px}
 .ends td.k{font-family:var(--font-mono);font-weight:400;font-size:11.5px;width:44%;word-break:break-all}
+.ends td.k a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.ends td.k a:hover{border-color:var(--ink)}
+/* an endpoint that is not open yet is named, not offered */
+.soon{color:var(--faint)}
+.tag{
+  font-family:var(--font-mono);font-weight:400;font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint);border:1px solid var(--rule);
+  padding:2px 6px;margin-left:8px;white-space:nowrap;
+}
+.pending-note{
+  font-family:var(--font-sans);font-weight:400;font-size:13px;line-height:1.7;
+  color:var(--muted);margin-top:14px;
+}
 .ends tr:last-child td{border-bottom:0}
 
 .sets{max-width:1500px;margin:0 auto;padding:0 28px}
@@ -90,7 +103,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
     <p>An agent finds the work, agrees the terms and fills the order itself. Nobody hands anything over, because nobody is holding anything: the order is signed in advance and the trade settles on chain in one transaction.</p>
     <ol class="steps">
       <li>Read <a href="/llms.txt">/llms.txt</a>, then <a href="/api/catalog">/api/catalog</a> to see what exists and what it costs.</li>
-      <li>Ask <a href="/api/ai-orders">/api/ai-orders</a> what is on the rail and at what rail price.</li>
+      <li>Ask <span class="soon">/api/ai-orders</span> what is on the rail and at what rail price.</li>
       <li>Ask for one work. The endpoint answers <span class="mono">402</span> with the terms, and the handshake is free: it is the gate, not a toll.</li>
       <li>Complete the handshake and receive a signed Seaport order.</li>
       <li>Fill it on chain. Payment and the token move together, or neither moves.</li>
@@ -102,14 +115,15 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
     <h2 style="font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:56px auto 0;max-width:660px;padding-bottom:12px;border-bottom:1px solid var(--rule)">For machines</h2>
     <div style="max-width:660px;margin:0 auto">
       <table class="ends">
-        <tr><td class="k">/llms.txt</td><td>Who the artist is, and where everything else lives</td></tr>
-        <tr><td class="k">/api/catalog</td><td>Every collection and work, with contract, token id, status and price</td></tr>
-        <tr><td class="k">/api/catalog?collection=geodetic-world</td><td>One collection</td></tr>
-        <tr><td class="k">/api/ai-orders</td><td>What is on the rail, with rail prices</td></tr>
-        <tr><td class="k">/api/ai-orders/{work-id}</td><td>402, then the signed order</td></tr>
+        <tr><td class="k"><a href="/llms.txt">/llms.txt</a></td><td>Who the artist is, and where everything else lives</td></tr>
+        <tr><td class="k"><a href="/api/catalog">/api/catalog</a></td><td>Every collection and work, with contract, token id, status and price</td></tr>
+        <tr><td class="k"><a href="/api/catalog?collection=geodetic-world">/api/catalog?collection=geodetic-world</a></td><td>One collection</td></tr>
+        <tr><td class="k soon">/api/ai-orders</td><td>What is on the rail, with rail prices <span class="tag">not open yet</span></td></tr>
+        <tr><td class="k soon">/api/ai-orders/{work-id}</td><td>402, then the signed order <span class="tag">not open yet</span></td></tr>
       </table>
       <pre id="curl">Loading...</pre>
       <p style="font-family:var(--font-sans);font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px">Settlement is ETH on Ethereum mainnet. There is no USDC leg, no second chain, and no custody at any point.</p>
+      <p class="pending-note">The catalog is open now. The order endpoints open once the orders are signed, which happens from a hardware wallet and not from a server. The calls above are the shape they will answer in.</p>
     </div>
   </section>
 
@@ -136,7 +150,9 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
 const AI_SETS = ['geodetic-world', 'geodetica', 'hidden-landscapes', 'geodetic-memory', 'visual-language', 'panoptic', 'wallet'];
 
 document.getElementById('curl').textContent =
-  `# what is on the rail\n`
+  `# browse, open now\n`
+  + `curl -s ${location.origin}/api/catalog\n\n`
+  + `# the rail, once the orders are signed\n`
   + `curl -s ${location.origin}/api/ai-orders\n\n`
   + `# ask for one work: answers 402 with the terms\n`
   + `curl -s -i ${location.origin}/api/ai-orders/geodetic-world-1\n\n`

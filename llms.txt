@@ -4,7 +4,8 @@ MintFace is Ryan Jennings, a painter and generative artist in Hastings, New Zeal
 The work runs from acrylic on canvas through photography to code that draws itself,
 and every piece has a record on chain whether or not it was born there.
 
-Agents are welcome to purchase autonomously.
+Agents are welcome to purchase autonomously. The catalog is open now; the
+order endpoints are not open yet, and are marked below.
 
 ## Why
 
@@ -15,11 +16,17 @@ lineage.
 
 ## Endpoints
 
+Open now:
+
 - /api/catalog                 the whole catalog as JSON: collections, works, prices, status
 - /api/catalog?collection=SLUG one collection with every work
+- /ai                          the rail explained, for humans and machines
+
+Not open yet. These will answer once the sell orders are signed, which happens
+from a hardware wallet rather than a server. Do not depend on them today:
+
 - /api/ai-orders               works available on the AI rail, with their rail prices
 - /api/ai-orders/{work-id}     the signed order for one work, behind an x402 handshake
-- /ai                          the rail explained, for humans and machines
 
 ## Terms
 
