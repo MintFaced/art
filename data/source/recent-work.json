@@ -175,17 +175,25 @@
       "title_from_manifest": true,
       "group": "pixel",
       "year": "2026",
-      "medium": "Acrylic on canvas",
+      "medium": "Acrylic on timber",
       "edition": "1/1",
       "image": "https://assets.mintface.art/recent/lunar-lander-and-breakout.jpg",
       "aspect": 1.3333,
       "orientation": "landscape",
       "pricing_nzd": {
         "digital": null,
-        "painting": null,
-        "both": null
+        "painting": 1600,
+        "both": 1600
       },
-      "added": "2026-08-17T00:07:00.000Z"
+      "added": "2026-08-17T00:07:00.000Z",
+      "dimensions": {
+        "w": 120,
+        "h": 300,
+        "d": 1,
+        "unit": "cm"
+      },
+      "notes": null,
+      "updated": "2026-08-17T23:04:45.366Z"
     },
     {
       "id": "map-is-not-territorial",
