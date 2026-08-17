@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MintFace</title>
+<meta name="description" content="Work by MintFace.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MintFace">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* ---------- image ---------- */
+/* the art takes the same column as the words, so the page has one measure */
+.stage{padding:6px 28px 0}
+.stage .frame{display:block;max-width:var(--measure);margin:0 auto}
+.stage img,.stage video{
+  width:100%;height:auto;max-height:88vh;object-fit:contain;margin:0 auto;
+  box-shadow:0 1px 0 rgba(0,0,0,.04);
+}
+/* an SVG work runs live, so it needs a box to run in */
+.stage object.live{
+  display:block;width:100%;aspect-ratio:2/1;margin:0 auto;
+}
+.motion{margin-top:16px}
+.ghost{
+  background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;
+  padding:11px 22px;font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+}
+.ghost:hover{border-color:var(--ink);color:var(--ink)}
+.motion-frame iframe{width:min(900px,100%);height:min(70vh,640px);border:1px solid var(--rule);background:#fff}
+.motion-frame video{max-height:70vh}
+.motion-label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+
+/* ---------- column ---------- */
+:root{--measure:624px}   /* 680 column less its 28px gutters, so art and text line up */
+.col{max-width:680px;margin:0 auto;padding:54px 28px 120px}
+h1{
+  font-family:var(--font-sans);font-weight:400;
+  font-size:clamp(34px,5.2vw,52px);line-height:1.08;
+  margin:0 0 6px;letter-spacing:-.005em;
+}
+.byline{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
+.byline a{text-decoration:none;border-bottom:1px solid var(--rule)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--rule);margin-bottom:0}
+.tab{font-family:var(--font-sans);font-weight:500;
+  background:none;border:0;padding:0 0 12px;cursor:pointer;
+  font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);position:relative;
+}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab[aria-selected="true"]::after{
+  content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--ink);
+}
+.panel{padding:26px 0 0}
+.panel[hidden]{display:none}
+.statement{font-family:var(--font-sans);font-weight:400;font-size:17px;line-height:1.6;color:#2c2924;margin:0;white-space:pre-line}
+.statement.none{font-family:var(--font-sans);font-size:13px;color:var(--faint)}
+
+/* ---------- detail rows ---------- */
+.rows{width:100%;border-collapse:collapse}
+.rows tr{border-bottom:1px solid var(--rule)}
+.rows tr:last-child{border-bottom:0}
+.rows th{font-family:var(--font-sans);font-weight:500;
+  text-align:left;font-weight:400;padding:13px 0;width:38%;vertical-align:top;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.rows td{padding:13px 0;vertical-align:top;font-size:13px;font-family:var(--font-mono);font-weight:400;font-variant-numeric:tabular-nums;line-height:1.75}
+.rows td.mono{font-size:11.5px;word-break:break-all;line-height:1.9}
+
+.rows.traits th{width:52%}
+.rows.traits td{text-align:right;font-size:12.5px}
+.swatch{
+  display:inline-block;width:9px;height:9px;margin-right:8px;
+  border:1px solid var(--rule);vertical-align:baseline;
+}
+
+/* ---------- fold ---------- */
+details{border-top:1px solid var(--rule)}
+details summary{
+  list-style:none;cursor:pointer;padding:15px 0;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  display:flex;justify-content:space-between;align-items:center;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:'+';font-family:var(--font-mono);font-size:13px;color:var(--faint)}
+details[open] summary::after{content:'–'}
+details summary:hover{color:var(--ink)}
+.fold-body{padding:0 0 20px}
+.fold-body p{margin:0 0 10px;font-size:14px;color:#3a372f}
+.chain-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
+.chain-links a{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
+.chain-links a:hover{color:var(--ink);border-color:var(--ink)}
+
+/* ---------- acquire ---------- */
+.scrim{position:fixed;inset:0;background:rgba(20,18,15,.28);opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:40}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--paper);
+  transform:translateX(100%);transition:transform .34s cubic-bezier(.4,0,.2,1);
+  z-index:50;display:flex;flex-direction:column;box-shadow:-1px 0 0 var(--rule);
+}
+.sheet.open{transform:none}
+.sheet header{display:flex;justify-content:space-between;align-items:baseline;padding:24px 28px 0}
+.sheet .close{background:none;border:0;cursor:pointer;font-family:var(--font-mono);font-size:16px;color:var(--muted);padding:0;line-height:1}
+.sheet .close:hover{color:var(--ink)}
+.sheet .body{padding:22px 28px 40px;overflow-y:auto;flex:1}
+.sheet h2{font-family:var(--font-sans);font-weight:400;font-size:30px;line-height:1.1;margin:6px 0 4px}
+.sheet .which{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:26px}
+.step{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:26px 0 12px}
+.choice{
+  display:flex;justify-content:space-between;align-items:baseline;gap:14px;width:100%;
+  background:none;border:1px solid var(--rule);cursor:pointer;padding:15px 16px;margin-bottom:9px;
+  font-family:var(--font-sans);text-align:left;color:var(--ink);
+}
+.choice:hover{border-color:var(--ink)}
+.choice[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.choice .what{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+.choice .amt{font-family:var(--font-mono);font-weight:400;font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* what the fee is, said once, quietly, beside what it is added to */
+.choice .add{
+  display:block;font-family:var(--font-mono);font-weight:400;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  margin-top:5px;font-variant-numeric:tabular-nums;
+}
+.choice .sub{display:block;font-size:11px;letter-spacing:0;text-transform:none;color:var(--muted);margin-top:3px}
+.choice[aria-pressed="true"] .sub{color:rgba(250,249,246,.7)}
+.sheet .go{margin-top:8px}
+.sheet .note{font-size:12px;color:var(--muted);line-height:1.7;margin:16px 0 0}
+.sheet input{
+  width:100%;padding:13px 14px;border:1px solid var(--rule);background:transparent;
+  font-family:var(--font-sans);font-size:14px;color:var(--ink);margin-bottom:9px;border-radius:0;
+}
+.sheet input:focus{outline:none;border-color:var(--ink)}
+.sheet .err{font-size:12px;color:#8b3a2a;margin-top:12px}
+.sheet .ok{font-family:var(--font-mono);font-weight:400;font-size:17px;line-height:1.45;color:#2c2924;font-variant-numeric:tabular-nums}
+.held{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  border-top:1px solid var(--rule);margin-top:18px;padding-top:12px;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+}
+.held.stale{color:#8b3a2a}
+.held button{
+  background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-sans);font-weight:500;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);
+  border-bottom:1px solid var(--rule);
+}
+.held button:hover{border-color:var(--ink)}
+.mono-line{font-family:var(--font-mono);font-size:11.5px;word-break:break-all;color:var(--muted);line-height:1.9}
+@media(max-width:560px){.sheet{width:100%}}
+
+/* ---------- pricing ---------- */
+.pricing{margin-top:46px;border-top:1px solid var(--ink);padding-top:20px}
+.pricing-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.pricing-head .smallcaps{color:var(--ink)}
+
+.price-row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--rule)}
+.price-row:last-of-type{border-bottom:0}
+.price-row .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.price-row .amount{font-family:var(--font-mono);font-weight:400;font-size:24px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.converted{font-family:var(--font-mono);font-weight:400;font-size:11px;color:var(--faint);margin-top:8px;font-variant-numeric:tabular-nums}
+.framed-note{
+  font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin-top:12px;font-variant-numeric:tabular-nums;
+}
+.poa{font-family:var(--font-sans);font-size:22px;color:var(--muted);padding:8px 0}
+
+/* ---------- action ---------- */
+.action{margin-top:34px}
+.btn{
+  display:block;width:100%;padding:19px 20px;background:var(--ink);color:var(--paper);
+  border:0;cursor:pointer;font-family:var(--font-sans);
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;
+}
+.btn:hover{background:#2c2924}
+/* who holds it, directly under the byline it belongs with */
+.collected{margin-top:12px;margin-bottom:26px}
+.collected .who{
+  font-family:var(--font-mono);font-weight:400;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.collected .when{
+  font-family:var(--font-mono);font-weight:400;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  font-variant-numeric:tabular-nums;margin-top:4px;
+}
+
+.state{display:flex;align-items:baseline;gap:10px;padding:18px 0;border-top:1px solid var(--rule)}
+.state .word{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.state .sub{font-family:var(--font-mono);font-weight:400;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.note{font-family:var(--font-sans);font-weight:400;font-size:16px;line-height:1.55;color:#2c2924;margin:12px 0 0}
+.holders{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.9}
+
+
+@media(max-width:640px){
+  .bar{padding:18px 20px}
+  .stage{padding:2px 20px 0}
+  .stage img,.stage video{max-height:none;width:100%}
+  .col{padding:38px 20px 90px}
+  .rows th{font-family:var(--font-sans);font-weight:500;width:44%}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" id="up" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" aria-hidden="true" aria-label="Acquire">
+  <header>
+    <span class="smallcaps">Acquire</span>
+    <button class="close" id="sheetClose" aria-label="Close">&times;</button>
+  </header>
+  <div class="body" id="sheetBody"></div>
+</aside>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+
+function workId() {
+  const m = location.pathname.match(/^\/w\/(.+?)\/?$/);
+  if (m) return decodeURIComponent(m[1]);
+  return new URLSearchParams(location.search).get('id') || '';
+}
+
+// preview aid: /w/{id}?px=2400,9800,11500 fills digital,painting,both until Ryan overlays real prices
+function previewPrices() {
+  const px = new URLSearchParams(location.search).get('px');
+  if (!px) return null;
+  const [digital, painting, both] = px.split(',').map((n) => (n === '' ? null : Number(n)));
+  return { digital: digital ?? null, painting: painting ?? null, both: both ?? null };
+}
+
+function detailRows(work, collection) {
+  const d = work.digital || {};
+  const p = work.physical || {};
+  const rows = [];
+  const st = MF.STATUS[work.status] || { label: work.status, dot: '' };
+
+  rows.push(['Availability', `<span class="dot ${st.dot}"></span> ${e(st.label)}`]);
+
+  const year = MF.year(work, collection);
+  if (year) rows.push(['Year', e(year)]);
+  const medium = work.medium || collection.medium;
+  if (medium) rows.push(['Medium', e(medium)]);
+  if (work.derivative_of) rows.push(['After', e(work.derivative_of)]);
+  if (work.meme_card) rows.push(['Meme card', e([work.meme_card, work.meme_season ? 'season ' + work.meme_season : null].filter(Boolean).join(' ... '))]);
+  if (work.sequence) rows.push(['Sequence', e(work.sequence)]);
+  if (work.keyword || work.age) rows.push(['Motif', e([work.keyword, work.age].filter(Boolean).join(' ... '))]);
+  if (d.chain === 'bitcoin' && d.inscribed === false) rows.push(['Inscription', '<span class="pending">Not yet inscribed</span>']);
+  if (d.minted === false) rows.push(['Provenance', 'Tokenized on purchase']);
+
+  const dims = [p.width_cm, p.height_cm].filter(Boolean);
+  if (dims.length) {
+    const depth = p.depth_cm ? ` x ${p.depth_cm}` : '';
+    rows.push(['Dimensions', `${dims.join(' x ')}${depth} cm`]);
+  } else if (collection.physical && p.exists !== false) {
+    rows.push(['Dimensions', '<span class="pending">Listed on request</span>']);
+  }
+  // one row for the painting: where it is, and how it comes
+  if (collection.physical) {
+    if (p.exists === false) {
+      rows.push(['Painting', '<span class="pending">Digital only, no physical work</span>']);
+    } else {
+      const bits = [];
+      if (p.sold && work.status !== 'vaulted') bits.push(p.collector ? `With ${p.collector}` : 'With a collector');
+      if (p.ready_to_hang) bits.push('Ready to hang');
+      if (p.framed) bits.push('Framed'); else if (p.framed === false) bits.push('Unframed');
+      if (p.certificate) bits.push('Certificate of authenticity');
+      if (bits.length) rows.push(['Painting', e(bits.join(' ... '))]);
+    }
+  }
+
+  if (work.edition) {
+    const size = work.edition.minted || work.edition.of || work.edition.live;
+    if (work.edition.type === 'edition' && size) {
+      const bits = [`Edition of ${size}`];
+      if (work.wrapped) bits.push(`${work.wrapped.total} wrapped on Ethereum`);
+      if (work.edition.live && work.edition.live !== work.edition.minted) bits.push(`${work.edition.live} held today`);
+      rows.push(['Edition', e(bits.join(' ... '))]);
+    } else if (work.edition.type !== 'edition') {
+      rows.push(['Edition', 'Unique 1/1']);
+    }
+  }
+
+  if (d.image_details && d.image_details.width) {
+    rows.push(['Resolution', `${d.image_details.width} x ${d.image_details.height} ${e(d.image_details.format || '')}`]);
+  }
+  if (MF.animationUrl(work)) rows.push(['Motion', 'Yes, plays under the still']);
+
+  return `<table class="rows">${rows.map(([k, v]) => `<tr><th>${e(k)}</th><td>${v}</td></tr>`).join('')}</table>`;
+}
+
+// Traits come off chain as they were written, in their own order.
+function traitsOf(work) {
+  const a = work.attributes || work.digital?.attributes;
+  return Array.isArray(a) ? a.filter((t) => t && (t.trait_type || t.name) && t.value != null && t.value !== '') : [];
+}
+
+function traitRows(traits) {
+  return `<table class="rows traits">${traits.map((t) => {
+    const name = t.trait_type || t.name;
+    const isColour = /^#[0-9a-f]{3,8}$/i.test(String(t.value));
+    const value = isColour
+      ? `<span class="swatch" style="background:${e(String(t.value))}"></span>${e(String(t.value))}`
+      : e(String(t.value));
+    return `<tr><th>${e(name)}</th><td>${value}</td></tr>`;
+  }).join('')}</table>`;
+}
+
+function provenanceFold(work) {
+  const d = work.digital || {};
+  if (d.minted === false) {
+    return `<details>
+      <summary>Provenance</summary>
+      <div class="fold-body">
+        <p>Not minted yet. This work is tokenized at the moment it sells, on ${e(d.chain === 'bitcoin' ? 'Bitcoin' : 'Ethereum')}${d.standard ? ' as ' + e(d.standard) : ''}, so the first owner written to chain is the collector rather than the artist.</p>
+        <p>The token and the painting travel together. The certificate references both.</p>
+      </div>
+    </details>`;
+  }
+  const rows = [];
+  if (d.chain) rows.push(['Chain', d.chain === 'ethereum' ? 'Ethereum' : 'Bitcoin']);
+  if (d.standard) rows.push(['Standard', d.standard]);
+  if (d.contract) rows.push(['Contract', e(d.contract), true]);
+  if (work.token_ids && work.token_ids.length > 1) {
+    const ids = work.token_ids.map(Number).filter((n) => !isNaN(n)).sort((a, b) => a - b);
+    rows.push(['Token IDs', ids.length ? `${ids.length} tokens, #${ids[0]} to #${ids[ids.length - 1]}` : `${work.token_ids.length} tokens`]);
+  } else if (d.token_id) {
+    rows.push(['Token ID', e(d.token_id)]);
+  }
+  if (d.inscription_id) rows.push(['Inscription', e(d.inscription_id), true]);
+  else if (d.chain === 'bitcoin' && d.inscribed === false) rows.push(['Inscription', '<span class="pending">Not yet inscribed</span>']);
+  if (d.inscription_number != null) rows.push(['Inscription number', e(String(d.inscription_number))]);
+  if (d.asset) rows.push(['Asset', e(d.asset)]);
+  if (work.wrapped) {
+    rows.push(['Wrapped on Ethereum', `${work.wrapped.total} of the edition, ${work.wrapped.artist_held} still with the artist`]);
+    rows.push(['Vault contract', e(work.wrapped.contract), true]);
+    rows.push(['Vault token', e(work.wrapped.token_id), true]);
+  }
+  if (d.image_note) rows.push(['Image', `<span class="pending">${e(d.image_note)}</span>`]);
+  const minted = work.minted_onchain || work.minted || d.genesis_timestamp;
+  if (minted) rows.push(['Minted', e(MF.date(minted))]);
+  const links = MF.links(work);
+  return `
+    <details>
+      <summary>Provenance</summary>
+      <div class="fold-body">
+        <table class="rows">
+          ${rows.map(([k, v, mono]) => `<tr><th>${e(k)}</th><td class="${mono ? 'mono' : ''}">${v}</td></tr>`).join('')}
+        </table>
+        ${links.length ? `<div class="chain-links">${links.map(([t, u]) => `<a href="${e(u)}" target="_blank" rel="noopener">${e(t)}</a>`).join('')}</div>` : ''}
+      </div>
+    </details>`;
+}
+
+// once a work is collected there is nothing to quote and nothing to send, so
+// the listing furniture comes off the page entirely
+const isCollected = (work) => work.status === 'acquired';
+// a vaulted work is held for at least a decade. Quoting it, even as "on
+// application", invites an offer that is not going to be taken.
+const isPriceless = (work) => isCollected(work) || work.status === 'vaulted';
+
+function shippingFold(collection, meta, work) {
+  if (isCollected(work)) return '';
+  if (!collection.physical) return '';
+  return `
+    <details>
+      <summary>Shipping</summary>
+      <div class="fold-body"><p>${e(meta.shipping || 'Worldwide. Boxing, crating and freight included in painting price.')}</p></div>
+    </details>`;
+}
+
+function pricingBlock(work, collection) {
+  if (isPriceless(work)) return '';
+  if (pricedInETH(work)) {
+    const opts = optionsFor(work, collection);
+    if (!opts.length) {
+      return `<div class="pricing"><div class="pricing-head"><span class="smallcaps">Price</span></div>
+        <div class="poa">On application</div></div>`;
+    }
+    const eth = work.pricing_eth.digital;
+    return `<div class="pricing">
+      <div class="pricing-head"><span class="smallcaps">Price</span></div>
+      <div class="price-row">
+        <span class="what">Digital</span>
+        <span class="amount" data-eth="${eth}">${eth} ETH</span>
+      </div>
+      <div class="converted" id="converted">Listed in ETH. <span id="ethNzd">Converting...</span></div>
+    </div>`;
+  }
+  // the same list the Acquire flow offers, so the page cannot advertise a
+  // painting that has already gone
+  // framing is an add-on chosen at the point of buying, not a fourth and fifth
+  // price to read on the way past
+  const all = optionsFor(work, collection);
+  const rows = all.filter((o) => !o.framed).map((o) => [
+    o.key === 'painting' ? 'Painting' : o.label,
+    o.nzd,
+  ]);
+  const framedNote = all.some((o) => o.framed) && collection.framing_fee_quoted
+    ? `Framing available, +${collection.framing_fee_quoted}`
+    : null;
+
+  if (!rows.length) {
+    return `<div class="pricing">
+      <div class="pricing-head"><span class="smallcaps">Price</span></div>
+      <div class="poa">On application</div>
+    </div>`;
+  }
+
+  return `<div class="pricing">
+    <div class="pricing-head">
+      <span class="smallcaps">Price</span>
+      ${MF.currencyBar('cur')}
+    </div>
+    ${rows.map(([what, nzd]) => `
+      <div class="price-row">
+        <span class="what">${e(what)}</span>
+        <span class="amount" data-nzd="${nzd}">$${Math.round(nzd).toLocaleString('en-NZ')}</span>
+      </div>`).join('')}
+    ${framedNote ? `<div class="framed-note">${e(framedNote)}</div>` : ''}
+    <div class="converted" id="converted" hidden></div>
+  </div>`;
+}
+
+function actionBlock(work, collection) {
+  const s = work.status;
+  const hasPrice = optionsFor(work, collection).length > 0;
+
+  if (s === 'available') {
+    return `<div class="action"><button class="btn" id="acquire">${hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork'}</button></div>`;
+  }
+  // the painting has gone but editions of the digital work remain
+  if (s === 'acquired' && hasPrice) {
+    const name = MF.collectorName(work.collector) || (work.physical && work.physical.collector);
+    return `<div class="action">
+      <div class="state"><span class="dot acquired"></span>
+        <span class="word">Painting collected${name ? ' by ' + e(name) : ''}</span></div>
+      <button class="btn" id="acquire" style="margin-top:14px">Acquire the digital work</button>
+    </div>`;
+  }
+  if (s === 'reserved') {
+    const until = MF.date(work.reserve && work.reserve.expires);
+    return `<div class="action"><div class="state"><span class="dot reserved"></span>
+      <span class="word">Reserved${until ? ' until ' + e(until) : ''}</span></div></div>`;
+  }
+  if (s === 'pending') {
+    return `<div class="action">
+      <div class="state"><span class="dot reserved"></span>
+        <span class="word">At the checkout</span>
+        <span class="sub">Someone is paying for this one</span></div>
+      <p class="note">Holds last half an hour at most. If it does not go through the work comes straight back.</p>
+    </div>`;
+  }
+  if (s === 'acquired') {
+    // the collector now reads under the title, so all that is left here is
+    // anything the collector wanted said
+    if (!(work.collector && work.collector.note)) return '';
+    return `<div class="action"><p class="note">${e(work.collector.note)}</p></div>`;
+  }
+  if (s === 'vaulted') {
+    return `<div class="action">
+      <div class="state"><span class="dot vaulted"></span><span class="word">Vaulted ... mintestate.eth</span></div>
+      <p class="note">Held for at least ten years, then passed down through the MintFace bloodline.</p>
+      <div style="margin-top:14px"><a class="smallcaps" href="/vault">The vault</a></div>
+    </div>`;
+  }
+  if (s === 'sold_out') {
+    const ed = work.edition || {};
+    return `<div class="action">
+      <div class="state"><span class="dot acquired"></span><span class="word">Sold out</span>
+        ${ed.minted ? `<span class="sub">${ed.minted} minted${ed.live && ed.live !== ed.minted ? ', ' + ed.live + ' held today' : ''}</span>` : ''}</div>
+    </div>`;
+  }
+  if (s === 'uninscribed') {
+    return `<div class="action">
+      <button class="btn" id="acquire">Enquire to have inscribed</button>
+      <div class="state"><span class="dot uninscribed"></span>
+        <span class="word">Not yet inscribed</span>
+        <span class="sub">Part of the canon, waiting on Bitcoin</span></div>
+    </div>`;
+  }
+  if (s === 'burned') {
+    return `<div class="action"><div class="state"><span class="dot burned"></span><span class="word">Burned</span>
+      <span class="sub">Returned to the zero address</span></div></div>`;
+  }
+  return '';
+}
+
+function holdersBlock(work) {
+  if (!work.holders || work.holders.length < 2) return '';
+  const named = work.holders.filter((h) => h.display_name || h.ens).slice(0, 12);
+  if (!named.length) return '';
+  return `<details>
+    <summary>Collectors</summary>
+    <div class="fold-body">
+      <div class="holders">${named.map((h) => e(h.display_name || h.ens)).join('<br>')}${work.holders.length > named.length ? `<br><span class="pending">and ${work.holders.length - named.length} more</span>` : ''}</div>
+    </div>
+  </details>`;
+}
+
+function motionKind(url) {
+  if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return 'video';
+  if (/\.(gif|webp|png|jpe?g|avif)(\?|$)/i.test(url)) return 'image';
+  return 'live'; // html renderers, AR scenes, generative pieces
+}
+
+function stage(work) {
+  const img = MF.imageUrl(work);
+  const anim = MF.animationUrl(work);
+  const kind = anim ? motionKind(anim) : null;
+  return `<div class="stage">
+    <div class="frame">
+      ${MF.img(work, 1600, { eager: true, live: true })}
+      ${anim ? `<div class="motion" id="motion" data-url="${e(anim)}" data-kind="${kind}">
+        <div class="motion-label">${kind === 'live' ? 'Living version' : 'Motion'}</div>
+        ${kind === 'image'
+          ? `<img src="${e(anim)}" alt="${e((work.title || 'Work') + ', in motion')}" loading="lazy">`
+          : `<button class="ghost" id="play">${kind === 'video' ? 'Play' : 'Open the living version'}</button>`}
+      </div>` : ''}
+    </div>
+  </div>`;
+}
+
+function wireMotion() {
+  const btn = document.getElementById('play');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const box = document.getElementById('motion');
+    const url = box.dataset.url;
+    const holder = document.createElement('div');
+    holder.className = 'motion-frame';
+    holder.innerHTML = box.dataset.kind === 'video'
+      ? `<video src="${e(url)}" controls autoplay playsinline loop></video>`
+      : `<iframe src="${e(url)}" title="Living version" loading="lazy" allow="accelerometer; camera; gyroscope; xr-spatial-tracking; fullscreen" sandbox="allow-scripts allow-same-origin"></iframe>`;
+    btn.replaceWith(holder);
+  });
+}
+
+// some contracts title a work with the mint number alone
+function displayTitle(work, collection) {
+  const t = (work.title || '').trim();
+  if (!t) return 'Untitled';
+  return /^#?\d+$/.test(t) ? `${collection.title} ${t.startsWith('#') ? t : '#' + t}` : t;
+}
+
+function collectedLine(work) {
+  if (!isCollected(work)) return '';
+  const name = MF.collectorName(work.collector);
+  const when = work.collector && work.collector.acquired
+    ? MF.date(work.collector.acquired, { month: 'long', year: 'numeric' })
+    : null;
+  return `<div class="collected">
+    <div class="who"><span class="dot acquired"></span> Collected by ${e(name || 'a private collector')}</div>
+    ${when ? `<div class="when">${e(when)}</div>` : ''}
+  </div>`;
+}
+
+function render(work, collection, meta) {
+  const shown = displayTitle(work, collection);
+  const traits = traitsOf(work);
+  document.title = `${shown} ... MintFace`;
+  const up = document.getElementById('up');
+  up.textContent = collection.title;
+  up.href = `/c/${collection.slug}`;
+
+  const desc = work.statement || work.subtitle || '';
+  document.querySelector('meta[name="description"]').setAttribute('content', desc.slice(0, 180) || `${work.title} by MintFace.`);
+
+  document.getElementById('main').innerHTML = `
+    ${stage(work)}
+    <div class="col">
+      <h1>${e(shown)}</h1>
+      <div class="byline">${[collection.title, work.sequence, MF.year(work, collection)].filter(Boolean).map(e).join(' &middot; ')}</div>
+      ${collectedLine(work)}
+
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tab-desc" aria-selected="true" aria-controls="panel-desc">Description</button>
+        <button class="tab" role="tab" id="tab-det" aria-selected="false" aria-controls="panel-det">Details</button>
+        ${traits.length ? '<button class="tab" role="tab" id="tab-traits" aria-selected="false" aria-controls="panel-traits">Traits</button>' : ''}
+      </div>
+
+      <div class="panel" id="panel-desc" role="tabpanel" aria-labelledby="tab-desc">
+        ${desc
+          ? `<p class="statement">${e(desc)}</p>`
+          : `<p class="statement none">No statement recorded for this work yet.</p>`}
+      </div>
+
+      <div class="panel" id="panel-det" role="tabpanel" aria-labelledby="tab-det" hidden>
+        ${detailRows(work, collection)}
+      </div>
+
+      ${traits.length ? `<div class="panel" id="panel-traits" role="tabpanel" aria-labelledby="tab-traits" hidden>
+        ${traitRows(traits)}
+      </div>` : ''}
+
+      <div style="margin-top:30px">
+        ${provenanceFold(work)}
+        ${holdersBlock(work)}
+        ${shippingFold(collection, meta, work)}
+      </div>
+
+      ${pricingBlock(work, collection)}
+      ${actionBlock(work, collection)}
+    </div>`;
+
+  MF.progress.watch(document.getElementById('main'));
+  wireTabs();
+  wireMotion();
+  wireCurrency();
+  wireSheetClose();
+  wireAcquire(work, collection);
+  thanksIfPaid();
+}
+
+function wireTabs() {
+  const tabs = [...document.querySelectorAll('.tab')];
+  tabs.forEach((t) => t.addEventListener('click', () => {
+    tabs.forEach((x) => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on));
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+  }));
+}
+
+async function wireCurrency() {
+  const ethAmount = document.querySelector('.amount[data-eth]');
+  if (ethAmount) {
+    const fx = await MF.fx();
+    const eth = Number(ethAmount.dataset.eth);
+    const nzd = fx.eth ? eth / fx.eth : null;
+    const usd = nzd != null && fx.usd ? nzd * fx.usd : null;
+    const line = document.getElementById('ethNzd');
+    if (line) {
+      line.textContent = nzd != null
+        ? `About $${Math.round(nzd).toLocaleString('en-NZ')} NZD${usd != null ? `, US$${Math.round(usd).toLocaleString('en-US')}` : ''} at today's rate.`
+        : 'Rate unavailable just now.';
+    }
+  }
+
+  const bar = document.getElementById('cur');
+  if (!bar) return;
+  const note = document.getElementById('converted');
+  const sayRate = (c) => {
+    if (!note) return;
+    note.hidden = c === 'NZD';
+    if (c !== 'NZD') note.textContent = 'Converted from New Zealand dollars, updated hourly.';
+  };
+  const { currency } = await MF.paintPrices();
+  sayRate(currency);
+  MF.wireCurrencyBar(bar, sayRate);
+}
+
+/* ---------------- acquire ---------------- */
+
+const SHEET = {
+  el: () => document.getElementById('sheet'),
+  body: () => document.getElementById('sheetBody'),
+  open() {
+    this.el().classList.add('open');
+    this.el().setAttribute('aria-hidden', 'false');
+    document.getElementById('scrim').classList.add('open');
+  },
+  close() {
+    this.el().classList.remove('open');
+    this.el().setAttribute('aria-hidden', 'true');
+    document.getElementById('scrim').classList.remove('open');
+  },
+};
+
+let ACQ = { work: null, collection: null, what: null, fx: null, quote: null };
+let QUOTE_TIMER = null;
+
+// The rate is locked when the slide-over opens and honoured for its full life.
+// Nothing on screen moves under the buyer while they are deciding.
+async function lockQuote() {
+  try {
+    const r = await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ workId: ACQ.work.id }),
+    });
+    if (!r.ok) throw new Error('no quote');
+    ACQ.quote = await r.json();
+  } catch {
+    ACQ.quote = null; // fall back to the hourly rates, and say so
+  }
+  return ACQ.quote;
+}
+
+const quoteLive = () => ACQ.quote && Date.now() < ACQ.quote.expires;
+
+// crypto and USD figures come from the locked rates while a quote is live
+function rateFor(currency) {
+  if (quoteLive()) {
+    const r = ACQ.quote.rates || {};
+    if (currency === 'ETH') return r.eth;
+    if (currency === 'BTC') return r.btc;
+    if (currency === 'USD') return r.usd;
+  }
+  const fx = ACQ.fx || {};
+  if (currency === 'ETH') return fx.eth;
+  if (currency === 'USD') return fx.usd;
+  return null;
+}
+
+function heldStrip() {
+  return '<div class="held" id="held"></div>';
+}
+
+function startCountdown(onExpire) {
+  clearInterval(QUOTE_TIMER);
+  const el = document.getElementById('held');
+  if (!el) return;
+  const tick = () => {
+    if (!ACQ.quote) {
+      el.innerHTML = '<span>Rates refresh hourly</span>';
+      return;
+    }
+    const left = ACQ.quote.expires - Date.now();
+    if (left <= 0) {
+      clearInterval(QUOTE_TIMER);
+      el.classList.add('stale');
+      el.innerHTML = '<span>The quote has expired</span><button id="requote">Take a fresh rate</button>';
+      const b = document.getElementById('requote');
+      if (b) b.addEventListener('click', async () => { await lockQuote(); if (onExpire) onExpire(); });
+      return;
+    }
+    const m = Math.floor(left / 60000);
+    const sec = Math.floor((left % 60000) / 1000);
+    el.classList.remove('stale');
+    el.innerHTML = `<span>Rate held</span><span>${m}:${String(sec).padStart(2, '0')}</span>`;
+  };
+  tick();
+  QUOTE_TIMER = setInterval(tick, 1000);
+}
+
+// What is on offer is decided at import time and recorded on the work, so the
+// page and the checkout cannot drift apart or reason about it differently.
+// A work is priced in one currency and converted into the others. Most are NZD;
+// Geodetic Moments and Geodetica are listed in ETH, so that is their price and
+// the NZD figure is the one that moves.
+function pricedInETH(work) {
+  return work.priced_in === 'ETH' && work.pricing_eth && work.pricing_eth.digital != null;
+}
+
+function optionsFor(work, collection) {
+  const preview = previewPrices();
+  if (pricedInETH(work) && !preview) {
+    const rate = rateFor('ETH');   // ETH per one NZD
+    const nzd = rate ? work.pricing_eth.digital / rate : null;
+    return (work.offers && work.offers.digital === false) ? [] : [{
+      key: 'digital', label: 'Digital', eth: work.pricing_eth.digital, nzd,
+      sub: 'The token, transferred to your wallet',
+    }];
+  }
+  const p = { ...(work.pricing_nzd || {}), ...(preview || {}) };
+  const ph = work.physical || {};
+  const o = work.offers || null;
+  const allow = (key, fallback) => (preview ? true : o ? o[key] === true : fallback);
+  const paintingFallback = collection.physical && ph.exists !== false && ph.sold !== true;
+
+  // framing is never a stored price. It is the painting price plus one fee,
+  // so there is nothing to keep in step when a painting is repriced.
+  const fee = collection.framing ? Number(collection.framing_fee_nzd) || 0 : 0;
+  const quoted = collection.framing_fee_quoted || null;
+
+  const out = [];
+  if (p.digital != null && allow('digital', true)) out.push({ key: 'digital', label: 'Digital', nzd: p.digital, sub: 'The token, transferred to your wallet' });
+  if (p.painting != null && allow('painting', paintingFallback)) {
+    out.push({
+      key: 'painting',
+      label: fee ? 'Painting, unframed' : 'Painting',
+      nzd: p.painting,
+      sub: 'The physical work, shipped worldwide',
+    });
+    if (fee) out.push({
+      key: 'painting_framed',
+      label: 'Painting, framed',
+      nzd: p.painting + fee,
+      framed: true,
+      sub: 'Framed here before it ships',
+      extra: quoted ? `Framing +${quoted}` : null,
+    });
+  }
+  if (p.both != null && allow('both', paintingFallback)) {
+    out.push({
+      key: 'both',
+      label: work.painting_included ? 'Painting and token' : 'Both together',
+      nzd: p.both,
+      sub: work.painting_included
+        ? 'The painting comes with the token, no extra cost'
+        : 'Painting and token, one provenance',
+    });
+    if (fee) out.push({
+      key: 'both_framed',
+      label: work.painting_included ? 'Painting and token, framed' : 'Both together, framed',
+      nzd: p.both + fee,
+      framed: true,
+      sub: 'Painting and token, framed before it ships',
+      extra: quoted ? `Framing +${quoted}` : null,
+    });
+  }
+  return out;
+}
+
+function money(nzd) {
+  if (nzd == null || !isFinite(nzd)) return null;
+  return 'NZ$' + Math.round(nzd).toLocaleString('en-NZ');
+}
+
+// An option knows what it is priced in. Everything else is converted from that.
+function amountIn(option, currency) {
+  const ethRate = rateFor('ETH');           // ETH per one NZD
+  const usdRate = rateFor('USD');
+  if (option.eth != null) {
+    if (currency === 'ETH') return option.eth.toFixed(4) + ' ETH';
+    const nzd = ethRate ? option.eth / ethRate : null;
+    if (currency === 'NZD') return money(nzd);
+    return nzd != null && usdRate ? 'US$' + Math.round(nzd * usdRate).toLocaleString('en-US') : null;
+  }
+  if (currency === 'NZD') return money(option.nzd);
+  if (currency === 'USD') return usdRate ? 'US$' + Math.round(option.nzd * usdRate).toLocaleString('en-US') : null;
+  return ethRate ? (option.nzd * ethRate).toFixed(4) + ' ETH' : null;
+}
+
+// what the buyer is actually asked to agree to, in the currency it is priced in
+const headlinePrice = (option) =>
+  amountIn(option, option.eth != null ? 'ETH' : MF.currency());
+
+function stepWhat() {
+  const opts = optionsFor(ACQ.work, ACQ.collection);
+  if (opts.length === 1) { ACQ.what = opts[0].key; return stepHow(); }
+  SHEET.body().innerHTML = `
+    <h2>${e(ACQ.work.title || 'Untitled')}</h2>
+    <div class="which">${e(ACQ.collection.title)}</div>
+    <div class="step">What would you like</div>
+    ${opts.map((o) => `<button class="choice" data-what="${o.key}" aria-pressed="false">
+      <span class="what">${e(o.label)}<span class="sub">${e(o.sub)}</span>${o.extra ? `<span class="add">${e(o.extra)}</span>` : ''}</span>
+      <span class="amt">${e(headlinePrice(o) || '...')}</span>
+    </button>`).join('')}
+    <p class="note">Shipping, crating and freight are included.</p>`;
+  SHEET.body().querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => {
+    ACQ.what = b.dataset.what;
+    stepHow();
+  }));
+  // a price in the viewer's currency needs a rate, so fill the figures in as
+  // soon as one arrives rather than leaving three dots on the button
+  if (opts.some((o) => headlinePrice(o) == null)) {
+    MF.fx().then((fx) => {
+      ACQ.fx = fx;
+      SHEET.body().querySelectorAll('.choice').forEach((b) => {
+        const o = opts.find((x) => x.key === b.dataset.what);
+        const amt = b.querySelector('.amt');
+        if (o && amt) amt.textContent = headlinePrice(o) || '...';
+      });
+    });
+  }
+}
+
+// the fortnight, said once, as a date rather than a count
+function untilDate(days) {
+  const d = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+  return d.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
+}
+
+function stepHow() {
+  const opts = optionsFor(ACQ.work, ACQ.collection);
+  const chosen = opts.find((o) => o.key === ACQ.what) || opts[0];
+  const frog = ACQ.work.wrapped || ACQ.work.digital?.asset === 'FROGDNA';
+  SHEET.body().innerHTML = `
+    <h2>${e(ACQ.work.title || 'Untitled')}</h2>
+    <div class="which">${e(chosen.label)} &middot; ${e(headlinePrice(chosen) || '...')}</div>
+    <div class="step">How would you like to pay</div>
+    <button class="choice" data-how="nzd"><span class="what">Card, New Zealand dollars<span class="sub">${chosen.eth != null ? "Converted at today's rate" : 'Stripe checkout'}</span></span><span class="amt" id="nzdAmt">...</span></button>
+    <button class="choice" data-how="usd"><span class="what">Card, US dollars<span class="sub">Converted at today's rate</span></span><span class="amt" id="usdAmt">...</span></button>
+    <button class="choice" data-how="eth"><span class="what">Ethereum<span class="sub">From your wallet to mintface.eth</span></span><span class="amt" id="ethAmt">...</span></button>
+    ${frog ? `<button class="choice" data-how="btc"><span class="what">Bitcoin<span class="sub">Counterparty, arranged directly</span></span><span class="amt">&rarr;</span></button>` : ''}
+    <button class="choice" data-how="reserve"><span class="what">Reserve<span class="sub">No payment, no obligation</span></span><span class="amt" id="resUntil">until ${e(untilDate(14))}</span></button>
+    <p class="note">${ACQ.work.digital && ACQ.work.digital.minted === false
+      ? 'This work is not minted yet. It is tokenized when it sells, so your wallet is the first owner written to chain.'
+      : 'The token is transferred by hand after payment, usually within a day.'}</p>
+    ${heldStrip()}`;
+
+  const paintAmounts = () => {
+    for (const [id, cur] of [['nzdAmt', 'NZD'], ['usdAmt', 'USD'], ['ethAmt', 'ETH']]) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = amountIn(chosen, cur) || 'unavailable';
+    }
+  };
+  MF.fx().then((fx) => { ACQ.fx = fx; paintAmounts(); });
+  paintAmounts();
+  startCountdown(() => { paintAmounts(); });
+
+  SHEET.body().querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => {
+    const how = b.dataset.how;
+    if (how === 'nzd' || how === 'usd') return stripeCheckout(how.toUpperCase());
+    if (how === 'reserve') return stepReserve();
+    if (how === 'eth') return stepEth(chosen);
+    if (how === 'btc') return stepBtc(chosen);
+  }));
+}
+
+async function stripeCheckout(currency) {
+  SHEET.body().innerHTML = '<p class="ok">Opening the checkout...</p>';
+  try {
+    const r = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, currency, quote: quoteLive() ? ACQ.quote.quote : null }),
+    });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || 'could not start the checkout');
+    location.href = j.url;
+  } catch (err) {
+    const busy = /at the checkout|busy/i.test(err.message);
+    SHEET.body().innerHTML = busy
+      ? `<h2>Someone is at the checkout</h2>
+         <p class="ok">This one is held while another buyer finishes paying.</p>
+         <p class="note">Holds last half an hour at most. If they do not go through with it the work comes straight back, so it is worth looking again shortly.</p>
+         <button class="choice go" id="retry"><span class="what">Try again</span><span class="amt">&rarr;</span></button>`
+      : `<p class="ok">That did not work.</p><p class="err">${e(err.message)}</p>
+         <p class="note">Email art@mintface.art and it will be sorted by hand.</p>`;
+    const again = document.getElementById('retry');
+    if (again) again.addEventListener('click', () => stepHow());
+  }
+}
+
+function stepReserve() {
+  SHEET.body().innerHTML = `
+    <h2>Hold it for a fortnight</h2>
+    <div class="which">${e(ACQ.work.title || 'Untitled')}</div>
+    <p class="note">Nothing is charged. The work shows as reserved until ${e(untilDate(14))} and quietly returns if the fortnight passes.</p>
+    <div class="step">Where to reach you</div>
+    <input id="resName" type="text" placeholder="Name" autocomplete="name">
+    <input id="resEmail" type="email" placeholder="Email" autocomplete="email" required>
+    <button class="choice go" id="resGo"><span class="what">Hold it</span><span class="amt">until ${e(untilDate(14))}</span></button>
+    <div id="resErr"></div>`;
+  document.getElementById('resGo').addEventListener('click', async () => {
+    const name = document.getElementById('resName').value.trim();
+    const email = document.getElementById('resEmail').value.trim();
+    const err = document.getElementById('resErr');
+    err.innerHTML = '';
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.innerHTML = '<p class="err">An email address, so the reminder can reach you.</p>'; return; }
+    try {
+      const r = await fetch('/api/reserve', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ workId: ACQ.work.id, name, email }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || 'could not hold it');
+      const until = MF.date(j.expires);
+      SHEET.body().innerHTML = `<p class="ok">Held for you until ${e(until)}.</p>
+        <p class="note">A note is on its way to ${e(email)}. Reply to it whenever you are ready, or let the fortnight pass and it lifts on its own.</p>`;
+    } catch (e2) {
+      err.innerHTML = `<p class="err">${e(e2.message)}</p>`;
+    }
+  });
+}
+
+function stepEth(chosen) {
+  const to = '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180';
+  const ethRate = rateFor('ETH');
+  const eth = chosen.eth != null ? chosen.eth : (ethRate ? chosen.nzd * ethRate : null);
+  SHEET.body().innerHTML = `
+    <h2>Pay with Ethereum</h2>
+    <div class="which">${e(chosen.label)} &middot; ${e(headlinePrice(chosen) || '')}</div>
+    <p class="note">The payment goes to mintface.eth from your own wallet. Nothing here can move your funds or your tokens.</p>
+    <div class="step">Amount</div>
+    <p class="ok">${eth ? eth.toFixed(4) + ' ETH' : 'rate unavailable'}</p>
+    <div class="step">Send to</div>
+    <p class="mono-line">mintface.eth<br>${e(to)}</p>
+    ${window.ethereum ? '<button class="choice go" id="ethGo"><span class="what">Connect wallet and pay</span><span class="amt">' + (eth ? eth.toFixed(4) + ' ETH' : '') + '</span></button>' : ''}
+    <div class="step">Or paste the transaction</div>
+    <input id="ethTx" type="text" placeholder="0x transaction hash" spellcheck="false">
+    <button class="choice go" id="ethConfirm"><span class="what">I have sent it</span><span class="amt">&rarr;</span></button>
+    <div id="ethErr"></div>
+    <p class="note">Once the transaction confirms, the work shows as collected. Ryan transfers the token by hand, hardware signed, usually within a day.</p>
+    ${heldStrip()}`;
+  startCountdown(() => stepEth(chosen));
+
+  const confirm = async (txHash) => {
+    const err = document.getElementById('ethErr');
+    err.innerHTML = '<p class="note">Checking the chain...</p>';
+    try {
+      const r = await fetch('/api/eth-payment', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ workId: ACQ.work.id, what: ACQ.what, txHash, quote: ACQ.quote ? ACQ.quote.quote : null }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || 'could not verify that payment');
+      SHEET.body().innerHTML = `<p class="ok">Received, thank you.</p>
+        <p class="note">${j.paid ? j.paid.toFixed(4) + ' ETH' : 'Payment'} confirmed on chain. Ryan will transfer the token to the wallet that paid, and will be in touch about anything physical.</p>`;
+    } catch (e2) {
+      err.innerHTML = `<p class="err">${e(e2.message)}</p>`;
+    }
+  };
+
+  const go = document.getElementById('ethGo');
+  if (go) go.addEventListener('click', async () => {
+    const err = document.getElementById('ethErr');
+    try {
+      if (!eth) throw new Error('the rate is not available, paste a transaction hash instead');
+      const [from] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const wei = '0x' + BigInt(Math.round(eth * 1e18)).toString(16);
+      const txHash = await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [{ from, to, value: wei }],
+      });
+      document.getElementById('ethTx').value = txHash;
+      await confirm(txHash);
+    } catch (e2) {
+      err.innerHTML = `<p class="err">${e(e2.message || 'the wallet declined')}</p>`;
+    }
+  });
+  document.getElementById('ethConfirm').addEventListener('click', () => {
+    const tx = document.getElementById('ethTx').value.trim();
+    if (!/^0x[0-9a-fA-F]{64}$/.test(tx)) {
+      document.getElementById('ethErr').innerHTML = '<p class="err">That does not look like a transaction hash.</p>';
+      return;
+    }
+    confirm(tx);
+  });
+}
+
+async function stepBtc(chosen) {
+  const asset = ACQ.work.digital?.asset || 'FROGDNA';
+  SHEET.body().innerHTML = `
+    <h2>Pay with Bitcoin</h2>
+    <div class="which">${e(asset)} &middot; Counterparty</div>
+    <p class="note">The native asset lives on Bitcoin as a Counterparty issuance, so this one settles directly rather than through a checkout.</p>
+    <div class="step">Amount</div>
+    <p class="ok" id="btcAmt">${e(headlinePrice(chosen) || '...')}</p>
+    <div class="step">Send to</div>
+    <p class="mono-line" id="btcAddr">Loading the address...</p>
+    <div class="step">Then</div>
+    <p class="note">Email the transaction and the Bitcoin address you would like ${e(asset)} sent to. The asset transfers once the payment confirms, usually the same day.</p>
+    <button class="choice go" id="btcMail"><span class="what">Email about ${e(asset)}</span><span class="amt">&rarr;</span></button>
+    <p class="note">If you would rather pay in ETH, the wrapped edition on Ethereum is the same asset inside an EmblemVault and goes through the wallet flow instead.</p>
+    ${heldStrip()}`;
+  startCountdown(() => stepBtc(chosen));
+
+  document.getElementById('btcMail').addEventListener('click', () => {
+    location.href = `mailto:art@mintface.art?subject=${encodeURIComponent(asset + ' ... paying in Bitcoin')}`;
+  });
+
+  const locked = rateFor('BTC');
+  const nzdFor = chosen.eth != null ? (rateFor('ETH') ? chosen.eth / rateFor('ETH') : null) : chosen.nzd;
+  if (locked && nzdFor != null) {
+    document.getElementById('btcAmt').textContent = `${(nzdFor * locked).toFixed(6)} BTC  ${money(nzdFor)}`;
+  }
+  try {
+    const r = await fetch('/api/pay-details?chain=bitcoin').then((x) => x.json());
+    const addr = document.getElementById('btcAddr');
+    addr.textContent = r.address || 'Address on request, email below and it comes straight back.';
+    if (!locked && r.rate && nzdFor != null) {
+      document.getElementById('btcAmt').textContent = `${(nzdFor * r.rate).toFixed(6)} BTC  ${money(nzdFor)}`;
+    }
+  } catch (err) {
+    document.getElementById('btcAddr').textContent = 'Address on request, email below and it comes straight back.';
+  }
+}
+
+// closing the panel is wired on its own, so it works whether the panel was
+// opened by the Acquire button or by coming back from Stripe
+function wireSheetClose() {
+  const shut = () => { clearInterval(QUOTE_TIMER); SHEET.close(); };
+  document.getElementById('sheetClose').addEventListener('click', shut);
+  document.getElementById('scrim').addEventListener('click', shut);
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') shut(); });
+}
+
+function wireAcquire(work, collection) {
+  const b = document.getElementById('acquire');
+  if (!b) return;
+  const priced = optionsFor(work, collection).length > 0;
+  b.addEventListener('click', () => {
+    if (!priced) {
+      const subject = encodeURIComponent(
+        work.status === 'uninscribed'
+          ? `Inscription enquiry ... ${work.title} ... ${collection.title}`
+          : `${work.title} ... ${collection.title}`);
+      location.href = `mailto:ryan@mintface.art?subject=${subject}`;
+      return;
+    }
+    ACQ = { work, collection, what: null, fx: ACQ.fx, quote: null };
+    SHEET.open();
+    stepWhat();
+    lockQuote();
+  });
+}
+
+// coming back from Stripe: the webhook does the fulfilling, this only says thank you
+function thanksIfPaid() {
+  const paid = new URLSearchParams(location.search).get('paid');
+  if (!paid) return;
+  SHEET.open();
+  SHEET.body().innerHTML = `<h2>Thank you</h2>
+    <p class="ok">Your payment went through.</p>
+    <p class="note">A confirmation is on its way. The work will show as collected here shortly, and Ryan will be in touch about the token and anything physical.</p>
+    <button class="choice go" id="thanksDone"><span class="what">Back to the work</span><span class="amt">&rarr;</span></button>`;
+  document.getElementById('thanksDone').addEventListener('click', () => {
+    SHEET.close();
+    // drop the ?paid= so a refresh does not thank them twice
+    history.replaceState(null, '', location.pathname);
+  });
+}
+
+(async function () {
+  const id = workId();
+  try {
+    const hit = await MF.work(id);
+    if (!hit) {
+      document.getElementById('main').innerHTML = `<div class="loading">Work not found</div>`;
+      return;
+    }
+    const idx = await MF.index();
+    render(hit.work, hit.collection, idx._meta || {});
+  } catch (err) {
+    document.getElementById('main').innerHTML = `<div class="loading">Could not load this work</div>`;
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

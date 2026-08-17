@@ -1,0 +1,28 @@
+import { getJSON, BS, bsPaged, mapLimit, sleep } from './lib.mjs';
+import fs from 'fs';
+const OS = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
+const scan = JSON.parse(fs.readFileSync('raw/os-scan.json','utf8'));
+const tr = JSON.parse(fs.readFileSync('os-artist-tokens.json','utf8'));
+const ids = new Map();
+for (const x of scan) ids.set(x.id, { id: x.id, index: x.index, name: x.name, metadata: x.metadata, image: x.image, animation: x.animation });
+for (const x of tr) if (!ids.has(String(x.id))) ids.set(String(x.id), { id: String(x.id), index: x.__index, name: x.instance?.metadata?.name, metadata: x.instance?.metadata, image: x.instance?.image_url, animation: x.instance?.animation_url });
+const list = [...ids.values()];
+console.log('tokens to detail:', list.length);
+let done = 0;
+await mapLimit(list, 3, async (t) => {
+  const holders = await bsPaged(`/tokens/${OS}/instances/${t.id}/holders`, { max: 50 });
+  t.holders = holders.map(h => ({ address: h.address?.hash, ens: h.address?.ens_domain_name, value: h.value }));
+  const trs = await getJSON(`${BS}/tokens/${OS}/instances/${t.id}/transfers`);
+  const items = trs.items || [];
+  t.transfers_count = items.length;
+  t.first_transfer = items.length ? items[items.length-1] : null;
+  t.last_transfer = items.length ? items[0] : null;
+  if (t.first_transfer) t.first_transfer = { ts: t.first_transfer.timestamp, from: t.first_transfer.from?.hash, from_ens: t.first_transfer.from?.ens_domain_name, to: t.first_transfer.to?.hash, to_ens: t.first_transfer.to?.ens_domain_name, tx: t.first_transfer.transaction_hash };
+  if (t.last_transfer) t.last_transfer = { ts: t.last_transfer.timestamp, to: t.last_transfer.to?.hash, to_ens: t.last_transfer.to?.ens_domain_name };
+  if (++done % 25 === 0) console.log('  ...', done);
+  await sleep(80);
+});
+fs.writeFileSync('raw/os-detail.json', JSON.stringify(list, null, 2));
+const gm = list.filter(x=>/^Geodetic (Moment|Marker)/i.test(x.name||''));
+const firsts = gm.map(x=>x.first_transfer?.ts).filter(Boolean).sort();
+console.log('geodetic moments/markers:', gm.length, '| earliest on-chain transfer:', firsts[0], '| latest:', firsts[firsts.length-1]);

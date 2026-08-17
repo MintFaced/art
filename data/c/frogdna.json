@@ -1,0 +1,404 @@
+{
+ "slug": "frogdna",
+ "title": "FROGDNA",
+ "group": "core",
+ "year": "2025",
+ "medium": "Painting",
+ "physical": true,
+ "statement": null,
+ "links": {
+  "site": "https://frogdna.com",
+  "tokenscan": "https://cp20.tokenscan.io/asset/FROGDNA",
+  "fake_rares": "https://fakeraredirectory.wordpress.com/series-2/",
+  "emblem": "https://emblem.finance/nft2?id=112120649069925438432858119347465481415441762939268014343104260294108241684123",
+  "opensea": "https://opensea.io/item/ethereum/0x4c03bcad293fb0562d26faa7d90a0cb3ea74c919/112120649069925438432858119347465481415441762939268014343104260294108241684123"
+ },
+ "notes": "Counterparty asset on Bitcoin (Fake Rare series), not an Ordinal. Some editions are wrapped in an EmblemVault ERC-1155 and trade on Ethereum.",
+ "counts": {
+  "works": 1,
+  "editions": 88,
+  "holders": 43,
+  "artist_held_native": 33,
+  "wrapped": 30,
+  "artist_held_wrapped": 14
+ },
+ "contracts": [
+  {
+   "chain": "bitcoin",
+   "standard": "Counterparty",
+   "asset": "FROGDNA",
+   "asset_id": "1753067758",
+   "issuer": "1GpCYqHS3sqvg4n837NJmcsmWLfAssXcqK",
+   "supply": 88,
+   "locked": true,
+   "first_issuance_block": 913856,
+   "last_issuance_block": 914012,
+   "metadata": "https://easyasset.art/j/cns6ae/FROGD.json"
+  },
+  {
+   "chain": "ethereum",
+   "standard": "ERC-1155",
+   "address": "0x4C03BCAD293fb0562D26FAa7D90A0cb3Ea74c919",
+   "token_id": "112120649069925438432858119347465481415441762939268014343104260294108241684123",
+   "name": "EmblemVault",
+   "role": "Wrapped for Ethereum, 30 of the edition"
+  }
+ ],
+ "works": [
+  {
+   "id": "frogdna-1",
+   "collection": "frogdna",
+   "title": "FROGDNA",
+   "edition": {
+    "type": "edition",
+    "of": 88,
+    "holders": 43,
+    "artist_held": 33
+   },
+   "digital": {
+    "chain": "bitcoin",
+    "standard": "Counterparty",
+    "asset": "FROGDNA",
+    "image": "/frogdna-by-mintface.jpg"
+   },
+   "wrapped": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x4C03BCAD293fb0562D26FAa7D90A0cb3Ea74c919",
+    "token_id": "112120649069925438432858119347465481415441762939268014343104260294108241684123",
+    "name": "FROGDNA | Series 18 Card 9",
+    "image": "https://raw.githubusercontent.com/EmblemCompany/vaultImages/master/collection/fake-rares/FROGDNA.jpg",
+    "total": 30,
+    "artist_held": 14,
+    "vaulted": 8,
+    "holders": [
+     {
+      "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+      "ens": "mintface.eth",
+      "qty": 14,
+      "status": "available"
+     },
+     {
+      "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
+      "ens": "mintestate.eth",
+      "qty": 8,
+      "status": "vaulted"
+     },
+     {
+      "address": "0xdE58879DE5cA41367a5093dEE41F622C167b94B4",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     },
+     {
+      "address": "0xa1F05dbe26cDC2EDe4f410a5C54fE6473B5D7071",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     },
+     {
+      "address": "0x914361B591a8c8De83A0d4E23c7C6dA2d226eEFd",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     },
+     {
+      "address": "0x69c144D56e10F2012da6C6EdB1A6fB72955e209A",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     },
+     {
+      "address": "0x31f8e9B0c3da5EA19f06c6DF7E88F3c60FDda1b4",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     },
+     {
+      "address": "0x16AC7b1598329D95e6C6C6372B12b6E0FB51c96c",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     },
+     {
+      "address": "0x0AAbac1408D397E5c875A28A1C9f6d052bF54D9a",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     },
+     {
+      "address": "0x03477E844A5eAab2a03E225d5d32826d1007105e",
+      "ens": null,
+      "qty": 1,
+      "status": "acquired"
+     }
+    ],
+    "links": {
+     "opensea": "https://opensea.io/item/ethereum/0x4c03bcad293fb0562d26faa7d90a0cb3ea74c919/112120649069925438432858119347465481415441762939268014343104260294108241684123",
+     "emblem": "https://emblem.finance/nft2?id=112120649069925438432858119347465481415441762939268014343104260294108241684123"
+    }
+   },
+   "physical": {
+    "exists": true,
+    "width_cm": 120,
+    "height_cm": 165,
+    "depth_cm": 1,
+    "ready_to_hang": true,
+    "framed": false,
+    "certificate": true,
+    "sold": true,
+    "collector": "S & A Novak"
+   },
+   "pricing_nzd": {
+    "digital": 150,
+    "painting": 5000,
+    "both": null
+   },
+   "status": "acquired",
+   "buy_paths": [
+    "stripe_nzd",
+    "stripe_usd",
+    "reserve",
+    "eth_emblem_vault",
+    "btc_counterparty"
+   ],
+   "holders": [
+    {
+     "address": "1GpCYqHS3sqvg4n837NJmcsmWLfAssXcqK",
+     "qty": 33,
+     "status": "available"
+    },
+    {
+     "address": "1JbjL5YBvNQf9oH7r8vDUELqHtuXWgeQ4u",
+     "qty": 5,
+     "status": "acquired"
+    },
+    {
+     "address": "126qy2Rt3fC81ZqRQZ8cVd14QeCQBADxNS",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1DecRwXWv1arS7SnDZE7ZHKjpcjv9hRuJx",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1BtXfC2Ypz6jRrBzQ6ne8WYggCBan4tT8K",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1q3BXKg6ZYUhhBqFLqj12N3PcUSfZsEBy",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1JiRk2AgcuwBVB2Yx8ux39YNjNEPQpChrW",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1L4ciJZi322ZN1DvzsP8LXoM4dipM1Bi8V",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "113UzmXEXtuc9KXFA8sgJVjKsMPHvAH3hm",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "19ioh82PWBUCHkVTcoy7kEtNBAvTvfPRns",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1AZQpNKna4bw5XcjF1RkuWbwTsJrrSJNsK",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1DEdfv9kiWmZ31rdRXGFRHvKc2wron5uKw",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1CX4qCqzHF8GXDS1YggyWkyVniHKd6yxHJ",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1KaFZmf76ydLSP3DHQ61RmMN4uatEwAFk6",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "19b2ZrgjaCg4zvHCWeJsrc8BBTEPxFai3L",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1DwBJfhZ5fN5QwcnRgaTdSzPkWDuTZ3ZeL",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "17s8ceKdaphkphWT3fzxjbt1zucutjtXxJ",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "13V5tpTBmTZKBZPQ7nUaEE2KtAeEueJXg2",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1K6ECnegJf3qxnC9YALgtuk83E4fKxTiHY",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1Gcb6iG1WjFBkJ39NrZZkCeqSmU1d8G5Nu",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "12E3GttnvCvp6zp8gLgiiqjUXD4hsKKWsm",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1DX8Bh4ahQneERBgeaxf8o6hRicP2K4DDS",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "13NWqL5RZHbbVqrMeQ8tRRRmQQHjUJMXVZ",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1Eczif64LoRHi988PjnfFm1HNPX2G2yVRq",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "19bjqoGwHNwhg9HLU5TA44WaN1xwPy14cE",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1LahcwaZaxTGFEsYgd6u7CQH9VFPQwHip9",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "174HRwaNRUc1pbLNb4fvtR27ABs8BwKRDm",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "14GSVW6JHNg8TT5o3nxZ7Vthhi8NWQSVmS",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "16Kzr7ocw1pTDhR5FL5vvFWmiSz4iFpygS",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "182w7NuXtvMbiMvQe6KJhBfovJTmz9rXqq",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1LD8HFKyL5UjGiXGfKvympCtWxofojNV5z",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1FpY1w2WP1qA2Q5WHD77TtreCQYsJzHCxM",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1F6FDQVgjseGSMXTpxZcVF8jJUf1VUqHR1",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1FKRr2LsH12HnYGYfTvdAZXiXfBdBpeYsW",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "15KW2Xt5iikA1knrjbi6fezFWhQSkdop7N",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1EX1fdmvs3LJjfMsJ5hGKMcbXNbpEswgSp",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1NanKFZ8QAxLiBQJFuMc1Y3rANPG52WjrA",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "16w68HiTqGN8B77Q6csZfCeM82BNK82hzV",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1MvAXrEy5QrAHEyBMM5F3x3ySdYUMqbdfA",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1DbUHWYVyd3zFiZarmjuMSvFdoeUdyALrJ",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1FNWAvoaTLgHbARjoXL9dnjezXGRPKeoFo",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "114p9o189Z4d87bBJ56aD24GHpQqYynuwH",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "1LSbNkNGUidmQavQPqbqPR1MxqmHzwwEuY",
+     "qty": 1,
+     "status": "acquired"
+    }
+   ],
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   },
+   "listing": {
+    "eth": 0.03,
+    "platform": null
+   },
+   "hand_notes": "1/1 physical, 88 digital editions",
+   "status_chain": "available",
+   "collector": {
+    "address": null,
+    "ens": null,
+    "note": null,
+    "acquired": null,
+    "display_name": "S & A Novak"
+   }
+  }
+ ],
+ "genre": "Painting / Design",
+ "facets": {}
+}

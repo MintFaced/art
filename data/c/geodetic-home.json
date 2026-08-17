@@ -1,0 +1,157 @@
+{
+ "slug": "geodetic-home",
+ "title": "Geodetic Home",
+ "group": "geodetic",
+ "year": "2025",
+ "medium": "Sculpture",
+ "physical": false,
+ "sold_out": true,
+ "statement": "We are home now.",
+ "links": {
+  "opensea": "https://opensea.io/item/ethereum/0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4/5"
+ },
+ "counts": {
+  "works": 1,
+  "editions_minted": 15
+ },
+ "contracts": [
+  {
+   "chain": "ethereum",
+   "standard": "ERC-1155",
+   "address": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4",
+   "deployed": "2022-02-18T08:29:35.000000Z"
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-home-5",
+   "collection": "geodetic-home",
+   "title": "Geodetic Home",
+   "statement": "We are home now.",
+   "edition": {
+    "type": "edition",
+    "minted": 15,
+    "holders": 13,
+    "artist_held": 1,
+    "vaulted": 0
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4",
+    "token_id": "5",
+    "image": "https://arweave.net/ABFPpfcDLXqGr-suGHviILZemMmcYRX4TpkSxtJAfcY",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": 160,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "holders": [
+    {
+     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+     "ens": "visco.eth",
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0x429683282E5a28b81Aab1F9126b8d5e4847DFBeb",
+     "ens": null,
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
+     "ens": "parachica.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xdE58879DE5cA41367a5093dEE41F622C167b94B4",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xdD6B80649e8D472EB8fb52eb7eEcFd2Dc219AcE7",
+     "ens": "ryanj.eth",
+     "qty": 1,
+     "status": "available"
+    },
+    {
+     "address": "0xDAfa9e3dAe493F0B9D6872EFf4fda0f40D1b7488",
+     "ens": "piercedcat.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xCB7504C4cb986E80AB4983b44263381F21273482",
+     "ens": "producedbydav.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC2547446c439bE477DCe96702FB1F9Dfb61baB3a",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc142DC5CEB96f73635D66B62bfde2A0eEa4e4cE1",
+     "ens": "sumofprimes.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa1F05dbe26cDC2EDe4f410a5C54fE6473B5D7071",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x40D2f4399D23f9AfB82D0a6B73055f13208614F9",
+     "ens": "mintsafe.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+     "ens": "iagof.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x0b3b0f9046905f50E13D3eBE055AB21E838eC872",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    }
+   ],
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace",
+     "display_type": "text"
+    }
+   ],
+   "assets": {
+    "display": "geodetic-home/geodetic-home-5-display.webp",
+    "image": "geodetic-home/geodetic-home-5-image.png"
+   },
+   "listed_eth": 0.05,
+   "offers": {
+    "digital": true,
+    "painting": false,
+    "both": false
+   }
+  }
+ ],
+ "genre": "Sculpture",
+ "facets": {}
+}

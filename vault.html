@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vault ... MintFace</title>
+<meta name="description" content="Works held for at least ten years, then passed down through the MintFace bloodline.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:1100px;margin:0 auto;padding:60px 28px 20px;text-align:center}
+.kicker{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(42px,8.6vw,104px);line-height:.95;margin:0;letter-spacing:-.035em}
+.intent{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,2vw,21px);line-height:1.55;color:#3a362f;max-width:640px;margin:30px auto 0}
+.held{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:26px}
+.mast-rule{width:44px;height:1px;background:var(--rule);margin:52px auto 0}
+
+.set{max-width:1500px;margin:0 auto;padding:0 28px}
+.chapter{padding:52px 0 4px}
+.chapter + .chapter{border-top:1px solid var(--rule)}
+.chead{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 20px;margin-bottom:26px}
+.chead h2{font-family:var(--font-sans);font-weight:400;font-size:clamp(23px,3vw,33px);line-height:1.08;margin:0;letter-spacing:-.025em}
+.chead h2 a{text-decoration:none}
+.chead h2 a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.cmeta{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+.all{margin-left:auto}
+
+/* the fine border is the whole visual idea: these are kept, not offered */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:26px}
+.grid a,.grid .cell{display:block;text-decoration:none}
+.frame{border:1px solid var(--rule);padding:9px;background:var(--paper)}
+.frame .shot{background:#f2efe9;aspect-ratio:1/1;overflow:hidden}
+.frame img,.frame video{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
+.frame img,.frame video.in{opacity:1}
+.cap{padding:10px 2px 0}
+.cap .t{font-family:var(--font-sans);font-weight:400;font-size:14px;line-height:1.3}
+.cap .v{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.grid a:hover .frame{border-color:var(--ink)}
+.grid a:hover .cap .t{text-decoration:underline;text-underline-offset:3px}
+
+.tail{max-width:660px;margin:0 auto;padding:76px 28px 110px;text-align:center}
+.tail p{font-size:13px;color:var(--muted);margin:0 0 8px}
+.tail .rest{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);line-height:2}
+
+@media(max-width:1200px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:820px){.grid{grid-template-columns:repeat(3,1fr);gap:18px}}
+@media(max-width:560px){
+  .mast{padding:34px 20px 12px}
+  .set{padding:0 20px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .frame{padding:6px}
+  .all{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+
+// Editions of one artwork are still one artwork on a wall. Same rule as the
+// edition collapse: a normalised title and the same image is the same piece.
+const normTitle = (t) => (t || '').replace(/\s*#\s*\d+(\s*\/\s*\d+)?\s*$/, '').trim();
+
+function dedupe(works) {
+  const groups = new Map();
+  for (const w of works) {
+    const key = `${normTitle(w.display_title || w.title)}|${w.image || ''}`;
+    if (!groups.has(key)) groups.set(key, { ...w, held: 0, token_ids: [] });
+    const g = groups.get(key);
+    g.held += Number(w.qty || 1);
+    g.token_ids.push(w.token_id);
+    if (!g.id && w.id) g.id = w.id;   // link to a work page if any copy has one
+  }
+  return [...groups.values()];
+}
+
+function tile(w, collectionTitle) {
+  const href = w.id ? `/w/${encodeURIComponent(w.id)}` : null;
+  const raw = (w.display_title || w.title || '').trim();
+  const title = /^#?\d+$/.test(raw)
+    ? `${collectionTitle} ${raw.startsWith('#') ? raw : '#' + raw}`
+    : (raw || 'Untitled');
+  const img = MF.img({ digital: { image: w.image }, assets: w.assets, title }, 520, { alt: title });
+  const body = `<div class="frame"><div class="shot">${img}</div></div>
+    <div class="cap">
+      <div class="t">${e(title)}</div>
+      <div class="v"><span class="dot vaulted"></span> Vaulted${w.held > 1 ? ' &middot; held &times; ' + w.held : ''}</div>
+    </div>`;
+  return href ? `<a href="${href}">${body}</a>` : `<div class="cell">${body}</div>`;
+}
+
+function chapter(group) {
+  return `<section class="chapter">
+    <div class="chead">
+      <h2>${group.slug ? `<a href="/c/${encodeURIComponent(group.slug)}">${e(group.title)}</a>` : e(group.title)}</h2>
+      <div class="cmeta">${group.works.length} ${group.works.length === 1 ? 'work' : 'works'}${group.tokens > group.works.length ? ` &middot; ${group.tokens} tokens` : ''}</div>
+      ${group.slug ? `<a class="smallcaps all" href="/c/${encodeURIComponent(group.slug)}">The collection</a>` : ''}
+    </div>
+    <div class="grid">${group.works.map((w) => tile(w, group.title)).join('')}</div>
+  </section>`;
+}
+
+(async function () {
+  try {
+    const [vault, idx] = await Promise.all([MF.collection('the-vault'), MF.index()]);
+    const titleOf = Object.fromEntries(idx.collections.map((c) => [c.slug, c.title]));
+    const order = idx.collections.map((c) => c.slug);
+
+    // group by the collection each vaulted token actually belongs to
+    const groups = new Map();
+    for (const w of vault.works) {
+      const slug = w.id ? idx.work_index[w.id] : null;
+      const key = slug || 'unplaced';
+      if (!groups.has(key)) {
+        groups.set(key, {
+          slug: slug || null,
+          title: slug ? (titleOf[slug] || slug) : 'Also in the vault',
+          works: [],
+        });
+      }
+      groups.get(key).works.push(w);
+    }
+    // one card per artwork, however many editions of it are held
+    for (const g of groups.values()) {
+      g.tokens = g.works.reduce((n, w) => n + Number(w.qty || 1), 0);
+      g.works = dedupe(g.works);
+    }
+    const list = [...groups.values()].sort((a, b) => {
+      const ia = a.slug ? order.indexOf(a.slug) : 999;
+      const ib = b.slug ? order.indexOf(b.slug) : 999;
+      return ia - ib || b.works.length - a.works.length;
+    });
+
+    const other = vault.counts && vault.counts.other_holdings;
+    const rest = (vault.other_holdings_summary || []).slice(0, 5)
+      .map((r) => `${r.collection.split('|')[0].trim()} (${r.count})`);
+
+    document.getElementById('main').innerHTML = `
+      <div class="mast">
+        <div class="kicker">${e(vault.wallet || 'mintestate.eth')}</div>
+        <h1>${e(vault.title)}</h1>
+        <p class="intent">${e(vault.intent || vault.statement || '')}</p>
+        <div class="held">${vault.works.reduce((n, w) => n + Number(w.qty || 1), 0)} tokens, ${new Set(vault.works.map((w) => `${normTitle(w.display_title || w.title)}|${w.image || ''}`)).size} works</div>
+        <div class="mast-rule"></div>
+      </div>
+      <div class="set">${list.map(chapter).join('')}</div>
+      ${other ? `<div class="tail">
+        <p>The same wallet holds ${other} works by other artists, collected rather than made.</p>
+        <div class="rest">${rest.map(e).join(' &middot; ')}</div>
+      </div>` : ''}`;
+    MF.progress.watch(document.getElementById('main'));
+  } catch (err) {
+    document.getElementById('main').innerHTML = '<div class="loading">Could not load the vault</div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

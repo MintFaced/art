@@ -1,0 +1,614 @@
+{
+ "_meta": {
+  "version": "0.4.0",
+  "note": "Canonical catalog for mintface.art. Single source of truth. Edit + push to deploy.",
+  "assets_base": "https://mintface.art/assets",
+  "artist_wallets": {
+   "mintface.eth": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "ryanj.eth": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "mintestate.eth": "enumerate via https://opensea.io/mintestate.eth"
+  },
+  "pricing": {
+   "master_currency": "NZD",
+   "display": [
+    "NZD",
+    "USD",
+    "ETH"
+   ],
+   "fx": "live, client-side, cached hourly"
+  },
+  "shipping": "Worldwide. Boxing, crating and freight included in painting price.",
+  "reserve_days": 14,
+  "vault_intent": "Works vaulted, not for sale for at least ten years. Passed down through the MintFace bloodline to the next generation. Patrimora is the same idea in Latin ... patri, what is handed down, and mora, delay. A heritage postponed but inevitable.",
+  "design_decisions": {
+   "accent": "Ink only. The availability dot is the single green.",
+   "hero": "One rotating curated work per visit.",
+   "grid_prices": "Inline on collection grids (Saatchi pattern)."
+  }
+ },
+ "groups": [
+  {
+   "id": "core",
+   "title": "Collections"
+  },
+  {
+   "id": "geodetic",
+   "title": "The Geodetic Collections"
+  },
+  {
+   "id": "geodetic-studies",
+   "title": "Studies",
+   "parent": "geodetic"
+  },
+  {
+   "id": "ai-studies",
+   "title": "AI Studies"
+  },
+  {
+   "id": "feature",
+   "title": "Features"
+  },
+  {
+   "id": "vault",
+   "title": "The Vault"
+  },
+  {
+   "id": "recent",
+   "title": "Recent Work"
+  }
+ ],
+ "collections": [
+  {
+   "slug": "pixelarcade",
+   "title": "PixelArcade",
+   "group": "core",
+   "year": "2026",
+   "medium": "Acrylic / Pixel / Tokenized",
+   "physical": true,
+   "editions": "64 \u00d7 1/1",
+   "statement": "FILL \u2014 one line",
+   "links": {
+    "site": "https://pixelarcade.art"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0x97536e...ba30e8 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ],
+   "notes": "Physical claim mechanic \u2014 details on pixelarcade.art"
+  },
+  {
+   "slug": "artificial-flowers",
+   "title": "Artificial Flowers",
+   "group": "core",
+   "year": "2025",
+   "medium": "Painting / AI / AR",
+   "physical": true,
+   "editions": "21 \u00d7 1/1",
+   "statement": "FILL",
+   "assets": {
+    "images": "gallery09",
+    "videos": "video01-video12 (AR demos)"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0xd64ac5...be90d (partial address from provenance table; expand to full 0x on build)"
+    }
+   ]
+  },
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "group": "core",
+   "year": "2025",
+   "medium": "Generative",
+   "physical": false,
+   "editions": "1/1 + 469 editions",
+   "statement": "FILL",
+   "assets": {
+    "images": "gallery06"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0xEabffd...502d8 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ]
+  },
+  {
+   "slug": "frogdna",
+   "title": "FROGDNA",
+   "group": "core",
+   "year": "2025",
+   "medium": "Painting",
+   "physical": true,
+   "editions": "1 work, 88 editions",
+   "statement": "FILL",
+   "contracts": [
+    {
+     "chain": "bitcoin",
+     "standard": "Ordinals",
+     "address": "FROGDNA"
+    }
+   ]
+  },
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "group": "core",
+   "year": "2024",
+   "medium": "Painting",
+   "physical": true,
+   "editions": "36 \u00d7 1/1",
+   "statement": "The inner and outer burdens.",
+   "links": {
+    "site": "https://twoburdens.com",
+    "networked": "https://networked.art/mintfacenft/twoburdens"
+   },
+   "assets": {
+    "images": "gallery03"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0xe1d1f9...ed09 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ]
+  },
+  {
+   "slug": "recursive-mind",
+   "title": "Recursive Mind",
+   "group": "core",
+   "year": "2023\u201325",
+   "medium": "Illustration",
+   "physical": false,
+   "editions": "13 \u00d7 1/1",
+   "statement": "FILL",
+   "assets": {
+    "images": "gallery04"
+   },
+   "contracts": [
+    {
+     "chain": "bitcoin",
+     "standard": "Ordinals",
+     "address": "146688a...b95i0"
+    }
+   ]
+  },
+  {
+   "slug": "hidden-landscapes",
+   "title": "Hidden Landscapes",
+   "group": "core",
+   "year": "2022",
+   "medium": "AI \u2014 ArtBreeder",
+   "physical": false,
+   "editions": "18 \u00d7 1/1",
+   "statement": "Hidden landscapes are emotions painted with words.",
+   "aliases": [
+    "Geodetic AI",
+    "geoai"
+   ],
+   "links": {
+    "networked": "https://networked.art/mintfacenft/geoai",
+    "more": "https://www.geodeticmoments.com/hidden-landscapes/"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0x38bae1...6045 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ],
+   "notes": "Shares contract 0x38bae1...6045 with Geodetic Illusions"
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "group": "core",
+   "year": "2022",
+   "medium": "Photography",
+   "physical": false,
+   "editions": "36 \u00d7 1/1 + 162 editions",
+   "statement": "Roads are for travelling. Rivers go with the flow.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/roadsandrivers"
+   },
+   "assets": {
+    "images": "gallery13"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0x18bd00...ee67 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ]
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "group": "geodetic",
+   "year": "2023",
+   "medium": "AI",
+   "physical": false,
+   "editions": "95 \u00d7 1/1",
+   "statement": "Distance separates, yet presence remains.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/geodeticworld"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0xe16c77...d396 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ]
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "group": "geodetic",
+   "year": "2022",
+   "medium": "AI",
+   "physical": false,
+   "editions": "100 \u00d7 1/1",
+   "statement": "The shortest visual path between human and machine.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/geodetica"
+   },
+   "assets": {
+    "images": "gallery05"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0xf6f44f...2933 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ],
+   "sold_out": true
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "group": "geodetic",
+   "year": "2021",
+   "medium": "Photography",
+   "physical": false,
+   "editions": "100 \u00d7 1/1",
+   "statement": "Look to the horizon and measure where you stand.",
+   "assets": {
+    "images": "gallery07"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-1155",
+     "address": "0x495f94...b7b5e (partial address from provenance table; expand to full 0x on build)"
+    }
+   ],
+   "sold_out": true
+  },
+  {
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
+   "group": "geodetic",
+   "year": "2025",
+   "medium": "Sculpture",
+   "physical": false,
+   "editions": "1 work, 15 editions",
+   "statement": "FILL",
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-1155",
+     "address": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4"
+    }
+   ],
+   "sold_out": true,
+   "links": {
+    "opensea": "https://opensea.io/item/ethereum/0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4/5"
+   }
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "group": "geodetic",
+   "year": "2022",
+   "medium": "Photography",
+   "physical": false,
+   "editions": "1 work, 823 editions",
+   "statement": "A dance with the unconscious mind, after Dali.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/geodetic-memory"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-1155",
+     "address": "0xa81f80...979c (partial address from provenance table; expand to full 0x on build)"
+    }
+   ]
+  },
+  {
+   "slug": "geodetic-illusions",
+   "title": "Geodetic Illusions",
+   "group": "geodetic-studies",
+   "year": "2022",
+   "medium": "Neural painting",
+   "physical": false,
+   "editions": "87 \u00d7 1/1",
+   "statement": "Preparation studies.",
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0x38bae1...6045 (partial address from provenance table; expand to full 0x on build)"
+    }
+   ]
+  },
+  {
+   "slug": "visual-language",
+   "title": "Visual Language",
+   "group": "ai-studies",
+   "year": "2022",
+   "medium": "AI",
+   "physical": false,
+   "editions": "31 \u00d7 1/1",
+   "statement": "The first line of a famous speech, reimagined by AI.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/visuallanguage"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "address": "FILL"
+    }
+   ]
+  },
+  {
+   "slug": "panoptic",
+   "title": "Panoptic",
+   "group": "ai-studies",
+   "year": "2022",
+   "medium": "AI",
+   "physical": false,
+   "editions": "9 \u00d7 1/1",
+   "statement": "Prompting our future from a single view.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/panopticon"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "address": "FILL"
+    }
+   ]
+  },
+  {
+   "slug": "wallet",
+   "title": "WALL\u039eT",
+   "group": "ai-studies",
+   "year": "2022",
+   "medium": "AI",
+   "physical": false,
+   "editions": "10 \u00d7 1/1",
+   "statement": "Artwork seeded by ten wallet addresses, interpreted by AI.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/wallet"
+   },
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "address": "FILL"
+    }
+   ]
+  },
+  {
+   "slug": "genesis",
+   "title": "Genesis",
+   "group": "feature",
+   "year": "2021",
+   "medium": "Photography",
+   "physical": false,
+   "statement": "City vs Nature \u2014 the genesis mint \u2014 and the Foundation 1/1s that followed.",
+   "children": [
+    {
+     "slug": "city-vs-nature",
+     "title": "City vs Nature",
+     "editions": "1 work, 5 editions",
+     "note": "Genesis mint",
+     "minted": "2021-04-25",
+     "platform": "Rarible",
+     "contract_standard": "ERC-1155"
+    },
+    {
+     "slug": "foundation-1of1s",
+     "title": "Foundation 1/1s",
+     "editions": "8 \u00d7 1/1",
+     "wallet": "ryanj.eth",
+     "note": "Eight photographs from 20 years. Canon 20D then 80D. Verify count via chain enumeration in Phase 1.",
+     "networked": "https://networked.art/mintface/foundation",
+     "contract": {
+      "chain": "ethereum",
+      "standard": "ERC-721",
+      "address": "Foundation"
+     }
+    }
+   ]
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "group": "feature",
+   "year": "2022",
+   "medium": "Data portrait",
+   "physical": false,
+   "statement": "One square of pixels for each of 10,000 frens... because NFTs are people.",
+   "links": {
+    "networked": "https://networked.art/mintfacenft/mintface2022"
+   },
+   "collaborator": "Dr Matthew Hirschey, Duke University \u2014 Digital Artist Economy student; wrote the organising scripts",
+   "artist_credit": "MintFace x Matthew Hirschey",
+   "works": [
+    {
+     "id": "10k-project",
+     "title": "10k Project",
+     "edition": {
+      "type": "1/1"
+     },
+     "status": "available",
+     "listed": true,
+     "minted": "2022-05-07",
+     "platform": "Foundation",
+     "resolution": "4800 x 4800",
+     "filesize": "22.9Mb",
+     "format": "jpg",
+     "contract": {
+      "chain": "ethereum",
+      "standard": "ERC-721",
+      "address": "0xe5eb0070a13f868a72996a568e12d085413445b8",
+      "token_id": "1"
+     },
+     "links": {
+      "networked": "https://networked.art/mintfacenft/mintface2022/1",
+      "mint_tx": "https://evm.now/tx/0x3ba5b27fe17dff5044d83d87a637e6c8e83d10858149284ec9b2bbe5612626c0",
+      "ipfs": "https://ipfs.networked.art/ipfs/QmYZBohMZ4n7dvEx7PvBCz7pZu736eQS2mhPkC47JgtVSt/nft.jpg"
+     }
+    },
+    {
+     "id": "10k-commemoration",
+     "title": "10k Project \u2014 Commemoration Edition",
+     "edition": {
+      "type": "edition",
+      "of": 1000,
+      "minted": 998,
+      "owners": 956
+     },
+     "note": "Framed commemoration variant for anyone who followed MintFace on Twitter at the time",
+     "contract": {
+      "chain": "ethereum",
+      "standard": "FILL (1155 likely)",
+      "address": "0xe125091e7c669d47e374d7f23bc857789f701780",
+      "token_id": "2"
+     },
+     "links": {
+      "opensea": "https://opensea.io/item/ethereum/0xe125091e7c669d47e374d7f23bc857789f701780/2"
+     }
+    }
+   ]
+  },
+  {
+   "slug": "the-vault",
+   "title": "The Vault",
+   "group": "vault",
+   "statement": "Vaulted works, not for sale for at least 10 years. Passed down through the MintFace bloodline.",
+   "wallet": "mintestate.eth",
+   "works": "enumerate from chain via opensea.io/mintestate.eth"
+  },
+  {
+   "slug": "recent-work",
+   "title": "Recent Work",
+   "group": "recent",
+   "statement": "Latest paintings.",
+   "notes": "Added via scripts/add-work.mjs"
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "group": "geodetic",
+   "year": "2022",
+   "medium": "Illustration",
+   "physical": false,
+   "editions": "5 works, 2\u00d7100 editions",
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-1155",
+     "address": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4"
+    }
+   ],
+   "notes": "Two black and white stencil/outline pieces... as a forge keeps a master mould. Position first in the Geodetic set as origin works. Shares contract with Geodetic Home.",
+   "statement": "The master moulds for the geodetic form."
+  }
+ ],
+ "work_schema_example": {
+  "id": "two-burdens-07",
+  "collection": "two-burdens",
+  "title": "FILL",
+  "year": 2024,
+  "medium": "Acrylic on canvas",
+  "edition": {
+   "type": "1/1"
+  },
+  "digital": {
+   "contract": "FILL",
+   "token_id": "7",
+   "chain": "ethereum",
+   "image": "gallery03/07.jpg",
+   "animation": null
+  },
+  "physical": {
+   "exists": true,
+   "width_cm": 0,
+   "height_cm": 0,
+   "depth_cm": 0,
+   "ready_to_hang": true,
+   "framed": false,
+   "certificate": true,
+   "packaging": "Ships boxed/crated, freight included"
+  },
+  "pricing_nzd": {
+   "digital": 0,
+   "painting": 0,
+   "both": 0
+  },
+  "status": "available",
+  "reserve": null,
+  "collector": {
+   "address": null,
+   "ens": null,
+   "display_name": null,
+   "note": null,
+   "acquired": null
+  }
+ },
+ "exhibition_history": [
+  {
+   "year": "2026",
+   "title": "PixelArcade \u2014 The Line",
+   "venue": "The Line Gallery, New Zealand"
+  },
+  {
+   "year": "2026",
+   "title": "Artificial Flowers \u2014 The Line",
+   "venue": "The Line Gallery, New Zealand"
+  },
+  {
+   "year": "2025",
+   "title": "Roads & Rivers \u2014 The Line",
+   "venue": "The Line Gallery, New Zealand \u00b7 September 2025 \u00b7 Featured NZ Herald"
+  },
+  {
+   "year": "2024",
+   "title": "Two Burdens \u2014 NFT NYC",
+   "venue": "Jutta Gallery, June 2024 \u00b7 US debut"
+  },
+  {
+   "year": "2024",
+   "title": "Two Burdens \u2014 The Studio",
+   "venue": "The Studio, Auckland, New Zealand"
+  },
+  {
+   "year": "2021\u2013",
+   "title": "Tokenized Works \u2014 Ongoing",
+   "venue": "OpenSea \u00b7 Foundation \u00b7 Gamma \u00b7 Highlight \u00b7 Rarible"
+  }
+ ]
+}

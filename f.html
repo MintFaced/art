@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MintFace</title>
+<meta name="description" content="A feature by MintFace.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MintFace">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* ---------- masthead ---------- */
+.mast{max-width:1100px;margin:0 auto;padding:60px 28px 20px;text-align:center}
+.kicker{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(44px,9.5vw,112px);line-height:.94;margin:0;letter-spacing:-.035em}
+.standfirst{
+  font-family:var(--font-sans);font-size:clamp(21px,2.6vw,29px);line-height:1.42;color:#3a362f;
+  max-width:680px;margin:30px auto 0;
+}
+.credit{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:26px}
+.mast-rule{width:44px;height:1px;background:var(--rule);margin:52px auto 0}
+
+/* ---------- prose ---------- */
+.prose{max-width:660px;margin:0 auto;padding:0 28px}
+.prose p{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,1.85vw,19px);line-height:1.7;color:#221f1a;margin:30px 0}
+.prose p.lead{font-size:clamp(21px,2.4vw,26px);line-height:1.48;color:var(--ink);margin:48px 0;letter-spacing:-.01em}
+.prose p.close{font-size:clamp(19px,2.2vw,23px);line-height:1.5;margin:60px 0 0;color:var(--ink);letter-spacing:-.005em}
+.prose h2.chapter{
+  font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);margin:76px 0 0;padding-bottom:12px;border-bottom:1px solid var(--rule);
+}
+.prose strong{font-weight:500}
+.prose a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.prose a:hover{border-color:var(--ink)}
+
+/* ---------- works in the flow ---------- */
+.plate{margin:74px 0}
+.plate .shot{background:#f2efe9;text-align:center}
+.plate .shot img,.plate .shot video{width:100%;height:auto;opacity:0;transition:opacity .6s ease}
+.plate .shot img,.plate .shot video.in{opacity:1}
+.plate.single{max-width:1240px;margin-left:auto;margin-right:auto;padding:0 28px}
+.plate.single .shot img{max-height:88vh;width:auto;margin:0 auto}
+.cap{
+  max-width:660px;margin:16px auto 0;padding:0 28px;display:flex;gap:16px;flex-wrap:wrap;
+  align-items:baseline;justify-content:center;
+  font-family:var(--font-sans);font-weight:500;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;
+}
+/* a mint date, a platform, an edition count: all measurement */
+.cap .cd{font-family:var(--font-mono);font-weight:400;letter-spacing:.1em;font-variant-numeric:tabular-nums}
+.cap a{text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
+.cap a:hover{border-color:var(--ink);color:var(--ink)}
+.strip{max-width:1500px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.strip a{display:block;text-decoration:none}
+.strip .shot{aspect-ratio:1/1;overflow:hidden}
+.strip img{width:100%;height:100%;object-fit:cover}
+.strip .t{font-family:var(--font-sans);font-weight:400;font-size:13px;line-height:1.3;margin-top:9px;color:#3a362f}
+.strip a:hover .t{text-decoration:underline;text-underline-offset:3px}
+
+.buy{margin-top:76px;border-top:1px solid var(--ink);padding-top:20px}
+.buy-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0 18px}
+.buy-row .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.buy-row .amt{font-family:var(--font-mono);font-weight:400;font-size:23px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.buy .btn{
+  display:block;width:100%;padding:19px 20px;background:var(--ink);color:var(--paper);
+  border:0;cursor:pointer;font-family:var(--font-sans);text-decoration:none;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;
+}
+.buy .btn:hover{background:#2c2924}
+.buy .note{font-size:12px;color:var(--muted);line-height:1.7;margin:16px 0 0}
+
+.tail{max-width:660px;margin:0 auto;padding:80px 28px 110px;text-align:center}
+.tail a{margin:0 14px}
+
+@media(max-width:900px){.strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){
+  .mast{padding:34px 20px 14px}
+  .prose{padding:0 20px}
+  .plate{margin:52px 0}
+  .plate.single{padding:0}
+  .strip{grid-template-columns:repeat(2,1fr);gap:12px;padding:0 20px}
+  .cap{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+
+function which() {
+  const m = location.pathname.match(/^\/(genesis|10k|frogdna)\/?$/)
+    || location.pathname.match(/^\/c\/(frogdna)\/?$/);
+  if (m) return m[1];
+  return new URLSearchParams(location.search).get('f') || 'genesis';
+}
+
+// the only markup the prose needs: emphasis and links
+function fmt(text) {
+  return e(text)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[(.+?)\]\((\/[^)\s]*)\)/g, '<a href="$2">$1</a>');
+}
+
+let FEATURE_WORK = null;
+
+const CHAIN = {
+  ethereum: 'Ethereum',
+  bitcoin: 'Bitcoin',
+};
+
+function plateCaption(work) {
+  const d = work.digital || {};
+  const bits = [];
+  if (work.title) bits.push(work.title);
+  const minted = work.minted_onchain || work.minted;
+  if (minted) bits.push('Minted ' + MF.date(minted));
+  if (work.platform) bits.push(work.platform);
+  else if (d.standard) bits.push(d.standard);
+  if (work.edition && work.edition.type === 'edition') {
+    const n = work.edition.minted || work.edition.of;
+    if (n) bits.push(`${n} editions`);
+  }
+  return bits;
+}
+
+function plate(work) {
+  if (!work) return '';
+  const caption = plateCaption(work);
+  return `<div class="plate single">
+    <div class="shot">${MF.img(work, 1600)}</div>
+    <div class="cap">
+      ${caption.map((c, i) => `<span class="${i === 0 ? 'ct' : 'cd'}">${e(c)}</span>`).join('')}
+      <a href="/w/${encodeURIComponent(work.id)}">The work</a>
+    </div>
+  </div>`;
+}
+
+function strip(works, block) {
+  const items = works.filter(Boolean);
+  if (!items.length) return '';
+  return `<div class="plate">
+    <div class="strip">
+      ${items.map((w) => {
+        return `<a href="/w/${encodeURIComponent(w.id)}">
+          <div class="shot">${MF.img(w, 520)}</div>
+          <div class="t">${e(w.title || 'Untitled')}</div>
+        </a>`;
+      }).join('')}
+    </div>
+    <div class="cap">
+      ${block.caption ? `<span class="cd">${e(block.caption)}</span>` : ''}
+      ${block.more ? `<a href="${e(block.more.href)}">${e(block.more.label)}</a>` : ''}
+    </div>
+  </div>`;
+}
+
+async function resolve(ids) {
+  const out = [];
+  for (const id of ids) {
+    const hit = await MF.work(id);
+    if (hit) out.push(hit.work);
+  }
+  return out;
+}
+
+async function render(feature) {
+  document.title = `${feature.title} ... MintFace`;
+  if (feature.standfirst) document.querySelector('meta[name="description"]').setAttribute('content', feature.standfirst);
+
+  const parts = [`<div class="mast">
+    ${feature.kicker ? `<div class="kicker">${e(feature.kicker)}</div>` : ''}
+    <h1>${e(feature.title)}</h1>
+    ${feature.standfirst ? `<p class="standfirst">${fmt(feature.standfirst)}</p>` : ''}
+    ${feature.credit ? `<div class="credit">${e(feature.credit)}</div>` : ''}
+    <div class="mast-rule"></div>
+  </div>`];
+
+  let prose = [];
+  const flushProse = () => {
+    if (prose.length) parts.push(`<div class="prose">${prose.join('')}</div>`);
+    prose = [];
+  };
+
+  for (const b of feature.blocks) {
+    if (b.type === 'p' || b.type === 'lead' || b.type === 'close') {
+      prose.push(`<p class="${b.type === 'p' ? '' : b.type}">${fmt(b.text)}</p>`);
+      continue;
+    }
+    flushProse();
+    if (b.type === 'heading') {
+      parts.push(`<div class="prose"><h2 class="chapter">${fmt(b.text)}</h2></div>`);
+    } else if (b.type === 'image') {
+      parts.push(`<div class="plate single">
+        <div class="shot"><img src="${e(b.src)}" alt="${e(b.caption || feature.title)}" loading="lazy" decoding="async" onload="this.classList.add('in')"></div>
+        ${b.caption ? `<div class="cap"><span class="cd">${e(b.caption)}</span></div>` : ''}
+      </div>`);
+    } else if (b.type === 'work') {
+      const hit = await MF.work(b.id);
+      parts.push(plate(hit && hit.work));
+    } else if (b.type === 'works') {
+      parts.push(strip(await resolve(b.ids), b));
+    }
+  }
+  flushProse();
+
+  if (feature.checkout) {
+    const hit = await MF.work(feature.checkout);
+    if (hit) {
+      const w = hit.work;
+      const eth = w.wrapped ? `${w.wrapped.artist_held} of the wrapped editions are still with the artist` : null;
+      const price = w.pricing_nzd && w.pricing_nzd.digital != null
+        ? `$${Math.round(w.pricing_nzd.digital).toLocaleString('en-NZ')}`
+        : null;
+      parts.push(`<div class="prose buy">
+        <div class="buy-row">
+          <span class="what">The digital work</span>
+          ${price ? `<span class="amt">${e(price)}</span>` : ''}
+        </div>
+        <a class="btn" href="/w/${encodeURIComponent(w.id)}">Acquire this artwork</a>
+        <p class="note">Eighty-eight editions on Bitcoin as a Counterparty asset${eth ? `, and ${e(eth)} on Ethereum` : ''}. Paying in Bitcoin is arranged directly; the wrapped edition goes through the wallet.</p>
+      </div>`);
+    }
+  }
+
+  parts.push(`<div class="tail">
+    <a class="smallcaps" href="/collections">All collections</a>
+    <a class="smallcaps" href="${feature.slug === 'genesis' ? '/10k' : '/genesis'}">${feature.slug === 'genesis' ? 'Next: the 10k Project' : 'Back to Genesis'}</a>
+  </div>`);
+
+  document.getElementById('main').innerHTML = parts.join('');
+  MF.progress.watch(document.getElementById('main'));
+}
+
+(async function () {
+  try {
+    const feature = await fetch(`/data/f/${which()}.json`).then((r) => r.json());
+    await render(feature);
+  } catch (err) {
+    document.getElementById('main').innerHTML = '<div class="loading">Could not load this story</div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,4 +1,72 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "functions": {
+    "api/derive-assets.js": {
+      "maxDuration": 300,
+      "memory": 3008
+    },
+    "api/warm-assets.js": {
+      "maxDuration": 300
+    }
+  },
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/stripe-webhook",
+      "destination": "/api/webhook"
+    },
+    {
+      "source": "/s/:key",
+      "destination": "/api/studio"
+    },
+    {
+      "source": "/w/:id",
+      "destination": "/api/w"
+    },
+    {
+      "source": "/c/frogdna",
+      "destination": "/f"
+    },
+    {
+      "source": "/c/patrimora",
+      "destination": "/patrimora"
+    },
+    {
+      "source": "/recent",
+      "destination": "/c"
+    },
+    {
+      "source": "/c/:slug",
+      "destination": "/c"
+    },
+    {
+      "source": "/genesis",
+      "destination": "/f"
+    },
+    {
+      "source": "/10k",
+      "destination": "/f"
+    },
+    {
+      "source": "/frogdna",
+      "destination": "/f"
+    },
+    {
+      "source": "/:key",
+      "destination": "/api/studio"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/reserves",
+      "schedule": "0 19 * * *"
+    }
+  ]
 }

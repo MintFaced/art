@@ -1,0 +1,1086 @@
+{
+ "slug": "geodetic-onchain",
+ "title": "Geodetic On-Chain",
+ "group": "geodetic",
+ "year": "2022",
+ "medium": "Illustration",
+ "physical": false,
+ "statement": "The master moulds for the geodetic form.",
+ "notes": "Fully on-chain SVG works. Shares contract with Geodetic Home. Position first in the Geodetic set as origin works.",
+ "counts": {
+  "works": 4,
+  "editions_minted": 293
+ },
+ "contracts": [
+  {
+   "chain": "ethereum",
+   "standard": "ERC-1155",
+   "address": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4",
+   "deployed": "2022-02-18T08:29:35.000000Z",
+   "holders": "131"
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-onchain-1",
+   "collection": "geodetic-onchain",
+   "title": "Geodetic Moment Light",
+   "statement": "The light of our being continues to shine, even when there are pieces missing.",
+   "edition": {
+    "type": "edition",
+    "minted": 81,
+    "holders": 27,
+    "artist_held": 34,
+    "vaulted": 10
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4",
+    "token_id": "1",
+    "image": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' viewBox='0 0 1200 1200'%3E%3Cpath vector-effect='non-scaling-stroke' d='M625.06 133.96a1.09 1.09.8 0 1-1.06-1.09V79.85q0-3.06-.03-3.19-.31-1.52-1.78-2.85-5.54-5.02-14.36-15.18a.48.47 47.4 0 0-.7-.04l-16.11 15.98a3.92 3.19 72.6 0 0-1 2.51l-1.56 64.61a.42.41 6.9 0 1-.51.39l-73.82-15.97a.56.56 4.8 0 0-.68.57l2.04 46.13a.8.78-85.8 0 0 .63.74q31.91 6.53 63.85 12.58 3.6.68 6.63.52 3.33-.19 6.65-.68 33.21-4.97 66.5-9.47 5.88-.8 9.2-.27a.63.62-88.3 0 1 .53.57q.91 9.81.55 18.86-.08 2.09 1.98 2.28l20.9 1.9a.96.95 3.1 0 0 1.04-.93l1.07-41.49a.71.69 4.5 0 0-.62-.71l-23.99-3.15q-1.77-.23-1.99-2.02l-2.8-22.85a.49.48 82.5 0 0-.55-.43q-17.94 2.41-35.8 5.36-2.46.41-4.21.34m-40.18 150.03a.93.93 83.9 0 1 1.14.92q-.19 30.34.11 57.84.06 4.88-1.38 8.5-17.57 44.27-76.58 191.6-.66 1.66-2.84 6-1.4 2.79-2.59 6.12a2.58 2.57-6.8 0 1-1 1.27q-2.49 1.64-4.89 2.92-1.03.54-1.42 1-.89 1.04-.02 1.95.6.64 1.9.7 3.71.19 10.69.19 94.97.05 189.35-.06a.65.65-10.1 0 0 .61-.87l-75.33-205.91q-.53-1.46-.62-3.06-.33-5.77-.22-11.49.21-11.13.21-11.22V277.4a.49.49 1.1 0 1 .51-.49q2.13.11 3.67.43 31.17 6.64 62.65 13.48a1.47 1.47 10.4 0 0 1.77-1.22q.42-2.83.41-6.35-.01-16.62-.01-33.49 0-1.81-1.64-2.6-7.05-3.41-14.62-6.55-3.66-1.52-4.56-5.3-2.1-8.82-4.76-17.54a1.1 1.09 77.7 0 0-1.2-.77q-34.41 4.88-68.84 9.77-5.9.84-9.41 1.01-4.73.22-9.47 0-28.38-1.36-57.65-2.83a.8.8 1.7 0 0-.84.79q-.19 17.89.27 34.51.17 6.26 5.72 8 9.8 3.07 19.54 7.03a1.24 1.17 5.3 0 1 .74.84l3.5 14.63a1.67 1.65 77 0 0 1.97 1.25l35.13-8.01m-284.85 810.04-13.79 39.94a1 .99-68.5 0 0 .53 1.24q1.68.75 3.61 1.31 1.53.44 3.77.7 15.43 1.78 30.67 3.76a1.58 1.51-73.3 0 0 1.58-.9l10.71-22.35a1.91 1.85 15.3 0 1 1.89-1.04l24.7 2.36a1.75 1.72 9.7 0 0 1.85-1.29l3.29-13.07a.92.92-82.7 0 1 .89-.69h482.1a1.33 1.3 76.2 0 1 1.17.73l16.63 33.32a1.72 1.71-13 0 0 1.54.95l36.03-.06a.36.36 81.1 0 0 .34-.47l-11.27-33.91a1.19 1.17 80.7 0 1 1.11-1.56h25.68a.57.56 78 0 0 .51-.8l-13.86-31.8a2.26 2.13 77.6 0 0-1.99-1.35l-17.73-.05a1.69 1.68-11.7 0 1-1.55-1.01q-6.05-14.14-11.48-28.32-5.94-15.47-7.2-18.66-52.74-133.72-105.34-267.71a1.34 1.23-32.1 0 1 .39-1.43l7.75-6.78a1.36 1.26 47.1 0 0 0-1.91l-9.77-9.98q-1.17-1.2-2.73-1.2H437.24a1.18 1.18-78.1 0 0-1.08.71q-7.23 16.68-13.99 33.8-54.46 137.79-109.12 275.51-1.92 4.84-4.27 9.43a1.03 1.03-76.1 0 1-.91.55h-17.11a1.35 1.33 11.7 0 0-1.23.8q-5.73 12.95-11.23 26.39-1.18 2.89-1.21 3-.41 2.17 2.47 3 3.7 1.06 20.17 8.17a.54.54 21.2 0 1 .3.67' stroke-width='2' fill='none' stroke='gray'/%3E%3Cpath fill='%23fff' d='M0 0h1200v1200H0V0Zm625.06 133.96a1.09 1.09.8 0 1-1.06-1.09V79.85q0-3.06-.03-3.19-.31-1.52-1.78-2.85-5.54-5.02-14.36-15.18a.48.47 47.4 0 0-.7-.04l-16.11 15.98a3.92 3.19 72.6 0 0-1 2.51l-1.56 64.61a.42.41 6.9 0 1-.51.39l-73.82-15.97a.56.56 4.8 0 0-.68.57l2.04 46.13a.8.78-85.8 0 0 .63.74q31.91 6.53 63.85 12.58 3.6.68 6.63.52 3.33-.19 6.65-.68 33.21-4.97 66.5-9.47 5.88-.8 9.2-.27a.63.62-88.3 0 1 .53.57q.91 9.81.55 18.86-.08 2.09 1.98 2.28l20.9 1.9a.96.95 3.1 0 0 1.04-.93l1.07-41.49a.71.69 4.5 0 0-.62-.71l-23.99-3.15q-1.77-.23-1.99-2.02l-2.8-22.85a.49.48 82.5 0 0-.55-.43q-17.94 2.41-35.8 5.36-2.46.41-4.21.34Zm-40.18 150.03a.93.93 83.9 0 1 1.14.92q-.19 30.34.11 57.84.06 4.88-1.38 8.5-17.57 44.27-76.58 191.6-.66 1.66-2.84 6-1.4 2.79-2.59 6.12a2.58 2.57-6.8 0 1-1 1.27q-2.49 1.64-4.89 2.92-1.03.54-1.42 1-.89 1.04-.02 1.95.6.64 1.9.7 3.71.19 10.69.19 94.97.05 189.35-.06a.65.65-10.1 0 0 .61-.87l-75.33-205.91q-.53-1.46-.62-3.06-.33-5.77-.22-11.49.21-11.13.21-11.22V277.4a.49.49 1.1 0 1 .51-.49q2.13.11 3.67.43 31.17 6.64 62.65 13.48a1.47 1.47 10.4 0 0 1.77-1.22q.42-2.83.41-6.35-.01-16.62-.01-33.49 0-1.81-1.64-2.6-7.05-3.41-14.62-6.55-3.66-1.52-4.56-5.3-2.1-8.82-4.76-17.54a1.1 1.09 77.7 0 0-1.2-.77q-34.41 4.88-68.84 9.77-5.9.84-9.41 1.01-4.73.22-9.47 0-28.38-1.36-57.65-2.83a.8.8 1.7 0 0-.84.79q-.19 17.89.27 34.51.17 6.26 5.72 8 9.8 3.07 19.54 7.03a1.24 1.17 5.3 0 1 .74.84l3.5 14.63a1.67 1.65 77 0 0 1.97 1.25l35.13-8.01Zm-284.85 810.04-13.79 39.94a1 .99-68.5 0 0 .53 1.24q1.68.75 3.61 1.31 1.53.44 3.77.7 15.43 1.78 30.67 3.76a1.58 1.51-73.3 0 0 1.58-.9l10.71-22.35a1.91 1.85 15.3 0 1 1.89-1.04l24.7 2.36a1.75 1.72 9.7 0 0 1.85-1.29l3.29-13.07a.92.92-82.7 0 1 .89-.69h482.1a1.33 1.3 76.2 0 1 1.17.73l16.63 33.32a1.72 1.71-13 0 0 1.54.95l36.03-.06a.36.36 81.1 0 0 .34-.47l-11.27-33.91a1.19 1.17 80.7 0 1 1.11-1.56h25.68a.57.56 78 0 0 .51-.8l-13.86-31.8a2.26 2.13 77.6 0 0-1.99-1.35l-17.73-.05a1.69 1.68-11.7 0 1-1.55-1.01q-6.05-14.14-11.48-28.32-5.94-15.47-7.2-18.66-52.74-133.72-105.34-267.71a1.34 1.23-32.1 0 1 .39-1.43l7.75-6.78a1.36 1.26 47.1 0 0 0-1.91l-9.77-9.98q-1.17-1.2-2.73-1.2H437.24a1.18 1.18-78.1 0 0-1.08.71q-7.23 16.68-13.99 33.8-54.46 137.79-109.12 275.51-1.92 4.84-4.27 9.43a1.03 1.03-76.1 0 1-.91.55h-17.11a1.35 1.33 11.7 0 0-1.23.8q-5.73 12.95-11.23 26.39-1.18 2.89-1.21 3-.41 2.17 2.47 3 3.7 1.06 20.17 8.17a.54.54 21.2 0 1 .3.67Z'/%3E%3Cpath d='m625.08 133.84 39.35-5.7a1.21 1.19-6.5 0 1 1.38 1.08q.89 11.47 2.85 22.98a1.65 1.63 89 0 0 1.39 1.36l24.17 3.19a.94.92 4.5 0 1 .82.94l-1.32 41.5a.51.5 2.3 0 1-.53.48q-11.28-.3-21.68-2.04a1.88 1.81-85.8 0 1-1.51-1.82l-.25-18.58a1.33 1.28 1.5 0 0-1.24-1.26q-4.16-.27-8.78.37-44.24 6.17-66.73 9.66-8.68 1.35-16.21-.21-30.39-6.31-60.82-12.22a.59.59-85.6 0 1-.47-.55l-2.15-46.05a.75.74-85 0 1 .9-.77l73.49 15.96a.81.81 6.8 0 0 .98-.77q.69-31.01 1.28-60.64.05-2.34.21-3.83.19-1.69 1.66-3.23 7.41-7.77 15.26-15.1a.48.48-41.4 0 1 .69.04q7.68 8.96 14.43 15.12 1.42 1.29 1.72 2.89.03.18.03 3.21v53.04a.96.94 85.9 0 0 1.08.95Zm-40.23 150.1-34.87 8.02q-2.15.5-2.51-1.67-1.33-7.93-3.5-14.38a1.07 1.06 2.6 0 0-.61-.66q-11.37-4.62-18.61-6.75-4.03-1.18-5.59-4.33-.89-1.77-.99-6.49-.32-15.2-.16-31.4a1.27 1.26-88 0 1 1.33-1.25q25.91 1.25 52.41 2.47 6.63.3 12.17.22 5-.07 12.1-1.07 34.23-4.82 68.38-9.64a1.01 1 78 0 1 1.1.72q2.43 8.76 4.73 17.54.58 2.21 2.03 3.36 2.32 1.83 5.99 3.37 5.39 2.25 11.45 5.4a2.31 2.3-76.5 0 1 1.24 2.03q.11 16.73.06 34.07-.01 3.49-.39 5.88-.3 1.87-2.18 1.47l-65.36-14.04a.9.88-84 0 0-1.07.88v74.71q0 2.04.68 3.91l75.23 205.65a.73.72 79.8 0 1-.67.98q-97.52.11-195.49.13-1.89 0-3.76-.16-4.51-.39-2.27-2.83.64-.69 2.15-1.47 1.87-.98 3.43-2.11.74-.53 1.15-1.36 4.08-8.34 6.85-15.26 37.19-93.06 74.49-186.07 2.9-7.21 2.53-14.88-.32-6.79-.32-6.87v-47.2a.94.94 83.6 0 0-1.15-.92Zm-306.94 800.47a1.5 1.49 22.4 0 1-.83-1.97l12.37-29.28a1.98 1.89 11 0 1 1.8-1.16h16.74a1.01 1.01 12.3 0 0 .92-.59q4.57-10.12 8.52-20.09 54.56-137.75 109.07-275.53 4.4-11.12 9.6-22.82a1.63 1.63-78 0 1 1.49-.97h322.42a3.31 3.27-22.2 0 1 2.33.96l10.48 10.49a.89.88-46.7 0 1 .03 1.22q-3.75 4.09-8.1 7.28a1.1 1.1-28.9 0 0-.37 1.28q59.75 151.89 119.1 303.41 2.2 5.62 4.9 11.18a2.09 2.09 77.1 0 0 1.88 1.18h17.8a1.39 1.38-11.7 0 1 1.27.83l14.03 32.52a.34.34 77.3 0 1-.3.48l-26.16.16a.84.83-9.4 0 0-.79 1.09l11.44 34.2a.55.55-9.2 0 1-.52.72h-35.65a2.07 2.02-13 0 1-1.84-1.12l-16.41-32.95a1.67 1.64 76.6 0 0-1.48-.93H369.86a1.17 1.16-83 0 0-1.13.89l-3.19 12.91a1.71 1.69 9.6 0 1-1.82 1.27l-24.82-2.37a1.92 1.91-74.4 0 0-1.91 1.08l-10.93 22.8a.88.86-72.8 0 1-.89.48q-14.77-2.04-29.17-3.52-5.06-.51-9.51-2.52a.63.62-68.7 0 1-.33-.77l13.83-39.74a1.32 1.28 20.7 0 0-.76-1.62l-21.32-8.48Z'/%3E%3C/svg%3E",
+    "animation": null,
+    "external_url": null,
+    "image_note": "Reconstructed from on-chain data. On-chain URI repair pending.",
+    "image_recovered": true
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "holders": [
+    {
+     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "ens": "mintface.eth",
+     "qty": 34,
+     "status": "available"
+    },
+    {
+     "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
+     "ens": "mintestate.eth",
+     "qty": 10,
+     "status": "vaulted"
+    },
+    {
+     "address": "0x40D2f4399D23f9AfB82D0a6B73055f13208614F9",
+     "ens": "mintsafe.eth",
+     "qty": 10,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd26cE943636ca63a1810886fd1444D3DcAF738b3",
+     "ens": "🏴‍☠🚂💨💨.eth",
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa1F05dbe26cDC2EDe4f410a5C54fE6473B5D7071",
+     "ens": null,
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6B6fF87ddEdfB45891D07b9Aa2525897F1a6B684",
+     "ens": null,
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC2aAEc38C14b81332f6741F9fdC211C6BB6F894C",
+     "ens": "murriohas.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa8eF8e793210158ECE2DbdB87B091f1574f0ADB9",
+     "ens": "leepengelly.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9E597A7e01ED135eFFb7e95Bd017Fe958e7656B8",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+     "ens": "visco.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x89e43fa3D631d53f3A417335444A0E0e903ABDBd",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x895Bef95023F591eBD1a9E8F53bEd2B73702E4d1",
+     "ens": "vivianeg.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x87ACCabBDEdce63379aF9D246bB979a3a481534C",
+     "ens": "artnftlove.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x86646054F1d16749B7832D0f111DF44CF4A0D33F",
+     "ens": "ivaavi.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x856A4ED4c11A610cc2a4dD706f5642208bf6521D",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x82139687FaAe8A29851902783E02E699dE0e0846",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7C008e93B10B1f5C659bCFcA0F41838196A16a40",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x79b834F7F6f3Ce94AaF63fC4a2b2f722e69De40A",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x79A27148CB08422441c560F83729CB07721EA54f",
+     "ens": "r0yart.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7110733AB02B2a18A947E3912BF54136FbCED169",
+     "ens": "midazofol.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x5B1022D859A46f42fcF24BCD8F5Ab616e52B4800",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x564A8E13D7DD23D5525160D204165BDBCb69B4dB",
+     "ens": "noobmuseum.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x534b8531e362Da97D808ba2ab3959fa2597BeF11",
+     "ens": "aristhodle.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x524514FF15349fce7bcd06079DdB54E9Eb3DA009",
+     "ens": "mrowe.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x4e1829da30CD7ae2F3E9915cB8C9f3F203ac7D83",
+     "ens": "hariology.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x319AF5203839970CCb04d2EdA95C427941C498aE",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x13EEe41d67b8d99E11174161D72cF8cCD194458C",
+     "ens": "davidkibler.eth",
+     "qty": 1,
+     "status": "acquired"
+    }
+   ]
+  },
+  {
+   "id": "geodetic-onchain-2",
+   "collection": "geodetic-onchain",
+   "title": "Geodetic Moment Dark",
+   "statement": "A darkness can envelope everything around us, and even part of us, but never all of us.",
+   "edition": {
+    "type": "edition",
+    "minted": 86,
+    "holders": 30,
+    "artist_held": 38,
+    "vaulted": 10
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4",
+    "token_id": "2",
+    "image": "data:image/svg+xml;utf8,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' viewBox='0 0 1200 1200'%3e%3cpath vector-effect='non-scaling-stroke' d='M625.08 133.84a.96.94 85.9 0 1-1.08-.95V79.85q0-3.03-.03-3.21-.3-1.6-1.72-2.89-6.75-6.16-14.43-15.12a.48.48-41.4 0 0-.69-.04q-7.85 7.33-15.26 15.1-1.47 1.54-1.66 3.23-.16 1.49-.21 3.83-.59 29.63-1.28 60.64a.81.81 6.8 0 1-.98.77l-73.49-15.96a.75.74-85 0 0-.9.77l2.15 46.05a.59.59-85.6 0 0 .47.55q30.43 5.91 60.82 12.22 7.53 1.56 16.21.21 22.49-3.49 66.73-9.66 4.62-.64 8.78-.37a1.33 1.28 1.5 0 1 1.24 1.26l.25 18.58a1.88 1.81-85.8 0 0 1.51 1.82q10.4 1.74 21.68 2.04a.51.5 2.3 0 0 .53-.48l1.32-41.5a.94.92 4.5 0 0-.82-.94l-24.17-3.19a1.65 1.63 89 0 1-1.39-1.36q-1.96-11.51-2.85-22.98a1.21 1.19-6.5 0 0-1.38-1.08l-39.35 5.7m-40.23 150.1a.94.94 83.6 0 1 1.15.92v47.2q0 .08.32 6.87.37 7.67-2.53 14.88-37.3 93.01-74.49 186.07-2.77 6.92-6.85 15.26-.41.83-1.15 1.36-1.56 1.13-3.43 2.11-1.51.78-2.15 1.47-2.24 2.44 2.27 2.83 1.87.16 3.76.16 97.97-.02 195.49-.13a.73.72 79.8 0 0 .67-.98l-75.23-205.65q-.68-1.87-.68-3.91v-74.71a.9.88-84 0 1 1.07-.88l65.36 14.04q1.88.4 2.18-1.47.38-2.39.39-5.88.05-17.34-.06-34.07a2.31 2.3-76.5 0 0-1.24-2.03q-6.06-3.15-11.45-5.4-3.67-1.54-5.99-3.37-1.45-1.15-2.03-3.36-2.3-8.78-4.73-17.54a1.01 1 78 0 0-1.1-.72q-34.15 4.82-68.38 9.64-7.1 1-12.1 1.07-5.54.08-12.17-.22-26.5-1.22-52.41-2.47a1.27 1.26-88 0 0-1.33 1.25q-.16 16.2.16 31.4.1 4.72.99 6.49 1.56 3.15 5.59 4.33 7.24 2.13 18.61 6.75a1.07 1.06 2.6 0 1 .61.66q2.17 6.45 3.5 14.38.36 2.17 2.51 1.67l34.87-8.02m-306.94 800.47 21.32 8.48a1.32 1.28 20.7 0 1 .76 1.62l-13.83 39.74a.63.62-68.7 0 0 .33.77q4.45 2.01 9.51 2.52 14.4 1.48 29.17 3.52a.88.86-72.8 0 0 .89-.48l10.93-22.8a1.92 1.91-74.4 0 1 1.91-1.08l24.82 2.37a1.71 1.69 9.6 0 0 1.82-1.27l3.19-12.91a1.17 1.16-83 0 1 1.13-.89h481.79a1.67 1.64 76.6 0 1 1.48.93l16.41 32.95a2.07 2.02-13 0 0 1.84 1.12h35.65a.55.55-9.2 0 0 .52-.72l-11.44-34.2a.84.83-9.4 0 1 .79-1.09l26.16-.16a.34.34 77.3 0 0 .3-.48l-14.03-32.52a1.39 1.38-11.7 0 0-1.27-.83h-17.8a2.09 2.09 77.1 0 1-1.88-1.18q-2.7-5.56-4.9-11.18-59.35-151.52-119.1-303.41a1.1 1.1-28.9 0 1 .37-1.28q4.35-3.19 8.1-7.28a.89.88-46.7 0 0-.03-1.22l-10.48-10.49a3.31 3.27-22.2 0 0-2.33-.96H437.59a1.63 1.63-78 0 0-1.49.97q-5.2 11.7-9.6 22.82-54.51 137.78-109.07 275.53-3.95 9.97-8.52 20.09a1.01 1.01 12.3 0 1-.92.59h-16.74a1.98 1.89 11 0 0-1.8 1.16l-12.37 29.28a1.5 1.49 22.4 0 0 .83 1.97' stroke-width='2' fill='none' stroke='gray'/%3e%3cpath d='M0 0h1200v1200H0V0Zm625.08 133.84a.96.94 85.9 0 1-1.08-.95V79.85q0-3.03-.03-3.21-.3-1.6-1.72-2.89-6.75-6.16-14.43-15.12a.48.48-41.4 0 0-.69-.04q-7.85 7.33-15.26 15.1-1.47 1.54-1.66 3.23-.16 1.49-.21 3.83-.59 29.63-1.28 60.64a.81.81 6.8 0 1-.98.77l-73.49-15.96a.75.74-85 0 0-.9.77l2.15 46.05a.59.59-85.6 0 0 .47.55q30.43 5.91 60.82 12.22 7.53 1.56 16.21.21 22.49-3.49 66.73-9.66 4.62-.64 8.78-.37a1.33 1.28 1.5 0 1 1.24 1.26l.25 18.58a1.88 1.81-85.8 0 0 1.51 1.82q10.4 1.74 21.68 2.04a.51.5 2.3 0 0 .53-.48l1.32-41.5a.94.92 4.5 0 0-.82-.94l-24.17-3.19a1.65 1.63 89 0 1-1.39-1.36q-1.96-11.51-2.85-22.98a1.21 1.19-6.5 0 0-1.38-1.08l-39.35 5.7Zm-40.23 150.1a.94.94 83.6 0 1 1.15.92v47.2q0 .08.32 6.87.37 7.67-2.53 14.88-37.3 93.01-74.49 186.07-2.77 6.92-6.85 15.26-.41.83-1.15 1.36-1.56 1.13-3.43 2.11-1.51.78-2.15 1.47-2.24 2.44 2.27 2.83 1.87.16 3.76.16 97.97-.02 195.49-.13a.73.72 79.8 0 0 .67-.98l-75.23-205.65q-.68-1.87-.68-3.91v-74.71a.9.88-84 0 1 1.07-.88l65.36 14.04q1.88.4 2.18-1.47.38-2.39.39-5.88.05-17.34-.06-34.07a2.31 2.3-76.5 0 0-1.24-2.03q-6.06-3.15-11.45-5.4-3.67-1.54-5.99-3.37-1.45-1.15-2.03-3.36-2.3-8.78-4.73-17.54a1.01 1 78 0 0-1.1-.72q-34.15 4.82-68.38 9.64-7.1 1-12.1 1.07-5.54.08-12.17-.22-26.5-1.22-52.41-2.47a1.27 1.26-88 0 0-1.33 1.25q-.16 16.2.16 31.4.1 4.72.99 6.49 1.56 3.15 5.59 4.33 7.24 2.13 18.61 6.75a1.07 1.06 2.6 0 1 .61.66q2.17 6.45 3.5 14.38.36 2.17 2.51 1.67l34.87-8.02Zm-306.94 800.47 21.32 8.48a1.32 1.28 20.7 0 1 .76 1.62l-13.83 39.74a.63.62-68.7 0 0 .33.77q4.45 2.01 9.51 2.52 14.4 1.48 29.17 3.52a.88.86-72.8 0 0 .89-.48l10.93-22.8a1.92 1.91-74.4 0 1 1.91-1.08l24.82 2.37a1.71 1.69 9.6 0 0 1.82-1.27l3.19-12.91a1.17 1.16-83 0 1 1.13-.89h481.79a1.67 1.64 76.6 0 1 1.48.93l16.41 32.95a2.07 2.02-13 0 0 1.84 1.12h35.65a.55.55-9.2 0 0 .52-.72l-11.44-34.2a.84.83-9.4 0 1 .79-1.09l26.16-.16a.34.34 77.3 0 0 .3-.48l-14.03-32.52a1.39 1.38-11.7 0 0-1.27-.83h-17.8a2.09 2.09 77.1 0 1-1.88-1.18q-2.7-5.56-4.9-11.18-59.35-151.52-119.1-303.41a1.1 1.1-28.9 0 1 .37-1.28q4.35-3.19 8.1-7.28a.89.88-46.7 0 0-.03-1.22l-10.48-10.49a3.31 3.27-22.2 0 0-2.33-.96H437.59a1.63 1.63-78 0 0-1.49.97q-5.2 11.7-9.6 22.82-54.51 137.78-109.07 275.53-3.95 9.97-8.52 20.09a1.01 1.01 12.3 0 1-.92.59h-16.74a1.98 1.89 11 0 0-1.8 1.16l-12.37 29.28a1.5 1.49 22.4 0 0 .83 1.97Z'/%3e%3cpath fill='%23fff' d='m625.08 133.84 39.35-5.7a1.21 1.19-6.5 0 1 1.38 1.08q.89 11.47 2.85 22.98a1.65 1.63 89 0 0 1.39 1.36l24.17 3.19a.94.92 4.5 0 1 .82.94l-1.32 41.5a.51.5 2.3 0 1-.53.48q-11.28-.3-21.68-2.04a1.88 1.81-85.8 0 1-1.51-1.82l-.25-18.58a1.33 1.28 1.5 0 0-1.24-1.26q-4.16-.27-8.78.37-44.24 6.17-66.73 9.66-8.68 1.35-16.21-.21-30.39-6.31-60.82-12.22a.59.59-85.6 0 1-.47-.55l-2.15-46.05a.75.74-85 0 1 .9-.77l73.49 15.96a.81.81 6.8 0 0 .98-.77q.69-31.01 1.28-60.64.05-2.34.21-3.83.19-1.69 1.66-3.23 7.41-7.77 15.26-15.1a.48.48-41.4 0 1 .69.04q7.68 8.96 14.43 15.12 1.42 1.29 1.72 2.89.03.18.03 3.21v53.04a.96.94 85.9 0 0 1.08.95Zm-40.23 150.1-34.87 8.02q-2.15.5-2.51-1.67-1.33-7.93-3.5-14.38a1.07 1.06 2.6 0 0-.61-.66q-11.37-4.62-18.61-6.75-4.03-1.18-5.59-4.33-.89-1.77-.99-6.49-.32-15.2-.16-31.4a1.27 1.26-88 0 1 1.33-1.25q25.91 1.25 52.41 2.47 6.63.3 12.17.22 5-.07 12.1-1.07 34.23-4.82 68.38-9.64a1.01 1 78 0 1 1.1.72q2.43 8.76 4.73 17.54.58 2.21 2.03 3.36 2.32 1.83 5.99 3.37 5.39 2.25 11.45 5.4a2.31 2.3-76.5 0 1 1.24 2.03q.11 16.73.06 34.07-.01 3.49-.39 5.88-.3 1.87-2.18 1.47l-65.36-14.04a.9.88-84 0 0-1.07.88v74.71q0 2.04.68 3.91l75.23 205.65a.73.72 79.8 0 1-.67.98q-97.52.11-195.49.13-1.89 0-3.76-.16-4.51-.39-2.27-2.83.64-.69 2.15-1.47 1.87-.98 3.43-2.11.74-.53 1.15-1.36 4.08-8.34 6.85-15.26 37.19-93.06 74.49-186.07 2.9-7.21 2.53-14.88-.32-6.79-.32-6.87v-47.2a.94.94 83.6 0 0-1.15-.92Zm-306.94 800.47a1.5 1.49 22.4 0 1-.83-1.97l12.37-29.28a1.98 1.89 11 0 1 1.8-1.16h16.74a1.01 1.01 12.3 0 0 .92-.59q4.57-10.12 8.52-20.09 54.56-137.75 109.07-275.53 4.4-11.12 9.6-22.82a1.63 1.63-78 0 1 1.49-.97h322.42a3.31 3.27-22.2 0 1 2.33.96l10.48 10.49a.89.88-46.7 0 1 .03 1.22q-3.75 4.09-8.1 7.28a1.1 1.1-28.9 0 0-.37 1.28q59.75 151.89 119.1 303.41 2.2 5.62 4.9 11.18a2.09 2.09 77.1 0 0 1.88 1.18h17.8a1.39 1.38-11.7 0 1 1.27.83l14.03 32.52a.34.34 77.3 0 1-.3.48l-26.16.16a.84.83-9.4 0 0-.79 1.09l11.44 34.2a.55.55-9.2 0 1-.52.72h-35.65a2.07 2.02-13 0 1-1.84-1.12l-16.41-32.95a1.67 1.64 76.6 0 0-1.48-.93H369.86a1.17 1.16-83 0 0-1.13.89l-3.19 12.91a1.71 1.69 9.6 0 1-1.82 1.27l-24.82-2.37a1.92 1.91-74.4 0 0-1.91 1.08l-10.93 22.8a.88.86-72.8 0 1-.89.48q-14.77-2.04-29.17-3.52-5.06-.51-9.51-2.52a.63.62-68.7 0 1-.33-.77l13.83-39.74a1.32 1.28 20.7 0 0-.76-1.62l-21.32-8.48Z'/%3e%3c/svg%3e",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "holders": [
+    {
+     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "ens": "mintface.eth",
+     "qty": 38,
+     "status": "available"
+    },
+    {
+     "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
+     "ens": "mintestate.eth",
+     "qty": 10,
+     "status": "vaulted"
+    },
+    {
+     "address": "0x40D2f4399D23f9AfB82D0a6B73055f13208614F9",
+     "ens": "mintsafe.eth",
+     "qty": 10,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd26cE943636ca63a1810886fd1444D3DcAF738b3",
+     "ens": "🏴‍☠🚂💨💨.eth",
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0xeE49f82e58A1C2B306720D0c68047CBf70C11FB5",
+     "ens": "pravijn.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xD614F79B1b01D42beD92EB05B58f973Be9a3Dd3D",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xcE5993291AadA8Cb38d9014F626A405E0f1128A4",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC839de0fEd241607d50aa4107aE582443B906e4c",
+     "ens": "hugofaz.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC2aAEc38C14b81332f6741F9fdC211C6BB6F894C",
+     "ens": "murriohas.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc142DC5CEB96f73635D66B62bfde2A0eEa4e4cE1",
+     "ens": "sumofprimes.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC00aE171ACD39F84e66e19c7bAD7BB676C1Fe10c",
+     "ens": "lisb.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xb40e296d1eb1aA2ce72Bf687Fff1A77C9c42C9f1",
+     "ens": "0xtj.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xA116583225aB2768Fc6ebE9E305DE17f657e8921",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x91e8be20d0DfB2293b97317e906223C1fa833A48",
+     "ens": "secureid.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8c36654B71c52Bf8bf2CA8c3eC19bD4E83Da7d11",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+     "ens": "visco.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8889EBB11295F456541901f50BCB5f382047cAaC",
+     "ens": "darrensrs.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x82139687FaAe8A29851902783E02E699dE0e0846",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7b7Ca7Aa1034CDE3d0d93Fb2e6A6b3E4Eb09BB60",
+     "ens": "dombaker.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x72eb30D3ca53f5e839325E2eACf535E70a9e6987",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7110733AB02B2a18A947E3912BF54136FbCED169",
+     "ens": "midazofol.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6B6fF87ddEdfB45891D07b9Aa2525897F1a6B684",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x59F71A5cd03Df3FF64FddD6f04cb91768Cc6fD5C",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x436A257aB8F9D8579594f493FFB81fA5245ADA26",
+     "ens": "nptacek.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x391A3699f430A4563097aEC735b3C242108350Ca",
+     "ens": "tylersjourney.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x364d1935f30773eb5eeF3355bD2f2675b6C5e4a1",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x29364C24912a00072dCDD27f0f7bfe2E0AC14167",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2932a3EE7Fb73b44eDF7403b421E232CA4C78dd8",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2327DBCC6C2a3821A97c3d9004954970900441E2",
+     "ens": "korbinianvogt.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x180669310D089fafCbeE40479ee719752d680d4E",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    }
+   ]
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "collection": "geodetic-onchain",
+   "title": "Geodetic Signal",
+   "statement": "Our identity emerges from a pattern of signals we send to ourselves and the signals we broadcast to those around us.",
+   "edition": {
+    "type": "edition",
+    "minted": 100,
+    "holders": 67,
+    "artist_held": 11,
+    "vaulted": 10
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4",
+    "token_id": "3",
+    "image": "https://arweave.net/lRdV37vamc8eYFcuJlpXk7w0W477HiA_xW57M5fH8po",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "holders": [
+    {
+     "address": "0x40D2f4399D23f9AfB82D0a6B73055f13208614F9",
+     "ens": "mintsafe.eth",
+     "qty": 11,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "ens": "mintface.eth",
+     "qty": 10,
+     "status": "available"
+    },
+    {
+     "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
+     "ens": "mintestate.eth",
+     "qty": 10,
+     "status": "vaulted"
+    },
+    {
+     "address": "0xe04bD69DA61920203bBd62Ac094FE57a62742351",
+     "ens": null,
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0xD69E257ae6088b717aE6D2ddeC9297703b4fB725",
+     "ens": "mysterian.eth",
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa1F05dbe26cDC2EDe4f410a5C54fE6473B5D7071",
+     "ens": null,
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0x856A4ED4c11A610cc2a4dD706f5642208bf6521D",
+     "ens": null,
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0x38E5EA79D5ceDef119fC780E78a0d8B0759f816c",
+     "ens": null,
+     "qty": 2,
+     "status": "acquired"
+    },
+    {
+     "address": "0xffC15eF23f4Ba7Faf4B4d3c28a35A28f126BCc0D",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xfF7528c341E2374C68EB37272DBA892Ff5D2F91D",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xF8DfA50903d65fcc03da6348bf8Fa88483965b16",
+     "ens": "yeahwong.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xF165F8A81e4A987d15258c371fc3f6b257CC5657",
+     "ens": "spaceminer.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xF08Cc0C0c9B6DAb57B82652E9D1200475B3fD725",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xEf5aB90a44b68d4F5e3f6bE6Af4Bedb12cd2c66E",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
+     "ens": "parachica.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xe874BA46982D7cBaB5931a50c2DC81A7aEb80344",
+     "ens": "newlightvisuals.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xE6666BA861C4749E316756E3f599676d1184e77C",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xe65435797497d5bE25f33d70D26698EC32Dd6A0d",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xdD6B80649e8D472EB8fb52eb7eEcFd2Dc219AcE7",
+     "ens": "ryanj.eth",
+     "qty": 1,
+     "status": "available"
+    },
+    {
+     "address": "0xdc018ADD198Ee371165F7413CC27849C5404C491",
+     "ens": "mnopxart.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xDBbd6bb7ADCBC9D1Ae962df6cf24F3bd14E1bC9b",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd8150E48739848F54EECF59B4d43b14ee901F562",
+     "ens": "borntotravel.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xD70150A7a5A42d4CD25974DAE077A79a1547fCf2",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xD44c223306ED3824a432bcD53bCf16b2F1575319",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xD37905283aDf21d3E628B423cBE20c4583BA9979",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc84D2bc55399De1f181c5ADC01eE9B4e9a1f5EFD",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC839de0fEd241607d50aa4107aE582443B906e4c",
+     "ens": "hugofaz.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc4cAE0938241bde4E3eF6ae4b2e489Eb88e2C57a",
+     "ens": "realision.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc142DC5CEB96f73635D66B62bfde2A0eEa4e4cE1",
+     "ens": "sumofprimes.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc01c99b2543e28EFf240e90384A1fd757a484927",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xbAA521bD781b7888f35f42D594BAAcD3Af3a4503",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xb6c4cE4eaE85066f8Fc45093D12444c8B89A6Aa9",
+     "ens": "jasonophoto.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xB4354fAe53823E690A48aA3a5abED56036ceC9f8",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xaDA00080816c264eCE458EEe56802C2521C2469e",
+     "ens": "snarkcontracts.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xaAB85567766043f4108D486B1c27535D0d57678E",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xaaa9ACa0d2AFF48aAB572DE4d24088A80F2aE452",
+     "ens": "dravanklab.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa903C06BF35286f6d1cDAD25396748353979a44C",
+     "ens": "benbodhi.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa16977865Ab1E2eeaB1068E71890B36de4bF95F3",
+     "ens": "amtwo.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9E597A7e01ED135eFFb7e95Bd017Fe958e7656B8",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x95B2db3f49B8A5365aFaCc6342f5ece0D253F8E0",
+     "ens": "vvveary.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x900A2e050De88dbDdAaaDb228a0b0AA51705c878",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8F401474A36b39F95D1D9053ff0823962746ee89",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8C1f393c989C667ad20E3d9Df72A4F778C5c64b2",
+     "ens": "walavault.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8bc303246b92b797cBd83E8527677402DB2B2609",
+     "ens": "0xshahrzad.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x832834FC5b0b35FFD4CF697c4eC08815Ad8D6a52",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x82139687FaAe8A29851902783E02E699dE0e0846",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7faBb88D9c81FA3e2b1177C9A085F47c2390B08e",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7a5adC385831130A51c579cAdEdCad6780F6ab5f",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6F1a6aFae39b273AF8DE1d8745706BCc3293048c",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6ECaE358e99DfDD1aBE900BeBE5f775431c12324",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6C4d62C003Eaa0bB2eF71a0e19204D0ae569906e",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6B6fF87ddEdfB45891D07b9Aa2525897F1a6B684",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x5F1Db8D30744EED120fa29D7045A5D32e34c9724",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x565465a0E19309ECB839319453E2c83Aa0BeFDF2",
+     "ens": "dinocelotti.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x50E05Fa93C604b02F7c4D4B0Aa328287b1545650",
+     "ens": "suiluv.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x45D6d9f604013B4F7442341B81A77fE4c391444f",
+     "ens": "meuleman.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x4525B5402a6d9EeFC656e828B9391aa9DFf2446C",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x38d762503dA939c1350ebF6482FDE2d4ef9DADDe",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x388160a99390392278AFdba240046b8B5E73f77b",
+     "ens": "zigmarillion.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x376E451F04863508A7dCE0B993354520e9acEe71",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+     "ens": "iagof.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2BA01d3615C2890a3c19aFCCB7F2361A705EAb13",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x1e3A1348881f6D0a5e1cdC6Bf19b88d98399b15a",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x17BcFB2aCE493935abED54755e4f883bC80C6Cd4",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x13c39B3e6E6159Bc233Fad90825f1F9F84fcb102",
+     "ens": "ricardotakamura.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x117dDE66c2De2979ba4619D8D494fd20fFe96c2e",
+     "ens": "personpixelated.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x020ef67CC7338689D34FBafa4446990ff1dcF4f8",
+     "ens": "loopmaniac.eth",
+     "qty": 1,
+     "status": "acquired"
+    }
+   ],
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    }
+   ],
+   "assets": {
+    "display": "geodetic-onchain/geodetic-onchain-3-display.webp",
+    "image": "geodetic-onchain/geodetic-onchain-3-image.png"
+   }
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "collection": "geodetic-onchain",
+   "title": "Patrimora",
+   "statement": "Presence.",
+   "edition": {
+    "type": "edition",
+    "minted": 26,
+    "holders": 26,
+    "artist_held": 1,
+    "vaulted": 0
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-1155",
+    "contract": "0x7b5ccc13ffacf2bc8204be1359a3eea3cae4dce4",
+    "token_id": "4",
+    "image": "https://arweave.net/sO_dBIEyz-Za0LQyKzIprkktkOCiM_Tu82PCUroqpn8",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "holders": [
+    {
+     "address": "0xfA977A0125c16A658A59CA1E59c7c48D58142226",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xE39Ad57A33244300C2E0acfcA24292434E2b9bae",
+     "ens": "crimsonovoidchucker.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xDAfa9e3dAe493F0B9D6872EFf4fda0f40D1b7488",
+     "ens": "piercedcat.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd7F624d0a67D09171b9555e2F43BDe7ACb16D79E",
+     "ens": "ricodemus.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "ens": "mintface.eth",
+     "qty": 1,
+     "status": "available"
+    },
+    {
+     "address": "0xc9cC85D6A45dDc91EBCA87c6Ba86f5993821c5a8",
+     "ens": "dabb3r.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa32c8ac28eC0AC0A19497CB30884cE85D88894fE",
+     "ens": "36529.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8C1f393c989C667ad20E3d9Df72A4F778C5c64b2",
+     "ens": "walavault.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+     "ens": "visco.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x89ECbBF60f39c8a6A345464958f88Ba4d28cD37c",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x89900edbf6B88e99aD849Ea34d6e3dF969631380",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x76E69bBC1Acace9cf046a273B3Ae38020d042452",
+     "ens": "56529.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6b159e840e28E009E930Df3bE6C06d1D70195Cc7",
+     "ens": "0xghostpepper.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6140F00e4Ff3936702E68744f2b5978885464cbB",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x437E59A28d34f755EB1654db31a0249C27Cd8C7c",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x3d91ad906C3969f86C588C988F721d5a735c6f81",
+     "ens": "jonnypickles.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x33a34e27a81436BA9D79276406a285E89A8bD8a8",
+     "ens": "tacita.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x31f8e9B0c3da5EA19f06c6DF7E88F3c60FDda1b4",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+     "ens": "iagof.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x1EE70DEC1a631B7374344F6799A2826EA771AE30",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x14Ddb398ce7A516c399a95B5d5C9A41326EC93dE",
+     "ens": "exlhot.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x13EEe41d67b8d99E11174161D72cF8cCD194458C",
+     "ens": "davidkibler.eth",
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x10d503FFE3b10fC43285396De53D4Df66a7A15e5",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x102B68Aa03c8098026fe944f013Ec9Ae4C49F1a1",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x0AAbac1408D397E5c875A28A1C9f6d052bF54D9a",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    },
+    {
+     "address": "0x08Db792F0dc2492C67bA901aDbE136E76648341c",
+     "ens": null,
+     "qty": 1,
+     "status": "acquired"
+    }
+   ],
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace",
+     "display_type": "text"
+    },
+    {
+     "trait_type": "Generative Art",
+     "value": "patrimora.com"
+    }
+   ],
+   "assets": {
+    "display": "geodetic-onchain/geodetic-onchain-4-display.webp",
+    "image": "geodetic-onchain/geodetic-onchain-4-image.png"
+   }
+  }
+ ],
+ "genre": "Design",
+ "facets": {}
+}

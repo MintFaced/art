@@ -1,0 +1,9 @@
+{
+ "_note": "Site-wide figures that are decisions rather than data read from the chain. NZD is master here as everywhere: a fee quoted to collectors in US dollars is converted once, rounded clean, and stored in NZD so it never drifts with the rate.",
+ "framing_fee_nzd": 850,
+ "framing_fee_quoted": "US$500",
+ "framing_converted_at": {
+  "rate_nzd_per_usd": 1.698843,
+  "at": "2026-08-17T00:00:00.000Z"
+ }
+}

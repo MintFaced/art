@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exhibitions ... MintFace</title>
+<meta name="description" content="Where the work has been shown.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:900px;margin:0 auto;padding:60px 28px 8px}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,92px);line-height:.96;margin:0;letter-spacing:-.035em}
+.mast-rule{width:44px;height:1px;background:var(--rule);margin:46px 0 0}
+
+.timeline{max-width:900px;margin:0 auto;padding:0 28px 110px}
+.year-group{display:grid;grid-template-columns:120px 1fr;gap:0 40px;padding:40px 0;border-bottom:1px solid var(--rule)}
+.year-group:last-child{border-bottom:0}
+.year{font-family:var(--font-mono);font-size:clamp(24px,3.2vw,34px);font-weight:400;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.shows{display:flex;flex-direction:column;gap:26px}
+.show .t{font-family:var(--font-sans);font-weight:400;font-size:clamp(18px,2.1vw,23px);line-height:1.3;letter-spacing:-.015em}
+.show .v{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:7px;line-height:1.9}
+.show .note{font-size:13px;color:var(--muted);margin-top:6px}
+.show a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.show a:hover{border-color:var(--ink)}
+
+@media(max-width:640px){
+  .mast{padding:34px 20px 6px}
+  .timeline{padding:0 20px 80px}
+  .year-group{grid-template-columns:1fr;gap:14px;padding:32px 0}
+  .year{font-size:26px}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="/vault">The Vault</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+
+// the venue line sometimes carries a date or a press mention after a middot
+function splitVenue(v) {
+  const parts = String(v || '').split('·').map((x) => x.trim()).filter(Boolean);
+  return { venue: parts.shift() || '', extra: parts };
+}
+
+(async function () {
+  try {
+    const idx = await MF.index();
+    const shows = idx.exhibition_history || [];
+    const years = [];
+    for (const s of shows) {
+      const y = String(s.year);
+      let g = years.find((x) => x.year === y);
+      if (!g) { g = { year: y, shows: [] }; years.push(g); }
+      g.shows.push(s);
+    }
+
+    document.getElementById('main').innerHTML = `
+      <div class="mast">
+        <h1>Exhibitions</h1>
+        <div class="mast-rule"></div>
+      </div>
+      <div class="timeline">
+        ${years.map((g) => `<div class="year-group">
+          <div class="year">${e(g.year)}</div>
+          <div class="shows">
+            ${g.shows.map((s) => {
+              const v = splitVenue(s.venue);
+              return `<div class="show">
+                <div class="t">${e(s.title)}</div>
+                <div class="v">${e(v.venue)}</div>
+                ${v.extra.length ? `<div class="note">${v.extra.map(e).join(' &middot; ')}</div>` : ''}
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`).join('')}
+      </div>`;
+  } catch (err) {
+    document.getElementById('main').innerHTML = '<div class="loading">Could not load the exhibition history</div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>
