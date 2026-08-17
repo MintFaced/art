@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/mintface.css">
 <style>
 /* ---------- hero ---------- */
-.hero{padding:4px 28px 0;text-align:center;min-height:40vh}
+.hero{padding:4px 28px 0;text-align:center;min-height:40vh;margin:12px 0 56px}
 .hero a{display:block;text-decoration:none}
 .hero .shot{display:inline-block;max-width:100%}
 .hero img,.hero video{max-height:84vh;width:auto;margin:0 auto;opacity:0;transition:opacity .8s ease}
@@ -48,6 +48,10 @@
 
 /* ---------- collections ---------- */
 .wrap{max-width:1500px;margin:0 auto;padding:44px 28px 40px}
+/* the collections run is split either side of the hero, so the half above it
+   closes up and the half below opens again */
+.wrap-core{padding-bottom:0}
+.wrap-rest{padding-top:0}
 .group{margin:0 0 62px}
 .group > h2{
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
@@ -142,9 +146,7 @@
   <a class="smallcaps" href="/collections">Collections</a>
 </header>
 
-<main id="main">
-  <div class="hero" id="hero"></div>
-</main>
+<main id="main"></main>
 
 <footer class="foot">
   <a class="smallcaps" href="/exhibitions">Exhibitions</a>
@@ -244,19 +246,18 @@ function heroMarkup(work, collection, pool) {
   </a>`;
 }
 
-// the newest six paintings. The pixel works are paintings too, but they have
-// their own set on /recent and reading as one run here is the point.
+// All of the recent work, pixel paintings included: they are recent work first
+// and PixelArcade adjacent second. Nineteen of them at hero height would bury
+// the collections, so the rows run shorter here than on /recent.
 async function fillRecent() {
   const el = document.getElementById('recentRows');
   const section = document.getElementById('recentSection');
   if (!el) return;
   let col = null;
   try { col = await MF.collection('recent-work'); } catch { /* nothing published yet */ }
-  const works = (col && col.works || [])
-    .filter((w) => (w.group || 'painting') === 'painting')
-    .slice(0, 6);
+  const works = (col && col.works) || [];
   if (!works.length) { if (section) section.remove(); return; }
-  MF.paintRows(el, works, { target: 340, targetSmall: 190, gutter: 10 });
+  MF.paintRows(el, works, { target: 170, targetSmall: 120, gutter: 8, maxPerRow: 7 });
 }
 
 async function fillVault() {
@@ -301,7 +302,36 @@ async function hero(home, idx) {
     const groups = MF.groupsWithCollections(idx);
     const works = idx.collections.reduce((n, c) => n + (c.counts.works || 0), 0);
 
+    // The page reads: the newest work, then the collections, then the hero as a
+    // breath in the middle, then the geodetic set and the asides.
+    const section = (g) => {
+      const annex = g.id === 'archive';
+      const setLink = g.id === 'geodetic' ? '<a class="smallcaps" href="/geodetic">The set as one page</a>' : '';
+      // the vault is a place, so it shows what is in it rather than a card about it
+      if (g.id === 'vault') {
+        return `<section class="group vault" id="vaultSection">
+          <h2>${e(g.title)}<a class="smallcaps" href="/vault">Everything held</a></h2>
+          <div class="cards" id="vaultCards"></div>
+        </section>`;
+      }
+      const cls = g.id === 'studies' ? 'studies' : g.id === 'feature' ? 'feature' : (annex ? 'annex' : '');
+      return `<section class="group ${cls}">
+        <h2>${e(g.title)}${setLink}</h2>
+        <div class="cards">${g.collections.map((c) => MF.collectionCard(c)).join('')}</div>
+      </section>`;
+    };
+    const pick = (id) => groups.find((g) => g.id === id);
+    const core = pick('core');
+    const geodetic = pick('geodetic');
+    const rest = groups.filter((g) => !['core', 'geodetic'].includes(g.id));
+
     document.getElementById('main').insertAdjacentHTML('beforeend', `
+      <section class="group recent-rows" id="recentSection">
+        <div class="wrap-head"><h2>Recent Paintings</h2></div>
+        <div class="rows" id="recentRows"></div>
+        <div class="rows-more"><a class="smallcaps" href="/recent">All recent work</a></div>
+      </section>
+
       <div class="wordmark-big">
         <h1><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></h1>
         <div class="sub">
@@ -311,28 +341,14 @@ async function hero(home, idx) {
         </div>
         <div class="figures">${MF.escape(MF.SALES_LINE)}</div>
       </div>
-      <section class="group recent-rows" id="recentSection">
-        <div class="wrap-head"><h2>Recent Paintings</h2></div>
-        <div class="rows" id="recentRows"></div>
-        <div class="rows-more"><a class="smallcaps" href="/recent">All recent work</a></div>
-      </section>
-      <div class="wrap">
-        ${groups.map((g) => {
-          const annex = g.id === 'archive';
-          const setLink = g.id === 'geodetic' ? '<a class="smallcaps" href="/geodetic">The set as one page</a>' : '';
-          // the vault is a place, so it shows what is in it rather than a card about it
-          if (g.id === 'vault') {
-            return `<section class="group vault" id="vaultSection">
-              <h2>${e(g.title)}<a class="smallcaps" href="/vault">Everything held</a></h2>
-              <div class="cards" id="vaultCards"></div>
-            </section>`;
-          }
-          const cls = g.id === 'studies' ? 'studies' : g.id === 'feature' ? 'feature' : (annex ? 'annex' : '');
-          return `<section class="group ${cls}">
-            <h2>${e(g.title)}${setLink}</h2>
-            <div class="cards">${g.collections.map((c) => MF.collectionCard(c)).join('')}</div>
-          </section>`;
-        }).join('')}
+
+      ${core ? `<div class="wrap wrap-core">${section(core)}</div>` : ''}
+
+      <div class="hero" id="hero"></div>
+
+      <div class="wrap wrap-rest">
+        ${geodetic ? section(geodetic) : ''}
+        ${rest.map(section).join('')}
       </div>`);
 
     await hero(home, idx);
