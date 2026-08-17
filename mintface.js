@@ -441,13 +441,19 @@ const MF = {
         ${a.badge ? `<span class="badge">${e(a.badge)}</span>` : ''}
         ${a.available ? `<span><span class="dot available"></span> ${a.available} available</span>` : ''}
       </div>
-      ${c.statement ? `<div class="s">${e(c.statement)}</div>` : ''}
+      ${c.card_statement || c.statement ? `<div class="s">${e(c.card_statement || c.statement)}</div>` : ''}
     </a>`;
   },
 
   // The record so far, kept here rather than in the page so one edit changes it
   // everywhere it is quoted.
-  SALES_LINE: 'Highest sale 8.2 ETH (328 ed.) \u00b7 av. edition 0.03 ETH \u00b7 av. 1/1 0.3 ETH',
+  // non-breaking inside each figure, so a line only ever breaks at a separator
+  SALES_LINE: [
+    'ATH digital sale 8.2 ETH (328 ed.)',
+    'ATH painting sale $5,000 NZD',
+    'av. edition 0.03 ETH',
+    'av. 1/1 0.3 ETH',
+  ].map((s) => s.replace(/ /g, '\u00a0')).join(' \u00b7 '),
 
   // groups, in the order the catalog gives them, with the locked geodetic run
   groupOrder: {

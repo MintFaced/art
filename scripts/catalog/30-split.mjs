@@ -18,9 +18,11 @@ const key = (w) => `${normTitle(w.title)}|${w.digital?.image || ''}`;
 const META = JSON.parse(fs.readFileSync(ROOT + 'data/source/collection-meta.json', 'utf8')).collections;
 const CONFIG = JSON.parse(fs.readFileSync(ROOT + 'data/source/config.json', 'utf8'));
 
-// The recovered Geodetic Moment Light is the face of the on-chain set, whether
-// or not it happens to be for sale.
-const COVER_OVERRIDE = { 'geodetic-onchain': 'geodetic-onchain-1' };
+// Some collections are known by one work rather than by whatever happens to be
+// for sale. Named in the overlay beside genre, so a cover is an edit.
+const COVER_OVERRIDE = Object.fromEntries(
+  Object.entries(META).filter(([, m]) => m.cover).map(([slug, m]) => [slug, m.cover]),
+);
 
 // collapse rule: 4+ works in one collection sharing a title and an image are one edition set
 function collapse(works) {
@@ -183,6 +185,8 @@ for (const col of cat.collections) {
   index.collections.push({
     slug: col.slug, title: col.title, group: meta.group || col.group, year: col.year || null,
     medium: col.medium || null, genre: meta.genre || null,
+    // a card wants one line; the page keeps whatever it already had
+    card_statement: meta.card_statement || null,
     framing: meta.framing === true || undefined,
     physical: !!col.physical, statement: col.statement || null, sold_out: col.sold_out || false,
     counts: { works: works.length, ...tally, ...(editionsMinted ? { editions_minted: editionsMinted, edition_works: editionWorks.length } : {}), ...(uniqueWorks ? { unique_works: uniqueWorks } : {}), ...(childWorks ? { child_works: childWorks } : {}) },
