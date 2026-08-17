@@ -447,13 +447,11 @@ function actionBlock(work, collection) {
   if (s === 'available') {
     return `<div class="action"><button class="btn" id="acquire">${hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork'}</button></div>`;
   }
-  // the painting has gone but editions of the digital work remain
+  // The painting has gone but editions of the digital work remain. Who has it
+  // is already said under the title, so it is not said twice here.
   if (s === 'acquired' && hasPrice) {
-    const name = MF.collectorName(work.collector) || (work.physical && work.physical.collector);
     return `<div class="action">
-      <div class="state"><span class="dot acquired"></span>
-        <span class="word">Painting collected${name ? ' by ' + e(name) : ''}</span></div>
-      <button class="btn" id="acquire" style="margin-top:14px">Acquire the digital work</button>
+      <button class="btn" id="acquire">Acquire the digital work</button>
     </div>`;
   }
   if (s === 'reserved') {
