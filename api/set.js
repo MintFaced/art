@@ -1,5 +1,5 @@
 import { siteIndex, siteOrigin, useRequestOrigin } from './_lib/data.js';
-import { workState, stateConfigured } from './_lib/state.js';
+import { readState, stateConfigured } from './_lib/state.js';
 
 /* The Geodetic Set: one work from each of five variants.
 
@@ -30,25 +30,27 @@ const sellable = (w) =>
   && w.offers && w.offers.digital === true
   && w.pricing_nzd && typeof w.pricing_nzd.digital === 'number' && w.pricing_nzd.digital > 0;
 
-// the live ledger wins over the catalog, the same way a work page works
-async function liveStatus(w) {
-  if (!stateConfigured()) return w;
+// The live ledger wins over the catalog. Read once for the whole set: asking
+// per work meant a couple of hundred round trips to answer one page.
+async function ledger() {
+  if (!stateConfigured()) return {};
   try {
-    const s = await workState(w.id);
-    return s && s.status ? { ...w, status: s.status } : w;
-  } catch { return w; }
+    const { state } = await readState();
+    return (state && state.works) || {};
+  } catch { return {}; }
 }
 
 export async function GET(request) {
   useRequestOrigin(request);
   await siteIndex();
+  const live = await ledger();
   const out = [];
   for (const slot of SET.slots) {
     const col = await fetch(`${siteOrigin()}/data/c/${slot.key}.json`)
       .then((r) => (r.ok ? r.json() : null)).catch(() => null);
     let works = (col && col.works) || [];
     if (slot.only) works = works.filter((w) => slot.only.includes(w.id));
-    works = await Promise.all(works.map(liveStatus));
+    works = works.map((w) => (live[w.id]?.status ? { ...w, status: live[w.id].status } : w));
     works = works.filter(sellable);
     out.push({
       key: slot.key,

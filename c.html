@@ -17,6 +17,15 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .meta{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;flex-wrap:wrap;gap:16px;align-items:center}
 .badge{border:1px solid var(--rule);padding:4px 10px;color:var(--muted)}
 .statement{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,1.9vw,20px);line-height:1.55;color:#2c2924;margin:22px 0 0;max-width:620px}
+/* one line, and nothing louder */
+.set-strip{
+  display:inline-flex;gap:14px;align-items:baseline;margin-top:22px;text-decoration:none;
+  font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--rule);padding-bottom:4px;font-variant-numeric:tabular-nums;
+}
+.set-strip:hover{color:var(--ink);border-color:var(--ink)}
+.set-strip span{color:var(--faint)}
 .minting{font-size:13px;color:var(--muted);margin:14px 0 0;max-width:560px}
 
 /* ---------- filters ---------- */
@@ -350,6 +359,21 @@ function wireFilters() {
 // Recent Work is shown as rows rather than a grid, because these are
 // photographs of paintings at whatever shape the painting is, and the set reads
 // better whole than cropped square.
+// the five variants that make up the geodetic set
+const SET_MEMBERS = ['geodetic-world', 'geodetic-moments', 'geodetic-memory', 'geodetic-onchain', 'geodetica'];
+
+// one quiet line, and only while a set can actually be completed
+async function setStrip(collection) {
+  const el = document.getElementById('setStrip');
+  if (!el || !SET_MEMBERS.includes(collection.slug)) return;
+  try {
+    const set = await fetch('/api/set').then((r) => r.json());
+    if (!set.complete || !set.remaining) return;
+    el.innerHTML = `<a class="set-strip" href="/set/${e(set.slug)}">Complete the set`
+      + `<span>${set.remaining} ${set.remaining === 1 ? 'remains' : 'remain'}</span></a>`;
+  } catch { /* the strip is an offer, not a requirement */ }
+}
+
 const RECENT_GROUPS = [
   { id: 'painting', title: 'Paintings' },
   { id: 'pixel', title: 'Pixel paintings' },
@@ -397,6 +421,7 @@ function render(collection) {
       </div>
       ${collection.statement ? `<p class="statement">${e(collection.statement)}</p>` : ''}
       ${collection.tokenize_on_purchase && collection.notes ? `<p class="minting">${e(collection.notes)}</p>` : ''}
+      <div id="setStrip"></div>
     </div>
     ${collection.slug === 'recent-work' ? '' : stateControl(collection.works)}
     ${collection.slug === 'recent-work' ? '' : filterBar(collection)}
@@ -413,6 +438,7 @@ function render(collection) {
   if (!document.getElementById('count')) {
     document.getElementById('grid').insertAdjacentHTML('beforebegin', '<div class="count" style="max-width:1500px;margin:0 auto;padding:0 28px" id="count"></div>');
   }
+  setStrip(collection);
   wireStates();
   wireFilters();
   // changing currency rewrites the band labels as well as the prices
