@@ -1,6 +1,6 @@
 {
   "_note": "Live sale state, written by the Vercel functions in api/ and committed back here. The static catalog is the record of the work; this is the record of what has happened to it since the last catalog rebuild.",
-  "updated": "2026-08-18T00:37:11.639Z",
+  "updated": "2026-08-18T00:37:12.405Z",
   "works": {
     "two-burdens-9": {
       "status": "available",
@@ -49,6 +49,15 @@
         "what": "digital"
       },
       "updated": "2026-08-18T00:37:11.639Z"
+    },
+    "geodetic-onchain-2": {
+      "status": "pending",
+      "pending": {
+        "expires": "2026-08-18T01:07:09.000Z",
+        "set": "geodetic",
+        "what": "digital"
+      },
+      "updated": "2026-08-18T00:37:12.405Z"
     }
   }
 }
