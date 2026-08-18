@@ -51,6 +51,17 @@ export async function POST(request) {
 // Only lift a hold that belongs to this session. A later buyer may already have
 // claimed the work, and their hold must not be cleared by an older timeout.
 async function release(session, why) {
+  // a set holds five works, and an abandoned set has to give all five back
+  const ids = setWorks(session);
+  if (ids.length) {
+    for (const id of ids) {
+      const s = await workState(id);
+      if (!s || s.status !== 'pending') continue;
+      await writeWorkState(id, { status: 'available', pending: null, note: why },
+        `Set hold lifted: ${id}, ${why}`);
+    }
+    return;
+  }
   const workId = session.metadata?.workId || session.client_reference_id;
   if (!workId) return;
   const live = await workState(workId);
@@ -58,6 +69,73 @@ async function release(session, why) {
   if (live.pending?.session && live.pending.session !== session.id) return;
   await writeWorkState(workId, { status: 'available', pending: null, note: why },
     `Hold lifted: ${workId}, ${why}`);
+}
+
+// a set session carries its five ids rather than one
+const setWorks = (session) =>
+  (session.metadata?.set && session.metadata?.works
+    ? String(session.metadata.works).split(',').map((s) => s.trim()).filter(Boolean)
+    : []);
+
+/* A set is one purchase of five works. Each flips on its own so its own page
+   reads correctly, and they share one collector, one time and one session, so
+   the ledger can tell afterwards that they went together. */
+async function fulfilSet(session, ids) {
+  const email = session.customer_details?.email || session.customer_email || null;
+  const amount = (session.amount_total ?? 0) / 100;
+  const currency = (session.currency || 'nzd').toUpperCase();
+  const at = new Date().toISOString();
+  const setName = session.metadata?.set || 'set';
+
+  const titles = [];
+  for (const id of ids) {
+    const hit = await findWork(id);
+    const title = hit?.work?.title || id;
+    titles.push(title);
+    await writeWorkState(id, {
+      status: 'acquired',
+      pending: null,
+      note: null,
+      what: 'digital',
+      sold_out: true,
+      set: setName,
+      paid: { amount, currency, session: session.id, at, set: setName },
+      collector: { email, display_name: null, ens: null, note: null, acquired: at },
+      token_transfer: 'pending',
+    }, `Sold as part of the ${setName} set: ${title}`);
+  }
+
+  const list = titles.map((t, i) => `  ${i + 1}. ${t}`).join('\n');
+  const notify = process.env.EMAIL_TO_ARTIST || 'ryan@mintface.art';
+  await send({
+    to: notify,
+    subject: `Sold: the ${setName} set, ${amount} ${currency}`,
+    text: `A complete set has sold.
+
+${list}
+
+Paid: ${amount} ${currency}
+Buyer: ${email || 'no email given'}
+
+All five transfer together.`,
+  }).catch((e) => console.error('artist email', e));
+
+  if (email) {
+    await send({
+      to: email,
+      subject: `Thank you ... the ${setName} set`,
+      text: `Your payment has gone through. You have acquired a complete set:
+
+${list}
+
+Paid: ${amount} ${currency}
+
+The five tokens will be transferred to your wallet together. Reply with the address you would like them sent to.
+
+Ryan
+MintFace`,
+    }).catch((e) => console.error('buyer email', e));
+  }
 }
 
 // One of a kind, or any purchase including the painting. An edition can be sold
@@ -68,6 +146,9 @@ function closesTheWork(work, what) {
 }
 
 async function fulfil(session) {
+  const setIds = setWorks(session);
+  if (setIds.length) return fulfilSet(session, setIds);
+
   const workId = session.metadata?.workId || session.client_reference_id;
   if (!workId) return;
 
