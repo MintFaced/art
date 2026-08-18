@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Geodetic Set ... MintFace</title>
+<meta name="description" content="One work from each of the five geodetic variants, chosen by you.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<meta property="og:title" content="The Geodetic Set ... MintFace">
+<meta property="og:description" content="One work from each of the five geodetic variants, chosen by you.">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.head{max-width:1500px;margin:0 auto;padding:48px 28px 0}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px);line-height:1.02;margin:0;letter-spacing:-.03em}
+.remain{
+  font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-top:14px;font-variant-numeric:tabular-nums;
+}
+.intro{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,1.9vw,20px);line-height:1.55;color:#2c2924;margin:20px 0 0;max-width:620px}
+
+/* the wall: five chosen works, side by side */
+.wall{max-width:1500px;margin:0 auto;padding:34px 28px 0;display:flex;gap:10px;align-items:flex-end}
+.wall .cell{flex:1 1 0;min-width:0}
+.wall .box{background:#f2efe9;border:1px solid var(--rule);aspect-ratio:1/1;overflow:hidden;position:relative}
+.wall .box img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s ease}
+.wall .box img.in{opacity:1}
+.wall .empty{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:center;padding:8px;
+}
+.wall .name{
+  font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* the slots */
+.slots{max-width:1500px;margin:0 auto;padding:44px 28px 0}
+.slot{border-top:1px solid var(--rule);padding:20px 0}
+.slot:last-of-type{border-bottom:1px solid var(--rule)}
+.slot-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;cursor:pointer}
+.slot-head .t{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.slot-head .picked{font-family:var(--font-mono);font-weight:400;font-size:11px;letter-spacing:.06em;color:var(--ink);font-variant-numeric:tabular-nums}
+.slot-head .picked.none{color:var(--faint)}
+.options{display:none;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:18px}
+.options.open{display:grid}
+.opt{background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.opt .box{background:#f2efe9;border:1px solid var(--rule);aspect-ratio:1/1;overflow:hidden}
+.opt img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s ease}
+.opt img.in{opacity:1}
+.opt[aria-pressed="true"] .box{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.opt .t{font-family:var(--font-sans);font-weight:400;font-size:12.5px;line-height:1.3;margin-top:7px;color:var(--ink)}
+.opt .p{font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.06em;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+
+/* the one number */
+.total{max-width:1500px;margin:0 auto;padding:34px 28px 0}
+.total-row{border-top:1px solid var(--ink);padding-top:18px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
+.total-row .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.total-row .n{font-family:var(--font-mono);font-weight:400;font-size:clamp(24px,3.4vw,34px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.total .cur{margin-top:12px}
+.actions{max-width:1500px;margin:0 auto;padding:24px 28px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.actions .btn{
+  background:var(--ink);border:1px solid var(--ink);color:var(--paper);cursor:pointer;
+  font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;padding:15px 28px;
+}
+.actions .btn[disabled]{opacity:.3;cursor:default}
+.note{
+  font-family:var(--font-sans);font-weight:400;font-size:13px;line-height:1.7;color:var(--muted);
+  max-width:600px;margin:18px 0 0;padding:0 28px;
+}
+.note.wrap{max-width:1500px}
+.said{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dot-available);padding:0 28px;margin-top:14px;min-height:14px}
+.said.bad{color:#8b3a2a}
+
+@media(max-width:1200px){.options{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:820px){
+  .options{grid-template-columns:repeat(3,1fr)}
+  .wall{flex-wrap:wrap}
+  .wall .cell{flex:1 1 30%}
+}
+@media(max-width:560px){
+  .head,.wall,.slots,.total,.actions{padding-left:20px;padding-right:20px}
+  .options{grid-template-columns:repeat(2,1fr)}
+  .wall .cell{flex:1 1 45%}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">All collections</a>
+</header>
+
+<main id="main">
+  <section class="head">
+    <h1 id="title">The Geodetic Set</h1>
+    <div class="remain" id="remain">Counting</div>
+    <p class="intro">One work from each of the five variants, chosen by you. The set is complete when every slot is filled.</p>
+  </section>
+
+  <div class="wall" id="wall"></div>
+  <div class="slots" id="slots"></div>
+
+  <div class="total">
+    <div class="total-row">
+      <span class="what">The set</span>
+      <span class="n" id="total">...</span>
+    </div>
+    <div id="curBar"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="buy" disabled>Acquire the set</button>
+  </div>
+  <div class="said" id="said"></div>
+  <p class="note">Five digital works, one payment. The tokens transfer together once payment confirms.</p>
+</main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+const $ = (id) => document.getElementById(id);
+const S = { data: null, chosen: {}, fx: {}, open: null };
+
+const chosenList = () => (S.data ? S.data.slots.map((s) => S.chosen[s.key] || null) : []);
+const complete = () => chosenList().every(Boolean);
+const totalNzd = () => chosenList().reduce((n, w) => n + (w ? w.nzd : 0), 0);
+
+function drawWall() {
+  $('wall').innerHTML = S.data.slots.map((slot) => {
+    const w = S.chosen[slot.key];
+    return `<div class="cell">
+      <div class="box">
+        ${w && w.image
+          ? `<img src="${e(MF.thumbUrl({ digital: { image: w.image } }, 600) || w.image)}" alt="${e(w.title || '')}" onload="this.classList.add('in')">`
+          : `<span class="empty">${e(slot.title)}</span>`}
+      </div>
+      <div class="name">${w ? e(w.title || w.id) : '&nbsp;'}</div>
+    </div>`;
+  }).join('');
+}
+
+function drawSlots() {
+  $('slots').innerHTML = S.data.slots.map((slot) => {
+    const w = S.chosen[slot.key];
+    const none = slot.works.length === 0;
+    return `<section class="slot" data-slot="${e(slot.key)}">
+      <div class="slot-head" role="button" tabindex="0" data-toggle="${e(slot.key)}">
+        <span class="t">${e(slot.title)}</span>
+        <span class="picked${w ? '' : ' none'}">${none ? 'None available' : w ? e(w.title || w.id) : `Choose one of ${slot.works.length}`}</span>
+      </div>
+      <div class="options${S.open === slot.key ? ' open' : ''}" data-for="${e(slot.key)}">
+        ${slot.works.map((x) => `<button class="opt" type="button" data-slot="${e(slot.key)}" data-id="${e(x.id)}" aria-pressed="${w && w.id === x.id}">
+          <div class="box">${x.image ? `<img src="${e(MF.thumbUrl({ digital: { image: x.image } }, 500) || x.image)}" alt="${e(x.title || '')}" loading="lazy" onload="this.classList.add('in')">` : ''}</div>
+          <div class="t">${e(x.title || x.id)}</div>
+          <div class="p" data-nzd="${x.nzd}">${e(MF.money(x.nzd, MF.currency(), S.fx) || '')}</div>
+        </button>`).join('')}
+      </div>
+    </section>`;
+  }).join('');
+}
+
+function drawTotal() {
+  const n = totalNzd();
+  const picked = chosenList().filter(Boolean).length;
+  $('total').textContent = picked
+    ? (MF.money(n, MF.currency(), S.fx) || '...') + (complete() ? '' : ` ... ${picked} of ${S.data.slots.length}`)
+    : '...';
+  $('buy').disabled = !complete();
+}
+
+function draw() {
+  drawWall();
+  drawSlots();
+  drawTotal();
+  MF.progress.watch($('slots'));
+}
+
+function say(msg, bad) {
+  $('said').textContent = msg || '';
+  $('said').className = 'said' + (bad ? ' bad' : '');
+}
+
+$('slots').addEventListener('click', (ev) => {
+  const head = ev.target.closest('[data-toggle]');
+  if (head) {
+    S.open = S.open === head.dataset.toggle ? null : head.dataset.toggle;
+    draw();
+    return;
+  }
+  const opt = ev.target.closest('.opt');
+  if (!opt) return;
+  const slot = S.data.slots.find((s) => s.key === opt.dataset.slot);
+  const work = slot.works.find((w) => w.id === opt.dataset.id);
+  // choosing the same one again clears the slot
+  S.chosen[slot.key] = (S.chosen[slot.key] && S.chosen[slot.key].id === work.id) ? null : work;
+  say('');
+  draw();
+});
+
+$('buy').addEventListener('click', async () => {
+  if (!complete()) return;
+  $('buy').disabled = true;
+  say('Opening the checkout...');
+  try {
+    const r = await fetch('/api/checkout-set', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ works: chosenList().map((w) => w.id), currency: MF.currency() === 'NZD' ? 'NZD' : 'USD' }),
+    }).then((x) => x.json());
+    if (r.url) { location.href = r.url; return; }
+    say(r.error || 'The checkout refused', true);
+  } catch {
+    say('Could not reach the checkout', true);
+  }
+  $('buy').disabled = false;
+});
+
+(async function () {
+  try {
+    const [data, fx] = await Promise.all([
+      fetch('/api/set').then((r) => r.json()),
+      MF.fx().catch(() => ({})),
+    ]);
+    S.data = data;
+    S.fx = fx || {};
+    $('title').textContent = data.title;
+    document.title = `${data.title} ... MintFace`;
+    // the header says what is true: the scarcest slot decides
+    $('remain').textContent = data.remaining > 0
+      ? `${data.remaining} complete ${data.remaining === 1 ? 'set remains' : 'sets remain'}`
+      : 'No complete set available just now';
+    $('curBar').innerHTML = MF.currencyBar('cur');
+    draw();
+    MF.wireCurrencyBar($('cur'), () => draw());
+    if (data.remaining === 0) { $('buy').disabled = true; say('A slot is empty, so the set cannot be completed', true); }
+  } catch (err) {
+    $('remain').textContent = '';
+    $('slots').innerHTML = '<div class="loading">Could not load the set</div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

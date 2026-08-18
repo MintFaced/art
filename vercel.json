@@ -59,6 +59,10 @@
       "destination": "/f"
     },
     {
+      "source": "/set/:slug",
+      "destination": "/set"
+    },
+    {
       "source": "/:key",
       "destination": "/api/studio"
     }

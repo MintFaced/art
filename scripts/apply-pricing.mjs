@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const src = JSON.parse(readFileSync('data/source/pricing-override.json', 'utf8'));
 const per = src.collections || {};
+const perWork = src.works || {};
 const catalog = JSON.parse(readFileSync('catalog.json', 'utf8'));
 
 let touched = 0;
@@ -27,6 +28,23 @@ for (const c of catalog.collections) {
   }
   report.push({ slug: c.slug, works: n, from: [...was], to: p.digital, eth: p.listed_eth });
 }
+
+// per work, applied after the collection sweep so a named work can differ from
+// or stand outside its collection's price
+let single = 0;
+for (const c of catalog.collections) {
+  for (const w of c.works || []) {
+    const p = perWork[w.id];
+    if (!p) continue;
+    if (w.status !== 'available') { console.log(`  skipped ${w.id}, it is ${w.status}`); continue; }
+    w.pricing_nzd = { ...(w.pricing_nzd || {}), digital: p.digital };
+    if (p.listed_eth) w.listed_eth = p.listed_eth;
+    w.offers = { digital: p.digital != null, painting: false, both: false };
+    single++;
+    report.push({ slug: `${c.slug} / ${w.id}`, works: 1, from: [], to: p.digital, eth: p.listed_eth });
+  }
+}
+if (single) console.log(`priced ${single} named works\n`);
 
 writeFileSync('catalog.json', JSON.stringify(catalog, null, 1));
 console.log(`priced ${touched} available works at ${src.converted_at.rate_nzd_per_eth} NZD/ETH, rounded to the ${src.rounding}\n`);

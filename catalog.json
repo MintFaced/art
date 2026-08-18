@@ -123824,7 +123824,7 @@
       "exists": null
      },
      "pricing_nzd": {
-      "digital": null,
+      "digital": 640,
       "painting": null,
       "both": null
      },
@@ -124010,7 +124010,13 @@
        "qty": 1,
        "status": "acquired"
       }
-     ]
+     ],
+     "listed_eth": 0.2,
+     "offers": {
+      "digital": true,
+      "painting": false,
+      "both": false
+     }
     },
     {
      "id": "geodetic-onchain-1",
@@ -124039,7 +124045,7 @@
       "exists": null
      },
      "pricing_nzd": {
-      "digital": null,
+      "digital": 640,
       "painting": null,
       "both": null
      },
@@ -124207,7 +124213,13 @@
        "qty": 1,
        "status": "acquired"
       }
-     ]
+     ],
+     "listed_eth": 0.2,
+     "offers": {
+      "digital": true,
+      "painting": false,
+      "both": false
+     }
     }
    ]
   },
