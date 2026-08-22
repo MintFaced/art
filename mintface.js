@@ -996,6 +996,36 @@ const MF = {
     return collection?.year || null;
   },
 
+  /* ---------- live listings ---------- */
+  // The listing is the price. Where a work is listed on chain that figure wins
+  // over the catalogue's NZD: the catalogue records what a work was offered at,
+  // the listing is what someone can actually pay for it this minute. Written by
+  // scripts/sync-listings.mjs. A missing or stale file is not an error, the page
+  // simply falls back to the catalogue.
+  async listings() {
+    if (this._listings !== undefined) return this._listings;
+    try {
+      const r = await fetch('/data/listings.json');
+      this._listings = r.ok ? await r.json() : null;
+    } catch (e) { this._listings = null; }
+    return this._listings;
+  },
+
+  listingFor(work, listings) {
+    const L = listings || this._listings;
+    if (!L || !L.works || !work) return null;
+    return L.works[work.id] || null;
+  },
+
+  // listings are denominated in ETH; everything downstream thinks in NZD, so the
+  // conversion happens once here and the rest of the money code is untouched
+  listingNzd(listing, fx) {
+    if (!listing || listing.price_eth == null) return null;
+    const f = fx || {};
+    if (!f.eth) return null;
+    return listing.price_eth / f.eth;
+  },
+
   /* ---------- marketplace marks ---------- */
   // The fine-print row at the foot of a work page: collect it where it trades,
   // verify it on chain. Ethereum only, because Etherscan is, and only once

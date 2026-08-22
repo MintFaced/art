@@ -8,6 +8,9 @@
     },
     "api/warm-assets.js": {
       "maxDuration": 300
+    },
+    "api/cron/listings.js": {
+      "maxDuration": 300
     }
   },
   "redirects": [
@@ -71,6 +74,10 @@
     {
       "path": "/api/cron/reserves",
       "schedule": "0 19 * * *"
+    },
+    {
+      "path": "/api/cron/listings",
+      "schedule": "0 20 * * *"
     }
   ]
 }

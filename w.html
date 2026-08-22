@@ -101,6 +101,10 @@ details summary:hover{color:var(--ink)}
 .market-row a{display:inline-flex;align-items:center;gap:8px;color:var(--mark);text-decoration:none;transition:color .18s ease}
 .market-row a:hover,.market-row a:focus-visible{color:var(--ink)}
 .market-row svg{width:16px;height:16px;flex:none;fill:currentColor}
+.onchain{display:flex;flex-direction:column;gap:3px;margin-top:14px;padding:12px 14px;border:1px solid var(--rule);text-decoration:none;transition:border-color .18s ease}
+.onchain:hover,.onchain:focus-visible{border-color:var(--ink)}
+.onchain .w{font-family:var(--font-sans);font-weight:500;font-size:12.5px;letter-spacing:.02em;color:var(--ink)}
+.onchain .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .market-row .lbl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:currentColor}
 
 /* ---------- acquire ---------- */
@@ -466,12 +470,28 @@ function pricingBlock(work, collection) {
   </div>`;
 }
 
+// Two ways to the same work: the site's own checkout, in fiat or on a reserve,
+// and the listing itself, filled from the buyer's own wallet. Neither is the
+// fallback for the other.
+function onchainBuy(work) {
+  const l = work.listing;
+  if (!l || !l.url) return '';
+  if (l.kind === 'auction') {
+    return `<a class="onchain" href="${e(l.url)}" target="_blank" rel="noopener">
+      <span class="w">At auction on Foundation</span><span class="s">Bid in your own wallet</span></a>`;
+  }
+  if (l.kind !== 'buy-now' || !(l.price_eth > 0)) return '';
+  return `<a class="onchain" href="${e(l.url)}" target="_blank" rel="noopener">
+    <span class="w">Buy on chain ... ${e(String(l.price_eth))} ETH</span>
+    <span class="s">Fills the listing from your wallet, on Foundation</span></a>`;
+}
+
 function actionBlock(work, collection) {
   const s = work.status;
   const hasPrice = optionsFor(work, collection).length > 0;
 
   if (s === 'available') {
-    return `<div class="action"><button class="btn" id="acquire">${hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork'}</button></div>`;
+    return `<div class="action"><button class="btn" id="acquire">${hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork'}</button>${onchainBuy(work)}</div>`;
   }
   // The painting has gone but editions of the digital work remain. Who has it
   // is already said under the title, so it is not said twice here.
@@ -1172,6 +1192,16 @@ function thanksIfPaid() {
       return;
     }
     const idx = await MF.index();
+    // The listing is the price. A live on-chain listing overrides the catalogue
+    // figure by filling in the ETH fields the page already understands, so
+    // nothing downstream needs to know where the number came from.
+    const listing = MF.listingFor(hit.work, await MF.listings());
+    if (listing && listing.kind === 'buy-now' && listing.price_eth > 0) {
+      hit.work.priced_in = 'ETH';
+      hit.work.pricing_eth = { ...(hit.work.pricing_eth || {}), digital: listing.price_eth };
+      hit.work.offers = { ...(hit.work.offers || {}), digital: true };
+    }
+    if (listing) hit.work.listing = listing;
     render(hit.work, hit.collection, idx._meta || {});
   } catch (err) {
     document.getElementById('main').innerHTML = `<div class="loading">Could not load this work</div>`;

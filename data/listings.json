@@ -1,0 +1,784 @@
+{
+ "_note": "Live listing prices read from chain. Written by scripts/sync-listings.mjs; the site prefers these over the catalogue figure. Foundation only ... OpenSea listings live in an off-chain order book and need an API key.",
+ "generated": "2026-08-22T04:07:14.892Z",
+ "sources": [
+  "foundation"
+ ],
+ "counts": {
+  "checked": 770,
+  "owner_unresolved": 9,
+  "escrowed": 102,
+  "priced": 86,
+  "auction": 13,
+  "errored": 3,
+  "carried_forward": 0
+ },
+ "works": {
+  "10k-project": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 10,
+   "price_wei": "10000000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe5eb0070a13f868a72996a568e12d085413445b8/1"
+  },
+  "foundation-91080": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 1,
+   "price_wei": "1000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/91080"
+  },
+  "foundation-109050": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 1,
+   "price_wei": "1000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/109050"
+  },
+  "foundation-132520": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 2,
+   "price_wei": "2000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/132520"
+  },
+  "geodetic-illusions-7": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/7"
+  },
+  "geodetic-illusions-29": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/29"
+  },
+  "geodetic-illusions-46": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/46"
+  },
+  "geodetic-illusions-53": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/53"
+  },
+  "geodetic-world-2": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/2"
+  },
+  "geodetic-world-3": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/3"
+  },
+  "geodetic-world-5": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/5"
+  },
+  "geodetic-world-9": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/9"
+  },
+  "geodetic-world-12": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/12"
+  },
+  "geodetic-world-13": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/13"
+  },
+  "geodetic-world-14": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/14"
+  },
+  "geodetic-world-16": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/16"
+  },
+  "geodetic-world-20": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/20"
+  },
+  "geodetic-world-21": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/21"
+  },
+  "geodetic-world-22": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/22"
+  },
+  "geodetic-world-26": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/26"
+  },
+  "geodetic-world-30": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/30"
+  },
+  "geodetic-world-31": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/31"
+  },
+  "geodetic-world-33": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/33"
+  },
+  "geodetic-world-41": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.069,
+   "price_wei": "69000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/41"
+  },
+  "geodetic-world-51": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/51"
+  },
+  "geodetic-world-58": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/58"
+  },
+  "geodetic-world-80": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/80"
+  },
+  "geodetic-world-82": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/82"
+  },
+  "geodetica-15": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xF6f44F3ddE8EA78A3F49F78EecA339FFA17B2933/15"
+  },
+  "geodetica-19": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.2,
+   "price_wei": "200000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xF6f44F3ddE8EA78A3F49F78EecA339FFA17B2933/19"
+  },
+  "geodetica-42": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xF6f44F3ddE8EA78A3F49F78EecA339FFA17B2933/42"
+  },
+  "geodetica-73": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xF6f44F3ddE8EA78A3F49F78EecA339FFA17B2933/73"
+  },
+  "geodetica-78": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xF6f44F3ddE8EA78A3F49F78EecA339FFA17B2933/78"
+  },
+  "hidden-landscapes-71": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/71"
+  },
+  "hidden-landscapes-74": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/74"
+  },
+  "hidden-landscapes-75": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/75"
+  },
+  "hidden-landscapes-78": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/78"
+  },
+  "hidden-landscapes-80": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/80"
+  },
+  "hidden-landscapes-81": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/81"
+  },
+  "hidden-landscapes-82": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/82"
+  },
+  "hidden-landscapes-83": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/83"
+  },
+  "hidden-landscapes-84": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/84"
+  },
+  "panoptic-1": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
+  },
+  "panoptic-2": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/2"
+  },
+  "panoptic-3": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/3"
+  },
+  "panoptic-4": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/4"
+  },
+  "panoptic-5": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/5"
+  },
+  "panoptic-6": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/6"
+  },
+  "panoptic-7": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/7"
+  },
+  "panoptic-8": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/8"
+  },
+  "panoptic-9": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/9"
+  },
+  "seize-and-share-mint-face-319": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/319"
+  },
+  "seize-and-share-mint-face-321": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/321"
+  },
+  "seize-and-share-mint-face-365": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/365"
+  },
+  "seize-and-share-aicopy-409": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.25,
+   "price_wei": "250000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/409"
+  },
+  "seize-and-share-gm-518": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/518"
+  },
+  "seize-and-share-accessdenied-mp4-2882": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.03,
+   "price_wei": "30000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/2882"
+  },
+  "visual-language-1": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/1"
+  },
+  "visual-language-2": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/2"
+  },
+  "visual-language-3": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/3"
+  },
+  "visual-language-6": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/6"
+  },
+  "visual-language-7": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/7"
+  },
+  "visual-language-8": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/8"
+  },
+  "visual-language-9": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/9"
+  },
+  "visual-language-10": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/10"
+  },
+  "visual-language-11": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/11"
+  },
+  "visual-language-12": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/12"
+  },
+  "visual-language-14": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/14"
+  },
+  "visual-language-15": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/15"
+  },
+  "visual-language-16": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/16"
+  },
+  "visual-language-17": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/17"
+  },
+  "visual-language-18": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/18"
+  },
+  "visual-language-19": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/19"
+  },
+  "visual-language-20": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/20"
+  },
+  "visual-language-21": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/21"
+  },
+  "visual-language-22": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/22"
+  },
+  "visual-language-23": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/23"
+  },
+  "visual-language-24": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/24"
+  },
+  "visual-language-25": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/25"
+  },
+  "visual-language-26": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/26"
+  },
+  "visual-language-27": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/27"
+  },
+  "visual-language-31": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/31"
+  },
+  "visual-language-32": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/32"
+  },
+  "visual-language-33": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/33"
+  },
+  "visual-language-34": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/34"
+  },
+  "visual-language-35": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/35"
+  },
+  "geodetic-illusions-38": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "212733",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/38"
+  },
+  "geodetic-illusions-62": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "212729",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/62"
+  },
+  "geodetica-81": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "237596",
+   "url": "https://foundation.app/mint/eth/0xF6f44F3ddE8EA78A3F49F78EecA339FFA17B2933/81"
+  },
+  "wallet-1": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288870",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/1"
+  },
+  "wallet-2": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288873",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/2"
+  },
+  "wallet-3": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288874",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/3"
+  },
+  "wallet-4": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288875",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/4"
+  },
+  "wallet-5": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288876",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/5"
+  },
+  "wallet-6": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288877",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/6"
+  },
+  "wallet-7": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288878",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/7"
+  },
+  "wallet-8": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288880",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/8"
+  },
+  "wallet-9": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288881",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/9"
+  },
+  "wallet-10": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "288882",
+   "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/10"
+  }
+ }
+}
