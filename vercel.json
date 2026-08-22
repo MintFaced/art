@@ -11,6 +11,9 @@
     },
     "api/cron/listings.js": {
       "maxDuration": 300
+    },
+    "api/cron/owners.js": {
+      "maxDuration": 300
     }
   },
   "redirects": [
@@ -78,6 +81,10 @@
     {
       "path": "/api/cron/listings",
       "schedule": "0 20 * * *"
+    },
+    {
+      "path": "/api/cron/owners",
+      "schedule": "0 21 * * *"
     }
   ]
 }
