@@ -159,22 +159,46 @@ export async function GET(request) {
   }
   const HEAD = await head();
   const deployed = await deployBlocks([...contracts], key);
-  const owner = new Map();   // "contract|tokenId" -> { to, ts, tx }
+  const list = [...contracts].sort();          // stable order, so the rotation is predictable
+
+  /* Sweeping every contract from birth every night does not fit in a function,
+     and does not need to. Ownership only changes when a token moves, so the
+     daily pass reads just the blocks since the last run: a day is about seven
+     thousand blocks and almost always a handful of logs.
+
+     Edition counts are the exception ... they are a property of the whole
+     edition, not of one transfer ... so one contract per night is swept in full
+     and its editions recounted. Twenty-one contracts means every edition is
+     recounted at least once a fortnight, while a sale still shows up the next
+     morning. */
+  const cur = await readFile('data/owners-cursor.json').catch(() => ({ sha: null, text: null }));
+  let cursor = null;
+  try { cursor = cur.text ? JSON.parse(cur.text) : null; } catch { cursor = null; }
+  // no cursor yet: look back two days rather than to the beginning of the chain
+  const since = cursor && cursor.last_block > 0 ? cursor.last_block : HEAD - 14400;
+  const rotation = cursor && Number.isInteger(cursor.rotation) ? cursor.rotation % list.length : 0;
+  const fullContract = list[rotation];
+
+  const owner = new Map();   // "contract|tokenId" -> { to, ts, tx }  (only what moved)
+  const full = new Map();    // the same, for the one contract swept in full
   const swept = new Set();
-  for (const c of contracts) {
-    const logs = await sweep(c, deployed.get(c) || 0, HEAD, key);
-    if (!logs.length) continue;
+  const parse = (logs, into) => {
     logs.sort((a, b) => parseInt(a.blockNumber, 16) - parseInt(b.blockNumber, 16) || parseInt(a.logIndex, 16) - parseInt(b.logIndex, 16));
     for (const l of logs) {
       if (!l.topics || l.topics.length < 4) continue;
-      owner.set(`${c}|${BigInt(l.topics[3]).toString()}`, {
+      into.set(`${l.address.toLowerCase()}|${BigInt(l.topics[3]).toString()}`, {
         to: ('0x' + l.topics[2].slice(-40)).toLowerCase(),
         ts: new Date(parseInt(l.timeStamp, 16) * 1000).toISOString(),
         tx: l.transactionHash,
       });
     }
+  };
+  for (const c of list) {
+    const from = Math.max(deployed.get(c) || 0, since);
+    if (from <= HEAD) parse(await sweep(c, from, HEAD, key), owner);
     swept.add(c);
   }
+  parse(await sweep(fullContract, deployed.get(fullContract) || 0, HEAD, key), full);
 
   const applied = [];
   const flagged = [];
@@ -187,11 +211,13 @@ export async function GET(request) {
       if (d.chain !== 'ethereum' || d.standard !== 'ERC-721' || !c || !swept.has(c)) continue;
       const isEdition = (w.edition || {}).type && w.edition.type !== '1/1';
 
-      // ---- guard two: an edition is judged by all of its tokens or not at all
+      // ---- guard two: an edition is judged by all of its tokens or not at all,
+      // so only the contract swept in full tonight is eligible to be recounted
       if (isEdition) {
+        if (c !== fullContract) continue;
         const ids = w.token_ids || [];
         if (!ids.length) continue;
-        const seen = ids.map((t) => owner.get(`${c}|${t}`)).filter(Boolean).map((o) => o.to);
+        const seen = ids.map((t) => full.get(`${c}|${t}`)).filter(Boolean).map((o) => o.to);
         if (seen.length < ids.length * 0.9) continue;      // too little of the edition resolved to judge it
         const burned = seen.filter((o) => BURN.has(o)).length;
         const artist = seen.filter((o) => ARTIST.has(o)).length;
@@ -221,8 +247,8 @@ export async function GET(request) {
         continue;
       }
 
-      // ---- 1/1s
-      const hit = owner.get(`${c}|${d.token_id}`);
+      // ---- 1/1s. Nothing moved means nothing changed, so silence is the answer.
+      const hit = owner.get(`${c}|${d.token_id}`) || (c === fullContract ? full.get(`${c}|${d.token_id}`) : null);
       if (!hit) continue;
       const now = hit.to;
 
@@ -300,7 +326,14 @@ export async function GET(request) {
     }
   }
 
-  const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, ${contracts.size} contracts swept`;
+  if (!dry) {
+    await writeFile('data/owners-cursor.json',
+      JSON.stringify({ last_block: HEAD, rotation: (rotation + 1) % list.length, updated: new Date().toISOString() }, null, 1) + '\n',
+      `Owners cursor: block ${HEAD}`, cur.sha || undefined);
+  }
+
+  const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, `
+    + `blocks ${since}-${HEAD}, full sweep of ${fullContract}`;
   console.log(summary);
 
   if (flagged.length && !dry) {
@@ -310,6 +343,6 @@ export async function GET(request) {
     await send({ to: process.env.EMAIL_TO_ARTIST, subject: `Ownership: ${flagged.length} to look at`, text }).catch(() => {});
   }
 
-  return new Response(JSON.stringify({ summary, applied, flagged, dry }, null, 1),
+  return new Response(JSON.stringify({ summary, applied, flagged, dry, since, head: HEAD, full_sweep: fullContract }, null, 1),
     { status: 200, headers: { 'content-type': 'application/json' } });
 }
