@@ -1059,17 +1059,23 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x01d5AAd69B4F303671aBD48E5E3cd20C368c566f",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-22T00:46:59.000000Z"
+   },
    "assets": {
     "image": "geodetic-illusions/geodetic-illusions-16-image.jpg"
    },
    "listed_eth": 0.009,
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },

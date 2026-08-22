@@ -211,18 +211,24 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x44c3Cf2D964d7B2f9Be5fA612B0CC436720F6EAd",
+    "ens": "codincowboy.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T05:28:35.000000Z"
+   },
    "assets": {
     "display": "hidden-landscapes/hidden-landscapes-72-display.webp",
     "image": "hidden-landscapes/hidden-landscapes-72-image.jpg"
    },
    "listed_eth": 0.2,
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },

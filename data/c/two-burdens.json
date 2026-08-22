@@ -1324,15 +1324,21 @@
     "painting": null,
     "both": 3000
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x70353A9A3A2FE66AB44aDecD61bB22B5928A6599",
+    "ens": "nftspy.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-22T00:14:23.000000Z"
+   },
    "offers": {
     "digital": false,
     "painting": false,
-    "both": true
+    "both": false
    },
    "painting_included": true,
    "listing": {
@@ -1706,13 +1712,19 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x91CB1ff4322559A5c5c67DBA075aB081c255Ba1f",
+    "ens": "adacrow.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T04:56:11.000000Z"
+   },
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },
@@ -1767,13 +1779,19 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x55206268c0DAec618C42F04539516a0E43ACf31B",
+    "ens": "deriniti.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-22T00:15:35.000000Z"
+   },
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },

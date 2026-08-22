@@ -746,13 +746,19 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x80b89390028cC3856E371CF4c35d0182c83c811D",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T04:02:23.000000Z"
+   },
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },
@@ -1336,13 +1342,19 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x61B04d2b5CB1F1F8505E7b4E1cb3d9E8A0B15BaE",
+    "ens": "inceptionally.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T05:11:23.000000Z"
+   },
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },
@@ -1406,13 +1418,19 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x5091081516C8695Dfa1BfdE3d7b33480C2cB2FcA",
+    "ens": "paultm.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T04:43:47.000000Z"
+   },
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },

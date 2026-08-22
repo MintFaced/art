@@ -4700,14 +4700,20 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x46ff0E2D5C5425b7fd8E6eF7108b94956d90F8F8",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T05:44:23.000000Z"
+   },
    "listed_eth": 0.05,
    "offers": {
-    "digital": true,
+    "digital": false,
     "painting": false,
     "both": false
    },

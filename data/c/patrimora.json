@@ -7425,11 +7425,17 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x1b9c993F2962d8F0FAEa3387b368A011f2B9D0EE",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T04:07:23.000000Z"
+   },
    "assets": {
     "image": "patrimora/patrimora-92-image.png"
    }
@@ -8811,11 +8817,17 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x8f791F061d7f36dc07De081ad88F87d71be1585E",
+    "ens": "flexcopy.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-21T04:04:47.000000Z"
+   },
    "assets": {
     "image": "patrimora/patrimora-109-image.png"
    }
