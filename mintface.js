@@ -996,6 +996,25 @@ const MF = {
     return collection?.year || null;
   },
 
+  /* ---------- marketplace marks ---------- */
+  // The fine-print row at the foot of a work page: collect it where it trades,
+  // verify it on chain. Ethereum only, because Etherscan is, and only once
+  // there is a token to point at ... an unminted work has nothing to link to.
+  marks(work) {
+    const d = work.digital || {};
+    if (d.chain !== 'ethereum' || !d.contract || d.minted === false) return null;
+    const isSet = work.token_ids && work.token_ids.length > 1;
+    return {
+      // a set has no single item page, so both marks fall back to the contract
+      opensea: isSet
+        ? `https://opensea.io/assets/ethereum/${d.contract}`
+        : (d.token_id != null ? `https://opensea.io/item/ethereum/${d.contract}/${d.token_id}` : null),
+      etherscan: isSet
+        ? `https://etherscan.io/token/${d.contract}`
+        : `https://etherscan.io/token/${d.contract}?a=${d.token_id}`,
+    };
+  },
+
   /* ---------- chain links ---------- */
   links(work) {
     const d = work.digital || {};

@@ -94,6 +94,15 @@ details summary:hover{color:var(--ink)}
 .chain-links a{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
 .chain-links a:hover{color:var(--ink);border-color:var(--ink)}
 
+/* ---------- marketplace / verification ---------- */
+/* Fine print. It sits under Acquire and never competes with it: the marks are
+   the hairline grey of the table rules, and only the hover admits any ink. */
+.market-row{display:flex;flex-wrap:wrap;gap:26px;margin-top:26px;padding-top:16px;border-top:1px solid var(--rule)}
+.market-row a{display:inline-flex;align-items:center;gap:8px;color:var(--mark);text-decoration:none;transition:color .18s ease}
+.market-row a:hover,.market-row a:focus-visible{color:var(--ink)}
+.market-row svg{width:16px;height:16px;flex:none;fill:currentColor}
+.market-row .lbl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:currentColor}
+
 /* ---------- acquire ---------- */
 .scrim{position:fixed;inset:0;background:rgba(20,18,15,.28);opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:40}
 .scrim.open{opacity:1;pointer-events:auto}
@@ -370,6 +379,21 @@ function provenanceFold(work) {
     </details>`;
 }
 
+// The two marks at the foot of the page. OpenSea only where an item page
+// exists to link to, Etherscan on anything with a token. Both are fine print:
+// the site's own Acquire is the way to buy, this is where to check the work.
+const MARK_OS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 1.4a10.6 10.6 0 1 0 0 21.2 10.6 10.6 0 0 0 0-21.2ZM11.2 5.6v7H6.7l4.5-7Zm-5.6 8.6h12.8c-.3 2.3-2.3 4-4.6 4h-2.1c-2.6 0-4.9-1.6-5.9-4Z"/></svg>';
+const MARK_ES = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 5.4 12.1 12 15.9l6.6-3.8L12 1.5Z"/><path d="M5.4 13.5 12 17.3l6.6-3.8L12 22.5l-6.6-9Z"/></svg>';
+
+function marketRow(work) {
+  const m = MF.marks(work);
+  if (!m) return '';
+  const link = (url, svg, label) => url
+    ? `<a href="${e(url)}" target="_blank" rel="noopener"${''}>${svg}<span class="lbl">${label}</span></a>` : '';
+  const row = link(m.opensea, MARK_OS, 'Collect on OpenSea') + link(m.etherscan, MARK_ES, 'Verify on Etherscan');
+  return row ? `<div class="market-row">${row}</div>` : '';
+}
+
 // once a work is collected there is nothing to quote and nothing to send, so
 // the listing furniture comes off the page entirely
 const isCollected = (work) => work.status === 'acquired';
@@ -615,6 +639,7 @@ function render(work, collection, meta) {
 
       ${pricingBlock(work, collection)}
       ${actionBlock(work, collection)}
+      ${marketRow(work)}
     </div>`;
 
   MF.progress.watch(document.getElementById('main'));

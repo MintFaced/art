@@ -237,9 +237,9 @@ $('buy').addEventListener('click', async () => {
     $('title').textContent = data.title;
     document.title = `${data.title} ... MintFace`;
     // the header says what is true: the scarcest slot decides
-    $('remain').textContent = data.remaining > 0
-      ? `${data.remaining} complete ${data.remaining === 1 ? 'set remains' : 'sets remain'}`
-      : 'No complete set available just now';
+    // zero is a number worth saying out loud: the set is dormant, not gone, and
+    // it fills itself again the moment a slot has stock
+    $('remain').textContent = `${data.remaining} complete ${data.remaining === 1 ? 'set remains' : 'sets remain'}`;
     $('curBar').innerHTML = MF.currencyBar('cur');
     draw();
     MF.wireCurrencyBar($('cur'), () => draw());
