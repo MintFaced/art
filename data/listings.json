@@ -1,17 +1,19 @@
 {
  "_note": "Live listing prices read from chain. Written by scripts/sync-listings.mjs; the site prefers these over the catalogue figure. Foundation only ... OpenSea listings live in an off-chain order book and need an API key.",
- "generated": "2026-08-22T04:07:14.892Z",
+ "generated": "2026-08-22T04:41:59.378Z",
  "sources": [
-  "foundation"
+  "foundation",
+  "opensea"
  ],
  "counts": {
   "checked": 770,
-  "owner_unresolved": 9,
+  "owner_unresolved": 10,
   "escrowed": 102,
-  "priced": 86,
+  "priced": 88,
   "auction": 13,
-  "errored": 3,
-  "carried_forward": 0
+  "errored": 1,
+  "opensea": 8,
+  "carried_forward": 1
  },
  "works": {
   "10k-project": {
@@ -238,6 +240,14 @@
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/82"
   },
+  "geodetica-9": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xF6f44F3ddE8EA78A3F49F78EecA339FFA17B2933/9"
+  },
   "geodetica-15": {
    "venue": "foundation",
    "kind": "buy-now",
@@ -310,6 +320,14 @@
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/78"
   },
+  "hidden-landscapes-79": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/79"
+  },
   "hidden-landscapes-80": {
    "venue": "foundation",
    "kind": "buy-now",
@@ -349,14 +367,6 @@
    "price_wei": "100000000000000000",
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0x38bae13b27222900c32Ec28ab28b54Cd61196045/84"
-  },
-  "panoptic-1": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
   },
   "panoptic-2": {
    "venue": "foundation",
@@ -493,6 +503,14 @@
    "price_wei": "40000000000000000",
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/3"
+  },
+  "visual-language-5": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.04,
+   "price_wei": "40000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/5"
   },
   "visual-language-6": {
    "venue": "foundation",
@@ -779,6 +797,87 @@
    "kind": "auction",
    "auction_id": "288882",
    "url": "https://foundation.app/mint/eth/0x7f51b00487fb9de02fe64cd5b5df073ba62e681d/10"
+  },
+  "artificial-flowers-21": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/21"
+  },
+  "artificial-flowers-22": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/22"
+  },
+  "artificial-flowers-20": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/20"
+  },
+  "artificial-flowers-7": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/7"
+  },
+  "artificial-flowers-17": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/17"
+  },
+  "artificial-flowers-2": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/2"
+  },
+  "artificial-flowers-15": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/15"
+  },
+  "artificial-flowers-1": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2026-11-20T01:06:19.000Z",
+   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/1"
+  },
+  "panoptic-1": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0x3ee441f307c4bf147849d15457339d6116bb8373/1",
+   "carried_forward": true
   }
  }
 }

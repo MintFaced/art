@@ -6,11 +6,15 @@
  * this reads it and writes data/listings.json, which the site prefers over the
  * catalogue figure.
  *
- * Foundation only, for now. Foundation escrows the token and stores the price,
- * so both are readable with an eth_call and no API key. OpenSea is the other
- * half and cannot be done this way: Seaport listings are signed orders held in
- * OpenSea's off-chain book, so they need an OPENSEA_API_KEY. When that key
- * exists, add a second reader here and merge into the same file.
+ * Two venues, read two different ways. Foundation escrows the token and stores
+ * the price on chain, so an eth_call answers. OpenSea's Seaport listings are
+ * signed orders in an off-chain book, so they need OPENSEA_API_KEY.
+ *
+ * Only the artist's own listings count. Anyone holding a MintFace work can list
+ * it on OpenSea, and a stranger's resale is not this site's asking price ... so
+ * every OpenSea order is filtered to an offerer in ARTIST. Foundation needs no
+ * such filter: the seller is checked there too, but only the artist can have
+ * escrowed the token in the first place.
  *
  *   node scripts/sync-listings.mjs            # write data/listings.json
  *   node scripts/sync-listings.mjs --dry      # report, write nothing
@@ -69,6 +73,89 @@ async function mapLimit(items, limit, fn) {
     }
   }));
   return out;
+}
+
+// mintface.eth, ryanj.eth, mintestate.eth, mintfaced.eth
+const ARTIST = new Set([
+  '0xd40b63bf04a44e43fbfe5784bcf22acaab34a180',
+  '0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7',
+  '0x6e420b64bb329be84a6627c68a7bdff825139773',
+  '0x7110733ab02b2a18a947e3912bf54136fbced169',
+]);
+const OS_KEY = process.env.OPENSEA_API_KEY || '';
+
+async function os(pathname) {
+  for (let i = 0; i < 4; i++) {
+    try {
+      const r = await fetch(`https://api.opensea.io/api/v2${pathname}`,
+        { headers: { accept: 'application/json', 'x-api-key': OS_KEY } });
+      if (r.status === 429) { await sleep(1500 * (i + 1)); continue; }
+      if (!r.ok) return null;
+      return await r.json();
+    } catch (e) { await sleep(600 * (i + 1)); }
+  }
+  return null;
+}
+
+// contract -> OpenSea collection slug. The slug is not derivable, it has to be
+// asked for, and several MintFace contracts sit under names that are not theirs.
+async function openseaSlugs(contracts) {
+  const map = new Map();
+  for (const c of contracts) {
+    const j = await os(`/chain/ethereum/contract/${c}`);
+    if (j && j.collection) map.set(c, j.collection);
+    await sleep(280);
+  }
+  return map;
+}
+
+async function openseaListings(byToken, contracts) {
+  if (!OS_KEY) return { entries: {}, skipped: 'OPENSEA_API_KEY is not set' };
+  const slugs = await openseaSlugs(contracts);
+  const entries = {};
+  let seen = 0, mine = 0;
+  for (const slug of new Set(slugs.values())) {
+    let next = null;
+    for (let page = 0; page < 20; page++) {
+      const q = `/listings/collection/${encodeURIComponent(slug)}/all?limit=100${next ? `&next=${encodeURIComponent(next)}` : ''}`;
+      const j = await os(q);
+      if (!j || !Array.isArray(j.listings)) break;
+      for (const l of j.listings) {
+        seen++;
+        if (l.status && l.status !== 'ACTIVE') continue;
+        const p = l.protocol_data && l.protocol_data.parameters;
+        const offerer = (p && p.offerer || '').toLowerCase();
+        // the whole point of this reader: a stranger's resale is not our price
+        if (!ARTIST.has(offerer)) continue;
+        const cur = l.price && l.price.current;
+        if (!cur || cur.currency !== 'ETH' || !cur.value) continue;
+        const contract = (l.asset && l.asset.contract || '').toLowerCase();
+        const tokenId = l.asset && l.asset.identifier;
+        if (!contract || tokenId == null) continue;
+        const id = byToken.get(`${contract}|${tokenId}`);
+        if (!id) continue;                       // a token the catalogue does not carry
+        const wei = BigInt(cur.value);
+        const eth = Number(wei) / 1e18;
+        const prev = entries[id];
+        // if the artist has more than one live order on a token, the cheapest is
+        // the one a buyer would actually fill
+        if (prev && prev.price_eth <= eth) continue;
+        entries[id] = {
+          venue: 'opensea', kind: 'buy-now',
+          price_eth: eth, price_wei: wei.toString(),
+          seller: offerer,
+          expires: p.endTime ? new Date(Number(p.endTime) * 1000).toISOString() : null,
+          url: `https://opensea.io/item/ethereum/${contract}/${tokenId}`,
+        };
+        mine++;
+      }
+      next = j.next || null;
+      if (!next) break;
+      await sleep(300);
+    }
+    await sleep(300);
+  }
+  return { entries, seen, mine: Object.keys(entries).length };
 }
 
 const padAddr = (a) => a.toLowerCase().replace(/^0x/, '').padStart(64, '0');
@@ -156,6 +243,23 @@ for (const x of auctions) {
   };
 }
 
+// 3. OpenSea, for anything the artist has listed there. A token in Foundation
+// escrow cannot be filled on OpenSea ... Foundation is holding it ... so where
+// both venues answer, Foundation wins.
+const byToken = new Map(all.map((w) => [`${w.contract.toLowerCase()}|${w.token_id}`, w.id]));
+const contracts = [...new Set(all.map((w) => w.contract.toLowerCase()))];
+const osOut = await openseaListings(byToken, contracts);
+let osAdded = 0;
+if (osOut.skipped) {
+  process.stderr.write(`  opensea skipped: ${osOut.skipped}\n`);
+} else {
+  for (const [id, entry] of Object.entries(osOut.entries)) {
+    if (byId[id]) continue;                    // Foundation already has the token
+    byId[id] = entry; osAdded++;
+  }
+  process.stderr.write(`  opensea: ${osOut.mine} listed by an artist wallet, ${osAdded} added\n`);
+}
+
 // Absence of an answer is not the same as absence of a listing. Where a call
 // failed ... an owner lookup that never resolved, or a price read that errored
 // ... the previous file's entry is carried forward rather than dropped, because
@@ -168,6 +272,10 @@ try {
     ...all.filter((w, i) => typeof owners[i] !== 'string').map((w) => w.id),
     ...escrowed.filter((w, i) => !listed[i] || listed[i].__error).map((w) => w.id),
   ]);
+  // OpenSea unreachable means its side is unknown, not empty
+  if (osOut.skipped) {
+    for (const [id, v] of Object.entries(prev.works || {})) if (v.venue === 'opensea') failedIds.add(id);
+  }
   for (const id of failedIds) {
     if (!byId[id] && prev.works && prev.works[id]) { byId[id] = { ...prev.works[id], carried_forward: true }; carried++; }
   }
@@ -176,8 +284,8 @@ try {
 const payload = {
   _note: 'Live listing prices read from chain. Written by scripts/sync-listings.mjs; the site prefers these over the catalogue figure. Foundation only ... OpenSea listings live in an off-chain order book and need an API key.',
   generated: new Date().toISOString(),
-  sources: ['foundation'],
-  counts: { checked: all.length, owner_unresolved: unresolved, escrowed: escrowed.length, priced: priced.length, auction: auctions.length, errored: errored.length, carried_forward: carried },
+  sources: OS_KEY ? ['foundation', 'opensea'] : ['foundation'],
+  counts: { checked: all.length, owner_unresolved: unresolved, escrowed: escrowed.length, priced: priced.length, auction: auctions.length, errored: errored.length, opensea: osAdded, carried_forward: carried },
   works: byId,
 };
 
