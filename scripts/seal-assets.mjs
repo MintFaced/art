@@ -148,6 +148,42 @@ report.untouched = report.untouched.filter((u) => !u.shared);
 console.log(`${shared} edition members pointed at the file their set already mirrors`);
 
 const dry = process.argv.includes('--dry');
+
+/* The split under data/c is what the site actually reads; catalog.json is the
+   older shape this script was written against. Sealing only the catalogue left
+   the site pointing at origins for everything warmed since the split became the
+   source of truth ... which is every collection added recently.
+   The split is patched in place rather than regenerated, because it now carries
+   work the catalogue does not: recovered images, backfilled dates, names. */
+let splitPatched = 0;
+for (const f of readdirSync('data/c').filter((x) => x.endsWith('.json'))) {
+  const path = `data/c/${f}`;
+  const raw = readFileSync(path, 'utf8');
+  let d;
+  try { d = JSON.parse(raw); } catch { continue; }
+  const slug = d.slug || f.replace('.json', '');
+  let changed = false;
+  for (const w of d.works || []) {
+    if (!w.id) continue;
+    const found = {};
+    for (const [field, kind] of [['display', 'display'], ['image', 'image']]) {
+      const key = findKey(slug, w.id, kind);
+      if (key && (await verify(key)).ok) found[field] = key;
+    }
+    const film = w.digital?.animation;
+    const filmKey = typeof film === 'string' ? filmToKey.get(film) : null;
+    if (filmKey) found.animation_display = filmKey;
+    if (!Object.keys(found).length) continue;
+    const next = { ...(w.assets || {}), ...found };
+    if (JSON.stringify(next) !== JSON.stringify(w.assets || null)) {
+      if (!dry) w.assets = next;
+      changed = true; splitPatched++;
+    }
+  }
+  if (changed && !dry) writeFileSync(path, JSON.stringify(d, null, 1) + (raw.endsWith('\n') ? '\n' : ''));
+}
+console.log(`${dry ? 'would patch' : 'patched'} ${splitPatched} works in the split under data/c`);
+
 if (!dry) writeFileSync('catalog.json', JSON.stringify(catalog, null, 1));
 else console.log('dry run, catalog not written');
 if (!dry) writeFileSync('docs/ASSETS-REPORT.json', JSON.stringify({
