@@ -1,6 +1,10 @@
 import { siteIndex, useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { putObject, deleteObject, listObjects, alreadyThere, r2Configured } from './_lib/r2.js';
 
+// image_source is a URL to the same bytes somewhere more reliable. Anything
+// that is not a URL is a credit, and a credit is not somewhere to fetch from.
+const betterUrl = (s) => (typeof s === 'string' && /^https?:\/\//.test(s) ? s : null);
+
 // Walks the catalog, pulls every artwork from wherever it currently lives, and
 // puts a copy in R2 keyed by work id. IPFS and marketplace CDNs are too slow and
 // too changeable to sell from; this makes the origin a fallback rather than the
@@ -104,7 +108,7 @@ export async function GET(request) {
       if (budget <= 0) break;
       seen++;
       const targets = [
-        ['image', w.digital?.image_source || w.digital?.image || w.image],
+        ['image', betterUrl(w.digital?.image_source) || w.digital?.image || w.image],
         ['animation', w.digital?.animation],
       ].filter(([, u]) => typeof u === 'string' && /^https?:\/\//.test(u));
 

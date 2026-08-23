@@ -8,6 +8,10 @@ import { readState, stateConfigured } from './_lib/state.js';
    surfaces. A set changed there changes what is sold and what is measured, in
    the same commit. */
 import { SET } from './_lib/sets.js';
+
+// image_source is a URL to the same bytes somewhere more reliable. Anything
+// that is not a URL is a credit, and a credit is not somewhere to fetch from.
+const betterUrl = (s) => (typeof s === 'string' && /^https?:\/\//.test(s) ? s : null);
 export { SET };
 
 const json = (b, s = 200) => new Response(JSON.stringify(b), {
@@ -51,7 +55,7 @@ export async function GET(request) {
         nzd: w.pricing_nzd.digital,
         image: w.assets && (w.assets.display || w.assets.image)
           ? `https://assets.mintface.art/${w.assets.display || w.assets.image}`
-          : (w.digital?.image_source || w.digital?.image || w.image || null),
+          : (betterUrl(w.digital?.image_source) || w.digital?.image || w.image || null),
         aspect: w.orientation === 'portrait' ? 0.75 : w.orientation === 'landscape' ? 1.4 : 1,
       })),
     });

@@ -1,5 +1,9 @@
 import { findWork, useRequestOrigin, siteOrigin } from './_lib/data.js';
 
+// image_source is a URL to the same bytes somewhere more reliable. Anything
+// that is not a URL is a credit, and a credit is not somewhere to fetch from.
+const betterUrl = (s) => (typeof s === 'string' && /^https?:\/\//.test(s) ? s : null);
+
 // A shared link should preview the art. Static HTML cannot carry per work meta
 // tags, so /w/:id comes through here: the same page, with its own title, image
 // and description written into the head before it leaves.
@@ -21,7 +25,7 @@ const previewFor = (work) => {
   const a = work.assets || {};
   if (a.display) return `${ASSETS}/${a.display}`;
   if (a.image && /\.(jpe?g|png|webp|gif)$/i.test(a.image)) return preview(`${ASSETS}/${a.image}`);
-  return preview(work.digital?.image_source || work.digital?.image || work.image);
+  return preview(betterUrl(work.digital?.image_source) || work.digital?.image || work.image);
 };
 
 export async function GET(request) {
