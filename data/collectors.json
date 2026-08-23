@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-08-23T08:21:27.578Z",
+ "generated": "2026-08-23T21:01:06.972Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -14,10 +14,10 @@
   "wallets": 3434
  },
  "counts": {
-  "collectors": 3679,
-  "with_page": 806,
+  "collectors": 3680,
+  "with_page": 807,
   "private": 0,
-  "named": 1213
+  "named": 1214
  },
  "collectors": [
   {
@@ -15140,6 +15140,25 @@
    },
    "first_collected": null,
    "last_collected": null,
+   "tao": 0,
+   "tao_rate": 0,
+   "tao_rank": 3228
+  },
+  {
+   "address": "0x610d72c32e3ed5ba381851d25a6c1b543622e4d8",
+   "ens": "rilax.eth",
+   "display_name": null,
+   "slug": "rilax.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 1,
+    "one_of_ones": 1,
+    "editions": 0,
+    "collections": 1
+   },
+   "first_collected": "2026-08-23T07:10:23.000Z",
+   "last_collected": "2026-08-23T07:10:23.000Z",
    "tao": 0,
    "tao_rate": 0,
    "tao_rank": 3228
