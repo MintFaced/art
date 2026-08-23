@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 6,
+  "works": 7,
   "one_of_ones": 1,
-  "editions": 5,
-  "collections": 4
+  "editions": 6,
+  "collections": 5
  },
  "first_collected": "2022-05-13T11:57:38.000000Z",
  "last_collected": "2023-06-06T04:34:59.000000Z",
@@ -32,6 +32,11 @@
   {
    "slug": "visual-language",
    "title": "Visual Language",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -88,6 +93,15 @@
    "acquired": "2022-05-13T11:57:38.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6I1tDW_5vI3fNpcblWhM5jsMUveB-tXmC_qvKsaZ4xE",
    "orientation": null
   }
  ]

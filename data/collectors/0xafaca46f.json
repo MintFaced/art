@@ -1,0 +1,80 @@
+{
+ "address": "0xafaca46f253c85d4ba372f82a8a4f4b0dd5d7dfc",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xafaca46f",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 5,
+  "one_of_ones": 1,
+  "editions": 4,
+  "collections": 3
+ },
+ "first_collected": "2022-12-27T03:29:59.000000Z",
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "collections": [
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 3
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "xnouns",
+   "title": "XNouns",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-7",
+   "title": "The Line Artist Allowlist",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/eklSs_Z0sBcEbaaCGlwqkuYSqKEqaegYc21p6xW92wA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/9tELif8vVY-Qz9adNDrv1N1aMpwUADMCYG8hKrgdPLw",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-293",
+   "title": "XNouns #293",
+   "collection": "xnouns",
+   "acquired": null,
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=293&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-cool.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-bege-crt.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-matrix-white.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-flower.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-purple.png",
+   "orientation": null
+  }
+ ]
+}

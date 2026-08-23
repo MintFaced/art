@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 35,
-  "one_of_ones": 10,
+  "works": 36,
+  "one_of_ones": 11,
   "editions": 25,
-  "collections": 10
+  "collections": 11
  },
  "first_collected": "2022-02-17T14:01:50.000000Z",
  "last_collected": "2026-08-21T05:06:23.000000Z",
@@ -38,6 +38,11 @@
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
    "works": 2
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
   },
   {
    "slug": "geodetic-home",
@@ -379,6 +384,15 @@
    "acquired": "2022-02-17T14:01:50.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-8-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-53",
+   "title": "First Selfie #52 CryptoCrystal",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/7y0rtnT4_q2i3WGMrT10lN6tKRbvRW5f-G0BdZKNxLA",
    "orientation": null
   }
  ]

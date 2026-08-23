@@ -1,0 +1,43 @@
+{
+ "address": "0x7dccc79361b0227a85c2ff788ca240d31f2a78d0",
+ "ens": "incept.eth",
+ "display_name": null,
+ "slug": "incept.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 2,
+  "editions": 0,
+  "collections": 1
+ },
+ "first_collected": null,
+ "last_collected": null,
+ "collections": [
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 2
+  }
+ ],
+ "works": [
+  {
+   "id": "first-selfie-98",
+   "title": "First Selfie #97 Cryptoarte",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/Ld_qEMBcRw4StftO9l8DXVJKpRPL8PELvLPJr-6Yth4",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-59",
+   "title": "First Selfie #58 UMA",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/wLnH0gxuExZgS0B8Jp85kS0riorsMB0mJuBboiv83Dk",
+   "orientation": null
+  }
+ ]
+}

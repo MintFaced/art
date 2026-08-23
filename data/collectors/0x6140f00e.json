@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 30,
+  "works": 31,
   "one_of_ones": 23,
-  "editions": 7,
-  "collections": 7
+  "editions": 8,
+  "collections": 8
  },
  "first_collected": "2022-05-10T05:25:59.000000Z",
  "last_collected": "2026-08-22T00:42:47.000000Z",
@@ -47,6 +47,11 @@
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -319,6 +324,15 @@
    "acquired": "2022-05-10T05:25:59.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/9tELif8vVY-Qz9adNDrv1N1aMpwUADMCYG8hKrgdPLw",
    "orientation": null
   }
  ]

@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 6,
   "one_of_ones": 0,
-  "editions": 3,
-  "collections": 2
+  "editions": 6,
+  "collections": 3
  },
  "first_collected": "2022-10-24T23:12:11.000Z",
  "last_collected": "2023-07-04T08:29:35.000000Z",
  "collections": [
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 3
+  },
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
@@ -51,6 +56,33 @@
    "acquired": "2022-10-24T23:12:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-hug-1956-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/8q_QgSyVCkXmSpTvoBEOR7-C7A-axq_Ha2lYtHHj_HA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/5IpBQH0QL1911Uo9SSNkItRUixeh6nPzhw7MfFnU23g",
    "orientation": null
   }
  ]

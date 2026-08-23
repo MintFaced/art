@@ -1,0 +1,48 @@
+{
+ "address": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+ "ens": "symbiotech.eth",
+ "display_name": null,
+ "slug": "symbiotech.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": null,
+ "last_collected": null,
+ "collections": [
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  },
+  {
+   "slug": "xnouns",
+   "title": "XNouns",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-358",
+   "title": "XNouns #358",
+   "collection": "xnouns",
+   "acquired": null,
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=358&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-computerblue.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-cloud.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-rosebud.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",
+   "orientation": null
+  }
+ ]
+}

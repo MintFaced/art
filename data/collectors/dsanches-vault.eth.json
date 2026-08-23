@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 3,
   "one_of_ones": 2,
-  "editions": 0,
-  "collections": 1
+  "editions": 1,
+  "collections": 2
  },
  "first_collected": "2024-08-25T09:36:47.000000Z",
  "last_collected": "2025-09-01T00:17:59.000000Z",
@@ -18,6 +18,11 @@
    "slug": "two-burdens",
    "title": "Two Burdens",
    "works": 2
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
   }
  ],
  "works": [
@@ -38,6 +43,15 @@
    "unique": true,
    "image": "two-burdens/two-burdens-3-display.webp",
    "orientation": "portrait"
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
   }
  ]
 }

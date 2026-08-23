@@ -1,0 +1,48 @@
+{
+ "address": "0xcd241563f7288b5eb2b9b715f736232889b62d8b",
+ "ens": "readypereone.eth",
+ "display_name": null,
+ "slug": "readypereone.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-12-16T11:49:47.000Z",
+ "last_collected": "2022-12-16T11:49:47.000Z",
+ "collections": [
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-16T11:49:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-91",
+   "title": "First Selfie #90 Rekt Guy",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/0pPh959eMzt14TOee4-v800MYLPDnRddorZ1tn7Y1Ds",
+   "orientation": null
+  }
+ ]
+}

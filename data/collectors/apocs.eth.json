@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 1,
+  "works": 2,
   "one_of_ones": 1,
-  "editions": 0,
-  "collections": 1
+  "editions": 1,
+  "collections": 2
  },
  "first_collected": "2026-08-21T05:08:23.000000Z",
  "last_collected": "2026-08-21T05:08:23.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "pixelarcade",
    "title": "PixelArcade",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -28,6 +33,15 @@
    "acquired": "2026-08-21T05:08:23.000000Z",
    "unique": true,
    "image": "pixelarcade/pixelarcade-39-image.svg",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-7",
+   "title": "The Line Artist Allowlist",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/eklSs_Z0sBcEbaaCGlwqkuYSqKEqaegYc21p6xW92wA",
    "orientation": null
   }
  ]

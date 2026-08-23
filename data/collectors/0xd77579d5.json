@@ -1,0 +1,57 @@
+{
+ "address": "0xd77579d5f78708325393ceb14af25ad999c86500",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xd77579d5",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 2,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-11-18T19:05:59.000Z",
+ "last_collected": "2022-11-18T19:05:59.000Z",
+ "collections": [
+  {
+   "slug": "xnouns",
+   "title": "XNouns",
+   "works": 2
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "seize-and-share-cc0-the-movie-2204",
+   "title": "CC0 The Movie",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-18T19:05:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-cc0-the-movie-2204-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-24",
+   "title": "XNouns #24",
+   "collection": "xnouns",
+   "acquired": null,
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=24&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-warm.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-orange.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-txt-we.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-clutch.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-5",
+   "title": "XNouns #5",
+   "collection": "xnouns",
+   "acquired": null,
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=5&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-orange-yellow.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-tie-black-on-white.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-cherry.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",
+   "orientation": null
+  }
+ ]
+}

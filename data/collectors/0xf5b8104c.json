@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 4,
   "one_of_ones": 1,
-  "editions": 2,
-  "collections": 2
+  "editions": 3,
+  "collections": 3
  },
  "first_collected": "2022-12-11T01:41:59.000000Z",
  "last_collected": "2022-12-20T00:32:35.000Z",
@@ -22,6 +22,11 @@
   {
    "slug": "geodetica",
    "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -52,6 +57,15 @@
    "unique": true,
    "image": "geodetica/geodetica-92-display.webp",
    "orientation": "square"
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/5IpBQH0QL1911Uo9SSNkItRUixeh6nPzhw7MfFnU23g",
+   "orientation": null
   }
  ]
 }

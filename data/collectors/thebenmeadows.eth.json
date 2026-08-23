@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 3,
   "one_of_ones": 1,
-  "editions": 1,
-  "collections": 2
+  "editions": 2,
+  "collections": 3
  },
  "first_collected": "2023-07-04T02:21:59.000000Z",
  "last_collected": "2026-08-21T03:53:47.000000Z",
@@ -22,6 +22,11 @@
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -42,6 +47,15 @@
    "acquired": "2023-07-04T02:21:59.000000Z",
    "unique": false,
    "image": "https://arweave.net/QPY1MVP9ji7xL4rYIrDMLLLfkv8es3CsBGvB4T6efjk",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
    "orientation": null
   }
  ]

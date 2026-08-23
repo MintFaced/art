@@ -6,14 +6,24 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
-  "one_of_ones": 3,
+  "works": 7,
+  "one_of_ones": 6,
   "editions": 1,
-  "collections": 4
+  "collections": 6
  },
  "first_collected": "2024-08-25T10:33:23.000000Z",
  "last_collected": "2024-08-26T03:52:47.000000Z",
  "collections": [
+  {
+   "slug": "xnouns",
+   "title": "XNouns",
+   "works": 2
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
+  },
   {
    "slug": "geodetic-moments",
    "title": "Geodetic Moments",
@@ -71,6 +81,33 @@
    "unique": true,
    "image": "two-burdens/two-burdens-33-display.webp",
    "orientation": "portrait"
+  },
+  {
+   "id": "first-selfie-54",
+   "title": "First Selfie #53 Grifters",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/0WMH29qDbsZLFyVNQC23VlKBJ1cxt3djV8p67F9yi5g",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-397",
+   "title": "XNouns #397",
+   "collection": "xnouns",
+   "acquired": null,
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=397&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-darkpink.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-lines-45-rose.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-beer.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-zeros.png",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-164",
+   "title": "XNouns #164",
+   "collection": "xnouns",
+   "acquired": null,
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=164&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-cool.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-green.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-scarf-clown.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-peyote.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-zeros.png",
+   "orientation": null
   }
  ]
 }

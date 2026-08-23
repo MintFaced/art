@@ -1,0 +1,34 @@
+{
+ "address": "0x01ab06f4eb304a6f804e26cbe5f16d23d06b68a5",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x01ab06f4",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 1,
+  "one_of_ones": 1,
+  "editions": 0,
+  "collections": 1
+ },
+ "first_collected": null,
+ "last_collected": null,
+ "collections": [
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "first-selfie-42",
+   "title": "First Selfie #41",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/5adIYNFvdfL7mV1IYkvQjk1PXN7qfArke-P9-yHesUE",
+   "orientation": null
+  }
+ ]
+}

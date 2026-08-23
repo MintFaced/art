@@ -1,0 +1,62 @@
+{
+ "address": "0xf4959e582adc2d90a1b71d7e283d885225bcebdb",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xf4959e58",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 3
+ },
+ "first_collected": "2026-08-08T01:16:35.000Z",
+ "last_collected": "2026-08-08T03:22:11.000Z",
+ "collections": [
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2026-08-08T03:22:11.000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2026-08-08T01:16:35.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "first-selfie-89",
+   "title": "First Selfie #88 Minted",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/P1CFhuqkdnkEDY3u_vxXB7Nw0c9cbFz99qxjsPQO-d8",
+   "orientation": null
+  }
+ ]
+}

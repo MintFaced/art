@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 10,
+  "works": 12,
   "one_of_ones": 0,
-  "editions": 10,
-  "collections": 4
+  "editions": 12,
+  "collections": 5
  },
  "first_collected": "2022-07-11T04:53:37.000Z",
  "last_collected": "2025-05-16T21:45:59.000000Z",
@@ -22,6 +22,11 @@
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 2
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 2
   },
   {
@@ -125,6 +130,24 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/9tELif8vVY-Qz9adNDrv1N1aMpwUADMCYG8hKrgdPLw",
+   "orientation": null
   }
  ]
 }

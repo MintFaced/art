@@ -1,0 +1,57 @@
+{
+ "address": "0xf192fef5c9f90db31826e57e57a404e5be28f0e9",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xf192fef5",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 2
+ },
+ "first_collected": "2022-11-15T01:48:47.000Z",
+ "last_collected": "2022-11-18T19:08:59.000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "xnouns",
+   "title": "XNouns",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "seize-and-share-cc0-the-movie-2204",
+   "title": "CC0 The Movie",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-18T19:08:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-cc0-the-movie-2204-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-tweet-3255",
+   "title": "Freedom to Tweet",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-15T01:48:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-tweet-3255-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-11",
+   "title": "XNouns #11",
+   "collection": "xnouns",
+   "acquired": null,
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=11&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-warm.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-bege-bsod.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-slimesplat.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-pyramid.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-zeros.png",
+   "orientation": null
+  }
+ ]
+}

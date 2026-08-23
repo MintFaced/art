@@ -87,7 +87,7 @@ export async function GET(request) {
   const dryRun = url.searchParams.get('dry') === '1';
 
   const idx = await siteIndex();
-  const slugs = (only ? [only] : idx.collections.map((c) => c.slug)).filter(Boolean);
+  const slugs = (only ? [only] : idx.collections.filter((c) => c.display !== false).map((c) => c.slug)).filter(Boolean);
 
   const done = [], skipped = [], failed = [];
   let budget = limit;

@@ -130,6 +130,7 @@ const yearKey = (c) => {
     // a collection can live on more than one contract, so each gets its own line
     const rows = [];
     for (const c of idx.collections) {
+      if (c.display === false) continue;      // tracked for collectors, not part of the record here
       if (!(c.contracts || []).length) continue;
       if (!(c.counts.works || c.counts.child_works)) continue;
       c.contracts.forEach((k, i) => rows.push({ c, k, first: i === 0 }));

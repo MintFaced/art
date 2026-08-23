@@ -1,0 +1,4595 @@
+{
+ "slug": "first-selfie",
+ "title": "First Selfie",
+ "group": "experiments",
+ "display": false,
+ "year": "2021",
+ "medium": "Illustration",
+ "physical": false,
+ "statement": null,
+ "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise.",
+ "counts": {
+  "works": 101,
+  "acquired": 44,
+  "available": 57
+ },
+ "contracts": [
+  {
+   "chain": "ethereum",
+   "standard": "ERC-721",
+   "address": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+   "name": "First Selfie",
+   "deployed": null,
+   "deployer": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+   "holders": "37"
+  }
+ ],
+ "works": [
+  {
+   "id": "first-selfie-101",
+   "collection": "first-selfie",
+   "title": "Lost Wisdom",
+   "statement": "CryptoPunk #3619",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "101",
+    "image": "https://arweave.net/sdwZdKxvkrSi4FSdnWYVSmSdlGNT2XEoHB8f-H9pVGw",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "display_type": "text",
+     "trait_type": "Artist",
+     "value": "MintFace"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x360Bd0E8ef21909115D520b924E72dE923eFf47e",
+    "ens": "lostwisdom.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-100",
+   "collection": "first-selfie",
+   "title": "First Selfie #99 First Mint",
+   "statement": "'City versus Nature' is the first minted artwork by MintFace minted on 26th April 2021. \n\n...because I decided to mint my own work instead of minting the Bored Ape project launch the same week.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "100",
+    "image": "https://arweave.net/12Gj5xvAA-m-HeuS_8FaqEUuxDnJgJI-duBSO0NfkSw",
+    "animation": null,
+    "external_url": "https://rarible.com/token/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:518231"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    },
+    {
+     "trait_type": "Project",
+     "value": "First minted art"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-99",
+   "collection": "first-selfie",
+   "title": "First Selfie #98 Deca",
+   "statement": "Deca is quietly building a social network centered around art.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "99",
+    "image": "https://arweave.net/k-yy0sOzq5jjhqzNg00wX5lzDGLBDIbpXjX7EdfhJa0",
+    "animation": null,
+    "external_url": "https://deca.art/Mint"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Rare"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Deca"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xDAfa9e3dAe493F0B9D6872EFf4fda0f40D1b7488",
+    "ens": "piercedcat.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-98",
+   "collection": "first-selfie",
+   "title": "First Selfie #97 Cryptoarte",
+   "statement": "Cryptoarte took three years to finally 'mint out' in August 2021.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "98",
+    "image": "https://arweave.net/Ld_qEMBcRw4StftO9l8DXVJKpRPL8PELvLPJr-6Yth4",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Rare"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Cryptoarte"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x7DcCC79361b0227A85c2FF788cA240d31f2a78d0",
+    "ens": "incept.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-97",
+   "collection": "first-selfie",
+   "title": "First Selfie #96 10k Phunks",
+   "statement": "10,000 Cryptophunks in a single image. 10k Phunks was the second ever artwork spotlit in Phunks Discord.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "97",
+    "image": "https://arweave.net/-i-gcxNhT8TsF-UvFf0TiCdkEZslmF1V5feOV3IMDyE",
+    "animation": null,
+    "external_url": "https://opensea.io/assets/ethereum/0x16362709e1be7a118360037a3f112bbf26a9b6cb/2"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Rare"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Cryptophunks"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-96",
+   "collection": "first-selfie",
+   "title": "First Selfie #95 10k Project",
+   "statement": "10k Project captured the pfp's of the first 10,000 frens who followed the MintFace Twitter account.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "96",
+    "image": "https://arweave.net/xnVBvHxopvDv_vfrVs06yZA8I5OlXpbCVNzOetrwq2o",
+    "animation": null,
+    "external_url": "https://opensea.io/assets/ethereum/0xe125091e7c669d47e374d7f23bc857789f701780/2"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Rare"
+    },
+    {
+     "trait_type": "Project",
+     "value": "10k Project"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x18E0f9AAdde970D74430cC8636A381CcFCD1F559",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-95",
+   "collection": "first-selfie",
+   "title": "First Selfie #94 Legendary",
+   "statement": "The mintface.xyz blog started in June 2021, as a diary of my own journey into NFTs.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "95",
+    "image": "https://arweave.net/ANaP33nbRvpb9AVNOYMD5F1stTve8zqMr1gCWFqLAlA",
+    "animation": null,
+    "external_url": "https://www.mintface.xyz/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x7a79944AC7E770cFd13eC024A4B31B8c5eFeE60d",
+    "ens": "alpinelifer.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-94",
+   "collection": "first-selfie",
+   "title": "First Selfie #93 MintFace",
+   "statement": "The mintface.xyz blog started in June 2021, as a diary of my own journey into NFTs.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "94",
+    "image": "https://arweave.net/3tol4M0YUXvC0ynNA4iDSAktdz8-UDYA5hUe9itT0OQ",
+    "animation": null,
+    "external_url": "https://www.mintface.xyz/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-93",
+   "collection": "first-selfie",
+   "title": "First Selfie #92 MintFace",
+   "statement": "The mintface.xyz blog started in June 2021, as a diary of my own journey into NFTs.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "93",
+    "image": "https://arweave.net/THFnPbA8MvONTjtK-pSEkvPTnDKU-EJmd2EBsTILXEE",
+    "animation": null,
+    "external_url": "https://www.mintface.xyz/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x18E0f9AAdde970D74430cC8636A381CcFCD1F559",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-92",
+   "collection": "first-selfie",
+   "title": "First Selfie #91 Geodetic Moments",
+   "statement": "Geodetic Moments is a collection of 100 photographs taken by MintFace during 'JPEG Summer' of 2021.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "92",
+    "image": "https://arweave.net/b2FOcb7wrjgqTg4Ri2IN6IuBIP5FR15-mNDOdHRtjKI",
+    "animation": null,
+    "external_url": "https://opensea.io/collection/geodetic-moments"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Geodetic Moments"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-91",
+   "collection": "first-selfie",
+   "title": "First Selfie #90 Rekt Guy",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "91",
+    "image": "https://arweave.net/0pPh959eMzt14TOee4-v800MYLPDnRddorZ1tn7Y1Ds",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Rekt Guy"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xCd241563F7288b5eb2b9B715F736232889B62d8b",
+    "ens": "readypereone.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-90",
+   "collection": "first-selfie",
+   "title": "First Selfie #89 Nouns Almanac",
+   "statement": "Nouns Almanac documents the first ever Nouns born on-chain.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "90",
+    "image": "https://arweave.net/q_m21v1d5_CdrCpSs7Kj7zOTNhBuDK7LQlYTSN6ZuQM",
+    "animation": null,
+    "external_url": "https://www.amazon.com/Nouns-Almanac-Every-Noun-born/dp/0473630257"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Nouns Almanac"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-89",
+   "collection": "first-selfie",
+   "title": "First Selfie #88 Minted",
+   "statement": "Minted book features 100 artists who minted on the blockchain in 2021.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "89",
+    "image": "https://arweave.net/P1CFhuqkdnkEDY3u_vxXB7Nw0c9cbFz99qxjsPQO-d8",
+    "animation": null,
+    "external_url": "https://www.amazon.com/Minted-Mint-Face/dp/0473608170/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Minted book"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xF4959E582AdC2D90a1B71D7E283d885225bcEBdb",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-88",
+   "collection": "first-selfie",
+   "title": "First Selfie #87 The Memes",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "88",
+    "image": "https://arweave.net/Brq_2I87IOgQIEP1KRpjweRccUGwm5I6STC99mO3CoI",
+    "animation": null,
+    "external_url": "https://thememes.6529.io/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Project",
+     "value": "The Memes by 6529"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xf52A30142877E3b7d30F3F6BB2C6bc55b8888710",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-87",
+   "collection": "first-selfie",
+   "title": "First Selfie #86 wen mint",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "87",
+    "image": "https://arweave.net/9-AiGzm5Mk6Spw27U2ekQA38df9eQYxK3HZYFu06qW8",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "MintFace"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-86",
+   "collection": "first-selfie",
+   "title": "First Selfie #85",
+   "statement": "Cryptophunk #457 became MintFace on May 13th 2022.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "86",
+    "image": "https://arweave.net/tTA62bNvuUX_1EQ41R5guvpLX3JYvVzFB4mdDevmOCU",
+    "animation": null,
+    "external_url": "https://opensea.io/assets/ethereum/0xf07468ead8cf26c752c676e43c814fee9c8cf402/457"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Cryptophunks"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-85",
+   "collection": "first-selfie",
+   "title": "First Selfie #84",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "85",
+    "image": "https://arweave.net/7i0ureJywE0ykIR9z3NBjrIPhqVkLBebkitjdLwx-QQ",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xe53c5B4F841570D193e05a27BFaFE1c554f14875",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-84",
+   "collection": "first-selfie",
+   "title": "First Selfie #83",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "84",
+    "image": "https://arweave.net/_l79LY3OAUiDR3S7bTmkDXF_150oLBTRWvY7XIWNIiw",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x41254fe73d3B49f0FE3Cc7743b4d40eF26bB338e",
+    "ens": "jpghodl.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-83",
+   "collection": "first-selfie",
+   "title": "First Selfie #82",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "83",
+    "image": "https://arweave.net/2T6UA-pi6hjUQy14sUoZ-_CtvoyWj3R3mZwc1EX_m1A",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Nouns"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-82",
+   "collection": "first-selfie",
+   "title": "First Selfie #81",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "82",
+    "image": "https://arweave.net/q9-cp_kNiV1QaN60gu6vZJtwli1GfPtywXH7a0J1Ytg",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Nouns"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-81",
+   "collection": "first-selfie",
+   "title": "First Selfie #80",
+   "statement": "The search for alpha is the search for the cherry 🍒\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "81",
+    "image": "https://arweave.net/HhIuizGUVdMIp1QgH8yaBebk8IioJRMvVBMcttHQ5fM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-80",
+   "collection": "first-selfie",
+   "title": "First Selfie #79",
+   "statement": "XNouns are Nouns with the X factor. Every 8 hours 8 minutes and 8 seconds a new XNoun is born. \n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "80",
+    "image": "https://arweave.net/hk5Dq8EH6Zm6tpjceqB3ybvU7fRAlg3ZtYPZjd2SPyQ",
+    "animation": null,
+    "external_url": "https://xnouns.xyz/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    },
+    {
+     "trait_type": "Project",
+     "value": "XNouns"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-79",
+   "collection": "first-selfie",
+   "title": "First Selfie #78",
+   "statement": "XNouns are Nouns with the X factor. Every 8 hours 8 minutes and 8 seconds a new XNoun is born. \n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "79",
+    "image": "https://arweave.net/9GbrzzcSrZ3poJO5B0Di0NDfvUsrtpTh76rBJcSVksM",
+    "animation": null,
+    "external_url": "https://xnouns.xyz/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Legendary"
+    },
+    {
+     "trait_type": "Project",
+     "value": "XNouns"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-78",
+   "collection": "first-selfie",
+   "title": "First Selfie #77 Death Dip",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "78",
+    "image": "https://arweave.net/Q8WNd4O40q_Vzapd9gJalgnUfu4AfUj-KjlZ7KM6utY",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x13EEe41d67b8d99E11174161D72cF8cCD194458C",
+    "ens": "davidkibler.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-77",
+   "collection": "first-selfie",
+   "title": "First Selfie #76 Anxiety",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "77",
+    "image": "https://arweave.net/zgO3esQRAt0-6ZoDbva1t6suuC0meDn-_E4JFkfG67w",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x259DffEE3680a5d1822903536a549797a9E6A153",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-76",
+   "collection": "first-selfie",
+   "title": "First Selfie #75 Reflection",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "76",
+    "image": "https://arweave.net/cPkBIZfj2STR2A-JdEgpTMBDnAP-iEkRA9lJrPZBYk0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xCc3B37EeB73143e6D2a547058118Fe25561A4eb2",
+    "ens": "0xunix.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-75",
+   "collection": "first-selfie",
+   "title": "First Selfie #74 Greedy Guts",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "75",
+    "image": "https://arweave.net/hKrRbOieirkS3gLcCkg1tCaHcJqYTWh4c5vYvuMXo3g",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-74",
+   "collection": "first-selfie",
+   "title": "First Selfie #73 Vaping Won't Save You",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "74",
+    "image": "https://arweave.net/WoqZa1glwgQY8K1fbO-DDnPjO8yFWKlZUfioqGV59vo",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-73",
+   "collection": "first-selfie",
+   "title": "First Selfie #72 Feeding",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "73",
+    "image": "https://arweave.net/w0rkoENBFlnMk4mgCJ7YJmjptfix2WPRBGICzoXHaEo",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-72",
+   "collection": "first-selfie",
+   "title": "First Selfie #71 Echoes of a Dead Earth",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "72",
+    "image": "https://arweave.net/qjoNOLXO_oUf9pPsksA0B8-VKD5gO8XfIysO2cbUQ7Y",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xfcBFe4130a0031558B10053f17B7597F428a59e8",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-71",
+   "collection": "first-selfie",
+   "title": "First Selfie #70",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "71",
+    "image": "https://arweave.net/I9bVrFi21H6075ObSrBmTGELwwHeJIsfzPE-DWjmf0Y",
+    "animation": null,
+    "external_url": "https://superrare.com/artwork-v2/cow-33524"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xE6CE1BC6255FCC6598f07Fab5d7c851C73C423c3",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-70",
+   "collection": "first-selfie",
+   "title": "First Selfie #69 Free Hawaii",
+   "statement": "The world's first image by Cath Simard, that had its rights released after GMoney purchased the NFT on the blockchain. \n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "70",
+    "image": "https://arweave.net/iiiUoZJpDkCuLDDZ57nHhMdvImLIU9B3AREGy1K_KEE",
+    "animation": null,
+    "external_url": "https://www.freehawaiiphoto.com"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-69",
+   "collection": "first-selfie",
+   "title": "First Selfie #68 Bleu",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "69",
+    "image": "https://arweave.net/_QtFcsbOkThwa-OXN1XEWKcFEv8Nz-cItEUaZXfiiRo",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-68",
+   "collection": "first-selfie",
+   "title": "First Selfie #67 Moon Rise",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "68",
+    "image": "https://arweave.net/j4Z4yIzGOhTIut2DRRNRSsBM2ss2UljuFuJ8qnDAjas",
+    "animation": null,
+    "external_url": "https://opensea.io/assets/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/29158143519667306174679199233279327141713317366366149551083667402607449604097"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-67",
+   "collection": "first-selfie",
+   "title": "First Selfie #66 Soul Plantation",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "67",
+    "image": "https://arweave.net/YM9NOx2Yfg9Vjdqf2-maN2kpmsc9gWB0BI0ZwFlsMII",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-66",
+   "collection": "first-selfie",
+   "title": "First Selfie #65 Manhattan",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "66",
+    "image": "https://arweave.net/JNgRmArUYhPzbMr_bphCB870DT4p5894SWhZdcK5nlo",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-65",
+   "collection": "first-selfie",
+   "title": "First Selfie #64 Cape Cod Sunrise",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "65",
+    "image": "https://arweave.net/IxOPfc1MWcZh_NtQo9683qK79avUSUJ4sRMe0e-KqoI",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xE6CE1BC6255FCC6598f07Fab5d7c851C73C423c3",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-64",
+   "collection": "first-selfie",
+   "title": "First Selfie #63 Trophies",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "64",
+    "image": "https://arweave.net/ztxMX-jwybPllwn-Sjr7x--3cq31fYaHpD5UhJ9tP3o",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-63",
+   "collection": "first-selfie",
+   "title": "First Selfie #62 Same Storm, Different Boats",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "63",
+    "image": "https://arweave.net/nwYc6sI2YJarF4AyXKpRBzIp5hd0SLT_qL6nIo-vIR0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-62",
+   "collection": "first-selfie",
+   "title": "First Selfie #61 The Temple of Gold",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "62",
+    "image": "https://arweave.net/QdYOxhCwLldn4nXoE6HdqEFRdGCpjKRH5mjsON0FMgo",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xE6CE1BC6255FCC6598f07Fab5d7c851C73C423c3",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-61",
+   "collection": "first-selfie",
+   "title": "First Selfie #60 gm collection",
+   "statement": "The first gm collection by 6529 curated by MintFace.\n\n'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "61",
+    "image": "https://arweave.net/7A-NojeJofZQQ1rltdeMNxvCPvpXWeJZ_qFrgr3e4Us",
+    "animation": null,
+    "external_url": "https://opensea.io/6529Museum?search[sortBy]=LAST_SALE_PRICE&search[query]=gm"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    },
+    {
+     "trait_type": "Project",
+     "value": "gm"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-60",
+   "collection": "first-selfie",
+   "title": "First Selfie #59 gm by LDF",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "60",
+    "image": "https://arweave.net/JbLoQwJ_dEG_217uvrxH-4TjRKVQmcNzKB1sUfxHC3A",
+    "animation": null,
+    "external_url": "https://opensea.io/assets/ethereum/0x3b3ee1931dc30c1957379fac9aba94d1c48a5405/91474"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-59",
+   "collection": "first-selfie",
+   "title": "First Selfie #58 UMA",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "59",
+    "image": "https://arweave.net/wLnH0gxuExZgS0B8Jp85kS0riorsMB0mJuBboiv83Dk",
+    "animation": null,
+    "external_url": "https://opensea.io/collection/uma-no-copyright"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    },
+    {
+     "trait_type": "Project",
+     "value": "UMA"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x7DcCC79361b0227A85c2FF788cA240d31f2a78d0",
+    "ens": "incept.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-58",
+   "collection": "first-selfie",
+   "title": "First Selfie #57 Sail-o-bots",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "58",
+    "image": "https://arweave.net/5J92ykHrZz-3lZHaBH5ZfMxKAi7RQ6AOJ8kTnVYGnac",
+    "animation": null,
+    "external_url": "https://opensea.io/collection/sail-o-bots-by-sturec"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-57",
+   "collection": "first-selfie",
+   "title": "First Selfie #56 Nouns",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "57",
+    "image": "https://arweave.net/3iZCsY8ajdYoU-C00An4xjdHWUHufkozmWQMNklHbYQ",
+    "animation": null,
+    "external_url": "https://nouns.wtf/"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Nouns"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-56",
+   "collection": "first-selfie",
+   "title": "First Selfie #55 mfers",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "56",
+    "image": "https://arweave.net/V2IDF-keku1j5pjQtwaKfBK7GAZLirMnC_vmGu1BFvQ",
+    "animation": null,
+    "external_url": "https://opensea.io/collection/mfers"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    },
+    {
+     "trait_type": "Project",
+     "value": "mfers"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x0a1c6F1638ADBE3873c7e8Dad6c0E3b08285BA07",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-55",
+   "collection": "first-selfie",
+   "title": "First Selfie #54 Underscore",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "55",
+    "image": "https://arweave.net/fq-bGcEicgkbwDUs6M-DoAIsWatpYyBZCEDdt0QgRCo",
+    "animation": null,
+    "external_url": "https://opensea.io/underscore_xo/created"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "Underscore"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x9438160d839391Bd22a2BC8CDCAab010063Ba131",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-54",
+   "collection": "first-selfie",
+   "title": "First Selfie #53 Grifters",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "54",
+    "image": "https://arweave.net/0WMH29qDbsZLFyVNQC23VlKBJ1cxt3djV8p67F9yi5g",
+    "animation": null,
+    "external_url": "https://opensea.io/collection/grifters-by-xcopy"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    },
+    {
+     "trait_type": "Artist",
+     "value": "XCOPY"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xC73Ffb72EB85059908b6f72eF4b0d3B38d46e0aD",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-53",
+   "collection": "first-selfie",
+   "title": "First Selfie #52 CryptoCrystal",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "53",
+    "image": "https://arweave.net/7y0rtnT4_q2i3WGMrT10lN6tKRbvRW5f-G0BdZKNxLA",
+    "animation": null,
+    "external_url": "https://opensea.io/collection/cryptocrystal"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    },
+    {
+     "trait_type": "Project",
+     "value": "CryptoCrystal"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+    "ens": "visco.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-52",
+   "collection": "first-selfie",
+   "title": "First Selfie #51 Cryptoadz",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "52",
+    "image": "https://arweave.net/aQObyUjHZPbdBV4keuPeKk7dSaakOkZYtaL2GiTWkgU",
+    "animation": null,
+    "external_url": "https://opensea.io/collection/cryptoadz-by-gremplin"
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "CC0"
+    },
+    {
+     "trait_type": "Project",
+     "value": "Cryptoadz"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-51",
+   "collection": "first-selfie",
+   "title": "First Selfie #50",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "51",
+    "image": "https://arweave.net/9wRJlm9SQWgAjT69fviMqWg7x1b0Ff58aH9VsdrQbjE",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-50",
+   "collection": "first-selfie",
+   "title": "First Selfie #49",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "50",
+    "image": "https://arweave.net/E6U9hcedDPOE_CgugZVelm6lqxxxPVUKJhwwVFY0OAA",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-49",
+   "collection": "first-selfie",
+   "title": "First Selfie #48",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "49",
+    "image": "https://arweave.net/RAJLILtfsEj5ccSDqoBL9SmDTavnLccYXQYJHvuthxw",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xCe7640AE90b7ebDEcd188419a7C6fB0f3EDC78BE",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-48",
+   "collection": "first-selfie",
+   "title": "First Selfie #47",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "48",
+    "image": "https://arweave.net/2h6qlX7EFdspAmoIDksSgFC_eF6Qtq_26SELwk2oMS0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x43D4bdeEcA8dD891E89ED80DAc83b70bF2D1d753",
+    "ens": "photox.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-47",
+   "collection": "first-selfie",
+   "title": "First Selfie #46",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "47",
+    "image": "https://arweave.net/5SjNqBhasqBssNDVFpgFg_sDVKaaFBLZ0IEqH2Jlgww",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-46",
+   "collection": "first-selfie",
+   "title": "First Selfie #45",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "46",
+    "image": "https://arweave.net/JVnGi_LtP1WsWsv_AVFLdavPHTYfTL1hmwYv1XLUzMc",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+    "ens": "iagof.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-45",
+   "collection": "first-selfie",
+   "title": "First Selfie #44",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "45",
+    "image": "https://arweave.net/BbC9iNc6Pz9QI2BeNzIaWU-0gc6exiU2ORo7RSs7XN8",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x8af6e15ED513B5B73573F58158b1b0BbD5085eC7",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-44",
+   "collection": "first-selfie",
+   "title": "First Selfie #43",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "44",
+    "image": "https://arweave.net/N2Mf1HpqNuekbeqbYsGPGGHkupMflZiGF9cr-PZVONg",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Rip Curl"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-43",
+   "collection": "first-selfie",
+   "title": "First Selfie #42",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "43",
+    "image": "https://arweave.net/tAEUjJyanjUOQR5wUz777J7PHMhwlodL_OhFRaq0te8",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Rip Curl"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xce6041330E6d30a48D2065Cf119454583180B3eF",
+    "ens": "mfersrock.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-42",
+   "collection": "first-selfie",
+   "title": "First Selfie #41",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "42",
+    "image": "https://arweave.net/5adIYNFvdfL7mV1IYkvQjk1PXN7qfArke-P9-yHesUE",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Ebeneezer Goode"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x01Ab06F4Eb304a6f804E26CbE5f16D23D06b68a5",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-41",
+   "collection": "first-selfie",
+   "title": "First Selfie #40",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "41",
+    "image": "https://arweave.net/Y4aolOQBguoCdaInU0MMhynbwaBOMkzvFr1VDg6hW7k",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Ebeneezer Goode"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x1e7F2ef8BbdE7FCaea03Ba0C83d5D293D066f41c",
+    "ens": "icdaywee.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-40",
+   "collection": "first-selfie",
+   "title": "First Selfie #39",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "40",
+    "image": "https://arweave.net/ElFMfrJ12MVRHNWzNdUR7BDR48rCPtopFerGXKvViek",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Atari"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x595A1B38c53D8FB5fbDF68196F22ef79FE59c9e9",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-39",
+   "collection": "first-selfie",
+   "title": "First Selfie #38",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "39",
+    "image": "https://arweave.net/IsuPIM_98ZK6yIGydCLnYnFh82olEDla4AMnQYkqbqM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Atari"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-38",
+   "collection": "first-selfie",
+   "title": "First Selfie #37",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "38",
+    "image": "https://arweave.net/zRoN5MyAOUHPdYHLfgTgPLrVSYrU2Szt761s0ufb3Iw",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Atari"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x52ABe6A75eaaED6545b615eC4e0d08E689e84cC5",
+    "ens": "carlos28355.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-37",
+   "collection": "first-selfie",
+   "title": "First Selfie #36",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "37",
+    "image": "https://arweave.net/CqITII3BT18mkAhW3c3OnNZdty0TXczfTy40OaqCobM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Atari"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-36",
+   "collection": "first-selfie",
+   "title": "First Selfie #35",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "36",
+    "image": "https://arweave.net/Z2BhH8Kt0K6ixkFenI5-BAJTwiAm-qkxaftA5Mld14s",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Atari"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-35",
+   "collection": "first-selfie",
+   "title": "First Selfie #34",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "35",
+    "image": "https://arweave.net/FdQI-phYoqsIUcgHq8MqBkxYDtIA98wvsk4Ci3yxfSM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "Atari"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xe485656EC623115Bf2d445B925DB5D63707Bf74b",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-34",
+   "collection": "first-selfie",
+   "title": "First Selfie #33",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "34",
+    "image": "https://arweave.net/T5NkXYE6pTrmgNClA1bJZlRGExWKny8yTDsQRFdoCok",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xaFcCEbed934565586A749C66Ff352B0fc871042b",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-33",
+   "collection": "first-selfie",
+   "title": "First Selfie #32",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "33",
+    "image": "https://arweave.net/klOwmvaW-Sr17FUi_rK1Cx7Yt3eN40rFviR0e3icfco",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-32",
+   "collection": "first-selfie",
+   "title": "First Selfie #31",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "32",
+    "image": "https://arweave.net/K0AKIYzdi_C84PjlNGGJxQJrFgAtWZRtlvJeb8MlVP0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-31",
+   "collection": "first-selfie",
+   "title": "First Selfie #30",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "31",
+    "image": "https://arweave.net/9NWRQJq3B0p_I9tGaHvePFMSnpEDWkQG4bLuOrVh8-w",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-30",
+   "collection": "first-selfie",
+   "title": "First Selfie #29",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "30",
+    "image": "https://arweave.net/tPQEnxpZJ95k8QpTqwU48RQ9DLSysZ1juXNH7L6xMcw",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-29",
+   "collection": "first-selfie",
+   "title": "First Selfie #28",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "29",
+    "image": "https://arweave.net/aAZhqxpi1XRELPFF5VDOhJfVcf-_O5XEdR7vUFy3Fjk",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xffC15eF23f4Ba7Faf4B4d3c28a35A28f126BCc0D",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-28",
+   "collection": "first-selfie",
+   "title": "First Selfie #27",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "28",
+    "image": "https://arweave.net/01kf32FKbmFvRLQOjaidXLKlwmUYRROWvmX8GwLwfQk",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-27",
+   "collection": "first-selfie",
+   "title": "First Selfie #26",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "27",
+    "image": "https://arweave.net/izQSB6XqU5_0HK6m8XAMelE0gdcu5GbieGi7ghJS4Vw",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    },
+    {
+     "trait_type": "Vibe",
+     "value": "MTV"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-26",
+   "collection": "first-selfie",
+   "title": "First Selfie #25",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "26",
+    "image": "https://arweave.net/13aBCf2BoGlTn60YPYt8vD60JSj3XENgwbq-6UMsKM0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-25",
+   "collection": "first-selfie",
+   "title": "First Selfie #24",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "25",
+    "image": "https://arweave.net/3m-OpBEBFPQu8Dw1pecQoKyZyys5R2Hei791GeUkyHk",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-24",
+   "collection": "first-selfie",
+   "title": "First Selfie #23",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "24",
+    "image": "https://arweave.net/rkgBwJzuMsTIXssaPLYMk9rlo5tD7sbCVgxGSstjYcM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-23",
+   "collection": "first-selfie",
+   "title": "First Selfie #22",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "23",
+    "image": "https://arweave.net/vgq9IRGX8FA7P5D7ZmIDb5CXTfW5rfH6UFqJ7Ubqe-I",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x18E0f9AAdde970D74430cC8636A381CcFCD1F559",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-22",
+   "collection": "first-selfie",
+   "title": "First Selfie #21",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "22",
+    "image": "https://arweave.net/gw5cnn9_zoLVx6WwAuHpLlpVdzJ3M6oBc1j-owsiZk0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-21",
+   "collection": "first-selfie",
+   "title": "First Selfie #20",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "21",
+    "image": "https://arweave.net/262xVWVGd7B6og19J8hZeS-WBVfPuFSKDalKLgfhFmU",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-20",
+   "collection": "first-selfie",
+   "title": "First Selfie #19",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "20",
+    "image": "https://arweave.net/HFoEn7eYcJFSjxidxZWYtbxvTdhOPmW41S11mnvvcr4",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x930922B1114ed66734BD773184667B227520f43F",
+    "ens": "spuddhism.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-19",
+   "collection": "first-selfie",
+   "title": "First Selfie #18",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "19",
+    "image": "https://arweave.net/btklV3c-XNE1UoFuGVCYXe2tMYVjL5_gZ5aFVaBSieM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-18",
+   "collection": "first-selfie",
+   "title": "First Selfie #17",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "18",
+    "image": "https://arweave.net/YX6titVo2z1wekb6YdvFc8Jwq8_cWUjD2bZNAb3nvu8",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-17",
+   "collection": "first-selfie",
+   "title": "First Selfie #16",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "17",
+    "image": "https://arweave.net/WjPkdy9v0UvYxluiJ5uXv3_LF7Qq3K7L3_3rsqpFUp0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x91CB1ff4322559A5c5c67DBA075aB081c255Ba1f",
+    "ens": "adacrow.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-16",
+   "collection": "first-selfie",
+   "title": "First Selfie #15",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "16",
+    "image": "https://arweave.net/Vajz-NVH3GDWaAzkeC_mDzj9ibZIyDk-fuj0ldthXrI",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-15",
+   "collection": "first-selfie",
+   "title": "First Selfie #14",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "15",
+    "image": "https://arweave.net/-6x56fqKlBksQZUgAbfztIELFVXWC7ShBzJpfWkMcSs",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xE6CE1BC6255FCC6598f07Fab5d7c851C73C423c3",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-14",
+   "collection": "first-selfie",
+   "title": "First Selfie #13",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "14",
+    "image": "https://arweave.net/AhptQM65kaz1KbQN5EuPkBQAStK85PCAglY27f81ZPI",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x7b0546D5847F5d6b2F0702e9e71AC0C371D54DCA",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-13",
+   "collection": "first-selfie",
+   "title": "First Selfie #12",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "13",
+    "image": "https://arweave.net/WErD8-ba3LIU2M0iWtofYQTh02IUhi-RF1bhYeY_kyo",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-12",
+   "collection": "first-selfie",
+   "title": "First Selfie #11",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "12",
+    "image": "https://arweave.net/tVUh8h_2Q-tHlVnh01TvZQ2mm_q3aOJIQNnswbGNVgU",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-11",
+   "collection": "first-selfie",
+   "title": "First Selfie #10",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "11",
+    "image": "https://arweave.net/DvNEZjfY9atDQr4MxMWn1esc3Bo1-QC95pjw_ABhU7s",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-10",
+   "collection": "first-selfie",
+   "title": "First Selfie #9",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "10",
+    "image": "https://arweave.net/Cz2MRmrv3LeeXFLwSMAbXiAfzexrzxZkPQal_xDH06E",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-9",
+   "collection": "first-selfie",
+   "title": "First Selfie #8",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "9",
+    "image": "https://arweave.net/Hc9FpPll3dmy_cFmpJ6yxO9ukqJmiXwSolXcrYO7EVw",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-8",
+   "collection": "first-selfie",
+   "title": "First Selfie #7",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "8",
+    "image": "https://arweave.net/JM-z3q9zUAH-uagi3C-BiXAJc2xaVn7ud-rphuf9DVA",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x43D4bdeEcA8dD891E89ED80DAc83b70bF2D1d753",
+    "ens": "photox.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-7",
+   "collection": "first-selfie",
+   "title": "First Selfie #6",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "7",
+    "image": "https://arweave.net/cb1IDurfZdcKm67ROfEpgdB5jAqXU3pQ_MwPieCu3xg",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x18E0f9AAdde970D74430cC8636A381CcFCD1F559",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-6",
+   "collection": "first-selfie",
+   "title": "First Selfie #5",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "6",
+    "image": "https://arweave.net/MBulV6zbtPFGq8NbpuZ9EVPaTOY0GIlef3P8KXnTb_g",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0x33a34e27a81436BA9D79276406a285E89A8bD8a8",
+    "ens": "tacita.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-5",
+   "collection": "first-selfie",
+   "title": "First Selfie #4",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "5",
+    "image": "https://arweave.net/l03pofQih7MiXXBvxR2LPWXk8XSITH7r-HdzFNWli-s",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "acquired",
+   "held_by": null,
+   "collector": {
+    "address": "0xFB74Eee69be0C2bd8Fb42ee67b6B6c4e05CD9Ddd",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   }
+  },
+  {
+   "id": "first-selfie-4",
+   "collection": "first-selfie",
+   "title": "First Selfie #3",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "4",
+    "image": "https://arweave.net/PnJ-ljLxE7fSnVYo98CkB2sSfmAzjJSsUKSxNMKY3_0",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-3",
+   "collection": "first-selfie",
+   "title": "First Selfie #2",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "3",
+    "image": "https://arweave.net/MLyQJ9F--Nu9XMjTq0zNmD9ytDeIX_gjkr1lTgaCNSM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-2",
+   "collection": "first-selfie",
+   "title": "First Selfie #1",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "2",
+    "image": "https://arweave.net/CZW0bpWb1pniw4QaK2AKFj7XL_oQ4xnY77ZwyGmq4SM",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  },
+  {
+   "id": "first-selfie-1",
+   "collection": "first-selfie",
+   "title": "First Selfie #0",
+   "statement": "'First Selfie' is a study in emergent Web3.0 identity.",
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+    "token_id": "1",
+    "image": "https://arweave.net/8pm6Y_MUhdgiY5LFPms5uMysmUoX6Gv0O1yLrqQ_iB8",
+    "animation": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "listed_on": null,
+   "reserve": null,
+   "attributes": [
+    {
+     "trait_type": "Artist",
+     "value": "MintFace"
+    },
+    {
+     "trait_type": "Selfie",
+     "value": "Glitch"
+    }
+   ],
+   "edition": {
+    "type": "1/1"
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "collector": null
+  }
+ ]
+}

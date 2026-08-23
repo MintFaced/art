@@ -1,0 +1,57 @@
+{
+ "address": "0x43d4bdeeca8dd891e89ed80dac83b70bf2d1d753",
+ "ens": "photox.eth",
+ "display_name": null,
+ "slug": "photox.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 2,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": null,
+ "last_collected": null,
+ "collections": [
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 2
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "first-selfie-48",
+   "title": "First Selfie #47",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/2h6qlX7EFdspAmoIDksSgFC_eF6Qtq_26SELwk2oMS0",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-8",
+   "title": "First Selfie #7",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/JM-z3q9zUAH-uagi3C-BiXAJc2xaVn7ud-rphuf9DVA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  }
+ ]
+}

@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 6,
-  "one_of_ones": 2,
+  "works": 7,
+  "one_of_ones": 3,
   "editions": 4,
-  "collections": 4
+  "collections": 5
  },
  "first_collected": "2022-12-14T19:15:11.000Z",
  "last_collected": "2025-05-16T14:42:11.000000Z",
@@ -23,6 +23,11 @@
    "slug": "seize-and-share",
    "title": "Seize And Share",
    "works": 2
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
   },
   {
    "slug": "geodetic-onchain",
@@ -88,6 +93,15 @@
    "acquired": "2022-12-14T19:15:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-6",
+   "title": "First Selfie #5",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/MBulV6zbtPFGq8NbpuZ9EVPaTOY0GIlef3P8KXnTb_g",
    "orientation": null
   }
  ]

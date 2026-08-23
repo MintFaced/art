@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 25,
-  "one_of_ones": 4,
+  "works": 26,
+  "one_of_ones": 5,
   "editions": 21,
-  "collections": 9
+  "collections": 10
  },
  "first_collected": "2022-05-12T23:12:49.000000Z",
  "last_collected": "2026-08-21T05:19:23.000000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "2022-10k",
    "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   },
   {
@@ -284,6 +289,15 @@
    "acquired": "2022-05-12T23:12:49.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-99",
+   "title": "First Selfie #98 Deca",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/k-yy0sOzq5jjhqzNg00wX5lzDGLBDIbpXjX7EdfhJa0",
    "orientation": null
   }
  ]

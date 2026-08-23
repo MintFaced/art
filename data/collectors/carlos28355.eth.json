@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 15,
-  "one_of_ones": 0,
-  "editions": 15,
-  "collections": 4
+  "works": 17,
+  "one_of_ones": 1,
+  "editions": 16,
+  "collections": 6
  },
  "first_collected": "2022-05-11T04:39:48.000000Z",
  "last_collected": "2023-01-05T01:40:23.000Z",
@@ -30,8 +30,18 @@
    "works": 1
   },
   {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
+  },
+  {
    "slug": "geodetic-memory",
    "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -169,6 +179,24 @@
    "acquired": "2022-05-11T04:39:48.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-38",
+   "title": "First Selfie #37",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/zRoN5MyAOUHPdYHLfgTgPLrVSYrU2Szt761s0ufb3Iw",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
    "orientation": null
   }
  ]

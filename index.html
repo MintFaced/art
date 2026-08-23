@@ -327,7 +327,7 @@ async function hero(home, idx) {
   }
 
   // nothing curated yet: a collection cover stands in, clearly provisional
-  const covers = idx.collections.filter((c) => c.cover && c.cover.image && c.counts.available && c.group !== 'archive');
+  const covers = idx.collections.filter((c) => c.display !== false && c.cover && c.cover.image && c.counts.available && c.group !== 'archive');
   if (!covers.length) { el.remove(); return; }
   const c = covers[Math.floor(Math.random() * covers.length)];
   const hit = await MF.work(c.cover.id);
@@ -343,7 +343,7 @@ async function hero(home, idx) {
     ]);
 
     const groups = MF.groupsWithCollections(idx);
-    const works = idx.collections.reduce((n, c) => n + (c.counts.works || 0), 0);
+    const works = idx.collections.filter((c) => c.display !== false).reduce((n, c) => n + (c.counts.works || 0), 0);
 
     // The page reads: the newest work, then the collections, then the hero as a
     // breath in the middle, then the geodetic set and the asides.

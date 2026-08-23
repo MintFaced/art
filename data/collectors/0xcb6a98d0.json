@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 1,
+  "works": 2,
   "one_of_ones": 1,
-  "editions": 0,
-  "collections": 1
+  "editions": 1,
+  "collections": 2
  },
  "first_collected": "2023-10-14T04:04:59.000000Z",
  "last_collected": "2023-10-14T04:04:59.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "geodetic-world",
    "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -29,6 +34,15 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-48-display.webp",
    "orientation": "square"
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
   }
  ]
 }

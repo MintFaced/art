@@ -1,0 +1,57 @@
+{
+ "address": "0x7c2f06ab61a94fe9760cc8d9ad35a33c0472cb8e",
+ "ens": "iameni.eth",
+ "display_name": null,
+ "slug": "iameni.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2022-12-07T15:48:35.000Z",
+ "last_collected": "2022-12-16T17:34:23.000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-16T17:34:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-xdecal-2590",
+   "title": "XDecal",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-07T15:48:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  }
+ ]
+}

@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 4,
   "one_of_ones": 1,
-  "editions": 1,
-  "collections": 2
+  "editions": 3,
+  "collections": 3
  },
  "first_collected": "2022-12-27T03:29:59.000000Z",
  "last_collected": "2026-08-21T05:48:11.000000Z",
  "collections": [
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 2
+  },
   {
    "slug": "pixelarcade",
    "title": "PixelArcade",
@@ -42,6 +47,24 @@
    "acquired": "2022-12-27T03:29:59.000000Z",
    "unique": false,
    "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/5IpBQH0QL1911Uo9SSNkItRUixeh6nPzhw7MfFnU23g",
    "orientation": null
   }
  ]

@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 5,
   "one_of_ones": 1,
-  "editions": 2,
-  "collections": 3
+  "editions": 4,
+  "collections": 4
  },
  "first_collected": "2022-02-17T23:39:29.000000Z",
  "last_collected": "2022-12-27T03:29:59.000000Z",
  "collections": [
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 2
+  },
   {
    "slug": "geodetic-moments",
    "title": "Geodetic Moments",
@@ -56,6 +61,24 @@
    "acquired": "2022-02-17T23:39:29.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-37-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6I1tDW_5vI3fNpcblWhM5jsMUveB-tXmC_qvKsaZ4xE",
    "orientation": null
   }
  ]

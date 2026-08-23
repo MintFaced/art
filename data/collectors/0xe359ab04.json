@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 0,
-  "editions": 4,
-  "collections": 3
+  "editions": 5,
+  "collections": 4
  },
  "first_collected": "2022-05-09T23:03:17.000000Z",
  "last_collected": "2022-12-05T19:00:59.000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "geodetic-memory",
    "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -65,6 +70,15 @@
    "acquired": "2022-05-09T23:03:17.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
    "orientation": null
   }
  ]

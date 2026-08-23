@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 13,
+  "works": 14,
   "one_of_ones": 0,
-  "editions": 13,
-  "collections": 3
+  "editions": 14,
+  "collections": 4
  },
  "first_collected": "2022-09-26T09:38:35.000Z",
  "last_collected": "2023-10-07T00:34:35.000000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
    "works": 1
   }
  ],
@@ -146,6 +151,15 @@
    "acquired": "2022-09-26T09:38:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
    "orientation": null
   }
  ]

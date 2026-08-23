@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 17,
-  "one_of_ones": 8,
+  "works": 18,
+  "one_of_ones": 9,
   "editions": 9,
-  "collections": 8
+  "collections": 9
  },
  "first_collected": "2022-05-11T02:08:10.000000Z",
  "last_collected": "2025-10-18T22:16:11.000000Z",
@@ -38,6 +38,11 @@
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
    "works": 2
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
   },
   {
    "slug": "geodetic-moments",
@@ -207,6 +212,15 @@
    "acquired": "2022-05-11T02:08:10.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-78",
+   "title": "First Selfie #77 Death Dip",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/Q8WNd4O40q_Vzapd9gJalgnUfu4AfUj-KjlZ7KM6utY",
    "orientation": null
   }
  ]

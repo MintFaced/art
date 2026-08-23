@@ -954,6 +954,9 @@ const MF = {
   groupsWithCollections(idx) {
     const by = {};
     for (const c of idx.collections) {
+      // collector-tracked but not site canon: enumerated into the catalogue so
+      // the collector register and the nightly sweep see it, never shown here
+      if (c.display === false) continue;
       if (!(c.counts.works || c.counts.child_works)) continue;
       const g = this.STUDIES.from.includes(c.group) ? this.STUDIES.into : c.group;
       (by[g] = by[g] || []).push(c);

@@ -68,6 +68,10 @@
    "title": "AI Studies"
   },
   {
+   "id": "experiments",
+   "title": "Experiments"
+  },
+  {
    "id": "feature",
    "title": "Features"
   },
@@ -1119,6 +1123,98 @@
    "notes": "Not yet minted. Each work is tokenized on purchase, so the collector's wallet is the first owner written to chain.",
    "has_children": false,
    "tokenize_on_purchase": true
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "group": "experiments",
+   "display": false,
+   "year": "2024",
+   "medium": "Collaborative",
+   "genre": null,
+   "card_statement": null,
+   "physical": false,
+   "statement": "One million artworks on The Line is the goal.",
+   "counts": {
+    "works": 8,
+    "available": 6,
+    "sold_out": 2
+   },
+   "cover": null,
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-1155",
+     "address": "0x269bC803c233620506c9D25d980E979bf8BcbBf6",
+     "name": null,
+     "deployed": null,
+     "deployer": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "holders": "794"
+    }
+   ],
+   "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise."
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "group": "experiments",
+   "display": false,
+   "year": "2021",
+   "medium": "Illustration",
+   "genre": null,
+   "card_statement": null,
+   "physical": false,
+   "statement": null,
+   "counts": {
+    "works": 101,
+    "acquired": 44,
+    "available": 57
+   },
+   "cover": null,
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0x78613F36916dF52aD8CDA841d4C2dCed15802bf4",
+     "name": "First Selfie",
+     "deployed": null,
+     "deployer": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "holders": "37"
+    }
+   ],
+   "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise."
+  },
+  {
+   "slug": "xnouns",
+   "title": "XNouns",
+   "group": "experiments",
+   "display": false,
+   "year": "2022",
+   "medium": "Generative",
+   "genre": null,
+   "card_statement": null,
+   "physical": false,
+   "statement": "XNouns celebrates the glitch origins of XCOPY combined with the artistic freedom of Nouns.",
+   "counts": {
+    "works": 519,
+    "acquired": 375,
+    "burned": 51,
+    "available": 82,
+    "vaulted": 11
+   },
+   "cover": null,
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-721",
+     "address": "0x2969Eca285C9acD0B7EeDEbE7714C4D913700794",
+     "name": "XNouns",
+     "deployed": null,
+     "deployer": "0xd310A3041dFcF14Def5ccBc508668974b5da7174",
+     "holders": "142"
+    }
+   ],
+   "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise."
   }
  ],
  "work_index": {

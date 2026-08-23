@@ -63,7 +63,7 @@ export async function GET(request) {
   const idx = await siteIndex();
   const fx = await rates();
 
-  const wanted = idx.collections.filter((c) => (only ? c.slug === only : true) && c.slug !== 'the-vault');
+  const wanted = idx.collections.filter((c) => (only ? c.slug === only : true) && c.slug !== 'the-vault' && c.display !== false);
   if (only && !wanted.length) return json({ error: 'no such collection' }, 404);
 
   const out = [];

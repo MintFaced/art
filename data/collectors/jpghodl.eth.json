@@ -1,0 +1,48 @@
+{
+ "address": "0x41254fe73d3b49f0fe3cc7743b4d40ef26bb338e",
+ "ens": "jpghodl.eth",
+ "display_name": null,
+ "slug": "jpghodl.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-12-25T07:09:11.000Z",
+ "last_collected": "2022-12-25T07:09:11.000Z",
+ "collections": [
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "seize-and-share-anxn-3250",
+   "title": "Anxn",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-25T07:09:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-84",
+   "title": "First Selfie #83",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/_l79LY3OAUiDR3S7bTmkDXF_150oLBTRWvY7XIWNIiw",
+   "orientation": null
+  }
+ ]
+}

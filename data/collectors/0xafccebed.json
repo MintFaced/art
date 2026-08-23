@@ -1,0 +1,48 @@
+{
+ "address": "0xafccebed934565586a749c66ff352b0fc871042b",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xafccebed",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2025-05-16T10:36:23.000000Z",
+ "last_collected": "2025-05-16T10:36:23.000000Z",
+ "collections": [
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": "2025-05-16T10:36:23.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "first-selfie-34",
+   "title": "First Selfie #33",
+   "collection": "first-selfie",
+   "acquired": null,
+   "unique": true,
+   "image": "https://arweave.net/T5NkXYE6pTrmgNClA1bJZlRGExWKny8yTDsQRFdoCok",
+   "orientation": null
+  }
+ ]
+}
