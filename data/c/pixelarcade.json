@@ -9394,15 +9394,21 @@
     "painting": 3200,
     "both": 3350
    },
-   "status": "available",
-   "held_by": "PixelArcade contract",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0x666491a68506564C97a17E697B0f96F52657a760",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-08-23T05:21:23.000Z"
+   },
    "offers": {
-    "digital": true,
-    "painting": true,
-    "both": true
+    "digital": false,
+    "painting": false,
+    "both": false
    },
    "listing": {
     "eth": 0.03,
