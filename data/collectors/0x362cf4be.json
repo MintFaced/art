@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-05-09T00:47:31.000000Z",
  "last_collected": "2022-05-09T00:47:31.000000Z",
+ "tao": 23340,
+ "tao_rate": 16.8,
  "collections": [
   {
    "slug": "xlife",
@@ -35,7 +37,8 @@
    "acquired": "2022-05-09T00:47:31.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6582
   },
   {
    "id": "xlife-3",
@@ -45,8 +48,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/rwo60iUk-cWvhsawfUE_iEpBktJ9lR4DESHhJqFfap4",
-   "orientation": null
+   "image": "xlife/xlife-3-image.gif",
+   "orientation": null,
+   "tao": 5585
   },
   {
    "id": "xlife-2",
@@ -56,8 +60,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/7ZZBQlgnUkV-OXgxZMq0pss37osrbSlDHli00NTWWH4",
-   "orientation": null
+   "image": "xlife/xlife-2-image.gif",
+   "orientation": null,
+   "tao": 5586
   },
   {
    "id": "xlife-1",
@@ -67,8 +72,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/qPhfvNhRdZDqzohCZjQJjVNijShYMxvufOhmhck1Vxo",
-   "orientation": null
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5586
   }
  ]
 }

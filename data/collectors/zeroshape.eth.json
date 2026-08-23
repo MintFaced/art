@@ -13,6 +13,8 @@
  },
  "first_collected": "2025-01-14T21:19:47.000000Z",
  "last_collected": "2025-01-14T21:19:47.000000Z",
+ "tao": 42867,
+ "tao_rate": 73.2,
  "collections": [
   {
    "slug": "geodetic-world",
@@ -35,7 +37,8 @@
    "acquired": "2025-01-14T21:19:47.000000Z",
    "unique": true,
    "image": "geodetic-world/geodetic-world-88-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 40387
   },
   {
    "id": "xlife-59",
@@ -46,7 +49,8 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/IV7_F_u5jRVOuQFoO64D0-Zn87HlUduyjL2__sZ_UXU",
-   "orientation": null
+   "orientation": null,
+   "tao": 2479
   }
  ]
 }

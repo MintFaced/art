@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-07-09T01:11:43.000Z",
  "last_collected": "2022-07-09T01:11:43.000Z",
+ "tao": 34152,
+ "tao_rate": 29.4,
  "collections": [
   {
    "slug": "xlife",
@@ -35,7 +37,8 @@
    "acquired": "2022-07-09T01:11:43.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 12651
   },
   {
    "id": "xlife-51",
@@ -45,8 +48,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
-   "orientation": null
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 6074
   },
   {
    "id": "xlife-24",
@@ -56,8 +60,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/mpLJymCIeEN2_UeYTYRV5VFQ19PSHYE_uqbm5VHwl6U",
-   "orientation": null
+   "image": "xlife/xlife-24-image.gif",
+   "orientation": null,
+   "tao": 15425
   }
  ]
 }

@@ -13,6 +13,8 @@
  },
  "first_collected": "2025-07-13T21:02:35.000000Z",
  "last_collected": "2025-07-13T21:45:11.000000Z",
+ "tao": 89010,
+ "tao_rate": 219.6,
  "collections": [
   {
    "slug": "xlife",
@@ -45,7 +47,8 @@
    "acquired": "2025-07-13T21:45:11.000000Z",
    "unique": true,
    "image": "geodetic-world/geodetic-world-50-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 27966
   },
   {
    "id": "geodetica-74",
@@ -56,7 +59,8 @@
    "acquired": "2025-07-13T21:24:11.000000Z",
    "unique": true,
    "image": "geodetica/geodetica-74-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 27967
   },
   {
    "id": "two-burdens-4",
@@ -67,7 +71,8 @@
    "acquired": "2025-07-13T21:02:35.000000Z",
    "unique": true,
    "image": "two-burdens/two-burdens-4-display.webp",
-   "orientation": "portrait"
+   "orientation": "portrait",
+   "tao": 27968
   },
   {
    "id": "xlife-66",
@@ -77,8 +82,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/gM8k7OzJaLy1bObiQxMO_iImoo755jF-2BBVfXvVQLI",
-   "orientation": null
+   "image": "xlife/xlife-66-image.gif",
+   "orientation": null,
+   "tao": 3404
   },
   {
    "id": "xlife-64",
@@ -88,8 +94,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/6jCMoKErwOmAUN-QzQkArcUm-8UPwW3UKYBPzNu2Psk",
-   "orientation": null
+   "image": "xlife/xlife-64-image.png",
+   "orientation": null,
+   "tao": 1702
   }
  ]
 }

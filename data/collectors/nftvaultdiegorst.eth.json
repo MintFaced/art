@@ -13,6 +13,8 @@
  },
  "first_collected": "2025-05-16T10:36:23.000000Z",
  "last_collected": "2025-05-16T10:36:23.000000Z",
+ "tao": 8265,
+ "tao_rate": 12.6,
  "collections": [
   {
    "slug": "xlife",
@@ -35,7 +37,8 @@
    "acquired": "2025-05-16T10:36:23.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 1947
   },
   {
    "id": "xlife-50",
@@ -45,8 +48,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/UFH2L8tr_wn3UpQdJ6zOwAxCXkXKRZ77wP1GCB__XF4",
-   "orientation": null
+   "image": "xlife/xlife-50-image.gif",
+   "orientation": null,
+   "tao": 3072
   },
   {
    "id": "xlife-49",
@@ -56,8 +60,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
-   "orientation": null
+   "image": "xlife/xlife-49-image.gif",
+   "orientation": null,
+   "tao": 3245
   }
  ]
 }

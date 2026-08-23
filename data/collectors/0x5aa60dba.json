@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-08-16T13:09:26.000000Z",
  "last_collected": "2022-08-16T14:00:12.000Z",
+ "tao": 107433,
+ "tao_rate": 73.2,
  "collections": [
   {
    "slug": "geodetic-memory",
@@ -35,7 +37,8 @@
    "acquired": "2022-08-16T14:00:12.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 6164
   },
   {
    "id": "geodetic-moments-14",
@@ -46,7 +49,8 @@
    "acquired": "2022-08-16T13:09:26.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-14-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 101269
   }
  ]
 }

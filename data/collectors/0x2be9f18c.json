@@ -13,6 +13,8 @@
  },
  "first_collected": "2024-10-01T08:45:59.000000Z",
  "last_collected": "2025-05-16T15:38:11.000000Z",
+ "tao": 55396,
+ "tao_rate": 81.6,
  "collections": [
   {
    "slug": "xlife",
@@ -40,7 +42,8 @@
    "acquired": "2025-05-16T15:38:11.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 1946
   },
   {
    "id": "two-burdens-12",
@@ -51,7 +54,8 @@
    "acquired": "2024-10-01T08:45:59.000000Z",
    "unique": true,
    "image": "two-burdens/two-burdens-12-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 47669
   },
   {
    "id": "xlife-54",
@@ -61,8 +65,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/tHkX4zAvZzmRMAE7Z_0AM7GehRWDmf5gWw6xU9IBC_0",
-   "orientation": null
+   "image": "xlife/xlife-54-image.gif",
+   "orientation": null,
+   "tao": 2877
   },
   {
    "id": "xlife-52",
@@ -72,8 +77,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
-   "orientation": null
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2902
   }
  ]
 }

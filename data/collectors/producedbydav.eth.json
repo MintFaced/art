@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-07-16T05:07:21.000Z",
  "last_collected": "2025-09-08T05:30:23.000000Z",
+ "tao": 7761,
+ "tao_rate": 8.4,
  "collections": [
   {
    "slug": "geodetic-home",
@@ -40,7 +42,8 @@
    "acquired": "2025-09-08T05:30:23.000000Z",
    "unique": false,
    "image": "geodetic-home/geodetic-home-5-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 1465
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -51,7 +54,8 @@
    "acquired": "2022-07-16T05:07:21.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 6295
   },
   {
    "id": "we-are-the-line-8",

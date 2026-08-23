@@ -13,6 +13,8 @@
  },
  "first_collected": "2026-08-21T04:53:59.000000Z",
  "last_collected": "2026-08-21T04:53:59.000000Z",
+ "tao": 3431,
+ "tao_rate": 73.2,
  "collections": [
   {
    "slug": "pixelarcade",
@@ -35,7 +37,8 @@
    "acquired": "2026-08-21T04:53:59.000000Z",
    "unique": true,
    "image": "pixelarcade/pixelarcade-16-image.svg",
-   "orientation": null
+   "orientation": null,
+   "tao": 139
   },
   {
    "id": "xlife-49",
@@ -45,8 +48,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
-   "orientation": null
+   "image": "xlife/xlife-49-image.gif",
+   "orientation": null,
+   "tao": 3292
   }
  ]
 }

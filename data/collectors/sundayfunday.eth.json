@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-07-09T16:37:26.000Z",
  "last_collected": "2022-12-16T14:47:59.000Z",
+ "tao": 35955,
+ "tao_rate": 25.2,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -40,7 +42,8 @@
    "acquired": "2022-12-16T14:47:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5651
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -51,7 +54,8 @@
    "acquired": "2022-09-30T12:21:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5975
   },
   {
    "id": "seize-and-share-gm-518",
@@ -62,7 +66,8 @@
    "acquired": "2022-08-31T22:33:58.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-518-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6099
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -73,7 +78,8 @@
    "acquired": "2022-07-09T16:37:26.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 12646
   },
   {
    "id": "xlife-4",
@@ -83,8 +89,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/8pNQxc87a7x56FOwp3tQyoHdPRqIgdPXgbj1Lxg1u0Y",
-   "orientation": null
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null,
+   "tao": 5582
   }
  ]
 }

@@ -13,6 +13,8 @@
  },
  "first_collected": "2025-02-05T15:11:59.000000Z",
  "last_collected": "2025-02-09T00:42:47.000000Z",
+ "tao": 41240,
+ "tao_rate": 73.2,
  "collections": [
   {
    "slug": "geodetic-onchain",
@@ -35,7 +37,8 @@
    "acquired": "2025-02-09T00:42:47.000000Z",
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 2352
   },
   {
    "id": "patrimora-157",
@@ -46,7 +49,8 @@
    "acquired": "2025-02-05T15:11:59.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-157-image.png",
-   "orientation": null
+   "orientation": null,
+   "tao": 38887
   }
  ]
 }

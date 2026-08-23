@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-08-11T08:07:54.000000Z",
  "last_collected": "2022-08-11T08:09:54.000000Z",
+ "tao": 304886,
+ "tao_rate": 207,
  "collections": [
   {
    "slug": "geodetica",
@@ -30,7 +32,8 @@
    "acquired": "2022-08-11T08:09:54.000000Z",
    "unique": true,
    "image": "geodetica/geodetica-77-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 101628
   },
   {
    "id": "geodetica-98",
@@ -41,7 +44,8 @@
    "acquired": "2022-08-11T08:09:02.000000Z",
    "unique": true,
    "image": "geodetica/geodetica-98-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 101628
   },
   {
    "id": "geodetica-71",
@@ -52,7 +56,8 @@
    "acquired": "2022-08-11T08:07:54.000000Z",
    "unique": true,
    "image": "geodetica/geodetica-71-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 101628
   }
  ]
 }

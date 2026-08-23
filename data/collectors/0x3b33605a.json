@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-02-07T10:31:08.000000Z",
  "last_collected": "2022-03-02T09:06:25.000000Z",
+ "tao": 227191,
+ "tao_rate": 138,
  "collections": [
   {
    "slug": "geodetic-illusions",
@@ -35,7 +37,8 @@
    "acquired": "2022-03-02T09:06:25.000000Z",
    "unique": true,
    "image": "geodetic-illusions/geodetic-illusions-69-image.jpg",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 112804
   },
   {
    "id": "geodetic-moments-16",
@@ -46,7 +49,8 @@
    "acquired": "2022-02-07T10:31:08.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-16-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 114387
   }
  ]
 }

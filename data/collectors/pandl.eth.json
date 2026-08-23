@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-08-23T03:34:39.000Z",
  "last_collected": "2022-12-24T02:10:35.000Z",
+ "tao": 134939,
+ "tao_rate": 94.2,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -40,7 +42,8 @@
    "acquired": "2022-12-24T02:10:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5620
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -51,7 +54,8 @@
    "acquired": "2022-12-24T02:10:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5620
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -62,7 +66,8 @@
    "acquired": "2022-12-24T02:10:35.000Z",
    "unique": false,
    "image": "https://i2c.seadn.io/ethereum/0xe63f4e6ce4110a2fad3de9ed38e7ea5858eb953b/158dfec217f8bece24a6cb05f63974f3.gif",
-   "orientation": null
+   "orientation": null,
+   "tao": 5620
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -73,7 +78,8 @@
    "acquired": "2022-11-19T15:53:23.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5764
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -84,7 +90,8 @@
    "acquired": "2022-10-14T02:24:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5918
   },
   {
    "id": "geodetica-58",
@@ -95,7 +102,8 @@
    "acquired": "2022-08-23T03:34:39.000Z",
    "unique": true,
    "image": "geodetica/geodetica-58-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 100814
   },
   {
    "id": "xlife-3",
@@ -105,8 +113,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/rwo60iUk-cWvhsawfUE_iEpBktJ9lR4DESHhJqFfap4",
-   "orientation": null
+   "image": "xlife/xlife-3-image.gif",
+   "orientation": null,
+   "tao": 5582
   }
  ]
 }

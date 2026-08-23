@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-10-11T10:42:35.000Z",
  "last_collected": "2026-08-21T07:26:47.000000Z",
+ "tao": 136028,
+ "tao_rate": 90,
  "collections": [
   {
    "slug": "id-please",
@@ -50,7 +52,8 @@
    "acquired": "2026-08-21T07:26:47.000000Z",
    "unique": true,
    "image": "pixelarcade/pixelarcade-22-image.svg",
-   "orientation": null
+   "orientation": null,
+   "tao": 131
   },
   {
    "id": "id-please-362",
@@ -61,7 +64,8 @@
    "acquired": "2025-05-16T16:35:23.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 1946
   },
   {
    "id": "seize-and-share-griftercity-2687",
@@ -72,7 +76,8 @@
    "acquired": "2022-12-13T20:25:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2687-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5663
   },
   {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
@@ -83,7 +88,8 @@
    "acquired": "2022-10-11T10:42:35.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 5929
   },
   {
    "id": "xlife-51",
@@ -93,8 +99,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
-   "orientation": null
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 6074
   }
  ]
 }

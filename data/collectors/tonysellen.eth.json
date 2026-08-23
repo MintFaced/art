@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-05-27T10:31:48.000000Z",
  "last_collected": "2022-09-24T06:48:59.000Z",
+ "tao": 18813,
+ "tao_rate": 12.6,
  "collections": [
   {
    "slug": "2022-10k",
@@ -40,7 +42,8 @@
    "acquired": "2022-09-24T06:48:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6001
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -51,7 +54,8 @@
    "acquired": "2022-07-13T14:29:20.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 6306
   },
   {
    "id": "2022-10k-1",
@@ -62,7 +66,8 @@
    "acquired": "2022-05-27T10:31:48.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6504
   }
  ]
 }

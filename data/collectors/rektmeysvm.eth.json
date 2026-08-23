@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-06-06T01:54:25.000000Z",
  "last_collected": "2022-10-10T07:03:47.000Z",
+ "tao": 39685,
+ "tao_rate": 29.4,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -50,7 +52,8 @@
    "acquired": "2022-10-10T07:03:47.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 5934
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -61,7 +64,8 @@
    "acquired": "2022-09-30T08:54:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5975
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -72,7 +76,8 @@
    "acquired": "2022-09-25T08:45:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5996
   },
   {
    "id": "seize-and-share-gm-518",
@@ -83,7 +88,8 @@
    "acquired": "2022-09-01T22:03:42.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-518-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6095
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -94,7 +100,8 @@
    "acquired": "2022-07-11T08:11:39.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 6316
   },
   {
    "id": "2022-10k-1",
@@ -105,7 +112,8 @@
    "acquired": "2022-06-06T01:54:25.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6464
   },
   {
    "id": "xlife-52",
@@ -115,8 +123,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
-   "orientation": null
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2902
   }
  ]
 }

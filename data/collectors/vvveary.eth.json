@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-05-12T00:09:49.000000Z",
  "last_collected": "2023-10-13T00:50:35.000000Z",
+ "tao": 349090,
+ "tao_rate": 289.2,
  "collections": [
   {
    "slug": "xlife",
@@ -70,7 +72,8 @@
    "acquired": "2023-10-13T00:50:35.000000Z",
    "unique": true,
    "image": "geodetic-world/geodetic-world-61-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 72117
   },
   {
    "id": "roads-and-rivers-213",
@@ -81,7 +84,8 @@
    "acquired": "2023-07-05T12:33:11.000000Z",
    "unique": true,
    "image": "roads-and-rivers/roads-and-rivers-213-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 78984
   },
   {
    "id": "roads-or-rivers-the-journey",
@@ -92,7 +96,8 @@
    "acquired": "2023-07-04T03:44:35.000000Z",
    "unique": false,
    "image": "https://arweave.net/QPY1MVP9ji7xL4rYIrDMLLLfkv8es3CsBGvB4T6efjk",
-   "orientation": null
+   "orientation": null,
+   "tao": 4813
   },
   {
    "id": "roads-or-rivers-the-shortcut",
@@ -103,7 +108,8 @@
    "acquired": "2023-07-04T01:34:11.000000Z",
    "unique": false,
    "image": "https://arweave.net/Q8StNcW0Icr7_Ds4IB8S83_yt9KsIMq7UUTpmC43DKk",
-   "orientation": null
+   "orientation": null,
+   "tao": 4813
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -114,7 +120,8 @@
    "acquired": "2022-12-27T03:29:59.000000Z",
    "unique": false,
    "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
-   "orientation": null
+   "orientation": null,
+   "tao": 5607
   },
   {
    "id": "seize-and-share-anxn-3250",
@@ -125,7 +132,8 @@
    "acquired": "2022-12-24T05:38:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5619
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -136,7 +144,8 @@
    "acquired": "2022-12-20T00:32:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
-   "orientation": null
+   "orientation": null,
+   "tao": 5637
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -147,7 +156,8 @@
    "acquired": "2022-12-16T14:21:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5651
   },
   {
    "id": "seize-and-share-griftercity-2690",
@@ -158,7 +168,8 @@
    "acquired": "2022-12-13T15:05:23.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5664
   },
   {
    "id": "seize-and-share-trashyad-2592",
@@ -169,7 +180,8 @@
    "acquired": "2022-12-07T19:14:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5688
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -180,7 +192,8 @@
    "acquired": "2022-12-03T20:02:35.000Z",
    "unique": false,
    "image": "https://i2c.seadn.io/ethereum/0xe63f4e6ce4110a2fad3de9ed38e7ea5858eb953b/158dfec217f8bece24a6cb05f63974f3.gif",
-   "orientation": null
+   "orientation": null,
+   "tao": 5705
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -191,7 +204,8 @@
    "acquired": "2022-11-30T17:40:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5718
   },
   {
    "id": "seize-and-share-certificate-of-mint-1918",
@@ -202,7 +216,8 @@
    "acquired": "2022-10-13T23:43:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5918
   },
   {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
@@ -213,7 +228,8 @@
    "acquired": "2022-10-11T01:25:23.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 11862
   },
   {
    "id": "geodetic-onchain-3",
@@ -224,7 +240,8 @@
    "acquired": "2022-07-12T01:58:48.000000Z",
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6313
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -235,7 +252,8 @@
    "acquired": "2022-07-09T06:53:53.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 6336
   },
   {
    "id": "seize-and-share-seize-and-share-168",
@@ -246,7 +264,8 @@
    "acquired": "2022-06-18T03:40:24.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-seize-and-share-168-image.png",
-   "orientation": null
+   "orientation": null,
+   "tao": 6413
   },
   {
    "id": "seize-and-share-mint-face-360",
@@ -257,7 +276,8 @@
    "acquired": "2022-06-18T03:07:56.000Z",
    "unique": false,
    "image": "https://i2c.seadn.io/ethereum/0xe63f4e6ce4110a2fad3de9ed38e7ea5858eb953b/df274434a6beab6116e1f654fe415e01.png",
-   "orientation": null
+   "orientation": null,
+   "tao": 6413
   },
   {
    "id": "2022-10k-2",
@@ -268,7 +288,8 @@
    "acquired": "2022-05-12T00:09:49.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6569
   },
   {
    "id": "we-are-the-line-8",
@@ -311,8 +332,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/WP951pFEfzIblAjlY6as3IZ_0D0CToyCtjyCEXGkKd4",
-   "orientation": null
+   "image": "xlife/xlife-46-image.gif",
+   "orientation": null,
+   "tao": 3650
   },
   {
    "id": "xlife-43",
@@ -322,8 +344,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/jM7BaoyOj-uIqK4U2uQ51hObCrFpHHQ3PZXr1nZC1Uk",
-   "orientation": null
+   "image": "xlife/xlife-43-image.webp",
+   "orientation": null,
+   "tao": 4049
   },
   {
    "id": "xlife-35",
@@ -333,8 +356,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/7vhoGf4bUa6_jT-1GvR_N7htC2rB6Ju2oLTleq1cF4I",
-   "orientation": null
+   "image": "xlife/xlife-35-image.gif",
+   "orientation": null,
+   "tao": 4289
   },
   {
    "id": "xlife-31",
@@ -344,8 +368,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/97QOh-YClWqnIT7VJfgH2qMwYIlX68vLVTiC66i8fIo",
-   "orientation": null
+   "image": "xlife/xlife-31-image.gif",
+   "orientation": null,
+   "tao": 4757
   },
   {
    "id": "xlife-29",
@@ -355,8 +380,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/oAmu_eCuIsFJL6mHTHU6cyHBU0r2kJz7MSNSnJZu6cQ",
-   "orientation": null
+   "image": "xlife/xlife-29-image.gif",
+   "orientation": null,
+   "tao": 4975
   },
   {
    "id": "xlife-28",
@@ -366,8 +392,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/53g-5OG74Vcowpfc8qnohnm9d1U1IPLVyuJo8YCnAK8",
-   "orientation": null
+   "image": "xlife/xlife-28-image.gif",
+   "orientation": null,
+   "tao": 5057
   },
   {
    "id": "xlife-25",
@@ -377,8 +404,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/VESKKm5KSjxSRKxdz8m0cu7RLUPypchg_RF86vVQmlk",
-   "orientation": null
+   "image": "xlife/xlife-25-image.gif",
+   "orientation": null,
+   "tao": 5135
   },
   {
    "id": "xlife-23",
@@ -388,8 +416,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/ZNdBlBNLH--iEfo2UQyKDOuex6RN4-eLIhRXB3FU4mQ",
-   "orientation": null
+   "image": "xlife/xlife-23-image.gif",
+   "orientation": null,
+   "tao": 5198
   },
   {
    "id": "xlife-22",
@@ -399,8 +428,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/yNyTfl0rE6_TofpPOMnDnd7xy8kknM3tUXmdZlyBwA8",
-   "orientation": null
+   "image": "xlife/xlife-22-image.gif",
+   "orientation": null,
+   "tao": 5226
   },
   {
    "id": "xlife-20",
@@ -410,8 +440,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/GZpZpCi8Yw22E4-d4_0iZ2YjkftWaQIkpj6v6wuoxu4",
-   "orientation": null
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 5258
   },
   {
    "id": "xlife-18",
@@ -421,8 +452,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/ZLk90piDkUyL6m_9U053MllY9lIJBvJ3jwFvLQ3BGCw",
-   "orientation": null
+   "image": "xlife/xlife-18-image.gif",
+   "orientation": null,
+   "tao": 5282
   },
   {
    "id": "xlife-11",
@@ -432,8 +464,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/YCXprheaR7nZyd_eAPSA8PjPYiCw22dhlGH4afXkiqM",
-   "orientation": null
+   "image": "xlife/xlife-11-image.gif",
+   "orientation": null,
+   "tao": 5460
   },
   {
    "id": "xlife-5",
@@ -443,8 +476,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/7sDuy5opFMS9hvVI5BiUD-5v8-5EjzvYW9en62hKQ20",
-   "orientation": null
+   "image": "xlife/xlife-5-image.gif",
+   "orientation": null,
+   "tao": 11160
   },
   {
    "id": "xlife-4",
@@ -454,8 +488,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/8pNQxc87a7x56FOwp3tQyoHdPRqIgdPXgbj1Lxg1u0Y",
-   "orientation": null
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null,
+   "tao": 5582
   },
   {
    "id": "xlife-3",
@@ -465,8 +500,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/rwo60iUk-cWvhsawfUE_iEpBktJ9lR4DESHhJqFfap4",
-   "orientation": null
+   "image": "xlife/xlife-3-image.gif",
+   "orientation": null,
+   "tao": 5582
   },
   {
    "id": "xlife-2",
@@ -476,8 +512,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/7ZZBQlgnUkV-OXgxZMq0pss37osrbSlDHli00NTWWH4",
-   "orientation": null
+   "image": "xlife/xlife-2-image.gif",
+   "orientation": null,
+   "tao": 5582
   },
   {
    "id": "xlife-1",
@@ -487,8 +524,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/qPhfvNhRdZDqzohCZjQJjVNijShYMxvufOhmhck1Vxo",
-   "orientation": null
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5582
   },
   {
    "id": "xnouns-339",

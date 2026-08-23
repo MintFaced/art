@@ -15,6 +15,9 @@
     },
     "api/cron/owners.js": {
       "maxDuration": 300
+    },
+    "api/cron/tao.js": {
+      "maxDuration": 300
     }
   },
   "redirects": [
@@ -86,6 +89,10 @@
     {
       "path": "/api/cron/owners",
       "schedule": "0 21 * * *"
+    },
+    {
+      "path": "/api/cron/tao",
+      "schedule": "30 21 * * *"
     }
   ]
 }

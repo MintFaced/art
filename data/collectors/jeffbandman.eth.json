@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-05-09T23:25:25.000000Z",
  "last_collected": "2025-05-16T10:34:47.000000Z",
+ "tao": 11831,
+ "tao_rate": 12.6,
  "collections": [
   {
    "slug": "2022-10k",
@@ -40,7 +42,8 @@
    "acquired": "2025-05-16T10:34:47.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 1947
   },
   {
    "id": "2022-10k-2",
@@ -51,7 +54,8 @@
    "acquired": "2022-05-09T23:25:25.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6578
   },
   {
    "id": "xlife-49",
@@ -61,8 +65,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
-   "orientation": null
+   "image": "xlife/xlife-49-image.gif",
+   "orientation": null,
+   "tao": 3305
   }
  ]
 }

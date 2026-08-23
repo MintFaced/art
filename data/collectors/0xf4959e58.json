@@ -13,6 +13,8 @@
  },
  "first_collected": "2026-08-08T01:16:35.000Z",
  "last_collected": "2026-08-08T03:22:11.000Z",
+ "tao": 959,
+ "tao_rate": 102.6,
  "collections": [
   {
    "slug": "first-selfie",
@@ -40,7 +42,8 @@
    "acquired": "2026-08-08T03:22:11.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 317
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -51,7 +54,8 @@
    "acquired": "2026-08-08T01:16:35.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 191
   },
   {
    "id": "first-selfie-89",
@@ -61,8 +65,9 @@
    "genre": "Illustration",
    "acquired": null,
    "unique": true,
-   "image": "https://arweave.net/P1CFhuqkdnkEDY3u_vxXB7Nw0c9cbFz99qxjsPQO-d8",
-   "orientation": null
+   "image": "first-selfie/first-selfie-89-image.gif",
+   "orientation": null,
+   "tao": 450
   }
  ]
 }

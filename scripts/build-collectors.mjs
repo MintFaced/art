@@ -35,7 +35,10 @@ const collections = fs.readdirSync(path.join(ROOT, 'data/c'))
   .map((n) => load(`data/c/${n}`, null))
   .filter(Boolean);
 
-const d = deriveCollectors(collections, titleOf, privateList);
+// TAO is computed from ownership history by scripts/tao/build.mjs; this only
+// attaches it. If it has never been built the collectors still build fine.
+const tao = load('data/tao.json', null);
+const d = deriveCollectors(collections, titleOf, privateList, tao);
 
 if (DRY) {
   console.log(JSON.stringify(d.index.counts, null, 1));
@@ -43,7 +46,8 @@ if (DRY) {
   console.log('\ntop of the index:');
   for (const p of d.index.collectors.slice(0, 12)) {
     console.log(`  ${String(p.ens || p.display_name || p.address).slice(0, 30).padEnd(30)}`
-      + ` ${String(p.counts.works).padStart(3)} works ${String(p.counts.one_of_ones).padStart(2)} unique  /${p.slug}`);
+      + ` ${String(p.counts.works).padStart(3)} works ${String(p.counts.one_of_ones).padStart(2)} unique`
+      + ` ${String(p.tao || 0).padStart(9)} TAO  /${p.slug}`);
   }
 } else {
   fs.writeFileSync(path.join(ROOT, 'data/collectors.json'), JSON.stringify(d.index, null, 1) + '\n');

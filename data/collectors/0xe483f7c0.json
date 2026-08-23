@@ -13,6 +13,8 @@
  },
  "first_collected": "2023-08-19T06:38:11.000000Z",
  "last_collected": "2023-09-23T22:25:47.000000Z",
+ "tao": 80366,
+ "tao_rate": 73.2,
  "collections": [
   {
    "slug": "2022-10k",
@@ -35,7 +37,8 @@
    "acquired": "2023-09-23T22:25:47.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-3-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 4470
   },
   {
    "id": "roads-and-rivers-8",
@@ -46,7 +49,8 @@
    "acquired": "2023-08-19T06:38:11.000000Z",
    "unique": true,
    "image": "roads-and-rivers/roads-and-rivers-8-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 75896
   }
  ]
 }

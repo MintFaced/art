@@ -13,6 +13,8 @@
  },
  "first_collected": "2025-05-16T18:08:59.000000Z",
  "last_collected": "2025-07-02T07:24:47.000000Z",
+ "tao": 38539,
+ "tao_rate": 85.8,
  "collections": [
   {
    "slug": "xlife",
@@ -40,7 +42,8 @@
    "acquired": "2025-07-02T07:24:47.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-62-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 28766
   },
   {
    "id": "id-please-362",
@@ -51,7 +54,8 @@
    "acquired": "2025-05-16T18:08:59.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 1946
   },
   {
    "id": "xlife-51",
@@ -61,8 +65,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
-   "orientation": null
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 6074
   },
   {
    "id": "xlife-46",
@@ -72,8 +77,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/WP951pFEfzIblAjlY6as3IZ_0D0CToyCtjyCEXGkKd4",
-   "orientation": null
+   "image": "xlife/xlife-46-image.gif",
+   "orientation": null,
+   "tao": 1751
   }
  ]
 }

@@ -33,8 +33,11 @@ const shortOf = (a, n) => a.slice(0, 2 + n);
  * @param collections  array of parsed data/c/*.json records
  * @param titleOf      Map slug -> collection title
  * @param privateList  Set of lowercased addresses that render as "Private collector"
+ * @param tao          data/tao.json, or null. Attached, never derived here:
+ *                     TAO is computed from ownership history, which this
+ *                     function has no sight of.
  */
-export function deriveCollectors(collections, titleOf, privateList = new Set()) {
+export function deriveCollectors(collections, titleOf, privateList = new Set(), tao = null) {
   const people = new Map();
 
   const note = (addr, w) => {
@@ -79,6 +82,11 @@ export function deriveCollectors(collections, titleOf, privateList = new Set()) 
       editions: p.works.filter((w) => !w.unique).length,
       collections: p.collections.size,
     };
+    const t = tao && tao.wallets ? tao.wallets[p.address] : null;
+    p.tao = t ? t.tao : 0;
+    p.tao_rate = t ? t.rate : 0;
+    // what each work has contributed to their total, for the hover
+    if (t && t.works) for (const w of p.works) { const v = t.works[w.id]; if (v) w.tao = v; }
     p.private = privateList.has(p.address);
     // the threshold decides a page, never whether someone is counted
     p.has_page = !p.private && (p.counts.works >= MIN_WORKS || p.counts.one_of_ones >= 1);
@@ -115,6 +123,7 @@ export function deriveCollectors(collections, titleOf, privateList = new Set()) 
     address: p.address, ens: p.ens, display_name: p.display_name,
     slug: p.has_page ? p.slug : null, private: p.private, has_page: p.has_page,
     counts: p.counts, first_collected: p.first_collected, last_collected: p.last_collected,
+    tao: p.tao || 0, tao_rate: p.tao_rate || 0,
   });
   const collectionsOf = (p) => [...p.collections.entries()]
     .map(([slug, works]) => ({ slug, title: titleOf.get(slug) || slug, works }))
@@ -127,6 +136,7 @@ export function deriveCollectors(collections, titleOf, privateList = new Set()) 
       _note: 'Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.',
       generated: new Date().toISOString(),
       threshold: { min_works: MIN_WORKS, or_any_unique: true },
+      tao: tao ? { rates: tao.rates, generated: tao.generated, wallets: tao.counts.wallets } : null,
       counts: {
         collectors: all.length,
         with_page: paged.length,

@@ -13,6 +13,8 @@
  },
  "first_collected": "2025-02-05T07:59:35.000000Z",
  "last_collected": "2025-02-09T00:42:47.000000Z",
+ "tao": 47740,
+ "tao_rate": 81.6,
  "collections": [
   {
    "slug": "xlife",
@@ -40,7 +42,8 @@
    "acquired": "2025-02-09T00:42:47.000000Z",
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 2352
   },
   {
    "id": "patrimora-155",
@@ -51,7 +54,8 @@
    "acquired": "2025-02-05T07:59:35.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-155-image.png",
-   "orientation": null
+   "orientation": null,
+   "tao": 38908
   },
   {
    "id": "xlife-57",
@@ -61,8 +65,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/137Lpf8n6zH0rCqIBrPnAdl7kz-J7Sjot7ixMlaACH0",
-   "orientation": null
+   "image": "xlife/xlife-57-image.png",
+   "orientation": null,
+   "tao": 2580
   },
   {
    "id": "xlife-51",
@@ -72,8 +77,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
-   "orientation": null
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 3494
   }
  ]
 }

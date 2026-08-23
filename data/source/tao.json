@@ -1,0 +1,54 @@
+{
+ "_note": "TAO configuration. The engine reads this and nothing else about MintFace, so it can be lifted out whole. See docs/TAO.md.",
+ "version": 1,
+ "rates": {
+  "unique_per_day": 69,
+  "edition_copy_per_day": 4.2
+ },
+ "scope": {
+  "_note": "Canon and archive. XNouns and We are The Line are patron context, not MintFace art, so they never accrue. The vault is a holdings mirror, not a sale record.",
+  "exclude_collections": ["xnouns", "we-are-the-line", "the-vault"],
+  "chains": ["ethereum"]
+ },
+ "exclusions": {
+  "_note": "Addresses that hold art without being patrons of it. Mint-to-first-collector intervals accrue to no one because the mint source is the zero address, which is here.",
+  "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180": "mintface.eth",
+  "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7": "ryanj.eth",
+  "0x7110733ab02b2a18a947e3912bf54136fbced169": "mintfaced.eth",
+  "0x6e420b64bb329be84a6627c68a7bdff825139773": "mintestate.eth, the vault",
+  "0xcda72070e455bb31c7690a170224ce43623d0b6f": "Foundation escrow",
+  "0xa9b3b278b8d8492fc5f27b78ac6e26a88202a9a5": "PixelArcade custody contract",
+  "0x0000000000000000000000000000000000000000": "mint and burn",
+  "0x000000000000000000000000000000000000dead": "burn"
+ },
+ "marketplaces": {
+  "_note": "A transfer whose transaction touches one of these carried consideration. Maintain this list; an address missing here makes a sale look like a gift, which is the forgiving direction.",
+  "0x00000000006c3852cbef3e08e8df289169ede581": "Seaport 1.1",
+  "0x00000000000001ad428e4906ae43d8f9852d0dd6": "Seaport 1.4",
+  "0x00000000000000adc04c56bf30ac9d3c0aaf14dc": "Seaport 1.5",
+  "0x0000000000000068f116a894984e2db1123eb395": "Seaport 1.6",
+  "0x7be8076f4ea4a4ad08075c2508e481d6c946d12b": "Wyvern v2",
+  "0x7f268357a8c2552623316e2562d90e642bb538e5": "Wyvern v2.3",
+  "0x000000000000ad05ccc4f10045630fb830b95127": "Blur",
+  "0xb2ecfe4e4d61f8790bbb9de2d1259b9e2410cea5": "Blur v2",
+  "0x39da41747a83aee658334415666f3ef92dd0d541": "Blur pool",
+  "0x59728544b08ab483533076417fbbb2fd0b17ce3a": "LooksRare",
+  "0x0000000000e655fae4d56241588680f86e3b2377": "LooksRare v2",
+  "0x74312363e45dcaba76c59ec49a7aa8a65a67eed3": "X2Y2",
+  "0xcda72070e455bb31c7690a170224ce43623d0b6f": "Foundation market",
+  "0x9757f2d2b135150bbeb65308d4a91804107cd8d6": "Rarible exchange",
+  "0x8c9f364bf7a56ed058fc63ef81c6cf09c833e656": "SuperRare bazaar",
+  "0x65b49f7aee40347f5a90b714be4ef086f3fe5e2c": "SuperRare market",
+  "0xe468ce99444174bd3bbbed09209577d25d1ad673": "Zora asks",
+  "0x3a3548e060be10c2614d0a4cb0c03cc9093fd799": "Manifold"
+ },
+ "weth": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+ "per_token_contracts": {
+  "_note": "Multi-artist contracts. Their whole log is other people's work, so history is read one token at a time instead of swept.",
+  "0x495f947276749ce646f68ac8c248420045cb7b5e": "OpenSea Shared Storefront",
+  "0x33fd426905f149f8376e227d0c9d3340aad17af1": "The Memes by 6529",
+  "0x3b3ee1931dc30c1957379fac9aba94d1c48a5405": "Foundation shared",
+  "0xd07dc4262bcdbf85190c01c996b4c06a461d2430": "Rarible shared",
+  "0xa81f8083072f192948dcae38da5c0c6073da979c": "Minted, networked.art shared"
+ }
+}

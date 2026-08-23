@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-07-09T03:44:06.000Z",
  "last_collected": "2022-09-30T08:59:47.000Z",
+ "tao": 30607,
+ "tao_rate": 21,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -40,7 +42,8 @@
    "acquired": "2022-09-30T08:59:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 5975
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -51,7 +54,8 @@
    "acquired": "2022-09-27T02:43:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 11979
   },
   {
    "id": "geodetic-onchain-3",
@@ -62,7 +66,8 @@
    "acquired": "2022-07-12T21:21:48.000000Z",
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 6309
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -73,7 +78,8 @@
    "acquired": "2022-07-09T03:44:06.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 6342
   }
  ]
 }

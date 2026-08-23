@@ -13,6 +13,8 @@
  },
  "first_collected": "2022-07-12T04:42:36.000Z",
  "last_collected": "2025-05-16T10:34:47.000000Z",
+ "tao": 14511,
+ "tao_rate": 12.6,
  "collections": [
   {
    "slug": "geodetic-memory",
@@ -40,7 +42,8 @@
    "acquired": "2025-05-16T10:34:47.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 1947
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -51,7 +54,8 @@
    "acquired": "2022-07-12T04:42:36.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
+   "orientation": "landscape",
+   "tao": 6312
   },
   {
    "id": "xlife-55",
@@ -61,8 +65,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/DTEPmt2Oph7mGZo5YjALUfOUKKwF_Vt8PlDdlpolr5I",
-   "orientation": null
+   "image": "xlife/xlife-55-image.gif",
+   "orientation": null,
+   "tao": 2662
   }
  ]
 }

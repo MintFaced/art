@@ -13,6 +13,8 @@
  },
  "first_collected": "2026-08-21T05:11:23.000000Z",
  "last_collected": "2026-08-21T05:11:23.000000Z",
+ "tao": 6213,
+ "tao_rate": 77.4,
  "collections": [
   {
    "slug": "artificial-flowers",
@@ -35,7 +37,8 @@
    "acquired": "2026-08-21T05:11:23.000000Z",
    "unique": true,
    "image": "artificial-flowers/artificial-flowers-18-display.webp",
-   "orientation": "square"
+   "orientation": "square",
+   "tao": 138
   },
   {
    "id": "xlife-51",
@@ -45,8 +48,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
-   "orientation": null
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 6074
   }
  ]
 }

@@ -13,6 +13,8 @@
  },
  "first_collected": "2026-03-08T21:06:11.000000Z",
  "last_collected": "2026-05-14T20:56:11.000000Z",
+ "tao": 27271,
+ "tao_rate": 146.4,
  "collections": [
   {
    "slug": "patrimora",
@@ -40,7 +42,8 @@
    "acquired": "2026-05-14T20:56:11.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 875
   },
   {
    "id": "patrimora-180",
@@ -51,7 +54,8 @@
    "acquired": "2026-03-08T21:06:11.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-180-image.png",
-   "orientation": null
+   "orientation": null,
+   "tao": 11546
   },
   {
    "id": "patrimora-181",
@@ -62,7 +66,8 @@
    "acquired": "2026-03-08T21:06:11.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-181-image.png",
-   "orientation": null
+   "orientation": null,
+   "tao": 11546
   },
   {
    "id": "xlife-49",
@@ -72,8 +77,9 @@
    "genre": null,
    "acquired": null,
    "unique": false,
-   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
-   "orientation": null
+   "image": "xlife/xlife-49-image.gif",
+   "orientation": null,
+   "tao": 3302
   }
  ]
 }
