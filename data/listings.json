@@ -1,45 +1,20 @@
 {
- "_note": "Live listing prices read from chain. Written by scripts/sync-listings.mjs; the site prefers these over the catalogue figure. Foundation only ... OpenSea listings live in an off-chain order book and need an API key.",
- "generated": "2026-08-23T06:44:48.936Z",
+ "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
+ "generated": "2026-08-23T20:03:44.975Z",
  "sources": [
   "foundation",
   "opensea"
  ],
  "counts": {
-  "checked": 1390,
+  "checked": 1394,
   "owner_unresolved": 60,
   "escrowed": 30,
-  "priced": 8,
+  "priced": 76,
   "auction": 21,
-  "errored": 1,
-  "opensea": 69,
+  "opensea": 67,
   "carried_forward": 1
  },
  "works": {
-  "foundation-91080": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 1,
-   "price_wei": "1000000000000000000",
-   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
-   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/91080"
-  },
-  "foundation-109050": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 1,
-   "price_wei": "1000000000000000000",
-   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
-   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/109050"
-  },
-  "foundation-132520": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 2,
-   "price_wei": "2000000000000000000",
-   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
-   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/132520"
-  },
   "geodetic-world-2": {
    "venue": "foundation",
    "kind": "buy-now",
@@ -47,44 +22,6 @@
    "price_wei": "50000000000000000",
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/2"
-  },
-  "seize-and-share-mint-face-319": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 0.5,
-   "price_wei": "500000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/319"
-  },
-  "seize-and-share-mint-face-321": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 0.5,
-   "price_wei": "500000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/321"
-  },
-  "seize-and-share-mint-face-365": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 0.5,
-   "price_wei": "500000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/365"
-  },
-  "seize-and-share-gm-518": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/518"
-  },
-  "10k-project": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "196544",
-   "url": "https://foundation.app/mint/eth/0xe5eb0070a13f868a72996a568e12d085413445b8/1"
   },
   "geodetic-world-3": {
    "venue": "foundation",
@@ -200,11 +137,73 @@
    "auction_id": "359088",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/82"
   },
+  "foundation-91080": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 1,
+   "price_wei": "1000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/91080"
+  },
+  "foundation-109050": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 1,
+   "price_wei": "1000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/109050"
+  },
+  "foundation-132520": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 2,
+   "price_wei": "2000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/132520"
+  },
+  "10k-project": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "196544",
+   "url": "https://foundation.app/mint/eth/0xe5eb0070a13f868a72996a568e12d085413445b8/1"
+  },
+  "seize-and-share-mint-face-319": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/319"
+  },
+  "seize-and-share-mint-face-321": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/321"
+  },
+  "seize-and-share-mint-face-365": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/365"
+  },
   "seize-and-share-aicopy-409": {
    "venue": "foundation",
    "kind": "auction",
    "auction_id": "232896",
    "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/409"
+  },
+  "seize-and-share-gm-518": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/518"
   },
   "artificial-flowers-21": {
    "venue": "opensea",
@@ -476,96 +475,6 @@
    "expires": "2027-02-19T06:30:07.000Z",
    "url": "https://opensea.io/item/ethereum/0xf6f44f3dde8ea78a3f49f78eeca339ffa17b2933/15"
   },
-  "panoptic-9": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/9"
-  },
-  "panoptic-7": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/7"
-  },
-  "panoptic-8": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/8"
-  },
-  "panoptic-6": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/6"
-  },
-  "panoptic-5": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/5"
-  },
-  "panoptic-4": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/4"
-  },
-  "panoptic-3": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/3"
-  },
-  "panoptic-2": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/2"
-  },
-  "panoptic-1": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.05,
-   "price_wei": "50000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:29:25.000Z",
-   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
-  },
-  "visual-language-9": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.0306,
-   "price_wei": "30600000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2027-02-19T06:31:47.000Z",
-   "url": "https://opensea.io/item/ethereum/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/9"
-  },
   "visual-language-8": {
    "venue": "opensea",
    "kind": "buy-now",
@@ -826,6 +735,78 @@
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "expires": "2027-02-19T06:31:47.000Z",
    "url": "https://opensea.io/item/ethereum/0x75e7c7c2e507e6d95c20bcde14135035e7e7a88a/1"
+  },
+  "panoptic-9": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/9"
+  },
+  "panoptic-7": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/7"
+  },
+  "panoptic-8": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/8"
+  },
+  "panoptic-6": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/6"
+  },
+  "panoptic-4": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/4"
+  },
+  "panoptic-3": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/3"
+  },
+  "panoptic-2": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/2"
+  },
+  "panoptic-1": {
+   "venue": "opensea",
+   "kind": "buy-now",
+   "price_eth": 0.05,
+   "price_wei": "50000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "expires": "2027-02-19T06:29:25.000Z",
+   "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
   },
   "seize-and-share-accessdenied-mp4-2882": {
    "venue": "foundation",
