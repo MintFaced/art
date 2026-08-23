@@ -186,6 +186,10 @@ if (!DRY) {
     };
     const at = idx.collections.findIndex((c) => c.slug === col.slug);
     if (at >= 0) idx.collections[at] = entry; else idx.collections.push(entry);
+    // the work route reads this map and nothing else builds it for a tracked
+    // collection, so without these lines every token here answers 404
+    idx.work_index = idx.work_index || {};
+    for (const w of col.works || []) if (w.id) idx.work_index[w.id] = col.slug;
   }
   fs.writeFileSync(p, JSON.stringify(idx, null, 1) + (raw.endsWith('\n') ? '\n' : ''));
 }

@@ -2,6 +2,7 @@
 // Edition sets collapse to one work record plus a holder list.
 import fs from 'fs';
 const ROOT = new URL('../../', import.meta.url).pathname;
+import { adoptTracked } from './adopt-tracked.mjs';
 const cat = JSON.parse(fs.readFileSync(ROOT + 'catalog.json', 'utf8'));
 
 const DATA = ROOT + 'data';
@@ -240,6 +241,11 @@ for (const f of files) {
 }
 for (const f of files) fs.writeFileSync(`${DATA}/c/${f.slug}.json`, JSON.stringify(f, null, 1));
 console.log('vault records linked to work pages:', linkedVault);
+
+// collections that live only in data/c would otherwise vanish here, since
+// this index is built from catalog.json and they are not in it
+const adopted = adoptTracked(index, ROOT, new Set(cat.collections.map((c) => c.slug)));
+for (const a of adopted) console.log(`adopted ${a.slug}: ${a.works} works indexed (${a.how})`);
 
 fs.writeFileSync(`${DATA}/index.json`, JSON.stringify(index, null, 1));
 const size = (p) => (fs.statSync(p).size / 1024).toFixed(0) + ' KB';
