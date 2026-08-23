@@ -1,6 +1,6 @@
 {
   "_note": "Live sale state, written by the Vercel functions in api/ and committed back here. The static catalog is the record of the work; this is the record of what has happened to it since the last catalog rebuild.",
-  "updated": "2026-08-23T19:00:34.555Z",
+  "updated": "2026-08-23T19:21:21.286Z",
   "works": {
     "two-burdens-9": {
       "status": "available",
@@ -43,6 +43,28 @@
       "pending": null,
       "updated": "2026-08-23T19:00:34.555Z",
       "note": "checkout hold timed out"
+    },
+    "creativek": {
+      "status": "acquired",
+      "pending": null,
+      "note": null,
+      "what": "digital",
+      "sold_out": true,
+      "paid": {
+        "amount": 86.25,
+        "currency": "NZD",
+        "session": "cs_live_b1XGhoRRdWVi1HQRGctAozlrIvlkvRi6gSyW6SGOVu0P62zExmWW7h5vFh",
+        "at": "2026-08-23T19:21:21.155Z"
+      },
+      "collector": {
+        "email": "sean@creativek.co.nz",
+        "display_name": null,
+        "ens": null,
+        "note": null,
+        "acquired": "2026-08-23T19:21:21.155Z"
+      },
+      "token_transfer": "pending",
+      "updated": "2026-08-23T19:21:21.286Z"
     }
   }
 }
