@@ -1,18 +1,16 @@
 {
- "bucket_objects": 2117,
- "bucket_bytes": 11029965110,
+ "bucket_objects": 2566,
+ "bucket_bytes": 11586663236,
  "works_considered": 2115,
- "patched": 881,
- "with_display_copy": 537,
+ "patched": 889,
+ "with_display_copy": 536,
  "display_only": 0,
  "shared_with_edition_sibling": 1184,
- "untouched": 50,
+ "untouched": 42,
  "untouched_by_collection": {
   "roads-and-rivers": 6,
-  "geodetic-onchain": 2,
   "frogdna": 1,
-  "genesis": 4,
-  "seize-and-share": 5,
+  "seize-and-share": 3,
   "the-vault": 32
  },
  "untouched_sample": [
@@ -41,40 +39,12 @@
    "src": "null"
   },
   {
-   "id": "geodetic-onchain-2",
-   "src": "data:image/svg+xml;utf8,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfil"
-  },
-  {
-   "id": "geodetic-onchain-1",
-   "src": "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfil"
-  },
-  {
    "id": "frogdna-1",
    "src": "/frogdna-by-mintface.jpg"
   },
   {
-   "id": "foundation-132520",
-   "src": "https://dweb.link/ipfs/QmbvdhjSng3pLcKY3J1Em5WYynPwyGzWyXF2Qd5cAnLPLu/nft.jpg"
-  },
-  {
-   "id": "foundation-109050",
-   "src": "https://dweb.link/ipfs/QmaYxAv2NJ5KEFZRYcgChgShj3bZDZjB1Acg92Kx3zc7s6/nft.mp4"
-  },
-  {
-   "id": "foundation-132520",
-   "src": "https://dweb.link/ipfs/QmbvdhjSng3pLcKY3J1Em5WYynPwyGzWyXF2Qd5cAnLPLu/nft.jpg"
-  },
-  {
-   "id": "foundation-109050",
-   "src": "https://dweb.link/ipfs/QmaYxAv2NJ5KEFZRYcgChgShj3bZDZjB1Acg92Kx3zc7s6/nft.mp4"
-  },
-  {
    "id": "seize-and-share-seize-and-share-175",
    "src": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4"
-  },
-  {
-   "id": "seize-and-share-surreal-dreamooor-2430",
-   "src": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk"
   },
   {
    "id": "seize-and-share-mint-face-360",
@@ -85,10 +55,6 @@
    "src": "https://arweave.net/Y5mnEOmRIu8cz3WSrnBG67DgvhufI5PTKvmUN-G3z4U"
   },
   {
-   "id": "seize-and-share-untitled-3144",
-   "src": "null"
-  },
-  {
    "id": "the-vault-x",
    "src": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk"
   },
@@ -135,8 +101,61 @@
   {
    "id": "the-vault-x",
    "src": "https://arweave.net/Y5mnEOmRIu8cz3WSrnBG67DgvhufI5PTKvmUN-G3z4U"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://arweave.net/DoizM2BPAnf5x5__H1pl1v3zJPDl--VKvoyR3hKDAOg"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://arweave.net/DoizM2BPAnf5x5__H1pl1v3zJPDl--VKvoyR3hKDAOg"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://arweave.net/DoizM2BPAnf5x5__H1pl1v3zJPDl--VKvoyR3hKDAOg"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://lh3.googleusercontent.com/aDedgrrSlB2KEpBxnXCNb657lDRp7tPQWFkdGazzdLFBgMfQ0E-YOvER"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://i.seadn.io/gae/YNJWf0EDKP4pqIa8jIRSmFO7GMls684Clnk3NFKzp-w-7wiwdp91x1XgNc_DOi6kV6B"
+  },
+  {
+   "id": "the-vault-x",
+   "src": "https://i.seadn.io/gae/zwAJtFLrmajA_oUDqTV5zqe1pQS6raa6CXuD9UrRVkJqAZNSFfGM6OdzDe8Xign8ZCy"
   }
  ],
- "rejected": 0,
- "rejected_detail": []
+ "rejected": 4,
+ "rejected_detail": [
+  {
+   "id": "visual-language-10",
+   "key": "visual-language/visual-language-10-display.webp",
+   "why": "fetch failed"
+  },
+  {
+   "id": "seize-and-share-seize-and-share-175",
+   "key": "seize-and-share/seize-and-share-seize-and-share-175-image.avif",
+   "why": "only 462 bytes"
+  },
+  {
+   "id": "seize-and-share-mint-face-360",
+   "key": "seize-and-share/seize-and-share-mint-face-360-image.avif",
+   "why": "only 462 bytes"
+  },
+  {
+   "id": "seize-and-share-seize-and-share-141",
+   "key": "seize-and-share/seize-and-share-seize-and-share-141-image.avif",
+   "why": "only 468 bytes"
+  }
+ ]
 }
