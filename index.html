@@ -116,6 +116,26 @@
 .studies .card .s{display:none}
 .studies .card .m{font-size:9px;gap:7px}
 
+/* ---------- folded groups ----------
+   Studies, Features, the Vault and the Archive open as a line rather than a
+   wall. The name is the control, in the same small-caps register the filter
+   rows and the work-page tabs use, so it needs no chevron to say it is one.
+   Nothing is remembered between visits: the page always opens folded. */
+.fold{border-top:1px solid var(--rule);padding:0}
+.fold-head{
+  display:flex;align-items:baseline;gap:10px;width:100%;
+  background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;
+  font-family:var(--font-sans);font-weight:500;font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.fold-head:hover,.fold-head:focus-visible{color:var(--ink)}
+.fold-head .nm{border-bottom:1px solid transparent;padding-bottom:2px}
+.fold-head:hover .nm,.fold-head:focus-visible .nm{border-bottom-color:var(--ink)}
+.fold-head .n{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--faint);font-variant-numeric:tabular-nums}
+.fold-head[aria-expanded="true"]{color:var(--ink)}
+.fold-body[hidden]{display:none}
+.fold-body{padding-bottom:34px}
+
 .feature .cards{grid-template-columns:repeat(2,1fr);gap:var(--gap);max-width:var(--measure3)}
 .feature .card .t{font-size:26px;margin-top:14px}
 .feature .card .s{font-size:15px}
@@ -352,19 +372,34 @@ async function hero(home, idx) {
     const section = (g) => {
       const annex = g.id === 'archive';
       const setLink = g.id === 'geodetic' ? '<a class="smallcaps" href="/geodetic">The set as one page</a>' : '';
-      // the vault is a place, so it shows what is in it rather than a card about it
-      if (g.id === 'vault') {
-        return `<section class="group vault" id="vaultSection">
-          <h2>${e(g.title)}<a class="smallcaps" href="/vault">Everything held</a></h2>
-          <div class="cards" id="vaultCards"></div>
-        </section>`;
-      }
+      // the contextual groups open as a line and expand when asked. The living
+      // edge and the canon keep their space; these promise their size instead.
+      const FOLDS = { studies: true, feature: true, vault: true, archive: true };
       const cls = g.id === 'studies' ? 'studies' : g.id === 'feature' ? 'feature' : (annex ? 'annex' : '');
+
+      if (g.id === 'vault') {
+        // the vault's own count, not the number of cards previewed inside it
+        const held = (g.collections[0] && g.collections[0].counts
+          && (g.collections[0].counts.works || g.collections[0].counts.unique_works)) || 0;
+        const body = `<div class="cards" id="vaultCards"></div>
+          <div class="rows-more"><a class="smallcaps" href="/vault">Everything held</a></div>`;
+        return foldable(g, held, 'group vault', body, 'vaultSection');
+      }
+      const body = `<div class="cards">${g.collections.map((c) => MF.collectionCard(c)).join('')}</div>`;
+      if (FOLDS[g.id]) return foldable(g, g.collections.length, `group ${cls}`, body);
       return `<section class="group ${cls}">
         <h2>${e(g.title)}${setLink}</h2>
-        <div class="cards">${g.collections.map((c) => MF.collectionCard(c)).join('')}</div>
+        ${body}
       </section>`;
     };
+    // the count is the point of a folded row: the name promises something
+    const foldable = (g, count, cls, body, id) => `<section class="${cls} fold"${id ? ` id="${id}"` : ''}>
+      <button type="button" class="fold-head" aria-expanded="false" data-fold="${e(g.id)}">
+        <span class="nm">${e(g.title)}</span><span class="n">&middot; ${count}</span>
+      </button>
+      <div class="fold-body" id="fold-${e(g.id)}" hidden>${body}</div>
+    </section>`;
+
     const pick = (id) => groups.find((g) => g.id === id);
     const core = pick('core');
     const geodetic = pick('geodetic');
@@ -397,6 +432,14 @@ async function hero(home, idx) {
         ${geodetic ? section(geodetic) : ''}
         ${rest.map(section).join('')}
       </div>`);
+
+    document.querySelectorAll('.fold-head').forEach((b) => b.addEventListener('click', () => {
+      const body = document.getElementById(`fold-${b.dataset.fold}`);
+      const open = b.getAttribute('aria-expanded') === 'true';
+      b.setAttribute('aria-expanded', String(!open));
+      body.hidden = open;
+      if (!open) MF.progress.watch(body);
+    }));
 
     await hero(home, idx);
     await fillRecent();
