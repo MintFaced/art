@@ -13,8 +13,8 @@
  },
  "first_collected": "2025-02-05T15:11:59.000000Z",
  "last_collected": "2026-08-23",
- "tao": 41240,
- "tao_rate": 73.2,
+ "tao": 41249,
+ "tao_rate": 142.2,
  "collections": [
   {
    "slug": "geodetic-moments",
@@ -42,7 +42,8 @@
    "acquired": "2026-08-23",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-40-display.webp",
-   "orientation": null
+   "orientation": null,
+   "tao": 4
   },
   {
    "id": "geodetic-onchain-4",
@@ -54,7 +55,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null,
-   "tao": 2352
+   "tao": 2353
   },
   {
    "id": "patrimora-157",
@@ -66,7 +67,7 @@
    "unique": true,
    "image": "patrimora/patrimora-157-image.png",
    "orientation": null,
-   "tao": 38887
+   "tao": 38891
   }
  ]
 }

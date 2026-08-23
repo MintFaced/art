@@ -12,19 +12,15 @@
  },
  "notes": "Chain shows 40 tokens named \"Roads and Rivers #N\" (1/1s) and 168 edition tokens (156 Traffic, 12 Rivers End); 8 tokens burned. Seed said 36 x 1/1 + 162 editions. Two contracts: the dedicated ERC-721 (0x18bd004e…) holding the 1/1s plus the Traffic and Rivers End editions, and a separate ERC-1155 (0x4a9a1087…) of 19 editions, 1,796 items, 451 holders, listed on OpenSea as \"Roads or Rivers\" — the 1155 contract carries no name on chain. Only one edition name maps to a 1/1 (The Ford / \"Roads and Rivers #26 Ford\"); the other 18 stand alone. The Line is 1,259 of the 1,796 items.",
  "counts": {
-  "works": 2012,
-  "burned": 25,
-  "acquired": 1577,
-  "available": 216,
-  "vaulted": 194,
-  "series": {
-   "one_of_ones": 40,
-   "traffic_editions": 156,
-   "rivers_end_editions": 12,
-   "ath_world": 2,
-   "no_metadata_burned": 6,
-   "roads_or_rivers_editions": 1796
-  }
+  "works": 69,
+  "acquired": 22,
+  "available": 33,
+  "vaulted": 3,
+  "burned": 8,
+  "sold_out": 3,
+  "editions_minted": 1964,
+  "edition_works": 29,
+  "unique_works": 40
  },
  "contracts": [
   {

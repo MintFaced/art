@@ -106,8 +106,8 @@
    "sold_out": false,
    "counts": {
     "works": 64,
-    "available": 63,
-    "acquired": 1,
+    "available": 50,
+    "acquired": 14,
     "unique_works": 64
    },
    "cover": {
@@ -149,8 +149,8 @@
    "sold_out": false,
    "counts": {
     "works": 22,
-    "available": 11,
-    "acquired": 9,
+    "available": 8,
+    "acquired": 12,
     "vaulted": 2,
     "unique_works": 22
    },
@@ -195,8 +195,8 @@
    "counts": {
     "works": 181,
     "vaulted": 48,
-    "acquired": 121,
-    "available": 12,
+    "acquired": 123,
+    "available": 10,
     "unique_works": 181
    },
    "cover": {
@@ -236,9 +236,9 @@
    "sold_out": false,
    "counts": {
     "works": 36,
-    "acquired": 17,
+    "acquired": 20,
     "vaulted": 4,
-    "available": 15,
+    "available": 12,
     "unique_works": 36
    },
    "cover": {
@@ -283,8 +283,8 @@
    "counts": {
     "works": 18,
     "vaulted": 4,
-    "available": 12,
-    "acquired": 2,
+    "available": 11,
+    "acquired": 3,
     "unique_works": 18
    },
    "cover": {
@@ -328,10 +328,11 @@
    "sold_out": false,
    "counts": {
     "works": 69,
-    "acquired": 25,
+    "acquired": 22,
     "available": 33,
     "vaulted": 3,
     "burned": 8,
+    "sold_out": 3,
     "editions_minted": 1964,
     "edition_works": 29,
     "unique_works": 40
@@ -376,8 +377,8 @@
    "sold_out": false,
    "counts": {
     "works": 95,
-    "available": 68,
-    "acquired": 27,
+    "available": 59,
+    "acquired": 36,
     "unique_works": 95
    },
    "cover": {
@@ -420,9 +421,9 @@
    "sold_out": true,
    "counts": {
     "works": 100,
-    "acquired": 80,
+    "acquired": 81,
     "vaulted": 7,
-    "available": 13,
+    "available": 12,
     "unique_works": 100
    },
    "cover": {
@@ -465,9 +466,9 @@
    "sold_out": false,
    "counts": {
     "works": 69,
-    "available": 60,
+    "available": 59,
     "vaulted": 5,
-    "acquired": 4,
+    "acquired": 5,
     "unique_works": 69
    },
    "cover": {
@@ -507,9 +508,9 @@
    "sold_out": true,
    "counts": {
     "works": 100,
-    "acquired": 53,
+    "acquired": 54,
     "vaulted": 10,
-    "available": 36,
+    "available": 35,
     "burned": 1,
     "unique_works": 99
    },
@@ -549,10 +550,9 @@
    "sold_out": false,
    "counts": {
     "works": 1,
-    "available": 0,
+    "sold_out": 1,
     "editions_minted": 832,
-    "edition_works": 1,
-    "sold_out": 1
+    "edition_works": 1
    },
    "cover": {
     "id": "geodetic-memory-geodetic-memory",

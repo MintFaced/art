@@ -103,6 +103,14 @@ details summary:hover{color:var(--ink)}
 .market-row svg{width:16px;height:16px;flex:none;fill:currentColor}
 .onchain{display:flex;flex-direction:column;gap:3px;margin-top:14px;padding:12px 14px;border:1px solid var(--rule);text-decoration:none;transition:border-color .18s ease}
 .onchain:hover,.onchain:focus-visible{border-color:var(--ink)}
+/* when the listing leads it takes the emphasis the acquire button usually has,
+   and the acquire button steps back to being the second way in */
+.onchain.lead{margin-top:0;background:var(--ink);border-color:var(--ink)}
+.onchain.lead .w{color:var(--paper)}
+.onchain.lead .s{color:rgba(250,249,246,.72)}
+.onchain.lead:hover{background:#2c2924}
+.btn.quiet{margin-top:10px;background:transparent;color:var(--ink);border:1px solid var(--rule)}
+.btn.quiet:hover{background:transparent;border-color:var(--ink)}
 .onchain .w{font-family:var(--font-sans);font-weight:500;font-size:12.5px;letter-spacing:.02em;color:var(--ink)}
 .onchain .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .market-row .lbl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:currentColor}
@@ -499,17 +507,30 @@ function onchainBuy(work) {
       <span class="w">At auction</span><span class="s">Bid in your own wallet</span></a>`;
   }
   if (l.kind !== 'buy-now' || !(l.price_eth > 0)) return '';
-  return `<a class="onchain" href="${e(l.url)}" target="_blank" rel="noopener">
-    <span class="w">Buy on chain ... ${e(String(l.price_eth))} ETH</span>
-    <span class="s">Fills the listing from your wallet</span></a>`;
+  /* A live listing settles the token in the same transaction as the payment,
+     so there is nothing to wait for and nobody to trust with the wait. That
+     makes it the better digital route, and it leads. */
+  return `<a class="onchain lead" href="${e(l.url)}" target="_blank" rel="noopener">
+    <span class="w">Buy now ... ${e(String(l.price_eth))} ETH</span>
+    <span class="s">Instant transfer, from your wallet</span></a>`;
 }
+// the on-chain route leads only when it is genuinely instant
+const instant = (work) => {
+  const l = work.listing;
+  return Boolean(l && l.kind === 'buy-now' && l.price_eth > 0
+    && String(l.venue || '').toLowerCase() !== 'foundation');
+};
 
 function actionBlock(work, collection) {
   const s = work.status;
   const hasPrice = optionsFor(work, collection).length > 0;
 
   if (s === 'available') {
-    return `<div class="action"><button class="btn" id="acquire">${hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork'}</button>${onchainBuy(work)}</div>`;
+    // a listed work leads with the listing; everything else leads with the site
+    const buy = onchainBuy(work);
+    const site = `<button class="${instant(work) ? 'btn quiet' : 'btn'}" id="acquire">${
+      instant(work) ? 'Other ways to acquire' : (hasPrice ? 'Acquire this artwork' : 'Enquire about this artwork')}</button>`;
+    return `<div class="action">${instant(work) ? buy + site : site + buy}</div>`;
   }
   // The painting has gone but editions of the digital work remain. Who has it
   // is already said under the title, so it is not said twice here.
