@@ -41,24 +41,47 @@ async function ens(q) {
   return null;
 }
 
-const load = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
+const load = (p, fallback) => {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8')); }
+  catch (e) { if (fallback !== undefined) return fallback; throw e; }
+};
 const reg = load('data/collectors.json');
 
-// ---- 1. the names Ryan already wrote down, resolved forward
-const overlay = load('data/source/overlay.json').works || {};
+/* ---- 1. the names Ryan has written down, resolved forward.
+   Two places carry them: the overlay, which names a collector against a work,
+   and data/source/collector-names.json, which names a wallet directly. The
+   second exists because ryanog, sailoulau and gissie hold across five or six
+   collections each and none of them publishes a reverse record ... naming them
+   one work at a time would have been the wrong shape for the fact. */
+const overlay = load('data/source/overlay.json', { works: {} }).works || {};
 const written = new Set();
 for (const v of Object.values(overlay)) {
   for (const n of [v.collector_display_name, (v.physical || {}).collector]) {
     if (typeof n === 'string' && /\.eth$/i.test(n.trim())) written.add(n.trim().toLowerCase());
   }
 }
+const declared = load('data/source/collector-names.json', { names: {} }).names || {};
+for (const n of Object.values(declared)) if (/\.eth$/i.test(String(n))) written.add(String(n).trim().toLowerCase());
+
 const byName = new Map();
+let refused = 0;
 for (const n of written) {
   const j = await ens(n);
   await sleep(260);
-  if (j && j.address) byName.set(String(j.address).toLowerCase(), n);
+  if (!j || !j.address) continue;
+  const landed = String(j.address).toLowerCase();
+  /* If a name was declared against a particular wallet, it is only accepted
+     when it still resolves there. A name that has been sold or transferred
+     would otherwise relabel a stranger with someone else's identity. */
+  const claimed = Object.entries(declared).find(([, v]) => String(v).toLowerCase() === n);
+  if (claimed && claimed[0].toLowerCase() !== landed) {
+    console.log(`  refused ${n}: declared for ${claimed[0].slice(0, 10)} but resolves to ${landed.slice(0, 10)}`);
+    refused++;
+    continue;
+  }
+  byName.set(landed, n);
 }
-console.log(`overlay names resolved forward: ${byName.size} of ${written.size}`);
+console.log(`names resolved forward: ${byName.size} of ${written.size}${refused ? `, ${refused} refused` : ''}`);
 
 // ---- 2. the addresses in the register with no name, asked directly
 const unnamed = reg.collectors.filter((c) => !c.ens && !c.display_name).map((c) => c.address);

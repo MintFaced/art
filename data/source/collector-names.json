@@ -1,0 +1,8 @@
+{
+ "_note": "Collectors whose name the chain will not tell us. A wallet with no reverse record is invisible to any address-to-name lookup, however many times it is asked ... the name is only knowable from the other end. These are resolved forward on every run and only used when the name actually lands on the address recorded here, so a typo or a transferred name fails closed rather than mislabelling someone.",
+ "names": {
+  "0xa1F05dbe26cDC2EDe4f410a5C54fE6473B5D7071": "ryanog.eth",
+  "0xdE58879DE5cA41367a5093dEE41F622C167b94B4": "sailoulau.eth",
+  "0x0b3b0f9046905f50E13D3eBE055AB21E838eC872": "gissie.eth"
+ }
+}

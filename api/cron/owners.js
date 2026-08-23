@@ -56,6 +56,77 @@ const ESCROW = {
 const BURN = new Set(['0x0000000000000000000000000000000000000000', '0x000000000000000000000000000000000000dead']);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// ERC-1155 moves are TransferSingle and TransferBatch, and the token id is in
+// the data rather than in a topic, so it cannot be filtered server-side
+const T1155_ONE = '0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62';
+const T1155_MANY = '0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb';
+const dataWords = (d0) => {
+  const d = String(d0 || '').replace(/^0x/, '');
+  const out = [];
+  for (let i = 0; i + 64 <= d.length; i += 64) out.push('0x' + d.slice(i, i + 64));
+  return out;
+};
+function tokenIdsFrom(l) {
+  const w = dataWords(l.data);
+  if (l.topics && l.topics[0] === T1155_ONE) return w.length >= 2 ? [BigInt(w[0]).toString()] : [];
+  if (w.length < 4) return [];
+  const at = Number(BigInt(w[0])) / 32;
+  const n = Number(BigInt(w[at] || '0x0'));
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(BigInt(w[at + 1 + i] || '0x0').toString());
+  return out;
+}
+async function sweep1155(addr, topic, from, to, key) {
+  const r = await es({ module: 'logs', action: 'getLogs', address: addr, topic0: topic, fromBlock: String(from), toBlock: String(to), offset: '1000', page: '1' }, key);
+  await sleep(200);
+  if (r === '__SPLIT__' || (Array.isArray(r) && r.length === 1000)) {
+    if (from >= to) return Array.isArray(r) ? r : [];
+    const mid = Math.floor((from + to) / 2);
+    return (await sweep1155(addr, topic, from, mid, key)).concat(await sweep1155(addr, topic, mid + 1, to, key));
+  }
+  return Array.isArray(r) ? r : [];
+}
+/* The holder list, read from the indexer rather than reconstructed from logs.
+   Balances are what an edition is, and asking for them directly is both
+   shorter and harder to get subtly wrong than replaying every transfer. */
+async function holdersOf(contract, ids) {
+  const total = new Map();
+  for (const id of ids) {
+    let next = {};
+    for (let page = 0; page < 40; page++) {
+      const qs = new URLSearchParams(next).toString();
+      let j = null;
+      for (let i = 0; i < 3; i++) {
+        try {
+          const r = await fetch(`${BS}/tokens/${contract}/instances/${encodeURIComponent(id)}/holders${qs ? '?' + qs : ''}`, { headers: { accept: 'application/json' } });
+          if (r.ok) { j = await r.json(); break; }
+          if (r.status === 404) break;
+        } catch (e) { /* retry */ }
+        await sleep(500 * (i + 1));
+      }
+      if (!j || !j.items) break;
+      for (const h of j.items) {
+        const a = String(h.address?.hash || '').toLowerCase();
+        const q = Number(h.value || 0);
+        if (!a || q <= 0 || BURN.has(a)) continue;
+        const prev = total.get(a) || { address: h.address.hash, ens: h.address?.ens_domain_name || null, qty: 0 };
+        prev.qty += q;
+        total.set(a, prev);
+      }
+      if (!j.next_page_params) break;
+      next = j.next_page_params;
+      await sleep(120);
+    }
+    await sleep(100);
+  }
+  if (!total.size) return null;
+  return [...total.values()].map((h) => {
+    const a = h.address.toLowerCase();
+    const status = ARTIST.has(a) ? 'artist_held' : (a === VAULT ? 'vaulted' : (ESCROW[a] ? 'listed' : 'acquired'));
+    return { address: h.address, ens: h.ens || ARTIST_NAME[a] || null, display_name: null, qty: h.qty, acquired: null, status };
+  });
+}
+
 
 async function es(params, key) {
   const url = `${ETHERSCAN}?${new URLSearchParams({ chainid: '1', apikey: key, ...params })}`;
@@ -158,11 +229,24 @@ export async function GET(request) {
   }
 
   // one sweep per contract, reused by both the 1/1s and the editions
+  /* The 1/1 sweep below reads ownerOf, which only an ERC-721 answers. Editions
+     are held as balances by many wallets at once and need their own pass, so
+     they are collected separately here rather than being silently dropped ...
+     which is what used to happen. Eight contracts and 208 tokens, Geodetic
+     Moments and XLIFE among them, were invisible to this run every night. */
   const contracts = new Set();
+  const editions = new Map();          // contract -> Set(token id)
   for (const { data } of files.values()) {
-    for (const w of data.works || []) {
+    // children are works too: Roads or Rivers lives there and was never read
+    for (const w of [...(data.works || []), ...(data.children || []).flatMap((c) => c.works || [])]) {
       const d = w.digital || {};
-      if (d.chain === 'ethereum' && d.standard === 'ERC-721' && d.contract) contracts.add(d.contract.toLowerCase());
+      if (d.chain !== 'ethereum' || !d.contract) continue;
+      const a = d.contract.toLowerCase();
+      if (d.standard === 'ERC-721') { contracts.add(a); continue; }
+      if (d.standard === 'ERC-1155') {
+        if (!editions.has(a)) editions.set(a, new Set());
+        for (const id of (w.token_ids && w.token_ids.length ? w.token_ids : [d.token_id])) editions.get(a).add(String(id));
+      }
     }
   }
   const HEAD = await head();
@@ -190,7 +274,11 @@ export async function GET(request) {
   const owner = new Map();   // "contract|tokenId" -> { to, ts, tx }  (only what moved)
   const full = new Map();    // the same, for the one contract swept in full
   const swept = new Set();
+  // how busy the chain was in this window, which is the only thing that tells
+  // a quiet night apart from a sweep that has stopped looking
+  let chainEvents = 0;
   const parse = (logs, into) => {
+    chainEvents += logs.length;
     logs.sort((a, b) => parseInt(a.blockNumber, 16) - parseInt(b.blockNumber, 16) || parseInt(a.logIndex, 16) - parseInt(b.logIndex, 16));
     for (const l of logs) {
       if (!l.topics || l.topics.length < 4) continue;
@@ -328,6 +416,53 @@ export async function GET(request) {
     }
   }
 
+  /* ---------- editions ----------
+     An edition is held as a balance by many wallets, so there is no ownerOf to
+     ask. Instead the transfer log says which tokens moved, and only those have
+     their holder list re-read ... which keeps a nightly run to the handful of
+     editions that actually changed hands rather than all 208.
+
+     The same policy applies as everywhere else in this file: a holder who
+     appears is added, a holder whose balance is gone is removed, and nothing
+     is ever put back on sale. Excluded addresses are recorded as holders with
+     their real standing rather than as collectors. */
+  let editionsChecked = 0, holderRows = 0;
+  for (const [addr, ids] of editions) {
+    let logs = [];
+    for (const topic of [T1155_ONE, T1155_MANY]) {
+      try { logs = logs.concat(await sweep1155(addr, topic, since, HEAD, key)); }
+      catch (e) { flagged.push({ id: addr, slug: addr.slice(0, 10), why: `edition sweep failed: ${String(e.message || e).slice(0, 80)}`, action: 'holders may be a day stale' }); }
+    }
+    chainEvents += logs.length;
+    const moved = new Set();
+    for (const l of logs) {
+      for (const id of tokenIdsFrom(l)) if (ids.has(id)) moved.add(id);
+    }
+    if (!moved.size) continue;
+    editionsChecked += moved.size;
+
+    for (const [slug, entry] of files) {
+      const works = [...(entry.data.works || []), ...(entry.data.children || []).flatMap((c) => c.works || [])];
+      for (const w of works) {
+        const d = w.digital || {};
+        if (!d.contract || d.contract.toLowerCase() !== addr) continue;
+        const mine = (w.token_ids && w.token_ids.length ? w.token_ids : [d.token_id]).map(String);
+        if (!mine.some((id) => moved.has(id))) continue;
+        const fresh = await holdersOf(addr, mine);
+        if (!fresh) continue;
+        const before = (w.holders || []).length;
+        if (!dry) {
+          w.holders = fresh;
+          w.edition = { ...(w.edition || {}), holders: fresh.filter((h) => h.status === 'acquired').length,
+            minted: fresh.reduce((n, h) => n + h.qty, 0) || (w.edition || {}).minted };
+        }
+        holderRows += fresh.length;
+        applied.push(`edition ${w.id}: ${before} -> ${fresh.length} holders`);
+        touched.add(slug); changedWorks.add(w.id);
+      }
+    }
+  }
+
   /* ---------- births ----------
      Everything above asks who holds a token we already know about. That can
      never notice a token that did not exist yesterday, which is how Patrimora
@@ -462,9 +597,41 @@ export async function GET(request) {
   }
 
   for (const id of born) applied.push(`born ${id}`);
-  const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, ${born.length} newly minted, `
+  const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, ${born.length} newly minted, ${editionsChecked} editions re-read, `
     + `blocks ${since}-${HEAD}, full sweep of ${fullContract}, ${collectorsWritten} collector pages`;
   console.log(summary);
+
+  /* ---------- the run log, and the thing that pages us ----------
+     A sweep that changes nothing looks identical to a sweep that failed to
+     look. The only way to tell them apart is whether the chain was quiet too,
+     so both are recorded: what changed, and how many transfers went past. A
+     run of quiet days while the chain was busy is the signal that something
+     has stopped seeing, and it emails rather than waiting to be noticed. */
+  const QUIET_DAYS = Number(process.env.OWNERS_QUIET_DAYS || 3);
+  let runLog = { runs: [] };
+  const rf = await readFile('data/owners-runs.json').catch(() => ({ sha: null, text: null }));
+  if (rf.text) { try { runLog = JSON.parse(rf.text); } catch (e) { /* start again */ } }
+  const entry = {
+    at: new Date().toISOString(), since, head: HEAD,
+    applied: applied.length, flagged: flagged.length, born: born.length,
+    editions: editionsChecked, chain_events: chainEvents, ok: true,
+  };
+  const recent = [entry, ...(runLog.runs || [])].slice(0, 30);
+  const quiet = [];
+  for (const r of recent.slice(0, QUIET_DAYS)) {
+    if (r.applied === 0 && r.born === 0 && (r.chain_events || 0) > 0) quiet.push(r.at.slice(0, 10));
+  }
+  const stalled = quiet.length >= QUIET_DAYS;
+  if (stalled) {
+    flagged.push({ id: 'sweep', slug: 'sweep',
+      why: `${quiet.length} runs in a row changed nothing while ${recent[0].chain_events} transfers went past`,
+      action: 'the sweep may have stopped seeing something ... check its scope' });
+  }
+  if (!dry) {
+    await writeFile('data/owners-runs.json',
+      JSON.stringify({ _note: 'One line per sweep. A run that changes nothing while the chain is busy is the signal that something has stopped seeing.', runs: recent }, null, 1) + '\n',
+      `Owners run: ${entry.applied} applied, ${entry.chain_events} transfers seen`, rf.sha || undefined);
+  }
 
   if (flagged.length && !dry) {
     const text = `The daily ownership run found ${flagged.length} thing${flagged.length === 1 ? '' : 's'} it will not change on its own.\n\n`
