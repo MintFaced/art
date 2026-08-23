@@ -1,0 +1,71 @@
+{
+ "address": "0x09bc641b6fa2308b030c312653f9675dfaa58e2b",
+ "ens": "baiwei.eth",
+ "display_name": null,
+ "slug": "baiwei.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 3
+ },
+ "first_collected": "2025-05-16T10:36:23.000000Z",
+ "last_collected": "2026-08-21T23:52:35.000Z",
+ "tao": 1948,
+ "tao_rate": 4.2,
+ "collections": [
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "patrimora-182",
+   "title": "Patrimora #182",
+   "collection": "patrimora",
+   "group": "core",
+   "genre": "Generative",
+   "acquired": "2026-08-21T23:52:35.000Z",
+   "unique": true,
+   "image": "https://assets.highlight.xyz/21d3bc75-912f-8f73-843b-83f90739a6f3",
+   "orientation": null
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-16T10:36:23.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1948
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  }
+ ]
+}

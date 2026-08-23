@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-08-23T06:52:48.377Z",
+ "generated": "2026-08-23T07:16:13.601Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -14,8 +14,8 @@
   "wallets": 3434
  },
  "counts": {
-  "collectors": 3678,
-  "with_page": 803,
+  "collectors": 3679,
+  "with_page": 806,
   "private": 0,
   "named": 1213
  },
@@ -7671,6 +7671,24 @@
    "tao_rate": 73.2
   },
   {
+   "address": "0x09bc641b6fa2308b030c312653f9675dfaa58e2b",
+   "ens": "baiwei.eth",
+   "display_name": null,
+   "slug": "baiwei.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 1,
+    "editions": 2,
+    "collections": 3
+   },
+   "first_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2026-08-21T23:52:35.000Z",
+   "tao": 1948,
+   "tao_rate": 4.2
+  },
+  {
    "address": "0xe39ad57a33244300c2e0acfca24292434e2b9bae",
    "ens": "crimsonovoidchucker.eth",
    "display_name": null,
@@ -7687,6 +7705,24 @@
    "last_collected": "2025-02-09T00:42:47.000000Z",
    "tao": 44881,
    "tao_rate": 77.4
+  },
+  {
+   "address": "0x452a9b6432cd228410f01a1da754449c8bafc85a",
+   "ens": "cuatroceronueve.eth",
+   "display_name": null,
+   "slug": "cuatroceronueve.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 1,
+    "editions": 2,
+    "collections": 3
+   },
+   "first_collected": "2026-08-21T23:52:35.000Z",
+   "last_collected": "2026-08-21T23:52:35.000Z",
+   "tao": 4254,
+   "tao_rate": 4.2
   },
   {
    "address": "0xa55bae6554a08576d7cc77c05348f3cee97beb14",
@@ -13429,6 +13465,24 @@
    "last_collected": "2025-01-24T04:14:35.000000Z",
    "tao": 39751,
    "tao_rate": 69
+  },
+  {
+   "address": "0xb1058c959987e3513600eb5b4fd82aeee2a0e4f9",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xb1058c95",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 1,
+    "one_of_ones": 1,
+    "editions": 0,
+    "collections": 1
+   },
+   "first_collected": "2026-08-21T23:52:35.000Z",
+   "last_collected": "2026-08-21T23:52:35.000Z",
+   "tao": 0,
+   "tao_rate": 0
   },
   {
    "address": "0xb6b6e5b78c05b77babbe418f4ce78a7e5ddaaf20",

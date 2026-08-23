@@ -1,0 +1,71 @@
+{
+ "address": "0x452a9b6432cd228410f01a1da754449c8bafc85a",
+ "ens": "cuatroceronueve.eth",
+ "display_name": null,
+ "slug": "cuatroceronueve.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 3
+ },
+ "first_collected": "2026-08-21T23:52:35.000Z",
+ "last_collected": "2026-08-21T23:52:35.000Z",
+ "tao": 4254,
+ "tao_rate": 4.2,
+ "collections": [
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "patrimora-184",
+   "title": "Patrimora #184",
+   "collection": "patrimora",
+   "group": "core",
+   "genre": "Generative",
+   "acquired": "2026-08-21T23:52:35.000Z",
+   "unique": true,
+   "image": "https://assets.highlight.xyz/360ab4b1-4bfd-847d-a881-1bd38dc17b3b",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-35",
+   "title": "Loading Pepe",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-35-image.gif",
+   "orientation": null,
+   "tao": 4254
+  }
+ ]
+}

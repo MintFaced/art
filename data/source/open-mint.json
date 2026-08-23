@@ -1,0 +1,21 @@
+{
+ "_note": "Contracts that are still minting. The sweep asks these for births as well as for owners, so a token that comes into existence appears on the site within a day without anyone touching it. Everything else is a closed edition: its tokens all exist already, and asking would be wasted calls.",
+ "contracts": {
+  "0xeabffde679fe5f0b835771aea36d90c1ce7502d8": {
+   "collection": "patrimora",
+   "standard": "ERC-721",
+   "title": "Patrimora #{id}",
+   "why": "open mint on Highlight, still selling"
+  },
+  "0x2969eca285c9acd0b7eedebe7714c4d913700794": {
+   "collection": "xnouns",
+   "standard": "ERC-721",
+   "title": "XNouns #{id}",
+   "why": "one born every 8 hours, 8 minutes and 8 seconds, forever. Collector-tracked rather than shown, so discovery keeps the profiles right rather than the grids."
+  }
+ },
+ "cursor": {
+  "0xeabffde679fe5f0b835771aea36d90c1ce7502d8": 25816285,
+  "0x2969eca285c9acd0b7eedebe7714c4d913700794": 25816285
+ }
+}

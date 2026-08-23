@@ -1,4 +1,5 @@
 import { readFile, writeFile } from '../_lib/repo.js';
+import { mintsSince, readToken, buildRecord } from '../_lib/discover.js';
 import { send } from '../_lib/email.js';
 import { deriveCollectors } from '../_lib/collectors.js';
 
@@ -41,6 +42,12 @@ const ARTIST = new Set([
   '0x7110733ab02b2a18a947e3912bf54136fbced169',
 ]);
 const VAULT = '0x6e420b64bb329be84a6627c68a7bdff825139773';
+// the same three wallets as ARTIST, but named: a new record says who holds it
+const ARTIST_NAME = {
+  '0xd40b63bf04a44e43fbfe5784bcf22acaab34a180': 'mintface.eth',
+  '0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7': 'ryanj.eth',
+  '0x7110733ab02b2a18a947e3912bf54136fbced169': 'mintfaced.eth',
+};
 // held, not sold. Guard one.
 const ESCROW = {
   '0xcda72070e455bb31c7690a170224ce43623d0b6f': 'Foundation escrow',
@@ -321,10 +328,91 @@ export async function GET(request) {
     }
   }
 
+  /* ---------- births ----------
+     Everything above asks who holds a token we already know about. That can
+     never notice a token that did not exist yesterday, which is how Patrimora
+     182 to 185 minted, sold, and stayed off the site entirely.
+
+     A mint is a Transfer whose sender is nobody. Reading those is exact for
+     any id scheme and does not need the contract to expose a supply ... which
+     matters, because Genesis sits on Foundation's shared contract and its
+     supply is a hundred and fourteen thousand other people's work. */
+  const born = [];
+  let mintCursorChanged = false;
+  const openMintFile = await readFile('data/source/open-mint.json').catch(() => ({ sha: null, text: null }));
+  const openMint = openMintFile.text ? JSON.parse(openMintFile.text) : null;
+  if (openMint) {
+    for (const [contract, conf] of Object.entries(openMint.contracts || {})) {
+      const entry = files.get(conf.collection);
+      if (!entry) continue;
+      const known = new Set((entry.data.works || []).map((w) => String((w.digital || {}).token_id)));
+      const from = openMint.cursor?.[contract] ? openMint.cursor[contract] + 1 : since;
+      let fresh = [];
+      try {
+        const mints = await mintsSince({ contract, fromBlock: from, toBlock: HEAD, es: (p) => es(p, key) });
+        fresh = mints.filter((m) => !known.has(m.tokenId));
+      } catch (e) {
+        flagged.push({ id: conf.collection, slug: conf.collection, why: `could not read new mints: ${String(e.message || e).slice(0, 90)}`, action: 'run scripts/discover-mints.mjs' });
+        continue;
+      }
+      // a burst of mints is added over several nights rather than in one run
+      const take = fresh.slice(0, 25);
+      if (fresh.length > take.length) {
+        flagged.push({ id: conf.collection, slug: conf.collection,
+          why: `${fresh.length} new tokens, ${take.length} added tonight`, action: 'the rest follow tomorrow' });
+      }
+      for (const m of take) {
+        const { owner, md } = await readToken({ contract, tokenId: m.tokenId, standard: conf.standard, rpc: 'https://ethereum-rpc.publicnode.com' });
+        const rec = buildRecord({
+          collection: conf.collection, contract: entry.data.contracts?.[0]?.address || contract,
+          standard: conf.standard, tokenId: m.tokenId, titlePattern: conf.title, mint: m,
+          owner: owner || m.to, md, artist: ARTIST_NAME, vault: VAULT, escrow: new Set(Object.keys(ESCROW)),
+        });
+        if (rec.collector && rec.collector.address) {
+          const id = await who(rec.collector.address);
+          rec.collector.address = id.address;
+          rec.collector.ens = id.ens;
+        }
+        entry.data.works = [...(entry.data.works || []), rec];
+        born.push(rec.id);
+        touched.add(conf.collection);
+        changedWorks.add(rec.id);
+      }
+      if (take.length) {
+        const tally = {};
+        for (const w of entry.data.works) if (w.status) tally[w.status] = (tally[w.status] || 0) + 1;
+        const uniq = entry.data.works.filter((w) => !((w.edition || {}).type && w.edition.type !== '1/1')).length;
+        entry.data.counts = { ...entry.data.counts, works: entry.data.works.length, ...tally,
+          ...(entry.data.counts && entry.data.counts.unique_works != null ? { unique_works: uniq } : {}) };
+      }
+      if (openMint.cursor) { openMint.cursor[contract] = HEAD; mintCursorChanged = true; }
+    }
+  }
+
   if (!dry) {
     for (const slug of touched) {
       const entry = files.get(slug);
       await writeFile(`data/c/${slug}.json`, JSON.stringify(entry.data, null, 1) + '\n', `Owners: ${slug}`, entry.sha);
+    }
+    if (mintCursorChanged) {
+      await writeFile('data/source/open-mint.json', JSON.stringify(openMint, null, 1) + '\n',
+        `Open mint cursor: block ${HEAD}`, openMintFile.sha || undefined);
+    }
+    /* A new work with no entry in the index is a page that answers 404 and a
+       count that is short. Both are written from the records here, because
+       nothing else will until the next full rebuild. */
+    if (born.length) {
+      const ix = await readFile('data/index.json');
+      const data = JSON.parse(ix.text);
+      data.work_index = data.work_index || {};
+      for (const slug of touched) {
+        const entry = files.get(slug);
+        for (const w of entry.data.works || []) if (w.id) data.work_index[w.id] = slug;
+        const c = (data.collections || []).find((x) => x.slug === slug);
+        if (c && entry.data.counts) c.counts = { ...c.counts, ...entry.data.counts };
+      }
+      await writeFile('data/index.json', JSON.stringify(data, null, 1) + '\n',
+        `Index: ${born.length} new work${born.length === 1 ? '' : 's'}`, ix.sha);
     }
   }
 
@@ -373,7 +461,8 @@ export async function GET(request) {
       `Owners cursor: block ${HEAD}`, cur.sha || undefined);
   }
 
-  const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, `
+  for (const id of born) applied.push(`born ${id}`);
+  const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, ${born.length} newly minted, `
     + `blocks ${since}-${HEAD}, full sweep of ${fullContract}, ${collectorsWritten} collector pages`;
   console.log(summary);
 
