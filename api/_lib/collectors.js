@@ -85,7 +85,19 @@ export function deriveCollectors(collections, titleOf, privateList = new Set()) 
   }
 
   // shortest address prefix that collides with nothing
-  const ensSlug = (p) => (p.ens && URL_SAFE.test(p.ens.toLowerCase()) ? p.ens.toLowerCase() : null);
+  /* A slug can come from a reverse record or from a name Ryan wrote down.
+     firstladyart.eth resolves forward to its wallet but publishes no reverse
+     record, so the recorded name is the only name it will ever have ... and
+     /firstladyart.eth is what a person would type. The address always resolves
+     as well, so nothing rots either way. */
+  const nameSlug = (p) => {
+    for (const n of [p.ens, p.display_name]) {
+      const v = typeof n === 'string' ? n.trim().toLowerCase() : '';
+      if (v && /\.eth$/.test(v) && URL_SAFE.test(v)) return v;
+    }
+    return null;
+  };
+  const ensSlug = nameSlug;
   const paged = all.filter((p) => p.has_page);
   let n = 8;
   for (; n <= 40; n += 4) {

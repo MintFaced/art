@@ -1,0 +1,52 @@
+{
+ "address": "0xcb6a98d0c5b9ef1005a382bca9f475763c3d3e32",
+ "ens": "debclarknz.eth",
+ "display_name": null,
+ "slug": "debclarknz.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2023-10-14T04:04:59.000000Z",
+ "last_collected": "2023-10-14T04:04:59.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-world-48",
+   "title": "Geodetic Dune",
+   "collection": "geodetic-world",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2023-10-14T04:04:59.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-48-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  }
+ ]
+}

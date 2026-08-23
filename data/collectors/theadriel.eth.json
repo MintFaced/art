@@ -1,0 +1,63 @@
+{
+ "address": "0x82f79d8090e32835f7fd7963f14f1aeb1faf2676",
+ "ens": "theadriel.eth",
+ "display_name": null,
+ "slug": "theadriel.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2022-07-09T01:11:43.000Z",
+ "last_collected": "2022-07-09T01:11:43.000Z",
+ "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "group": "geodetic",
+   "genre": "Photography / AI",
+   "acquired": "2022-07-09T01:11:43.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-24",
+   "title": "Anon",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/mpLJymCIeEN2_UeYTYRV5VFQ19PSHYE_uqbm5VHwl6U",
+   "orientation": null
+  }
+ ]
+}

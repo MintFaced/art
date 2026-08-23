@@ -1,0 +1,95 @@
+{
+ "address": "0x3368b4733a4552b38b7d81c215d88cac4c78d8e5",
+ "ens": "lunaleo.eth",
+ "display_name": null,
+ "slug": "lunaleo.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 5,
+  "one_of_ones": 0,
+  "editions": 5,
+  "collections": 4
+ },
+ "first_collected": "2022-05-13T16:02:12.000000Z",
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "collections": [
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 2
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "group": "geodetic",
+   "genre": "Photography / AI",
+   "acquired": "2022-07-09T18:06:33.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "group": "feature",
+   "genre": "Design",
+   "acquired": "2022-05-13T16:02:12.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/9tELif8vVY-Qz9adNDrv1N1aMpwUADMCYG8hKrgdPLw",
+   "orientation": null
+  }
+ ]
+}

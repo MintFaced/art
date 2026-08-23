@@ -1,0 +1,63 @@
+{
+ "address": "0xd77579d5f78708325393ceb14af25ad999c86500",
+ "ens": "sweetbaby3zus.eth",
+ "display_name": null,
+ "slug": "sweetbaby3zus.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 2,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-11-18T19:05:59.000Z",
+ "last_collected": "2022-11-18T19:05:59.000Z",
+ "collections": [
+  {
+   "slug": "xnouns",
+   "title": "XNouns",
+   "works": 2
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "seize-and-share-cc0-the-movie-2204",
+   "title": "CC0 The Movie",
+   "collection": "seize-and-share",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2022-11-18T19:05:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-cc0-the-movie-2204-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-24",
+   "title": "XNouns #24",
+   "collection": "xnouns",
+   "group": "experiments",
+   "genre": "Design",
+   "acquired": null,
+   "unique": true,
+   "image": "https://i2c.seadn.io/ethereum/0x2969eca285c9acd0b7eedebe7714c4d913700794/ee6640349b568bcfce6365c8eb2b741a.png",
+   "orientation": null
+  },
+  {
+   "id": "xnouns-5",
+   "title": "XNouns #5",
+   "collection": "xnouns",
+   "group": "experiments",
+   "genre": "Design",
+   "acquired": null,
+   "unique": true,
+   "image": "https://i2c.seadn.io/ethereum/0x2969eca285c9acd0b7eedebe7714c4d913700794/e17d72fe60df5226e5a66b10a724d149.png",
+   "orientation": null
+  }
+ ]
+}

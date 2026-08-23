@@ -1,0 +1,47 @@
+{
+ "address": "0xae291acb5941a8629f44b91c8edd3613401b03ab",
+ "ens": "demonflipper.eth",
+ "display_name": null,
+ "slug": "demonflipper.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 2,
+  "editions": 0,
+  "collections": 1
+ },
+ "first_collected": "2022-08-11T06:49:04.000000Z",
+ "last_collected": "2022-08-11T06:50:30.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 2
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-47",
+   "title": "Geodetica #47",
+   "collection": "geodetica",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2022-08-11T06:50:30.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-47-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-31",
+   "title": "Geodetica #31",
+   "collection": "geodetica",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2022-08-11T06:49:04.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-31-display.webp",
+   "orientation": "square"
+  }
+ ]
+}
