@@ -1,6 +1,6 @@
 {
- "_note": "Set definitions, used by two surfaces and defined once. The commerce set builder at /set sells the geodetic set from these slots; the collector pages on collectors.mintface.art draw their meters from all four. Change a set here and both follow. PENDING RYAN'S CONFIRMATION: the membership below is proposed, not settled.",
- "confirmed": false,
+ "_note": "Set definitions, used by two surfaces and defined once. The commerce set builder at /set sells the geodetic set from these slots; the collector pages on collectors.mintface.art draw their meters from all four. Change a set here and both follow. Membership confirmed by Ryan on 23 August 2026.",
+ "confirmed": true,
  "commerce_set": "geodetic",
  "sets": [
   {
@@ -10,11 +10,30 @@
    "sellable": true,
    "note": "Identical to the set that is actually for sale. Geodetic Home is excluded: it is a POAP, not a work you buy.",
    "slots": [
-    { "key": "geodetic-world", "title": "Geodetic World" },
-    { "key": "geodetic-moments", "title": "Geodetic Moments" },
-    { "key": "geodetic-memory", "title": "Geodetic Memory" },
-    { "key": "geodetic-onchain", "title": "Geodetic On-Chain", "only": ["geodetic-onchain-1", "geodetic-onchain-2"] },
-    { "key": "geodetica", "title": "Geodetica" }
+    {
+     "key": "geodetic-world",
+     "title": "Geodetic World"
+    },
+    {
+     "key": "geodetic-moments",
+     "title": "Geodetic Moments"
+    },
+    {
+     "key": "geodetic-memory",
+     "title": "Geodetic Memory"
+    },
+    {
+     "key": "geodetic-onchain",
+     "title": "Geodetic On-Chain",
+     "only": [
+      "geodetic-onchain-1",
+      "geodetic-onchain-2"
+     ]
+    },
+    {
+     "key": "geodetica",
+     "title": "Geodetica"
+    }
    ]
   },
   {
@@ -24,10 +43,22 @@
    "sellable": false,
    "note": "The core of the /ai canon. The AI Studies are left out on purpose: a seven-collection set nobody finishes is not a set, it is a wall.",
    "slots": [
-    { "key": "geodetic-world", "title": "Geodetic World" },
-    { "key": "geodetica", "title": "Geodetica" },
-    { "key": "hidden-landscapes", "title": "Hidden Landscapes" },
-    { "key": "geodetic-memory", "title": "Geodetic Memory" }
+    {
+     "key": "geodetic-world",
+     "title": "Geodetic World"
+    },
+    {
+     "key": "geodetica",
+     "title": "Geodetica"
+    },
+    {
+     "key": "hidden-landscapes",
+     "title": "Hidden Landscapes"
+    },
+    {
+     "key": "geodetic-memory",
+     "title": "Geodetic Memory"
+    }
    ]
   },
   {
@@ -36,10 +67,22 @@
    "title": "The Painting Set",
    "sellable": false,
    "slots": [
-    { "key": "pixelarcade", "title": "PixelArcade" },
-    { "key": "two-burdens", "title": "Two Burdens" },
-    { "key": "artificial-flowers", "title": "Artificial Flowers" },
-    { "key": "frogdna", "title": "FROGDNA" }
+    {
+     "key": "pixelarcade",
+     "title": "PixelArcade"
+    },
+    {
+     "key": "two-burdens",
+     "title": "Two Burdens"
+    },
+    {
+     "key": "artificial-flowers",
+     "title": "Artificial Flowers"
+    },
+    {
+     "key": "frogdna",
+     "title": "FROGDNA"
+    }
    ]
   },
   {
@@ -49,9 +92,18 @@
    "sellable": false,
    "note": "Genesis is satisfied by any work in it, a City vs Nature edition or a Foundation one-of-one alike.",
    "slots": [
-    { "key": "roads-and-rivers", "title": "Roads & Rivers" },
-    { "key": "geodetic-moments", "title": "Geodetic Moments" },
-    { "key": "genesis", "title": "Genesis" }
+    {
+     "key": "roads-and-rivers",
+     "title": "Roads & Rivers"
+    },
+    {
+     "key": "geodetic-moments",
+     "title": "Geodetic Moments"
+    },
+    {
+     "key": "genesis",
+     "title": "Genesis"
+    }
    ]
   }
  ]
