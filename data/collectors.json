@@ -1,15 +1,15 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-08-23T00:17:11.479Z",
+ "generated": "2026-08-23T01:31:57.839Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
  },
  "counts": {
-  "collectors": 2740,
-  "with_page": 403,
+  "collectors": 2754,
+  "with_page": 413,
   "private": 0,
-  "named": 707
+  "named": 705
  },
  "collectors": [
   {
@@ -20,13 +20,13 @@
    "private": false,
    "has_page": true,
    "counts": {
-    "works": 42,
+    "works": 48,
     "one_of_ones": 0,
-    "editions": 42,
+    "editions": 48,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-12-07T02:43:59.000Z",
+   "last_collected": "2025-05-16T10:36:23.000000Z"
   },
   {
    "address": "0xc6400a5584db71e41b0e5dfbdc769b54b91256cd",
@@ -36,13 +36,29 @@
    "private": false,
    "has_page": true,
    "counts": {
-    "works": 38,
+    "works": 42,
     "one_of_ones": 0,
-    "editions": 38,
+    "editions": 42,
     "collections": 3
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-07-23T00:42:26.000Z",
+   "last_collected": "2025-05-16T10:34:47.000000Z"
+  },
+  {
+   "address": "0x32ffe815277ff53dd2a73557664e229899e6501e",
+   "ens": "justanotherblockinthechain.eth",
+   "display_name": null,
+   "slug": "justanotherblockinthechain.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 36,
+    "one_of_ones": 1,
+    "editions": 35,
+    "collections": 5
+   },
+   "first_collected": "2022-05-09T12:17:22.000000Z",
+   "last_collected": "2023-01-16T00:17:11.000Z"
   },
   {
    "address": "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8",
@@ -61,22 +77,6 @@
    "last_collected": "2026-08-21T05:06:23.000000Z"
   },
   {
-   "address": "0x32ffe815277ff53dd2a73557664e229899e6501e",
-   "ens": "justanotherblockinthechain.eth",
-   "display_name": null,
-   "slug": "justanotherblockinthechain.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 33,
-    "one_of_ones": 1,
-    "editions": 32,
-    "collections": 5
-   },
-   "first_collected": "2022-07-09T02:45:56.000000Z",
-   "last_collected": "2022-10-23T15:08:47.000000Z"
-  },
-  {
    "address": "0x6140f00e4ff3936702e68744f2b5978885464cbb",
    "ens": null,
    "display_name": null,
@@ -84,12 +84,12 @@
    "private": false,
    "has_page": true,
    "counts": {
-    "works": 31,
+    "works": 30,
     "one_of_ones": 23,
-    "editions": 8,
+    "editions": 7,
     "collections": 7
    },
-   "first_collected": "2022-07-09T01:57:32.000000Z",
+   "first_collected": "2022-05-10T05:25:59.000000Z",
    "last_collected": "2026-08-22T00:42:47.000000Z"
   },
   {
@@ -105,8 +105,8 @@
     "editions": 25,
     "collections": 6
    },
-   "first_collected": "2022-08-11T07:59:47.000000Z",
-   "last_collected": "2025-02-04T20:12:23.000000Z"
+   "first_collected": "2022-06-20T08:33:17.000Z",
+   "last_collected": "2025-09-08T08:30:59.000000Z"
   },
   {
    "address": "0xd69e257ae6088b717ae6d2ddec9297703b4fb725",
@@ -116,13 +116,13 @@
    "private": false,
    "has_page": true,
    "counts": {
-    "works": 27,
+    "works": 28,
     "one_of_ones": 2,
-    "editions": 25,
+    "editions": 26,
     "collections": 6
    },
-   "first_collected": "2022-07-21T12:39:02.000000Z",
-   "last_collected": "2023-07-04T12:08:47.000000Z"
+   "first_collected": "2022-06-13T05:41:13.000000Z",
+   "last_collected": "2025-06-14T23:10:35.000Z"
   },
   {
    "address": "0x7a5adc385831130a51c579cadedcad6780f6ab5f",
@@ -169,7 +169,7 @@
     "editions": 21,
     "collections": 9
    },
-   "first_collected": "2022-07-10T21:33:13.000000Z",
+   "first_collected": "2022-05-12T23:12:49.000000Z",
    "last_collected": "2026-08-21T05:19:23.000000Z"
   },
   {
@@ -185,8 +185,8 @@
     "editions": 21,
     "collections": 7
    },
-   "first_collected": "2022-07-09T01:03:36.000000Z",
-   "last_collected": "2024-05-04T22:39:23.000000Z"
+   "first_collected": "2022-06-11T18:45:48.000Z",
+   "last_collected": "2025-09-10T05:18:59.000000Z"
   },
   {
    "address": "0x93c4b4334f77d56a84a13077d7fc6f38e3ff833f",
@@ -201,8 +201,8 @@
     "editions": 22,
     "collections": 5
    },
-   "first_collected": "2022-07-12T23:11:37.000000Z",
-   "last_collected": "2022-10-10T11:03:47.000000Z"
+   "first_collected": "2022-06-01T09:53:06.000000Z",
+   "last_collected": "2022-12-24T04:24:59.000Z"
   },
   {
    "address": "0x565465a0e19309ecb839319453e2c83aa0befdf2",
@@ -217,8 +217,8 @@
     "editions": 22,
     "collections": 4
    },
-   "first_collected": "2022-07-18T08:06:47.000000Z",
-   "last_collected": "2022-07-18T08:06:47.000000Z"
+   "first_collected": "2022-05-11T05:33:24.000000Z",
+   "last_collected": "2022-12-24T10:51:23.000Z"
   },
   {
    "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
@@ -233,24 +233,8 @@
     "editions": 20,
     "collections": 5
    },
-   "first_collected": "2022-08-23T01:47:15.000000Z",
+   "first_collected": "2022-08-23T01:28:09.000000Z",
    "last_collected": "2023-07-04T11:20:47.000000Z"
-  },
-  {
-   "address": "0x95b2db3f49b8a5365afacc6342f5ece0d253f8e0",
-   "ens": "vvveary.eth",
-   "display_name": null,
-   "slug": "vvveary.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 20,
-    "one_of_ones": 2,
-    "editions": 18,
-    "collections": 6
-   },
-   "first_collected": "2022-07-09T06:53:53.000000Z",
-   "last_collected": "2023-10-13T00:50:35.000000Z"
   },
   {
    "address": "0x410e7f16476faff4a4d7565d8b34245cb52dfdc2",
@@ -265,8 +249,24 @@
     "editions": 17,
     "collections": 5
    },
-   "first_collected": "2022-07-09T02:01:25.000000Z",
-   "last_collected": "2022-10-15T01:01:11.000000Z"
+   "first_collected": "2022-06-20T09:56:15.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
+  },
+  {
+   "address": "0x95b2db3f49b8a5365afacc6342f5ece0d253f8e0",
+   "ens": "vvveary.eth",
+   "display_name": null,
+   "slug": "vvveary.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 19,
+    "one_of_ones": 2,
+    "editions": 17,
+    "collections": 6
+   },
+   "first_collected": "2022-05-12T00:09:49.000000Z",
+   "last_collected": "2023-10-13T00:50:35.000000Z"
   },
   {
    "address": "0xaab85567766043f4108d486b1c27535d0d57678e",
@@ -281,7 +281,7 @@
     "editions": 19,
     "collections": 5
    },
-   "first_collected": "2022-07-10T05:33:27.000000Z",
+   "first_collected": "2022-06-23T01:48:10.000Z",
    "last_collected": "2022-12-27T03:08:35.000000Z"
   },
   {
@@ -298,7 +298,7 @@
     "collections": 7
    },
    "first_collected": "2022-04-22T04:36:21.000000Z",
-   "last_collected": "2022-12-27T07:33:35.000000Z"
+   "last_collected": "2025-09-13T21:49:47.000000Z"
   },
   {
    "address": "0x31f8e9b0c3da5ea19f06c6df7e88f3c60fdda1b4",
@@ -313,8 +313,8 @@
     "editions": 5,
     "collections": 6
    },
-   "first_collected": "2022-07-13T04:46:17.000000Z",
-   "last_collected": "2025-02-05T01:01:35.000000Z"
+   "first_collected": "2022-05-11T03:56:30.000000Z",
+   "last_collected": "2025-12-26T03:48:23.000000Z"
   },
   {
    "address": "0x13eee41d67b8d99e11174161d72cf8ccd194458c",
@@ -329,7 +329,7 @@
     "editions": 9,
     "collections": 8
    },
-   "first_collected": "2022-12-27T15:42:35.000000Z",
+   "first_collected": "2022-05-11T02:08:10.000000Z",
    "last_collected": "2025-10-18T22:16:11.000000Z"
   },
   {
@@ -361,7 +361,7 @@
     "editions": 16,
     "collections": 6
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-02-28T22:20:02.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -377,8 +377,8 @@
     "editions": 17,
     "collections": 5
    },
-   "first_collected": "2022-07-09T08:45:24.000000Z",
-   "last_collected": "2022-10-11T10:46:23.000000Z"
+   "first_collected": "2022-05-09T12:42:58.000000Z",
+   "last_collected": "2022-12-24T09:45:59.000Z"
   },
   {
    "address": "0xeeaf3bd19ebe8823abcc994538a930ee37a6dd3b",
@@ -393,7 +393,7 @@
     "editions": 14,
     "collections": 2
    },
-   "first_collected": "2022-10-10T06:42:35.000000Z",
+   "first_collected": "2022-09-25T09:51:35.000Z",
    "last_collected": "2022-12-27T07:12:47.000000Z"
   },
   {
@@ -409,8 +409,24 @@
     "editions": 15,
     "collections": 4
    },
-   "first_collected": "2022-07-09T07:36:11.000000Z",
-   "last_collected": "2023-01-01T02:14:11.000000Z"
+   "first_collected": "2022-05-11T04:39:48.000000Z",
+   "last_collected": "2023-01-05T01:40:23.000Z"
+  },
+  {
+   "address": "0xcf4485735f981bff764023f04c58d2db649b3b8d",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xcf448573",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 14,
+    "one_of_ones": 1,
+    "editions": 13,
+    "collections": 6
+   },
+   "first_collected": "2022-02-21T04:10:08.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
    "address": "0xd70150a7a5a42d4cd25974dae077a79a1547fcf2",
@@ -425,24 +441,8 @@
     "editions": 14,
     "collections": 6
    },
-   "first_collected": "2022-07-09T10:15:44.000000Z",
-   "last_collected": "2022-10-10T09:48:35.000000Z"
-  },
-  {
-   "address": "0xcf4485735f981bff764023f04c58d2db649b3b8d",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xcf448573",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 13,
-    "one_of_ones": 1,
-    "editions": 12,
-    "collections": 5
-   },
-   "first_collected": "2022-03-27T04:49:54.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-05-28T05:36:57.000000Z",
+   "last_collected": "2025-05-16T15:34:23.000000Z"
   },
   {
    "address": "0x19d266792b28a441cb0f6a3334ba617ef18b50ee",
@@ -457,8 +457,24 @@
     "editions": 13,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2025-11-07T07:30:47.000Z",
+   "last_collected": "2026-02-28T16:24:59.000Z"
+  },
+  {
+   "address": "0x91a3ebce4e0d326539c6e2720f25449774cb615e",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x91a3ebce",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 13,
+    "one_of_ones": 0,
+    "editions": 13,
+    "collections": 4
+   },
+   "first_collected": "2022-05-09T02:51:50.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
    "address": "0x4936b305102f442080d4711f14c5f0318e3caf74",
@@ -473,7 +489,7 @@
     "editions": 13,
     "collections": 2
    },
-   "first_collected": "2022-12-05T00:49:23.000000Z",
+   "first_collected": "2022-11-24T05:09:35.000Z",
    "last_collected": "2023-07-04T02:44:23.000000Z"
   },
   {
@@ -489,8 +505,8 @@
     "editions": 13,
     "collections": 3
    },
-   "first_collected": "2022-10-23T01:30:47.000000Z",
-   "last_collected": "2022-10-23T01:30:47.000000Z"
+   "first_collected": "2022-09-26T09:38:35.000Z",
+   "last_collected": "2023-10-07T00:34:35.000000Z"
   },
   {
    "address": "0xbd751cac1fb27d930a6a0394d97c77908d94ad5d",
@@ -505,8 +521,8 @@
     "editions": 13,
     "collections": 3
    },
-   "first_collected": "2022-07-09T05:19:26.000000Z",
-   "last_collected": "2022-11-30T07:09:23.000000Z"
+   "first_collected": "2022-06-18T11:32:29.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x82139687faae8a29851902783e02e699de0e0846",
@@ -522,7 +538,7 @@
     "collections": 7
    },
    "first_collected": "2022-04-21T12:09:44.000000Z",
-   "last_collected": "2022-10-11T10:41:59.000000Z"
+   "last_collected": "2025-05-16T10:36:23.000000Z"
   },
   {
    "address": "0x856a4ed4c11a610cc2a4dd706f5642208bf6521d",
@@ -553,7 +569,7 @@
     "editions": 12,
     "collections": 4
    },
-   "first_collected": "2022-07-09T01:46:35.000000Z",
+   "first_collected": "2022-07-09T01:46:35.000Z",
    "last_collected": "2022-12-28T12:00:23.000000Z"
   },
   {
@@ -569,8 +585,24 @@
     "editions": 12,
     "collections": 4
    },
-   "first_collected": "2022-07-09T17:48:12.000000Z",
-   "last_collected": "2022-10-11T10:52:59.000000Z"
+   "first_collected": "2022-05-27T10:44:00.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
+  },
+  {
+   "address": "0xfcab2f0f8e64bbda95e1c65d368e6cb22bc5a808",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xfcab2f0f",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 12,
+    "one_of_ones": 0,
+    "editions": 12,
+    "collections": 1
+   },
+   "first_collected": "2022-12-01T02:49:59.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xa903c06bf35286f6d1cdad25396748353979a44c",
@@ -585,8 +617,8 @@
     "editions": 12,
     "collections": 5
    },
-   "first_collected": "2022-07-09T04:02:09.000000Z",
-   "last_collected": "2022-10-10T09:04:35.000000Z"
+   "first_collected": "2022-07-09T04:02:09.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xa5214719feb1d07b66292a5d4d0a2712bd048435",
@@ -601,8 +633,8 @@
     "editions": 12,
     "collections": 5
    },
-   "first_collected": "2022-07-09T13:08:37.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-05-27T05:58:09.000000Z",
+   "last_collected": "2025-05-16T15:23:59.000000Z"
   },
   {
    "address": "0xd0b53c871a4c2ab5db77ad752aa950f781021982",
@@ -617,8 +649,24 @@
     "editions": 12,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2025-01-25T13:32:35.000Z",
+   "last_collected": "2025-05-16T10:36:23.000000Z"
+  },
+  {
+   "address": "0xa41341bab6588948da8503d1dfb0a0ab0ea269cb",
+   "ens": "square-pixel.eth",
+   "display_name": null,
+   "slug": "square-pixel.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 12,
+    "one_of_ones": 0,
+    "editions": 12,
+    "collections": 2
+   },
+   "first_collected": "2022-05-10T11:31:39.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x257984b6b5bcfd665532649450242d4df1eb304f",
@@ -633,7 +681,7 @@
     "editions": 2,
     "collections": 5
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-12-14T19:15:59.000Z",
    "last_collected": "2025-05-28T18:30:11.000000Z"
   },
   {
@@ -650,23 +698,7 @@
     "collections": 7
    },
    "first_collected": "2025-07-09T00:48:47.000000Z",
-   "last_collected": "2025-09-01T08:33:47.000000Z"
-  },
-  {
-   "address": "0x8c1f393c989c667ad20e3d9df72a4f778c5c64b2",
-   "ens": "walavault.eth",
-   "display_name": null,
-   "slug": "walavault.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 11,
-    "one_of_ones": 2,
-    "editions": 9,
-    "collections": 6
-   },
-   "first_collected": "2022-08-02T14:14:38.000000Z",
-   "last_collected": "2025-02-05T01:35:47.000000Z"
+   "last_collected": "2025-12-26T03:45:59.000000Z"
   },
   {
    "address": "0x057117f9c9e95c2804c6133c6d63b32a519eec57",
@@ -681,40 +713,8 @@
     "editions": 11,
     "collections": 3
    },
-   "first_collected": "2022-07-10T04:34:56.000000Z",
+   "first_collected": "2022-07-10T04:34:56.000Z",
    "last_collected": "2022-12-27T03:09:23.000000Z"
-  },
-  {
-   "address": "0x91a3ebce4e0d326539c6e2720f25449774cb615e",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x91a3ebce",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 11,
-    "one_of_ones": 0,
-    "editions": 11,
-    "collections": 4
-   },
-   "first_collected": "2022-07-09T11:50:24.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
-  },
-  {
-   "address": "0xfcab2f0f8e64bbda95e1c65d368e6cb22bc5a808",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xfcab2f0f",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 11,
-    "one_of_ones": 0,
-    "editions": 11,
-    "collections": 1
-   },
-   "first_collected": null,
-   "last_collected": null
   },
   {
    "address": "0x81b55fbe66c5ffbb8468328e924af96a84438f14",
@@ -729,24 +729,8 @@
     "editions": 11,
     "collections": 2
    },
-   "first_collected": "2022-10-10T23:28:35.000000Z",
+   "first_collected": "2022-06-18T05:36:49.000Z",
    "last_collected": "2022-12-28T08:11:11.000000Z"
-  },
-  {
-   "address": "0xa41341bab6588948da8503d1dfb0a0ab0ea269cb",
-   "ens": "square-pixel.eth",
-   "display_name": null,
-   "slug": "square-pixel.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 11,
-    "one_of_ones": 0,
-    "editions": 11,
-    "collections": 2
-   },
-   "first_collected": null,
-   "last_collected": null
   },
   {
    "address": "0x9e597a7e01ed135effb7e95bd017fe958e7656b8",
@@ -762,7 +746,7 @@
     "collections": 5
    },
    "first_collected": "2025-07-21T01:21:35.000000Z",
-   "last_collected": "2025-07-21T01:21:35.000000Z"
+   "last_collected": "2025-07-21T01:21:35.000Z"
   },
   {
    "address": "0xa1f05dbe26cdc2ede4f410a5c54fe6473b5d7071",
@@ -778,7 +762,23 @@
     "collections": 7
    },
    "first_collected": "2025-07-09T00:57:59.000000Z",
-   "last_collected": "2025-07-09T00:57:59.000000Z"
+   "last_collected": "2025-12-26T03:41:47.000000Z"
+  },
+  {
+   "address": "0x8c1f393c989c667ad20e3d9df72a4f778c5c64b2",
+   "ens": "walavault.eth",
+   "display_name": null,
+   "slug": "walavault.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 10,
+    "one_of_ones": 2,
+    "editions": 8,
+    "collections": 6
+   },
+   "first_collected": "2022-05-20T03:28:49.000000Z",
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x15ef9bb5d59fc204caab300d0c23d28da34e3535",
@@ -793,8 +793,8 @@
     "editions": 10,
     "collections": 4
    },
-   "first_collected": "2022-07-09T10:24:40.000000Z",
-   "last_collected": "2022-10-11T11:39:35.000000Z"
+   "first_collected": "2022-05-28T08:21:12.000000Z",
+   "last_collected": "2022-12-24T10:18:11.000Z"
   },
   {
    "address": "0x832834fc5b0b35ffd4cf697c4ec08815ad8d6a52",
@@ -809,8 +809,24 @@
     "editions": 10,
     "collections": 5
    },
-   "first_collected": "2022-07-09T02:25:44.000000Z",
+   "first_collected": "2022-05-10T06:17:09.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
+  },
+  {
+   "address": "0xbdd615f15447baf294411f2f82263851d15bcf5c",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xbdd615f1",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 10,
+    "one_of_ones": 0,
+    "editions": 10,
+    "collections": 1
+   },
+   "first_collected": "2022-11-29T09:18:35.000Z",
+   "last_collected": "2022-12-24T07:19:47.000Z"
   },
   {
    "address": "0xf7b6409b12a540947688f054dbf5b629fb3fc7d8",
@@ -825,7 +841,7 @@
     "editions": 10,
     "collections": 3
    },
-   "first_collected": "2022-10-14T22:33:11.000000Z",
+   "first_collected": "2022-05-13T13:13:30.000000Z",
    "last_collected": "2022-12-28T05:06:59.000000Z"
   },
   {
@@ -841,8 +857,40 @@
     "editions": 10,
     "collections": 4
    },
-   "first_collected": "2022-07-11T04:53:37.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-07-11T04:53:37.000Z",
+   "last_collected": "2025-05-16T21:45:59.000000Z"
+  },
+  {
+   "address": "0xc97958ff5370c56b7e0e6fb58437f00702714d49",
+   "ens": "glitchqueen.eth",
+   "display_name": null,
+   "slug": "glitchqueen.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 9,
+    "one_of_ones": 6,
+    "editions": 3,
+    "collections": 3
+   },
+   "first_collected": "2022-07-09T01:15:58.000Z",
+   "last_collected": "2022-12-02T17:11:35.000Z"
+  },
+  {
+   "address": "0x4076eca4db9684fa1d9bfac231cb516889a33e5a",
+   "ens": "genesis.articulate.eth",
+   "display_name": null,
+   "slug": "genesis.articulate.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 9,
+    "one_of_ones": 2,
+    "editions": 7,
+    "collections": 6
+   },
+   "first_collected": "2022-02-19T02:39:41.000000Z",
+   "last_collected": "2024-04-21T22:49:59.000000Z"
   },
   {
    "address": "0xf1e1c701b49b1dc2405a9e8ef40f9f88802b80fa",
@@ -857,8 +905,8 @@
     "editions": 7,
     "collections": 5
    },
-   "first_collected": "2022-07-18T18:25:36.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-04-30T22:40:44.000Z",
+   "last_collected": "2023-02-07T07:48:35.000Z"
   },
   {
    "address": "0xd26ce943636ca63a1810886fd1444d3dcaf738b3",
@@ -874,7 +922,7 @@
     "collections": 6
    },
    "first_collected": "2022-02-19T02:13:29.000000Z",
-   "last_collected": "2022-10-11T12:40:23.000000Z"
+   "last_collected": "2022-11-02T12:52:11.000Z"
   },
   {
    "address": "0x3c2550ddb9294c21d209999bdaa15f8249d0c161",
@@ -889,7 +937,7 @@
     "editions": 8,
     "collections": 3
    },
-   "first_collected": "2022-12-05T01:34:23.000000Z",
+   "first_collected": "2022-09-25T10:45:59.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -905,8 +953,8 @@
     "editions": 9,
     "collections": 3
    },
-   "first_collected": "2022-10-11T06:00:47.000000Z",
-   "last_collected": "2022-12-08T22:54:23.000000Z"
+   "first_collected": "2022-06-22T02:01:41.000Z",
+   "last_collected": "2025-08-02T02:27:11.000000Z"
   },
   {
    "address": "0x6ecae358e99dfdd1abe900bebe5f775431c12324",
@@ -921,8 +969,8 @@
     "editions": 9,
     "collections": 4
    },
-   "first_collected": "2022-10-11T10:49:23.000000Z",
-   "last_collected": "2022-10-11T10:49:23.000000Z"
+   "first_collected": "2022-06-06T23:00:55.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xa38cd368705648904200675f3b10960be3975cf5",
@@ -937,24 +985,8 @@
     "editions": 9,
     "collections": 3
    },
-   "first_collected": "2022-07-11T00:00:53.000000Z",
-   "last_collected": "2022-07-11T00:00:53.000000Z"
-  },
-  {
-   "address": "0xbdd615f15447baf294411f2f82263851d15bcf5c",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xbdd615f1",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 9,
-    "one_of_ones": 0,
-    "editions": 9,
-    "collections": 1
-   },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-05-12T20:16:16.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xd83dde5249bfb96b976873556f4d84236c8abf27",
@@ -969,8 +1001,8 @@
     "editions": 9,
     "collections": 3
    },
-   "first_collected": "2022-07-09T01:43:06.000000Z",
-   "last_collected": "2022-07-09T01:43:06.000000Z"
+   "first_collected": "2022-07-09T01:43:06.000Z",
+   "last_collected": "2026-05-15T22:31:23.000000Z"
   },
   {
    "address": "0x09c52c99e701304332b5998227f07d2648e8a72c",
@@ -985,8 +1017,8 @@
     "editions": 9,
     "collections": 3
    },
-   "first_collected": "2022-07-09T18:32:51.000000Z",
-   "last_collected": "2022-10-11T13:27:11.000000Z"
+   "first_collected": "2022-07-09T18:32:51.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x7ef61cacd0c785eacdfe17649d1c5bcba676a858",
@@ -1017,40 +1049,40 @@
     "editions": 9,
     "collections": 3
    },
-   "first_collected": "2022-07-11T12:06:00.000000Z",
-   "last_collected": "2022-10-12T08:22:11.000000Z"
+   "first_collected": "2022-07-11T12:06:00.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
-   "address": "0xc97958ff5370c56b7e0e6fb58437f00702714d49",
-   "ens": "glitchqueen.eth",
+   "address": "0xf7174bd56541305b18222e88c1f3ab82776993a7",
+   "ens": "sañctuary.eth",
    "display_name": null,
-   "slug": "glitchqueen.eth",
+   "slug": "0xf7174bd5",
    "private": false,
    "has_page": true,
    "counts": {
-    "works": 8,
-    "one_of_ones": 6,
-    "editions": 2,
+    "works": 9,
+    "one_of_ones": 0,
+    "editions": 9,
     "collections": 3
    },
-   "first_collected": "2022-07-09T01:15:58.000000Z",
-   "last_collected": "2022-08-11T10:13:47.000000Z"
+   "first_collected": "2022-06-17T19:02:04.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
-   "address": "0x4076eca4db9684fa1d9bfac231cb516889a33e5a",
-   "ens": "genesis.articulate.eth",
+   "address": "0xef5ab90a44b68d4f5e3f6be6af4bedb12cd2c66e",
+   "ens": null,
    "display_name": null,
-   "slug": "genesis.articulate.eth",
+   "slug": "0xef5ab90a",
    "private": false,
    "has_page": true,
    "counts": {
     "works": 8,
-    "one_of_ones": 2,
-    "editions": 6,
+    "one_of_ones": 3,
+    "editions": 5,
     "collections": 5
    },
-   "first_collected": "2022-10-11T01:52:59.000000Z",
-   "last_collected": "2024-04-21T22:49:59.000000Z"
+   "first_collected": "2022-02-21T04:08:23.000000Z",
+   "last_collected": "2022-08-12T01:14:32.000000Z"
   },
   {
    "address": "0x9481d8bc76fb1b7d2f95733a6ec0b40d0cb1fffc",
@@ -1066,7 +1098,7 @@
     "collections": 3
    },
    "first_collected": "2022-08-29T03:11:07.000000Z",
-   "last_collected": "2022-10-11T04:49:47.000000Z"
+   "last_collected": "2022-12-24T21:46:59.000Z"
   },
   {
    "address": "0x05dba3798520986ae5ae4e7ecd3af0ef80b65278",
@@ -1081,8 +1113,8 @@
     "editions": 8,
     "collections": 3
    },
-   "first_collected": "2022-10-11T11:03:11.000000Z",
-   "last_collected": "2022-10-11T11:03:11.000000Z"
+   "first_collected": "2022-05-28T20:04:44.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x16dee223fc168abff7b979813cdf15866eed7e8d",
@@ -1097,8 +1129,24 @@
     "editions": 8,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-12-03T09:08:59.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
+  },
+  {
+   "address": "0x1f6b5d424c90e4834c1b4cd2c0e7adeaa941501e",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x1f6b5d42",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 8,
+    "one_of_ones": 0,
+    "editions": 8,
+    "collections": 2
+   },
+   "first_collected": "2022-10-14T02:48:11.000Z",
+   "last_collected": "2022-12-27T11:37:23.000000Z"
   },
   {
    "address": "0x4cffc2b4fb3114ca8cf9a2a244632d0176395348",
@@ -1113,8 +1161,8 @@
     "editions": 8,
     "collections": 3
    },
-   "first_collected": "2022-07-13T04:44:51.000000Z",
-   "last_collected": "2022-07-13T04:44:51.000000Z"
+   "first_collected": "2022-07-13T04:44:51.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x8181dd699e486493027e4e21bf6d0c7b7c94055e",
@@ -1129,24 +1177,24 @@
     "editions": 8,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-10-07T17:59:23.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
-   "address": "0xc0efdd2b7616b1a469d5fc05dcc90f29647f03b2",
+   "address": "0xaec3f7e735505c2b787b05d67f4adaefe3dfd678",
    "ens": null,
    "display_name": null,
-   "slug": "0xc0efdd2b",
+   "slug": "0xaec3f7e7",
    "private": false,
    "has_page": true,
    "counts": {
     "works": 8,
     "one_of_ones": 0,
     "editions": 8,
-    "collections": 3
+    "collections": 5
    },
-   "first_collected": "2022-07-13T05:29:06.000000Z",
-   "last_collected": "2022-07-13T05:29:06.000000Z"
+   "first_collected": "2022-05-09T00:47:31.000000Z",
+   "last_collected": "2025-08-12T09:33:11.000000Z"
   },
   {
    "address": "0xa16977865ab1e2eeab1068e71890b36de4bf95f3",
@@ -1161,8 +1209,8 @@
     "editions": 8,
     "collections": 4
    },
-   "first_collected": "2022-07-19T12:38:54.000000Z",
-   "last_collected": "2022-07-19T12:38:54.000000Z"
+   "first_collected": "2022-06-14T06:22:39.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xb6c4ce4eae85066f8fc45093d12444c8b89a6aa9",
@@ -1177,8 +1225,8 @@
     "editions": 8,
     "collections": 6
    },
-   "first_collected": "2022-07-13T07:49:09.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-05-09T10:13:16.000000Z",
+   "last_collected": "2025-05-30T00:20:11.000000Z"
   },
   {
    "address": "0x13c39b3e6e6159bc233fad90825f1f9f84fcb102",
@@ -1193,24 +1241,8 @@
     "editions": 8,
     "collections": 5
    },
-   "first_collected": "2022-07-09T15:54:28.000000Z",
+   "first_collected": "2022-05-10T20:15:24.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
-  },
-  {
-   "address": "0xf7174bd56541305b18222e88c1f3ab82776993a7",
-   "ens": "sañctuary.eth",
-   "display_name": null,
-   "slug": "0xf7174bd5",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 8,
-    "one_of_ones": 0,
-    "editions": 8,
-    "collections": 3
-   },
-   "first_collected": "2022-07-11T21:45:24.000000Z",
-   "last_collected": "2022-07-11T21:45:24.000000Z"
   },
   {
    "address": "0x0b3b0f9046905f50e13d3ebe055ab21e838ec872",
@@ -1226,7 +1258,7 @@
     "collections": 6
    },
    "first_collected": "2025-08-06T05:11:47.000000Z",
-   "last_collected": "2025-08-06T05:11:47.000000Z"
+   "last_collected": "2025-09-08T05:26:59.000000Z"
   },
   {
    "address": "0xfa977a0125c16a658a59ca1e59c7c48d58142226",
@@ -1241,8 +1273,40 @@
     "editions": 4,
     "collections": 5
    },
-   "first_collected": "2023-10-27T05:43:35.000000Z",
-   "last_collected": "2025-02-08T23:48:11.000000Z"
+   "first_collected": "2022-12-12T11:54:11.000Z",
+   "last_collected": "2025-05-16T10:36:23.000000Z"
+  },
+  {
+   "address": "0x1430997022e8ccf845af34596ef37f4754983f85",
+   "ens": "apocalypseart.eth",
+   "display_name": null,
+   "slug": "apocalypseart.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 7,
+    "one_of_ones": 3,
+    "editions": 4,
+    "collections": 7
+   },
+   "first_collected": "2022-02-17T18:52:56.000000Z",
+   "last_collected": "2024-09-28T23:59:47.000000Z"
+  },
+  {
+   "address": "0x436a257ab8f9d8579594f493ffb81fa5245ada26",
+   "ens": "nptacek.eth",
+   "display_name": null,
+   "slug": "nptacek.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 7,
+    "one_of_ones": 3,
+    "editions": 4,
+    "collections": 4
+   },
+   "first_collected": "2022-02-17T03:43:40.000000Z",
+   "last_collected": "2022-07-09T00:48:11.000Z"
   },
   {
    "address": "0x319af5203839970ccb04d2eda95c427941c498ae",
@@ -1258,7 +1322,23 @@
     "collections": 5
    },
    "first_collected": "2022-04-21T13:35:30.000000Z",
-   "last_collected": "2022-07-09T10:24:14.000000Z"
+   "last_collected": "2022-08-31T22:21:06.000Z"
+  },
+  {
+   "address": "0xe6666ba861c4749e316756e3f599676d1184e77c",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xe6666ba8",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 7,
+    "one_of_ones": 1,
+    "editions": 6,
+    "collections": 5
+   },
+   "first_collected": "2022-02-17T11:37:18.000000Z",
+   "last_collected": "2022-09-24T06:32:35.000Z"
   },
   {
    "address": "0x91cb1ff4322559a5c5c67dba075ab081c255ba1f",
@@ -1273,7 +1353,7 @@
     "editions": 6,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-10-14T03:11:47.000Z",
    "last_collected": "2026-08-21T04:56:11.000000Z"
   },
   {
@@ -1293,22 +1373,6 @@
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
-   "address": "0x1f6b5d424c90e4834c1b4cd2c0e7adeaa941501e",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x1f6b5d42",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 7,
-    "one_of_ones": 0,
-    "editions": 7,
-    "collections": 2
-   },
-   "first_collected": "2022-11-29T13:02:35.000000Z",
-   "last_collected": "2022-12-27T11:37:23.000000Z"
-  },
-  {
    "address": "0x25780546b9937720791ba9a93f1aaf08746df36f",
    "ens": null,
    "display_name": null,
@@ -1321,8 +1385,8 @@
     "editions": 7,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2025-11-29T01:22:59.000Z",
+   "last_collected": "2026-02-11T22:35:59.000Z"
   },
   {
    "address": "0x32d53a21813debfcb33a2b1ff2a396bd3a06f818",
@@ -1337,8 +1401,8 @@
     "editions": 7,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-19T12:31:11.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x34f5c36dfd35ef66c996eca754bc5e38165f31f4",
@@ -1353,8 +1417,8 @@
     "editions": 7,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2025-07-24T19:05:35.000Z",
+   "last_collected": "2025-10-16T10:45:47.000Z"
   },
   {
    "address": "0x3f4a9bfaf9ecd4f321eb1a3b9394d90f16ac081e",
@@ -1369,8 +1433,8 @@
     "editions": 7,
     "collections": 4
    },
-   "first_collected": "2022-07-09T09:10:47.000000Z",
-   "last_collected": "2022-10-10T06:12:11.000000Z"
+   "first_collected": "2022-06-01T21:30:09.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x4f99d481981f464d824592604f58bcee9cb8abf6",
@@ -1385,7 +1449,7 @@
     "editions": 7,
     "collections": 2
    },
-   "first_collected": "2022-11-30T07:17:11.000000Z",
+   "first_collected": "2022-09-25T09:13:47.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -1401,8 +1465,8 @@
     "editions": 7,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-25T18:44:11.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x5feadf8ef647da7f07584b3d33fcd565b79359a4",
@@ -1417,8 +1481,8 @@
     "editions": 7,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-10-13T23:38:35.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xa5dce742f3775059d9406342d2ecbb0ff8e3a3c2",
@@ -1433,24 +1497,8 @@
     "editions": 7,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:07:23.000000Z",
+   "first_collected": "2022-09-25T14:36:59.000Z",
    "last_collected": "2022-12-27T03:07:23.000000Z"
-  },
-  {
-   "address": "0xaec3f7e735505c2b787b05d67f4adaefe3dfd678",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xaec3f7e7",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 7,
-    "one_of_ones": 0,
-    "editions": 7,
-    "collections": 5
-   },
-   "first_collected": "2022-07-09T05:41:19.000000Z",
-   "last_collected": "2022-10-12T03:53:59.000000Z"
   },
   {
    "address": "0xb814f14996dd967a04e858ebe36120784ced4e36",
@@ -1465,8 +1513,24 @@
     "editions": 7,
     "collections": 3
    },
-   "first_collected": "2026-07-18T19:08:47.000000Z",
-   "last_collected": "2026-07-18T19:08:47.000000Z"
+   "first_collected": "2026-01-25T14:40:35.000Z",
+   "last_collected": "2026-07-18T19:08:47.000Z"
+  },
+  {
+   "address": "0xc0efdd2b7616b1a469d5fc05dcc90f29647f03b2",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xc0efdd2b",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 7,
+    "one_of_ones": 0,
+    "editions": 7,
+    "collections": 3
+   },
+   "first_collected": "2022-06-07T03:41:32.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xa20377b058e3e7fddf5ec14e8f64b17b9c8e744f",
@@ -1481,8 +1545,8 @@
     "editions": 7,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-05-13T04:33:39.000000Z",
+   "last_collected": "2022-12-28T03:25:11.000Z"
   },
   {
    "address": "0xa86d8add58edf1e77a20c6edea06de34465ec98e",
@@ -1497,8 +1561,8 @@
     "editions": 7,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-10-15T04:53:35.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x40d2f4399d23f9afb82d0a6b73055f13208614f9",
@@ -1513,8 +1577,8 @@
     "editions": 7,
     "collections": 5
    },
-   "first_collected": "2022-08-03T00:47:07.000000Z",
-   "last_collected": "2023-01-29T07:14:11.000000Z"
+   "first_collected": "2022-08-03T00:24:09.000000Z",
+   "last_collected": "2025-09-08T04:53:35.000Z"
   },
   {
    "address": "0xab0e2f3c3c29deaa7c3ca0dacec97a33d5c26708",
@@ -1529,8 +1593,8 @@
     "editions": 7,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-08-04T11:43:44.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x862464bbd83d5743f9cf873c6ea3d187d0f909bf",
@@ -1545,7 +1609,7 @@
     "editions": 7,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-08-30T01:07:18.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -1563,38 +1627,6 @@
    },
    "first_collected": "2022-08-11T07:39:59.000000Z",
    "last_collected": "2022-08-11T08:05:08.000000Z"
-  },
-  {
-   "address": "0xef5ab90a44b68d4f5e3f6be6af4bedb12cd2c66e",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xef5ab90a",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 6,
-    "one_of_ones": 3,
-    "editions": 3,
-    "collections": 5
-   },
-   "first_collected": "2022-04-23T13:38:30.000000Z",
-   "last_collected": "2022-08-12T01:14:32.000000Z"
-  },
-  {
-   "address": "0x436a257ab8f9d8579594f493ffb81fa5245ada26",
-   "ens": "nptacek.eth",
-   "display_name": null,
-   "slug": "nptacek.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 6,
-    "one_of_ones": 3,
-    "editions": 3,
-    "collections": 4
-   },
-   "first_collected": "2022-02-17T03:43:40.000000Z",
-   "last_collected": "2022-07-09T00:48:11.000000Z"
   },
   {
    "address": "0x7b7ca7aa1034cde3d0d93fb2e6a6b3e4eb09bb60",
@@ -1625,8 +1657,8 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2025-02-04T21:55:23.000000Z",
-   "last_collected": "2025-02-04T21:55:23.000000Z"
+   "first_collected": "2022-12-14T19:15:11.000Z",
+   "last_collected": "2025-05-16T14:42:11.000000Z"
   },
   {
    "address": "0x5b046272cb9fde317ab73a836546e52b1f2d81f3",
@@ -1641,24 +1673,8 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-11-30T07:04:35.000000Z",
+   "first_collected": "2022-05-13T11:57:38.000000Z",
    "last_collected": "2023-06-06T04:34:59.000000Z"
-  },
-  {
-   "address": "0xe6666ba861c4749e316756e3f599676d1184e77c",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xe6666ba8",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 6,
-    "one_of_ones": 1,
-    "editions": 5,
-    "collections": 5
-   },
-   "first_collected": "2022-02-17T11:37:18.000000Z",
-   "last_collected": "2022-07-13T12:04:55.000000Z"
   },
   {
    "address": "0x266d5bdae1a0bb609b3de4c5c8aae4231e356bf7",
@@ -1673,8 +1689,8 @@
     "editions": 5,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-08-23T03:34:39.000Z",
+   "last_collected": "2022-12-24T02:10:35.000Z"
   },
   {
    "address": "0x895bef95023f591ebd1a9e8f53bed2b73702e4d1",
@@ -1693,6 +1709,38 @@
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
+   "address": "0x2777129e77c1ccf6c6987117bacfadcbd573f3a9",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x2777129e",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 6,
+    "one_of_ones": 0,
+    "editions": 6,
+    "collections": 2
+   },
+   "first_collected": "2023-01-13T08:48:23.000Z",
+   "last_collected": "2023-01-13T09:55:59.000000Z"
+  },
+  {
+   "address": "0x5b33b6f41e87111b7d22685b297f086b5535034d",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x5b33b6f4",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 6,
+    "one_of_ones": 0,
+    "editions": 6,
+    "collections": 3
+   },
+   "first_collected": "2022-05-29T15:30:00.000000Z",
+   "last_collected": "2022-12-28T08:04:23.000000Z"
+  },
+  {
    "address": "0x690dabe81caf23ff4f855d27785d01da66ede8ca",
    "ens": null,
    "display_name": null,
@@ -1706,7 +1754,7 @@
     "collections": 2
    },
    "first_collected": "2022-11-30T07:46:47.000000Z",
-   "last_collected": "2022-11-30T07:46:47.000000Z"
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xa431d9ae84cce1c1c6d28f8258b5b95bab930210",
@@ -1721,8 +1769,8 @@
     "editions": 6,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-25T21:54:47.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xc2547446c439be477dce96702fb1f9dfb61bab3a",
@@ -1737,8 +1785,8 @@
     "editions": 6,
     "collections": 4
    },
-   "first_collected": "2022-07-09T11:03:00.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-07-09T11:03:00.000Z",
+   "last_collected": "2025-09-12T20:09:59.000000Z"
   },
   {
    "address": "0x82cab9c4cfddc6ac54c988743e713a81234d2399",
@@ -1753,7 +1801,7 @@
     "editions": 6,
     "collections": 4
    },
-   "first_collected": "2022-07-15T06:13:28.000000Z",
+   "first_collected": "2022-06-22T06:05:48.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -1769,8 +1817,8 @@
     "editions": 6,
     "collections": 4
    },
-   "first_collected": "2022-07-09T18:35:51.000000Z",
-   "last_collected": "2022-07-09T18:35:51.000000Z"
+   "first_collected": "2022-06-01T19:27:53.000000Z",
+   "last_collected": "2025-05-16T10:36:23.000000Z"
   },
   {
    "address": "0xe23e0bd6e320c87367b0e4b797b42dc9b4fe7ca0",
@@ -1785,7 +1833,7 @@
     "editions": 6,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-05-27T11:48:54.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -1801,24 +1849,8 @@
     "editions": 6,
     "collections": 2
    },
-   "first_collected": "2022-12-27T05:14:23.000000Z",
+   "first_collected": "2022-09-25T13:06:47.000Z",
    "last_collected": "2022-12-27T05:14:23.000000Z"
-  },
-  {
-   "address": "0x98dc45a0a69a60e63f7a042507ab38e4d492cd69",
-   "ens": "mint.justanotherblockinthechain.eth",
-   "display_name": null,
-   "slug": "mint.justanotherblockinthechain.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 6,
-    "one_of_ones": 0,
-    "editions": 6,
-    "collections": 2
-   },
-   "first_collected": null,
-   "last_collected": null
   },
   {
    "address": "0x838a1c2f0cae94072332c346533acdc6c590971f",
@@ -1833,8 +1865,8 @@
     "editions": 6,
     "collections": 3
    },
-   "first_collected": "2022-07-12T23:07:58.000000Z",
-   "last_collected": "2022-07-12T23:07:58.000000Z"
+   "first_collected": "2022-05-30T12:30:02.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x40e6d6e798dc878e12987ed978f23c2391f1f570",
@@ -1849,8 +1881,8 @@
     "editions": 6,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-05T09:02:06.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x92c70f31efa47bd08b65f36079fba5668f3050c4",
@@ -1865,8 +1897,8 @@
     "editions": 6,
     "collections": 4
    },
-   "first_collected": "2022-10-10T07:03:47.000000Z",
-   "last_collected": "2022-10-10T07:03:47.000000Z"
+   "first_collected": "2022-06-06T01:54:25.000000Z",
+   "last_collected": "2022-10-10T07:03:47.000Z"
   },
   {
    "address": "0xaf12a9af19331fa9b89915537ce9d41bce5e4c5d",
@@ -1881,7 +1913,7 @@
     "editions": 6,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-08-18T03:09:22.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -1897,7 +1929,7 @@
     "editions": 6,
     "collections": 4
    },
-   "first_collected": "2022-07-09T04:18:43.000000Z",
+   "first_collected": "2022-05-13T04:50:03.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -1914,23 +1946,7 @@
     "collections": 2
    },
    "first_collected": "2022-08-11T06:55:10.000000Z",
-   "last_collected": "2022-08-11T06:57:39.000000Z"
-  },
-  {
-   "address": "0x1430997022e8ccf845af34596ef37f4754983f85",
-   "ens": "apocalypseart.eth",
-   "display_name": null,
-   "slug": "apocalypseart.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 5,
-    "one_of_ones": 3,
-    "editions": 2,
-    "collections": 5
-   },
-   "first_collected": "2022-02-17T18:52:56.000000Z",
-   "last_collected": "2024-09-28T23:59:47.000000Z"
+   "last_collected": "2022-09-24T06:08:11.000Z"
   },
   {
    "address": "0xf474e475fc675a37075ce0d9d5b4367d54c4d8fe",
@@ -1962,7 +1978,7 @@
     "collections": 3
    },
    "first_collected": "2022-04-21T11:35:04.000000Z",
-   "last_collected": "2022-04-21T11:35:04.000000Z"
+   "last_collected": "2022-07-28T23:03:18.000000Z"
   },
   {
    "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
@@ -1977,7 +1993,7 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": "2024-08-26T09:02:11.000000Z",
+   "first_collected": "2022-05-13T15:09:23.000000Z",
    "last_collected": "2024-08-26T09:02:11.000000Z"
   },
   {
@@ -1993,8 +2009,24 @@
     "editions": 4,
     "collections": 5
    },
-   "first_collected": "2022-07-10T23:29:18.000000Z",
+   "first_collected": "2022-07-10T23:29:18.000Z",
    "last_collected": "2023-11-25T04:00:47.000000Z"
+  },
+  {
+   "address": "0x08493a92a95d4e93bdbc49f66e7647f1445a9210",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x08493a92",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 5,
+    "one_of_ones": 0,
+    "editions": 5,
+    "collections": 1
+   },
+   "first_collected": "2022-11-29T02:03:59.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x1e3a1348881f6d0a5e1cdc6bf19b88d98399b15a",
@@ -2009,8 +2041,8 @@
     "editions": 5,
     "collections": 3
    },
-   "first_collected": "2022-07-17T20:54:06.000000Z",
-   "last_collected": "2022-07-17T20:54:06.000000Z"
+   "first_collected": "2022-05-27T13:24:45.000000Z",
+   "last_collected": "2022-07-28T23:03:18.000000Z"
   },
   {
    "address": "0x2d17a7381c3a7af82e3bcf02173df197ae3fea4f",
@@ -2025,7 +2057,7 @@
     "editions": 5,
     "collections": 2
    },
-   "first_collected": "2022-11-24T06:16:47.000000Z",
+   "first_collected": "2022-11-24T06:16:47.000Z",
    "last_collected": "2022-12-28T03:55:23.000000Z"
   },
   {
@@ -2041,7 +2073,7 @@
     "editions": 5,
     "collections": 3
    },
-   "first_collected": "2022-11-30T06:55:23.000000Z",
+   "first_collected": "2022-05-10T17:04:51.000000Z",
    "last_collected": "2022-12-27T05:14:47.000000Z"
   },
   {
@@ -2057,24 +2089,8 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-07-09T04:21:29.000000Z",
+   "first_collected": "2022-02-26T06:23:17.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
-  },
-  {
-   "address": "0x5b33b6f41e87111b7d22685b297f086b5535034d",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x5b33b6f4",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 5,
-    "one_of_ones": 0,
-    "editions": 5,
-    "collections": 3
-   },
-   "first_collected": "2022-12-27T04:39:11.000000Z",
-   "last_collected": "2022-12-28T08:04:23.000000Z"
   },
   {
    "address": "0x6b6ff87ddedfb45891d07b9aa2525897f1a6b684",
@@ -2089,8 +2105,8 @@
     "editions": 5,
     "collections": 3
    },
-   "first_collected": "2022-07-18T08:09:53.000000Z",
-   "last_collected": "2022-07-18T08:09:53.000000Z"
+   "first_collected": "2022-03-12T03:47:00.000000Z",
+   "last_collected": "2022-07-18T08:09:53.000Z"
   },
   {
    "address": "0x833b6cac387e694dadb02b26d0c55e346b4c9c34",
@@ -2105,8 +2121,8 @@
     "editions": 5,
     "collections": 2
    },
-   "first_collected": "2022-07-21T11:50:57.000000Z",
-   "last_collected": "2022-07-21T11:50:57.000000Z"
+   "first_collected": "2022-07-21T11:50:57.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xa9276b86e04058b70cd43916e8e666bc3ad5bc9a",
@@ -2121,8 +2137,24 @@
     "editions": 5,
     "collections": 2
    },
-   "first_collected": "2022-07-14T22:28:21.000000Z",
-   "last_collected": "2022-07-14T22:28:21.000000Z"
+   "first_collected": "2022-07-18T20:58:08.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
+  },
+  {
+   "address": "0xb1b81fd772169a18504aee662cbd5ebb4886e0d4",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xb1b81fd7",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 5,
+    "one_of_ones": 0,
+    "editions": 5,
+    "collections": 1
+   },
+   "first_collected": "2022-12-03T05:52:23.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xb4354fae53823e690a48aa3a5abed56036cec9f8",
@@ -2137,8 +2169,8 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-07-09T13:10:01.000000Z",
-   "last_collected": "2022-07-09T13:10:01.000000Z"
+   "first_collected": "2022-06-20T21:35:27.000000Z",
+   "last_collected": "2022-09-24T06:16:11.000Z"
   },
   {
    "address": "0xd37905283adf21d3e628b423cbe20c4583ba9979",
@@ -2153,8 +2185,8 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-07-09T08:27:14.000000Z",
-   "last_collected": "2022-10-12T07:54:35.000000Z"
+   "first_collected": "2022-07-08T11:36:24.000Z",
+   "last_collected": "2022-10-12T07:54:35.000Z"
   },
   {
    "address": "0xdc613e6ecba50027235ac03ab1a844b441e57b43",
@@ -2169,7 +2201,23 @@
     "editions": 5,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-05-09T00:47:31.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
+  },
+  {
+   "address": "0xde69bda76c17409242533e9ff6a8363846afd7d8",
+   "ens": null,
+   "display_name": null,
+   "slug": "0xde69bda7",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 5,
+    "one_of_ones": 0,
+    "editions": 5,
+    "collections": 4
+   },
+   "first_collected": "2022-02-22T01:14:29.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -2185,8 +2233,24 @@
     "editions": 5,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2025-05-30T02:07:23.000Z",
+   "last_collected": "2026-02-15T02:13:23.000Z"
+  },
+  {
+   "address": "0x5eefc3ae27be1483ad6b864b45ed72fc39e6bb6c",
+   "ens": "aniltprabhakar.eth",
+   "display_name": null,
+   "slug": "aniltprabhakar.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 5,
+    "one_of_ones": 0,
+    "editions": 5,
+    "collections": 4
+   },
+   "first_collected": "2022-03-15T01:14:30.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
    "address": "0xc6aef9394574777c237fc10bb122589d36d13dc7",
@@ -2201,8 +2265,24 @@
     "editions": 5,
     "collections": 2
    },
-   "first_collected": "2022-12-27T05:05:35.000000Z",
-   "last_collected": "2022-12-28T01:08:35.000000Z"
+   "first_collected": "2022-12-14T17:22:11.000Z",
+   "last_collected": "2023-03-27T02:55:59.000Z"
+  },
+  {
+   "address": "0x8889ebb11295f456541901f50bcb5f382047caac",
+   "ens": "darrensrs.eth",
+   "display_name": null,
+   "slug": "darrensrs.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 5,
+    "one_of_ones": 0,
+    "editions": 5,
+    "collections": 4
+   },
+   "first_collected": "2022-04-23T03:04:13.000000Z",
+   "last_collected": "2025-05-16T10:34:47.000000Z"
   },
   {
    "address": "0x5e15052dfa1b27dfc5985d51d51dc0539c1c10ca",
@@ -2217,7 +2297,7 @@
     "editions": 5,
     "collections": 3
    },
-   "first_collected": "2022-10-11T08:38:59.000000Z",
+   "first_collected": "2022-05-13T06:29:23.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -2233,7 +2313,7 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-07-09T06:58:04.000000Z",
+   "first_collected": "2022-05-13T21:18:42.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -2249,8 +2329,8 @@
     "editions": 5,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-26T07:33:11.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x171446b041c6683e5f138b8a3f263bbffb8ee74a",
@@ -2265,8 +2345,8 @@
     "editions": 5,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-18T07:51:37.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x020ef67cc7338689d34fbafa4446990ff1dcf4f8",
@@ -2281,8 +2361,8 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-07-09T10:39:06.000000Z",
-   "last_collected": "2022-07-09T10:39:06.000000Z"
+   "first_collected": "2022-05-09T01:54:50.000000Z",
+   "last_collected": "2022-09-24T06:29:59.000Z"
   },
   {
    "address": "0xdc018add198ee371165f7413cc27849c5404c491",
@@ -2297,8 +2377,8 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-07-09T09:44:45.000000Z",
-   "last_collected": "2022-07-09T09:44:45.000000Z"
+   "first_collected": "2022-06-05T06:20:24.000000Z",
+   "last_collected": "2022-11-30T19:42:35.000Z"
   },
   {
    "address": "0x50e05fa93c604b02f7c4d4b0aa328287b1545650",
@@ -2313,8 +2393,8 @@
     "editions": 5,
     "collections": 4
    },
-   "first_collected": "2022-07-10T17:19:39.000000Z",
-   "last_collected": "2022-07-10T17:19:39.000000Z"
+   "first_collected": "2022-05-13T04:24:16.000000Z",
+   "last_collected": "2022-07-12T21:32:33.000000Z"
   },
   {
    "address": "0xfdfca754ba734df524f7a72e336aac8d159c9d96",
@@ -2329,8 +2409,8 @@
     "editions": 5,
     "collections": 3
    },
-   "first_collected": "2022-07-10T11:21:49.000000Z",
-   "last_collected": "2022-10-11T10:00:23.000000Z"
+   "first_collected": "2022-07-10T11:21:49.000Z",
+   "last_collected": "2022-11-14T23:08:23.000Z"
   },
   {
    "address": "0x914361b591a8c8de83a0d4e23c7c6da2d226eefd",
@@ -2346,7 +2426,7 @@
     "collections": 2
    },
    "first_collected": "2025-11-05T02:35:59.000000Z",
-   "last_collected": "2025-11-05T02:35:59.000000Z"
+   "last_collected": "2025-11-05T02:35:59.000Z"
   },
   {
    "address": "0xe322875fffb56f840456c7ba4742c125dd9cfd14",
@@ -2393,7 +2473,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2022-08-15T23:58:52.000000Z",
+   "first_collected": "2022-05-09T23:11:47.000000Z",
    "last_collected": "2022-08-16T00:13:40.000000Z"
   },
   {
@@ -2441,7 +2521,7 @@
     "editions": 1,
     "collections": 3
    },
-   "first_collected": "2023-07-05T05:18:47.000000Z",
+   "first_collected": "2023-03-27T04:22:59.000Z",
    "last_collected": "2026-06-17T05:04:11.000000Z"
   },
   {
@@ -2458,7 +2538,7 @@
     "collections": 4
    },
    "first_collected": "2024-07-27T06:22:35.000000Z",
-   "last_collected": "2025-02-07T03:01:11.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x89ecbbf60f39c8a6a345464958f88ba4d28cd37c",
@@ -2474,7 +2554,7 @@
     "collections": 3
    },
    "first_collected": "2025-02-05T15:03:47.000000Z",
-   "last_collected": "2025-02-05T15:05:23.000000Z"
+   "last_collected": "2025-05-20T22:37:35.000000Z"
   },
   {
    "address": "0x9addd91874b08f6856bf6b4a2263665d2bc0d933",
@@ -2490,7 +2570,7 @@
     "collections": 3
    },
    "first_collected": "2022-08-11T08:32:44.000000Z",
-   "last_collected": "2022-10-10T08:21:35.000000Z"
+   "last_collected": "2022-10-10T08:21:35.000Z"
   },
   {
    "address": "0xba0431f70833fe78d118f1e55bab3c8a526f303c",
@@ -2505,7 +2585,7 @@
     "editions": 3,
     "collections": 4
    },
-   "first_collected": "2022-10-11T10:42:35.000000Z",
+   "first_collected": "2022-10-11T10:42:35.000Z",
    "last_collected": "2026-08-21T07:26:47.000000Z"
   },
   {
@@ -2537,7 +2617,7 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-12-21T01:04:59.000000Z",
+   "first_collected": "2022-05-10T03:05:15.000000Z",
    "last_collected": "2022-12-27T05:13:35.000000Z"
   },
   {
@@ -2554,7 +2634,7 @@
     "collections": 3
    },
    "first_collected": "2022-12-27T03:39:11.000000Z",
-   "last_collected": "2025-02-04T20:01:35.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0xa8ef8e793210158ece2dbdb87b091f1574f0adb9",
@@ -2589,22 +2669,6 @@
    "last_collected": "2022-12-28T00:50:35.000000Z"
   },
   {
-   "address": "0x08493a92a95d4e93bdbc49f66e7647f1445a9210",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x08493a92",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 4,
-    "one_of_ones": 0,
-    "editions": 4,
-    "collections": 1
-   },
-   "first_collected": null,
-   "last_collected": null
-  },
-  {
    "address": "0x0a1c6f1638adbe3873c7e8dad6c0e3b08285ba07",
    "ens": null,
    "display_name": null,
@@ -2617,7 +2681,7 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-12-27T07:58:11.000000Z",
+   "first_collected": "2022-12-24T07:09:59.000Z",
    "last_collected": "2022-12-27T07:59:11.000000Z"
   },
   {
@@ -2633,8 +2697,24 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": "2022-07-14T05:32:48.000000Z",
-   "last_collected": "2022-07-14T05:32:48.000000Z"
+   "first_collected": "2022-06-07T06:57:23.000000Z",
+   "last_collected": "2022-11-12T21:06:35.000Z"
+  },
+  {
+   "address": "0x17b73c47b92007cce78eb92bfed964ba2e5d118d",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x17b73c47",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 4,
+    "one_of_ones": 0,
+    "editions": 4,
+    "collections": 2
+   },
+   "first_collected": "2023-02-01T15:57:11.000Z",
+   "last_collected": "2023-02-01T16:36:47.000Z"
   },
   {
    "address": "0x248458947c120ca057ec028b3fe7e4b3f26fdb3d",
@@ -2649,24 +2729,8 @@
     "editions": 4,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
-  },
-  {
-   "address": "0x2777129e77c1ccf6c6987117bacfadcbd573f3a9",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x2777129e",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 4,
-    "one_of_ones": 0,
-    "editions": 4,
-    "collections": 2
-   },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-26T11:19:47.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x2edb8bfb8caca74ddcf0a1914864a8e37bd4b000",
@@ -2681,8 +2745,8 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-05-18T08:30:54.000000Z",
+   "last_collected": "2022-10-07T22:40:47.000Z"
   },
   {
    "address": "0x32dd9f6885332ccf8633a18cb0c2e25e68fe03d1",
@@ -2697,8 +2761,8 @@
     "editions": 4,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-12-23T21:56:59.000Z",
+   "last_collected": "2022-12-23T21:56:59.000Z"
   },
   {
    "address": "0x33bfd3ba3bd175148d1bb1ee87e865253fd265e5",
@@ -2713,8 +2777,8 @@
     "editions": 4,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-26T00:08:23.000Z",
+   "last_collected": "2022-12-30T20:42:59.000Z"
   },
   {
    "address": "0x3d4e27b8391809d572d44adedda01b4f4804361d",
@@ -2729,7 +2793,7 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-12-27T05:55:59.000000Z",
+   "first_collected": "2022-12-24T09:37:59.000Z",
    "last_collected": "2022-12-27T08:39:35.000000Z"
   },
   {
@@ -2745,8 +2809,8 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-11-30T06:54:47.000000Z",
-   "last_collected": "2022-11-30T06:54:47.000000Z"
+   "first_collected": "2022-10-15T05:15:23.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x5f1db8d30744eed120fa29d7045a5d32e34c9724",
@@ -2761,8 +2825,8 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-08-03T07:29:17.000000Z",
-   "last_collected": "2022-08-03T07:29:17.000000Z"
+   "first_collected": "2022-08-03T07:28:31.000000Z",
+   "last_collected": "2025-06-19T07:49:11.000000Z"
   },
   {
    "address": "0x213f6b2680dce3e4d0924acff3e4e34520ef9ba1",
@@ -2777,7 +2841,7 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:18:47.000000Z",
+   "first_collected": "2022-12-20T07:45:35.000Z",
    "last_collected": "2022-12-28T01:09:35.000000Z"
   },
   {
@@ -2793,8 +2857,8 @@
     "editions": 4,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-19T05:02:36.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x7f9d9715fc2e460c5895f99824a4aece18012953",
@@ -2809,8 +2873,8 @@
     "editions": 4,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-11-30T17:05:47.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x7fabb88d9c81fa3e2b1177c9a085f47c2390b08e",
@@ -2825,8 +2889,8 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-07-11T06:17:39.000Z",
+   "last_collected": "2022-11-30T17:43:35.000Z"
   },
   {
    "address": "0x809dcc99c388767fb8bd9c25590f96c801aaebaf",
@@ -2857,7 +2921,7 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-12-27T07:20:59.000000Z",
+   "first_collected": "2022-12-24T10:47:47.000Z",
    "last_collected": "2022-12-27T09:19:59.000000Z"
   },
   {
@@ -2877,22 +2941,6 @@
    "last_collected": "2022-12-27T08:46:23.000000Z"
   },
   {
-   "address": "0xb1b81fd772169a18504aee662cbd5ebb4886e0d4",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xb1b81fd7",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 4,
-    "one_of_ones": 0,
-    "editions": 4,
-    "collections": 1
-   },
-   "first_collected": null,
-   "last_collected": null
-  },
-  {
    "address": "0xc01c99b2543e28eff240e90384a1fd757a484927",
    "ens": null,
    "display_name": null,
@@ -2905,7 +2953,7 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-10-23T17:36:47.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -2921,8 +2969,8 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": "2022-07-10T12:59:41.000000Z",
-   "last_collected": "2022-07-10T12:59:41.000000Z"
+   "first_collected": "2022-07-02T20:03:18.000Z",
+   "last_collected": "2022-09-25T08:59:59.000Z"
   },
   {
    "address": "0xc84d2bc55399de1f181c5adc01ee9b4e9a1f5efd",
@@ -2937,23 +2985,23 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-07-13T08:06:46.000000Z",
+   "first_collected": "2022-05-20T04:42:19.000000Z",
    "last_collected": "2023-03-19T18:37:11.000000Z"
   },
   {
-   "address": "0xde69bda76c17409242533e9ff6a8363846afd7d8",
+   "address": "0xdbd8fefa7f919825c22ab1a1ebfc5ce51340f1bb",
    "ens": null,
    "display_name": null,
-   "slug": "0xde69bda7",
+   "slug": "0xdbd8fefa",
    "private": false,
    "has_page": true,
    "counts": {
     "works": 4,
     "one_of_ones": 0,
     "editions": 4,
-    "collections": 3
+    "collections": 4
    },
-   "first_collected": "2022-10-11T00:11:35.000000Z",
+   "first_collected": "2022-03-06T02:07:29.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -2969,8 +3017,8 @@
     "editions": 4,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2025-09-14T10:40:47.000Z",
+   "last_collected": "2025-09-24T02:02:47.000Z"
   },
   {
    "address": "0xe359ab04cec41ac8c62bc5016c10c749c7de5480",
@@ -2985,8 +3033,8 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": "2022-07-10T17:13:30.000000Z",
-   "last_collected": "2022-07-10T17:13:30.000000Z"
+   "first_collected": "2022-05-09T23:03:17.000000Z",
+   "last_collected": "2022-12-05T19:00:59.000Z"
   },
   {
    "address": "0xf33f6c5302fee8dcaf6363f6862071092b3d56b0",
@@ -3017,24 +3065,8 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": "2022-07-09T07:55:31.000000Z",
-   "last_collected": "2022-07-09T07:55:31.000000Z"
-  },
-  {
-   "address": "0x5eefc3ae27be1483ad6b864b45ed72fc39e6bb6c",
-   "ens": "aniltprabhakar.eth",
-   "display_name": null,
-   "slug": "aniltprabhakar.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 4,
-    "one_of_ones": 0,
-    "editions": 4,
-    "collections": 3
-   },
-   "first_collected": "2022-07-10T04:57:46.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-07-09T07:55:31.000Z",
+   "last_collected": "2022-10-01T03:28:59.000Z"
   },
   {
    "address": "0xe781fe7a6f65ee6b3efe66ed8f7f5c1e9f01cc55",
@@ -3049,8 +3081,8 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-08T22:59:05.000000Z",
+   "last_collected": "2022-09-29T10:39:11.000Z"
   },
   {
    "address": "0x17726f58ba7350a33d08d1bbad623e155fa2daa0",
@@ -3065,8 +3097,8 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-07-10T03:00:52.000000Z",
-   "last_collected": "2022-07-10T03:00:52.000000Z"
+   "first_collected": "2022-06-12T01:31:12.000Z",
+   "last_collected": "2022-07-10T03:00:52.000Z"
   },
   {
    "address": "0xb26c452e8ac20ae7445fcf46b6478d3984f5d8e9",
@@ -3081,24 +3113,8 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": "2022-07-09T11:01:21.000000Z",
-   "last_collected": "2022-07-09T11:01:21.000000Z"
-  },
-  {
-   "address": "0x8889ebb11295f456541901f50bcb5f382047caac",
-   "ens": "darrensrs.eth",
-   "display_name": null,
-   "slug": "darrensrs.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 4,
-    "one_of_ones": 0,
-    "editions": 4,
-    "collections": 4
-   },
-   "first_collected": "2022-07-09T10:07:15.000000Z",
-   "last_collected": "2022-07-09T10:07:15.000000Z"
+   "first_collected": "2022-07-09T11:01:21.000Z",
+   "last_collected": "2025-05-16T10:36:23.000000Z"
   },
   {
    "address": "0xc99360f97475dcd02cbaa1940e0e6a2cb67186c8",
@@ -3113,7 +3129,7 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-10-11T11:24:35.000000Z",
+   "first_collected": "2022-06-18T09:23:36.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3129,8 +3145,8 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-07-09T03:44:06.000Z",
+   "last_collected": "2022-09-30T08:59:47.000Z"
   },
   {
    "address": "0x7fdab8c244e0b775edeeb9ebb8356b59068c6873",
@@ -3145,8 +3161,24 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-07-15T03:09:09.000000Z",
+   "first_collected": "2022-05-13T20:25:08.000000Z",
    "last_collected": "2022-12-27T21:18:47.000000Z"
+  },
+  {
+   "address": "0x36eebc48da111b14b010a97abecf8bb68d10095c",
+   "ens": "fathi.eth",
+   "display_name": null,
+   "slug": "fathi.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 4,
+    "one_of_ones": 0,
+    "editions": 4,
+    "collections": 2
+   },
+   "first_collected": "2022-05-09T10:13:16.000000Z",
+   "last_collected": "2022-10-22T09:03:47.000Z"
   },
   {
    "address": "0x1b8532be318e881a6d073b6b24aa584d76d017fe",
@@ -3161,7 +3193,7 @@
     "editions": 4,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-05-27T14:42:54.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3177,8 +3209,24 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-07-09T11:19:14.000000Z",
+   "first_collected": "2022-05-12T22:40:12.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
+  },
+  {
+   "address": "0x8fc11ab9a5f72a4f0d12199a72f474933bd71064",
+   "ens": "masis.eth",
+   "display_name": null,
+   "slug": "masis.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 4,
+    "one_of_ones": 0,
+    "editions": 4,
+    "collections": 2
+   },
+   "first_collected": "2022-02-28T20:39:24.000000Z",
+   "last_collected": "2023-07-04T07:20:11.000000Z"
   },
   {
    "address": "0xb70c3049982c09c18dcbf8596ccef6f5b3c239a3",
@@ -3193,8 +3241,24 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-09-25T15:32:47.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
+  },
+  {
+   "address": "0x8f8b4759dc93ca55bd6997df719f20f581f10f5c",
+   "ens": "mistertodd.eth",
+   "display_name": null,
+   "slug": "mistertodd.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 4,
+    "one_of_ones": 0,
+    "editions": 4,
+    "collections": 2
+   },
+   "first_collected": "2022-03-15T01:11:15.000000Z",
+   "last_collected": "2022-07-28T23:03:18.000000Z"
   },
   {
    "address": "0xc4cae0938241bde4e3ef6ae4b2e489eb88e2c57a",
@@ -3209,8 +3273,8 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-07-09T05:49:42.000000Z",
-   "last_collected": "2022-07-09T05:49:42.000000Z"
+   "first_collected": "2022-05-09T11:17:44.000000Z",
+   "last_collected": "2022-09-24T06:49:11.000Z"
   },
   {
    "address": "0x91e8be20d0dfb2293b97317e906223c1fa833a48",
@@ -3225,7 +3289,7 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-02-18T10:49:06.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3241,8 +3305,8 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-10-10T16:56:11.000000Z",
-   "last_collected": "2022-10-10T16:56:11.000000Z"
+   "first_collected": "2022-09-26T06:16:11.000Z",
+   "last_collected": "2022-10-13T23:48:11.000Z"
   },
   {
    "address": "0xada00080816c264ece458eee56802c2521c2469e",
@@ -3257,8 +3321,8 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-07-25T20:46:29.000000Z",
-   "last_collected": "2022-07-25T20:46:29.000000Z"
+   "first_collected": "2022-07-20T05:59:01.000000Z",
+   "last_collected": "2022-10-12T02:39:59.000Z"
   },
   {
    "address": "0x69cb3b1de24e08f1cfc2994171b6c6930498f750",
@@ -3273,8 +3337,8 @@
     "editions": 4,
     "collections": 2
    },
-   "first_collected": "2022-07-09T16:37:26.000000Z",
-   "last_collected": "2022-07-09T16:37:26.000000Z"
+   "first_collected": "2022-07-09T16:37:26.000Z",
+   "last_collected": "2022-12-16T14:47:59.000Z"
   },
   {
    "address": "0x388160a99390392278afdba240046b8b5e73f77b",
@@ -3289,7 +3353,7 @@
     "editions": 4,
     "collections": 4
    },
-   "first_collected": "2022-07-10T08:59:21.000000Z",
+   "first_collected": "2022-05-09T00:47:31.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3338,7 +3402,7 @@
     "collections": 1
    },
    "first_collected": "2022-08-11T07:07:00.000000Z",
-   "last_collected": "2022-08-11T07:07:00.000000Z"
+   "last_collected": "2022-08-11T07:07:00.000Z"
   },
   {
    "address": "0x360bd0e8ef21909115d520b924e72de923eff47e",
@@ -3370,7 +3434,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-05T05:25:35.000000Z",
-   "last_collected": "2025-02-05T05:25:35.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x8c36654b71c52bf8bf2ca8c3ec19bd4e83da7d11",
@@ -3386,7 +3450,7 @@
     "collections": 2
    },
    "first_collected": "2022-02-17T09:59:13.000000Z",
-   "last_collected": "2022-02-17T13:19:56.000000Z"
+   "last_collected": "2022-02-23T06:56:16.000000Z"
   },
   {
    "address": "0x8bf824d7e8a2dbbe6f47bd09721a8a3fdce09d63",
@@ -3402,7 +3466,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-04T20:16:47.000000Z",
-   "last_collected": "2025-02-04T20:16:47.000000Z"
+   "last_collected": "2025-05-20T22:00:11.000000Z"
   },
   {
    "address": "0x7d88f221e9ecef9eef118e0d0e8a47f81b37e0b6",
@@ -3418,7 +3482,7 @@
     "collections": 2
    },
    "first_collected": "2026-03-08T21:06:11.000000Z",
-   "last_collected": "2026-03-08T21:06:11.000000Z"
+   "last_collected": "2026-05-14T20:56:11.000000Z"
   },
   {
    "address": "0xba9941758893819c506b79906a02ebdaac0e337c",
@@ -3434,7 +3498,7 @@
     "collections": 2
    },
    "first_collected": "2022-08-22T01:58:15.000000Z",
-   "last_collected": "2022-08-22T02:01:25.000000Z"
+   "last_collected": "2022-09-05T23:21:51.000000Z"
   },
   {
    "address": "0x04dd50bdd139a9981bbaca6451f79b22d5af3ecf",
@@ -3450,7 +3514,7 @@
     "collections": 3
    },
    "first_collected": "2022-08-11T22:20:52.000000Z",
-   "last_collected": "2022-08-11T22:20:52.000000Z"
+   "last_collected": "2022-09-24T06:19:47.000Z"
   },
   {
    "address": "0x180669310d089fafcbee40479ee719752d680d4e",
@@ -3466,7 +3530,23 @@
     "collections": 3
    },
    "first_collected": "2022-04-21T08:44:54.000000Z",
-   "last_collected": "2022-04-21T08:44:54.000000Z"
+   "last_collected": "2022-05-09T09:28:11.000000Z"
+  },
+  {
+   "address": "0x4209c91d59985dd563213a139d2e1e66f7662d38",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x4209c91d",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 1,
+    "editions": 2,
+    "collections": 3
+   },
+   "first_collected": "2022-02-17T23:39:29.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
    "address": "0x44dd6be7a16dbce3676e9607269c8bdebd66dacf",
@@ -3497,8 +3577,8 @@
     "editions": 2,
     "collections": 3
    },
-   "first_collected": "2025-01-11T04:06:35.000000Z",
-   "last_collected": "2025-01-11T04:06:35.000000Z"
+   "first_collected": "2025-01-11T04:05:35.000Z",
+   "last_collected": "2025-05-16T10:36:23.000000Z"
   },
   {
    "address": "0xd614f79b1b01d42bed92eb05b58f973be9a3dd3d",
@@ -3513,7 +3593,7 @@
     "editions": 2,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-03-20T04:30:05.000000Z",
    "last_collected": "2026-08-21T05:31:47.000000Z"
   },
   {
@@ -3530,7 +3610,7 @@
     "collections": 2
    },
    "first_collected": "2022-12-11T01:41:59.000000Z",
-   "last_collected": "2022-12-11T01:41:59.000000Z"
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x6b159e840e28e009e930df3be6c06d1d70195cc7",
@@ -3546,7 +3626,7 @@
     "collections": 3
    },
    "first_collected": "2025-02-05T03:19:23.000000Z",
-   "last_collected": "2025-02-05T03:19:23.000000Z"
+   "last_collected": "2025-05-17T01:14:35.000000Z"
   },
   {
    "address": "0xa32c8ac28ec0ac0a19497cb30884ce85d88894fe",
@@ -3562,7 +3642,7 @@
     "collections": 3
    },
    "first_collected": "2025-02-05T00:51:59.000000Z",
-   "last_collected": "2025-02-05T00:51:59.000000Z"
+   "last_collected": "2025-05-17T20:20:23.000000Z"
   },
   {
    "address": "0x76e69bbc1acace9cf046a273b3ae38020d042452",
@@ -3578,7 +3658,7 @@
     "collections": 3
    },
    "first_collected": "2025-02-05T00:50:59.000000Z",
-   "last_collected": "2025-02-05T00:50:59.000000Z"
+   "last_collected": "2025-05-17T20:21:47.000000Z"
   },
   {
    "address": "0x7cef7db4289005fd56dfa6c73bb2be6ec13bc250",
@@ -3594,7 +3674,7 @@
     "collections": 3
    },
    "first_collected": "2022-02-17T10:38:57.000000Z",
-   "last_collected": "2025-08-10T10:54:11.000000Z"
+   "last_collected": "2025-08-10T10:54:11.000Z"
   },
   {
    "address": "0x8179e48d959a4c41d5e0432ac05b30707149d649",
@@ -3609,7 +3689,7 @@
     "editions": 2,
     "collections": 3
    },
-   "first_collected": "2023-04-07T05:51:35.000000Z",
+   "first_collected": "2022-12-06T22:55:47.000Z",
    "last_collected": "2024-04-22T03:24:11.000000Z"
   },
   {
@@ -3625,8 +3705,8 @@
     "editions": 2,
     "collections": 3
    },
-   "first_collected": "2022-11-17T11:07:11.000000Z",
-   "last_collected": "2023-10-15T17:04:11.000000Z"
+   "first_collected": "2022-11-17T11:07:11.000Z",
+   "last_collected": "2023-11-04T02:28:23.000Z"
   },
   {
    "address": "0x49f49396c23e4b976e375231a210b04b93569b1b",
@@ -3645,6 +3725,22 @@
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
+   "address": "0x95164c11db60941e60a262bbfe183ace6a34363e",
+   "ens": "landandcityscapes.eth",
+   "display_name": null,
+   "slug": "landandcityscapes.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 1,
+    "editions": 2,
+    "collections": 3
+   },
+   "first_collected": "2021-12-11T08:39:11.000000Z",
+   "last_collected": "2022-05-13T23:57:50.000000Z"
+  },
+  {
    "address": "0x00ba0b79fbf0c18034b753d3e2eedaae7bdf2aa2",
    "ens": null,
    "display_name": null,
@@ -3658,7 +3754,23 @@
     "collections": 3
    },
    "first_collected": "2022-11-19T23:51:59.000000Z",
-   "last_collected": "2022-11-19T23:51:59.000000Z"
+   "last_collected": "2022-11-19T23:51:59.000Z"
+  },
+  {
+   "address": "0x06dac6a2dcfa0f0dfb3e7e766515eef5b2c6399a",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x06dac6a2",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 3
+   },
+   "first_collected": "2022-05-27T06:41:34.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
    "address": "0x1145b29b49f9b61d6178050b4b5e520255c2e565",
@@ -3673,8 +3785,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-25T19:35:35.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x1445c1930852d09bd01b48a3b0ab7a14f21bb528",
@@ -3689,8 +3801,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-26T07:17:47.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x172c7f0626aaffdd9b95dbed0b38544ef3dddb00",
@@ -3705,24 +3817,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-09-05T00:06:24.000000Z",
-   "last_collected": "2022-10-11T11:10:47.000000Z"
-  },
-  {
-   "address": "0x17b73c47b92007cce78eb92bfed964ba2e5d118d",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x17b73c47",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 2
-   },
-   "first_collected": "2023-02-01T16:36:47.000000Z",
-   "last_collected": "2023-02-01T16:36:47.000000Z"
+   "first_collected": "2022-09-05T00:06:24.000Z",
+   "last_collected": "2022-10-11T11:10:47.000Z"
   },
   {
    "address": "0x18f97c7a1622411c7f2434b9c6900120781437a0",
@@ -3737,8 +3833,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-26T07:13:59.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x26fca9a99e95be90447a25a1da852d870417aac9",
@@ -3785,7 +3881,7 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-09T18:06:33.000000Z",
+   "first_collected": "2022-05-13T16:02:12.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3817,8 +3913,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-11T15:43:29.000000Z",
-   "last_collected": "2022-07-11T15:43:29.000000Z"
+   "first_collected": "2022-05-13T13:48:20.000000Z",
+   "last_collected": "2022-07-12T21:20:28.000000Z"
   },
   {
    "address": "0x46b2bd5c888e6d57a839c559fd6076f2c15a8cb1",
@@ -3833,14 +3929,14 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-05-31T02:57:34.000000Z",
+   "last_collected": "2022-07-28T23:03:18.000000Z"
   },
   {
-   "address": "0x56640ba14fb770f1ed151886ac7bb6adaa96955c",
+   "address": "0x4a15e3d354043fdefbb8fa77a55da211f4058190",
    "ens": null,
    "display_name": null,
-   "slug": "0x56640ba1",
+   "slug": "0x4a15e3d3",
    "private": false,
    "has_page": true,
    "counts": {
@@ -3849,8 +3945,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-05-13T12:22:03.000000Z",
+   "last_collected": "2022-09-30T10:43:23.000Z"
   },
   {
    "address": "0x6fb8d222d20b38910ba5f4e9699c760004089e47",
@@ -3869,6 +3965,22 @@
    "last_collected": "2022-12-28T18:27:23.000000Z"
   },
   {
+   "address": "0x72eb30d3ca53f5e839325e2eacf535e70a9e6987",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x72eb30d3",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 2
+   },
+   "first_collected": "2022-03-25T22:37:17.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
+  },
+  {
    "address": "0x74112baf5a50d45f455089ac8ea2dcc6c37261e6",
    "ens": null,
    "display_name": null,
@@ -3881,7 +3993,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-11-30T06:40:23.000000Z",
+   "first_collected": "2022-05-12T23:03:48.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3913,7 +4025,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-09-27T03:45:23.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3929,8 +4041,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-18T08:09:55.000Z",
+   "last_collected": "2022-11-30T20:20:11.000Z"
   },
   {
    "address": "0xa8174abc36b3298356d273e512cd87223a2b3ffa",
@@ -3945,8 +4057,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2023-01-09T02:23:59.000000Z",
-   "last_collected": "2023-01-09T02:23:59.000000Z"
+   "first_collected": "2022-10-15T07:22:11.000Z",
+   "last_collected": "2023-09-11T02:01:23.000Z"
   },
   {
    "address": "0xbfde1b001f5446756f7b99b301c26ea6f9a721a4",
@@ -3961,8 +4073,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-18T11:03:59.000Z",
+   "last_collected": "2022-10-05T05:09:59.000Z"
   },
   {
    "address": "0xc185d966f64480bedb2ed458e7d1a1e29d95231c",
@@ -3977,7 +4089,7 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-09T02:37:23.000000Z",
+   "first_collected": "2022-05-13T21:17:00.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -3993,8 +4105,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-10-14T01:36:11.000Z",
+   "last_collected": "2022-12-13T06:59:59.000Z"
   },
   {
    "address": "0xce990032a3ed14e197421270a9bec9e276bf2f31",
@@ -4009,7 +4121,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-07-14T10:25:10.000000Z",
+   "first_collected": "2022-07-14T10:34:06.000Z",
    "last_collected": "2022-12-27T07:25:35.000000Z"
   },
   {
@@ -4025,8 +4137,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-06T20:48:23.000000Z",
+   "last_collected": "2022-09-24T06:18:35.000Z"
   },
   {
    "address": "0xd76bf62f54e2af8b9a74924de857ee3cd6dcc6b4",
@@ -4041,8 +4153,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-12-07T12:34:11.000000Z",
+   "last_collected": "2022-12-07T13:24:35.000000Z"
   },
   {
    "address": "0xd7d16a716f6dfcef1e9553bf12136463f6414f1a",
@@ -4057,24 +4169,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-08-18T11:41:13.000000Z",
-   "last_collected": "2022-12-16T16:11:11.000000Z"
-  },
-  {
-   "address": "0xdbd8fefa7f919825c22ab1a1ebfc5ce51340f1bb",
-   "ens": null,
-   "display_name": null,
-   "slug": "0xdbd8fefa",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 3
-   },
-   "first_collected": "2022-07-13T05:49:34.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-08-18T11:41:13.000Z",
+   "last_collected": "2022-12-16T16:11:11.000Z"
   },
   {
    "address": "0xdc85bcd0f0e3f29f0637ebee04394988bdd06b83",
@@ -4089,7 +4185,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2026-07-08T07:10:23.000000Z",
+   "first_collected": "2026-07-08T07:10:23.000Z",
    "last_collected": "2026-07-09T10:23:23.000000Z"
   },
   {
@@ -4105,8 +4201,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-12T23:07:17.000Z",
+   "last_collected": "2022-06-14T23:00:02.000Z"
   },
   {
    "address": "0xe6afec39775d78c1868cb09a9003c4eed1f0b5bc",
@@ -4121,8 +4217,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-07-12T22:34:24.000000Z",
-   "last_collected": "2022-07-12T22:34:24.000000Z"
+   "first_collected": "2022-05-10T06:53:22.000000Z",
+   "last_collected": "2022-07-12T22:34:24.000Z"
   },
   {
    "address": "0xe72eeb929e5aa9bb4f6a346376546a19708c100b",
@@ -4137,8 +4233,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-10-12T11:47:47.000000Z",
-   "last_collected": "2022-10-12T11:47:47.000000Z"
+   "first_collected": "2022-09-24T18:37:23.000Z",
+   "last_collected": "2022-10-12T11:47:47.000Z"
   },
   {
    "address": "0xf52a30142877e3b7d30f3f6bb2c6bc55b8888710",
@@ -4153,7 +4249,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-12-24T04:24:59.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -4169,8 +4265,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-06T01:48:37.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0xfebbaf01709baf5a4a2686124c4b1884072eaa28",
@@ -4201,8 +4297,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-16T10:21:33.000000Z",
-   "last_collected": "2022-07-16T10:21:33.000000Z"
+   "first_collected": "2022-05-10T12:30:13.000000Z",
+   "last_collected": "2022-08-19T02:02:48.000Z"
   },
   {
    "address": "0xff7528c341e2374c68eb37272dba892ff5d2f91d",
@@ -4217,8 +4313,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-09T11:23:21.000000Z",
-   "last_collected": "2022-07-09T11:23:21.000000Z"
+   "first_collected": "2022-05-09T10:18:34.000000Z",
+   "last_collected": "2022-07-13T22:30:14.000000Z"
   },
   {
    "address": "0xb40e296d1eb1aa2ce72bf687fff1a77c9c42c9f1",
@@ -4233,7 +4329,7 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-04-16T02:23:36.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -4249,8 +4345,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-12-14T19:19:23.000Z",
+   "last_collected": "2025-05-16T16:28:47.000000Z"
   },
   {
    "address": "0x0843e80240f9304f3fe7059f25f3e1a66886a0eb",
@@ -4266,7 +4362,23 @@
     "collections": 2
    },
    "first_collected": "2023-01-03T13:54:11.000000Z",
-   "last_collected": "2023-01-03T13:54:11.000000Z"
+   "last_collected": "2025-05-16T10:36:23.000000Z"
+  },
+  {
+   "address": "0x822ec855cc9f41b592622108e6f3565e976430c6",
+   "ens": "aferg.eth",
+   "display_name": null,
+   "slug": "aferg.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 3
+   },
+   "first_collected": "2022-02-19T02:47:20.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
    "address": "0x534b8531e362da97d808ba2ab3959fa2597bef11",
@@ -4281,8 +4393,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-10T14:44:30.000000Z",
-   "last_collected": "2022-07-10T14:44:30.000000Z"
+   "first_collected": "2022-04-16T02:24:05.000000Z",
+   "last_collected": "2022-07-10T14:44:30.000Z"
   },
   {
    "address": "0x251216dd3473ea5fcdbaffd0dd0826017f8e1b24",
@@ -4297,8 +4409,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-09T08:28:33.000000Z",
-   "last_collected": "2022-10-12T07:52:47.000000Z"
+   "first_collected": "2022-07-09T08:28:33.000Z",
+   "last_collected": "2022-10-12T07:52:47.000Z"
   },
   {
    "address": "0x11a22b262e505d355f975e1e48a365b5d4811ae0",
@@ -4313,7 +4425,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-06-18T06:45:10.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -4329,8 +4441,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-05-09T23:16:19.000000Z",
+   "last_collected": "2025-05-16T10:34:47.000000Z"
   },
   {
    "address": "0x7037f550b8176f4794e667c13516dc6a25f5c75a",
@@ -4345,8 +4457,24 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-05-20T11:32:32.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
+  },
+  {
+   "address": "0xb3260a8a221c17dd81f2e3396cbb7ea2dc2a08de",
+   "ens": "cooperpix.eth",
+   "display_name": null,
+   "slug": "cooperpix.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 1
+   },
+   "first_collected": "2022-10-23T01:45:59.000Z",
+   "last_collected": "2022-12-07T23:43:23.000Z"
   },
   {
    "address": "0xe082d4e79c8e9587deb8539f3454da340b0f5668",
@@ -4361,8 +4489,24 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-12-02T18:18:47.000Z",
+   "last_collected": "2022-12-16T14:12:35.000Z"
+  },
+  {
+   "address": "0x53006f95def268f88dc1b8216654ab56f3afd052",
+   "ens": "cuttlevault.eth",
+   "display_name": null,
+   "slug": "cuttlevault.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 2
+   },
+   "first_collected": "2022-09-28T16:20:35.000000Z",
+   "last_collected": "2022-11-18T19:07:23.000Z"
   },
   {
    "address": "0xf02fe5b5f57b0d75e4588919299f96f10da07f14",
@@ -4377,8 +4521,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-08-27T04:16:59.000000Z",
+   "last_collected": "2022-09-24T06:18:11.000Z"
   },
   {
    "address": "0x46128db228f960860a79463c73c03a54c481b7da",
@@ -4393,24 +4537,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
-  },
-  {
-   "address": "0x36eebc48da111b14b010a97abecf8bb68d10095c",
-   "ens": "fathi.eth",
-   "display_name": null,
-   "slug": "fathi.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 2
-   },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-25T17:19:11.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x3ac61447a75149ba67639100ecc92c76fb20941c",
@@ -4425,7 +4553,7 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-11T23:58:50.000000Z",
+   "first_collected": "2022-07-11T23:58:50.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -4457,8 +4585,24 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-08-13T20:56:38.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "first_collected": "2022-08-13T20:56:38.000Z",
+   "last_collected": "2024-05-19T04:31:35.000000Z"
+  },
+  {
+   "address": "0xd722a299d14a19b56cddaeae0e1d5a5786424570",
+   "ens": "jak.eth",
+   "display_name": null,
+   "slug": "jak.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 2
+   },
+   "first_collected": "2022-10-24T23:12:11.000Z",
+   "last_collected": "2023-07-04T08:29:35.000000Z"
   },
   {
    "address": "0x547322faf3b4d0e16c8dda880da2bbd40ebd6109",
@@ -4473,8 +4617,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-09T06:06:28.000000Z",
-   "last_collected": "2022-07-09T06:06:28.000000Z"
+   "first_collected": "2022-05-09T09:20:00.000000Z",
+   "last_collected": "2022-09-30T09:22:35.000Z"
   },
   {
    "address": "0x2327dbcc6c2a3821a97c3d9004954970900441e2",
@@ -4489,7 +4633,7 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-03-07T01:37:06.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -4505,24 +4649,40 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-05-10T08:22:56.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
-   "address": "0x8fc11ab9a5f72a4f0d12199a72f474933bd71064",
-   "ens": "masis.eth",
+   "address": "0xa7efbb4a06a680f3b65c5861ec387408ceafbec8",
+   "ens": "mbstuart.eth",
    "display_name": null,
-   "slug": "masis.eth",
+   "slug": "mbstuart.eth",
    "private": false,
    "has_page": true,
    "counts": {
     "works": 3,
     "one_of_ones": 0,
     "editions": 3,
-    "collections": 1
+    "collections": 3
    },
-   "first_collected": "2022-12-09T18:52:59.000000Z",
-   "last_collected": "2023-07-04T07:20:11.000000Z"
+   "first_collected": "2022-03-24T21:53:20.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z"
+  },
+  {
+   "address": "0x4808d5a2b6423abc0060465fdfd338c58e758690",
+   "ens": "milibooo.eth",
+   "display_name": null,
+   "slug": "milibooo.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 3
+   },
+   "first_collected": "2022-03-24T22:28:36.000000Z",
+   "last_collected": "2022-11-30T17:08:35.000Z"
   },
   {
    "address": "0x7d93f170dfd65d14d58682678b7a0d171f287c93",
@@ -4537,8 +4697,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-07-09T11:16:07.000000Z",
-   "last_collected": "2022-07-09T11:16:07.000000Z"
+   "first_collected": "2022-07-09T11:16:07.000Z",
+   "last_collected": "2022-12-01T13:51:59.000Z"
   },
   {
    "address": "0xffdc43e03609c792bc62f4fd137ad80e4b9c294b",
@@ -4553,7 +4713,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-12-27T05:14:35.000000Z",
+   "first_collected": "2022-12-17T00:31:35.000Z",
    "last_collected": "2022-12-27T05:14:35.000000Z"
   },
   {
@@ -4569,8 +4729,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-03-05T05:17:52.000000Z",
+   "last_collected": "2022-05-10T18:38:47.000000Z"
   },
   {
    "address": "0x8ca7e4a1f59495107bdc4c7b246691d89fd3a939",
@@ -4585,8 +4745,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-09T08:10:51.000000Z",
-   "last_collected": "2022-07-09T08:10:51.000000Z"
+   "first_collected": "2022-05-11T06:52:49.000000Z",
+   "last_collected": "2022-09-24T06:33:35.000Z"
   },
   {
    "address": "0xc68c7771ec6a6e5d67d62aa9c6f22df69865e401",
@@ -4601,8 +4761,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-07-17T19:50:33.000000Z",
-   "last_collected": "2022-07-17T19:50:33.000000Z"
+   "first_collected": "2022-07-17T19:50:33.000Z",
+   "last_collected": "2022-10-01T05:51:47.000Z"
   },
   {
    "address": "0x373678e468a51b881bfd2f2957ec992072e0d78a",
@@ -4617,8 +4777,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-18T09:09:31.000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z"
   },
   {
    "address": "0x117dde66c2de2979ba4619d8d494fd20ffe96c2e",
@@ -4633,8 +4793,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-15T13:54:18.000000Z",
-   "last_collected": "2022-07-15T13:54:18.000000Z"
+   "first_collected": "2022-05-13T21:24:30.000000Z",
+   "last_collected": "2022-07-15T13:54:18.000Z"
   },
   {
    "address": "0x67a6009424cb2daeaaa9bcb414b48dea4befc265",
@@ -4649,8 +4809,8 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-03T13:33:08.000000Z",
+   "last_collected": "2022-09-24T06:14:35.000Z"
   },
   {
    "address": "0x7b5af6790381f932abae790e8b0d0ff50e287f8e",
@@ -4665,8 +4825,24 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-12-27T07:00:47.000000Z",
+   "first_collected": "2022-09-25T08:28:11.000Z",
    "last_collected": "2022-12-27T07:00:47.000000Z"
+  },
+  {
+   "address": "0x3d21d71aaf37a1a96abb3a8e57e0199a9a942b8d",
+   "ens": "rememer.eth",
+   "display_name": null,
+   "slug": "rememer.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 1
+   },
+   "first_collected": "2022-11-29T07:59:35.000Z",
+   "last_collected": "2022-12-13T06:54:11.000Z"
   },
   {
    "address": "0x2d08cb1a341cdbe407ce1449ae7ea8947569d72d",
@@ -4681,8 +4857,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-09-25T11:05:59.000Z",
+   "last_collected": "2022-10-05T10:51:47.000Z"
   },
   {
    "address": "0x13c942e3f8be4faf966ef03e6038b33d000db22f",
@@ -4697,8 +4873,24 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2026-08-22T00:29:47.000000Z",
+   "first_collected": "2022-12-24T08:16:59.000Z",
    "last_collected": "2026-08-22T00:29:59.000000Z"
+  },
+  {
+   "address": "0xf165f8a81e4a987d15258c371fc3f6b257cc5657",
+   "ens": "spaceminer.eth",
+   "display_name": null,
+   "slug": "spaceminer.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 3
+   },
+   "first_collected": "2022-05-09T00:47:31.000000Z",
+   "last_collected": "2022-07-12T01:58:48.000000Z"
   },
   {
    "address": "0xf56e7796e42d01109d3eb99905da2d83e6cf2ba3",
@@ -4713,7 +4905,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-07-09T00:58:08.000000Z",
+   "first_collected": "2022-07-09T00:58:08.000Z",
    "last_collected": "2023-07-04T03:08:59.000000Z"
   },
   {
@@ -4729,8 +4921,8 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2022-07-13T14:29:20.000000Z",
-   "last_collected": "2022-07-13T14:29:20.000000Z"
+   "first_collected": "2022-05-27T10:31:48.000000Z",
+   "last_collected": "2022-09-24T06:48:59.000Z"
   },
   {
    "address": "0xc2e8ed8cc0be70f91fc9aa903d5f4538719d7dec",
@@ -4745,8 +4937,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-08-22T05:21:50.000Z",
+   "last_collected": "2022-12-16T11:50:47.000Z"
   },
   {
    "address": "0x39cc9c86e67baf2129b80fe3414c397492ea8026",
@@ -4761,8 +4953,8 @@
     "editions": 3,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2022-06-12T01:19:48.000Z",
+   "last_collected": "2022-12-07T17:45:23.000Z"
   },
   {
    "address": "0x4c6e348056b8d35075af1d92d521f9ffdea531e2",
@@ -4777,7 +4969,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2022-12-27T03:29:59.000000Z",
+   "first_collected": "2022-09-25T09:48:47.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z"
   },
   {
@@ -4794,7 +4986,7 @@
     "collections": 2
    },
    "first_collected": "2025-08-01T01:24:23.000000Z",
-   "last_collected": "2025-08-01T01:24:23.000000Z"
+   "last_collected": "2025-08-01T01:24:23.000Z"
   },
   {
    "address": "0x3b33605a49803ce5bf936d61ec34a82dc9a8af67",
@@ -4874,7 +5066,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-05T22:47:23.000000Z",
-   "last_collected": "2025-02-05T22:47:23.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x102b68aa03c8098026fe944f013ec9ae4c49f1a1",
@@ -4890,7 +5082,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-05T01:30:23.000000Z",
-   "last_collected": "2025-02-05T01:30:23.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x10d503ffe3b10fc43285396de53d4df66a7a15e5",
@@ -4906,7 +5098,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-05T15:11:59.000000Z",
-   "last_collected": "2025-02-05T15:11:59.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x1ee70dec1a631b7374344f6799a2826ea771ae30",
@@ -4922,7 +5114,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-05T07:59:35.000000Z",
-   "last_collected": "2025-02-05T07:59:35.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x20f30d8db95e333fe674d161ad1539b3931fa2d0",
@@ -4937,7 +5129,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2022-07-09T06:25:09.000000Z",
+   "first_collected": "2022-07-09T06:25:09.000Z",
    "last_collected": "2022-08-11T07:10:55.000000Z"
   },
   {
@@ -4954,23 +5146,7 @@
     "collections": 2
    },
    "first_collected": "2024-10-01T08:45:59.000000Z",
-   "last_collected": "2024-10-01T08:45:59.000000Z"
-  },
-  {
-   "address": "0x4209c91d59985dd563213a139d2e1e66f7662d38",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x4209c91d",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 2,
-    "one_of_ones": 1,
-    "editions": 1,
-    "collections": 2
-   },
-   "first_collected": "2022-02-17T23:39:29.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z"
+   "last_collected": "2025-05-16T15:38:11.000000Z"
   },
   {
    "address": "0x437c3056e488b3ad705039770a8c9d7446258de6",
@@ -4985,7 +5161,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2025-07-02T07:24:47.000000Z",
+   "first_collected": "2025-05-16T18:08:59.000000Z",
    "last_collected": "2025-07-02T07:24:47.000000Z"
   },
   {
@@ -5002,7 +5178,23 @@
     "collections": 2
    },
    "first_collected": "2025-02-06T23:18:47.000000Z",
-   "last_collected": "2025-02-06T23:18:47.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
+  },
+  {
+   "address": "0x51c92564137510602710f742250101669b1e6f83",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x51c92564",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 2,
+    "one_of_ones": 1,
+    "editions": 1,
+    "collections": 2
+   },
+   "first_collected": "2022-03-15T04:16:42.000000Z",
+   "last_collected": "2022-03-15T04:18:36.000000Z"
   },
   {
    "address": "0x5aa60dbad729e57363221d95bc5f465dd502f6a4",
@@ -5018,7 +5210,7 @@
     "collections": 2
    },
    "first_collected": "2022-08-16T13:09:26.000000Z",
-   "last_collected": "2022-08-16T14:00:12.000000Z"
+   "last_collected": "2022-08-16T14:00:12.000Z"
   },
   {
    "address": "0x8a7c1422fe789c276e21d1792afda90f638ac5cc",
@@ -5033,7 +5225,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2022-07-12T02:21:18.000000Z",
+   "first_collected": "2022-07-12T02:21:18.000Z",
    "last_collected": "2022-08-11T10:01:20.000000Z"
   },
   {
@@ -5049,7 +5241,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2025-12-02T22:31:35.000000Z",
+   "first_collected": "2025-05-16T10:36:23.000000Z",
    "last_collected": "2025-12-02T22:31:35.000000Z"
   },
   {
@@ -5066,7 +5258,7 @@
     "collections": 2
    },
    "first_collected": "2022-04-21T05:52:21.000000Z",
-   "last_collected": "2022-04-21T05:52:21.000000Z"
+   "last_collected": "2022-04-23T23:01:30.000000Z"
   },
   {
    "address": "0xa5137500e1bedbcb99881b76d4daadd54f9088cf",
@@ -5081,7 +5273,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2022-08-22T03:52:13.000000Z",
+   "first_collected": "2022-05-13T04:25:14.000000Z",
    "last_collected": "2022-08-22T03:52:13.000000Z"
   },
   {
@@ -5113,7 +5305,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2024-05-28T03:25:11.000000Z",
+   "first_collected": "2024-05-25T08:55:59.000000Z",
    "last_collected": "2024-05-28T03:25:11.000000Z"
   },
   {
@@ -5130,7 +5322,7 @@
     "collections": 2
    },
    "first_collected": "2023-08-19T06:38:11.000000Z",
-   "last_collected": "2023-08-19T06:38:11.000000Z"
+   "last_collected": "2023-09-23T22:25:47.000000Z"
   },
   {
    "address": "0xe8a0cc457405c250a3142db639b3e058fd431510",
@@ -5145,7 +5337,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2023-07-05T03:45:59.000000Z",
+   "first_collected": "2022-12-20T11:00:47.000Z",
    "last_collected": "2023-07-05T03:45:59.000000Z"
   },
   {
@@ -5194,7 +5386,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-04T21:00:59.000000Z",
-   "last_collected": "2025-02-04T21:00:59.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0xc9cc85d6a45ddc91ebca87c6ba86f5993821c5a8",
@@ -5210,7 +5402,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-05T22:49:59.000000Z",
-   "last_collected": "2025-02-05T22:49:59.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0x55206268c0daec618c42f04539516a0e43acf31b",
@@ -5257,7 +5449,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2022-10-14T05:31:47.000000Z",
+   "first_collected": "2022-10-14T05:28:47.000Z",
    "last_collected": "2022-10-14T05:31:47.000000Z"
   },
   {
@@ -5277,22 +5469,6 @@
    "last_collected": "2023-11-04T02:21:59.000000Z"
   },
   {
-   "address": "0x95164c11db60941e60a262bbfe183ace6a34363e",
-   "ens": "landandcityscapes.eth",
-   "display_name": null,
-   "slug": "landandcityscapes.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 2,
-    "one_of_ones": 1,
-    "editions": 1,
-    "collections": 2
-   },
-   "first_collected": "2021-12-11T08:39:11.000000Z",
-   "last_collected": "2021-12-11T08:39:11.000000Z"
-  },
-  {
    "address": "0xbd72d021d3cb334deb3151db905ee073b8eee518",
    "ens": "mightymoose.eth",
    "display_name": null,
@@ -5305,7 +5481,7 @@
     "editions": 1,
     "collections": 2
    },
-   "first_collected": "2022-07-15T03:28:05.000000Z",
+   "first_collected": "2022-07-15T03:28:05.000Z",
    "last_collected": "2023-09-25T21:09:23.000000Z"
   },
   {
@@ -5338,7 +5514,7 @@
     "collections": 2
    },
    "first_collected": "2025-02-05T01:38:23.000000Z",
-   "last_collected": "2025-02-05T01:38:23.000000Z"
+   "last_collected": "2025-02-09T00:42:47.000000Z"
   },
   {
    "address": "0xd6dee643da993cf6be961f571cfaaacc444eccac",
@@ -5481,8 +5657,8 @@
     "editions": 0,
     "collections": 1
    },
-   "first_collected": null,
-   "last_collected": null
+   "first_collected": "2023-10-14T04:03:35.000Z",
+   "last_collected": "2023-10-14T04:03:35.000Z"
   },
   {
    "address": "0x33145abe552d621f811c789ab3c20197b02553ef",
@@ -5595,22 +5771,6 @@
    },
    "first_collected": "2025-02-17T00:34:23.000000Z",
    "last_collected": "2025-02-17T00:34:23.000000Z"
-  },
-  {
-   "address": "0x51c92564137510602710f742250101669b1e6f83",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x51c92564",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 1,
-    "one_of_ones": 1,
-    "editions": 0,
-    "collections": 1
-   },
-   "first_collected": "2022-03-15T04:18:36.000000Z",
-   "last_collected": "2022-03-15T04:18:36.000000Z"
   },
   {
    "address": "0x51ec8bb228af8aed84d935e0cbed0fdb3fc39114",

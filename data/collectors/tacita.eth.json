@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 4
  },
- "first_collected": "2025-02-04T21:55:23.000000Z",
- "last_collected": "2025-02-04T21:55:23.000000Z",
+ "first_collected": "2022-12-14T19:15:11.000Z",
+ "last_collected": "2025-05-16T14:42:11.000000Z",
  "collections": [
   {
    "slug": "patrimora",
@@ -37,6 +37,24 @@
  ],
  "works": [
   {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": "2025-05-16T14:42:11.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": "2025-02-09T00:42:47.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  },
+  {
    "id": "patrimora-85",
    "title": "Patrimora #85",
    "collection": "patrimora",
@@ -55,39 +73,21 @@
    "orientation": null
   },
   {
-   "id": "geodetic-onchain-4",
-   "title": "Patrimora",
-   "collection": "geodetic-onchain",
-   "acquired": null,
+   "id": "seize-and-share-anxn-3250",
+   "title": "Anxn",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-24T04:32:23.000Z",
    "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
+   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-mintface-says-2778",
    "title": "MintFace says",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-14T19:15:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-anxn-3250",
-   "title": "Anxn",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null
   }
  ]

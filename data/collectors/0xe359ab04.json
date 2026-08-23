@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 3
  },
- "first_collected": "2022-07-10T17:13:30.000000Z",
- "last_collected": "2022-07-10T17:13:30.000000Z",
+ "first_collected": "2022-05-09T23:03:17.000000Z",
+ "last_collected": "2022-12-05T19:00:59.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -32,10 +32,28 @@
  ],
  "works": [
   {
+   "id": "seize-and-share-don-t-trust-clowns-2451",
+   "title": "Don't Trust Clowns",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-05T19:00:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-don-t-trust-clowns-2451-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-birth-of-gm-543",
+   "title": "Birth of gm",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-09T09:07:40.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-10T17:13:30.000000Z",
+   "acquired": "2022-07-10T17:13:30.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
@@ -44,27 +62,9 @@
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-09T23:03:17.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-birth-of-gm-543",
-   "title": "Birth of gm",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-don-t-trust-clowns-2451",
-   "title": "Don't Trust Clowns",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-don-t-trust-clowns-2451-display.webp",
    "orientation": null
   }
  ]

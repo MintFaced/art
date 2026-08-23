@@ -11,8 +11,8 @@
   "editions": 10,
   "collections": 4
  },
- "first_collected": "2022-07-09T10:24:40.000000Z",
- "last_collected": "2022-10-11T11:39:35.000000Z",
+ "first_collected": "2022-05-28T08:21:12.000000Z",
+ "last_collected": "2022-12-24T10:18:11.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -37,82 +37,10 @@
  ],
  "works": [
   {
-   "id": "roads-and-rivers-roads-and-rivers-traffic",
-   "title": "Roads and Rivers Traffic",
-   "collection": "roads-and-rivers",
-   "acquired": "2022-10-11T11:39:35.000000Z",
-   "unique": false,
-   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-09T10:24:40.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "2022-10k-1",
-   "title": "10k Project Black and White",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-1-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-mint-face-229",
-   "title": "Mint Face",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-eth-is-finite-1805",
-   "title": "Eth Is Finite",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-trashyad-2592",
-   "title": "TRASHYAD",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-griftercity-2690",
-   "title": "GrifterCity",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-mintface-says-2778",
-   "title": "MintFace says",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
-   "orientation": null
-  },
-  {
    "id": "seize-and-share-anxn-3250",
    "title": "Anxn",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-24T10:18:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null
@@ -121,9 +49,81 @@
    "id": "seize-and-share-rememes-3252",
    "title": "ReMemes",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-20T00:32:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mintface-says-2778",
+   "title": "MintFace says",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-14T19:20:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-griftercity-2690",
+   "title": "GrifterCity",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-14T10:38:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-trashyad-2592",
+   "title": "TRASHYAD",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-07T21:45:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-11T11:39:35.000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-eth-is-finite-1805",
+   "title": "Eth Is Finite",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-05T07:18:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T10:24:40.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-mint-face-229",
+   "title": "Mint Face",
+   "collection": "seize-and-share",
+   "acquired": "2022-06-18T10:22:50.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-1",
+   "title": "10k Project Black and White",
+   "collection": "2022-10k",
+   "acquired": "2022-05-28T08:21:12.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null
   }
  ]

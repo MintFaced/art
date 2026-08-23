@@ -11,8 +11,8 @@
   "editions": 6,
   "collections": 4
  },
- "first_collected": "2022-07-09T11:03:00.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
+ "first_collected": "2022-07-09T11:03:00.000Z",
+ "last_collected": "2025-09-12T20:09:59.000000Z",
  "collections": [
   {
    "slug": "roads-and-rivers",
@@ -37,6 +37,15 @@
  ],
  "works": [
   {
+   "id": "geodetic-home-5",
+   "title": "Geodetic Home",
+   "collection": "geodetic-home",
+   "acquired": "2025-09-12T20:09:59.000000Z",
+   "unique": false,
+   "image": "geodetic-home/geodetic-home-5-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -46,49 +55,40 @@
    "orientation": null
   },
   {
+   "id": "seize-and-share-nights-dawn-2382",
+   "title": "Nights Dawn",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-30T21:08:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-10-11T11:11:59.000000Z",
+   "acquired": "2022-10-11T11:11:59.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
   },
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-09T11:03:00.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "geodetic-home-5",
-   "title": "Geodetic Home",
-   "collection": "geodetic-home",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-home/geodetic-home-5-display.webp",
-   "orientation": null
-  },
-  {
    "id": "seize-and-share-freedom-to-live-1654",
    "title": "Freedom to Live",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-09-25T10:58:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null
   },
   {
-   "id": "seize-and-share-nights-dawn-2382",
-   "title": "Nights Dawn",
-   "collection": "seize-and-share",
-   "acquired": null,
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T11:03:00.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
-   "orientation": null
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

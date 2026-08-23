@@ -11,8 +11,8 @@
   "editions": 3,
   "collections": 3
  },
- "first_collected": "2022-08-13T20:56:38.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
+ "first_collected": "2022-08-13T20:56:38.000Z",
+ "last_collected": "2024-05-19T04:31:35.000000Z",
  "collections": [
   {
    "slug": "2022-10k",
@@ -32,6 +32,15 @@
  ],
  "works": [
   {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": "2024-05-19T04:31:35.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -44,19 +53,10 @@
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-08-13T20:56:38.000000Z",
+   "acquired": "2022-08-13T20:56:38.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
-  },
-  {
-   "id": "2022-10k-2",
-   "title": "10k Project",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
   }
  ]
 }

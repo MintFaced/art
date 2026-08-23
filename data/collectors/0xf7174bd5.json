@@ -6,18 +6,18 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 8,
+  "works": 9,
   "one_of_ones": 0,
-  "editions": 8,
+  "editions": 9,
   "collections": 3
  },
- "first_collected": "2022-07-11T21:45:24.000000Z",
- "last_collected": "2022-07-11T21:45:24.000000Z",
+ "first_collected": "2022-06-17T19:02:04.000Z",
+ "last_collected": "2022-12-20T00:32:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
-   "works": 6
+   "works": 7
   },
   {
    "slug": "geodetic-memory",
@@ -32,75 +32,84 @@
  ],
  "works": [
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-11T21:45:24.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "roads-and-rivers-roads-and-rivers-traffic",
-   "title": "Roads and Rivers Traffic",
-   "collection": "roads-and-rivers",
-   "acquired": null,
-   "unique": false,
-   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "seize-and-share-seize-and-share-53",
-   "title": "Seize and Share",
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-20T00:32:35.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-seize-and-share-53-image.png",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-seize-and-share-175",
-   "title": "Seize and Share",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-bicameral-hallucination-1580",
-   "title": "Bicameral Hallucination",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-bicameral-hallucination-1580-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-gm-gm-1683",
-   "title": "gm gm",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null
   },
   {
    "id": "seize-and-share-grimalkin-2312",
    "title": "Grimalkin",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-11-28T21:41:23.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null
   },
   {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
-   "collection": "seize-and-share",
-   "acquired": null,
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-11T14:54:23.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-30T17:58:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-bicameral-hallucination-1580",
+   "title": "Bicameral Hallucination",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-29T02:46:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-bicameral-hallucination-1580-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-awakening-1547",
+   "title": "Awakening ॐ",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-27T17:27:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-awakening-1547-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-11T21:45:24.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-seize-and-share-175",
+   "title": "Seize and Share",
+   "collection": "seize-and-share",
+   "acquired": "2022-06-17T19:09:10.000Z",
+   "unique": false,
+   "image": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-seize-and-share-53",
+   "title": "Seize and Share",
+   "collection": "seize-and-share",
+   "acquired": "2022-06-17T19:02:04.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-seize-and-share-53-image.png",
    "orientation": null
   }
  ]

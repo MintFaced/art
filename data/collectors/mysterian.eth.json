@@ -6,18 +6,18 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 27,
+  "works": 28,
   "one_of_ones": 2,
-  "editions": 25,
+  "editions": 26,
   "collections": 6
  },
- "first_collected": "2022-07-21T12:39:02.000000Z",
- "last_collected": "2023-07-04T12:08:47.000000Z",
+ "first_collected": "2022-06-13T05:41:13.000000Z",
+ "last_collected": "2025-06-14T23:10:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
-   "works": 17
+   "works": 18
   },
   {
    "slug": "roads-and-rivers",
@@ -47,6 +47,24 @@
  ],
  "works": [
   {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2025-06-14T23:10:35.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": "2025-06-14T23:10:35.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-journey",
    "title": "The Journey",
    "collection": "roads-and-rivers",
@@ -74,6 +92,105 @@
    "orientation": null
   },
   {
+   "id": "seize-and-share-anxn-3250",
+   "title": "Anxn",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-24T04:23:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-20T00:32:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-16T05:01:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mintface-says-2778",
+   "title": "MintFace says",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-14T19:17:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-griftercity-2682",
+   "title": "GrifterCity",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-13T02:33:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-griftercity-2682-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-griftercity-2653",
+   "title": "GrifterCity",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-13T01:54:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-griftercity-2653-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-surreal-dreamooor-2430",
+   "title": "Surreal Dreamooor",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-02T17:20:23.000Z",
+   "unique": false,
+   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-nights-dawn-2382",
+   "title": "Nights Dawn",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-30T17:41:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-grimalkin-2312",
+   "title": "Grimalkin",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-28T20:42:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-untitled-3144",
+   "title": "Untitled",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-14T22:52:59.000Z",
+   "unique": false,
+   "image": null,
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-winter-shade-2135",
+   "title": "Winter Shade",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-14T22:30:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-and-rivers-13",
    "title": "Roads and Rivers #13",
    "collection": "roads-and-rivers",
@@ -83,13 +200,58 @@
    "orientation": "landscape"
   },
   {
+   "id": "seize-and-share-we-like-the-line-1951",
+   "title": "We Like The Line",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-22T17:22:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-we-like-the-line-1951-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-certificate-of-mint-1918",
+   "title": "Certificate of Mint",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-14T19:50:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-10-11T03:05:35.000000Z",
+   "acquired": "2022-10-11T03:05:35.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-30T10:27:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-awakening-1547",
+   "title": "Awakening ॐ",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-27T17:54:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-awakening-1547-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-24T06:15:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
   },
   {
    "id": "geodetica-46",
@@ -101,192 +263,39 @@
    "orientation": "square"
   },
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-21T12:39:02.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "2022-10k-3",
-   "title": "10k Project Blueprint",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-3-display.webp",
-   "orientation": null
-  },
-  {
    "id": "2022-10k-4",
    "title": "10k Ghosted",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-07-28T23:03:18.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-4-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-onchain-3",
-   "title": "Geodetic Signal",
-   "collection": "geodetic-onchain",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-mint-face-229",
-   "title": "Mint Face",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
    "orientation": null
   },
   {
    "id": "seize-and-share-dalleglytch6529-387",
    "title": "Dalleglytch6529",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-07-23T15:30:46.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-dalleglytch6529-387-display.webp",
    "orientation": null
   },
   {
-   "id": "seize-and-share-10k-buidling-643",
-   "title": "10k Buidling",
+   "id": "seize-and-share-mint-face-229",
+   "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-06-23T12:02:48.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
    "orientation": null
   },
   {
-   "id": "seize-and-share-gm-gm-1683",
-   "title": "gm gm",
-   "collection": "seize-and-share",
-   "acquired": null,
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": "2022-06-13T05:41:13.000000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-certificate-of-mint-1918",
-   "title": "Certificate of Mint",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-we-like-the-line-1951",
-   "title": "We Like The Line",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-we-like-the-line-1951-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-winter-shade-2135",
-   "title": "Winter Shade",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-grimalkin-2312",
-   "title": "Grimalkin",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-nights-dawn-2382",
-   "title": "Nights Dawn",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-surreal-dreamooor-2430",
-   "title": "Surreal Dreamooor",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-griftercity-2653",
-   "title": "GrifterCity",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-griftercity-2653-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-griftercity-2682",
-   "title": "GrifterCity",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-griftercity-2682-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-mintface-says-2778",
-   "title": "MintFace says",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-accessdenied-mp4-2882",
-   "title": "AccessDenied.mp4",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-untitled-3144",
-   "title": "Untitled",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": null,
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-anxn-3250",
-   "title": "Anxn",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "image": "2022-10k/2022-10k-3-display.webp",
    "orientation": null
   }
  ]

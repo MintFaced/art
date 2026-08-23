@@ -12,7 +12,7 @@
   "collections": 2
  },
  "first_collected": "2022-08-11T06:55:10.000000Z",
- "last_collected": "2022-08-11T06:57:39.000000Z",
+ "last_collected": "2022-09-24T06:08:11.000Z",
  "collections": [
   {
    "slug": "geodetica",
@@ -26,6 +26,24 @@
   }
  ],
  "works": [
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-24T06:08:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-a-meditation-on-gn-478",
+   "title": "A Meditation on gn",
+   "collection": "seize-and-share",
+   "acquired": "2022-08-19T02:12:00.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
+   "orientation": null
+  },
   {
    "id": "geodetica-80",
    "title": "Geodetica #80",
@@ -52,24 +70,6 @@
    "unique": true,
    "image": "geodetica/geodetica-6-display.webp",
    "orientation": "square"
-  },
-  {
-   "id": "seize-and-share-a-meditation-on-gn-478",
-   "title": "A Meditation on gn",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-10k-buidling-643",
-   "title": "10k Buidling",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
-   "orientation": null
   }
  ]
 }

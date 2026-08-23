@@ -11,8 +11,8 @@
   "editions": 5,
   "collections": 4
  },
- "first_collected": "2022-07-09T09:44:45.000000Z",
- "last_collected": "2022-07-09T09:44:45.000000Z",
+ "first_collected": "2022-06-05T06:20:24.000000Z",
+ "last_collected": "2022-11-30T19:42:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -37,10 +37,37 @@
  ],
  "works": [
   {
+   "id": "seize-and-share-nights-dawn-2382",
+   "title": "Nights Dawn",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-30T19:42:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-25T20:23:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": "2022-07-13T22:23:19.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-09T09:44:45.000000Z",
+   "acquired": "2022-07-09T09:44:45.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
@@ -49,36 +76,9 @@
    "id": "2022-10k-1",
    "title": "10k Project Black and White",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-06-05T06:20:24.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-onchain-3",
-   "title": "Geodetic Signal",
-   "collection": "geodetic-onchain",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-nights-dawn-2382",
-   "title": "Nights Dawn",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null
   }
  ]

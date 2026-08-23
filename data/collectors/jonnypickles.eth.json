@@ -12,7 +12,7 @@
   "collections": 4
  },
  "first_collected": "2024-07-27T06:22:35.000000Z",
- "last_collected": "2025-02-07T03:01:11.000000Z",
+ "last_collected": "2025-02-09T00:42:47.000000Z",
  "collections": [
   {
    "slug": "geodetic-moments",
@@ -36,6 +36,15 @@
   }
  ],
  "works": [
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": "2025-02-09T00:42:47.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  },
   {
    "id": "patrimora-162",
    "title": "Patrimora #162",
@@ -61,15 +70,6 @@
    "acquired": "2024-07-27T06:22:35.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-81-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-onchain-4",
-   "title": "Patrimora",
-   "collection": "geodetic-onchain",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null
   }
  ]

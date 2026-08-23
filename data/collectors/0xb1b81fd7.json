@@ -6,35 +6,53 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 0,
-  "editions": 4,
+  "editions": 5,
   "collections": 1
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-12-03T05:52:23.000Z",
+ "last_collected": "2022-12-20T00:32:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
-   "works": 4
+   "works": 5
   }
  ],
  "works": [
   {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-20T00:32:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-dalleglytch6529-387",
    "title": "Dalleglytch6529",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-04T14:17:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-dalleglytch6529-387-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-awakening-1547",
+   "title": "Awakening ॐ",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-03T05:52:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-awakening-1547-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-my-precious-2004",
    "title": "My Precious ☑️",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-03T05:52:23.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-my-precious-2004-display.webp",
    "orientation": null
@@ -43,18 +61,9 @@
    "id": "seize-and-share-ftx-2033",
    "title": "FTX",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-03T05:52:23.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-ftx-2033-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null
   }
  ]

@@ -11,8 +11,8 @@
   "editions": 5,
   "collections": 6
  },
- "first_collected": "2022-07-13T04:46:17.000000Z",
- "last_collected": "2025-02-05T01:01:35.000000Z",
+ "first_collected": "2022-05-11T03:56:30.000000Z",
+ "last_collected": "2025-12-26T03:48:23.000000Z",
  "collections": [
   {
    "slug": "patrimora",
@@ -46,6 +46,24 @@
   }
  ],
  "works": [
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": "2025-12-26T03:48:23.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": "2025-02-09T00:42:47.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  },
   {
    "id": "patrimora-112",
    "title": "Patrimora #112",
@@ -167,7 +185,7 @@
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-13T04:46:17.000000Z",
+   "acquired": "2022-07-13T04:46:17.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
@@ -176,27 +194,9 @@
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-11T03:56:30.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-onchain-4",
-   "title": "Patrimora",
-   "collection": "geodetic-onchain",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
    "orientation": null
   }
  ]

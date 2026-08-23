@@ -12,7 +12,7 @@
   "collections": 2
  },
  "first_collected": "2025-11-05T02:35:59.000000Z",
- "last_collected": "2025-11-05T02:35:59.000000Z",
+ "last_collected": "2025-11-05T02:35:59.000Z",
  "collections": [
   {
    "slug": "patrimora",
@@ -26,6 +26,15 @@
   }
  ],
  "works": [
+  {
+   "id": "geodetic-world-69",
+   "title": "Geodetic Conflict",
+   "collection": "geodetic-world",
+   "acquired": "2025-11-05T02:35:59.000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-69-display.webp",
+   "orientation": "square"
+  },
   {
    "id": "patrimora-87",
    "title": "Patrimora #87",
@@ -52,15 +61,6 @@
    "unique": true,
    "image": "patrimora/patrimora-93-image.png",
    "orientation": null
-  },
-  {
-   "id": "geodetic-world-69",
-   "title": "Geodetic Conflict",
-   "collection": "geodetic-world",
-   "acquired": null,
-   "unique": true,
-   "image": "geodetic-world/geodetic-world-69-display.webp",
-   "orientation": "square"
   }
  ]
 }

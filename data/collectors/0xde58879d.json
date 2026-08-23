@@ -12,7 +12,7 @@
   "collections": 7
  },
  "first_collected": "2025-07-09T00:48:47.000000Z",
- "last_collected": "2025-09-01T08:33:47.000000Z",
+ "last_collected": "2025-12-26T03:45:59.000000Z",
  "collections": [
   {
    "slug": "patrimora",
@@ -52,6 +52,24 @@
  ],
  "works": [
   {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": "2025-12-26T03:45:59.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-home-5",
+   "title": "Geodetic Home",
+   "collection": "geodetic-home",
+   "acquired": "2025-09-08T05:25:47.000000Z",
+   "unique": false,
+   "image": "geodetic-home/geodetic-home-5-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-another-wei",
    "title": "Another Wei",
    "collection": "roads-and-rivers",
@@ -77,6 +95,15 @@
    "unique": false,
    "image": "https://arweave.net/s2BNlgtpYDSoJxBnSYo9aQ7AI5-0nz1UaAPkv7oU2-k",
    "orientation": null
+  },
+  {
+   "id": "geodetic-world-66",
+   "title": "Geodetic Temple",
+   "collection": "geodetic-world",
+   "acquired": "2025-07-09T00:48:47.000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-66-display.webp",
+   "orientation": "square"
   },
   {
    "id": "geodetic-moments-83",
@@ -121,33 +148,6 @@
    "acquired": "2025-07-09T00:48:47.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-105-image.png",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-home-5",
-   "title": "Geodetic Home",
-   "collection": "geodetic-home",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-home/geodetic-home-5-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-world-66",
-   "title": "Geodetic Temple",
-   "collection": "geodetic-world",
-   "acquired": null,
-   "unique": true,
-   "image": "geodetic-world/geodetic-world-66-display.webp",
-   "orientation": "square"
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
    "orientation": null
   }
  ]

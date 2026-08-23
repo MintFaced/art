@@ -11,7 +11,7 @@
   "editions": 5,
   "collections": 2
  },
- "first_collected": "2022-11-24T06:16:47.000000Z",
+ "first_collected": "2022-11-24T06:16:47.000Z",
  "last_collected": "2022-12-28T03:55:23.000000Z",
  "collections": [
   {
@@ -54,22 +54,22 @@
    "orientation": null
   },
   {
-   "id": "roads-and-rivers-roads-and-rivers-traffic",
-   "title": "Roads and Rivers Traffic",
-   "collection": "roads-and-rivers",
-   "acquired": "2022-11-24T06:16:47.000000Z",
-   "unique": false,
-   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
-  },
-  {
    "id": "seize-and-share-winter-shade-2135",
    "title": "Winter Shade",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-05T05:18:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-11-24T06:16:47.000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

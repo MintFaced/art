@@ -11,8 +11,8 @@
   "editions": 3,
   "collections": 3
  },
- "first_collected": "2022-08-18T11:41:13.000000Z",
- "last_collected": "2022-12-16T16:11:11.000000Z",
+ "first_collected": "2022-08-18T11:41:13.000Z",
+ "last_collected": "2022-12-16T16:11:11.000Z",
  "collections": [
   {
    "slug": "geodetic-memory",
@@ -35,28 +35,28 @@
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-12-16T16:11:11.000000Z",
+   "acquired": "2022-12-16T16:11:11.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-08-18T11:41:13.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
   },
   {
    "id": "seize-and-share-winter-shade-2135",
    "title": "Winter Shade",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-16T16:11:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-08-18T11:41:13.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

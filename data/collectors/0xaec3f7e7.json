@@ -6,22 +6,22 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 7,
+  "works": 8,
   "one_of_ones": 0,
-  "editions": 7,
+  "editions": 8,
   "collections": 5
  },
- "first_collected": "2022-07-09T05:41:19.000000Z",
- "last_collected": "2022-10-12T03:53:59.000000Z",
+ "first_collected": "2022-05-09T00:47:31.000000Z",
+ "last_collected": "2025-08-12T09:33:11.000000Z",
  "collections": [
-  {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
-   "works": 2
-  },
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
+   "works": 3
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 2
   },
   {
@@ -42,28 +42,64 @@
  ],
  "works": [
   {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": "2025-08-12T09:33:11.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-10-12T03:53:59.000000Z",
+   "acquired": "2022-10-12T03:53:59.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
   },
   {
+   "id": "seize-and-share-stored-digital-value-1830",
+   "title": "Stored Digital Value",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-07T22:40:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-stored-digital-value-1830-image.gif",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-30T09:06:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-09T05:41:19.000000Z",
+   "acquired": "2022-07-09T05:41:19.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
   },
   {
+   "id": "seize-and-share-mint-face-353",
+   "title": "Mint Face",
+   "collection": "seize-and-share",
+   "acquired": "2022-06-18T09:51:54.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mint-face-353-image.png",
+   "orientation": null
+  },
+  {
    "id": "2022-10k-1",
    "title": "10k Project Black and White",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-06-01T08:19:17.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null
@@ -72,36 +108,9 @@
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-09T00:47:31.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-mint-face-353",
-   "title": "Mint Face",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-mint-face-353-image.png",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-gm-gm-1683",
-   "title": "gm gm",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null
   }
  ]

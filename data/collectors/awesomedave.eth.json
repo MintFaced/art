@@ -11,8 +11,8 @@
   "editions": 5,
   "collections": 2
  },
- "first_collected": "2022-12-27T05:05:35.000000Z",
- "last_collected": "2022-12-28T01:08:35.000000Z",
+ "first_collected": "2022-12-14T17:22:11.000Z",
+ "last_collected": "2023-03-27T02:55:59.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -26,6 +26,15 @@
   }
  ],
  "works": [
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2023-03-27T02:55:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
   {
    "id": "roads-or-rivers-twisted",
    "title": "Twisted",
@@ -45,30 +54,21 @@
    "orientation": null
   },
   {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-16T17:26:35.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-mintface-says-2778",
    "title": "MintFace says",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-14T17:22:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-accessdenied-mp4-2882",
-   "title": "AccessDenied.mp4",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null
   }
  ]

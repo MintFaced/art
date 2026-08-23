@@ -11,8 +11,8 @@
   "editions": 5,
   "collections": 2
  },
- "first_collected": "2022-07-14T22:28:21.000000Z",
- "last_collected": "2022-07-14T22:28:21.000000Z",
+ "first_collected": "2022-07-18T20:58:08.000Z",
+ "last_collected": "2022-12-20T00:32:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -27,28 +27,19 @@
  ],
  "works": [
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-14T22:28:21.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "seize-and-share-certificate-of-mint-1918",
-   "title": "Certificate of Mint",
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-20T00:32:35.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null
   },
   {
    "id": "seize-and-share-griftercity-2653",
    "title": "GrifterCity",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-13T01:59:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2653-display.webp",
    "orientation": null
@@ -57,19 +48,28 @@
    "id": "seize-and-share-untitled-3144",
    "title": "Untitled",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-11-14T22:58:59.000Z",
    "unique": false,
    "image": null,
    "orientation": null
   },
   {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
+   "id": "seize-and-share-certificate-of-mint-1918",
+   "title": "Certificate of Mint",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-10-14T05:42:59.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
    "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-18T20:58:08.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

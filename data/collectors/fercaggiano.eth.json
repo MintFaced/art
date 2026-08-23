@@ -11,7 +11,7 @@
   "editions": 3,
   "collections": 3
  },
- "first_collected": "2022-07-11T23:58:50.000000Z",
+ "first_collected": "2022-07-11T23:58:50.000Z",
  "last_collected": "2022-12-27T03:29:59.000000Z",
  "collections": [
   {
@@ -41,22 +41,22 @@
    "orientation": null
   },
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-11T23:58:50.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
    "id": "seize-and-share-line-of-gm-1989",
    "title": "Line of gm",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-10-28T21:43:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-line-of-gm-1989-display.webp",
    "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-11T23:58:50.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

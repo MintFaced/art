@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 3
  },
- "first_collected": "2022-07-09T07:55:31.000000Z",
- "last_collected": "2022-07-09T07:55:31.000000Z",
+ "first_collected": "2022-07-09T07:55:31.000Z",
+ "last_collected": "2022-10-01T03:28:59.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -32,40 +32,40 @@
  ],
  "works": [
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-09T07:55:31.000000Z",
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-01T03:28:59.000Z",
    "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "geodetic-onchain-3",
-   "title": "Geodetic Signal",
-   "collection": "geodetic-onchain",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
    "title": "Freedom to Live",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-09-25T19:22:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null
   },
   {
-   "id": "seize-and-share-gm-gm-1683",
-   "title": "gm gm",
-   "collection": "seize-and-share",
-   "acquired": null,
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": "2022-07-13T05:11:09.000000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
    "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T07:55:31.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

@@ -11,8 +11,8 @@
   "editions": 8,
   "collections": 6
  },
- "first_collected": "2022-07-13T07:49:09.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
+ "first_collected": "2022-05-09T10:13:16.000000Z",
+ "last_collected": "2025-05-30T00:20:11.000000Z",
  "collections": [
   {
    "slug": "roads-and-rivers",
@@ -47,6 +47,15 @@
  ],
  "works": [
   {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": "2025-05-30T00:20:11.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -56,10 +65,19 @@
    "orientation": null
   },
   {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-07T01:47:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-12-06T02:53:59.000000Z",
+   "acquired": "2022-12-06T02:53:59.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
@@ -74,10 +92,19 @@
    "orientation": null
   },
   {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": "2022-07-13T22:28:05.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-13T07:49:09.000000Z",
+   "acquired": "2022-07-13T07:49:09.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
@@ -86,36 +113,9 @@
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-09T10:13:16.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-onchain-3",
-   "title": "Geodetic Signal",
-   "collection": "geodetic-onchain",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null
   }
  ]

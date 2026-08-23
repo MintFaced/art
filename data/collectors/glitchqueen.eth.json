@@ -6,13 +6,13 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 8,
+  "works": 9,
   "one_of_ones": 6,
-  "editions": 2,
+  "editions": 3,
   "collections": 3
  },
- "first_collected": "2022-07-09T01:15:58.000000Z",
- "last_collected": "2022-08-11T10:13:47.000000Z",
+ "first_collected": "2022-07-09T01:15:58.000Z",
+ "last_collected": "2022-12-02T17:11:35.000Z",
  "collections": [
   {
    "slug": "geodetica",
@@ -20,17 +20,35 @@
    "works": 6
   },
   {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
-   "works": 1
-  },
-  {
    "slug": "seize-and-share",
    "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
    "works": 1
   }
  ],
  "works": [
+  {
+   "id": "seize-and-share-surreal-dreamooor-2430",
+   "title": "Surreal Dreamooor",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-02T17:11:35.000Z",
+   "unique": false,
+   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-awakening-1547",
+   "title": "Awakening ॐ",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-27T17:39:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-awakening-1547-display.webp",
+   "orientation": null
+  },
   {
    "id": "geodetica-99",
    "title": "Geodetica #99",
@@ -59,6 +77,24 @@
    "orientation": "square"
   },
   {
+   "id": "geodetica-60",
+   "title": "Geodetica #60",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T09:24:40.000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-60-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-57",
+   "title": "Geodetica #57",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T09:19:21.000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-57-display.webp",
+   "orientation": "square"
+  },
+  {
    "id": "geodetica-40",
    "title": "Geodetica #40",
    "collection": "geodetica",
@@ -71,37 +107,10 @@
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-09T01:15:58.000000Z",
+   "acquired": "2022-07-09T01:15:58.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
-  },
-  {
-   "id": "geodetica-57",
-   "title": "Geodetica #57",
-   "collection": "geodetica",
-   "acquired": null,
-   "unique": true,
-   "image": "geodetica/geodetica-57-display.webp",
-   "orientation": "square"
-  },
-  {
-   "id": "geodetica-60",
-   "title": "Geodetica #60",
-   "collection": "geodetica",
-   "acquired": null,
-   "unique": true,
-   "image": "geodetica/geodetica-60-display.webp",
-   "orientation": "square"
-  },
-  {
-   "id": "seize-and-share-surreal-dreamooor-2430",
-   "title": "Surreal Dreamooor",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
-   "orientation": null
   }
  ]
 }

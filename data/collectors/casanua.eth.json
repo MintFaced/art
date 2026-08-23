@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 3
  },
- "first_collected": "2022-07-09T11:01:21.000000Z",
- "last_collected": "2022-07-09T11:01:21.000000Z",
+ "first_collected": "2022-07-09T11:01:21.000Z",
+ "last_collected": "2025-05-16T10:36:23.000000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -32,40 +32,40 @@
  ],
  "works": [
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-09T11:01:21.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
    "id": "id-please-362",
    "title": "ID Please",
    "collection": "id-please",
-   "acquired": null,
+   "acquired": "2025-05-16T10:36:23.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-line-of-gm-1989",
    "title": "Line of gm",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-11-02T19:19:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-line-of-gm-1989-display.webp",
    "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-25T11:01:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T11:01:21.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

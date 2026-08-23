@@ -12,7 +12,7 @@
   "collections": 2
  },
  "first_collected": "2023-08-19T06:38:11.000000Z",
- "last_collected": "2023-08-19T06:38:11.000000Z",
+ "last_collected": "2023-09-23T22:25:47.000000Z",
  "collections": [
   {
    "slug": "2022-10k",
@@ -27,6 +27,15 @@
  ],
  "works": [
   {
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": "2023-09-23T22:25:47.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-3-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-and-rivers-8",
    "title": "Roads and Rivers #8",
    "collection": "roads-and-rivers",
@@ -34,15 +43,6 @@
    "unique": true,
    "image": "roads-and-rivers/roads-and-rivers-8-display.webp",
    "orientation": "landscape"
-  },
-  {
-   "id": "2022-10k-3",
-   "title": "10k Project Blueprint",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-3-display.webp",
-   "orientation": null
   }
  ]
 }

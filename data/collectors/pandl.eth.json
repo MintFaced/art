@@ -11,8 +11,8 @@
   "editions": 5,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-08-23T03:34:39.000Z",
+ "last_collected": "2022-12-24T02:10:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -27,37 +27,10 @@
  ],
  "works": [
   {
-   "id": "geodetica-58",
-   "title": "Geodetica #58",
-   "collection": "geodetica",
-   "acquired": null,
-   "unique": true,
-   "image": "geodetica/geodetica-58-display.webp",
-   "orientation": "square"
-  },
-  {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-winter-shade-2135",
-   "title": "Winter Shade",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
-   "orientation": null
-  },
-  {
    "id": "seize-and-share-grimalkin-2312",
    "title": "Grimalkin",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-24T02:10:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null
@@ -66,7 +39,7 @@
    "id": "seize-and-share-nights-dawn-2382",
    "title": "Nights Dawn",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-24T02:10:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null
@@ -75,10 +48,37 @@
    "id": "seize-and-share-surreal-dreamooor-2430",
    "title": "Surreal Dreamooor",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-24T02:10:35.000Z",
    "unique": false,
    "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
    "orientation": null
+  },
+  {
+   "id": "seize-and-share-winter-shade-2135",
+   "title": "Winter Shade",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-19T15:53:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-14T02:24:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetica-58",
+   "title": "Geodetica #58",
+   "collection": "geodetica",
+   "acquired": "2022-08-23T03:34:39.000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-58-display.webp",
+   "orientation": "square"
   }
  ]
 }

@@ -11,8 +11,8 @@
   "editions": 10,
   "collections": 4
  },
- "first_collected": "2022-07-11T04:53:37.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
+ "first_collected": "2022-07-11T04:53:37.000Z",
+ "last_collected": "2025-05-16T21:45:59.000000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -37,6 +37,15 @@
  ],
  "works": [
   {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": "2025-05-16T21:45:59.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -46,85 +55,76 @@
    "orientation": null
   },
   {
-   "id": "roads-and-rivers-roads-and-rivers-traffic",
-   "title": "Roads and Rivers Traffic",
-   "collection": "roads-and-rivers",
-   "acquired": "2022-10-12T07:29:35.000000Z",
-   "unique": false,
-   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-11T04:53:37.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-20T00:32:35.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-eth-is-finite-1805",
-   "title": "Eth Is Finite",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-grimalkin-2312",
-   "title": "Grimalkin",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-vibe-2617",
-   "title": "!VIBE",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-vibe-2617-display.webp",
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null
   },
   {
    "id": "seize-and-share-griftercity-2690",
    "title": "GrifterCity",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-13T04:54:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
    "orientation": null
   },
   {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
+   "id": "seize-and-share-vibe-2617",
+   "title": "!VIBE",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-09T22:41:59.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "image": "seize-and-share/seize-and-share-vibe-2617-display.webp",
    "orientation": null
+  },
+  {
+   "id": "seize-and-share-grimalkin-2312",
+   "title": "Grimalkin",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-29T08:42:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-12T07:29:35.000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-eth-is-finite-1805",
+   "title": "Eth Is Finite",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-05T05:04:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-25T19:16:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-11T04:53:37.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

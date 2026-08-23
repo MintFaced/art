@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": "2022-07-09T16:37:26.000000Z",
- "last_collected": "2022-07-09T16:37:26.000000Z",
+ "first_collected": "2022-07-09T16:37:26.000Z",
+ "last_collected": "2022-12-16T14:47:59.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -27,40 +27,40 @@
  ],
  "works": [
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-09T16:37:26.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "seize-and-share-gm-518",
-   "title": "gm日本",
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-16T14:47:59.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-gm-518-display.webp",
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-gm-gm-1683",
    "title": "gm gm",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-09-30T12:21:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null
   },
   {
-   "id": "seize-and-share-accessdenied-mp4-2882",
-   "title": "AccessDenied.mp4",
+   "id": "seize-and-share-gm-518",
+   "title": "gm日本",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-08-31T22:33:58.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "image": "seize-and-share/seize-and-share-gm-518-display.webp",
    "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T16:37:26.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

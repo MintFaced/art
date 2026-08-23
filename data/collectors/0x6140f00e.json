@@ -6,12 +6,12 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 31,
+  "works": 30,
   "one_of_ones": 23,
-  "editions": 8,
+  "editions": 7,
   "collections": 7
  },
- "first_collected": "2022-07-09T01:57:32.000000Z",
+ "first_collected": "2022-05-10T05:25:59.000000Z",
  "last_collected": "2026-08-22T00:42:47.000000Z",
  "collections": [
   {
@@ -23,11 +23,6 @@
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
    "works": 3
-  },
-  {
-   "slug": "seize-and-share",
-   "title": "Seize And Share",
-   "works": 2
   },
   {
    "slug": "2022-10k",
@@ -48,6 +43,11 @@
    "slug": "pixelarcade",
    "title": "PixelArcade",
    "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
   }
  ],
  "works": [
@@ -58,6 +58,15 @@
    "acquired": "2026-08-22T00:42:47.000000Z",
    "unique": true,
    "image": "pixelarcade/pixelarcade-60-image.svg",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": "2025-02-09T00:42:47.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null
   },
   {
@@ -280,16 +289,25 @@
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-10-11T00:15:23.000000Z",
+   "acquired": "2022-10-11T00:15:23.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
   },
   {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-25T16:12:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-09T01:57:32.000000Z",
+   "acquired": "2022-07-09T01:57:32.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
@@ -298,36 +316,9 @@
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-10T05:25:59.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "geodetic-onchain-4",
-   "title": "Patrimora",
-   "collection": "geodetic-onchain",
-   "acquired": null,
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-eth-is-finite-1805",
-   "title": "Eth Is Finite",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null
   }
  ]

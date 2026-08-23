@@ -12,7 +12,7 @@
   "collections": 1
  },
  "first_collected": "2022-08-11T07:07:00.000000Z",
- "last_collected": "2022-08-11T07:07:00.000000Z",
+ "last_collected": "2022-08-11T07:07:00.000Z",
  "collections": [
   {
    "slug": "geodetica",
@@ -21,6 +21,15 @@
   }
  ],
  "works": [
+  {
+   "id": "geodetica-50",
+   "title": "Geodetica #50",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T07:07:00.000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-50-display.webp",
+   "orientation": "square"
+  },
   {
    "id": "geodetica-1",
    "title": "Geodetica #1",
@@ -37,15 +46,6 @@
    "acquired": "2022-08-11T07:07:00.000000Z",
    "unique": true,
    "image": "geodetica/geodetica-65-display.webp",
-   "orientation": "square"
-  },
-  {
-   "id": "geodetica-50",
-   "title": "Geodetica #50",
-   "collection": "geodetica",
-   "acquired": null,
-   "unique": true,
-   "image": "geodetica/geodetica-50-display.webp",
    "orientation": "square"
   }
  ]

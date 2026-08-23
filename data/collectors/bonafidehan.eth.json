@@ -11,8 +11,8 @@
   "editions": 3,
   "collections": 3
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-05-09T23:16:19.000000Z",
+ "last_collected": "2025-05-16T10:34:47.000000Z",
  "collections": [
   {
    "slug": "2022-10k",
@@ -32,19 +32,10 @@
  ],
  "works": [
   {
-   "id": "2022-10k-2",
-   "title": "10k Project",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
    "id": "id-please-362",
    "title": "ID Please",
    "collection": "id-please",
-   "acquired": null,
+   "acquired": "2025-05-16T10:34:47.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null
@@ -53,9 +44,18 @@
    "id": "seize-and-share-xdecal-2590",
    "title": "XDecal",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-07T15:48:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": "2022-05-09T23:16:19.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null
   }
  ]

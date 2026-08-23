@@ -12,7 +12,7 @@
   "collections": 3
  },
  "first_collected": "2022-08-29T03:11:07.000000Z",
- "last_collected": "2022-10-11T04:49:47.000000Z",
+ "last_collected": "2022-12-24T21:46:59.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -32,13 +32,58 @@
  ],
  "works": [
   {
+   "id": "seize-and-share-anxn-3250",
+   "title": "Anxn",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-24T21:46:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-21T00:23:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-surreal-dreamooor-2430",
+   "title": "Surreal Dreamooor",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-02T18:20:23.000Z",
+   "unique": false,
+   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-winter-shade-2135",
+   "title": "Winter Shade",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-15T00:13:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-10-11T04:49:47.000000Z",
+   "acquired": "2022-10-11T04:49:47.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-birth-of-gm-543",
+   "title": "Birth of gm",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-08T05:12:58.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
+   "orientation": null
   },
   {
    "id": "geodetica-13",
@@ -57,51 +102,6 @@
    "unique": true,
    "image": "geodetica/geodetica-43-display.webp",
    "orientation": "square"
-  },
-  {
-   "id": "seize-and-share-birth-of-gm-543",
-   "title": "Birth of gm",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-winter-shade-2135",
-   "title": "Winter Shade",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-surreal-dreamooor-2430",
-   "title": "Surreal Dreamooor",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-anxn-3250",
-   "title": "Anxn",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
-   "orientation": null
   }
  ]
 }

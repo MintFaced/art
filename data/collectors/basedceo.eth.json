@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-06-08T22:59:05.000000Z",
+ "last_collected": "2022-09-29T10:39:11.000Z",
  "collections": [
   {
    "slug": "2022-10k",
@@ -27,28 +27,10 @@
  ],
  "works": [
   {
-   "id": "2022-10k-3",
-   "title": "10k Project Blueprint",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-3-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "2022-10k-4",
-   "title": "10k Ghosted",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-4-display.webp",
-   "orientation": null
-  },
-  {
    "id": "seize-and-share-10k-buidling-643",
    "title": "10k Buidling",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-09-29T10:39:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null
@@ -57,9 +39,27 @@
    "id": "seize-and-share-bicameral-hallucination-1580",
    "title": "Bicameral Hallucination",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-09-29T10:36:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-bicameral-hallucination-1580-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-4",
+   "title": "10k Ghosted",
+   "collection": "2022-10k",
+   "acquired": "2022-07-28T23:03:18.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-4-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": "2022-06-08T22:59:05.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-3-display.webp",
    "orientation": null
   }
  ]

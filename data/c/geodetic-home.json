@@ -55,81 +55,107 @@
    "status": "available",
    "holders": [
     {
-     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
-     "ens": "visco.eth",
-     "qty": 2,
-     "status": "acquired"
-    },
-    {
-     "address": "0x429683282E5a28b81Aab1F9126b8d5e4847DFBeb",
-     "ens": null,
-     "qty": 2,
-     "status": "acquired"
-    },
-    {
-     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
-     "ens": "parachica.eth",
-     "qty": 1,
-     "status": "acquired"
-    },
-    {
-     "address": "0xdE58879DE5cA41367a5093dEE41F622C167b94B4",
-     "ens": null,
-     "qty": 1,
-     "status": "acquired"
-    },
-    {
      "address": "0xdD6B80649e8D472EB8fb52eb7eEcFd2Dc219AcE7",
      "ens": "ryanj.eth",
+     "display_name": null,
      "qty": 1,
-     "status": "available"
+     "acquired": "2025-09-08T04:52:23.000000Z",
+     "status": "artist_held"
     },
     {
-     "address": "0xDAfa9e3dAe493F0B9D6872EFf4fda0f40D1b7488",
-     "ens": "piercedcat.eth",
+     "address": "0x40D2f4399D23f9AfB82D0a6B73055f13208614F9",
+     "ens": "mintsafe.eth",
+     "display_name": null,
      "qty": 1,
-     "status": "acquired"
-    },
-    {
-     "address": "0xCB7504C4cb986E80AB4983b44263381F21273482",
-     "ens": "producedbydav.eth",
-     "qty": 1,
-     "status": "acquired"
-    },
-    {
-     "address": "0xC2547446c439bE477DCe96702FB1F9Dfb61baB3a",
-     "ens": null,
-     "qty": 1,
-     "status": "acquired"
-    },
-    {
-     "address": "0xc142DC5CEB96f73635D66B62bfde2A0eEa4e4cE1",
-     "ens": "sumofprimes.eth",
-     "qty": 1,
+     "acquired": "2025-09-08T04:53:35.000000Z",
      "status": "acquired"
     },
     {
      "address": "0xa1F05dbe26cDC2EDe4f410a5C54fE6473B5D7071",
      "ens": null,
+     "display_name": null,
      "qty": 1,
+     "acquired": "2025-09-08T05:24:23.000000Z",
      "status": "acquired"
     },
     {
-     "address": "0x40D2f4399D23f9AfB82D0a6B73055f13208614F9",
-     "ens": "mintsafe.eth",
+     "address": "0xdE58879DE5cA41367a5093dEE41F622C167b94B4",
+     "ens": null,
+     "display_name": null,
      "qty": 1,
-     "status": "acquired"
-    },
-    {
-     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
-     "ens": "iagof.eth",
-     "qty": 1,
+     "acquired": "2025-09-08T05:25:47.000000Z",
      "status": "acquired"
     },
     {
      "address": "0x0b3b0f9046905f50E13D3eBE055AB21E838eC872",
      "ens": null,
+     "display_name": null,
      "qty": 1,
+     "acquired": "2025-09-08T05:26:59.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xCB7504C4cb986E80AB4983b44263381F21273482",
+     "ens": "producedbydav.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2025-09-08T05:30:23.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+     "ens": "iagof.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2025-09-08T08:30:59.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+     "ens": "visco.eth",
+     "display_name": null,
+     "qty": 2,
+     "acquired": "2025-09-08T10:33:23.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xDAfa9e3dAe493F0B9D6872EFf4fda0f40D1b7488",
+     "ens": "piercedcat.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2025-09-08T11:18:35.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0x429683282E5a28b81Aab1F9126b8d5e4847DFBeb",
+     "ens": null,
+     "display_name": null,
+     "qty": 2,
+     "acquired": "2025-09-09T03:04:35.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
+     "ens": "parachica.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2025-09-10T05:18:59.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xC2547446c439bE477DCe96702FB1F9Dfb61baB3a",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2025-09-12T20:09:59.000000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xc142DC5CEB96f73635D66B62bfde2A0eEa4e4cE1",
+     "ens": "sumofprimes.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2025-09-13T21:49:47.000000Z",
      "status": "acquired"
     }
    ],

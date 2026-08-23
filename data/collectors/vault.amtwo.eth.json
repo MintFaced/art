@@ -11,8 +11,8 @@
   "editions": 3,
   "collections": 1
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-08-22T05:21:50.000Z",
+ "last_collected": "2022-12-16T11:50:47.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -22,10 +22,19 @@
  ],
  "works": [
   {
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-16T11:50:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-mint-face-224",
    "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-08-22T05:21:50.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-224-image.png",
    "orientation": null
@@ -34,18 +43,9 @@
    "id": "seize-and-share-mint-face-353",
    "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-08-22T05:21:50.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-353-image.png",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-accessdenied-mp4-2882",
-   "title": "AccessDenied.mp4",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null
   }
  ]

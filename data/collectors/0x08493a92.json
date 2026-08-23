@@ -6,26 +6,44 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 0,
-  "editions": 4,
+  "editions": 5,
   "collections": 1
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-11-29T02:03:59.000Z",
+ "last_collected": "2022-12-20T00:32:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
-   "works": 4
+   "works": 5
   }
  ],
  "works": [
   {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-20T00:32:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mintface-says-2778",
+   "title": "MintFace says",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-14T19:21:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-xdecal-2590",
    "title": "XDecal",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-07T17:43:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
    "orientation": null
@@ -34,27 +52,18 @@
    "id": "seize-and-share-trashyad-2592",
    "title": "TRASHYAD",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-07T17:33:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
    "orientation": null
   },
   {
-   "id": "seize-and-share-mintface-says-2778",
-   "title": "MintFace says",
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-11-29T02:03:59.000Z",
    "unique": false,
-   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null
   }
  ]

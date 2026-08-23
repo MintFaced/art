@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 3
  },
- "first_collected": "2022-07-10T12:59:41.000000Z",
- "last_collected": "2022-07-10T12:59:41.000000Z",
+ "first_collected": "2022-07-02T20:03:18.000Z",
+ "last_collected": "2022-09-25T08:59:59.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -32,10 +32,19 @@
  ],
  "works": [
   {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-25T08:59:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-10T12:59:41.000000Z",
+   "acquired": "2022-07-10T12:59:41.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
@@ -44,7 +53,7 @@
    "id": "2022-10k-1",
    "title": "10k Project Black and White",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-07-02T20:13:13.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null
@@ -53,18 +62,9 @@
    "id": "seize-and-share-mint-face-229",
    "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-07-02T20:03:18.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null
   }
  ]

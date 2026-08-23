@@ -11,8 +11,8 @@
   "editions": 5,
   "collections": 1
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-06-18T07:51:37.000Z",
+ "last_collected": "2022-12-20T00:32:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -22,10 +22,19 @@
  ],
  "works": [
   {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-20T00:32:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-mint-face-224",
    "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-06-18T07:51:37.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-224-image.png",
    "orientation": null
@@ -34,7 +43,7 @@
    "id": "seize-and-share-mint-face-229",
    "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-06-18T07:51:37.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
    "orientation": null
@@ -43,7 +52,7 @@
    "id": "seize-and-share-mint-face-353",
    "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-06-18T07:51:37.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-353-image.png",
    "orientation": null
@@ -52,18 +61,9 @@
    "id": "seize-and-share-mint-face-367",
    "title": "Mint Face",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-06-18T07:51:37.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-367-image.png",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-rememes-3252",
-   "title": "ReMemes",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null
   }
  ]

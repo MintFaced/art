@@ -12,7 +12,7 @@
   "collections": 3
  },
  "first_collected": "2022-08-11T08:32:44.000000Z",
- "last_collected": "2022-10-10T08:21:35.000000Z",
+ "last_collected": "2022-10-10T08:21:35.000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -35,10 +35,28 @@
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
-   "acquired": "2022-10-10T08:21:35.000000Z",
+   "acquired": "2022-10-10T08:21:35.000Z",
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-eth-is-finite-1805",
+   "title": "Eth Is Finite",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-05T05:11:35.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": "2022-09-30T12:49:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
   },
   {
    "id": "geodetica-26",
@@ -48,24 +66,6 @@
    "unique": true,
    "image": "geodetica/geodetica-26-display.webp",
    "orientation": "square"
-  },
-  {
-   "id": "seize-and-share-gm-gm-1683",
-   "title": "gm gm",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-eth-is-finite-1805",
-   "title": "Eth Is Finite",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
-   "orientation": null
   }
  ]
 }

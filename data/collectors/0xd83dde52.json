@@ -11,8 +11,8 @@
   "editions": 9,
   "collections": 3
  },
- "first_collected": "2022-07-09T01:43:06.000000Z",
- "last_collected": "2022-07-09T01:43:06.000000Z",
+ "first_collected": "2022-07-09T01:43:06.000Z",
+ "last_collected": "2026-05-15T22:31:23.000000Z",
  "collections": [
   {
    "slug": "seize-and-share",
@@ -32,85 +32,85 @@
  ],
  "works": [
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "acquired": "2022-07-09T01:43:06.000000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape"
-  },
-  {
-   "id": "2022-10k-1",
-   "title": "10k Project Black and White",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-1-display.webp",
-   "orientation": null
-  },
-  {
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2026-05-15T22:31:23.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-ftx-2033",
-   "title": "FTX",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-ftx-2033-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-surreal-dreamooor-2430",
-   "title": "Surreal Dreamooor",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-vibe-2617",
-   "title": "!VIBE",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-vibe-2617-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-griftercity-2690",
-   "title": "GrifterCity",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-anxn-3250",
    "title": "Anxn",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-24T05:10:35.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-griftercity-2690",
+   "title": "GrifterCity",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-13T04:56:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-vibe-2617",
+   "title": "!VIBE",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-09T21:21:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-vibe-2617-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-surreal-dreamooor-2430",
+   "title": "Surreal Dreamooor",
+   "collection": "seize-and-share",
+   "acquired": "2022-12-04T05:17:35.000Z",
+   "unique": false,
+   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-ftx-2033",
+   "title": "FTX",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-10T04:35:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-ftx-2033-display.webp",
    "orientation": null
   },
   {
    "id": "seize-and-share-dreaming-honey-3257",
    "title": "Dreaming Honey",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-10-27T04:06:59.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-dreaming-honey-3257-display.webp",
    "orientation": null
+  },
+  {
+   "id": "2022-10k-1",
+   "title": "10k Project Black and White",
+   "collection": "2022-10k",
+   "acquired": "2022-08-24T13:18:14.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-1-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T01:43:06.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

@@ -11,7 +11,7 @@
   "editions": 3,
   "collections": 4
  },
- "first_collected": "2022-10-11T10:42:35.000000Z",
+ "first_collected": "2022-10-11T10:42:35.000Z",
  "last_collected": "2026-08-21T07:26:47.000000Z",
  "collections": [
   {
@@ -46,19 +46,10 @@
    "orientation": null
   },
   {
-   "id": "roads-and-rivers-roads-and-rivers-traffic",
-   "title": "Roads and Rivers Traffic",
-   "collection": "roads-and-rivers",
-   "acquired": "2022-10-11T10:42:35.000000Z",
-   "unique": false,
-   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
-   "orientation": "landscape"
-  },
-  {
    "id": "id-please-362",
    "title": "ID Please",
    "collection": "id-please",
-   "acquired": null,
+   "acquired": "2025-05-16T16:35:23.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null
@@ -67,10 +58,19 @@
    "id": "seize-and-share-griftercity-2687",
    "title": "GrifterCity",
    "collection": "seize-and-share",
-   "acquired": null,
+   "acquired": "2022-12-13T20:25:47.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2687-display.webp",
    "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-11T10:42:35.000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
   }
  ]
 }

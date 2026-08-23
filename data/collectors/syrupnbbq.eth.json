@@ -12,7 +12,7 @@
   "collections": 2
  },
  "first_collected": "2022-08-22T01:58:15.000000Z",
- "last_collected": "2022-08-22T02:01:25.000000Z",
+ "last_collected": "2022-09-05T23:21:51.000000Z",
  "collections": [
   {
    "slug": "geodetica",
@@ -26,6 +26,15 @@
   }
  ],
  "works": [
+  {
+   "id": "2022-10k-1",
+   "title": "10k Project Black and White",
+   "collection": "2022-10k",
+   "acquired": "2022-09-05T23:21:51.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-1-display.webp",
+   "orientation": null
+  },
   {
    "id": "geodetica-33",
    "title": "Geodetica #33",
@@ -43,15 +52,6 @@
    "unique": true,
    "image": "geodetica/geodetica-11-display.webp",
    "orientation": "square"
-  },
-  {
-   "id": "2022-10k-1",
-   "title": "10k Project Black and White",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-1-display.webp",
-   "orientation": null
   }
  ]
 }

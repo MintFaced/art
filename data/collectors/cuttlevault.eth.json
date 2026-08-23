@@ -1,0 +1,57 @@
+{
+ "address": "0x53006f95def268f88dc1b8216654ab56f3afd052",
+ "ens": "cuttlevault.eth",
+ "display_name": null,
+ "slug": "cuttlevault.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2022-09-28T16:20:35.000000Z",
+ "last_collected": "2022-11-18T19:07:23.000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "seize-and-share-cc0-the-movie-2204",
+   "title": "CC0 The Movie",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-18T19:07:23.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-cc0-the-movie-2204-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-winter-shade-2135",
+   "title": "Winter Shade",
+   "collection": "seize-and-share",
+   "acquired": "2022-11-15T17:11:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": "2022-09-28T16:20:35.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-3-display.webp",
+   "orientation": null
+  }
+ ]
+}

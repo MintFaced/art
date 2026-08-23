@@ -11,8 +11,8 @@
   "editions": 7,
   "collections": 5
  },
- "first_collected": "2022-07-18T18:25:36.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
+ "first_collected": "2022-04-30T22:40:44.000Z",
+ "last_collected": "2023-02-07T07:48:35.000Z",
  "collections": [
   {
    "slug": "2022-10k",
@@ -42,6 +42,15 @@
  ],
  "works": [
   {
+   "id": "foundation-91077",
+   "title": "gm",
+   "collection": "genesis",
+   "acquired": "2023-02-07T07:48:35.000Z",
+   "unique": true,
+   "image": "genesis/foundation-91077-display.webp",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -51,19 +60,46 @@
    "orientation": null
   },
   {
+   "id": "2022-10k-4",
+   "title": "10k Ghosted",
+   "collection": "2022-10k",
+   "acquired": "2022-07-28T23:03:18.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-4-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-it-s-meme-szn-388",
+   "title": "It's Meme Szn",
+   "collection": "seize-and-share",
+   "acquired": "2022-07-22T02:18:16.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-it-s-meme-szn-388-image.gif",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-18T18:25:36.000000Z",
+   "acquired": "2022-07-18T18:25:36.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
   },
   {
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": "2022-06-14T05:40:10.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-3-display.webp",
+   "orientation": null
+  },
+  {
    "id": "2022-10k-1",
    "title": "10k Project Black and White",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-06-14T05:39:48.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null
@@ -72,54 +108,18 @@
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-09T05:05:54.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "2022-10k-3",
-   "title": "10k Project Blueprint",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-3-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "2022-10k-4",
-   "title": "10k Ghosted",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-4-display.webp",
    "orientation": null
   },
   {
    "id": "foundation-91070",
    "title": "Mountains on Mountains",
    "collection": "genesis",
-   "acquired": null,
+   "acquired": "2022-04-30T22:40:44.000Z",
    "unique": true,
    "image": "genesis/foundation-91070-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "foundation-91077",
-   "title": "gm",
-   "collection": "genesis",
-   "acquired": null,
-   "unique": true,
-   "image": "genesis/foundation-91077-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-it-s-meme-szn-388",
-   "title": "It's Meme Szn",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-it-s-meme-szn-388-image.gif",
    "orientation": null
   }
  ]

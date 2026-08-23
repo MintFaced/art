@@ -11,8 +11,8 @@
   "editions": 3,
   "collections": 3
  },
- "first_collected": "2022-07-15T13:54:18.000000Z",
- "last_collected": "2022-07-15T13:54:18.000000Z",
+ "first_collected": "2022-05-13T21:24:30.000000Z",
+ "last_collected": "2022-07-15T13:54:18.000Z",
  "collections": [
   {
    "slug": "2022-10k",
@@ -35,27 +35,27 @@
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
-   "acquired": "2022-07-15T13:54:18.000000Z",
+   "acquired": "2022-07-15T13:54:18.000Z",
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
   },
   {
-   "id": "2022-10k-2",
-   "title": "10k Project",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
    "id": "geodetic-onchain-3",
    "title": "Geodetic Signal",
    "collection": "geodetic-onchain",
-   "acquired": null,
+   "acquired": "2022-07-12T21:35:29.000000Z",
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": "2022-05-13T21:24:30.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null
   }
  ]

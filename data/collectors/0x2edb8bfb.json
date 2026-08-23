@@ -11,8 +11,8 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2022-05-18T08:30:54.000000Z",
+ "last_collected": "2022-10-07T22:40:47.000Z",
  "collections": [
   {
    "slug": "2022-10k",
@@ -27,10 +27,28 @@
  ],
  "works": [
   {
+   "id": "seize-and-share-stored-digital-value-1830",
+   "title": "Stored Digital Value",
+   "collection": "seize-and-share",
+   "acquired": "2022-10-07T22:40:47.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-stored-digital-value-1830-image.gif",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-4",
+   "title": "10k Ghosted",
+   "collection": "2022-10k",
+   "acquired": "2022-07-28T23:03:18.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-4-display.webp",
+   "orientation": null
+  },
+  {
    "id": "2022-10k-1",
    "title": "10k Project Black and White",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-30T00:06:17.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null
@@ -39,27 +57,9 @@
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
-   "acquired": null,
+   "acquired": "2022-05-18T08:30:54.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "2022-10k-4",
-   "title": "10k Ghosted",
-   "collection": "2022-10k",
-   "acquired": null,
-   "unique": false,
-   "image": "2022-10k/2022-10k-4-display.webp",
-   "orientation": null
-  },
-  {
-   "id": "seize-and-share-stored-digital-value-1830",
-   "title": "Stored Digital Value",
-   "collection": "seize-and-share",
-   "acquired": null,
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-stored-digital-value-1830-image.gif",
    "orientation": null
   }
  ]
