@@ -1,15 +1,62 @@
 {
  "_note": "Hero work and line for the pages that are not a work, a collection or a collector. Config, so a card can be re-pointed without touching the renderer.",
  "pages": {
-  "home": { "work": "geodetic-world-3", "title": "MintFace", "line": "Paintings and their tokens", "sub": "Hawke's Bay, Aotearoa" },
-  "collections": { "work": "patrimora-181", "title": "Collections", "line": "Every series, on chain and on canvas" },
-  "ai": { "work": "geodetic-illusions-1", "title": "The AI rail", "line": "Twenty-five per cent of every resale, to the models that helped" },
-  "genesis": { "work": "foundation-91070", "title": "Genesis", "line": "Where it started" },
-  "10k": { "work": "10k-project", "title": "The 10k Project", "line": "Ten thousand of one thing" },
-  "vault": { "work": "patrimora-1", "title": "The Vault", "line": "Held for a decade, not for sale" },
-  "provenance": { "work": "geodetica-36", "title": "Provenance", "line": "Chain records for every collection" },
-  "exhibitions": { "work": "two-burdens-1", "title": "Exhibitions", "line": "Where the work has stood" },
-  "claim": { "work": "patrimora-100", "title": "Receive your artwork", "line": "Three steps, about ten minutes" },
-  "set": { "work": "geodetic-world-3", "title": "The Geodetic Set", "line": "One work from each of five variants" }
+  "home": {
+   "work": "geodetic-world-3",
+   "title": "MintFace",
+   "line": "Paintings and their tokens",
+   "sub": "Hawke's Bay, Aotearoa"
+  },
+  "collections": {
+   "work": "patrimora-181",
+   "title": "Collections",
+   "line": "Every series, on chain and on canvas"
+  },
+  "ai": {
+   "work": "geodetic-illusions-1",
+   "title": "The AI rail",
+   "line": "Twenty-five per cent of every resale, to the models that helped"
+  },
+  "genesis": {
+   "work": "foundation-91070",
+   "title": "Genesis",
+   "line": "Where it started"
+  },
+  "10k": {
+   "work": "10k-project",
+   "title": "The 10k Project",
+   "line": "Ten thousand of one thing"
+  },
+  "vault": {
+   "work": "patrimora-1",
+   "title": "The Vault",
+   "line": "Held for a decade, not for sale"
+  },
+  "provenance": {
+   "work": "geodetica-36",
+   "title": "Provenance",
+   "line": "Chain records for every collection"
+  },
+  "exhibitions": {
+   "work": "two-burdens-1",
+   "title": "Exhibitions",
+   "line": "Where the work has stood"
+  },
+  "claim": {
+   "work": "patrimora-100",
+   "title": "Receive your artwork",
+   "line": "Three steps, about ten minutes"
+  },
+  "set": {
+   "work": "geodetic-world-3",
+   "title": "The Geodetic Set",
+   "line": "One work from each of five variants"
+  },
+  "studio": {
+   "work": "patrimora-181",
+   "title": "Artist Virtual Studio",
+   "line": "TAO gets a voice",
+   "sub": "A nudge steers, it never commands"
+  }
  }
 }

@@ -38,7 +38,8 @@ const collections = fs.readdirSync(path.join(ROOT, 'data/c'))
 // TAO is computed from ownership history by scripts/tao/build.mjs; this only
 // attaches it. If it has never been built the collectors still build fine.
 const tao = load('data/tao.json', null);
-const d = deriveCollectors(collections, titleOf, privateList, tao);
+const nudges = load('data/nudge-weighings.json', null);
+const d = deriveCollectors(collections, titleOf, privateList, tao, nudges);
 
 if (DRY) {
   console.log(JSON.stringify(d.index.counts, null, 1));

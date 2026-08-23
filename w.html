@@ -366,6 +366,10 @@ function provenanceFold(work) {
       </div>
     </details>`;
   }
+  /* A work that a nudge shaped carries it for good. The figure is the banked
+     one, not a live reading: the nudge closed, and what it weighed then is
+     what steered the work. */
+  const steer = work.nudge && work.nudge.line ? `<p>${e(work.nudge.line)}</p>` : '';
   const rows = [];
   if (d.chain) rows.push(['Chain', d.chain === 'ethereum' ? 'Ethereum' : 'Bitcoin']);
   if (d.standard) rows.push(['Standard', d.standard]);
@@ -393,6 +397,7 @@ function provenanceFold(work) {
     <details>
       <summary>Provenance</summary>
       <div class="fold-body">
+        ${steer}
         <table class="rows">
           ${rows.map(([k, v, mono]) => `<tr><th>${e(k)}</th><td class="${mono ? 'mono' : ''}">${v}</td></tr>`).join('')}
         </table>

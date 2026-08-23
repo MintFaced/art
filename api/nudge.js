@@ -1,0 +1,127 @@
+import { verifyMessage } from 'viem';
+import { readFile, writeFile } from './_lib/repo.js';
+import { siteOrigin, useRequestOrigin } from './_lib/data.js';
+import { tally, latest, isOpen, weighMessage, SIDES } from './_lib/nudges.js';
+
+/* Weighing TAO behind a Yes or a No.
+ *
+ * No gas, no tokens moved, nothing on chain. A wallet signs a plain sentence
+ * saying what it is doing, and that signature is kept beside the weighing as
+ * the audit trail. The TAO itself never moves: it is read from the register,
+ * weighed, and stays exactly where it was.
+ */
+
+const json = (b, s = 200) => new Response(JSON.stringify(b, null, 1), {
+  status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
+});
+const lower = (a) => String(a || '').toLowerCase();
+
+async function load(origin) {
+  const at = async (p) => {
+    const r = await fetch(`${origin}/${p}`, { headers: { accept: 'application/json' } });
+    if (!r.ok) throw new Error(`${p}: ${r.status}`);
+    return r.json();
+  };
+  const [nudges, weighings, tao] = await Promise.all([
+    at('data/nudges.json'), at('data/nudge-weighings.json'), at('data/tao.json'),
+  ]);
+  return { nudges, weighings, tao };
+}
+
+const taoReader = (tao) => (addr) => {
+  const w = tao.wallets && tao.wallets[lower(addr)];
+  return w ? w.tao : 0;
+};
+
+/** Everything the studio page needs, in one request. */
+export async function GET(request) {
+  const origin = useRequestOrigin(request) || siteOrigin();
+  let data;
+  try { data = await load(origin); } catch (e) { return json({ error: 'the studio is not reachable' }, 503); }
+  const readTao = taoReader(data.tao);
+  const url = new URL(request.url);
+  const who = url.searchParams.get('address');
+
+  const out = (data.nudges.nudges || []).filter((n) => n.published !== false).map((n) => {
+    const rows = latest(data.weighings.weighings || [], n.id);
+    // a banked nudge keeps the numbers it closed with, whatever has happened
+    // to anyone's TAO since. It is a record, not a live reading.
+    const t = n.banked ? n.banked : tally(rows, readTao);
+    const mine = who ? rows.find((r) => lower(r.address) === lower(who)) : null;
+    return {
+      id: n.id, number: n.number, question: n.question, note: n.note || null,
+      image: n.image || null, opens: n.opens || null, closes: n.closes,
+      open: isOpen(n), banked: Boolean(n.banked), outcome: n.outcome || null,
+      totals: t.totals, counts: t.counts, total: t.total, collectors: t.collectors,
+      share: t.share, result: t.result,
+      ledger: (t.ledger || []).map((r) => ({ address: r.address, name: r.name || null, side: r.side, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
+      mine: mine ? { side: mine.side, amount: mine.amount, at: mine.at } : null,
+    };
+  }).sort((a, b) => Number(b.open) - Number(a.open) || String(b.closes).localeCompare(String(a.closes)));
+
+  return json({
+    nudges: out,
+    tao: who ? readTao(who) : null,
+    rule: 'A nudge steers. It never commands. The studio may act with, against, or without the result.',
+  });
+}
+
+/** Weigh, or weigh again. The latest stands. */
+export async function POST(request) {
+  const origin = useRequestOrigin(request) || siteOrigin();
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400); }
+
+  const address = lower(body.address);
+  const side = String(body.side || '').toLowerCase();
+  const amount = Math.floor(Number(body.amount));
+  const issued = String(body.issued || '');
+  const signature = String(body.signature || '');
+  const nudgeId = String(body.nudge || '');
+
+  if (!/^0x[0-9a-f]{40}$/.test(address)) return json({ error: 'that is not a wallet address' }, 400);
+  if (!SIDES.includes(side)) return json({ error: 'a nudge is a yes or a no' }, 400);
+  if (!Number.isFinite(amount) || amount <= 0) return json({ error: 'weigh some TAO, or none at all' }, 400);
+  if (!signature.startsWith('0x')) return json({ error: 'a signature is required' }, 400);
+  // an old signature should not sit around waiting to be replayed
+  const age = Date.now() - Date.parse(issued);
+  if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
+    return json({ error: 'that signature has gone stale, please sign again' }, 400);
+  }
+
+  let data;
+  try { data = await load(origin); } catch (e) { return json({ error: 'the studio is not reachable' }, 503); }
+
+  const n = (data.nudges.nudges || []).find((x) => x.id === nudgeId);
+  if (!n) return json({ error: 'no such nudge' }, 404);
+  if (!isOpen(n)) return json({ error: 'this nudge has closed' }, 409);
+
+  const held = Math.floor(taoReader(data.tao)(address) || 0);
+  if (held <= 0) return json({ error: 'this wallet holds no TAO yet' }, 403);
+  if (amount > held) return json({ error: `that is more than this wallet holds. Its TAO is ${held.toLocaleString('en-NZ')}.` }, 400);
+
+  const message = weighMessage({ nudge: n.question, side, amount, address, issued });
+  let ok = false;
+  try { ok = await verifyMessage({ address, message, signature }); } catch (e) { ok = false; }
+  if (!ok) return json({ error: 'that signature does not match the wallet' }, 401);
+
+  // the register knows their name; the ledger shows it rather than a hex string
+  let name = null;
+  try {
+    const reg = await fetch(`${origin}/data/collectors.json`).then((r) => r.json());
+    const hit = (reg.collectors || []).find((c) => lower(c.address) === address);
+    name = hit ? (hit.display_name || hit.ens || null) : null;
+  } catch (e) { /* a name is a courtesy */ }
+
+  const file = await readFile('data/nudge-weighings.json');
+  const store = JSON.parse(file.text);
+  store.weighings = [...(store.weighings || []), {
+    nudge: n.id, address, side, amount, name,
+    at: new Date().toISOString(), issued, signature,
+  }];
+  await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
+    `Nudge ${n.number}: ${name || address.slice(0, 10)} weighs ${amount} on ${side}`, file.sha);
+
+  const rows = latest(store.weighings, n.id);
+  return json({ ok: true, tally: tally(rows, taoReader(data.tao)) });
+}

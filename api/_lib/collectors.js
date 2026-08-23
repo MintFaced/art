@@ -33,11 +33,21 @@ const shortOf = (a, n) => a.slice(0, 2 + n);
  * @param collections  array of parsed data/c/*.json records
  * @param titleOf      Map slug -> collection title
  * @param privateList  Set of lowercased addresses that render as "Private collector"
+ * @param nudges       data/nudge-weighings.json, or null. Participation is
+ *                     part of the patron record.
  * @param tao          data/tao.json, or null. Attached, never derived here:
  *                     TAO is computed from ownership history, which this
  *                     function has no sight of.
  */
-export function deriveCollectors(collections, titleOf, privateList = new Set(), tao = null) {
+export function deriveCollectors(collections, titleOf, privateList = new Set(), tao = null, nudges = null) {
+  // how many distinct nudges each wallet has weighed in on
+  const weighed = new Map();
+  for (const w of (nudges && nudges.weighings) || []) {
+    const a = String(w.address || '').toLowerCase();
+    if (!a) continue;
+    if (!weighed.has(a)) weighed.set(a, new Set());
+    weighed.get(a).add(w.nudge);
+  }
   const people = new Map();
 
   const note = (addr, w) => {
@@ -87,6 +97,7 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
     p.tao_rate = t ? t.rate : 0;
     // what each work has contributed to their total, for the hover
     if (t && t.works) for (const w of p.works) { const v = t.works[w.id]; if (v) w.tao = v; }
+    p.nudges = weighed.has(p.address) ? weighed.get(p.address).size : 0;
     p.private = privateList.has(p.address);
     // the threshold decides a page, never whether someone is counted
     p.has_page = !p.private && (p.counts.works >= MIN_WORKS || p.counts.one_of_ones >= 1);
@@ -143,6 +154,7 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
     slug: p.has_page ? p.slug : null, private: p.private, has_page: p.has_page,
     counts: p.counts, first_collected: p.first_collected, last_collected: p.last_collected,
     tao: p.tao || 0, tao_rate: p.tao_rate || 0, tao_rank: p.tao_rank || null,
+    ...(p.nudges ? { nudges: p.nudges } : {}),
   });
   const collectionsOf = (p) => [...p.collections.entries()]
     .map(([slug, works]) => ({ slug, title: titleOf.get(slug) || slug, works }))

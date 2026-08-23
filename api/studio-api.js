@@ -52,6 +52,47 @@ export async function POST(request) {
 
   if (!sessionOk(sessionFrom(request))) return json({ error: 'sign in first' }, 401);
 
+  /* Nudge authoring. A nudge is one question, a close date, and nothing else
+     required. While it is open only the wording of the note and the image may
+     be corrected: changing the question itself would silently re-purpose
+     weighings that were made against different words, so that voids and
+     restarts as a new nudge rather than editing in place. */
+  if (action === 'nudge') {
+    const question = String(body.question || '').trim();
+    const closes = String(body.closes || '').trim();
+    if (question.length < 8) return json({ error: 'ask something' }, 400);
+    if (!Date.parse(closes)) return json({ error: 'a close date is required' }, 400);
+    if (Date.parse(closes) < Date.now()) return json({ error: 'that date has already passed' }, 400);
+
+    const file = await readFile('data/nudges.json');
+    const store = JSON.parse(file.text);
+    store.nudges = store.nudges || [];
+    const number = store.next_number || (store.nudges.length + 1);
+    const id = `nudge-${number}`;
+    store.nudges.push({
+      id, number, question,
+      note: String(body.note || '').trim() || null,
+      image: String(body.image || '').trim() || null,
+      opens: new Date().toISOString(),
+      closes: new Date(closes).toISOString(),
+      published: body.publish !== false,
+    });
+    store.next_number = number + 1;
+    await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n', `Nudge ${number}: ${question.slice(0, 60)}`, file.sha);
+    return json({ ok: true, id, number });
+  }
+
+  // what happened after a nudge banked, written on the record
+  if (action === 'nudge-outcome') {
+    const file = await readFile('data/nudges.json');
+    const store = JSON.parse(file.text);
+    const n = (store.nudges || []).find((x) => x.id === String(body.id));
+    if (!n) return json({ error: 'no such nudge' }, 404);
+    n.outcome = String(body.outcome || '').trim() || null;
+    await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n', `Nudge ${n.number}: outcome`, file.sha);
+    return json({ ok: true });
+  }
+
   if (action === 'upload') {
     if (!r2Configured()) return json({ error: 'no image store configured' }, 503);
     const m = /^data:(image\/(jpeg|png|webp));base64,(.+)$/.exec(String(body.data || ''));

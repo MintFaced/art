@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artist Virtual Studio ... MintFace</title>
+<meta name="description" content="TAO gets a voice. Collectors weigh their TAO behind a yes or a no on studio questions. A nudge steers; it never commands.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<meta property="og:image" content="https://mintface.art/api/og?page=studio">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mintface.art/api/og?page=studio">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:1400px;margin:0 auto;padding:60px 28px 0}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(38px,6.4vw,76px);line-height:.98;margin:0;letter-spacing:-.035em}
+h1 em{font-style:italic;display:block;font-size:.3em;color:var(--muted);letter-spacing:-.02em;margin-top:16px}
+.frame{max-width:1400px;margin:0 auto;padding:40px 28px 0}
+.frame p{font-size:16.5px;line-height:1.7;color:#3a362f;max-width:34em;margin:0 0 14px}
+.rule{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-left:2px solid var(--ink);padding-left:16px;margin:26px 0 0;line-height:1.8}
+
+.wrap{max-width:1400px;margin:0 auto;padding:54px 28px 120px}
+.sec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;margin:0 0 20px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.sec + .sec{margin-top:64px}
+.nudge{border-bottom:1px solid var(--rule);padding:30px 0}
+.nudge:last-child{border-bottom:0}
+.q{font-family:var(--font-sans);font-weight:400;font-size:clamp(21px,2.5vw,27px);line-height:1.25;letter-spacing:-.02em;margin:0;max-width:22em}
+.when{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.note{font-size:15px;line-height:1.65;color:#3a362f;margin:14px 0 0;max-width:34em}
+.shot{margin:18px 0 0;max-width:520px}
+.shot img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+
+/* two hairline bars, the way the meters read elsewhere on the site */
+.bars{margin:22px 0 0;max-width:520px}
+.bar{margin-bottom:12px}
+.bar .lab{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.bar .lab b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+.bar .track{height:3px;background:var(--rule);position:relative}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+
+.act{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 0;align-items:center}
+.side{padding:11px 20px;border:1px solid var(--rule);background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+.side[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.amt{width:190px;padding:11px 13px;border:1px solid var(--rule);background:transparent;font-family:var(--font-mono);font-size:14px;color:var(--ink);border-radius:0}
+.amt:focus{outline:none;border-color:var(--ink)}
+.go{padding:11px 22px;background:var(--ink);color:var(--paper);border:0;cursor:pointer;font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.go[disabled]{opacity:.5;cursor:default}
+.said{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:12px 0 0}
+.said.bad{color:#8b3a2a;text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
+
+.ledger{margin:24px 0 0;max-width:640px}
+.ledger table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.ledger th{text-align:left;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:0 0 9px;border-bottom:1px solid var(--rule)}
+.ledger td{padding:10px 0;border-bottom:1px solid var(--rule);font-size:13.5px}
+.ledger th + th,.ledger td + td{padding-left:22px}
+.ledger .w{font-family:var(--font-mono);font-size:12.5px;text-align:right;white-space:nowrap}
+.ledger .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ledger tr:last-child td{border-bottom:0}
+.banked{font-family:var(--font-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);margin:18px 0 0}
+.outcome{font-size:15px;line-height:1.65;color:#3a362f;margin:12px 0 0;max-width:34em}
+.empty{font-size:15px;color:var(--faint);padding:8px 0 0}
+@media(max-width:560px){.mast,.frame,.wrap{padding-left:20px;padding-right:20px}.amt{width:100%}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main">
+  <section class="mast">
+    <h1>Artist Virtual Studio<em>TAO gets a voice</em></h1>
+  </section>
+
+  <div class="frame">
+    <p>While some build at nation-state size ... huge scale, complex coordination ... there is also a need for smaller experiments, shorter runways, faster iteration. The Artist Virtual Studio is smol scale, needing simple coordination: a yes or a no, built on MintFace art tokens. Co-creation between the artist and collectoors ... and eventually beyond.</p>
+    <p class="rule">A nudge steers. It never commands.<br>The studio may act with, against, or without the result.</p>
+  </div>
+
+  <div class="wrap" id="wrap"><div class="loading">Loading</div></div>
+</main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="/claim">Receive your artwork</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+const e = MF.escape;
+const $ = (id) => document.getElementById(id);
+const n = (x) => Number(x || 0).toLocaleString('en-NZ');
+const short = (a) => a.slice(0, 6) + '…' + a.slice(-4);
+const day = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+
+let STATE = null;
+let WALLET = null;
+let MY_TAO = 0;
+const chosen = {};      // nudge id -> side picked but not yet signed
+
+async function load() {
+  const q = WALLET ? `?address=${encodeURIComponent(WALLET)}` : '';
+  STATE = await fetch(`/api/nudge${q}`).then((r) => r.json());
+  draw();
+}
+
+function bars(x) {
+  const rows = [['yes', 'Yes'], ['no', 'No']];
+  return `<div class="bars">${rows.map(([k, label]) => `
+    <div class="bar">
+      <div class="lab"><span>${label}</span><span><b>${n(x.totals[k])}</b> TAO &middot; ${x.counts[k]} collector${x.counts[k] === 1 ? '' : 's'}</span></div>
+      <div class="track"><div class="fill" style="width:${(x.share[k] * 100).toFixed(1)}%"></div></div>
+    </div>`).join('')}</div>`;
+}
+
+function ledger(x) {
+  if (!x.ledger.length) return '<p class="empty">Nobody has weighed in yet.</p>';
+  return `<div class="ledger"><table>
+    <thead><tr><th>Collector</th><th>Side</th><th class="w">Weighed</th></tr></thead>
+    <tbody>${x.ledger.map((r) => `<tr>
+      <td>${e(r.name || short(r.address))}</td>
+      <td class="s">${e(r.side)}${r.clamped ? ' &middot; clamped' : ''}</td>
+      <td class="w">${n(r.weight)}</td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+function openCard(x) {
+  const mine = x.mine;
+  const pick = chosen[x.id] || (mine && mine.side) || null;
+  return `<div class="nudge">
+    <p class="q">${e(x.question)}</p>
+    <div class="when">Nudge #${x.number} &middot; closes ${e(day(x.closes))}</div>
+    ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
+    ${x.image ? `<div class="shot"><img src="${e(x.image)}" alt=""></div>` : ''}
+    ${bars(x)}
+    <div class="act">
+      <button type="button" class="side" data-nudge="${e(x.id)}" data-side="yes" aria-pressed="${pick === 'yes'}">Yes</button>
+      <button type="button" class="side" data-nudge="${e(x.id)}" data-side="no" aria-pressed="${pick === 'no'}">No</button>
+      ${WALLET
+        ? `<input class="amt" id="amt-${e(x.id)}" type="text" inputmode="numeric" placeholder="TAO to weigh"
+             value="${mine ? mine.amount : ''}" aria-label="TAO to weigh">
+           <button class="go" data-weigh="${e(x.id)}">${mine ? 'Adjust' : 'Weigh'}</button>`
+        : `<button class="go" id="connect">Connect wallet</button>`}
+    </div>
+    ${WALLET ? `<p class="said">Your TAO ${n(MY_TAO)}${mine ? ` &middot; you weighed ${n(mine.amount)} on ${e(mine.side)}` : ''}</p>` : ''}
+    <p class="said" id="say-${e(x.id)}" hidden></p>
+    ${ledger(x)}
+  </div>`;
+}
+
+function bankedCard(x) {
+  return `<div class="nudge">
+    <p class="q">${e(x.question)}</p>
+    <div class="when">Nudge #${x.number} &middot; closed ${e(day(x.closes))}</div>
+    ${bars(x)}
+    <p class="banked">${x.result === 'even' ? 'Even' : x.result === 'yes' ? 'Yes' : 'No'}
+      &middot; ${n(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}</p>
+    ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
+    ${ledger(x)}
+  </div>`;
+}
+
+function draw() {
+  const open = STATE.nudges.filter((x) => x.open);
+  const done = STATE.nudges.filter((x) => !x.open);
+  $('wrap').innerHTML = `
+    <h2 class="sec">Open</h2>
+    ${open.length ? open.map(openCard).join('') : '<p class="empty">No nudge is open just now.</p>'}
+    ${done.length ? `<h2 class="sec">Banked</h2>${done.map(bankedCard).join('')}` : ''}`;
+  wire();
+}
+
+function wire() {
+  document.querySelectorAll('.side').forEach((b) => b.addEventListener('click', () => {
+    chosen[b.dataset.nudge] = b.dataset.side;
+    document.querySelectorAll(`.side[data-nudge="${b.dataset.nudge}"]`)
+      .forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  }));
+  const c = $('connect');
+  if (c) c.addEventListener('click', connect);
+  document.querySelectorAll('[data-weigh]').forEach((b) => b.addEventListener('click', () => weigh(b.dataset.weigh)));
+}
+
+async function connect() {
+  if (!window.ethereum) { alert('No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.'); return; }
+  const [a] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  WALLET = String(a).toLowerCase();
+  await load();
+  MY_TAO = STATE.tao || 0;
+  draw();
+}
+
+function say(id, text, bad) {
+  const el = $(`say-${id}`);
+  if (!el) return;
+  el.textContent = text;
+  el.className = bad ? 'said bad' : 'said';
+  el.hidden = !text;
+}
+
+async function weigh(id) {
+  const x = STATE.nudges.find((y) => y.id === id);
+  const side = chosen[id] || (x.mine && x.mine.side);
+  if (!side) { say(id, 'Pick a yes or a no first.', true); return; }
+  const amount = Math.floor(Number(String(($(`amt-${id}`) || {}).value || '').replace(/[^0-9]/g, '')));
+  if (!amount) { say(id, 'How much of your TAO do you want behind it?', true); return; }
+  if (amount > MY_TAO) { say(id, `That is more TAO than this wallet holds. Yours is ${n(MY_TAO)}.`, true); return; }
+
+  say(id, 'Sign in your wallet ...');
+  const issued = new Date().toISOString();
+  const message = [
+    'MintFace Artist Virtual Studio', '',
+    `Nudge: ${x.question}`, `Side: ${side.toUpperCase()}`, `Weight: ${amount} TAO`,
+    `Wallet: ${WALLET}`, `Issued: ${issued}`, '',
+    'A nudge steers. It never commands.',
+    'Weighing does not move or spend any TAO.',
+  ].join('\n');
+
+  let signature;
+  try {
+    signature = await window.ethereum.request({ method: 'personal_sign', params: [message, WALLET] });
+  } catch (err) { say(id, 'Nothing was signed, so nothing was weighed.', true); return; }
+
+  say(id, 'Recording ...');
+  const r = await fetch('/api/nudge', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ nudge: id, address: WALLET, side, amount, issued, signature }),
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { say(id, j.error || 'That did not go through.', true); return; }
+  await load();
+  MY_TAO = STATE.tao || MY_TAO;
+  draw();
+  say(id, 'Weighed. Your TAO has not moved.');
+}
+
+load().catch(() => { $('wrap').innerHTML = '<div class="loading">The studio is quiet just now</div>'; });
+</script>
+</body>
+</html>
