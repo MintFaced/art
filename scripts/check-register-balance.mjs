@@ -157,13 +157,52 @@ const missingFromRegister = shouldBe.filter((a) => !registered.has(a));
 const inRegisterOnly = [...registered].filter((a) => !onChain.has(a));
 const exclusionsSeen = [...onChain].filter((a) => excluded.has(a));
 
+/* A discrepancy is only real if the contract agrees. The shared contracts are
+   backfilled one token at a time through an indexer, and that backfill can
+   miss a transfer ... id-please token 362 kept an incoming move and lost the
+   matching outgoing one, which made a wallet holding nothing look like a
+   collector nobody had counted. So anything flagged is asked of the contract
+   directly before it is reported, and quietly dropped if the chain disagrees. */
+const rpc = process.env.ETH_RPC || 'https://ethereum-rpc.publicnode.com';
+const wordOf = (v) => BigInt(v).toString(16).padStart(64, '0');
+const addrWord = (a) => a.toLowerCase().replace(/^0x/, '').padStart(64, '0');
+async function reallyHolds(address) {
+  for (const [k, m] of bal) {
+    if ((m.get(address) || 0) <= 0) continue;
+    const [contract, token] = [k.slice(0, k.indexOf('|')), k.slice(k.indexOf('|') + 1)];
+    const std = (tracked.get(contract) || {}).std;
+    const data = std === 'ERC-1155'
+      ? '0x00fdd58e' + addrWord(address) + wordOf(token)
+      : '0x6352211e' + wordOf(token);
+    try {
+      const r = await fetch(rpc, { method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'eth_call', params: [{ to: contract, data }, 'latest'] }) });
+      const j = await r.json();
+      if (!j.result || j.result === '0x') continue;
+      if (std === 'ERC-1155') { if (BigInt(j.result) > 0n) return true; }
+      else if (('0x' + j.result.slice(-40)).toLowerCase() === address) return true;
+    } catch (e) { /* ask about the next token it supposedly holds */ }
+    await sleep(80);
+  }
+  return false;
+}
+const phantom = [];
+for (let i = missingFromRegister.length - 1; i >= 0; i--) {
+  const a = missingFromRegister[i];
+  if (!(await reallyHolds(a))) { phantom.push(a); missingFromRegister.splice(i, 1); }
+}
+
 console.log('\nREGISTER BALANCE\n' + '='.repeat(64));
 console.log(`  ${String(onChain.size).padStart(6)}  addresses holding a tracked token, per Transfer logs`);
 console.log(`- ${String(exclusionsSeen.length).padStart(6)}  on the exclusion list (artist, vault, escrow, burn)`);
+// a phantom is in the log total but the contract says it holds nothing, so it
+// has to come off the same total or the equation cannot close
+if (phantom.length) console.log(`- ${String(phantom.length).padStart(6)}  the logs credit but the contract does not`);
 console.log(`  ${'-'.repeat(6)}`);
-console.log(`  ${String(onChain.size - exclusionsSeen.length).padStart(6)}  should be in the register`);
+const expected = onChain.size - exclusionsSeen.length - phantom.length;
+console.log(`  ${String(expected).padStart(6)}  should be in the register`);
 console.log(`  ${String(registered.size).padStart(6)}  are in the register`);
-const diff = (onChain.size - exclusionsSeen.length) - registered.size;
+const diff = expected - registered.size;
 console.log(`\n  difference: ${diff === 0 ? 'none ... it balances' : diff}`);
 if (missingFromRegister.length) {
   console.log(`\n  ${missingFromRegister.length} hold art and are NOT in the register:`);
@@ -174,6 +213,10 @@ if (inRegisterOnly.length) {
   console.log(`\n  ${inRegisterOnly.length} in the register hold nothing per the logs:`);
   for (const a of inRegisterOnly.slice(0, 15)) console.log(`     ${a}`);
   if (inRegisterOnly.length > 15) console.log(`     ... and ${inRegisterOnly.length - 15} more`);
+}
+if (phantom.length) {
+  console.log(`\n  ${phantom.length} flagged by the logs but holding nothing per the contract:`);
+  for (const a of phantom.slice(0, 10)) console.log(`     ${a}  (incomplete shared-contract backfill)`);
 }
 console.log(`\n  exclusions actually seen holding: ${exclusionsSeen.length} of ${excluded.size} listed`);
 process.exit(missingFromRegister.length || inRegisterOnly.length ? 1 : 0);

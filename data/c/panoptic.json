@@ -11,8 +11,8 @@
  },
  "counts": {
   "works": 10,
-  "acquired": 1,
-  "available": 9
+  "acquired": 2,
+  "available": 8
  },
  "contracts": [
   {
@@ -324,11 +324,17 @@
     "painting": null,
     "both": null
    },
-   "status": "available",
-   "held_by": "mintface.eth",
+   "status": "acquired",
+   "held_by": null,
    "listed_on": null,
    "reserve": null,
-   "collector": null,
+   "collector": {
+    "address": "0xc93C7f71581DFEAAb59BEd908888dAC5689F312a",
+    "ens": "humanityisthedevil.eth",
+    "display_name": null,
+    "note": null,
+    "acquired": null
+   },
    "assets": {
     "display": "panoptic/panoptic-5-display.webp",
     "image": "panoptic/panoptic-5-image.gif"

@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-08-23T21:14:03.845Z",
+ "generated": "2026-08-23T21:19:51.194Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -14,10 +14,10 @@
   "wallets": 3434
  },
  "counts": {
-  "collectors": 3680,
-  "with_page": 807,
+  "collectors": 3681,
+  "with_page": 808,
   "private": 0,
-  "named": 1217
+  "named": 1218
  },
  "collectors": [
   {
@@ -14744,6 +14744,25 @@
    "tao": 31375,
    "tao_rate": 69,
    "tao_rank": 369
+  },
+  {
+   "address": "0xc93c7f71581dfeaab59bed908888dac5689f312a",
+   "ens": "humanityisthedevil.eth",
+   "display_name": null,
+   "slug": "humanityisthedevil.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 1,
+    "one_of_ones": 1,
+    "editions": 0,
+    "collections": 1
+   },
+   "first_collected": null,
+   "last_collected": null,
+   "tao": 0,
+   "tao_rate": 0,
+   "tao_rank": 3228
   },
   {
    "address": "0x66298837aa0079c0d1a4ff7549f2aac8a79c383e",
