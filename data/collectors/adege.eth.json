@@ -1,0 +1,57 @@
+{
+ "address": "0x0843e80240f9304f3fe7059f25f3e1a66886a0eb",
+ "ens": "adege.eth",
+ "display_name": null,
+ "slug": "adege.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2023-01-03T13:54:11.000000Z",
+ "last_collected": "2023-01-03T13:54:11.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 2
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-01-03T13:54:11.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-shortcut",
+   "title": "The Shortcut",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-01-03T13:54:11.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/Q8StNcW0Icr7_Ds4IB8S83_yt9KsIMq7UUTpmC43DKk",
+   "orientation": null
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  }
+ ]
+}

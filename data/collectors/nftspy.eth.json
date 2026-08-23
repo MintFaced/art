@@ -1,0 +1,34 @@
+{
+ "address": "0x70353a9a3a2fe66ab44adecd61bb22b5928a6599",
+ "ens": "nftspy.eth",
+ "display_name": null,
+ "slug": "nftspy.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 1,
+  "one_of_ones": 1,
+  "editions": 0,
+  "collections": 1
+ },
+ "first_collected": "2026-08-22T00:14:23.000000Z",
+ "last_collected": "2026-08-22T00:14:23.000000Z",
+ "collections": [
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "two-burdens-21",
+   "title": "Untitled II",
+   "collection": "two-burdens",
+   "acquired": "2026-08-22T00:14:23.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-21-display.webp",
+   "orientation": "square"
+  }
+ ]
+}

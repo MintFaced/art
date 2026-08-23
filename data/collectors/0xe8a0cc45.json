@@ -1,0 +1,48 @@
+{
+ "address": "0xe8a0cc457405c250a3142db639b3e058fd431510",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xe8a0cc45",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2023-07-05T03:45:59.000000Z",
+ "last_collected": "2023-07-05T03:45:59.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-and-rivers-214",
+   "title": "Roads and Rivers #38",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-07-05T03:45:59.000000Z",
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-214-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  }
+ ]
+}

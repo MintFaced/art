@@ -1,0 +1,108 @@
+{
+ "address": "0xfa977a0125c16a658a59ca1e59c7c48d58142226",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xfa977a01",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 7,
+  "one_of_ones": 3,
+  "editions": 4,
+  "collections": 5
+ },
+ "first_collected": "2023-10-27T05:43:35.000000Z",
+ "last_collected": "2025-02-08T23:48:11.000000Z",
+ "collections": [
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 2
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "patrimora-10",
+   "title": "#10",
+   "collection": "patrimora",
+   "acquired": "2025-02-08T23:48:11.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-10-image.png",
+   "orientation": null
+  },
+  {
+   "id": "patrimora-156",
+   "title": "#156",
+   "collection": "patrimora",
+   "acquired": "2025-02-08T23:48:11.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-156-image.png",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-world-86",
+   "title": "Geodetic Arctic",
+   "collection": "geodetic-world",
+   "acquired": "2023-10-27T05:43:35.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-86-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-anxn-3250",
+   "title": "Anxn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
+   "orientation": null
+  }
+ ]
+}

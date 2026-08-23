@@ -1,0 +1,48 @@
+{
+ "address": "0x95164c11db60941e60a262bbfe183ace6a34363e",
+ "ens": "landandcityscapes.eth",
+ "display_name": null,
+ "slug": "landandcityscapes.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2021-12-11T08:39:11.000000Z",
+ "last_collected": "2021-12-11T08:39:11.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-moments-3",
+   "title": "Geodetic Moment #3",
+   "collection": "geodetic-moments",
+   "acquired": "2021-12-11T08:39:11.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  }
+ ]
+}

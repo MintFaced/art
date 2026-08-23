@@ -1,0 +1,52 @@
+{
+ "address": "0x9438160d839391bd22a2bc8cdcaab010063ba131",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x9438160d",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 1
+ },
+ "first_collected": "2022-12-27T08:04:59.000000Z",
+ "last_collected": "2022-12-27T08:17:59.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 3
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-keep-truckin",
+   "title": "Keep Truckin'",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T08:17:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/JeHXgZ-k8XWnL90qOiAKny_xsiQhJd9zVUaem9tNwAA",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T08:16:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-wei",
+   "title": "The Wei",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T08:04:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/i4Dru3m45FbsxaC0q-CyQqDuSWzt9oZxizEV8u-y1HU",
+   "orientation": null
+  }
+ ]
+}

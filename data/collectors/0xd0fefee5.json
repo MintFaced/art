@@ -1,0 +1,66 @@
+{
+ "address": "0xd0fefee51ac174206aed0f859ab73a0960b2523f",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xd0fefee5",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 3,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2024-08-22T22:09:35.000000Z",
+ "last_collected": "2024-09-05T06:02:35.000000Z",
+ "collections": [
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "works": 3
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "two-burdens-24",
+   "title": "Derision",
+   "collection": "two-burdens",
+   "acquired": "2024-09-05T06:02:35.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-24-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "two-burdens-10",
+   "title": "Obsidian Light",
+   "collection": "two-burdens",
+   "acquired": "2024-08-29T05:49:11.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-10-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2024-08-29T05:43:59.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "two-burdens-25",
+   "title": "The Highwayman",
+   "collection": "two-burdens",
+   "acquired": "2024-08-22T22:09:35.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-25-display.webp",
+   "orientation": "square"
+  }
+ ]
+}

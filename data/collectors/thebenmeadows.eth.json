@@ -1,0 +1,48 @@
+{
+ "address": "0x98f1bda2d45ffaca73fcf2154e9e007871e14934",
+ "ens": "thebenmeadows.eth",
+ "display_name": null,
+ "slug": "thebenmeadows.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2023-07-04T02:21:59.000000Z",
+ "last_collected": "2026-08-21T03:53:47.000000Z",
+ "collections": [
+  {
+   "slug": "pixelarcade",
+   "title": "PixelArcade",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "pixelarcade-36",
+   "title": "Sixteen-Bit Composition XIX",
+   "collection": "pixelarcade",
+   "acquired": "2026-08-21T03:53:47.000000Z",
+   "unique": true,
+   "image": "pixelarcade/pixelarcade-36-image.svg",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-journey",
+   "title": "The Journey",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-07-04T02:21:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/QPY1MVP9ji7xL4rYIrDMLLLfkv8es3CsBGvB4T6efjk",
+   "orientation": null
+  }
+ ]
+}

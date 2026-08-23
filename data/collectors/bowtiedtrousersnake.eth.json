@@ -1,0 +1,66 @@
+{
+ "address": "0x17726f58ba7350a33d08d1bbad623e155fa2daa0",
+ "ens": "bowtiedtrousersnake.eth",
+ "display_name": null,
+ "slug": "bowtiedtrousersnake.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 0,
+  "editions": 4,
+  "collections": 2
+ },
+ "first_collected": "2022-07-10T03:00:52.000000Z",
+ "last_collected": "2022-07-10T03:00:52.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 3
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-10T03:00:52.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-seize-and-share-53",
+   "title": "Seize and Share",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-seize-and-share-53-image.png",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-seize-and-share-168",
+   "title": "Seize and Share",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-seize-and-share-168-image.png",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-seize-and-share-176",
+   "title": "Seize and Share",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-seize-and-share-176-image.png",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "address": "0xfaeab24340ef750f67ee158deaafc82d34f019bd",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xfaeab243",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": null,
+ "last_collected": null,
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "2022-10k-1",
+   "title": "10k Project Black and White",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-1-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-certificate-of-mint-1918",
+   "title": "Certificate of Mint",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  }
+ ]
+}

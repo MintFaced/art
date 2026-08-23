@@ -1,0 +1,62 @@
+{
+ "address": "0xe61c204d9ab083240a7c8522e636298261ff354e",
+ "ens": "manishm.eth",
+ "display_name": null,
+ "slug": "manishm.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 3
+ },
+ "first_collected": "2022-12-27T03:29:59.000000Z",
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
+  }
+ ]
+}

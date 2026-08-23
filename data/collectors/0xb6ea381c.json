@@ -1,0 +1,48 @@
+{
+ "address": "0xb6ea381cac9da2de47c6a760445bbeab2b1db480",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xb6ea381c",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2023-10-21T09:03:11.000000Z",
+ "last_collected": "2025-03-03T09:10:59.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2025-03-03T09:10:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-world-85",
+   "title": "Geodetic Canopy",
+   "collection": "geodetic-world",
+   "acquired": "2023-10-21T09:03:11.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-85-display.webp",
+   "orientation": "square"
+  }
+ ]
+}

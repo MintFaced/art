@@ -1,0 +1,57 @@
+{
+ "address": "0x360bd0e8ef21909115d520b924e72de923eff47e",
+ "ens": "lostwisdom.eth",
+ "display_name": null,
+ "slug": "lostwisdom.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 3,
+  "editions": 0,
+  "collections": 2
+ },
+ "first_collected": "2024-08-23T07:53:47.000000Z",
+ "last_collected": "2024-08-24T08:08:35.000000Z",
+ "collections": [
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "works": 2
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-34",
+   "title": "Geodetica #34",
+   "collection": "geodetica",
+   "acquired": "2024-08-24T08:08:35.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-34-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "two-burdens-26",
+   "title": "Antipodal Familia",
+   "collection": "two-burdens",
+   "acquired": "2024-08-23T08:03:11.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-26-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "two-burdens-17",
+   "title": "Do Not Pass",
+   "collection": "two-burdens",
+   "acquired": "2024-08-23T07:53:47.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-17-display.webp",
+   "orientation": "square"
+  }
+ ]
+}

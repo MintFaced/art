@@ -1,0 +1,62 @@
+{
+ "address": "0x04dd50bdd139a9981bbaca6451f79b22d5af3ecf",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x04dd50bd",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 3
+ },
+ "first_collected": "2022-08-11T22:20:52.000000Z",
+ "last_collected": "2022-08-11T22:20:52.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-18",
+   "title": "Geodetica #18",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T22:20:52.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-18-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "address": "0x7cd29e0df7e442068e5751b638c9086fb62c50fa",
+ "ens": "cadmonkey.eth",
+ "display_name": null,
+ "slug": "cadmonkey.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-08-29T02:21:57.000000Z",
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "geodetica-88",
+   "title": "Geodetica #88",
+   "collection": "geodetica",
+   "acquired": "2022-08-29T02:21:57.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-88-display.webp",
+   "orientation": "square"
+  }
+ ]
+}

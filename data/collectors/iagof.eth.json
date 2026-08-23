@@ -1,0 +1,320 @@
+{
+ "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
+ "ens": "iagof.eth",
+ "display_name": null,
+ "slug": "iagof.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 30,
+  "one_of_ones": 5,
+  "editions": 25,
+  "collections": 6
+ },
+ "first_collected": "2022-08-11T07:59:47.000000Z",
+ "last_collected": "2025-02-04T20:12:23.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 19
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 4
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 2
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 2
+  },
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "patrimora-4",
+   "title": "#4",
+   "collection": "patrimora",
+   "acquired": "2025-02-04T20:12:23.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-4-image.png",
+   "orientation": null
+  },
+  {
+   "id": "patrimora-5",
+   "title": "#5",
+   "collection": "patrimora",
+   "acquired": "2025-02-04T20:12:23.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-5-image.png",
+   "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-1",
+   "title": "Roads and Rivers #1",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-06T18:13:23.000000Z",
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-1-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "roads-or-rivers-the-reservoir",
+   "title": "The Reservoir",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-05T07:46:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/v8nMEaQiWrsKZY9zsvSoHc26tGQ1FPQsc-7ekjwrxaU",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-roads",
+   "title": "Roads",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-11-30T07:11:23.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/s2BNlgtpYDSoJxBnSYo9aQ7AI5-0nz1UaAPkv7oU2-k",
+   "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-roads-and-rivers-rivers-end",
+   "title": "Roads and Rivers - Rivers End",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-13T23:36:59.000000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-rivers-end-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetica-32",
+   "title": "Geodetica #32",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T08:01:49.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-32-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-84",
+   "title": "Geodetica #84",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T07:59:47.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-84-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-home-5",
+   "title": "Geodetic Home",
+   "collection": "geodetic-home",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-home/geodetic-home-5-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mint-face-224",
+   "title": "Mint Face",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mint-face-224-image.png",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mint-face-229",
+   "title": "Mint Face",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-eth-is-finite-1805",
+   "title": "Eth Is Finite",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-certificate-of-mint-1918",
+   "title": "Certificate of Mint",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-lucky-kevin-2023",
+   "title": "Lucky Kevin",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-lucky-kevin-2023-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-winter-shade-2135",
+   "title": "Winter Shade",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-grimalkin-2312",
+   "title": "Grimalkin",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-nights-dawn-2382",
+   "title": "Nights Dawn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-surreal-dreamooor-2430",
+   "title": "Surreal Dreamooor",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-trashyad-2592",
+   "title": "TRASHYAD",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-griftercity-2653",
+   "title": "GrifterCity",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-griftercity-2653-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-griftercity-2682",
+   "title": "GrifterCity",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-griftercity-2682-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mintface-says-2778",
+   "title": "MintFace says",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-anxn-3250",
+   "title": "Anxn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  }
+ ]
+}

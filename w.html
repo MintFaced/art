@@ -195,6 +195,10 @@ details summary:hover{color:var(--ink)}
   font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
   font-variant-numeric:tabular-nums;
 }
+/* the attribution links out to the collector's page. Ink, underlined on hover,
+   nothing louder than the line it sits in */
+.collected .who a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.collected .who a:hover{border-color:var(--ink)}
 .collected .when{
   font-family:var(--font-mono);font-weight:400;
   font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
@@ -611,8 +615,10 @@ function collectedLine(work) {
   const when = work.collector && work.collector.acquired
     ? MF.date(work.collector.acquired, { month: 'long', year: 'numeric' })
     : null;
+  // the name links to their page when they have one; the link is filled in
+  // after the map loads, so the line reads correctly either way
   return `<div class="collected">
-    <div class="who"><span class="dot acquired"></span> Collected by ${e(name || 'a private collector')}</div>
+    <div class="who"><span class="dot acquired"></span> Collected by <span id="collectorName">${e(name || 'a private collector')}</span></div>
     ${when ? `<div class="when">${e(when)}</div>` : ''}
   </div>`;
 }
@@ -1203,6 +1209,13 @@ function thanksIfPaid() {
     }
     if (listing) hit.work.listing = listing;
     render(hit.work, hit.collection, idx._meta || {});
+
+    // link the attribution to the collector's page, if they have one
+    const slot = document.getElementById('collectorName');
+    if (slot && hit.work.collector) {
+      const url = MF.collectorUrl(hit.work.collector, await MF.collectorSlugs());
+      if (url) slot.innerHTML = `<a href="${e(url)}">${e(slot.textContent)}</a>`;
+    }
   } catch (err) {
     document.getElementById('main').innerHTML = `<div class="loading">Could not load this work</div>`;
     console.error(err);

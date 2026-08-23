@@ -1,0 +1,48 @@
+{
+ "address": "0x4209c91d59985dd563213a139d2e1e66f7662d38",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x4209c91d",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-02-17T23:39:29.000000Z",
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-moments-37",
+   "title": "Geodetic Moment #37",
+   "collection": "geodetic-moments",
+   "acquired": "2022-02-17T23:39:29.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-37-display.webp",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "address": "0x3b33605a49803ce5bf936d61ec34a82dc9a8af67",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x3b33605a",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 2,
+  "editions": 0,
+  "collections": 2
+ },
+ "first_collected": "2022-02-07T10:31:08.000000Z",
+ "last_collected": "2022-03-02T09:06:25.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-illusions",
+   "title": "Geodetic Illusions",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-illusions-69",
+   "title": "AI Knight",
+   "collection": "geodetic-illusions",
+   "acquired": "2022-03-02T09:06:25.000000Z",
+   "unique": true,
+   "image": "geodetic-illusions/geodetic-illusions-69-image.jpg",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-moments-16",
+   "title": "Geodetic Moment #16",
+   "collection": "geodetic-moments",
+   "acquired": "2022-02-07T10:31:08.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-16-display.webp",
+   "orientation": null
+  }
+ ]
+}

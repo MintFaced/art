@@ -1,0 +1,48 @@
+{
+ "address": "0x2be9f18c46df11f05b581131af4d339c20c7254e",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x2be9f18c",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2024-10-01T08:45:59.000000Z",
+ "last_collected": "2024-10-01T08:45:59.000000Z",
+ "collections": [
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "two-burdens-12",
+   "title": "Division",
+   "collection": "two-burdens",
+   "acquired": "2024-10-01T08:45:59.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-12-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "address": "0xdc85bcd0f0e3f29f0637ebee04394988bdd06b83",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xdc85bcd0",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2026-07-08T07:10:23.000000Z",
+ "last_collected": "2026-07-09T10:23:23.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2026-07-09T10:23:23.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-roads",
+   "title": "Roads",
+   "collection": "roads-and-rivers",
+   "acquired": "2026-07-09T09:52:11.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/s2BNlgtpYDSoJxBnSYo9aQ7AI5-0nz1UaAPkv7oU2-k",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2026-07-08T07:10:23.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  }
+ ]
+}

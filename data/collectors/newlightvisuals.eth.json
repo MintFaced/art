@@ -1,0 +1,90 @@
+{
+ "address": "0xe874ba46982d7cbab5931a50c2dc81a7aeb80344",
+ "ens": "newlightvisuals.eth",
+ "display_name": null,
+ "slug": "newlightvisuals.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 5,
+  "one_of_ones": 1,
+  "editions": 4,
+  "collections": 5
+ },
+ "first_collected": "2022-07-10T23:29:18.000000Z",
+ "last_collected": "2023-11-25T04:00:47.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-world-8",
+   "title": "Geodetic Isolation",
+   "collection": "geodetic-world",
+   "acquired": "2023-11-25T04:00:47.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-8-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-10T23:29:18.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  }
+ ]
+}

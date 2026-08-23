@@ -1,0 +1,85 @@
+{
+ "address": "0x50e05fa93c604b02f7c4d4b0aa328287b1545650",
+ "ens": "suiluv.eth",
+ "display_name": null,
+ "slug": "suiluv.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 5,
+  "one_of_ones": 0,
+  "editions": 5,
+  "collections": 4
+ },
+ "first_collected": "2022-07-10T17:19:39.000000Z",
+ "last_collected": "2022-07-10T17:19:39.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-10T17:19:39.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "2022-10k-1",
+   "title": "10k Project Black and White",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-1-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mint-face-229",
+   "title": "Mint Face",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
+   "orientation": null
+  }
+ ]
+}

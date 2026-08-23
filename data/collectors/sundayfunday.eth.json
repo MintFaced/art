@@ -1,0 +1,66 @@
+{
+ "address": "0x69cb3b1de24e08f1cfc2994171b6c6930498f750",
+ "ens": "sundayfunday.eth",
+ "display_name": null,
+ "slug": "sundayfunday.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 0,
+  "editions": 4,
+  "collections": 2
+ },
+ "first_collected": "2022-07-09T16:37:26.000000Z",
+ "last_collected": "2022-07-09T16:37:26.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 3
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T16:37:26.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-gm-518",
+   "title": "gm日本",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-518-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "orientation": null
+  }
+ ]
+}

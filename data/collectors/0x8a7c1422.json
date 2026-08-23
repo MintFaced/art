@@ -1,0 +1,48 @@
+{
+ "address": "0x8a7c1422fe789c276e21d1792afda90f638ac5cc",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x8a7c1422",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-07-12T02:21:18.000000Z",
+ "last_collected": "2022-08-11T10:01:20.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-82",
+   "title": "Geodetica #82",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T10:01:20.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-82-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-12T02:21:18.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  }
+ ]
+}

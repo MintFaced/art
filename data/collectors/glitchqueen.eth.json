@@ -1,0 +1,107 @@
+{
+ "address": "0xc97958ff5370c56b7e0e6fb58437f00702714d49",
+ "ens": "glitchqueen.eth",
+ "display_name": null,
+ "slug": "glitchqueen.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 8,
+  "one_of_ones": 6,
+  "editions": 2,
+  "collections": 3
+ },
+ "first_collected": "2022-07-09T01:15:58.000000Z",
+ "last_collected": "2022-08-11T10:13:47.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 6
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-99",
+   "title": "Geodetica #99",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T10:13:47.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-99-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-16",
+   "title": "Geodetica #16",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T10:11:42.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-16-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-24",
+   "title": "Geodetica #24",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T09:44:56.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-24-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-40",
+   "title": "Geodetica #40",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T09:19:21.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-40-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T01:15:58.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetica-57",
+   "title": "Geodetica #57",
+   "collection": "geodetica",
+   "acquired": null,
+   "unique": true,
+   "image": "geodetica/geodetica-57-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-60",
+   "title": "Geodetica #60",
+   "collection": "geodetica",
+   "acquired": null,
+   "unique": true,
+   "image": "geodetica/geodetica-60-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "seize-and-share-surreal-dreamooor-2430",
+   "title": "Surreal Dreamooor",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
+   "orientation": null
+  }
+ ]
+}

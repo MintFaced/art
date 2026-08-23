@@ -973,6 +973,28 @@ const MF = {
       .filter((g) => g.collections.length);
   },
 
+  /* ---------- collectors ----------
+     A small address -> slug map, so an attribution can link to the collector's
+     page without loading the whole collector index to find out whether one
+     exists. Someone below the threshold, or on the private list, simply has no
+     entry and the name renders as plain text. */
+  async collectorSlugs() {
+    if (this._slugs !== undefined) return this._slugs;
+    try {
+      const r = await fetch('/data/collector-slugs.json');
+      this._slugs = r.ok ? (await r.json()).slugs || {} : {};
+    } catch (e) { this._slugs = {}; }
+    return this._slugs;
+  },
+
+  collectorUrl(collector, slugs) {
+    const a = collector && collector.address;
+    const map = slugs || this._slugs;
+    if (!a || !map) return null;
+    const slug = map[a.toLowerCase()];
+    return slug ? `https://collectors.mintface.art/${encodeURIComponent(slug)}` : null;
+  },
+
   collectorName(collector) {
     if (!collector) return null;
     return collector.display_name || collector.ens || this.shortAddress(collector.address);

@@ -1,0 +1,62 @@
+{
+ "address": "0x2a7999c9c0ae20e7b64a126f838351bbb6c120b4",
+ "ens": "cmplx.eth",
+ "display_name": null,
+ "slug": "cmplx.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 3
+ },
+ "first_collected": "2022-11-17T11:07:11.000000Z",
+ "last_collected": "2023-10-15T17:04:11.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-world-81",
+   "title": "Geodetic Energy",
+   "collection": "geodetic-world",
+   "acquired": "2023-10-15T17:04:11.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-81-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-11-17T11:07:11.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-grimalkin-2312",
+   "title": "Grimalkin",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
+   "orientation": null
+  }
+ ]
+}

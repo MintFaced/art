@@ -1,0 +1,76 @@
+{
+ "address": "0x5f1db8d30744eed120fa29d7045a5d32e34c9724",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x5f1db8d3",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 0,
+  "editions": 4,
+  "collections": 4
+ },
+ "first_collected": "2022-08-03T07:29:17.000000Z",
+ "last_collected": "2022-08-03T07:29:17.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-08-03T07:29:17.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-seize-and-share-168",
+   "title": "Seize and Share",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-seize-and-share-168-image.png",
+   "orientation": null
+  }
+ ]
+}

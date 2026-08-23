@@ -1,0 +1,57 @@
+{
+ "address": "0xf5b8104c727b5667bca098f940ffb2c1239b3c82",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xf5b8104c",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 2
+ },
+ "first_collected": "2022-12-11T01:41:59.000000Z",
+ "last_collected": "2022-12-11T01:41:59.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-92",
+   "title": "Geodetica #92",
+   "collection": "geodetica",
+   "acquired": "2022-12-11T01:41:59.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-92-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "seize-and-share-certificate-of-mint-1918",
+   "title": "Certificate of Mint",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  }
+ ]
+}

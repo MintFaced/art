@@ -1,0 +1,107 @@
+{
+ "address": "0x9481d8bc76fb1b7d2f95733a6ec0b40d0cb1fffc",
+ "ens": "nftacular.eth",
+ "display_name": null,
+ "slug": "nftacular.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 8,
+  "one_of_ones": 2,
+  "editions": 6,
+  "collections": 3
+ },
+ "first_collected": "2022-08-29T03:11:07.000000Z",
+ "last_collected": "2022-10-11T04:49:47.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 5
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 2
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-11T04:49:47.000000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetica-13",
+   "title": "Geodetica #13",
+   "collection": "geodetica",
+   "acquired": "2022-08-31T00:55:03.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-13-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-43",
+   "title": "Geodetica #43",
+   "collection": "geodetica",
+   "acquired": "2022-08-29T03:11:07.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-43-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "seize-and-share-birth-of-gm-543",
+   "title": "Birth of gm",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-winter-shade-2135",
+   "title": "Winter Shade",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-surreal-dreamooor-2430",
+   "title": "Surreal Dreamooor",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/x541HTBiVGjNDWAtiy0hhNIGC-27tKgzuCmjgSLCxQk",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-anxn-3250",
+   "title": "Anxn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-rememes-3252",
+   "title": "ReMemes",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
+   "orientation": null
+  }
+ ]
+}

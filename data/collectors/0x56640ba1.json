@@ -1,0 +1,57 @@
+{
+ "address": "0x56640ba14fb770f1ed151886ac7bb6adaa96955c",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x56640ba1",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": null,
+ "last_collected": null,
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-eth-is-finite-1805",
+   "title": "Eth Is Finite",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
+   "orientation": null
+  }
+ ]
+}

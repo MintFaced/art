@@ -1,0 +1,57 @@
+{
+ "address": "0x7d93f170dfd65d14d58682678b7a0d171f287c93",
+ "ens": "mint.t04d4418.eth",
+ "display_name": null,
+ "slug": "mint.t04d4418.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2022-07-09T11:16:07.000000Z",
+ "last_collected": "2022-07-09T11:16:07.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T11:16:07.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-we-like-the-line-1951",
+   "title": "We Like The Line",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-we-like-the-line-1951-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-nights-dawn-2382",
+   "title": "Nights Dawn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
+   "orientation": null
+  }
+ ]
+}

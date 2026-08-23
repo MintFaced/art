@@ -1,0 +1,71 @@
+{
+ "address": "0x9addd91874b08f6856bf6b4a2263665d2bc0d933",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x9addd918",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 1,
+  "editions": 3,
+  "collections": 3
+ },
+ "first_collected": "2022-08-11T08:32:44.000000Z",
+ "last_collected": "2022-10-10T08:21:35.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-10T08:21:35.000000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetica-26",
+   "title": "Geodetica #26",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T08:32:44.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-26-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "seize-and-share-gm-gm-1683",
+   "title": "gm gm",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-eth-is-finite-1805",
+   "title": "Eth Is Finite",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
+   "orientation": null
+  }
+ ]
+}

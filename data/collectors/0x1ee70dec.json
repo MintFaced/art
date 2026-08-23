@@ -1,0 +1,48 @@
+{
+ "address": "0x1ee70dec1a631b7374344f6799a2826ea771ae30",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x1ee70dec",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2025-02-05T07:59:35.000000Z",
+ "last_collected": "2025-02-05T07:59:35.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "patrimora-155",
+   "title": "#155",
+   "collection": "patrimora",
+   "acquired": "2025-02-05T07:59:35.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-155-image.png",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  }
+ ]
+}

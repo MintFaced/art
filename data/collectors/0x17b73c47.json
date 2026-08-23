@@ -1,0 +1,57 @@
+{
+ "address": "0x17b73c47b92007cce78eb92bfed964ba2e5d118d",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x17b73c47",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2023-02-01T16:36:47.000000Z",
+ "last_collected": "2023-02-01T16:36:47.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 2
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-gap",
+   "title": "The Gap",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-02-01T16:36:47.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/t1Ba0cp9sf-IYTBpiyUqK6Nfqf-hNww0zS11OQMPhzw",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-flow",
+   "title": "The Flow",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-02-01T16:36:47.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/XiiG-eEkFtvVecZ9_6Fz1RJCZYDi1AtBMpB-67D_fbY",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-accessdenied-mp4-2882",
+   "title": "AccessDenied.mp4",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
+   "orientation": null
+  }
+ ]
+}

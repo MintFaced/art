@@ -1,0 +1,75 @@
+{
+ "address": "0xbc1eb4359ab755af079f6ef77e3faac465e53eda",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xbc1eb435",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 5,
+  "one_of_ones": 3,
+  "editions": 2,
+  "collections": 2
+ },
+ "first_collected": "2022-08-11T06:55:10.000000Z",
+ "last_collected": "2022-08-11T06:57:39.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 3
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-80",
+   "title": "Geodetica #80",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T06:57:39.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-80-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-8",
+   "title": "Geodetica #8",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T06:56:17.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-8-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-6",
+   "title": "Geodetica #6",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T06:55:10.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-6-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "seize-and-share-a-meditation-on-gn-478",
+   "title": "A Meditation on gn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
+  }
+ ]
+}

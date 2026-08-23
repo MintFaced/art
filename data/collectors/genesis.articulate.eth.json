@@ -1,0 +1,117 @@
+{
+ "address": "0x4076eca4db9684fa1d9bfac231cb516889a33e5a",
+ "ens": "genesis.articulate.eth",
+ "display_name": null,
+ "slug": "genesis.articulate.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 8,
+  "one_of_ones": 2,
+  "editions": 6,
+  "collections": 5
+ },
+ "first_collected": "2022-10-11T01:52:59.000000Z",
+ "last_collected": "2024-04-21T22:49:59.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 3
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 2
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-76",
+   "title": "Geodetica #76",
+   "collection": "geodetica",
+   "acquired": "2024-04-21T22:49:59.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-76-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "roads-or-rivers-bridging",
+   "title": "Bridging",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-06T04:10:35.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/PxsbwTxXbAzsHXASiJV9lZ9RpRxyC7I2RW_eA7jl4e8",
+   "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-11T01:52:59.000000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-world-73",
+   "title": "Geodetic Capital",
+   "collection": "geodetic-world",
+   "acquired": null,
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-73-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "seize-and-share-a-meditation-on-gn-478",
+   "title": "A Meditation on gn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-nights-dawn-2382",
+   "title": "Nights Dawn",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
+   "orientation": null
+  }
+ ]
+}

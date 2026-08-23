@@ -1,0 +1,57 @@
+{
+ "address": "0xe72eeb929e5aa9bb4f6a346376546a19708c100b",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xe72eeb92",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2022-10-12T11:47:47.000000Z",
+ "last_collected": "2022-10-12T11:47:47.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-and-rivers-roads-and-rivers-traffic",
+   "title": "Roads and Rivers Traffic",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-10-12T11:47:47.000000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  }
+ ]
+}

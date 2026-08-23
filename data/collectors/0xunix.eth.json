@@ -1,0 +1,71 @@
+{
+ "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+ "ens": "0xunix.eth",
+ "display_name": null,
+ "slug": "0xunix.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 3,
+  "editions": 1,
+  "collections": 3
+ },
+ "first_collected": "2023-07-05T05:18:47.000000Z",
+ "last_collected": "2026-06-17T05:04:11.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 2
+  },
+  {
+   "slug": "pixelarcade",
+   "title": "PixelArcade",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "pixelarcade-58",
+   "title": "Thirty-Two-Bit Tableau XIII",
+   "collection": "pixelarcade",
+   "acquired": "2026-06-17T05:04:11.000000Z",
+   "unique": true,
+   "image": "pixelarcade/pixelarcade-58-image.svg",
+   "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-206",
+   "title": "Roads and Rivers #32",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-07-07T17:03:47.000000Z",
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-206-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "roads-and-rivers-29",
+   "title": "Roads and Rivers #29 Zoom Out",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-07-05T05:18:47.000000Z",
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-29-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "seize-and-share-mintface-says-2778",
+   "title": "MintFace says",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
+   "orientation": null
+  }
+ ]
+}

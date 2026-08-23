@@ -1,0 +1,48 @@
+{
+ "address": "0xe483f7c09b4707e423f621c0d7453fb2c7eabc03",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xe483f7c0",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2023-08-19T06:38:11.000000Z",
+ "last_collected": "2023-08-19T06:38:11.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-and-rivers-8",
+   "title": "Roads and Rivers #8",
+   "collection": "roads-and-rivers",
+   "acquired": "2023-08-19T06:38:11.000000Z",
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-8-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-3-display.webp",
+   "orientation": null
+  }
+ ]
+}

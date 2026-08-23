@@ -1,0 +1,71 @@
+{
+ "address": "0xb26c452e8ac20ae7445fcf46b6478d3984f5d8e9",
+ "ens": "casanua.eth",
+ "display_name": null,
+ "slug": "casanua.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 0,
+  "editions": 4,
+  "collections": 3
+ },
+ "first_collected": "2022-07-09T11:01:21.000000Z",
+ "last_collected": "2022-07-09T11:01:21.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-09T11:01:21.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-line-of-gm-1989",
+   "title": "Line of gm",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-line-of-gm-1989-display.webp",
+   "orientation": null
+  }
+ ]
+}

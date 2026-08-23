@@ -1,0 +1,57 @@
+{
+ "address": "0xf02fe5b5f57b0d75e4588919299f96f10da07f14",
+ "ens": "donye.eth",
+ "display_name": null,
+ "slug": "donye.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": null,
+ "last_collected": null,
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 2
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "2022-10k-3",
+   "title": "10k Project Blueprint",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-birth-of-gm-543",
+   "title": "Birth of gm",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-10k-buidling-643",
+   "title": "10k Buidling",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
+   "orientation": null
+  }
+ ]
+}

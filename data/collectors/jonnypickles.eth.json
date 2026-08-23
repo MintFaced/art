@@ -1,0 +1,76 @@
+{
+ "address": "0x3d91ad906c3969f86c588c988f721d5a735c6f81",
+ "ens": "jonnypickles.eth",
+ "display_name": null,
+ "slug": "jonnypickles.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 3,
+  "editions": 1,
+  "collections": 4
+ },
+ "first_collected": "2024-07-27T06:22:35.000000Z",
+ "last_collected": "2025-02-07T03:01:11.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 1
+  },
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "patrimora-162",
+   "title": "#162",
+   "collection": "patrimora",
+   "acquired": "2025-02-07T03:01:11.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-162-image.png",
+   "orientation": null
+  },
+  {
+   "id": "two-burdens-1",
+   "title": "Chromatic Symphony",
+   "collection": "two-burdens",
+   "acquired": "2024-08-21T23:51:11.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-1-display.webp",
+   "orientation": "portrait"
+  },
+  {
+   "id": "geodetic-moments-81",
+   "title": "Geodetic Moment #81",
+   "collection": "geodetic-moments",
+   "acquired": "2024-07-27T06:22:35.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-81-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  }
+ ]
+}

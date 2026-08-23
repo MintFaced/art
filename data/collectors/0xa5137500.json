@@ -1,0 +1,48 @@
+{
+ "address": "0xa5137500e1bedbcb99881b76d4daadd54f9088cf",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xa5137500",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-08-22T03:52:13.000000Z",
+ "last_collected": "2022-08-22T03:52:13.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-69",
+   "title": "Geodetica #69",
+   "collection": "geodetica",
+   "acquired": "2022-08-22T03:52:13.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-69-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  }
+ ]
+}

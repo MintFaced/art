@@ -1,0 +1,52 @@
+{
+ "address": "0x49df36a77f819190a41368bc8aca8a54fb6d760d",
+ "ens": "ilikecats.eth",
+ "display_name": null,
+ "slug": "ilikecats.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 3,
+  "editions": 0,
+  "collections": 1
+ },
+ "first_collected": "2022-08-11T07:07:00.000000Z",
+ "last_collected": "2022-08-11T07:07:00.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 3
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-1",
+   "title": "Geodetica #1",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T07:07:00.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-1-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-65",
+   "title": "Geodetica #65",
+   "collection": "geodetica",
+   "acquired": "2022-08-11T07:07:00.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-65-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-50",
+   "title": "Geodetica #50",
+   "collection": "geodetica",
+   "acquired": null,
+   "unique": true,
+   "image": "geodetica/geodetica-50-display.webp",
+   "orientation": "square"
+  }
+ ]
+}

@@ -1,5 +1,6 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { send } from '../_lib/email.js';
+import { deriveCollectors } from '../_lib/collectors.js';
 
 /* Daily ownership reconciliation.
  *
@@ -203,6 +204,7 @@ export async function GET(request) {
   const applied = [];
   const flagged = [];
   const touched = new Set();
+  const changedWorks = new Set();   // which collectors need their page rewritten
 
   for (const [slug, entry] of files) {
     for (const w of entry.data.works || []) {
@@ -232,7 +234,7 @@ export async function GET(request) {
           const was = w.edition.artist_held;      // captured before the swap, or the log reads 5->5
           if (!dry) w.edition = next;
           applied.push(`counts ${w.id}: artist_held ${was}->${next.artist_held}`);
-          touched.add(slug);
+          touched.add(slug); changedWorks.add(w.id);
         }
         // an edition with nothing left and nothing asked for it may retire itself
         if (w.status === 'available' && artist === 0) {
@@ -241,7 +243,7 @@ export async function GET(request) {
           } else {
             if (!dry) { w.status = 'sold_out'; w.held_by = null; }
             applied.push(`sold_out ${w.id} (edition exhausted, unpriced)`);
-            touched.add(slug);
+            touched.add(slug); changedWorks.add(w.id);
           }
         }
         continue;
@@ -285,7 +287,7 @@ export async function GET(request) {
           if (w.offers) w.offers = { ...w.offers, digital: false, painting: false, both: false };
         }
         applied.push(`collected ${w.id} -> ${id.ens || id.address}`);
-        touched.add(slug);
+        touched.add(slug); changedWorks.add(w.id);
         continue;
       }
 
@@ -298,7 +300,7 @@ export async function GET(request) {
         const id = await who(now);
         if (!dry) w.collector = { ...w.collector, address: id.address, ens: id.ens, acquired: hit.ts };
         applied.push(`resold ${w.id} -> ${id.ens || id.address}`);
-        touched.add(slug);
+        touched.add(slug); changedWorks.add(w.id);
       }
     }
   }
@@ -326,6 +328,39 @@ export async function GET(request) {
     }
   }
 
+  /* Collectors are derived from what was just written, using the same module
+     scripts/build-collectors.mjs uses ... one sweep feeds both sites.
+
+     The index and the slug map are small and always rewritten. The 400-odd
+     per-collector files are not: writing them all would be 400 commits a night,
+     so only the people whose works actually moved are rewritten. */
+  let collectorsWritten = 0;
+  if (!dry && (touched.size || ledgerCleared)) {
+    try {
+      const titleOf = new Map((index.collections || []).map((c) => [c.slug, c.title]));
+      let priv = new Set();
+      try {
+        const pf = await readFile('data/source/collectors-private.json');
+        priv = new Set(((JSON.parse(pf.text).wallets) || []).map((w) => String(w).toLowerCase()));
+      } catch (e) { /* no list yet, nobody is private */ }
+
+      const d = deriveCollectors([...files.values()].map((f) => f.data), titleOf, priv);
+      const put = async (path, body, msg) => {
+        const cur = await readFile(path).catch(() => ({ sha: null }));
+        await writeFile(path, JSON.stringify(body, null, 1) + '\n', msg, cur.sha || undefined);
+      };
+      await put('data/collectors.json', d.index, `Collectors: ${d.index.counts.collectors}`);
+      await put('data/collector-slugs.json', d.slugMap, 'Collectors: slug map');
+      for (const p of d.all) {
+        if (!p.has_page || !p.works.some((w) => changedWorks.has(w.id))) continue;
+        await put(`data/collectors/${p.slug}.json`, d.page(p), `Collectors: ${p.slug}`);
+        collectorsWritten++;
+      }
+    } catch (e) {
+      flagged.push({ id: 'collectors', slug: 'collectors', why: `rebuild failed: ${String(e.message || e).slice(0, 120)}`, action: 'the collectors site is serving yesterday' });
+    }
+  }
+
   if (!dry) {
     await writeFile('data/owners-cursor.json',
       JSON.stringify({ last_block: HEAD, rotation: (rotation + 1) % list.length, updated: new Date().toISOString() }, null, 1) + '\n',
@@ -333,7 +368,7 @@ export async function GET(request) {
   }
 
   const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, `
-    + `blocks ${since}-${HEAD}, full sweep of ${fullContract}`;
+    + `blocks ${since}-${HEAD}, full sweep of ${fullContract}, ${collectorsWritten} collector pages`;
   console.log(summary);
 
   if (flagged.length && !dry) {

@@ -1,0 +1,52 @@
+{
+ "address": "0x9d3bea10a103635776ce77377c3079613b3238db",
+ "ens": "g3rmv.eth",
+ "display_name": null,
+ "slug": "g3rmv.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 1
+ },
+ "first_collected": "2022-12-29T19:05:23.000000Z",
+ "last_collected": "2022-12-29T19:05:59.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 3
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-29T19:05:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-wei",
+   "title": "The Wei",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-29T19:05:23.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/i4Dru3m45FbsxaC0q-CyQqDuSWzt9oZxizEV8u-y1HU",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-shortcut",
+   "title": "The Shortcut",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-29T19:05:23.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/Q8StNcW0Icr7_Ds4IB8S83_yt9KsIMq7UUTpmC43DKk",
+   "orientation": null
+  }
+ ]
+}

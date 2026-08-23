@@ -1,0 +1,76 @@
+{
+ "address": "0xc73ffb72eb85059908b6f72ef4b0d3b38d46e0ad",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xc73ffb72",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 4,
+  "one_of_ones": 3,
+  "editions": 1,
+  "collections": 4
+ },
+ "first_collected": "2024-08-25T10:33:23.000000Z",
+ "last_collected": "2024-08-26T03:52:47.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-moments-29",
+   "title": "Geodetic Moment #29",
+   "collection": "geodetic-moments",
+   "acquired": "2024-08-26T03:52:47.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-29-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-world-19",
+   "title": "Geodetic Greece",
+   "collection": "geodetic-world",
+   "acquired": "2024-08-25T10:33:23.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-19-display.webp",
+   "orientation": "portrait"
+  },
+  {
+   "id": "roads-or-rivers-42-below",
+   "title": "42 Below",
+   "collection": "roads-and-rivers",
+   "acquired": "2024-08-25T10:33:23.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/sshepXkj0M40P9ZX-whJ49Y5tuH3cWOgjA-EE2RXA5U",
+   "orientation": null
+  },
+  {
+   "id": "two-burdens-33",
+   "title": "Cascade",
+   "collection": "two-burdens",
+   "acquired": "2024-08-25T10:33:23.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-33-display.webp",
+   "orientation": "portrait"
+  }
+ ]
+}

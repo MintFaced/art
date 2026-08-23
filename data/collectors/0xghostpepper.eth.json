@@ -1,0 +1,62 @@
+{
+ "address": "0x6b159e840e28e009e930df3be6c06d1d70195cc7",
+ "ens": "0xghostpepper.eth",
+ "display_name": null,
+ "slug": "0xghostpepper.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 1,
+  "editions": 2,
+  "collections": 3
+ },
+ "first_collected": "2025-02-05T03:19:23.000000Z",
+ "last_collected": "2025-02-05T03:19:23.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "patrimora-152",
+   "title": "#152",
+   "collection": "patrimora",
+   "acquired": "2025-02-05T03:19:23.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-152-image.png",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-4",
+   "title": "Patrimora",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  }
+ ]
+}

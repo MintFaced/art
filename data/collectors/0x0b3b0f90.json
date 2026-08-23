@@ -1,0 +1,113 @@
+{
+ "address": "0x0b3b0f9046905f50e13d3ebe055ab21e838ec872",
+ "ens": null,
+ "display_name": null,
+ "slug": "0x0b3b0f90",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 7,
+  "one_of_ones": 6,
+  "editions": 1,
+  "collections": 6
+ },
+ "first_collected": "2025-08-06T05:11:47.000000Z",
+ "last_collected": "2025-08-06T05:11:47.000000Z",
+ "collections": [
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 2
+  },
+  {
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetic-moments-63",
+   "title": "Geodetic Moment #63",
+   "collection": "geodetic-moments",
+   "acquired": "2025-08-06T05:11:47.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-63-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetica-70",
+   "title": "Geodetica #70",
+   "collection": "geodetica",
+   "acquired": "2025-08-06T05:11:47.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-70-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "patrimora-110",
+   "title": "#110",
+   "collection": "patrimora",
+   "acquired": "2025-08-06T05:11:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-110-image.png",
+   "orientation": null
+  },
+  {
+   "id": "patrimora-111",
+   "title": "#111",
+   "collection": "patrimora",
+   "acquired": "2025-08-06T05:11:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-111-image.png",
+   "orientation": null
+  },
+  {
+   "id": "roads-and-rivers-14",
+   "title": "Roads and Rivers #14",
+   "collection": "roads-and-rivers",
+   "acquired": "2025-08-06T05:11:47.000000Z",
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-14-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetic-home-5",
+   "title": "Geodetic Home",
+   "collection": "geodetic-home",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-home/geodetic-home-5-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-world-63",
+   "title": "Geodetic Evergreen",
+   "collection": "geodetic-world",
+   "acquired": null,
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-63-display.webp",
+   "orientation": "square"
+  }
+ ]
+}

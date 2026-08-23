@@ -1,0 +1,57 @@
+{
+ "address": "0xba9941758893819c506b79906a02ebdaac0e337c",
+ "ens": "syrupnbbq.eth",
+ "display_name": null,
+ "slug": "syrupnbbq.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 2,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-08-22T01:58:15.000000Z",
+ "last_collected": "2022-08-22T02:01:25.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 2
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-33",
+   "title": "Geodetica #33",
+   "collection": "geodetica",
+   "acquired": "2022-08-22T02:01:25.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-33-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-11",
+   "title": "Geodetica #11",
+   "collection": "geodetica",
+   "acquired": "2022-08-22T01:58:15.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-11-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "2022-10k-1",
+   "title": "10k Project Black and White",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-1-display.webp",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "address": "0xa88fe6fa01fcc112bb2164c6e37d63395b923e5f",
+ "ens": "eitzi.eth",
+ "display_name": null,
+ "slug": "eitzi.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-12-27T03:29:59.000000Z",
+ "last_collected": "2026-08-21T05:48:11.000000Z",
+ "collections": [
+  {
+   "slug": "pixelarcade",
+   "title": "PixelArcade",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "pixelarcade-26",
+   "title": "Sixteen-Bit Composition IX",
+   "collection": "pixelarcade",
+   "acquired": "2026-08-21T05:48:11.000000Z",
+   "unique": true,
+   "image": "pixelarcade/pixelarcade-26-image.svg",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,108 @@
+{
+ "address": "0xc457fee0564bf3eb972114762f62ab45c0e3590b",
+ "ens": "rakeshpulapa.eth",
+ "display_name": null,
+ "slug": "rakeshpulapa.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 7,
+  "one_of_ones": 1,
+  "editions": 6,
+  "collections": 5
+ },
+ "first_collected": "2022-02-17T11:33:57.000000Z",
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "collections": [
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 3
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-16T09:44:50.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetic-moments-5",
+   "title": "Geodetic Moment #5",
+   "collection": "geodetic-moments",
+   "acquired": "2022-02-17T11:33:57.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-5-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-1",
+   "title": "10k Project Black and White",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-1-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-mint-face-360",
+   "title": "Mint Face",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-10kseized-488",
+   "title": "10kSeized",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-10kseized-488-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  }
+ ]
+}

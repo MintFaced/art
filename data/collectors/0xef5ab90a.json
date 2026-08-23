@@ -1,0 +1,99 @@
+{
+ "address": "0xef5ab90a44b68d4f5e3f6be6af4bedb12cd2c66e",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xef5ab90a",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 6,
+  "one_of_ones": 3,
+  "editions": 3,
+  "collections": 5
+ },
+ "first_collected": "2022-04-23T13:38:30.000000Z",
+ "last_collected": "2022-08-12T01:14:32.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 2
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-45",
+   "title": "Geodetica #45",
+   "collection": "geodetica",
+   "acquired": "2022-08-12T01:14:32.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-45-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetica-48",
+   "title": "Geodetica #48",
+   "collection": "geodetica",
+   "acquired": "2022-08-12T01:11:30.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-48-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "acquired": "2022-07-10T14:27:07.000000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "geodetic-moments-94",
+   "title": "Geodetic Moment #94",
+   "collection": "geodetic-moments",
+   "acquired": "2022-04-23T13:38:30.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-94-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "address": "0xe1d23eddf8f0f597a8582d86586999ffc41bb030",
+ "ens": "greendude.eth",
+ "display_name": null,
+ "slug": "greendude.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 2,
+  "one_of_ones": 1,
+  "editions": 1,
+  "collections": 2
+ },
+ "first_collected": "2022-10-14T05:31:47.000000Z",
+ "last_collected": "2022-10-14T05:31:47.000000Z",
+ "collections": [
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "seize-and-share",
+   "title": "Seize And Share",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "geodetica-87",
+   "title": "Geodetica #87",
+   "collection": "geodetica",
+   "acquired": "2022-10-14T05:31:47.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-87-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "seize-and-share-certificate-of-mint-1918",
+   "title": "Certificate of Mint",
+   "collection": "seize-and-share",
+   "acquired": null,
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
+   "orientation": null
+  }
+ ]
+}

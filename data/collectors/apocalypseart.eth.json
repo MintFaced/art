@@ -1,0 +1,90 @@
+{
+ "address": "0x1430997022e8ccf845af34596ef37f4754983f85",
+ "ens": "apocalypseart.eth",
+ "display_name": null,
+ "slug": "apocalypseart.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 5,
+  "one_of_ones": 3,
+  "editions": 2,
+  "collections": 5
+ },
+ "first_collected": "2022-02-17T18:52:56.000000Z",
+ "last_collected": "2024-09-28T23:59:47.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "genesis",
+   "title": "Genesis",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "two-burdens",
+   "title": "Two Burdens",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "two-burdens-16",
+   "title": "Safe Harbour",
+   "collection": "two-burdens",
+   "acquired": "2024-09-28T23:59:47.000000Z",
+   "unique": true,
+   "image": "two-burdens/two-burdens-16-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-moments-65",
+   "title": "Geodetic Moment #65",
+   "collection": "geodetic-moments",
+   "acquired": "2022-02-17T18:52:56.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-65-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "acquired": null,
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "foundation-105105",
+   "title": "True Identity",
+   "collection": "genesis",
+   "acquired": null,
+   "unique": true,
+   "image": "genesis/foundation-105105-display.webp",
+   "orientation": null
+  }
+ ]
+}

@@ -1,0 +1,154 @@
+{
+ "address": "0xde58879de5ca41367a5093dee41f622c167b94b4",
+ "ens": null,
+ "display_name": null,
+ "slug": "0xde58879d",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 11,
+  "one_of_ones": 6,
+  "editions": 5,
+  "collections": 7
+ },
+ "first_collected": "2025-07-09T00:48:47.000000Z",
+ "last_collected": "2025-09-01T08:33:47.000000Z",
+ "collections": [
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 3
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 3
+  },
+  {
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-another-wei",
+   "title": "Another Wei",
+   "collection": "roads-and-rivers",
+   "acquired": "2025-09-01T08:33:47.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/jxN0MIE4oBWX6RBjQJHD40cqkNa8p3pxkqSAtwQR1IU",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-gap",
+   "title": "The Gap",
+   "collection": "roads-and-rivers",
+   "acquired": "2025-09-01T08:31:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/t1Ba0cp9sf-IYTBpiyUqK6Nfqf-hNww0zS11OQMPhzw",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-roads",
+   "title": "Roads",
+   "collection": "roads-and-rivers",
+   "acquired": "2025-09-01T08:30:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/s2BNlgtpYDSoJxBnSYo9aQ7AI5-0nz1UaAPkv7oU2-k",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-moments-83",
+   "title": "Geodetic Moment #83",
+   "collection": "geodetic-moments",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-83-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetica-41",
+   "title": "Geodetica #41",
+   "collection": "geodetica",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-41-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "patrimora-95",
+   "title": "#95",
+   "collection": "patrimora",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-95-image.png",
+   "orientation": null
+  },
+  {
+   "id": "patrimora-104",
+   "title": "#104",
+   "collection": "patrimora",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-104-image.png",
+   "orientation": null
+  },
+  {
+   "id": "patrimora-105",
+   "title": "#105",
+   "collection": "patrimora",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-105-image.png",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-home-5",
+   "title": "Geodetic Home",
+   "collection": "geodetic-home",
+   "acquired": null,
+   "unique": false,
+   "image": "geodetic-home/geodetic-home-5-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-world-66",
+   "title": "Geodetic Temple",
+   "collection": "geodetic-world",
+   "acquired": null,
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-66-display.webp",
+   "orientation": "square"
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  }
+ ]
+}
