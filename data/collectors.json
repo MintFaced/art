@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-08-23T21:01:06.972Z",
+ "generated": "2026-08-23T21:14:03.845Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -17,7 +17,7 @@
   "collectors": 3680,
   "with_page": 807,
   "private": 0,
-  "named": 1214
+  "named": 1217
  },
  "collectors": [
   {
@@ -574,8 +574,8 @@
   {
    "address": "0xde58879de5ca41367a5093dee41f622c167b94b4",
    "ens": null,
-   "display_name": null,
-   "slug": "0xde58879d",
+   "display_name": "sailoulau.eth",
+   "slug": "sailoulau.eth",
    "private": false,
    "has_page": true,
    "counts": {
@@ -612,8 +612,8 @@
   {
    "address": "0xa1f05dbe26cdc2ede4f410a5c54fe6473b5d7071",
    "ens": null,
-   "display_name": null,
-   "slug": "0xa1f05dbe",
+   "display_name": "ryanog.eth",
+   "slug": "ryanog.eth",
    "private": false,
    "has_page": true,
    "counts": {
@@ -1847,8 +1847,8 @@
   {
    "address": "0x0b3b0f9046905f50e13d3ebe055ab21e838ec872",
    "ens": null,
-   "display_name": null,
-   "slug": "0x0b3b0f90",
+   "display_name": "gissie.eth",
+   "slug": "gissie.eth",
    "private": false,
    "has_page": true,
    "counts": {
