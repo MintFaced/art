@@ -45,7 +45,8 @@ export function deriveCollectors(collections, titleOf, privateList = new Set()) 
     if (w.ens && !p.ens) p.ens = w.ens;                       // holder rows carry names inconsistently
     if (w.display_name && !p.display_name) p.display_name = w.display_name;
     if (p.works.some((x) => x.id === w.id)) return;           // an edition held twice is one work here
-    p.works.push({ id: w.id, title: w.title, collection: w.collection, acquired: w.acquired || null, unique: w.unique, image: w.image, orientation: w.orientation || null });
+    p.works.push({ id: w.id, title: w.title, collection: w.collection, group: w.group || null, genre: w.genre || null,
+      acquired: w.acquired || null, unique: w.unique, image: w.image, orientation: w.orientation || null });
     p.collections.set(w.collection, (p.collections.get(w.collection) || 0) + 1);
   };
 
@@ -54,7 +55,10 @@ export function deriveCollectors(collections, titleOf, privateList = new Set()) 
     for (const w of col.works || []) {
       const unique = !((w.edition || {}).type && w.edition.type !== '1/1');
       const image = (w.assets && (w.assets.display || w.assets.image)) || (w.digital && w.digital.image) || null;
-      const base = { id: w.id, title: w.title || w.id, collection: col.slug, unique, image, orientation: w.orientation };
+      // group and genre are the collection's, taken as they are. The filters on
+      // a collector page read these; nothing re-derives them from a title.
+      const base = { id: w.id, title: w.title || w.id, collection: col.slug, group: col.group || null,
+        genre: col.genre || null, unique, image, orientation: w.orientation };
       const c = w.collector || {};
       if (c.address) note(c.address, { ...base, ens: c.ens, display_name: c.display_name, acquired: c.acquired });
       for (const h of w.holders || []) {

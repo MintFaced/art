@@ -3,22 +3,12 @@ import { readState, stateConfigured } from './_lib/state.js';
 
 /* The Geodetic Set: one work from each of five variants.
 
-   The definition lives here rather than in the page, because the page can be
-   edited by whoever is looking at it and the price cannot. Everything the
-   builder offers is read from the same catalog the rest of the site reads, and
-   filtered to what is actually for sale right now. */
-export const SET = {
-  slug: 'geodetic',
-  title: 'The Geodetic Set',
-  slots: [
-    { key: 'geodetic-world', title: 'Geodetic World' },
-    { key: 'geodetic-moments', title: 'Geodetic Moments' },
-    { key: 'geodetic-memory', title: 'Geodetic Memory' },
-    // Light or Dark satisfies this slot. Signal and Patrimora do not.
-    { key: 'geodetic-onchain', title: 'Geodetic On-Chain', only: ['geodetic-onchain-1', 'geodetic-onchain-2'] },
-    { key: 'geodetica', title: 'Geodetica' },
-  ],
-};
+   The definition is not here any more. It lives in data/sets.json, which the
+   collector meters on collectors.mintface.art read as well ... one truth, two
+   surfaces. A set changed there changes what is sold and what is measured, in
+   the same commit. */
+import { SET } from './_lib/sets.js';
+export { SET };
 
 const json = (b, s = 200) => new Response(JSON.stringify(b), {
   status: s,
