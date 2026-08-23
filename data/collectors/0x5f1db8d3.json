@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 6,
   "one_of_ones": 0,
-  "editions": 4,
-  "collections": 4
+  "editions": 6,
+  "collections": 5
  },
  "first_collected": "2022-08-03T07:28:31.000000Z",
  "last_collected": "2025-06-19T07:49:11.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
   {
    "slug": "geodetic-memory",
    "title": "Geodetic Memory",
@@ -78,6 +83,28 @@
    "acquired": "2022-08-03T07:28:31.000000Z",
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
    "orientation": null
   }
  ]

@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 10,
   "one_of_ones": 1,
-  "editions": 2,
-  "collections": 2
+  "editions": 9,
+  "collections": 3
  },
  "first_collected": "2023-01-05T19:07:23.000Z",
  "last_collected": "2023-01-11T21:56:47.000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 7
+  },
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
@@ -49,11 +54,88 @@
    "orientation": null
   },
   {
+   "id": "xlife-68",
+   "title": "Don't Let The Clowns Edit Your JPEGS",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/Ur2eLE6iZ9Y4WRwscznraarx_XI-Et5OEZkq2DxuFmU",
+   "orientation": null
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/IiRgSPhUD49wYavB36AzdKzzGZB8IlXweP-QquM-Xg4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-42",
+   "title": "They Don't Know...",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/aHSSClLP-l2N3xHCJyFQTBhGNaOjBFvJoASn9Qw8tp0",
+   "orientation": null
+  },
+  {
+   "id": "xlife-38",
+   "title": "Goodnight Doom",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/iejjo3Fo7wF9I9lmoknffgYcDPEaPgmQepfAG6hbnfE",
+   "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/Q1lP3J_UdVCify_bw9unGt9sbd3UnapDW13tzg85hyg",
+   "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/qPhfvNhRdZDqzohCZjQJjVNijShYMxvufOhmhck1Vxo",
+   "orientation": null
+  },
+  {
    "id": "xnouns-116",
    "title": "XNouns #116",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=116&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-magenta.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-txt-noun-multicolor.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-clover.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",

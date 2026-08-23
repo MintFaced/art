@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 9,
+  "works": 20,
   "one_of_ones": 3,
-  "editions": 6,
-  "collections": 4
+  "editions": 17,
+  "collections": 5
  },
  "first_collected": "2022-12-14T17:22:11.000Z",
  "last_collected": "2023-03-27T02:55:59.000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 11
+  },
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
@@ -103,11 +108,132 @@
    "orientation": null
   },
   {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-46",
+   "title": "FC Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/WP951pFEfzIblAjlY6as3IZ_0D0CToyCtjyCEXGkKd4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-43",
+   "title": "Right Click Tokenize",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/jM7BaoyOj-uIqK4U2uQ51hObCrFpHHQ3PZXr1nZC1Uk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-31",
+   "title": "Visualize XValue Blue",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/97QOh-YClWqnIT7VJfgH2qMwYIlX68vLVTiC66i8fIo",
+   "orientation": null
+  },
+  {
+   "id": "xlife-23",
+   "title": "XFlex Media",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/ZNdBlBNLH--iEfo2UQyKDOuex6RN4-eLIhRXB3FU4mQ",
+   "orientation": null
+  },
+  {
+   "id": "xlife-22",
+   "title": "2 Trillion",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/yNyTfl0rE6_TofpPOMnDnd7xy8kknM3tUXmdZlyBwA8",
+   "orientation": null
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/GZpZpCi8Yw22E4-d4_0iZ2YjkftWaQIkpj6v6wuoxu4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/8pNQxc87a7x56FOwp3tQyoHdPRqIgdPXgbj1Lxg1u0Y",
+   "orientation": null
+  },
+  {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/rwo60iUk-cWvhsawfUE_iEpBktJ9lR4DESHhJqFfap4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-2",
+   "title": "X Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7ZZBQlgnUkV-OXgxZMq0pss37osrbSlDHli00NTWWH4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/qPhfvNhRdZDqzohCZjQJjVNijShYMxvufOhmhck1Vxo",
+   "orientation": null
+  },
+  {
    "id": "xnouns-327",
    "title": "XNouns #327",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=327&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-cool.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-orange.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-fries.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-wave.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-no-frame.png",
@@ -118,7 +244,7 @@
    "title": "XNouns #287",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=287&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-orange-yellow.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-leaf.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-cloud.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",
@@ -129,7 +255,7 @@
    "title": "XNouns #130",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=130&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x-top-right.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-ice-cold.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-small-bling.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-console-handheld.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-zeros.png",

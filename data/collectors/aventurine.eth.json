@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 1,
+  "works": 2,
   "one_of_ones": 1,
-  "editions": 0,
-  "collections": 1
+  "editions": 1,
+  "collections": 2
  },
  "first_collected": "2026-08-21T03:32:59.000000Z",
  "last_collected": "2026-08-21T03:32:59.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "geodetic-world",
    "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -31,6 +36,17 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-24-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
   }
  ]
 }

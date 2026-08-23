@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 1,
-  "editions": 3,
-  "collections": 3
+  "editions": 4,
+  "collections": 4
  },
  "first_collected": "2022-12-27T03:39:11.000000Z",
  "last_collected": "2025-02-09T00:42:47.000000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "patrimora",
    "title": "Patrimora",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -73,6 +78,17 @@
    "acquired": "2022-12-27T03:39:11.000000Z",
    "unique": false,
    "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "xlife-56",
+   "title": "Late Stage Memeism",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/QFdXiF7GVFOX819XYvYCvpmfeM9lv7meAEF8Cgb47bo",
    "orientation": null
   }
  ]

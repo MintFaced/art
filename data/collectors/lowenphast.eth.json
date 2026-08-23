@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 10,
+  "works": 14,
   "one_of_ones": 3,
-  "editions": 7,
-  "collections": 3
+  "editions": 11,
+  "collections": 4
  },
  "first_collected": "2022-05-13T04:33:39.000000Z",
  "last_collected": "2022-12-28T03:25:11.000Z",
@@ -18,6 +18,11 @@
    "slug": "seize-and-share",
    "title": "Seize And Share",
    "works": 6
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 4
   },
   {
    "slug": "xnouns",
@@ -109,11 +114,55 @@
    "orientation": null
   },
   {
+   "id": "xlife-46",
+   "title": "FC Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/WP951pFEfzIblAjlY6as3IZ_0D0CToyCtjyCEXGkKd4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/rwo60iUk-cWvhsawfUE_iEpBktJ9lR4DESHhJqFfap4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-2",
+   "title": "X Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7ZZBQlgnUkV-OXgxZMq0pss37osrbSlDHli00NTWWH4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/qPhfvNhRdZDqzohCZjQJjVNijShYMxvufOhmhck1Vxo",
+   "orientation": null
+  },
+  {
    "id": "xnouns-218",
    "title": "XNouns #218",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=218&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-orange.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-bling-anchor.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-paperclip.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",
@@ -124,7 +173,7 @@
    "title": "XNouns #125",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=125&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-warm.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-darkbrown.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-scarf-clown.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-washingmachine.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-no-frame.png",
@@ -135,7 +184,7 @@
    "title": "XNouns #18",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=18&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-gold.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-checker-spaced-white.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-ghost-b.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",

@@ -19,10 +19,16 @@ const DRY = process.argv.includes('--dry');
 const BS = 'https://eth.blockscout.com/api/v2';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/* group and display default to the parked treatment; a collection that is part
+   of the site proper says so. */
 const TRACKED = [
   { slug: 'we-are-the-line', title: 'We are The Line', address: '0x269bC803c233620506c9D25d980E979bf8BcbBf6', standard: 'ERC-1155', year: '2024', medium: 'Collaborative', statement: 'One million artworks on The Line is the goal.' },
   { slug: 'first-selfie', title: 'First Selfie', address: '0x78613F36916dF52aD8CDA841d4C2dCed15802bf4', standard: 'ERC-721', year: '2021', medium: 'Illustration', statement: null },
-  { slug: 'xnouns', title: 'XNouns', address: '0x2969Eca285C9acD0B7EeDEbE7714C4D913700794', standard: 'ERC-721', year: '2022', medium: 'Generative', statement: 'XNouns celebrates the glitch origins of XCOPY combined with the artistic freedom of Nouns.' },
+  { slug: 'xnouns', title: 'XNouns', address: '0x2969Eca285C9acD0B7EeDEbE7714C4D913700794', standard: 'ERC-721',
+    year: '2022', medium: 'Generative', genre: 'Design', group: 'experiments', display: true,
+    statement: 'Nouns with the X factor. A new XNouns is born every 8 hours, 8 minutes and 8 seconds, auctioned one at a time. The work is a CC0 derivative celebrating the glitch origins of XCOPY and the artistic freedom of Nouns, made by and for XCOPY-enjoyooors. xnouns.xyz'.replace(/^/, ''), card_statement: 'Nouns with the X factor ... born every 8 hours, 8 minutes and 8 seconds.'.replace(/^/, '') },
+  { slug: 'xlife', title: 'XLIFE', address: '0x8f6ee5787a60959C8dAf3D35fA48FD0C49BcCA2a', standard: 'ERC-1155',
+    year: null, medium: null, statement: null, group: 'archive', display: true },
 ];
 
 // The same guard list the rest of the pipeline uses. A token sitting in one of
@@ -128,11 +134,13 @@ async function enumerate(t) {
   for (const w of works) tally[w.status] = (tally[w.status] || 0) + 1;
   return {
     slug: t.slug, title: t.title,
-    group: 'experiments',
-    display: false,     // tracked for collectors, never shown in a public grid
-    year: t.year, medium: t.medium, physical: false,
-    statement: t.statement,
-    notes: `Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise.`,
+    group: t.group || 'experiments',
+    display: t.display === true ? true : false,
+    year: t.year, medium: t.medium, genre: t.genre || null, physical: false,
+    statement: t.statement, card_statement: t.card_statement || null,
+    notes: t.display === true
+      ? 'Enumerated from chain. Year, genre and the card line are Ryan\'s to fill in now that it renders.'
+      : 'Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise.',
     counts: { works: works.length, ...tally },
     contracts: [{ chain: 'ethereum', standard: t.standard, address: t.address,
       name: meta?.name || null, deployed: null, deployer: addr?.creator_address_hash || null,
@@ -167,9 +175,10 @@ if (!DRY) {
   for (const t of TRACKED) {
     const col = JSON.parse(fs.readFileSync(path.join(ROOT, `data/c/${t.slug}.json`), 'utf8'));
     const entry = {
-      slug: col.slug, title: col.title, group: col.group, display: false,
-      year: col.year, medium: col.medium, genre: null,
-      card_statement: null, physical: false, statement: col.statement,
+      slug: col.slug, title: col.title, group: col.group,
+      ...(col.display === true ? {} : { display: false }),
+      year: col.year, medium: col.medium, genre: col.genre || null,
+      card_statement: col.card_statement || null, physical: false, statement: col.statement,
       counts: col.counts, cover: null, contracts: col.contracts, notes: col.notes,
     };
     const at = idx.collections.findIndex((c) => c.slug === col.slug);

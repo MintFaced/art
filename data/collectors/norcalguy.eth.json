@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 11,
+  "works": 12,
   "one_of_ones": 2,
-  "editions": 9,
-  "collections": 6
+  "editions": 10,
+  "collections": 7
  },
  "first_collected": "2022-04-30T22:40:44.000Z",
  "last_collected": "2023-02-07T07:48:35.000Z",
@@ -42,6 +42,11 @@
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -165,6 +170,17 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/9tELif8vVY-Qz9adNDrv1N1aMpwUADMCYG8hKrgdPLw",
+   "orientation": null
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/IiRgSPhUD49wYavB36AzdKzzGZB8IlXweP-QquM-Xg4",
    "orientation": null
   }
  ]

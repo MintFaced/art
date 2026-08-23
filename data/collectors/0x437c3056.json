@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 4,
   "one_of_ones": 1,
-  "editions": 1,
-  "collections": 2
+  "editions": 3,
+  "collections": 3
  },
  "first_collected": "2025-05-16T18:08:59.000000Z",
  "last_collected": "2025-07-02T07:24:47.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
   {
    "slug": "geodetic-moments",
    "title": "Geodetic Moments",
@@ -46,6 +51,28 @@
    "acquired": "2025-05-16T18:08:59.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-46",
+   "title": "FC Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/WP951pFEfzIblAjlY6as3IZ_0D0CToyCtjyCEXGkKd4",
    "orientation": null
   }
  ]

@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 14,
+  "works": 15,
   "one_of_ones": 1,
-  "editions": 13,
-  "collections": 6
+  "editions": 14,
+  "collections": 7
  },
  "first_collected": "2022-02-17T13:28:23.000000Z",
  "last_collected": "2022-12-27T03:29:59.000000Z",
@@ -42,6 +42,11 @@
   {
    "slug": "geodetic-moments",
    "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -198,6 +203,17 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/5IpBQH0QL1911Uo9SSNkItRUixeh6nPzhw7MfFnU23g",
+   "orientation": null
+  },
+  {
+   "id": "xlife-24",
+   "title": "Anon",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/mpLJymCIeEN2_UeYTYRV5VFQ19PSHYE_uqbm5VHwl6U",
    "orientation": null
   }
  ]

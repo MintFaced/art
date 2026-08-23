@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 4,
   "one_of_ones": 1,
-  "editions": 2,
-  "collections": 3
+  "editions": 3,
+  "collections": 4
  },
  "first_collected": "2022-05-10T00:57:39.000000Z",
  "last_collected": "2022-07-10T03:15:31.000Z",
@@ -22,6 +22,11 @@
   {
    "slug": "geodetic-memory",
    "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   },
   {
@@ -54,11 +59,22 @@
    "orientation": null
   },
   {
+   "id": "xlife-42",
+   "title": "They Don't Know...",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/aHSSClLP-l2N3xHCJyFQTBhGNaOjBFvJoASn9Qw8tp0",
+   "orientation": null
+  },
+  {
    "id": "xnouns-271",
    "title": "XNouns #271",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=271&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-cool.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-redpinkish.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-small-bling.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-burger-dollarmenu.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",

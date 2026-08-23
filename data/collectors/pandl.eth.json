@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 6,
+  "works": 7,
   "one_of_ones": 1,
-  "editions": 5,
-  "collections": 2
+  "editions": 6,
+  "collections": 3
  },
  "first_collected": "2022-08-23T03:34:39.000Z",
  "last_collected": "2022-12-24T02:10:35.000Z",
@@ -22,6 +22,11 @@
   {
    "slug": "geodetica",
    "title": "Geodetica",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -91,6 +96,17 @@
    "unique": true,
    "image": "geodetica/geodetica-58-display.webp",
    "orientation": "square"
+  },
+  {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/rwo60iUk-cWvhsawfUE_iEpBktJ9lR4DESHhJqFfap4",
+   "orientation": null
   }
  ]
 }

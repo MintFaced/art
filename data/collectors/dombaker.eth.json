@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 8,
+  "works": 10,
   "one_of_ones": 2,
-  "editions": 6,
-  "collections": 7
+  "editions": 8,
+  "collections": 8
  },
  "first_collected": "2022-02-19T01:49:14.000000Z",
  "last_collected": "2023-10-14T04:32:23.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "we-are-the-line",
    "title": "We are The Line",
+   "works": 2
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 2
   },
   {
@@ -137,6 +142,28 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/6I1tDW_5vI3fNpcblWhM5jsMUveB-tXmC_qvKsaZ4xE",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/Q1lP3J_UdVCify_bw9unGt9sbd3UnapDW13tzg85hyg",
    "orientation": null
   }
  ]

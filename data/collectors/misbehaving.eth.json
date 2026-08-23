@@ -1,0 +1,68 @@
+{
+ "address": "0x8125ef62932875f3dfab6c9b39fa12c087397cb5",
+ "ens": "misbehaving.eth",
+ "display_name": null,
+ "slug": "misbehaving.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 3
+ },
+ "first_collected": "2022-05-09T10:12:40.000000Z",
+ "last_collected": "2022-05-09T10:12:40.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "group": "feature",
+   "genre": "Design",
+   "acquired": "2022-05-09T10:12:40.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/5IpBQH0QL1911Uo9SSNkItRUixeh6nPzhw7MfFnU23g",
+   "orientation": null
+  },
+  {
+   "id": "xlife-24",
+   "title": "Anon",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/mpLJymCIeEN2_UeYTYRV5VFQ19PSHYE_uqbm5VHwl6U",
+   "orientation": null
+  }
+ ]
+}

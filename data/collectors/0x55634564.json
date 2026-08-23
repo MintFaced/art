@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 4,
   "one_of_ones": 1,
-  "editions": 2,
-  "collections": 2
+  "editions": 3,
+  "collections": 3
  },
  "first_collected": null,
  "last_collected": null,
@@ -18,6 +18,11 @@
    "slug": "we-are-the-line",
    "title": "We are The Line",
    "works": 2
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
   },
   {
    "slug": "xnouns",
@@ -49,11 +54,22 @@
    "orientation": null
   },
   {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/Q1lP3J_UdVCify_bw9unGt9sbd3UnapDW13tzg85hyg",
+   "orientation": null
+  },
+  {
    "id": "xnouns-174",
    "title": "XNouns #174",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=174&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-ice-cold.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-axe.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-bank.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-purple.png",

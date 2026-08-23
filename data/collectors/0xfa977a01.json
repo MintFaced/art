@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 7,
+  "works": 10,
   "one_of_ones": 3,
-  "editions": 4,
-  "collections": 5
+  "editions": 7,
+  "collections": 6
  },
  "first_collected": "2022-12-12T11:54:11.000Z",
  "last_collected": "2025-05-16T10:36:23.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 3
+  },
   {
    "slug": "patrimora",
    "title": "Patrimora",
@@ -116,6 +121,39 @@
    "acquired": "2022-12-12T11:54:11.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-40",
+   "title": "AI Swear",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/n-u9cTKe2IugWf_MtJI_BT7bB2DjYCKm0DSI8_UJRRY",
    "orientation": null
   }
  ]

@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 26,
+  "works": 32,
   "one_of_ones": 3,
-  "editions": 23,
-  "collections": 7
+  "editions": 29,
+  "collections": 8
  },
  "first_collected": "2022-08-23T01:28:09.000000Z",
  "last_collected": "2023-07-04T11:20:47.000000Z",
@@ -18,6 +18,11 @@
    "slug": "seize-and-share",
    "title": "Seize And Share",
    "works": 14
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 6
   },
   {
    "slug": "roads-and-rivers",
@@ -316,11 +321,77 @@
    "orientation": null
   },
   {
+   "id": "xlife-54",
+   "title": "Medal Winner",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/tHkX4zAvZzmRMAE7Z_0AM7GehRWDmf5gWw6xU9IBC_0",
+   "orientation": null
+  },
+  {
+   "id": "xlife-46",
+   "title": "FC Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/WP951pFEfzIblAjlY6as3IZ_0D0CToyCtjyCEXGkKd4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-33",
+   "title": "CC0 King",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/RBO4MSbjBq7pJPhGQ-09ICqlkYvzPHCgpsDz_4o2Vnw",
+   "orientation": null
+  },
+  {
+   "id": "xlife-22",
+   "title": "2 Trillion",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/yNyTfl0rE6_TofpPOMnDnd7xy8kknM3tUXmdZlyBwA8",
+   "orientation": null
+  },
+  {
+   "id": "xlife-21",
+   "title": "Special Project",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/ik_YfFxCkonjzLY-xIaO3wpsom5bwCIdt34gtUk654I",
+   "orientation": null
+  },
+  {
+   "id": "xlife-16",
+   "title": "Lost Culture",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OI-6k0YvvX6Ex19d-ZYpdpmY67hzDk3KcxIjuKQhKXY",
+   "orientation": null
+  },
+  {
    "id": "xnouns-319",
    "title": "XNouns #319",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=319&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-cool.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-grayscale-7.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-slimesplat.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-flower.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",
@@ -331,7 +402,7 @@
    "title": "XNouns #70",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=70&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-warm.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-grayscale-8.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-txt-mint.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-sandwich.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",

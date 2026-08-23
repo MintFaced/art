@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 1,
+  "works": 2,
   "one_of_ones": 1,
-  "editions": 0,
-  "collections": 1
+  "editions": 1,
+  "collections": 2
  },
  "first_collected": "2025-01-14T21:19:47.000000Z",
  "last_collected": "2025-01-14T21:19:47.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "geodetic-world",
    "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -31,6 +36,17 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-88-display.webp",
    "orientation": "square"
+  },
+  {
+   "id": "xlife-59",
+   "title": "!Yeehaw",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/IV7_F_u5jRVOuQFoO64D0-Zn87HlUduyjL2__sZ_UXU",
+   "orientation": null
   }
  ]
 }

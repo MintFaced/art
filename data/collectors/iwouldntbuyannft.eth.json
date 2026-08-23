@@ -1,0 +1,63 @@
+{
+ "address": "0x43b0bd27d5016e969193412933387b0dd4cf3e0a",
+ "ens": "iwouldntbuyannft.eth",
+ "display_name": null,
+ "slug": "iwouldntbuyannft.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 2
+ },
+ "first_collected": "2025-05-24T19:08:23.000000Z",
+ "last_collected": "2025-05-24T19:08:23.000000Z",
+ "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-24T19:08:23.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/gM8k7OzJaLy1bObiQxMO_iImoo755jF-2BBVfXvVQLI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-58",
+   "title": "Self Stoic",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/dmWlJE6k2LIRi2RWhIfvFsqjKIAfl7KomHs4TiFkQXk",
+   "orientation": null
+  }
+ ]
+}

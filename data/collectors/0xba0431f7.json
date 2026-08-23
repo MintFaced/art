@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 1,
-  "editions": 3,
-  "collections": 4
+  "editions": 4,
+  "collections": 5
  },
  "first_collected": "2022-10-11T10:42:35.000Z",
  "last_collected": "2026-08-21T07:26:47.000000Z",
@@ -32,6 +32,11 @@
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -79,6 +84,17 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
   }
  ]
 }

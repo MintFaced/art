@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 7,
+  "works": 10,
   "one_of_ones": 6,
-  "editions": 1,
-  "collections": 6
+  "editions": 4,
+  "collections": 7
  },
  "first_collected": "2025-08-06T05:11:47.000000Z",
  "last_collected": "2025-09-08T05:26:59.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 3
+  },
   {
    "slug": "patrimora",
    "title": "Patrimora",
@@ -122,6 +127,39 @@
    "unique": true,
    "image": "roads-and-rivers/roads-and-rivers-14-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6jCMoKErwOmAUN-QzQkArcUm-8UPwW3UKYBPzNu2Psk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-55",
+   "title": "Faded Summer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/DTEPmt2Oph7mGZo5YjALUfOUKKwF_Vt8PlDdlpolr5I",
+   "orientation": null
+  },
+  {
+   "id": "xlife-45",
+   "title": "Mostly Worthless",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7bgxq2vTXXQ5Qx_7iNBDauLTRwufOMlvX3k75-OscIE",
+   "orientation": null
   }
  ]
 }

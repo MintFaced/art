@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 3,
   "one_of_ones": 1,
-  "editions": 1,
-  "collections": 2
+  "editions": 2,
+  "collections": 3
  },
  "first_collected": "2025-02-04T21:00:59.000000Z",
  "last_collected": "2025-02-09T00:42:47.000000Z",
@@ -22,6 +22,11 @@
   {
    "slug": "patrimora",
    "title": "Patrimora",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -46,6 +51,17 @@
    "acquired": "2025-02-04T21:00:59.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-58-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-48",
+   "title": "Freedom Enjoyoor",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/H38LIYoKYoTDm3-gQ8j_40K0RT0OvxQ4BXtnuxfMpyw",
    "orientation": null
   }
  ]

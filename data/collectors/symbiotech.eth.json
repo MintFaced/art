@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 4,
   "one_of_ones": 1,
-  "editions": 1,
-  "collections": 2
+  "editions": 3,
+  "collections": 3
  },
  "first_collected": null,
  "last_collected": null,
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
   {
    "slug": "we-are-the-line",
    "title": "We are The Line",
@@ -38,11 +43,33 @@
    "orientation": null
   },
   {
+   "id": "xlife-19",
+   "title": "The Damage",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/l4iwRmO8fipljA-EaGrjxiqs8S3grdYW4FBmiVIIQLk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-12",
+   "title": "Xchequer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/EpatwFiUEa4WZsYAyzKba5NKzMHE7zNifRViwxUG8pc",
+   "orientation": null
+  },
+  {
    "id": "xnouns-358",
    "title": "XNouns #358",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=358&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-computerblue.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-cloud.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-rosebud.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",

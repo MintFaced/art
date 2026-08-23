@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 11,
+  "works": 12,
   "one_of_ones": 0,
-  "editions": 11,
-  "collections": 6
+  "editions": 12,
+  "collections": 7
  },
  "first_collected": "2022-05-10T20:15:24.000000Z",
  "last_collected": "2022-12-27T03:29:59.000000Z",
@@ -42,6 +42,11 @@
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -165,6 +170,17 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/6I1tDW_5vI3fNpcblWhM5jsMUveB-tXmC_qvKsaZ4xE",
+   "orientation": null
+  },
+  {
+   "id": "xlife-2",
+   "title": "X Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7ZZBQlgnUkV-OXgxZMq0pss37osrbSlDHli00NTWWH4",
    "orientation": null
   }
  ]

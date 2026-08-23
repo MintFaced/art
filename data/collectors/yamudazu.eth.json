@@ -1,0 +1,68 @@
+{
+ "address": "0x4d0838582cab6aa41cc2fb5e65f87f2958dae620",
+ "ens": "yamudazu.eth",
+ "display_name": null,
+ "slug": "yamudazu.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 3
+ },
+ "first_collected": "2022-12-27T03:29:59.000000Z",
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "collections": [
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "we-are-the-line",
+   "title": "We are The Line",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
+   "acquired": "2022-12-27T03:29:59.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  }
+ ]
+}

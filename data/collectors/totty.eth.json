@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 6,
   "one_of_ones": 0,
-  "editions": 3,
-  "collections": 2
+  "editions": 6,
+  "collections": 3
  },
  "first_collected": "2022-12-27T03:29:59.000000Z",
  "last_collected": "2022-12-27T03:29:59.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 3
+  },
   {
    "slug": "we-are-the-line",
    "title": "We are The Line",
@@ -57,6 +62,39 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/6I1tDW_5vI3fNpcblWhM5jsMUveB-tXmC_qvKsaZ4xE",
+   "orientation": null
+  },
+  {
+   "id": "xlife-16",
+   "title": "Lost Culture",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OI-6k0YvvX6Ex19d-ZYpdpmY67hzDk3KcxIjuKQhKXY",
+   "orientation": null
+  },
+  {
+   "id": "xlife-5",
+   "title": "WEN MINT",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7sDuy5opFMS9hvVI5BiUD-5v8-5EjzvYW9en62hKQ20",
+   "orientation": null
+  },
+  {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/8pNQxc87a7x56FOwp3tQyoHdPRqIgdPXgbj1Lxg1u0Y",
    "orientation": null
   }
  ]

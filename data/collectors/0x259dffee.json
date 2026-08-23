@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 5,
+  "works": 6,
   "one_of_ones": 1,
-  "editions": 4,
-  "collections": 3
+  "editions": 5,
+  "collections": 4
  },
  "first_collected": "2022-12-27T18:54:11.000000Z",
  "last_collected": "2022-12-27T18:57:59.000000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "first-selfie",
    "title": "First Selfie",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -84,6 +89,17 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/6I1tDW_5vI3fNpcblWhM5jsMUveB-tXmC_qvKsaZ4xE",
+   "orientation": null
+  },
+  {
+   "id": "xlife-13",
+   "title": "AI Gobshite",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/aodkwJd6CHy-UY4kXp24ZBGAvzWrdS47mGXrfJtrrsI",
    "orientation": null
   }
  ]

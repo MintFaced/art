@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 7,
   "one_of_ones": 1,
-  "editions": 1,
-  "collections": 2
+  "editions": 6,
+  "collections": 3
  },
  "first_collected": "2025-05-16T10:36:23.000000Z",
  "last_collected": "2025-12-02T22:31:35.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 5
+  },
   {
    "slug": "id-please",
    "title": "ID Please",
@@ -46,6 +51,61 @@
    "acquired": "2025-05-16T10:36:23.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-48",
+   "title": "Freedom Enjoyoor",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/H38LIYoKYoTDm3-gQ8j_40K0RT0OvxQ4BXtnuxfMpyw",
+   "orientation": null
+  },
+  {
+   "id": "xlife-17",
+   "title": "You're on Mute",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/wR2e5KTzu3N7ade2XyrmC-kVIPTLLBgLwSwKwk2-BnI",
    "orientation": null
   }
  ]

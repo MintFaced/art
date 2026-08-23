@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 11,
+  "works": 13,
   "one_of_ones": 0,
-  "editions": 11,
-  "collections": 2
+  "editions": 13,
+  "collections": 3
  },
  "first_collected": "2022-06-18T05:36:49.000Z",
  "last_collected": "2022-12-28T08:11:11.000000Z",
@@ -23,6 +23,11 @@
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
    "works": 3
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
   }
  ],
  "works": [
@@ -145,6 +150,28 @@
    "acquired": "2022-06-18T05:36:49.000Z",
    "unique": false,
    "image": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/Q1lP3J_UdVCify_bw9unGt9sbd3UnapDW13tzg85hyg",
+   "orientation": null
+  },
+  {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/8pNQxc87a7x56FOwp3tQyoHdPRqIgdPXgbj1Lxg1u0Y",
    "orientation": null
   }
  ]

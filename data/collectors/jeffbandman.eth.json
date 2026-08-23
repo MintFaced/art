@@ -1,0 +1,68 @@
+{
+ "address": "0xfe3b3f0d64f354b69a5b40d02f714e69ca4b09bd",
+ "ens": "jeffbandman.eth",
+ "display_name": null,
+ "slug": "jeffbandman.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 3
+ },
+ "first_collected": "2022-05-09T23:25:25.000000Z",
+ "last_collected": "2025-05-16T10:34:47.000000Z",
+ "collections": [
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-16T10:34:47.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "group": "feature",
+   "genre": "Design",
+   "acquired": "2022-05-09T23:25:25.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
+   "orientation": null
+  }
+ ]
+}

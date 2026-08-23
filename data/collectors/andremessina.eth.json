@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 1,
-  "editions": 3,
-  "collections": 4
+  "editions": 4,
+  "collections": 5
  },
  "first_collected": "2022-12-06T22:55:47.000Z",
  "last_collected": "2024-04-22T03:24:11.000000Z",
@@ -32,6 +32,11 @@
   {
    "slug": "we-are-the-line",
    "title": "We are The Line",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -78,6 +83,17 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/8q_QgSyVCkXmSpTvoBEOR7-C7A-axq_Ha2lYtHHj_HA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-40",
+   "title": "AI Swear",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/n-u9cTKe2IugWf_MtJI_BT7bB2DjYCKm0DSI8_UJRRY",
    "orientation": null
   }
  ]

@@ -1188,13 +1188,12 @@
    "slug": "xnouns",
    "title": "XNouns",
    "group": "experiments",
-   "display": false,
    "year": "2022",
    "medium": "Generative",
-   "genre": null,
-   "card_statement": null,
+   "genre": "Design",
+   "card_statement": "Nouns with the X factor ... born every 8 hours, 8 minutes and 8 seconds.",
    "physical": false,
-   "statement": "XNouns celebrates the glitch origins of XCOPY combined with the artistic freedom of Nouns.",
+   "statement": "Nouns with the X factor. A new XNouns is born every 8 hours, 8 minutes and 8 seconds, auctioned one at a time. The work is a CC0 derivative celebrating the glitch origins of XCOPY and the artistic freedom of Nouns, made by and for XCOPY-enjoyooors. xnouns.xyz",
    "counts": {
     "works": 519,
     "acquired": 375,
@@ -1214,7 +1213,39 @@
      "holders": "142"
     }
    ],
-   "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise."
+   "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise.",
+   "links": {
+    "site": "https://xnouns.xyz"
+   }
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "group": "archive",
+   "year": null,
+   "medium": null,
+   "genre": null,
+   "card_statement": null,
+   "physical": false,
+   "statement": null,
+   "counts": {
+    "works": 69,
+    "available": 62,
+    "sold_out": 7
+   },
+   "cover": null,
+   "contracts": [
+    {
+     "chain": "ethereum",
+     "standard": "ERC-1155",
+     "address": "0x8f6ee5787a60959C8dAf3D35fA48FD0C49BcCA2a",
+     "name": "XLIFE",
+     "deployed": null,
+     "deployer": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "holders": "678"
+    }
+   ],
+   "notes": "Enumerated from chain. Year, genre and the card line are Ryan's to fill in now that it renders."
   }
  ],
  "work_index": {

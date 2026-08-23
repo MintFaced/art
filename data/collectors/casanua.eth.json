@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 0,
-  "editions": 4,
-  "collections": 3
+  "editions": 5,
+  "collections": 4
  },
  "first_collected": "2022-07-09T11:01:21.000Z",
  "last_collected": "2025-05-16T10:36:23.000000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "id-please",
    "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -74,6 +79,17 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape"
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
+   "orientation": null
   }
  ]
 }

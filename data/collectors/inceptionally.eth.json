@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 1,
+  "works": 2,
   "one_of_ones": 1,
-  "editions": 0,
-  "collections": 1
+  "editions": 1,
+  "collections": 2
  },
  "first_collected": "2026-08-21T05:11:23.000000Z",
  "last_collected": "2026-08-21T05:11:23.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "artificial-flowers",
    "title": "Artificial Flowers",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -31,6 +36,17 @@
    "unique": true,
    "image": "artificial-flowers/artificial-flowers-18-display.webp",
    "orientation": "square"
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
   }
  ]
 }

@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 0,
-  "editions": 4,
-  "collections": 1
+  "editions": 5,
+  "collections": 2
  },
  "first_collected": "2022-12-27T14:05:35.000000Z",
  "last_collected": "2022-12-28T01:23:59.000000Z",
@@ -18,6 +18,11 @@
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
    "works": 4
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
   }
  ],
  "works": [
@@ -63,6 +68,17 @@
    "acquired": "2022-12-27T14:05:35.000000Z",
    "unique": false,
    "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "xlife-48",
+   "title": "Freedom Enjoyoor",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/H38LIYoKYoTDm3-gQ8j_40K0RT0OvxQ4BXtnuxfMpyw",
    "orientation": null
   }
  ]

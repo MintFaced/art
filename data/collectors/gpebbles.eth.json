@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 4,
   "one_of_ones": 2,
-  "editions": 1,
-  "collections": 2
+  "editions": 2,
+  "collections": 3
  },
  "first_collected": "2026-03-08T21:06:11.000000Z",
  "last_collected": "2026-05-14T20:56:11.000000Z",
@@ -22,6 +22,11 @@
   {
    "slug": "id-please",
    "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -57,6 +62,17 @@
    "acquired": "2026-03-08T21:06:11.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-181-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
    "orientation": null
   }
  ]

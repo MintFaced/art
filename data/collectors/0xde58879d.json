@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 13,
+  "works": 21,
   "one_of_ones": 8,
-  "editions": 5,
-  "collections": 8
+  "editions": 13,
+  "collections": 9
  },
  "first_collected": "2025-07-09T00:48:47.000000Z",
  "last_collected": "2025-12-26T03:45:59.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 8
+  },
   {
    "slug": "patrimora",
    "title": "Patrimora",
@@ -178,11 +183,99 @@
    "orientation": null
   },
   {
+   "id": "xlife-68",
+   "title": "Don't Let The Clowns Edit Your JPEGS",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/Ur2eLE6iZ9Y4WRwscznraarx_XI-Et5OEZkq2DxuFmU",
+   "orientation": null
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/gM8k7OzJaLy1bObiQxMO_iImoo755jF-2BBVfXvVQLI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-65",
+   "title": "Casting Vote",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/IYnwlLZzriz3Abgkod0XntatuWKwbwoyuxrUMe2iZpw",
+   "orientation": null
+  },
+  {
+   "id": "xlife-61",
+   "title": "Tired of Winning",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/BaPMMUtgmyHRR4KZiXzoLk8s8WQtVC3eqeuV1IGIdaA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-56",
+   "title": "Late Stage Memeism",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/QFdXiF7GVFOX819XYvYCvpmfeM9lv7meAEF8Cgb47bo",
+   "orientation": null
+  },
+  {
+   "id": "xlife-55",
+   "title": "Faded Summer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/DTEPmt2Oph7mGZo5YjALUfOUKKwF_Vt8PlDdlpolr5I",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-45",
+   "title": "Mostly Worthless",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7bgxq2vTXXQ5Qx_7iNBDauLTRwufOMlvX3k75-OscIE",
+   "orientation": null
+  },
+  {
    "id": "xnouns-411",
    "title": "XNouns #411",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=411&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-grayscale-9.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-txt-nil-grey-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-ruler-triangular.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-black.png",
@@ -193,7 +286,7 @@
    "title": "XNouns #336",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=336&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x-top-right.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-grayscale-8.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-bling-scissors.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-earth.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-purple.png",

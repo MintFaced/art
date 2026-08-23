@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 19,
+  "works": 21,
   "one_of_ones": 2,
-  "editions": 17,
-  "collections": 5
+  "editions": 19,
+  "collections": 6
  },
  "first_collected": "2022-06-20T09:56:15.000Z",
  "last_collected": "2022-12-20T00:32:35.000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "geodetica",
    "title": "Geodetica",
+   "works": 2
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 2
   },
   {
@@ -248,6 +253,28 @@
    "acquired": "2022-06-20T09:56:15.000Z",
    "unique": false,
    "image": "https://arweave.net/S9jBWhrKJOKou0bCG3VEcVio4QmaAGsooS69rEMNUT4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-25",
+   "title": "Doxxed",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/VESKKm5KSjxSRKxdz8m0cu7RLUPypchg_RF86vVQmlk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-24",
+   "title": "Anon",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/mpLJymCIeEN2_UeYTYRV5VFQ19PSHYE_uqbm5VHwl6U",
    "orientation": null
   }
  ]

@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 12,
+  "works": 17,
   "one_of_ones": 2,
-  "editions": 10,
-  "collections": 7
+  "editions": 15,
+  "collections": 8
  },
  "first_collected": "2022-04-21T12:09:44.000000Z",
  "last_collected": "2025-05-16T10:36:23.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 5
+  },
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
@@ -181,6 +186,61 @@
    "acquired": "2022-04-21T12:09:44.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-66-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/gM8k7OzJaLy1bObiQxMO_iImoo755jF-2BBVfXvVQLI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-58",
+   "title": "Self Stoic",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/dmWlJE6k2LIRi2RWhIfvFsqjKIAfl7KomHs4TiFkQXk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-50",
+   "title": "Bullish Seizing",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/UFH2L8tr_wn3UpQdJ6zOwAxCXkXKRZ77wP1GCB__XF4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
    "orientation": null
   }
  ]

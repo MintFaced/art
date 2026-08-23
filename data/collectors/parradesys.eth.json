@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 1,
-  "editions": 3,
-  "collections": 3
+  "editions": 4,
+  "collections": 4
  },
  "first_collected": "2022-12-27T03:29:59.000000Z",
  "last_collected": "2023-11-04T02:47:23.000000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -73,6 +78,17 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/5IpBQH0QL1911Uo9SSNkItRUixeh6nPzhw7MfFnU23g",
+   "orientation": null
+  },
+  {
+   "id": "xlife-34",
+   "title": "Swipe X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/nudC7hCP5HeswHQDy30aohQEHeOruisr1VjszgrytuI",
    "orientation": null
   }
  ]

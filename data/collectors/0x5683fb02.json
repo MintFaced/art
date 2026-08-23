@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 5,
   "one_of_ones": 3,
-  "editions": 0,
-  "collections": 3
+  "editions": 2,
+  "collections": 4
  },
  "first_collected": "2025-07-13T21:02:35.000000Z",
  "last_collected": "2025-07-13T21:45:11.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
   {
    "slug": "geodetic-world",
    "title": "Geodetic World",
@@ -63,6 +68,28 @@
    "unique": true,
    "image": "two-burdens/two-burdens-4-display.webp",
    "orientation": "portrait"
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/gM8k7OzJaLy1bObiQxMO_iImoo755jF-2BBVfXvVQLI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6jCMoKErwOmAUN-QzQkArcUm-8UPwW3UKYBPzNu2Psk",
+   "orientation": null
   }
  ]
 }

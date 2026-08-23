@@ -1,0 +1,85 @@
+{
+ "address": "0xb68babf19df3889f5185576f7f657c9272923002",
+ "ens": "synthetic.schizosthesia.eth",
+ "display_name": null,
+ "slug": "synthetic.schizosthesia.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 5,
+  "one_of_ones": 0,
+  "editions": 5,
+  "collections": 2
+ },
+ "first_collected": "2022-12-28T00:33:11.000000Z",
+ "last_collected": "2022-12-28T00:59:47.000000Z",
+ "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 3
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 2
+  }
+ ],
+ "works": [
+  {
+   "id": "roads-or-rivers-twisted",
+   "title": "Twisted",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
+   "acquired": "2022-12-28T00:59:47.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/1AfhOftgprKOi4jMLJqi_hsddw8q8DXuS-RK9MoLw-8",
+   "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
+   "acquired": "2022-12-28T00:33:11.000000Z",
+   "unique": false,
+   "image": "https://arweave.net/L6ztSVaFFyxwWXLabxBh0jJd7o--0ABtHGVdSz6Ng80",
+   "orientation": null
+  },
+  {
+   "id": "xlife-5",
+   "title": "WEN MINT",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7sDuy5opFMS9hvVI5BiUD-5v8-5EjzvYW9en62hKQ20",
+   "orientation": null
+  },
+  {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/rwo60iUk-cWvhsawfUE_iEpBktJ9lR4DESHhJqFfap4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/qPhfvNhRdZDqzohCZjQJjVNijShYMxvufOhmhck1Vxo",
+   "orientation": null
+  }
+ ]
+}

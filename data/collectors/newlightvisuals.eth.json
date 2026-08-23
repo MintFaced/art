@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 8,
+  "works": 11,
   "one_of_ones": 1,
-  "editions": 7,
-  "collections": 6
+  "editions": 10,
+  "collections": 7
  },
  "first_collected": "2022-07-10T23:29:18.000Z",
  "last_collected": "2023-11-25T04:00:47.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "we-are-the-line",
    "title": "We are The Line",
+   "works": 3
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 3
   },
   {
@@ -132,6 +137,39 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/5IpBQH0QL1911Uo9SSNkItRUixeh6nPzhw7MfFnU23g",
+   "orientation": null
+  },
+  {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6jCMoKErwOmAUN-QzQkArcUm-8UPwW3UKYBPzNu2Psk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-18",
+   "title": "Sound Choice",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/ZLk90piDkUyL6m_9U053MllY9lIJBvJ3jwFvLQ3BGCw",
    "orientation": null
   }
  ]

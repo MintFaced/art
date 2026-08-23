@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 31,
+  "works": 32,
   "one_of_ones": 23,
-  "editions": 8,
-  "collections": 8
+  "editions": 9,
+  "collections": 9
  },
  "first_collected": "2022-05-10T05:25:59.000000Z",
  "last_collected": "2026-08-22T00:42:47.000000Z",
@@ -52,6 +52,11 @@
   {
    "slug": "we-are-the-line",
    "title": "We are The Line",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -395,6 +400,17 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/9tELif8vVY-Qz9adNDrv1N1aMpwUADMCYG8hKrgdPLw",
+   "orientation": null
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/IiRgSPhUD49wYavB36AzdKzzGZB8IlXweP-QquM-Xg4",
    "orientation": null
   }
  ]

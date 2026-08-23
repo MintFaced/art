@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 17,
+  "works": 18,
   "one_of_ones": 0,
-  "editions": 17,
-  "collections": 5
+  "editions": 18,
+  "collections": 6
  },
  "first_collected": "2022-05-09T12:42:58.000000Z",
  "last_collected": "2022-12-24T09:45:59.000Z",
@@ -37,6 +37,11 @@
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -226,6 +231,17 @@
    "acquired": "2022-05-09T12:42:58.000000Z",
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-22",
+   "title": "2 Trillion",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/yNyTfl0rE6_TofpPOMnDnd7xy8kknM3tUXmdZlyBwA8",
    "orientation": null
   }
  ]

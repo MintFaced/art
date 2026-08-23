@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 19,
+  "works": 20,
   "one_of_ones": 0,
-  "editions": 19,
-  "collections": 5
+  "editions": 20,
+  "collections": 6
  },
  "first_collected": "2022-06-23T01:48:10.000Z",
  "last_collected": "2022-12-27T03:08:35.000000Z",
@@ -37,6 +37,11 @@
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
@@ -248,6 +253,17 @@
    "acquired": "2022-06-23T01:48:10.000Z",
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-353-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-7",
+   "title": "Happy X Day",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6tp0Fd89Y6_1SGdYQRc7uoBUlkW5ycBEmB5DnVnsuHM",
    "orientation": null
   }
  ]

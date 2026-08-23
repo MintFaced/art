@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 11,
   "one_of_ones": 3,
-  "editions": 1,
-  "collections": 4
+  "editions": 8,
+  "collections": 5
  },
  "first_collected": "2024-07-27T06:22:35.000000Z",
  "last_collected": "2025-02-09T00:42:47.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 7
+  },
   {
    "slug": "geodetic-moments",
    "title": "Geodetic Moments",
@@ -78,6 +83,83 @@
    "acquired": "2024-07-27T06:22:35.000000Z",
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-81-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/gM8k7OzJaLy1bObiQxMO_iImoo755jF-2BBVfXvVQLI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6jCMoKErwOmAUN-QzQkArcUm-8UPwW3UKYBPzNu2Psk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-58",
+   "title": "Self Stoic",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/dmWlJE6k2LIRi2RWhIfvFsqjKIAfl7KomHs4TiFkQXk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-50",
+   "title": "Bullish Seizing",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/UFH2L8tr_wn3UpQdJ6zOwAxCXkXKRZ77wP1GCB__XF4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-48",
+   "title": "Freedom Enjoyoor",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/H38LIYoKYoTDm3-gQ8j_40K0RT0OvxQ4BXtnuxfMpyw",
    "orientation": null
   }
  ]

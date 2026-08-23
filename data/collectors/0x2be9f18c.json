@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 4,
   "one_of_ones": 1,
-  "editions": 1,
-  "collections": 2
+  "editions": 3,
+  "collections": 3
  },
  "first_collected": "2024-10-01T08:45:59.000000Z",
  "last_collected": "2025-05-16T15:38:11.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
   {
    "slug": "id-please",
    "title": "ID Please",
@@ -47,6 +52,28 @@
    "unique": true,
    "image": "two-burdens/two-burdens-12-display.webp",
    "orientation": "square"
+  },
+  {
+   "id": "xlife-54",
+   "title": "Medal Winner",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/tHkX4zAvZzmRMAE7Z_0AM7GehRWDmf5gWw6xU9IBC_0",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
   }
  ]
 }

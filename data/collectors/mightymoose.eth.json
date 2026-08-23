@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 5,
+  "works": 6,
   "one_of_ones": 2,
-  "editions": 3,
-  "collections": 4
+  "editions": 4,
+  "collections": 5
  },
  "first_collected": "2022-07-15T03:28:05.000Z",
  "last_collected": "2023-09-25T21:09:23.000000Z",
@@ -27,6 +27,11 @@
   {
    "slug": "geodetic-world",
    "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   },
   {
@@ -81,11 +86,22 @@
    "orientation": null
   },
   {
+   "id": "xlife-23",
+   "title": "XFlex Media",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/ZNdBlBNLH--iEfo2UQyKDOuex6RN4-eLIhRXB3FU4mQ",
+   "orientation": null
+  },
+  {
    "id": "xnouns-206",
    "title": "XNouns #206",
    "collection": "xnouns",
    "group": "experiments",
-   "genre": null,
+   "genre": "Design",
    "acquired": null,
    "unique": true,
    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=206&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-warm.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-orange-yellow.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-stains-blood.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-moose.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-purple.png",

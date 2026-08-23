@@ -1,0 +1,68 @@
+{
+ "address": "0xfd22004806a6846ea67ad883356be810f0428793",
+ "ens": "genesis.punk6529.eth",
+ "display_name": null,
+ "slug": "genesis.punk6529.eth",
+ "private": false,
+ "has_page": true,
+ "counts": {
+  "works": 3,
+  "one_of_ones": 0,
+  "editions": 3,
+  "collections": 3
+ },
+ "first_collected": "2022-07-12T04:42:36.000Z",
+ "last_collected": "2025-05-16T10:34:47.000000Z",
+ "collections": [
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
+  }
+ ],
+ "works": [
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-16T10:34:47.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "group": "geodetic",
+   "genre": "Photography / AI",
+   "acquired": "2022-07-12T04:42:36.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape"
+  },
+  {
+   "id": "xlife-55",
+   "title": "Faded Summer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/DTEPmt2Oph7mGZo5YjALUfOUKKwF_Vt8PlDdlpolr5I",
+   "orientation": null
+  }
+ ]
+}

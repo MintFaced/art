@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 8,
   "one_of_ones": 4,
-  "editions": 0,
-  "collections": 1
+  "editions": 4,
+  "collections": 2
  },
  "first_collected": "2025-10-11T00:55:35.000000Z",
  "last_collected": "2025-10-11T07:23:11.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "artificial-flowers",
    "title": "Artificial Flowers",
+   "works": 4
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 4
   }
  ],
@@ -64,6 +69,50 @@
    "unique": true,
    "image": "artificial-flowers/artificial-flowers-13-display.webp",
    "orientation": "portrait"
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/gM8k7OzJaLy1bObiQxMO_iImoo755jF-2BBVfXvVQLI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6jCMoKErwOmAUN-QzQkArcUm-8UPwW3UKYBPzNu2Psk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-58",
+   "title": "Self Stoic",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/dmWlJE6k2LIRi2RWhIfvFsqjKIAfl7KomHs4TiFkQXk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-50",
+   "title": "Bullish Seizing",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/UFH2L8tr_wn3UpQdJ6zOwAxCXkXKRZ77wP1GCB__XF4",
+   "orientation": null
   }
  ]
 }

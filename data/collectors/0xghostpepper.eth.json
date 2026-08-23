@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 3,
+  "works": 5,
   "one_of_ones": 1,
-  "editions": 2,
-  "collections": 3
+  "editions": 4,
+  "collections": 4
  },
  "first_collected": "2025-02-05T03:19:23.000000Z",
  "last_collected": "2025-05-17T01:14:35.000000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 2
+  },
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
@@ -62,6 +67,28 @@
    "acquired": "2025-02-05T03:19:23.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-152-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-48",
+   "title": "Freedom Enjoyoor",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/H38LIYoKYoTDm3-gQ8j_40K0RT0OvxQ4BXtnuxfMpyw",
    "orientation": null
   }
  ]

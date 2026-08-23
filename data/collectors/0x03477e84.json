@@ -6,14 +6,19 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
+  "works": 9,
   "one_of_ones": 2,
-  "editions": 0,
-  "collections": 2
+  "editions": 7,
+  "collections": 3
  },
  "first_collected": "2025-08-01T01:24:23.000000Z",
  "last_collected": "2025-08-01T01:24:23.000Z",
  "collections": [
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 7
+  },
   {
    "slug": "geodetic-world",
    "title": "Geodetic World",
@@ -46,6 +51,83 @@
    "acquired": "2025-08-01T01:24:23.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-89-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-68",
+   "title": "Don't Let The Clowns Edit Your JPEGS",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/Ur2eLE6iZ9Y4WRwscznraarx_XI-Et5OEZkq2DxuFmU",
+   "orientation": null
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/IiRgSPhUD49wYavB36AzdKzzGZB8IlXweP-QquM-Xg4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/YzfXe2XKSR7V0QMIfJOepUVQHNWtHaMa4qvUITk0A70",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-50",
+   "title": "Bullish Seizing",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/UFH2L8tr_wn3UpQdJ6zOwAxCXkXKRZ77wP1GCB__XF4",
+   "orientation": null
+  },
+  {
+   "id": "xlife-45",
+   "title": "Mostly Worthless",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/7bgxq2vTXXQ5Qx_7iNBDauLTRwufOMlvX3k75-OscIE",
+   "orientation": null
+  },
+  {
+   "id": "xlife-43",
+   "title": "Right Click Tokenize",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/jM7BaoyOj-uIqK4U2uQ51hObCrFpHHQ3PZXr1nZC1Uk",
    "orientation": null
   }
  ]

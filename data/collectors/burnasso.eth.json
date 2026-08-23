@@ -6,10 +6,10 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 6,
+  "works": 9,
   "one_of_ones": 1,
-  "editions": 5,
-  "collections": 4
+  "editions": 8,
+  "collections": 5
  },
  "first_collected": "2022-05-13T15:09:23.000000Z",
  "last_collected": "2024-08-26T09:02:11.000000Z",
@@ -17,6 +17,11 @@
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
+   "works": 3
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 3
   },
   {
@@ -100,6 +105,39 @@
    "acquired": null,
    "unique": false,
    "image": "https://arweave.net/_8JjGqYPBZAk6utMDass7Iv_zq_jsDtcHfVG0_pc-iA",
+   "orientation": null
+  },
+  {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/6jCMoKErwOmAUN-QzQkArcUm-8UPwW3UKYBPzNu2Psk",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/OgWbkizQ8WY3EWSI4qIFGYefR_F35LlRJ6r_eCa52vI",
+   "orientation": null
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "https://arweave.net/701UAbxJvZS6DedljHN91HwHxmpf0f9cvvg7SW1pQOA",
    "orientation": null
   }
  ]
