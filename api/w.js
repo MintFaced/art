@@ -47,7 +47,12 @@ export async function GET(request) {
       : null;
     const bits = [collection.title, work.year || collection.year, price].filter(Boolean);
     const description = (work.statement || bits.join(' &middot; ') || `${title} by MintFace`).slice(0, 200);
-    const image = previewFor(work);
+    /* The card is generated from the catalogue rather than being the artwork
+       itself, so a share carries the price, the status and the attribution as
+       they are right now. previewFor stays as the fallback for anything the
+       renderer cannot draw. */
+    const image = `${origin}/api/og?work=${encodeURIComponent(work.id)}`;
+    void previewFor;
     const url = `${origin}/w/${encodeURIComponent(work.id)}`;
 
     const meta = [
@@ -60,7 +65,9 @@ export async function GET(request) {
       `<meta property="og:url" content="${esc(url)}">`,
       image ? `<meta property="og:image" content="${esc(image)}">` : '',
       image ? `<meta property="og:image:alt" content="${esc(title)}">` : '',
-      `<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">`,
+      `<meta property="og:image:width" content="1200">`,
+      `<meta property="og:image:height" content="630">`,
+      `<meta name="twitter:card" content="summary_large_image">`,
       `<meta name="twitter:title" content="${esc(title)}">`,
       `<meta name="twitter:description" content="${esc(description)}">`,
       image ? `<meta name="twitter:image" content="${esc(image)}">` : '',

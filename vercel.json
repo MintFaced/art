@@ -18,6 +18,10 @@
     },
     "api/cron/tao.js": {
       "maxDuration": 300
+    },
+    "api/og.js": {
+      "includeFiles": "api/_fonts/**",
+      "memory": 1024
     }
   },
   "redirects": [
@@ -59,7 +63,7 @@
     },
     {
       "source": "/c/:slug",
-      "destination": "/c"
+      "destination": "/api/c"
     },
     {
       "source": "/genesis",
