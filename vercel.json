@@ -25,6 +25,11 @@
       "source": "/home",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/tao",
+      "destination": "https://collectors.mintface.art/#tao",
+      "permanent": false
     }
   ],
   "rewrites": [

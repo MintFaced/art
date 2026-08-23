@@ -1057,16 +1057,21 @@ const MF = {
   // there is a token to point at ... an unminted work has nothing to link to.
   marks(work) {
     const d = work.digital || {};
-    if (d.chain !== 'ethereum' || !d.contract || d.minted === false) return null;
+    if (d.chain !== 'ethereum' || !d.contract) return null;
     const isSet = work.token_ids && work.token_ids.length > 1;
+    /* A lazy-minted work has no token on chain yet, but it does have a real
+       item page: that page is where it is bought, and buying it is what mints
+       it. So OpenSea still stands and Etherscan does not ... there is nothing
+       there to verify until someone collects it. */
+    const unminted = d.minted === false;
     return {
       // a set has no single item page, so both marks fall back to the contract
       opensea: isSet
         ? `https://opensea.io/assets/ethereum/${d.contract}`
         : (d.token_id != null ? `https://opensea.io/item/ethereum/${d.contract}/${d.token_id}` : null),
-      etherscan: isSet
+      etherscan: unminted ? null : (isSet
         ? `https://etherscan.io/token/${d.contract}`
-        : `https://etherscan.io/token/${d.contract}?a=${d.token_id}`,
+        : `https://etherscan.io/token/${d.contract}?a=${d.token_id}`),
     };
   },
 
