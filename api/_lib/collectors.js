@@ -114,6 +114,25 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
   }
   for (const p of paged) p.slug = ensSlug(p) || shortOf(p.address, n);
 
+  /* Standard competition ranking: equal totals share a place and the next
+     distinct total skips the ones they used up. 1, 2, 2, 4. Computed over
+     everyone, not over the ones with pages, because a wallet holding a single
+     edition is still ranked ... it is simply ranked low. */
+  const rankBy = (list, value) => {
+    const sorted = list.slice().sort((a, b) => value(b) - value(a));
+    let place = 0, seen = 0, last = null;
+    const out = new Map();
+    for (const p of sorted) {
+      const v = value(p);
+      seen++;
+      if (last === null || v !== last) { place = seen; last = v; }
+      out.set(p.address, place);
+    }
+    return out;
+  };
+  const taoRank = rankBy(all, (p) => p.tao || 0);
+  for (const p of all) p.tao_rank = taoRank.get(p.address);
+
   const ranked = all.slice().sort((a, b) =>
     b.counts.works - a.counts.works
     || b.counts.one_of_ones - a.counts.one_of_ones
@@ -123,15 +142,42 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
     address: p.address, ens: p.ens, display_name: p.display_name,
     slug: p.has_page ? p.slug : null, private: p.private, has_page: p.has_page,
     counts: p.counts, first_collected: p.first_collected, last_collected: p.last_collected,
-    tao: p.tao || 0, tao_rate: p.tao_rate || 0,
+    tao: p.tao || 0, tao_rate: p.tao_rate || 0, tao_rank: p.tao_rank || null,
   });
   const collectionsOf = (p) => [...p.collections.entries()]
     .map(([slug, works]) => ({ slug, title: titleOf.get(slug) || slug, works }))
     .sort((a, b) => b.works - a.works);
 
+  /* Every collector, in a shape small enough to hand a browser. The full
+     summary for all of them is a megabyte and a half; this is a quarter of
+     that, and it is only ever read by one table. Order is TAO descending, so
+     the default view needs no sort at all. */
+  // the column shows a month, but ranking by month would put hundreds of
+  // people in one tie, so the day is kept and the display trims it
+  const dayOf = (d) => (typeof d === 'string' && d.length >= 10 ? d.slice(0, 10) : null);
+  const register = {
+    _note: 'Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.',
+    generated: new Date().toISOString(),
+    fields: ['address', 'name', 'slug', 'private', 'works', 'unique', 'tao', 'rate', 'last', 'rank'],
+    rows: all.slice().sort((a, b) => (b.tao || 0) - (a.tao || 0) || b.counts.works - a.counts.works)
+      .map((p) => [
+        p.address,
+        p.display_name || p.ens || '',
+        p.has_page ? p.slug : '',
+        p.private ? 1 : 0,
+        p.counts.works,
+        p.counts.one_of_ones,
+        p.tao || 0,
+        p.tao_rate || 0,
+        dayOf(p.last_collected),
+        p.tao_rank || 0,
+      ]),
+  };
+
   return {
     hexBits: n,
     all: ranked,
+    register,
     index: {
       _note: 'Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.',
       generated: new Date().toISOString(),

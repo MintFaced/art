@@ -51,6 +51,11 @@ if (DRY) {
   }
 } else {
   fs.writeFileSync(path.join(ROOT, 'data/collectors.json'), JSON.stringify(d.index, null, 1) + '\n');
+  // one row per line keeps the nightly diff readable and the file small
+  fs.writeFileSync(path.join(ROOT, 'data/collectors-register.json'),
+    `{\n "_note": ${JSON.stringify(d.register._note)},\n "generated": ${JSON.stringify(d.register.generated)},\n`
+    + ` "fields": ${JSON.stringify(d.register.fields)},\n "rows": [\n`
+    + d.register.rows.map((r) => '  ' + JSON.stringify(r)).join(',\n') + '\n ]\n}\n');
   fs.writeFileSync(path.join(ROOT, 'data/collector-slugs.json'), JSON.stringify(d.slugMap, null, 1) + '\n');
 
   const dir = path.join(ROOT, 'data/collectors');
@@ -65,4 +70,5 @@ if (DRY) {
   for (const f of fs.readdirSync(dir)) if (f.endsWith('.json') && !keep.has(f)) fs.unlinkSync(path.join(dir, f));
 
   console.log(`wrote data/collectors.json (${d.index.counts.collectors} collectors), ${keep.size} pages, and the slug map`);
+  console.log(`wrote data/collectors-register.json (${d.register.rows.length} ranked rows)`);
 }
