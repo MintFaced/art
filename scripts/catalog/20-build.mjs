@@ -85,7 +85,20 @@ function edition1155(inst, { collection, contract, idPrefix }) {
 }
 
 const collections = [];
-const push = (c) => collections.push(c);
+/* Some contracts name a token with nothing but its number ... Patrimora's
+   metadata for token 83 is literally "#83". A title should say what the thing
+   is, so the collection name goes back on the front as the work is pushed.
+   Anything carrying a real name is left exactly as the chain gave it. */
+const BARE_NUMBER = /^#?\d+$/;
+function qualifyTitles(c) {
+  if (!c || !c.title) return c;
+  for (const w of c.works || []) {
+    const t = String(w.title || '').trim();
+    if (BARE_NUMBER.test(t)) w.title = `${c.title} ${t.startsWith('#') ? t : '#' + t}`;
+  }
+  return c;
+}
+const push = (c) => collections.push(qualifyTitles(c));
 const stats = {};
 const tally = (works) => {
   const t = {};
