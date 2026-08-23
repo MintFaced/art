@@ -22,10 +22,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 /* group and display default to the parked treatment; a collection that is part
    of the site proper says so. */
 const TRACKED = [
-  { slug: 'we-are-the-line', title: 'We are The Line', address: '0x269bC803c233620506c9D25d980E979bf8BcbBf6', standard: 'ERC-1155', year: '2024', medium: 'Collaborative', statement: 'One million artworks on The Line is the goal.' },
-  { slug: 'first-selfie', title: 'First Selfie', address: '0x78613F36916dF52aD8CDA841d4C2dCed15802bf4', standard: 'ERC-721', year: '2021', medium: 'Illustration', statement: null },
+  { slug: 'we-are-the-line', title: 'We are The Line', address: '0x269bC803c233620506c9D25d980E979bf8BcbBf6', standard: 'ERC-1155',
+    year: '2024', medium: 'Collaborative', statement: 'One million artworks on The Line is the goal.' },   // collector-tracked, non-canon
+  // canon: the fifth Study. Its first mint was January 2023, not 2021.
+  { slug: 'first-selfie', title: 'First Selfie', address: '0x78613F36916dF52aD8CDA841d4C2dCed15802bf4', standard: 'ERC-721',
+    year: '2023', medium: 'Illustration', genre: 'Illustration', group: 'studies', display: true, statement: null },
   { slug: 'xnouns', title: 'XNouns', address: '0x2969Eca285C9acD0B7EeDEbE7714C4D913700794', standard: 'ERC-721',
-    year: '2022', medium: 'Generative', genre: 'Design', group: 'experiments', display: true,
+    year: '2022', medium: 'Generative', genre: 'Design', group: 'experiments', display: false,
     statement: 'Nouns with the X factor. A new XNouns is born every 8 hours, 8 minutes and 8 seconds, auctioned one at a time. The work is a CC0 derivative celebrating the glitch origins of XCOPY and the artistic freedom of Nouns, made by and for XCOPY-enjoyooors. xnouns.xyz'.replace(/^/, ''), card_statement: 'Nouns with the X factor ... born every 8 hours, 8 minutes and 8 seconds.'.replace(/^/, '') },
   { slug: 'xlife', title: 'XLIFE', address: '0x8f6ee5787a60959C8dAf3D35fA48FD0C49BcCA2a', standard: 'ERC-1155',
     year: null, medium: null, statement: null, group: 'archive', display: true },
