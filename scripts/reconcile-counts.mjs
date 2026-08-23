@@ -26,6 +26,18 @@ const idx = JSON.parse(raw);
 
 // anything that is a tally of work status, and so ours to recompute
 const STATUS = new Set(['available', 'acquired', 'sold_out', 'reserved', 'vaulted', 'burned', 'artist_held', 'listed']);
+/* The split works these out from the records too, so they are derived here
+   rather than carried forward. Preserving them meant a stale unique_works of
+   181 was copied back over a corrected 185 ... the reconcile undoing the very
+   thing it exists to do. A key is only written if the collection already had
+   it, because the split omits them when they are zero. */
+const derived = (works, children) => ({
+  unique_works: works.filter((w) => !((w.edition || {}).type && w.edition.type !== '1/1')).length,
+  edition_works: works.filter((w) => (w.edition || {}).type === 'edition').length,
+  editions_minted: works.reduce((n, w) => n + (((w.edition || {}).type === 'edition')
+    ? ((w.edition.minted || w.edition.of || 0)) : 0), 0),
+  child_works: children.reduce((n, ch) => n + (ch.works || []).length, 0),
+});
 const changed = [];
 
 for (const c of idx.collections) {
@@ -41,8 +53,11 @@ for (const c of idx.collections) {
   for (const w of works) if (w.status) tally[w.status] = (tally[w.status] || 0) + 1;
 
   const before = { ...c.counts };
-  const kept = Object.fromEntries(Object.entries(c.counts || {}).filter(([k]) => !STATUS.has(k) && k !== 'works'));
-  const after = { works: works.length, ...tally, ...kept };
+  const d = derived(works, col.children || []);
+  const kept = Object.fromEntries(Object.entries(c.counts || {})
+    .filter(([k]) => !STATUS.has(k) && k !== 'works' && !(k in d)));
+  const redone = Object.fromEntries(Object.entries(d).filter(([k]) => k in (c.counts || {})));
+  const after = { works: works.length, ...tally, ...kept, ...redone };
 
   const diff = [...new Set([...Object.keys(before), ...Object.keys(after)])]
     .filter((k) => before[k] !== after[k])
