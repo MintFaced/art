@@ -65,6 +65,33 @@ If the timing was simply wrong, tell me and I will hold it again.
 Ryan
 MintFace`,
   }),
+  /* A painting collector who has just found their way through /claim. The
+     confirmation is the whole reassurance: they have handed over an address
+     and cannot tell from their side whether it landed. */
+  claimReceived: ({ name }) => ({
+    subject: 'Got it ... your artwork is on its way',
+    text: `${name ? name + ',' : 'Hello,'}
+
+Thank you. I have your wallet address.
+
+I'll transfer your artwork within a day or two and email you when it's in your wallet. There is nothing more to do at your end.
+
+If anything looks wrong, just reply to this email.
+
+Ryan
+MintFace`,
+  }),
+  claimNotice: ({ name, email, address, works }) => ({
+    subject: `Wallet address ... ${name}`,
+    text: `${name} has sent a wallet address through /claim.
+
+Name: ${name}
+Email: ${email}
+Address: ${address}
+Paintings: ${works || 'not said'}
+
+Transfer the token, then reply to them.`,
+  }),
   sold: ({ title, what, amount, currency, email, shipping }) => ({
     subject: `Sold ... ${title}`,
     text: `${title} sold.

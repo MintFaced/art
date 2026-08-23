@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { findWork, useRequestOrigin, includesPainting, describeWhat } from './_lib/data.js';
+import { findWork, useRequestOrigin, siteOrigin, includesPainting, describeWhat } from './_lib/data.js';
 import { writeWorkState, workState } from './_lib/state.js';
 import { send, templates } from './_lib/email.js';
 
@@ -191,7 +191,13 @@ async function fulfil(session) {
 What: ${describeWhat(what)}
 Paid: ${amount} ${currency}
 
-${!includesPainting(what) ? 'The token will be transferred to your wallet by hand, usually within a day. Reply with the address you would like it sent to.' : 'Ryan will be in touch within a day to arrange crating and freight, and to take the wallet address for the token.'}
+${!includesPainting(what) ? 'The token will be transferred to your wallet by hand, usually within a day. Reply with the address you would like it sent to.' : `Ryan will be in touch within a day to arrange crating and freight.
+
+Your painting also comes with a token ... its certificate of ownership, recorded on chain. To receive it, send through the wallet address it should go to:
+
+${siteOrigin()}/claim
+
+If you have never held one before, that page walks through it in three steps. It takes about ten minutes and costs nothing.`}
 
 Ryan
 MintFace`,

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Receive your artwork ... MintFace</title>
+<meta name="description" content="How to receive the token that comes with your MintFace painting. Three steps, about ten minutes.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<meta property="og:title" content="Receive your tokenized artwork">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* This page is read by people who have just bought a painting and have never
+   held a token. It is allowed more words and more air than anywhere else on
+   the site. Mono appears only where an address does, so the one thing a
+   reader has to copy accurately looks different from everything else. */
+.mast{max-width:1400px;margin:0 auto;padding:60px 28px 0}
+h1{
+  font-family:var(--font-sans);font-weight:400;font-size:clamp(38px,6.4vw,72px);
+  line-height:1;margin:0;letter-spacing:-.035em;max-width:11ch;text-wrap:balance;
+}
+.lede{max-width:1400px;margin:0 auto;padding:38px 28px 0}
+.lede p{
+  font-family:var(--font-sans);font-size:clamp(17px,1.9vw,20px);line-height:1.65;
+  color:#3a362f;max-width:34em;margin:0;
+}
+
+.steps{max-width:1400px;margin:0 auto;padding:0 28px;list-style:none}
+.step{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 28px;padding:74px 0 0;max-width:calc(34em + 92px)}
+.step .n{
+  font-family:var(--font-sans);font-weight:400;font-size:44px;line-height:.9;
+  color:var(--faint);letter-spacing:-.03em;
+}
+.step h2{
+  font-family:var(--font-sans);font-weight:400;font-size:clamp(23px,2.6vw,29px);
+  line-height:1.15;letter-spacing:-.02em;margin:0 0 16px;
+}
+.step p{font-size:16.5px;line-height:1.7;color:#3a362f;margin:0 0 16px;max-width:34em}
+.step p:last-child{margin-bottom:0}
+.step a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.step a:hover{border-color:var(--ink)}
+
+/* the two ways to get the app, quiet enough to sit inside the paragraph flow */
+.apps{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 4px}
+.apps a{
+  display:block;padding:13px 18px;border:1px solid var(--rule);text-decoration:none;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.apps a:hover{border-color:var(--ink);color:var(--ink)}
+
+/* the one thing on this page that must not be skimmed */
+.care{border-left:2px solid var(--ink);padding:2px 0 2px 18px;margin:26px 0 0}
+.care strong{font-weight:500}
+
+.addr-eg{
+  font-family:var(--font-mono);font-size:clamp(15px,2.2vw,19px);letter-spacing:.02em;
+  color:var(--ink);padding:18px 20px;border:1px solid var(--rule);background:#f4f1ec;
+  margin:4px 0 20px;display:block;width:max-content;max-width:100%;overflow-x:auto;
+}
+
+/* ---------- the form ---------- */
+form{margin-top:8px;max-width:34em}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:15px;color:#3a362f;margin-bottom:8px}
+.field .hint{display:block;font-size:13.5px;color:var(--muted);margin-top:-2px;margin-bottom:8px}
+input{
+  width:100%;padding:15px 16px;border:1px solid var(--rule);background:transparent;
+  font-family:var(--font-sans);font-size:16px;color:var(--ink);border-radius:0;
+}
+input:focus{outline:none;border-color:var(--ink)}
+input.mono{font-family:var(--font-mono);font-size:15px}
+input::placeholder{color:var(--faint)}
+.field.wrong input{border-color:#8b3a2a}
+.field .say{display:none;font-size:14px;line-height:1.5;color:#8b3a2a;margin-top:8px}
+.field.wrong .say{display:block}
+.btn{
+  display:block;width:100%;padding:19px 20px;background:var(--ink);color:var(--paper);
+  border:0;cursor:pointer;font-family:var(--font-sans);
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;
+}
+.btn:hover{background:#2c2924}
+.btn[disabled]{opacity:.55;cursor:default}
+.trouble{font-size:14px;line-height:1.6;color:#8b3a2a;margin:16px 0 0}
+
+.done h2{font-family:var(--font-sans);font-weight:400;font-size:26px;letter-spacing:-.02em;margin:0 0 14px}
+.done p{font-size:16.5px;line-height:1.7;color:#3a362f;margin:0 0 14px;max-width:34em}
+
+.after{max-width:1400px;margin:0 auto;padding:74px 28px 120px}
+.after p{
+  font-size:16.5px;line-height:1.7;color:#3a362f;margin:0;
+  max-width:calc(34em + 92px);padding-left:92px;
+}
+.after a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.after a:hover{border-color:var(--ink)}
+
+@media(max-width:620px){
+  .mast,.lede,.steps,.after{padding-left:20px;padding-right:20px}
+  .step{grid-template-columns:1fr;gap:0;padding-top:56px}
+  .step .n{font-size:30px;margin-bottom:10px}
+  .after p{padding-left:0}
+  .apps a{flex:1 1 auto;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main">
+
+  <section class="mast">
+    <h1>Receive your tokenized artwork</h1>
+  </section>
+
+  <div class="lede">
+    <p>Every MintFace painting exists twice ... once on canvas, once on chain. The token is your certificate of ownership, recorded publicly and permanently. If you already collect digital art, send me your wallet address below. If this is all new, three steps and ten minutes.</p>
+  </div>
+
+  <ol class="steps">
+
+    <li class="step">
+      <div class="n">1</div>
+      <div>
+        <h2>Set up a wallet</h2>
+        <p>A wallet is a free app that holds your digital certificate ... think of it as a safe that only you have the combination to. No bank, no fees to open one, and you don't need to buy anything.</p>
+        <p>I recommend <a href="https://rainbow.me" target="_blank" rel="noopener">Rainbow</a> ... it's the friendliest place to start.</p>
+        <div class="apps">
+          <a href="https://apps.apple.com/app/rainbow-ethereum-wallet/id1457119021" target="_blank" rel="noopener">Rainbow for iPhone</a>
+          <a href="https://play.google.com/store/apps/details?id=me.rainbow" target="_blank" rel="noopener">Rainbow for Android</a>
+        </div>
+        <p class="care">When the app shows you a recovery phrase, <strong>write it on paper and keep it somewhere safe</strong>. It's the only key. Never share it with anyone ... including anyone claiming to be me.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <div class="n">2</div>
+      <div>
+        <h2>Find your wallet address</h2>
+        <p>Your address is a long code starting with 0x ... like an account number that's safe to share. In Rainbow, tap your account name at the top and copy the address.</p>
+        <span class="addr-eg">0x1a2b...3c4d</span>
+        <p>Sharing your address is completely safe. It lets people send things to you, never take from you.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <div class="n">3</div>
+      <div>
+        <h2>Send it to me</h2>
+        <div id="slot">
+          <p>Paste the address in below and I'll do the rest.</p>
+          <form id="claim" novalidate>
+            <div class="field" id="f-name">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name">
+              <span class="say"></span>
+            </div>
+            <div class="field" id="f-email">
+              <label for="email">Your email</label>
+              <span class="hint">So I can tell you when the artwork has arrived.</span>
+              <input id="email" name="email" type="email" autocomplete="email" spellcheck="false">
+              <span class="say"></span>
+            </div>
+            <div class="field" id="f-address">
+              <label for="address">Your wallet address</label>
+              <span class="hint">The long code starting with 0x, or your .eth name if you have one.</span>
+              <input id="address" name="address" type="text" class="mono" placeholder="0x1a2b...3c4d"
+                     spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off">
+              <span class="say"></span>
+            </div>
+            <div class="field" id="f-works">
+              <label for="works">Which painting or paintings do you have?</label>
+              <span class="hint">The title is plenty. If you're not sure of it, describe it.</span>
+              <input id="works" name="works" type="text">
+              <span class="say"></span>
+            </div>
+            <button class="btn" type="submit">Send this to Ryan</button>
+            <p class="trouble" id="trouble" hidden></p>
+          </form>
+        </div>
+      </div>
+    </li>
+
+  </ol>
+
+  <div class="after">
+    <p>Once transferred, your artwork appears in your wallet and on your collector page here ... mintface.art will show your name (or your address) beside your artwork, alongside <a href="https://collectors.mintface.art">every collector before you</a>.</p>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const e = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+const HEX = /^0x[0-9a-fA-F]{40}$/;
+const ENS = /^[a-z0-9][a-z0-9-]*(\.[a-z0-9-]+)*\.eth$/i;
+const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+/* Nothing here tells a reader they are wrong. It tells them what is missing
+   and what it should look like, in the same voice as the rest of the page. */
+function complain(id, say) {
+  const f = $('f-' + id);
+  f.classList.add('wrong');
+  f.querySelector('.say').textContent = say;
+  return f;
+}
+function calm(id) {
+  const f = $('f-' + id);
+  f.classList.remove('wrong');
+  f.querySelector('.say').textContent = '';
+}
+
+function check() {
+  ['name', 'email', 'address'].forEach(calm);
+  const v = (id) => $(id).value.trim();
+  let first = null;
+  const fail = (id, say) => { const f = complain(id, say); if (!first) first = f; };
+
+  if (!v('name')) fail('name', 'What should I call you?');
+  if (!v('email')) fail('email', 'I need an email address to let you know when the artwork is on its way.');
+  else if (!EMAIL.test(v('email'))) fail('email', 'That address looks incomplete ... could you check it over?');
+
+  const a = v('address').replace(/\s+/g, '');
+  if (!a) fail('address', 'I need your wallet address to send the artwork to. Step 2 above shows where to find it.');
+  else if (/^0x/i.test(a) && !HEX.test(a)) {
+    fail('address', a.length < 42
+      ? 'That looks like part of an address. A full one is 42 characters ... it may not have all copied across.'
+      : 'That address is a little longer than it should be. A full one is 42 characters, starting with 0x.');
+  } else if (!/^0x/i.test(a) && !ENS.test(a)) {
+    fail('address', 'An address starts with 0x, or ends in .eth if you have a name. Step 2 above shows where to find yours.');
+  }
+
+  if (first) { first.scrollIntoView({ block: 'center', behavior: 'smooth' }); first.querySelector('input').focus({ preventScroll: true }); }
+  return !first;
+}
+
+// clear the note as soon as someone starts putting it right
+['name', 'email', 'address'].forEach((id) => $(id).addEventListener('input', () => calm(id)));
+
+$('claim').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  $('trouble').hidden = true;
+  if (!check()) return;
+
+  const btn = $('claim').querySelector('.btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending';
+
+  const body = {
+    name: $('name').value.trim(),
+    email: $('email').value.trim(),
+    address: $('address').value.trim().replace(/\s+/g, ''),
+    works: $('works').value.trim(),
+  };
+
+  try {
+    const r = await fetch('/api/claim', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.say || '');
+    $('slot').innerHTML = `<div class="done">
+      <h2>Got it, thank you.</h2>
+      <p>I'll transfer your artwork within a day or two and email you at ${e(body.email)} when it's in your wallet.</p>
+      <p>Nothing more to do at your end. If anything looks wrong in the meantime, just reply to the confirmation I've sent you.</p>
+    </div>`;
+    $('slot').scrollIntoView({ block: 'center', behavior: 'smooth' });
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Send this to Ryan';
+    $('trouble').textContent = (err && err.message)
+      || 'That didn’t go through, and it will be my end rather than yours. Please email art@mintface.art with your address and I’ll sort it out.';
+    $('trouble').hidden = false;
+  }
+});
+</script>
+</body>
+</html>
