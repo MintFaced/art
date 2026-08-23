@@ -145,10 +145,20 @@ export async function GET(request) {
           const type = res.headers.get('content-type') || '';
           const len = Number(res.headers.get('content-length')) || 0;
           const key = `${guessKey}.${extFor(type, src)}`;
-          // piped rather than buffered: an artwork never lands in memory here
-          if (!res.body) throw new Error('no body to stream');
-          await putStream(key, res.body, type.split(';')[0] || undefined, len || undefined);
-          done.push({ id: idPart, kind, key, bytes: len || null });
+          let bytes = len || null;
+          if (len && res.body) {
+            // piped rather than buffered: the artwork never lands in memory
+            await putStream(key, res.body, type.split(';')[0] || undefined, len);
+          } else {
+            // R2 insists on a content-length, and a chunked origin does not give
+            // one, so those few are held after all. Rare, and small enough.
+            const buf = Buffer.from(await res.arrayBuffer());
+            if (!buf.length) throw new Error('empty body');
+            if (buf.length > 60 * 1024 * 1024) throw new Error(`${buf.length} bytes with no content-length`);
+            await putObject(key, buf, type.split(';')[0] || undefined);
+            bytes = buf.length;
+          }
+          done.push({ id: idPart, kind, key, bytes });
         } catch (err) {
           failed.push({ id: idPart, kind, src: src.slice(0, 90), why: String(err.message || err) });
         }
