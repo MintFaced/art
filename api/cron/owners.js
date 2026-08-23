@@ -344,7 +344,13 @@ export async function GET(request) {
         priv = new Set(((JSON.parse(pf.text).wallets) || []).map((w) => String(w).toLowerCase()));
       } catch (e) { /* no list yet, nobody is private */ }
 
-      const d = deriveCollectors([...files.values()].map((f) => f.data), titleOf, priv);
+      /* TAO is computed by its own run half an hour after this one, and the
+         index carries it. Rebuilding without it would strip every collector's
+         figure until that run caught up, so it is read and passed through
+         rather than recomputed here. */
+      let tao = null;
+      try { tao = JSON.parse((await readFile('data/tao.json')).text); } catch (e) { /* never built */ }
+      const d = deriveCollectors([...files.values()].map((f) => f.data), titleOf, priv, tao);
       const put = async (path, body, msg) => {
         const cur = await readFile(path).catch(() => ({ sha: null }));
         await writeFile(path, JSON.stringify(body, null, 1) + '\n', msg, cur.sha || undefined);
