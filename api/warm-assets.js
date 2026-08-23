@@ -1,5 +1,5 @@
 import { siteIndex, useRequestOrigin, siteOrigin } from './_lib/data.js';
-import { putObject, deleteObject, listObjects, alreadyThere, r2Configured } from './_lib/r2.js';
+import { putObject, putStream, deleteObject, listObjects, alreadyThere, r2Configured } from './_lib/r2.js';
 
 // image_source is a URL to the same bytes somewhere more reliable. Anything
 // that is not a URL is a credit, and a credit is not somewhere to fetch from.
@@ -143,11 +143,12 @@ export async function GET(request) {
           }
           if (!res) throw new Error(lastWhy || 'no gateway answered');
           const type = res.headers.get('content-type') || '';
-          const buf = Buffer.from(await res.arrayBuffer());
-          if (!buf.length) throw new Error('empty body');
+          const len = Number(res.headers.get('content-length')) || 0;
           const key = `${guessKey}.${extFor(type, src)}`;
-          await putObject(key, buf, type.split(';')[0] || undefined);
-          done.push({ id: idPart, kind, key, bytes: buf.length });
+          // piped rather than buffered: an artwork never lands in memory here
+          if (!res.body) throw new Error('no body to stream');
+          await putStream(key, res.body, type.split(';')[0] || undefined, len || undefined);
+          done.push({ id: idPart, kind, key, bytes: len || null });
         } catch (err) {
           failed.push({ id: idPart, kind, src: src.slice(0, 90), why: String(err.message || err) });
         }

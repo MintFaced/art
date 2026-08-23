@@ -103,6 +103,50 @@ export async function putObject(key, body, contentType) {
 }
 
 /**
+ * Put without ever holding the object in memory.
+ *
+ * SigV4 normally wants a hash of the payload, which means having all of it. R2
+ * accepts UNSIGNED-PAYLOAD over HTTPS instead, so the body can be piped
+ * straight from wherever it came from. That matters here: buffering whole
+ * artworks is what was killing the warm run.
+ */
+export async function putStream(key, stream, contentType, contentLength) {
+  if (!r2Configured()) throw new Error('R2 is not configured');
+  const host = `${ACCOUNT}.r2.cloudflarestorage.com`;
+  const path = `/${BUCKET}/${key.split('/').map(encodeURIComponent).join('/')}`;
+  const now = new Date();
+  const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, '');
+  const date = amzDate.slice(0, 8);
+  const payloadHash = 'UNSIGNED-PAYLOAD';
+
+  const headers = {
+    host,
+    'content-type': contentType || 'application/octet-stream',
+    'x-amz-content-sha256': payloadHash,
+    'x-amz-date': amzDate,
+  };
+  const signedHeaders = Object.keys(headers).sort().join(';');
+  const canonicalHeaders = Object.keys(headers).sort().map((h) => `${h}:${headers[h]}\n`).join('');
+  const canonical = ['PUT', path, '', canonicalHeaders, signedHeaders, payloadHash].join('\n');
+  const scope = `${date}/${REGION}/${SERVICE}/aws4_request`;
+  const toSign = ['AWS4-HMAC-SHA256', amzDate, scope, sha256(canonical)].join('\n');
+  const signature = createHmac('sha256', signingKey(date)).update(toSign).digest('hex');
+
+  const res = await fetch(`https://${host}${path}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      ...(contentLength ? { 'content-length': String(contentLength) } : {}),
+      authorization: `AWS4-HMAC-SHA256 Credential=${KEY}/${scope}, SignedHeaders=${signedHeaders}, Signature=${signature}`,
+    },
+    body: stream,
+    duplex: 'half',
+  });
+  if (!res.ok) throw new Error(`r2 put ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  return key;
+}
+
+/**
  * Every key in the bucket with its size. R2 pages at 1000, so this follows the
  * continuation token until it runs out. Used to survey what a warm run actually
  * put there, which is how you find out you have been storing 30MB masters.
