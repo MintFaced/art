@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-08-23T05:19:29.924Z",
+ "generated": "2026-08-23T05:48:45.570Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -7419,6 +7419,24 @@
    "tao_rate": 0
   },
   {
+   "address": "0x10d503ffe3b10fc43285396de53d4df66a7a15e5",
+   "ens": null,
+   "display_name": null,
+   "slug": "0x10d503ff",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 2,
+    "editions": 1,
+    "collections": 3
+   },
+   "first_collected": "2025-02-05T15:11:59.000000Z",
+   "last_collected": "2026-08-23",
+   "tao": 41240,
+   "tao_rate": 73.2
+  },
+  {
    "address": "0x8c36654b71c52bf8bf2ca8c3ec19bd4e83da7d11",
    "ens": null,
    "display_name": null,
@@ -12132,24 +12150,6 @@
    "first_collected": "2025-02-05T01:30:23.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
    "tao": 41279,
-   "tao_rate": 73.2
-  },
-  {
-   "address": "0x10d503ffe3b10fc43285396de53d4df66a7a15e5",
-   "ens": null,
-   "display_name": null,
-   "slug": "0x10d503ff",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 2,
-    "one_of_ones": 1,
-    "editions": 1,
-    "collections": 2
-   },
-   "first_collected": "2025-02-05T15:11:59.000000Z",
-   "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 41240,
    "tao_rate": 73.2
   },
   {

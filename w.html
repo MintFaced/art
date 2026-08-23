@@ -283,6 +283,11 @@ function detailRows(work, collection) {
   if (work.keyword || work.age) rows.push(['Motif', e([work.keyword, work.age].filter(Boolean).join(' ... '))]);
   if (d.chain === 'bitcoin' && d.inscribed === false) rows.push(['Inscription', '<span class="pending">Not yet inscribed</span>']);
   if (d.minted === false) rows.push(['Provenance', 'Tokenized on purchase']);
+  // said plainly, because a buyer who checks the chain will find the token
+  // somewhere other than the artist's wallet and deserves to know why
+  if (String((work.listing || {}).venue || '').toLowerCase() === 'foundation') {
+    rows.push(['Token', 'Held in Foundation escrow until transfer']);
+  }
 
   const dims = [p.width_cm, p.height_cm].filter(Boolean);
   if (dims.length) {
@@ -475,20 +480,28 @@ function pricingBlock(work, collection) {
   </div>`;
 }
 
-// Two ways to the same work: the site's own checkout, in fiat or on a reserve,
-// and the listing itself, filled from the buyer's own wallet. Neither is the
-// fallback for the other.
+/* Two ways to the same work: the site's own checkout, in fiat or on a reserve,
+   and the listing itself, filled from the buyer's own wallet.
+
+   Foundation is not one of them. Those tokens sit in Foundation's escrow
+   rather than in Ryan's wallet, and sending a buyer there sends them away from
+   the site to a venue he is withdrawing from. A Foundation listing still sets
+   the price, because the price is whatever the chain says ... it just no
+   longer offers a way to act on it here. When the tokens come back and the
+   OpenSea listings exist, this lights up again on its own, because the rule
+   below is about the venue and not about the work. */
 function onchainBuy(work) {
   const l = work.listing;
   if (!l || !l.url) return '';
+  if (String(l.venue || '').toLowerCase() === 'foundation') return '';
   if (l.kind === 'auction') {
     return `<a class="onchain" href="${e(l.url)}" target="_blank" rel="noopener">
-      <span class="w">At auction on Foundation</span><span class="s">Bid in your own wallet</span></a>`;
+      <span class="w">At auction</span><span class="s">Bid in your own wallet</span></a>`;
   }
   if (l.kind !== 'buy-now' || !(l.price_eth > 0)) return '';
   return `<a class="onchain" href="${e(l.url)}" target="_blank" rel="noopener">
     <span class="w">Buy on chain ... ${e(String(l.price_eth))} ETH</span>
-    <span class="s">Fills the listing from your wallet, on Foundation</span></a>`;
+    <span class="s">Fills the listing from your wallet</span></a>`;
 }
 
 function actionBlock(work, collection) {

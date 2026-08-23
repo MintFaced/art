@@ -6,16 +6,21 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 2,
-  "one_of_ones": 1,
+  "works": 3,
+  "one_of_ones": 2,
   "editions": 1,
-  "collections": 2
+  "collections": 3
  },
  "first_collected": "2025-02-05T15:11:59.000000Z",
- "last_collected": "2025-02-09T00:42:47.000000Z",
+ "last_collected": "2026-08-23",
  "tao": 41240,
  "tao_rate": 73.2,
  "collections": [
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
@@ -28,6 +33,17 @@
   }
  ],
  "works": [
+  {
+   "id": "geodetic-moments-40",
+   "title": "Geodetic Moment #40",
+   "collection": "geodetic-moments",
+   "group": "geodetic",
+   "genre": "Photography",
+   "acquired": "2026-08-23",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-40-display.webp",
+   "orientation": null
+  },
   {
    "id": "geodetic-onchain-4",
    "title": "Patrimora",
