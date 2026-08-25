@@ -93,7 +93,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 const e = MF.escape;
 const ROOM = {
   wallet: null, rows: [], total: 0, start: 0, more: false, me: null,
-  max: 500, busy: false, say: null, draft: '', timer: null,
+  max: 500, busy: false, say: null, draft: '', timer: null, pick: null,
 };
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
@@ -184,9 +184,15 @@ function card(m) {
 function composer() {
   const me = ROOM.me;
   if (!ROOM.open) return '';
+  if (ROOM.pick) {
+    return `<div class="box"><div class="row" style="justify-content:flex-start;flex-wrap:wrap">
+      ${ROOM.pick.map((w) => `<button class="go" data-act="pick" data-uuid="${e(w.uuid)}">${e(w.name)}</button>`).join('')}
+    </div></div>`;
+  }
   if (!ROOM.wallet) {
-    return `<div class="box"><div class="row" style="justify-content:flex-start">
+    return `<div class="box"><div class="row" style="justify-content:flex-start;gap:20px">
       <button class="go" data-act="connect">Connect a wallet to speak</button>
+      <button class="go" data-act="which" style="border-color:transparent">Nothing happening?</button>
     </div></div>`;
   }
   if (!me || !me.can_speak) {
@@ -244,11 +250,25 @@ function draw({ keep = false, toEnd = false } = {}) {
    none should be: there is no session to open, so there is nothing to sign
    until there are words to sign. That is worth saying out loud on the page,
    because a wallet that connects and then goes quiet reads as a failure. */
-async function connect() {
+async function connect(choice) {
   try {
-    ROOM.wallet = await MF.connect();
+    ROOM.wallet = await MF.connect(choice);
+    ROOM.pick = null;
   } catch (err) {
+    /* Two wallets answering, neither already authorised here. The page cannot
+       guess which one this person means, and guessing wrong sends the request
+       somewhere it will never be answered ... which is the failure that looks
+       like nothing happening at all. So it asks. */
+    if (err.code === 'many-providers') {
+      ROOM.pick = err.wallets;
+      status('More than one wallet is answering. Which one?', false);
+      draw();
+      return false;
+    }
     status(String(err.message || err), true);
+    // no wallet answering at all is worth saying precisely, because the reason
+    // is nearly always outside the page
+    if (err.code === 'no-provider') await sayWhatWeSee();
     return false;
   }
   ROOM.focus = true;
@@ -257,6 +277,21 @@ async function connect() {
     ? 'Connected. Your wallet is asked to sign once, when you say something.'
     : null);
   return true;
+}
+
+/* What this browser looks like from inside the page, in one line somebody can
+   read back over a message. Every wallet problem that is not the page is
+   visible here: nothing installed, an extension switched off for this site,
+   two extensions fighting over one slot, or a page served insecurely. */
+async function sayWhatWeSee() {
+  let r;
+  try { r = await MF.walletReport(); } catch (err) { status(`Could not look: ${err.message}`, true); return; }
+  const bits = [];
+  bits.push(r.announced.length ? `Wallets answering: ${r.announced.join(', ')}` : 'No wallet announced itself');
+  bits.push(r.injected ? `window.ethereum: ${r.injectedName}${r.stacked ? `, with ${r.stacked} stacked behind it` : ''}` : 'window.ethereum: absent');
+  if (!r.secure) bits.push('This page is not on a secure origin, which stops extensions injecting');
+  if (!r.count) bits.push('Nothing to connect to. Check the extension is enabled for mintface.art, then reload.');
+  status(bits.join(' · '), !r.count);
 }
 
 async function send(payload) {
@@ -293,6 +328,8 @@ document.addEventListener('click', async (ev) => {
 
   if (act === 'earlier') return earlier();
   if (act === 'connect') return void connect();
+  if (act === 'pick') return void connect(b.dataset.uuid);
+  if (act === 'which') return void sayWhatWeSee();
 
   const run = async (fn) => {
     ROOM.busy = true;

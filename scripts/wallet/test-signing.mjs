@@ -22,11 +22,30 @@ import { privateKeyToAccount, generatePrivateKey } from 'viem/accounts';
 const ROOT = path.resolve(import.meta.dirname, '../..');
 
 /* ---------- mintface.js, loaded the way a page loads it ---------- */
-const win = {};
+class Ev { constructor(type) { this.type = type; } }
+const win = {
+  isSecureContext: true,
+  _on: {},
+  addEventListener(t, fn) { (this._on[t] ||= []).push(fn); },
+  dispatchEvent(ev) { for (const fn of this._on[ev.type] || []) fn(ev); return true; },
+};
+globalThis.Event = Ev;
+
+/* A wallet extension that announces itself the way EIP-6963 says to: it hears
+   the page ask, and answers with its own provider rather than racing for a
+   slot that only holds one of them. */
+function announce(name, rdns, provider) {
+  win.addEventListener('eip6963:requestProvider', () => {
+    win.dispatchEvent(Object.assign(new Ev('eip6963:announceProvider'), {
+      detail: { info: { uuid: rdns, rdns, name }, provider },
+    }));
+  });
+}
+const forget = () => { win._on = {}; if (win.MF) win.MF._found = null, win.MF._wallet = null; };
 const src = fs.readFileSync(path.join(ROOT, 'mintface.js'), 'utf8');
-new Function('window', 'document', 'fetch', 'location', 'setTimeout', 'clearTimeout', 'console', src)(
+new Function('window', 'document', 'fetch', 'location', 'setTimeout', 'clearTimeout', 'console', 'Event', src)(
   win, { addEventListener() {}, querySelector: () => null }, async () => ({ ok: false }),
-  { href: 'https://mintface.art/chat', search: '' }, setTimeout, clearTimeout, console,
+  { href: 'https://mintface.art/chat', search: '' }, setTimeout, clearTimeout, console, Ev,
 );
 const MF = win.MF;
 
@@ -41,6 +60,7 @@ function provider(mode, { delay = 0 } = {}) {
     seen,
     async request({ method, params }) {
       seen.push({ method, params });
+      if (method === 'eth_accounts') return mode === 'locked' ? [] : [account.address];
       if (method === 'eth_requestAccounts') {
         if (mode === 'refuse-connect') { const e = new Error('User rejected the request.'); e.code = 4001; throw e; }
         return [account.address];
@@ -104,6 +124,7 @@ head('What the wallet is handed');
 /* ================= it is only ever plain personal_sign ================= */
 head('No typed data anywhere');
 {
+  forget();
   win.ethereum = provider('ok');
   await MF.sign(SENTENCE, ADDRESS);
   const methods = win.ethereum.seen.map((c) => c.method);
@@ -118,6 +139,7 @@ head('No typed data anywhere');
 /* ================= saying no ================= */
 head('Every way a wallet says no is said out loud');
 {
+  forget();
   const states = [];
   const watch = (s, why) => states.push(why ? `${s}: ${why}` : s);
 
@@ -150,12 +172,14 @@ head('Every way a wallet says no is said out loud');
   delete win.ethereum;
   err = null;
   try { await MF.sign(SENTENCE, ADDRESS); } catch (e) { err = e; }
-  ok(err && /No wallet found/i.test(err.message), 'no wallet at all says so before anything else');
+  ok(err && /No wallet is answering/i.test(err.message),
+    'no wallet at all says so before anything else', err && err.message);
 }
 
 /* ================= the wait ================= */
 head('A wallet that takes its time');
 {
+  forget();
   const states = [];
   win.ethereum = provider('ok', { delay: 60 });
   const sig = await MF.sign(SENTENCE, ADDRESS, (s) => states.push(s));
@@ -174,20 +198,83 @@ head('A wallet that takes its time');
 }
 
 /* ================= connecting ================= */
+head('Finding the wallet ... two extensions, one slot');
+{
+  /* The failure this guards against: two extensions installed, one wins
+     window.ethereum, and a request sent to it goes to the wallet that does not
+     hold the account. It does not error. It simply never comes back. */
+  forget();
+  const rabby = provider('ok');
+  const locked = provider('locked');
+  announce('Rabby', 'io.rabby', rabby);
+  announce('MetaMask', 'io.metamask', locked);
+  win.ethereum = locked;                       // the one that won the slot is the wrong one
+
+  const list = await MF.wallets();
+  ok(list.length === 2, 'both wallets are found, not just the one holding the slot',
+    list.map((w) => w.info.name).join(', '));
+
+  const a = await MF.connect();
+  ok(a === ADDRESS, 'and the one that already has this site authorised is chosen, silently', a);
+  ok(rabby.seen.some((c) => c.method === 'eth_requestAccounts'),
+    'the request goes to that wallet');
+  ok(!locked.seen.some((c) => c.method === 'eth_requestAccounts'),
+    'and not to the one that would never have answered');
+
+  win.ethereum = provider('ok');
+  const sig = await MF.sign(SENTENCE, ADDRESS);
+  ok(rabby.seen.some((c) => c.method === 'personal_sign'),
+    'and the signature goes to the same wallet, not to whatever holds the slot by then');
+  ok(await verifyMessage({ address: account.address, message: SENTENCE, signature: sig }),
+    'and still verifies');
+}
+
+head('A genuine tie is a question, not a guess');
+{
+  forget();
+  const one = provider('locked');
+  const two = provider('locked');
+  announce('Rabby', 'io.rabby', one);
+  announce('MetaMask', 'io.metamask', two);
+  win.ethereum = one;
+  let err = null;
+  try { await MF.connect(); } catch (e) { err = e; }
+  ok(err && err.code === 'many-providers' && err.wallets.length === 2,
+    'neither authorised, so the page asks instead of picking', err && err.message);
+  const chosen = await MF.connect(err.wallets[1].uuid);
+  ok(chosen === ADDRESS && two.seen.some((c) => c.method === 'eth_requestAccounts'),
+    'and the answer is honoured');
+}
+
+head('Nothing answering at all');
+{
+  forget();
+  delete win.ethereum;
+  let err = null;
+  try { await MF.connect(); } catch (e) { err = e; }
+  ok(err && err.code === 'no-provider' && /switched off for this site/.test(err.message),
+    'says so precisely, because the reason is nearly always outside the page', err && err.message);
+  const r = await MF.walletReport();
+  ok(r.count === 0 && r.injected === false && r.announced.length === 0,
+    'and the report says what it looked for', JSON.stringify(r));
+}
+
 head('Connecting');
 {
+  forget();
   win.ethereum = provider('ok');
   const a = await MF.connect();
   ok(a === ADDRESS, 'the address comes back lowercased', a);
-  ok(win.ethereum.seen.length === 1 && win.ethereum.seen[0].method === 'eth_requestAccounts',
-    'connecting asks for accounts and nothing else ... no signature is requested here',
+  ok(!win.ethereum.seen.some((c) => c.method === 'personal_sign'),
+    'connecting never asks for a signature ... there is no session to open',
     win.ethereum.seen.map((c) => c.method).join(', '));
 
+  forget();
   win.ethereum = provider('refuse-connect');
   let err = null;
   try { await MF.connect(); } catch (e) { err = e; }
-  ok(err && /refused in the wallet/i.test(err.message),
-    'and a refusal to connect is reported as one', err && err.message);
+  ok(err && err.code === 4001 && /Connection refused in/i.test(err.message),
+    'and a refusal to connect is reported as one, naming the wallet that refused', err && err.message);
 }
 
 console.log(`\n${'='.repeat(74)}`);

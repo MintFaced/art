@@ -1206,8 +1206,13 @@ const MF = {
    * @param onState  (state, detail) => void ... 'requested' | 'slow' | 'signed' | 'failed'
    */
   async sign(message, address, onState = () => {}) {
-    if (!window.ethereum) {
-      const e = new Error('No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.');
+    /* The provider we connected through, not whatever holds window.ethereum by
+       now. With two extensions installed those are routinely not the same
+       object, and a signature sent to the one that does not hold the account is
+       a request that goes out and never comes back. */
+    const provider = (this._wallet && this._wallet.provider) || (typeof window !== 'undefined' ? window.ethereum : null);
+    if (!provider) {
+      const e = new Error('No wallet is answering in this browser.');
       onState('failed', e.message);
       throw e;
     }
@@ -1217,7 +1222,7 @@ const MF = {
     // slower still. Say so rather than letting it read as a dead button.
     const slow = setTimeout(() => onState('slow'), 12000);
     try {
-      const signature = await window.ethereum.request({ method: 'personal_sign', params: [data, address] });
+      const signature = await provider.request({ method: 'personal_sign', params: [data, address] });
       if (!signature || typeof signature !== 'string' || !signature.startsWith('0x')) {
         const e = new Error('The wallet answered without a signature.');
         e.code = 'no-signature';
@@ -1242,20 +1247,131 @@ const MF = {
     }
   },
 
-  /** eth_requestAccounts, with the refusal said out loud rather than swallowed. */
-  async connect() {
-    if (!window.ethereum) {
-      throw new Error('No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.');
-    }
+  /* ---------- finding the wallet ----------
+     window.ethereum is a single slot and every extension wants it. Install two
+     and they fight: one wins, one wraps the other, and the loser's accounts are
+     unreachable through a name that looks like it should work. A request sent
+     to the wrong provider does not error ... it goes somewhere and never comes
+     back, which is exactly what a dead button looks like.
+
+     EIP-6963 exists for this. Instead of reading the slot, we ask the page and
+     every wallet that is listening announces itself, so two wallets are two
+     entries rather than one collision. window.ethereum stays as the fallback
+     for anything too old to answer, and if nothing answers at all we can say
+     that plainly rather than guessing. */
+  _found: null,
+
+  listenForWallets() {
+    if (this._found) return this._found;
+    const found = new Map();
+    this._found = found;
     try {
-      const [a] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      window.addEventListener('eip6963:announceProvider', (ev) => {
+        const d = ev && ev.detail;
+        if (d && d.info && d.provider) found.set(d.info.uuid || d.info.rdns, d);
+      });
+      window.dispatchEvent(new Event('eip6963:requestProvider'));
+    } catch (e) { /* an old browser, or none of this exists ... the fallback covers it */ }
+    return found;
+  },
+
+  /** What an injected provider calls itself, for a legible choice. */
+  walletName(p) {
+    if (!p) return 'a wallet';
+    if (p.isRabby) return 'Rabby';
+    if (p.isMetaMask) return 'MetaMask';
+    if (p.isCoinbaseWallet) return 'Coinbase Wallet';
+    if (p.isBraveWallet) return 'Brave Wallet';
+    if (p.isRainbow) return 'Rainbow';
+    if (p.isTrust || p.isTrustWallet) return 'Trust';
+    if (p.isFrame) return 'Frame';
+    if (p.isPhantom) return 'Phantom';
+    return 'an injected wallet';
+  },
+
+  /** Every wallet that answered, newest standard first, the old slot last. */
+  async wallets() {
+    const found = this.listenForWallets();
+    // announcements arrive on the next turn, and a slow extension on the one
+    // after that
+    await new Promise((r) => setTimeout(r, 150));
+    try { window.dispatchEvent(new Event('eip6963:requestProvider')); } catch (e) { /* fine */ }
+    await new Promise((r) => setTimeout(r, 150));
+    const list = [...found.values()];
+    if (list.length) return list;
+    const slot = typeof window !== 'undefined' ? window.ethereum : null;
+    if (!slot) return [];
+    /* Some extensions stack themselves under window.ethereum.providers rather
+       than announcing. It is the older convention and worth reading. */
+    const stacked = Array.isArray(slot.providers) ? slot.providers : [slot];
+    return stacked.map((p, i) => ({
+      info: { uuid: `injected-${i}`, rdns: 'window.ethereum', name: this.walletName(p) },
+      provider: p,
+    }));
+  },
+
+  /** What this browser looks like, in words a person can read back to us. */
+  async walletReport() {
+    const list = await this.wallets();
+    const slot = typeof window !== 'undefined' ? window.ethereum : null;
+    return {
+      announced: list.filter((w) => w.info.rdns !== 'window.ethereum').map((w) => `${w.info.name} (${w.info.rdns})`),
+      injected: Boolean(slot),
+      injectedName: slot ? this.walletName(slot) : null,
+      stacked: slot && Array.isArray(slot.providers) ? slot.providers.length : 0,
+      secure: typeof window === 'undefined' || window.isSecureContext !== false,
+      count: list.length,
+    };
+  },
+
+  /**
+   * eth_requestAccounts, on a provider we chose on purpose.
+   * @param choice  uuid or rdns from wallets(), or nothing for the only one
+   */
+  async connect(choice) {
+    const list = await this.wallets();
+    if (!list.length) {
+      const e = new Error('No wallet is answering in this browser. If an extension is installed, it may be switched off for this site, or this may be a browser without one.');
+      e.code = 'no-provider';
+      throw e;
+    }
+    const hit = choice ? list.find((w) => w.info.uuid === choice || w.info.rdns === choice) : null;
+    if (choice && !hit) throw new Error('That wallet is no longer answering. Try again.');
+    /* More than one answering and no choice made. Before asking a person to
+       pick, ask the wallets: eth_accounts is silent, prompts nothing, and says
+       which of them already has this site authorised. One does, almost always,
+       and that one is the answer. Only a genuine tie is worth a question. */
+    let chosen = hit;
+    if (!chosen && list.length > 1) {
+      const live = [];
+      for (const w of list) {
+        try {
+          const accounts = await w.provider.request({ method: 'eth_accounts' });
+          if (accounts && accounts.length) live.push(w);
+        } catch (e) { /* a provider that will not answer is not the one */ }
+      }
+      if (live.length === 1) chosen = live[0];
+      else {
+        const e = new Error(`More than one wallet is answering: ${list.map((w) => w.info.name).join(', ')}. Choose one.`);
+        e.code = 'many-providers';
+        e.wallets = list.map((w) => ({ uuid: w.info.uuid, rdns: w.info.rdns, name: w.info.name }));
+        throw e;
+      }
+    }
+    if (!chosen) chosen = list[0];
+    this._wallet = chosen;
+    try {
+      const accounts = await chosen.provider.request({ method: 'eth_requestAccounts' });
+      const a = accounts && accounts[0];
       if (!a) throw new Error('the wallet returned no account');
       return String(a).toLowerCase();
     } catch (err) {
       const code = err && err.code;
-      throw new Error(code === 4001 ? 'Connection refused in the wallet.'
-        : code === -32002 ? 'The wallet already has a request waiting. Open it and answer that one first.'
-          : `The wallet did not connect: ${String((err && err.message) || err).slice(0, 160)}`);
+      const out = new Error(code === 4001 ? `Connection refused in ${chosen.info.name}.`
+        : code === -32002 ? `${chosen.info.name} already has a request waiting. Open it and answer that one first.`
+          : `${chosen.info.name} did not connect: ${String((err && err.message) || err).slice(0, 160)}`);
+      out.code = code;
+      throw out;
     }
   },
 
