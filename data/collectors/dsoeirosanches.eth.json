@@ -12,10 +12,10 @@
   "collections": 3
  },
  "first_collected": "2025-02-04T20:16:47.000000Z",
- "last_collected": "2025-05-20T22:00:11.000000Z",
- "tao": 97515,
+ "last_collected": "2025-02-04T20:16:47.000000Z",
+ "tao": 97952,
  "tao_rate": 167.4,
- "tao_rank": 161,
+ "tao_rank": 160,
  "collections": [
   {
    "slug": "xlife",
@@ -35,18 +35,6 @@
  ],
  "works": [
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-20T22:00:11.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 3876
-  },
-  {
    "id": "patrimora-8",
    "title": "Patrimora #8",
    "collection": "patrimora",
@@ -56,7 +44,7 @@
    "unique": true,
    "image": "patrimora/patrimora-8-image.png",
    "orientation": null,
-   "tao": 38946
+   "tao": 39126
   },
   {
    "id": "patrimora-9",
@@ -68,7 +56,19 @@
    "unique": true,
    "image": "patrimora/patrimora-9-image.png",
    "orientation": null,
-   "tao": 38946
+   "tao": 39126
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 3898
   },
   {
    "id": "xlife-65",
@@ -80,7 +80,7 @@
    "unique": false,
    "image": "xlife/xlife-65-image.png",
    "orientation": null,
-   "tao": 1973
+   "tao": 1984
   },
   {
    "id": "xlife-57",
@@ -92,7 +92,7 @@
    "unique": false,
    "image": "xlife/xlife-57-image.png",
    "orientation": null,
-   "tao": 2585
+   "tao": 2596
   },
   {
    "id": "xlife-55",
@@ -104,7 +104,7 @@
    "unique": false,
    "image": "xlife/xlife-55-image.gif",
    "orientation": null,
-   "tao": 2660
+   "tao": 2671
   },
   {
    "id": "xlife-50",
@@ -116,7 +116,7 @@
    "unique": false,
    "image": "xlife/xlife-50-image.gif",
    "orientation": null,
-   "tao": 3080
+   "tao": 3091
   },
   {
    "id": "xlife-49",
@@ -128,7 +128,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 3305
+   "tao": 3316
   }
  ]
 }
