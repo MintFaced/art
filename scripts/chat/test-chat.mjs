@@ -9,6 +9,7 @@
  *
  *   node scripts/chat/test-chat.mjs
  */
+import fs from 'node:fs';
 import http from 'node:http';
 import { privateKeyToAccount, generatePrivateKey } from 'viem/accounts';
 
@@ -68,7 +69,7 @@ const A = (x) => x.address.toLowerCase();
 
 const chatCfg = {
   version: 1, min_tao: 1, max_chars: 500,
-  seconds_between: 15, burst: 10, burst_window_seconds: 600, page: 50, session_days: 7,
+  seconds_between: 15, burst: 10, burst_window_seconds: 600, page: 50, session_days: 30,
 };
 const artistFixture = { wallets: { [A(artist)]: 'mintface.eth' } };
 const taoFixture = {
@@ -373,14 +374,17 @@ head('History, past a hundred');
 }
 
 /* ================= one signature, then a week ================= */
-head('One signature, then a week of it');
+head('One signature, then thirty days of it');
 {
   const opened = await signIn(visco);
   ok(opened.status === 200 && opened.body.token && opened.body.until,
     'one signature opens the room', opened.body.error || `until ${opened.body.until}`);
   const token = opened.body.token;
   ok(token.length >= 32, 'the token is long enough not to be guessed', `${token.length} characters`);
-  ok(Date.parse(opened.body.until) - Date.now() > 6 * 86400000, 'and it lasts the week');
+  const lasts = (Date.parse(opened.body.until) - Date.now()) / 86400000;
+  ok(Math.abs(lasts - chatCfg.session_days) < 0.01,
+    'for exactly as long as the config says, and not a day the config does not say',
+    `${lasts.toFixed(2)} days, config says ${chatCfg.session_days}`);
 
   advance(20000);
   const one = await withToken(token, { action: 'say', text: 'No wallet prompt for this one.' });
@@ -422,6 +426,28 @@ head('One signature, then a week of it');
   advance(20000);
   const still = await say(visco, 'Signed this one by hand.');
   ok(still.status === 200, 'and signing each message is still a way to speak', still.body.error);
+}
+
+head('The sentence says the date, not a length');
+{
+  /* If the closing lines said "for a week" and the config said thirty days,
+     the wallet would be showing one thing and doing another. The only place a
+     duration appears is the Until line, worked out from the config on both
+     sides, so there is nothing to drift. */
+  const issued = '2026-08-25T00:00:00.000Z';
+  const until = sessionUntil(issued, chatCfg.session_days);
+  const text = chatMessage({ action: 'sign in', address: A(visco), issued, until });
+  ok(until === '2026-09-24T00:00:00.000Z', 'the date is the config applied to the moment of signing', until);
+  ok(text.includes(`Until: ${until}`), 'and it is in the sentence the wallet shows');
+  ok(!/\bweek\b|\bdays\b|\bmonth\b/i.test(text),
+    'which is the only mention of how long it lasts',
+    text.split('\n').filter((l) => /open|Until/.test(l)).join(' / '));
+
+  // and both halves build it identically, which is the thing that breaks silently
+  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  const closing = 'Signing opens the room until the date above. It moves nothing and spends nothing.';
+  ok(page.includes(closing) && text.includes(closing),
+    'the page and the server write the same closing line');
 }
 
 head('The artist signs in the same way');

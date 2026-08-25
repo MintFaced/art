@@ -18,9 +18,15 @@ const lower = (a) => String(a || '').toLowerCase();
 
 /** The sentence a wallet signs. */
 export function chatMessage({ action, text, target, address, issued, until }) {
+  /* The closing lines never name a duration. The Until line above already says
+     exactly when this runs out, to the second, and it is worked out from the
+     config ... so changing the length of a sign-in changes one number and the
+     wallet still shows the truth. A sentence that said "for a week" beside a
+     date a month away would be the config and the prose disagreeing in front
+     of the person being asked to trust it. */
   const closing = action === 'sign in'
     ? [
-      'Signing opens the room for a week. It moves nothing and spends nothing.',
+      'Signing opens the room until the date above. It moves nothing and spends nothing.',
       'Until then this browser can speak here without asking again.',
     ]
     : ['Signing speaks in the room. It moves nothing and spends nothing.'];

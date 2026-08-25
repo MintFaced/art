@@ -118,18 +118,19 @@ const sentence = ({ action, text, target, address, issued, until }) => [
   `Issued: ${issued}`,
   '',
   ...(action === 'sign in'
-    ? ['Signing opens the room for a week. It moves nothing and spends nothing.',
+    ? ['Signing opens the room until the date above. It moves nothing and spends nothing.',
       'Until then this browser can speak here without asking again.']
     : ['Signing speaks in the room. It moves nothing and spends nothing.']),
 ].join('\n');
 
-/* One signature, then a week of it.
+/* One signature, then a month of it.
  *
  * A wallet tap per sentence is right for something you do twice a year and
  * wrong for a room: it turns a conversation into a series of approvals, and on
  * a hardware wallet it turns it into a series of walks to the drawer. So the
  * signature moves up a level. You sign that this browser may speak as you until
- * a stated date, and the sentence you approve says exactly that.
+ * a stated date, and the sentence you approve says exactly that ... the date,
+ * not a length in words, so the config can change without the wallet lying.
  *
  * The token means nothing on its own ... the store holds what it stands for,
  * and the server reads the address from there and never from the request. A
@@ -261,9 +262,9 @@ function composer() {
   }
   if (!mySession()) {
     return `<div class="box">
-      <div class="say">Signed in as ${e(me.name || short(ROOM.wallet))}${me.role === 'artist' ? ', the artist' : ''}. One signature opens the room for a week.</div>
+      <div class="say">Connected as ${e(me.name || short(ROOM.wallet))}${me.role === 'artist' ? ', the artist' : ''}. One signature opens the room for ${ROOM.days} days.</div>
       <div class="row" style="justify-content:flex-start;gap:20px">
-        <button class="go" data-act="signin">Sign in to the room</button>
+        <button class="go" data-act="signin">Sign in for ${ROOM.days} days</button>
       </div></div>`;
   }
   const len = ROOM.draft.length;
@@ -401,7 +402,7 @@ async function signIn() {
   const signature = await askWallet(sentence({ action: 'sign in', address: ROOM.wallet, issued, until }));
   const j = await post({ action: 'sign in', address: ROOM.wallet, issued, until, signature });
   keep({ address: ROOM.wallet, token: j.token, until: j.until });
-  status(`Signed in until ${new Date(j.until).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long' })}. No more wallet prompts here until then.`);
+  status(`Signed in until ${new Date(j.until).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' })}. No more wallet prompts here until then.`);
   return j;
 }
 
