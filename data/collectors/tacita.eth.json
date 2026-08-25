@@ -12,8 +12,8 @@
   "collections": 6
  },
  "first_collected": "2022-12-14T19:15:11.000Z",
- "last_collected": "2025-05-16T14:42:11.000000Z",
- "tao": 251276,
+ "last_collected": "2025-02-09T00:42:47.000000Z",
+ "tao": 252004,
  "tao_rate": 278.4,
  "tao_rank": 39,
  "collections": [
@@ -33,11 +33,6 @@
    "works": 2
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
-   "works": 1
-  },
-  {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
    "works": 1
@@ -46,21 +41,14 @@
    "slug": "id-please",
    "title": "ID Please",
    "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T14:42:11.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1947
-  },
   {
    "id": "geodetic-onchain-4",
    "title": "Patrimora",
@@ -71,7 +59,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null,
-   "tao": 2353
+   "tao": 2364
   },
   {
    "id": "patrimora-85",
@@ -83,7 +71,7 @@
    "unique": true,
    "image": "patrimora/patrimora-85-image.png",
    "orientation": null,
-   "tao": 38941
+   "tao": 39121
   },
   {
    "id": "patrimora-86",
@@ -95,7 +83,7 @@
    "unique": true,
    "image": "patrimora/patrimora-86-image.png",
    "orientation": null,
-   "tao": 38941
+   "tao": 39121
   },
   {
    "id": "seize-and-share-anxn-3250",
@@ -107,7 +95,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 11239
+   "tao": 11261
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -119,7 +107,19 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11318
+   "tao": 11340
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1958
   },
   {
    "id": "first-selfie-6",
@@ -131,7 +131,7 @@
    "unique": true,
    "image": "first-selfie/first-selfie-6-image.gif",
    "orientation": null,
-   "tao": 90343
+   "tao": 90524
   },
   {
    "id": "xlife-46",
@@ -143,7 +143,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3651
+   "tao": 3662
   },
   {
    "id": "xlife-43",
@@ -155,7 +155,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4049
+   "tao": 4060
   },
   {
    "id": "xlife-31",
@@ -167,7 +167,7 @@
    "unique": false,
    "image": "xlife/xlife-31-image.gif",
    "orientation": null,
-   "tao": 4759
+   "tao": 4770
   },
   {
    "id": "xlife-20",
@@ -179,7 +179,7 @@
    "unique": false,
    "image": "xlife/xlife-20-image.gif",
    "orientation": null,
-   "tao": 5259
+   "tao": 5270
   },
   {
    "id": "xlife-13",
@@ -191,7 +191,7 @@
    "unique": false,
    "image": "xlife/xlife-13-image.gif",
    "orientation": null,
-   "tao": 5430
+   "tao": 5441
   },
   {
    "id": "xlife-12",
@@ -203,7 +203,7 @@
    "unique": false,
    "image": "xlife/xlife-12-image.gif",
    "orientation": null,
-   "tao": 5448
+   "tao": 5459
   },
   {
    "id": "xlife-11",
@@ -215,7 +215,7 @@
    "unique": false,
    "image": "xlife/xlife-11-image.gif",
    "orientation": null,
-   "tao": 5460
+   "tao": 5471
   },
   {
    "id": "xlife-10",
@@ -227,7 +227,7 @@
    "unique": false,
    "image": "xlife/xlife-10-image.gif",
    "orientation": null,
-   "tao": 5465
+   "tao": 5476
   },
   {
    "id": "xlife-9",
@@ -239,7 +239,7 @@
    "unique": false,
    "image": "xlife/xlife-9-image.gif",
    "orientation": null,
-   "tao": 5499
+   "tao": 5510
   },
   {
    "id": "xlife-5",
@@ -251,7 +251,7 @@
    "unique": false,
    "image": "xlife/xlife-5-image.gif",
    "orientation": null,
-   "tao": 5582
+   "tao": 5593
   },
   {
    "id": "xlife-4",
@@ -263,7 +263,7 @@
    "unique": false,
    "image": "xlife/xlife-4-image.gif",
    "orientation": null,
-   "tao": 5582
+   "tao": 5593
   }
  ]
 }
