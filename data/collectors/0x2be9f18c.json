@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2024-10-01T08:45:59.000000Z",
- "last_collected": "2025-05-16T15:38:11.000000Z",
- "tao": 55401,
+ "last_collected": "2024-10-01T08:45:59.000000Z",
+ "tao": 55614,
  "tao_rate": 81.6,
  "tao_rank": 278,
  "collections": [
@@ -23,29 +23,17 @@
    "works": 2
   },
   {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "two-burdens",
+   "title": "Two Burdens",
    "works": 1
   },
   {
-   "slug": "two-burdens",
-   "title": "Two Burdens",
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T15:38:11.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1947
-  },
   {
    "id": "two-burdens-12",
    "title": "Division",
@@ -56,7 +44,19 @@
    "unique": true,
    "image": "two-burdens/two-burdens-12-display.webp",
    "orientation": "square",
-   "tao": 47673
+   "tao": 47853
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1958
   },
   {
    "id": "xlife-54",
@@ -68,7 +68,7 @@
    "unique": false,
    "image": "xlife/xlife-54-image.gif",
    "orientation": null,
-   "tao": 2877
+   "tao": 2888
   },
   {
    "id": "xlife-52",
@@ -80,7 +80,7 @@
    "unique": false,
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
-   "tao": 2903
+   "tao": 2913
   }
  ]
 }
