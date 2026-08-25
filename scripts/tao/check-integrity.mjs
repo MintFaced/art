@@ -359,6 +359,11 @@ head('10. guard rails, checked in the production path');
     'the register is rebuilt from every collection, not only the ones that accrue');
   check(/collectors-register\.json/.test(cron), 'the leaderboard is written by the run that changes it');
   check(/data\/tao\/pages\.json/.test(cron), 'the collector pages are given a live overlay of their figures');
+  check(/data\/tao\/total\.json/.test(cron) && /previous: wasLive/.test(cron),
+    'the board total is written beside the one before it, by the run that sees both',
+    'so a header can show the day\'s movement without anybody typing a number in');
+  check(/data\/availability\.json/.test(cron) && /skip\.has\(col\.slug\)/.test(cron),
+    'what is for sale is published too, patron collections excluded');
 
   // evidence
   check(/saveRuns\(RUNS/.test(cron) && /keep: 90/.test(cron), 'every run leaves a record, ninety kept');

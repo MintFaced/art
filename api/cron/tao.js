@@ -388,6 +388,53 @@ async function run({ key, dry, started, prior, url }) {
       await writeFile(`data/tao/e/${addr}.json`, JSON.stringify(f.data), `TAO events: ${addr.slice(0, 10)}`, cur.sha || undefined);
       written.push(`data/tao/e/${addr}.json`);
     }
+    /* The board's own total, and where it stood the run before. Two numbers in
+       two hundred bytes, written by the only thing that knows both, so the
+       register's header can show the day's movement as run-over-run truth
+       rather than a figure somebody typed in once. A day the total falls ...
+       sales taking back more than time adds ... shows the fall, which is the
+       whole of the metric having stakes. */
+    await put('data/tao/total.json', {
+      _note: 'The board total and the one before it. Written by the nightly TAO run, which is the only thing that sees both.',
+      generated: tao.generated,
+      live: tao.counts.tao_live,
+      previous: wasLive,
+      previous_at: before ? before.generated : null,
+      delta: wasLive == null ? null : tao.counts.tao_live - wasLive,
+      pct: wasLive ? Math.round(((tao.counts.tao_live - wasLive) / wasLive) * 1000000) / 10000 : null,
+      wallets: tao.counts.wallets,
+    }, `TAO total: ${tao.counts.tao_live.toLocaleString('en-NZ')}`);
+
+    /* What is for sale, small enough for another site to read. The collections
+       are already open in memory for the register rebuild, so this costs
+       nothing but the writing of it, and it saves the collectors site pulling
+       five megabytes of catalogue to answer one question. */
+    const forSale = [];
+    for (const col of all) {
+      if (skip.has(col.slug)) continue;                 // patron collections are not MintFace art to acquire
+      const works = [...(col.works || []), ...(col.children || []).flatMap((x) => x.works || [])];
+      const free = works.filter((w) => w.status === 'available');
+      if (!free.length) continue;
+      const nzd = [];
+      const eth = [];
+      for (const w of free) {
+        for (const v of Object.values(w.pricing_nzd || {})) if (typeof v === 'number' && v > 0) nzd.push(v);
+        if (w.priced_in === 'ETH') for (const v of Object.values(w.pricing_eth || {})) if (typeof v === 'number' && v > 0) eth.push(v);
+      }
+      forSale.push({
+        slug: col.slug, title: col.title || col.slug, available: free.length,
+        from_nzd: nzd.length ? Math.min(...nzd) : null,
+        from_eth: eth.length ? Math.min(...eth) : null,
+      });
+    }
+    forSale.sort((a, b) => b.available - a.available);
+    await put('data/availability.json', {
+      _note: 'What is available, by collection, for anywhere that needs to say so without reading the catalogue.',
+      generated: tao.generated,
+      totals: { collections: forSale.length, works: forSale.reduce((n, x) => n + x.available, 0) },
+      collections: forSale,
+    }, `Available: ${forSale.reduce((n, x) => n + x.available, 0)} works across ${forSale.length} collections`);
+
     if (classified) await put('data/tao/sales.json', sales, `TAO: ${classified} transactions classified`);
     await put('data/tao.json', tao, `TAO: ${tao.counts.wallets} wallets, ${tao.counts.tao_live.toLocaleString('en-NZ')} live`);
     // the exit ledger is what scripts/tao/report.mjs and check-integrity.mjs
