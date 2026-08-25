@@ -817,7 +817,17 @@ async function loadNotes() {
   drawNotes();
 }
 
-const notesSay = (text, bad) => { NOTES.say = text ? { text, bad: Boolean(bad) } : null; drawNotes(); };
+/* Written straight into the DOM rather than through drawNotes(), because the
+   thing it most needs to report ... a signature sitting in a wallet ... happens
+   while a half-written note is in the box. */
+const notesSay = (text, bad) => {
+  NOTES.say = text ? { text, bad: Boolean(bad) } : null;
+  const el = document.querySelector('#notes .nt-say');
+  if (!el) { drawNotes(); return; }
+  el.textContent = text || '';
+  el.classList.toggle('bad', Boolean(bad));
+  el.hidden = !text;
+};
 
 function noteCard(n) {
   const who = n.kind === 'artist' ? "Artist's note"
@@ -889,7 +899,7 @@ function drawNotes() {
     ? `<div class="head" style="margin-top:18px"><button data-act="prov">Provenance notes &middot; ${prov.length}</button></div>`
       + (NOTES.prov ? prov.map(noteCard).join('') : '')
     : '';
-  const say = NOTES.say ? `<div class="nt-say${NOTES.say.bad ? ' bad' : ''}">${e(NOTES.say.text)}</div>` : '';
+  const say = `<div class="nt-say${NOTES.say && NOTES.say.bad ? ' bad' : ''}"${NOTES.say ? '' : ' hidden'}>${e(NOTES.say ? NOTES.say.text : '')}</div>`;
 
   el.innerHTML = head + shown.map(noteCard).join('') + more
     + (NOTES.writing ? noteForm() : '') + say + provFold;
@@ -900,15 +910,12 @@ function drawNotes() {
   }
 }
 
+/* Connecting connects. No signature is asked for here and none is needed:
+   there is no session, so there is nothing to sign until there are words. */
 async function notesConnect() {
-  if (!window.ethereum) {
-    notesSay('No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.', true);
-    return false;
-  }
   try {
-    const [a] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    NOTES.wallet = String(a).toLowerCase();
-  } catch (err) { notesSay('The wallet did not connect.', true); return false; }
+    NOTES.wallet = await MF.connect();
+  } catch (err) { notesSay(String(err.message || err), true); return false; }
   NOTES.say = null;
   await loadNotes();
   return true;
@@ -917,7 +924,12 @@ async function notesConnect() {
 async function notesSend(payload) {
   const issued = new Date().toISOString();
   const message = noteSentence({ ...payload, address: NOTES.wallet, issued });
-  const signature = await window.ethereum.request({ method: 'personal_sign', params: [message, NOTES.wallet] });
+  const signature = await MF.sign(message, NOTES.wallet, (state, why) => {
+    if (state === 'requested') notesSay('Signature requested ... check your wallet.');
+    if (state === 'slow') notesSay('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
+    if (state === 'signed') notesSay('Signed. Sending.');
+    if (state === 'failed') notesSay(why, true);
+  });
   const r = await fetch('/api/notes', {
     method: 'POST', headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ ...payload, address: NOTES.wallet, issued, signature }),
@@ -960,16 +972,26 @@ async function onNoteClick(ev) {
   const run = async (fn) => {
     NOTES.busy = true;
     b.disabled = true;
-    try { await fn(); } catch (err) { notesSay(String(err.message || err), true); }
-    NOTES.busy = false;
+    const label = b.textContent;
+    b.textContent = 'Waiting on the wallet';
+    try {
+      await fn();
+    } catch (err) {
+      // MF.sign has already written its own reason, and it is the better one
+      notesSay(String((err && err.message) || err), true);
+    } finally {
+      NOTES.busy = false;
+      if (document.body.contains(b)) { b.disabled = false; b.textContent = label; }
+    }
   };
 
   if (act === 'delete') {
     if (!window.confirm('Delete this note? It does not come back.')) return;
     await run(async () => {
       await notesSend({ action: 'delete', id, work: NOTES.id });
-      NOTES.writing = null; NOTES.say = null;
+      NOTES.writing = null;
       await loadNotes();
+      notesSay(null);
     });
     return;
   }
@@ -992,8 +1014,9 @@ async function onNoteClick(ev) {
       } else {
         await notesSend({ action: 'write', work: NOTES.id, text, visibility });
       }
-      NOTES.writing = null; NOTES.say = null; NOTES.open = true;
+      NOTES.writing = null; NOTES.open = true;
       await loadNotes();
+      notesSay(null);
     });
   }
 }

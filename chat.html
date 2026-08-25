@@ -200,14 +200,27 @@ function composer() {
       <span class="count${len > ROOM.max ? ' over' : ''}" id="count">${len}/${ROOM.max}</span>
     </div>
     <div class="row" style="justify-content:flex-end">
-      <button class="go" id="go" data-act="say"${len && len <= ROOM.max ? '' : ' disabled'}>Sign and say</button>
+      <button class="go" id="go" data-act="say"${ROOM.busy || !(len && len <= ROOM.max) ? ' disabled' : ''}>${ROOM.busy ? 'Waiting on the wallet' : 'Sign and say'}</button>
     </div>
   </div>`;
 }
 
+/* The status line is written straight into the DOM rather than through draw(),
+   because the thing it most needs to report ... a signature request sitting in
+   a wallet ... happens while somebody's half-written message is in the box, and
+   re-rendering the box under them to say so would be a poor trade. */
+function status(text, bad) {
+  ROOM.say = text ? { text, bad: Boolean(bad) } : null;
+  const el = document.getElementById('say');
+  if (!el) { draw(); return; }
+  el.textContent = text || '';
+  el.classList.toggle('bad', Boolean(bad));
+  el.hidden = !text;
+}
+
 function draw({ keep = false, toEnd = false } = {}) {
   const before = keep ? document.documentElement.scrollHeight : 0;
-  const say = ROOM.say ? `<div class="say${ROOM.say.bad ? ' bad' : ''}">${e(ROOM.say.text)}</div>` : '';
+  const say = `<div class="say${ROOM.say && ROOM.say.bad ? ' bad' : ''}" id="say"${ROOM.say ? '' : ' hidden'}>${e(ROOM.say ? ROOM.say.text : '')}</div>`;
 
   document.getElementById('main').innerHTML = `
     <section class="mast">
@@ -227,30 +240,34 @@ function draw({ keep = false, toEnd = false } = {}) {
   if (t && ROOM.focus) { t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
 }
 
+/* Connecting connects, and nothing else. No signature is asked for here, and
+   none should be: there is no session to open, so there is nothing to sign
+   until there are words to sign. That is worth saying out loud on the page,
+   because a wallet that connects and then goes quiet reads as a failure. */
 async function connect() {
-  if (!window.ethereum) {
-    ROOM.say = { text: 'No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.', bad: true };
-    draw();
-    return false;
-  }
   try {
-    const [a] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    ROOM.wallet = String(a).toLowerCase();
+    ROOM.wallet = await MF.connect();
   } catch (err) {
-    ROOM.say = { text: 'The wallet did not connect.', bad: true };
-    draw();
+    status(String(err.message || err), true);
     return false;
   }
-  ROOM.say = null;
   ROOM.focus = true;
   await load();
+  status(ROOM.me && ROOM.me.can_speak
+    ? 'Connected. Your wallet is asked to sign once, when you say something.'
+    : null);
   return true;
 }
 
 async function send(payload) {
   const issued = new Date().toISOString();
   const message = sentence({ ...payload, address: ROOM.wallet, issued });
-  const signature = await window.ethereum.request({ method: 'personal_sign', params: [message, ROOM.wallet] });
+  const signature = await MF.sign(message, ROOM.wallet, (state, why) => {
+    if (state === 'requested') status('Signature requested ... check your wallet.');
+    if (state === 'slow') status('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
+    if (state === 'signed') status('Signed. Sending.');
+    if (state === 'failed') status(why, true);
+  });
   const r = await fetch('/api/chat', {
     method: 'POST', headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ ...payload, address: ROOM.wallet, issued, signature }),
@@ -280,8 +297,18 @@ document.addEventListener('click', async (ev) => {
   const run = async (fn) => {
     ROOM.busy = true;
     b.disabled = true;
-    try { await fn(); } catch (err) { ROOM.say = { text: String(err.message || err), bad: true }; draw(); }
-    ROOM.busy = false;
+    b.textContent = 'Waiting on the wallet';
+    try {
+      await fn();
+    } catch (err) {
+      /* MF.sign has already put its own reason on the line, and it is a better
+         one than the rethrow carries. Anything else that fails ... the network,
+         the room refusing the message ... says so here. */
+      status(String((err && err.message) || err), true);
+    } finally {
+      ROOM.busy = false;
+      if (document.body.contains(b)) { b.disabled = false; b.textContent = 'Sign and say'; }
+    }
   };
 
   if (act === 'say') {
@@ -289,9 +316,9 @@ document.addEventListener('click', async (ev) => {
     return run(async () => {
       await send({ action: 'say', text });
       ROOM.draft = '';
-      ROOM.say = null;
       ROOM.focus = true;
       await load();
+      status(null);
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     });
   }
@@ -299,8 +326,8 @@ document.addEventListener('click', async (ev) => {
   if (act === 'delete' || act === 'restore') {
     return run(async () => {
       await send({ action: act, target: String(b.dataset.n) });
-      ROOM.say = null;
       await load();
+      status(null);
     });
   }
 
@@ -309,8 +336,8 @@ document.addEventListener('click', async (ev) => {
     if (!window.confirm(`Mute ${who}? They can still read, and nothing in the room will say so.`)) return;
     return run(async () => {
       await send({ action: 'mute', target: who });
-      ROOM.say = { text: `${who} is muted.`, bad: false };
       await load();
+      status(`${who} is muted.`);
     });
   }
 });

@@ -193,8 +193,8 @@ function wire() {
 }
 
 async function connect() {
-  if (!window.ethereum) { alert('No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.'); return; }
-  const [a] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  let a;
+  try { a = await MF.connect(); } catch (err) { alert(String(err.message || err)); return; }
   WALLET = String(a).toLowerCase();
   await load();
   MY_TAO = STATE.tao || 0;
@@ -227,10 +227,18 @@ async function weigh(id) {
     'Weighing does not move or spend any TAO.',
   ].join('\n');
 
+  /* Through MF.sign: the payload goes as hex, which is what personal_sign is
+     specified to take and what anything relaying the call to a hardware wallet
+     needs, and the wait is reported rather than left looking like a dead
+     button. The bytes signed are identical, so the server is unaffected. */
   let signature;
   try {
-    signature = await window.ethereum.request({ method: 'personal_sign', params: [message, WALLET] });
-  } catch (err) { say(id, 'Nothing was signed, so nothing was weighed.', true); return; }
+    signature = await MF.sign(message, WALLET, (state, why) => {
+      if (state === 'requested') say(id, 'Signature requested ... check your wallet.');
+      if (state === 'slow') say(id, 'Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
+      if (state === 'failed') say(id, why, true);
+    });
+  } catch (err) { return; }
 
   say(id, 'Recording ...');
   const r = await fetch('/api/nudge', {

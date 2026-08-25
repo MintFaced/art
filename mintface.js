@@ -1171,6 +1171,94 @@ const MF = {
     },
   },
 
+
+  /* ---------- wallet signing ----------
+     Three features on this site ask a wallet to sign a sentence: the nudges,
+     the notes and the room. They all come through here, because everything
+     that goes wrong with signing goes wrong the same way for all three.
+
+     Two things this does that a bare request does not.
+
+     The message is hex-encoded first. personal_sign is specified to take hex,
+     and MetaMask happens to accept a UTF-8 string and convert it, which is why
+     handing it one appears to work. Anything relaying the call rather than
+     handling it ... WalletConnect, a hardware bridge, a wallet behind another
+     wallet ... is under no obligation to guess, and a request that cannot be
+     decoded is a request that never reaches the device. The bytes signed are
+     identical either way, so nothing the server verifies changes.
+
+     And it says when it is waiting. A hardware wallet can sit on a request for
+     half a minute, or forever if its prompt opened behind something, and a
+     button that has gone quiet is indistinguishable from a button that is
+     broken. The caller is told the moment the request goes out, told again if
+     the wallet has said nothing for a while, and told exactly what happened if
+     it refuses. */
+  toHex(text) {
+    const bytes = new TextEncoder().encode(String(text));
+    let out = '0x';
+    for (const b of bytes) out += b.toString(16).padStart(2, '0');
+    return out;
+  },
+
+  /**
+   * @param message  the sentence, as the server will rebuild it
+   * @param address  the wallet, lowercased
+   * @param onState  (state, detail) => void ... 'requested' | 'slow' | 'signed' | 'failed'
+   */
+  async sign(message, address, onState = () => {}) {
+    if (!window.ethereum) {
+      const e = new Error('No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.');
+      onState('failed', e.message);
+      throw e;
+    }
+    const data = this.toHex(message);
+    onState('requested');
+    // a hardware wallet is slow, and a prompt that opened behind the window is
+    // slower still. Say so rather than letting it read as a dead button.
+    const slow = setTimeout(() => onState('slow'), 12000);
+    try {
+      const signature = await window.ethereum.request({ method: 'personal_sign', params: [data, address] });
+      if (!signature || typeof signature !== 'string' || !signature.startsWith('0x')) {
+        const e = new Error('The wallet answered without a signature.');
+        e.code = 'no-signature';
+        throw e;
+      }
+      onState('signed');
+      return signature;
+    } catch (err) {
+      // EIP-1193 says what happened; wallets are inconsistent about the text
+      const code = err && (err.code ?? (err.data && err.data.code));
+      const why = code === 'no-signature' ? err.message
+        : code === 4001 ? 'Signature refused in the wallet.'
+        : code === -32002 ? 'The wallet already has a request waiting. Open it and answer that one first.'
+          : code === 4900 || code === 4100 ? 'The wallet is not connected to this site. Reconnect and try again.'
+            : `The wallet could not sign: ${String((err && err.message) || err).slice(0, 160)}`;
+      onState('failed', why);
+      const out = new Error(why);
+      out.code = code;
+      throw out;
+    } finally {
+      clearTimeout(slow);
+    }
+  },
+
+  /** eth_requestAccounts, with the refusal said out loud rather than swallowed. */
+  async connect() {
+    if (!window.ethereum) {
+      throw new Error('No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.');
+    }
+    try {
+      const [a] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (!a) throw new Error('the wallet returned no account');
+      return String(a).toLowerCase();
+    } catch (err) {
+      const code = err && err.code;
+      throw new Error(code === 4001 ? 'Connection refused in the wallet.'
+        : code === -32002 ? 'The wallet already has a request waiting. Open it and answer that one first.'
+          : `The wallet did not connect: ${String((err && err.message) || err).slice(0, 160)}`);
+    }
+  },
+
   escape(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   },
