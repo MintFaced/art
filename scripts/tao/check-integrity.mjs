@@ -359,9 +359,12 @@ head('10. guard rails, checked in the production path');
     'the register is rebuilt from every collection, not only the ones that accrue');
   check(/collectors-register\.json/.test(cron), 'the leaderboard is written by the run that changes it');
   check(/data\/tao\/pages\.json/.test(cron), 'the collector pages are given a live overlay of their figures');
-  check(/data\/tao\/total\.json/.test(cron) && /previous: wasLive/.test(cron),
-    'the board total is written beside the one before it, by the run that sees both',
-    'so a header can show the day\'s movement without anybody typing a number in');
+  check(/data\/tao\/totals\.json/.test(cron) && /run_id: runId/.test(cron),
+    'every successful run leaves a totals row, stamped with the same id as its evidence',
+    'so a delta is the change between two totals that were both computed');
+  check(/tao_exact/.test(engine) && /w\.tao_exact, 0\)\)/.test(cron),
+    'the board total sums unrounded and rounds once',
+    'flooring three thousand wallets first loses a couple of thousand TAO that exist');
   check(/data\/availability\.json/.test(cron) && /skip\.has\(col\.slug\)/.test(cron),
     'what is for sale is published too, patron collections excluded');
 

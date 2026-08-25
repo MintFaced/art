@@ -130,6 +130,12 @@ export function computeTao(events, tokens, cfg, now = Math.floor(Date.now() / 10
   const wallet = (w) => ({
     address: w.address,
     tao_total: Math.floor(Math.max(0, w.total)),
+    /* The unrounded figure, carried alongside for one purpose: a board total is
+       the sum of what everyone holds, not the sum of what everyone is shown.
+       Flooring three and a half thousand wallets first and adding afterwards
+       loses half a unit each, which is a couple of thousand TAO that exist and
+       are not counted. Display floors. Totals do not. */
+    tao_exact: Math.max(0, w.total),
     tao_rate: Math.round(w.rate * 10) / 10,
     tao_lost: Math.floor(w.lost),
     tao_kept: Math.floor(w.kept),

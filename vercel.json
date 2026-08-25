@@ -114,5 +114,16 @@
       "path": "/api/cron/nudges",
       "schedule": "0 22 * * *"
     }
+  ],
+  "headers": [
+    {
+      "source": "/data/(availability|tao/totals).json",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "public, max-age=0, s-maxage=600, stale-while-revalidate=3600"
+        }
+      ]
+    }
   ]
 }

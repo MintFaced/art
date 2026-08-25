@@ -116,7 +116,7 @@ export async function GET(request) {
     return new Response(JSON.stringify(out, null, 1), { status: 200, headers: { 'content-type': 'application/json' } });
   } catch (err) {
     const why = String(err && err.message ? err.message : err).slice(0, 300);
-    const entry = { at: new Date(started).toISOString(), ok: false, ms: Date.now() - started, error: why };
+    const entry = { run_id: `r${started.toString(36)}`, at: new Date(started).toISOString(), ok: false, ms: Date.now() - started, error: why };
     if (!dry) {
       await saveRuns(RUNS, prior, entry, { keep: 90, note: NOTE, message: `TAO run failed: ${why.slice(0, 60)}` }).catch(() => {});
       await alarm(`TAO: the nightly run failed`,
@@ -138,6 +138,10 @@ async function alarm(subject, text) {
 }
 
 async function run({ key, dry, started, prior, url }) {
+  /* One id for this run, stamped on every piece of evidence it leaves, so the
+     totals row and the run record can be matched up without guessing from
+     timestamps. */
+  const runId = `r${started.toString(36)}`;
   const site = process.env.SITE_ORIGIN || 'https://mintface.art';
   const get = async (p) => {
     const r = await fetch(`${site}/${p}`, { headers: { accept: 'application/json' } });
@@ -351,7 +355,8 @@ async function run({ key, dry, started, prior, url }) {
       wallets: held.length, events: events.length, exits: exits.length,
       sales: exits.filter((e) => e.verdict === 'sale').length,
       transfers: exits.filter((e) => e.verdict === 'transfer').length,
-      tao_live: held.reduce((n, w) => n + w.tao_total, 0),
+      // summed unrounded, rounded once at the end
+      tao_live: Math.round(held.reduce((n, w) => n + w.tao_exact, 0)),
       tao_lost_to_sales: Math.round(wallets.reduce((n, w) => n + w.tao_lost, 0)),
     },
     wallets: Object.fromEntries(held.map((w) => [w.address, { tao: w.tao_total, rate: w.tao_rate, lost: w.tao_lost, sales: w.sales, works: w.works }])),
@@ -394,15 +399,25 @@ async function run({ key, dry, started, prior, url }) {
        rather than a figure somebody typed in once. A day the total falls ...
        sales taking back more than time adds ... shows the fall, which is the
        whole of the metric having stakes. */
-    await put('data/tao/total.json', {
-      _note: 'The board total and the one before it. Written by the nightly TAO run, which is the only thing that sees both.',
-      generated: tao.generated,
-      live: tao.counts.tao_live,
-      previous: wasLive,
-      previous_at: before ? before.generated : null,
-      delta: wasLive == null ? null : tao.counts.tao_live - wasLive,
-      pct: wasLive ? Math.round(((tao.counts.tao_live - wasLive) / wasLive) * 1000000) / 10000 : null,
-      wallets: tao.counts.wallets,
+    /* One row per successful run, newest first. A failed run writes nothing
+       here, which is the point: the delta is the change between two totals that
+       were both actually computed, never between a real one and a gap. The
+       header reads the top two rows and does no arithmetic of its own beyond
+       the division. */
+    let totals = { rows: [] };
+    try { totals = await get('data/tao/totals.json'); } catch (e) { /* the first one */ }
+    const row = {
+      run_id: runId,
+      run_at: tao.generated,
+      head_block: HEAD,
+      total_tao: tao.counts.tao_live,
+      address_count: tao.counts.wallets,
+    };
+    await put('data/tao/totals.json', {
+      _note: 'One row per successful TAO recompute, newest first. A failed run writes nothing here, '
+        + 'so a delta is always the change between two totals that were both computed.',
+      keep: 400,
+      rows: [row, ...(totals.rows || []).filter((r) => r.run_id !== runId)].slice(0, 400),
     }, `TAO total: ${tao.counts.tao_live.toLocaleString('en-NZ')}`);
 
     /* What is for sale, small enough for another site to read. The collections
@@ -495,7 +510,7 @@ async function run({ key, dry, started, prior, url }) {
   /* ---- the run record, and the thing that pages us ---- */
   const gap = hoursSince(prior.runs, started);
   const entry = {
-    at: new Date(started).toISOString(), ok: true, ms: Date.now() - started, dry: dry || undefined,
+    run_id: runId, at: new Date(started).toISOString(), ok: true, ms: Date.now() - started, dry: dry || undefined,
     blocks: { from: scannedFrom, to: HEAD, scanned: Math.max(0, HEAD - scannedFrom + 1) },
     chain_events: chainEvents,
     changed_hands: { works: movements.length, sales: movements.filter((m) => m.how === 'sale').length,
