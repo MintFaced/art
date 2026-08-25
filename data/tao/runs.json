@@ -1,0 +1,77 @@
+{
+ "_note": "One record per TAO run, newest first, ninety kept. A run that changes nothing is recorded too ... a quiet night and a run that stopped looking are otherwise the same thing. See docs/TAO.md.",
+ "keep": 90,
+ "runs": [
+  {
+   "at": "2026-08-25T21:30:04.346Z",
+   "ok": true,
+   "ms": 32025,
+   "blocks": {
+    "from": 25820496,
+    "to": 25834910,
+    "scanned": 14415
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 1,
+    "sales": 0,
+    "transfers": 1,
+    "mints": 0
+   },
+   "wallets_affected": 2,
+   "tao": {
+    "live": 71876038,
+    "was": 71810937,
+    "delta": 65101,
+    "lost_to_sales": 266003,
+    "wallets": 3438
+   },
+   "register": {
+    "collectors": 3681,
+    "with_page": 808,
+    "private": 0,
+    "named": 1218
+   },
+   "classified": 1,
+   "unclassified": 0,
+   "events": 13087,
+   "files": 7,
+   "pages": 0,
+   "movements": [
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-08-25T12:02:11.000Z",
+     "block": 25832083,
+     "tx": "0xab042ae01b74988bb0160db4d46a908b870f3d098ddc8ee7010a05a31694b516",
+     "from": "0x6de13c77f8df1e1f9abec6276c5a1cb96d6f0419",
+     "to": "0xb4569c46644b7e6bf6f97c765fdf587a6dd617f7",
+     "how": "transfer",
+     "effect": "the sender keeps what it banked and stops accruing; the receiver starts from zero",
+     "why": "no marketplace and no payment found"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0x6de13c77f8df1e1f9abec6276c5a1cb96d6f0419",
+     "before": 1536,
+     "after": 1539,
+     "delta": 3,
+     "gained": 0,
+     "sales": 0,
+     "transfers": 1
+    },
+    {
+     "address": "0xb4569c46644b7e6bf6f97c765fdf587a6dd617f7",
+     "before": 0,
+     "after": 1,
+     "delta": 1,
+     "gained": 1
+    }
+   ]
+  }
+ ]
+}
