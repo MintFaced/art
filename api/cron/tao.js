@@ -39,6 +39,9 @@ const RUNS = 'data/tao/runs.json';
 const QUIET_RUNS = Number(process.env.TAO_QUIET_RUNS || 3);
 // the schedule is daily; a gap much beyond that is a run that did not happen
 const MAX_GAP_HOURS = Number(process.env.TAO_MAX_GAP_HOURS || 36);
+// the sweep runs half an hour before this one, so anything past a day and a
+// half means it has missed at least one night and said nothing
+const OWNERS_STALE_HOURS = Number(process.env.TAO_OWNERS_STALE_HOURS || 36);
 // collector pages rewritten per run, for the wallets whose works moved. The
 // figures on every other page come from the overlay, live, so they need no
 // commit ... this budget only stops one extraordinary night writing hundreds.
@@ -455,12 +458,34 @@ async function run({ key, dry, started, prior, url }) {
       lost_to_sales: tao.counts.tao_lost_to_sales, wallets: tao.counts.wallets },
     register: registerCounts,
     classified, unclassified, events: tao.counts.events,
+    owners_cursor_age_hours: ownersAge == null ? null : Math.round(ownersAge * 10) / 10,
     files: written.length, pages: pagesWritten,
     movements: movements.slice(0, 25),
     movers,
   };
 
+  /* The sweep half an hour before this one has been stopping dead without
+     saying so, three nights running, because it was being killed by the
+     platform before its own catch could run. A process cannot be relied on to
+     report a failure that kills it. This one completes in half a minute every
+     night, so it is the right place to notice: the cursor either moved since
+     yesterday or it did not, and that is a fact about a file rather than a
+     hope about a process.
+
+     The general rule, worth keeping: the watchdog belongs in a different
+     process from the thing it watches. */
   const alarms = [];
+  let ownersAge = null;
+  try {
+    const cur = await get('data/owners-cursor.json');
+    ownersAge = (Date.now() - Date.parse(cur.updated)) / 3600000;
+    if (Number.isFinite(ownersAge) && ownersAge > OWNERS_STALE_HOURS) {
+      alarms.push(`the ownership sweep has not finished for ${Math.round(ownersAge)} hours `
+        + `... its cursor is still on block ${cur.last_block}, so who holds what is that old. `
+        + `TAO is unaffected: it reads its own event history, not the register.`);
+    }
+  } catch (e) { alarms.push('the ownership sweep has no cursor at all ... it has never finished'); }
+
   if (gap != null && gap > MAX_GAP_HOURS) {
     alarms.push(`the previous run was ${Math.round(gap)} hours ago, on a daily schedule ... at least one run did not happen`);
   }

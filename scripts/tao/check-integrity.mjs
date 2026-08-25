@@ -364,6 +364,13 @@ head('10. guard rails, checked in the production path');
   check(/saveRuns\(RUNS/.test(cron) && /keep: 90/.test(cron), 'every run leaves a record, ninety kept');
   check(/ok: false/.test(cron), 'a failed run leaves a record too');
   check(/MAX_GAP_HOURS/.test(cron) && /QUIET_RUNS/.test(cron), 'silence raises an alarm rather than passing for calm');
+  /* A process cannot report a failure that kills it. The sweep was being
+     stopped by the platform mid-run for three nights, so its own try/catch
+     never ran and its own run log was never written. The watchdog has to live
+     somewhere else. */
+  check(/OWNERS_STALE_HOURS/.test(cron) && /owners-cursor\.json/.test(cron),
+    'this run watches the sweep that runs before it, from outside it',
+    'a cursor that has not moved is a fact about a file, not a hope about a process');
 }
 
 /* ================= the two methods, end to end ================= */

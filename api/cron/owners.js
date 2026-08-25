@@ -235,6 +235,13 @@ export async function GET(request) {
   }
 }
 
+/* Of the function's three hundred seconds, the full sweep may start only
+   inside the first ninety and the edition pass only inside the first two
+   hundred and ten. Everything this run exists to do happens after both, and a
+   run that is killed before it writes is a run that never happened as far as
+   anything downstream can tell. */
+const FULL_SWEEP_BY = Number(process.env.OWNERS_FULL_SWEEP_MS || 90000);
+
 async function handle(request, started, dry) {
   const secret = process.env.CRON_SECRET;
   const auth = request.headers.get('authorization');
@@ -297,9 +304,35 @@ async function handle(request, started, dry) {
   try { cursor = cur.text ? JSON.parse(cur.text) : null; } catch { cursor = null; }
   // no cursor yet: look back two days rather than to the beginning of the chain
   const since = cursor && cursor.last_block > 0 ? cursor.last_block : HEAD - 14400;
-  const rotation = cursor && Number.isInteger(cursor.rotation) ? cursor.rotation % list.length : 0;
-  const fullContract = list[rotation];
+  /* One contract a night gets swept from its deployment block rather than from
+     the cursor, as a slow reconciliation against drift. Two things about that
+     were wrong, and together they stopped this run dead for three nights.
 
+     The rotation was a counter in the cursor file, and the cursor file is
+     written at the *end* of a successful run. So a contract the sweep cannot
+     finish is a contract the sweep retries every single night, forever, never
+     advancing past it. It is derived from the day now. Nothing can wedge it,
+     because nothing has to write it down.
+
+     And the multi-artist contracts were in the rotation at all. Their whole log
+     is other people's work ... Foundation's shared contract is millions of
+     transfers, of which a few dozen are ours ... so sweeping one from its
+     deployment block is both impossible inside a function's lifetime and
+     pointless, since the incremental sweep already catches everything of ours
+     that moves. data/source/tao.json has known which contracts these are since
+     the TAO engine was written; this run simply never asked. */
+  let sharedContracts = new Set();
+  try {
+    const cfgFile = JSON.parse((await readFile('data/source/tao.json')).text);
+    sharedContracts = new Set(Object.keys(cfgFile.per_token_contracts || {})
+      .filter((k) => k.startsWith('0x')).map((k) => k.toLowerCase()));
+  } catch (e) { /* without it the deadline below is the only guard, which is enough */ }
+  const rotatable = list.filter((c) => !sharedContracts.has(c));
+  const rotation = rotatable.length ? Math.floor(Date.now() / 86400000) % rotatable.length : 0;
+  const fullContract = rotatable.length ? rotatable[rotation] : null;
+
+  const applied = [];
+  const flagged = [];
   const owner = new Map();   // "contract|tokenId" -> { to, ts, tx }  (only what moved)
   const full = new Map();    // the same, for the one contract swept in full
   const swept = new Set();
@@ -318,15 +351,24 @@ async function handle(request, started, dry) {
       });
     }
   };
+  /* The incremental sweep is the mechanism and always runs: a night of blocks
+     across seventeen contracts is seconds. The full sweep is a luxury, and it
+     only gets whatever time is left. */
   for (const c of list) {
     const from = Math.max(deployed.get(c) || 0, since);
     if (from <= HEAD) parse(await sweep(c, from, HEAD, key), owner);
     swept.add(c);
   }
-  parse(await sweep(fullContract, deployed.get(fullContract) || 0, HEAD, key), full);
+  let fullSwept = false;
+  if (fullContract && Date.now() - started < FULL_SWEEP_BY) {
+    parse(await sweep(fullContract, deployed.get(fullContract) || 0, HEAD, key), full);
+    fullSwept = true;
+  } else if (fullContract) {
+    flagged.push({ id: 'full-sweep', slug: fullContract.slice(0, 10),
+      why: 'the nightly full sweep was skipped: the incremental pass had already used the budget',
+      action: 'nothing is stale that the incremental sweep would have caught; it comes round again tomorrow' });
+  }
 
-  const applied = [];
-  const flagged = [];
   const touched = new Set();
   const changedWorks = new Set();   // which collectors need their page rewritten
 
@@ -462,7 +504,7 @@ async function handle(request, started, dry) {
      the register and the run log down with it ... which is what happened the
      first night it ran. It now stops at the deadline and says what it did not
      reach; those editions are a day stale, and the run still lands. */
-  const EDITION_DEADLINE = Number(process.env.OWNERS_EDITION_MS || 150000);
+  const EDITION_DEADLINE = Number(process.env.OWNERS_EDITION_MS || 210000);
   let editionsChecked = 0, holderRows = 0, editionsSkipped = 0;
   for (const [addr, ids] of editions) {
     if (Date.now() - started > EDITION_DEADLINE) { editionsSkipped++; continue; }
@@ -639,7 +681,8 @@ async function handle(request, started, dry) {
 
   if (!dry) {
     await writeFile('data/owners-cursor.json',
-      JSON.stringify({ last_block: HEAD, rotation: (rotation + 1) % list.length, updated: new Date().toISOString() }, null, 1) + '\n',
+      JSON.stringify({ last_block: HEAD, rotation, full_swept: fullSwept ? fullContract : null,
+        updated: new Date().toISOString() }, null, 1) + '\n',
       `Owners cursor: block ${HEAD}`, cur.sha || undefined);
   }
 
@@ -650,7 +693,7 @@ async function handle(request, started, dry) {
       action: 'their holders are a day stale; the next run picks them up from the same cursor' });
   }
   const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, ${born.length} newly minted, ${editionsChecked} editions re-read, `
-    + `blocks ${since}-${HEAD}, full sweep of ${fullContract}, ${collectorsWritten} collector pages`;
+    + `blocks ${since}-${HEAD}, full sweep ${fullSwept ? 'of ' + fullContract : 'skipped'}, ${collectorsWritten} collector pages`;
   console.log(summary);
 
   /* ---------- the run log, and the thing that pages us ----------
