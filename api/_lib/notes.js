@@ -23,6 +23,8 @@
  * acceptance cases in scripts/notes/test-notes.mjs can run the real thing.
  */
 
+import { isArtist, ARTIST_NAME } from './artist.js';
+
 export const ROLES = ['artist', 'collector', 'senior'];
 
 const lower = (a) => String(a || '').toLowerCase();
@@ -73,7 +75,10 @@ export function heldSince(work, address) {
  */
 export function standing({ address, cfg, tao, holders }) {
   const a = lower(address);
-  if (cfg.artist && cfg.artist[a]) return { role: 'artist', name: cfg.artist[a] };
+  /* The artist first, always, and through the one shared test ... his wallets
+     are excluded from TAO accrual by design, so any gate that reaches the
+     threshold check before it reaches him shuts him out for good. */
+  if (isArtist(cfg.artist, a)) return { role: 'artist', name: ARTIST_NAME };
   if (holders.has(a)) return { role: 'collector' };
   const held = Math.floor(Number(tao) || 0);
   if (held >= Number(cfg.senior_tao)) return { role: 'senior', tao: held };

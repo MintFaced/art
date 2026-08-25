@@ -63,13 +63,18 @@ export function wearTao(n) {
  * show that something was said and taken down, not pretend the conversation
  * never had a gap in it. The artist sees what it was, and can put it back.
  */
-export function render(row, { isArtist } = {}) {
+export function render(row, { isArtist, artist } = {}) {
   if (!row) return null;
-  const base = {
-    n: row.n, address: row.address, name: row.name || null,
-    tao: row.tao || 0, worn: wearTao(row.tao), at: row.at,
-    deleted: Boolean(row.deleted),
-  };
+  /* Read from the row where it was written down, and from the config where it
+     was not: a message said before the artist was known as the artist should
+     still read as his. */
+  const mine = row.role === 'artist'
+    || Boolean(artist && artist[String(row.address || '').toLowerCase()]);
+  const base = mine
+    ? { n: row.n, address: row.address, name: 'MintFace', role: 'artist', tao: null, worn: null,
+        at: row.at, deleted: Boolean(row.deleted) }
+    : { n: row.n, address: row.address, name: row.name || null, role: 'collector',
+        tao: row.tao || 0, worn: wearTao(row.tao), at: row.at, deleted: Boolean(row.deleted) };
   if (row.deleted && !isArtist) return { ...base, text: null };
   return { ...base, text: row.text, ...(isArtist ? { can_delete: true } : {}) };
 }

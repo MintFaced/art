@@ -161,6 +161,55 @@ head('Who may speak');
   ok(empty2.status === 400, 'and a message of nothing is nothing', empty2.body.error);
 }
 
+/* ================= the artist ================= */
+head('The artist, who holds no TAO and never will');
+{
+  /* His wallets are excluded from accrual by design ... docs/TAO.md item 4 ...
+     so a gate written as tao > 0 does not keep him one edition short of the
+     door. It shuts it for good. */
+  ok(taoFixture.wallets[A(artist)].tao === 0, 'the register says nought, correctly', '0 TAO');
+
+  const view = await get(`viewer=${A(artist)}`);
+  ok(view.body.me.can_speak === true, 'and he can speak anyway', JSON.stringify(view.body.me));
+  ok(view.body.me.role === 'artist' && view.body.me.artist === true, 'named as the artist');
+  ok(view.body.me.name === 'MintFace', 'called MintFace, not a null and not a hex string', view.body.me.name);
+  ok(view.body.me.tao === null, 'and carrying no figure at all, because nought would be a lie');
+
+  const said = await say(artist, 'The light in this one was an accident I kept.');
+  ok(said.status === 200 && said.body.ok, 'he speaks', said.body.error);
+  const m = said.body.message;
+  ok(m.role === 'artist' && m.name === 'MintFace' && m.worn === null && m.tao === null,
+    'and the message wears a label rather than a number',
+    m ? `${m.name} · ${m.worn === null ? 'no figure' : m.worn}` : '');
+
+  const anyone = await get();
+  const his = anyone.body.messages.find((x) => x.address === A(artist));
+  ok(his && his.role === 'artist' && his.worn === null,
+    'which is how everyone else reads it too');
+
+  /* A message written before any of this was known should still read as his,
+     because the answer comes from the config as well as from the row. */
+  const dbx = chatStore(pipe, chatCfg);
+  await dbx.say({ address: A(artist), name: null, tao: 0, text: 'An older line.', at: new Date(NOW).toISOString(), deleted: false });
+  const back = await get();
+  const old = back.body.messages.find((x) => x.text === 'An older line.');
+  ok(old && old.role === 'artist' && old.name === 'MintFace',
+    'including one written before the row carried a role');
+}
+
+head('The moderation gate is the artist, not a threshold');
+{
+  const before = await get();
+  const target = before.body.messages.find((x) => x.address === A(visco));
+  const rich = await post(visco, { action: 'delete', target: String(target.n) });
+  ok(rich.status === 403, '1.49M TAO does not buy the delete button', `${rich.status} ${rich.body.error}`);
+  const his = await post(artist, { action: 'delete', target: String(target.n) });
+  ok(his.status === 200, 'nought TAO and the artist wallet does', his.body.error);
+  await post(artist, { action: 'restore', target: String(target.n) });
+  const muteRich = await post(visco, { action: 'mute', target: A(loud) });
+  ok(muteRich.status === 403, 'and the same for muting', `${muteRich.status} ${muteRich.body.error}`);
+}
+
 head('The signature is the whole authorisation');
 {
   advance(20000);
@@ -186,8 +235,11 @@ head('The signature is the whole authorisation');
 head('Reading takes nothing');
 {
   const open = await get();
-  ok(open.body.messages.length === 2 && open.body.total === 2,
-    'the whole room is public with no wallet and no sign-in', `${open.body.messages.length} messages`);
+  // however many have been said by now ... a count pinned to a number here just
+  // breaks whenever a case is added above it
+  ok(open.body.messages.length > 0 && open.body.messages.length === open.body.total,
+    'the whole room is public with no wallet and no sign-in',
+    `${open.body.messages.length} of ${open.body.total} messages`);
   ok(open.body.me === null, 'and a reader is asked for nothing about themselves');
   ok(open.body.messages.every((m) => m.text && m.address && m.at),
     'every message carries its words, its wallet and its date');

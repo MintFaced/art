@@ -2,6 +2,7 @@ import { verifyMessage } from 'viem';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 import { chatStore, chatMessage, checkMessage, render } from './_lib/chat.js';
+import { loadArtist, isArtist as artistIs, taoGate, ARTIST_NAME } from './_lib/artist.js';
 
 /* The room.
  *
@@ -39,11 +40,13 @@ const at = async (origin, p) => {
 async function config(origin) {
   const [cfg, artist] = await Promise.all([
     at(origin, 'data/source/chat.json'),
-    at(origin, 'data/source/artist.json'),
+    loadArtist(at, origin),
   ]);
-  cfg.artist = Object.fromEntries(Object.entries(artist.wallets || {}).filter(([k]) => k.startsWith('0x')));
+  cfg.artist = artist;
   return cfg;
 }
+
+const SHUT = 'The room is for anyone holding TAO. One edition copy held for a day is enough.';
 
 /** What the register knows about a wallet: what it holds, and what to call it. */
 async function whois(origin, address) {
@@ -85,7 +88,7 @@ export async function GET(request) {
        which is what a salon is worth and no more. */
     if (since != null) {
       const { rows, total } = await db.since(Number(since) || 0);
-      return json({ messages: rows.map((r) => render(r, { isArtist })), total, store: true });
+      return json({ messages: rows.map((r) => render(r, { isArtist, artist: cfg.artist })), total, store: true });
     }
 
     const page = await db.page({ before: before == null ? null : Number(before), limit: Number(cfg.page) || 50 });
@@ -93,18 +96,19 @@ export async function GET(request) {
     if (/^0x[0-9a-f]{40}$/.test(viewer)) {
       const who = await whois(origin, viewer);
       const muted = await db.isMuted(viewer);
+      const gate = taoGate({ artist: cfg.artist, address: viewer, tao: who.tao, min: cfg.min_tao || 1, why: SHUT });
       me = {
-        tao: who.tao, name: who.name,
-        can_speak: !muted && who.tao >= Number(cfg.min_tao || 1),
+        tao: gate.role === 'artist' ? null : who.tao,
+        name: gate.role === 'artist' ? ARTIST_NAME : who.name,
+        role: gate.role,
+        can_speak: gate.ok && !muted,
         muted,
-        why: muted ? 'This wallet is muted in the room. You can still read.'
-          : who.tao >= Number(cfg.min_tao || 1) ? null
-            : 'The room is for anyone holding TAO. One edition copy held for a day is enough.',
+        why: muted ? 'This wallet is muted in the room. You can still read.' : (gate.ok ? null : gate.why),
         artist: isArtist,
       };
     }
     return json({
-      messages: page.rows.map((r) => render(r, { isArtist })),
+      messages: page.rows.map((r) => render(r, { isArtist, artist: cfg.artist })),
       start: page.start, end: page.end, total: page.total, more: page.more,
       me, max_chars: cfg.max_chars, store: true,
     });
@@ -171,7 +175,7 @@ export async function POST(request) {
     }
     row.deleted = action === 'delete';
     await db.save(row);
-    return json({ ok: true, n, deleted: row.deleted, message: render(row, { isArtist: true }) });
+    return json({ ok: true, n, deleted: row.deleted, message: render(row, { isArtist: true, artist: cfg.artist }) });
   }
 
   /* ---- saying something ---- */
@@ -183,12 +187,8 @@ export async function POST(request) {
   }
 
   const who = await whois(origin, address);
-  if (who.tao < Number(cfg.min_tao || 1)) {
-    return json({
-      error: 'The room is for anyone holding TAO. One edition copy held for a day is enough.',
-      tao: who.tao,
-    }, 403);
-  }
+  const gate = taoGate({ artist: cfg.artist, address, tao: who.tao, min: cfg.min_tao || 1, why: SHUT });
+  if (!gate.ok) return json({ error: gate.why, tao: gate.tao }, 403);
 
   if (!(await verify({ action: 'say', text: text.text }))) {
     return json({ error: 'that signature does not match the wallet' }, 401);
@@ -200,8 +200,10 @@ export async function POST(request) {
   if (spend.error) return json({ error: spend.error }, 429);
 
   const row = await db.say({
-    address, name: who.name, tao: who.tao,
+    address, role: gate.role,
+    name: gate.role === 'artist' ? ARTIST_NAME : who.name,
+    tao: gate.role === 'artist' ? 0 : who.tao,
     text: text.text, at: new Date().toISOString(), deleted: false,
   });
-  return json({ ok: true, message: render(row, { isArtist }) });
+  return json({ ok: true, message: render(row, { isArtist, artist: cfg.artist }) });
 }

@@ -30,6 +30,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font-size:15px;line-height:1.68;color:#2c2924}
 .m .gone{margin:8px 0 0;font-family:var(--font-mono);font-size:11.5px;color:var(--faint)}
 .m.mine{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
+.m .who .artist{color:var(--ink);letter-spacing:.18em}
 .m .mod{margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   display:flex;gap:16px;color:var(--faint)}
 .m .mod button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;
@@ -93,7 +94,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 const e = MF.escape;
 const ROOM = {
   wallet: null, rows: [], total: 0, start: 0, more: false, me: null,
-  max: 500, busy: false, say: null, draft: '', timer: null, pick: null,
+  max: 500, busy: false, say: null, draft: '', timer: null, pick: null, asking: false,
 };
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
@@ -163,6 +164,10 @@ async function poll() {
 
 function card(m) {
   const mine = ROOM.wallet && m.address === ROOM.wallet;
+  /* The artist is named and unnumbered. A TAO figure beside him would read as
+     nought, which says the opposite of the truth ... the wallets are excluded
+     from accrual because he is the one being patronised, not the patron. */
+  const isArtist = m.role === 'artist';
   const mod = ROOM.me && ROOM.me.artist ? `<div class="mod">
       <button data-act="${m.deleted ? 'restore' : 'delete'}" data-n="${m.n}">${m.deleted ? 'Restore' : 'Delete'}</button>
       <button data-act="mute" data-who="${e(m.address)}">Mute this wallet</button>
@@ -170,10 +175,10 @@ function card(m) {
   const words = m.text == null
     ? '<p class="gone">Taken down.</p>'
     : `<p>${e(m.text)}${m.deleted ? '' : ''}</p>`;
-  return `<article class="m${mine ? ' mine' : ''}">
+  return `<article class="m${mine ? ' mine' : ''}${isArtist ? ' by-artist' : ''}">
     <div class="who">
-      <span>${e(m.name || short(m.address))}</span>
-      <span class="tao">&middot; ${e(m.worn)} TAO</span>
+      <span${isArtist ? ' class="artist"' : ''}>${e(isArtist ? 'MintFace' : (m.name || short(m.address)))}</span>
+      ${isArtist ? '<span class="tao">&middot; the artist</span>' : `<span class="tao">&middot; ${e(m.worn)} TAO</span>`}
       <span class="at">${e(stamp(m.at))}</span>
     </div>
     ${words}
@@ -189,20 +194,37 @@ function composer() {
       ${ROOM.pick.map((w) => `<button class="go" data-act="pick" data-uuid="${e(w.uuid)}">${e(w.name)}</button>`).join('')}
     </div></div>`;
   }
+  /* Three states out of the payload, and every one of them an affordance.
+     The middle one used to be a dead end: a wallet connected, `me` absent
+     because the request that would have fetched it never completed, and a
+     sentence with nothing to press. */
   if (!ROOM.wallet) {
     return `<div class="box"><div class="row" style="justify-content:flex-start;gap:20px">
-      <button class="go" data-act="connect">Connect a wallet to speak</button>
+      <button class="go" data-act="connect">${ROOM.asking ? 'Asking your wallet ...' : 'Connect a wallet to speak'}</button>
       <button class="go" data-act="which" style="border-color:transparent">Nothing happening?</button>
     </div></div>`;
   }
-  if (!me || !me.can_speak) {
-    return `<div class="box"><div class="say">${e((me && me.why) || 'This wallet cannot speak in the room.')}</div></div>`;
+  if (!me) {
+    // connected, and the room could not say who this is. Always a way back.
+    return `<div class="box">
+      <div class="say bad">Connected as ${e(short(ROOM.wallet))}, but the room could not read this wallet's standing. It may be a moment's trouble reaching the register.</div>
+      <div class="row" style="justify-content:flex-start;gap:20px">
+        <button class="go" data-act="again">Try again</button>
+        <button class="go" data-act="which" style="border-color:transparent">Nothing happening?</button>
+      </div></div>`;
+  }
+  if (!me.can_speak) {
+    return `<div class="box">
+      <div class="say">${e(me.why || 'This wallet cannot speak in the room.')}</div>
+      <div class="row" style="justify-content:flex-start;gap:20px">
+        <button class="go" data-act="again">Check again</button>
+      </div></div>`;
   }
   const len = ROOM.draft.length;
   return `<div class="box">
     <textarea id="text" placeholder="Say something." spellcheck="true" maxlength="${ROOM.max + 40}">${e(ROOM.draft)}</textarea>
     <div class="row">
-      <span>${e(me.name || short(ROOM.wallet))} &middot; ${e(String(me.tao.toLocaleString('en-NZ')))} TAO</span>
+      <span>${e(me.name || short(ROOM.wallet))}${me.role === 'artist' ? ' &middot; the artist' : ` &middot; ${e(Number(me.tao || 0).toLocaleString('en-NZ'))} TAO`}</span>
       <span class="count${len > ROOM.max ? ' over' : ''}" id="count">${len}/${ROOM.max}</span>
     </div>
     <div class="row" style="justify-content:flex-end">
@@ -251,10 +273,20 @@ function draw({ keep = false, toEnd = false } = {}) {
    until there are words to sign. That is worth saying out loud on the page,
    because a wallet that connects and then goes quiet reads as a failure. */
 async function connect(choice) {
+  /* Connecting never asks for a signature ... there is no session here, so
+     there is nothing to sign until there are words. But it does put a request
+     in the wallet, and that request can sit unanswered behind a window exactly
+     the way a signature can, so it gets the same treatment. */
+  ROOM.asking = true;
+  status('Asking your wallet for an account ... check your wallet.');
+  draw();
+  const slow = setTimeout(() => status('Still waiting on the wallet. Its prompt may have opened behind this window.'), 8000);
   try {
     ROOM.wallet = await MF.connect(choice);
     ROOM.pick = null;
   } catch (err) {
+    ROOM.asking = false;
+    clearTimeout(slow);
     /* Two wallets answering, neither already authorised here. The page cannot
        guess which one this person means, and guessing wrong sends the request
        somewhere it will never be answered ... which is the failure that looks
@@ -269,8 +301,11 @@ async function connect(choice) {
     // no wallet answering at all is worth saying precisely, because the reason
     // is nearly always outside the page
     if (err.code === 'no-provider') await sayWhatWeSee();
+    draw();
     return false;
   }
+  clearTimeout(slow);
+  ROOM.asking = false;
   ROOM.focus = true;
   await load();
   status(ROOM.me && ROOM.me.can_speak
@@ -330,6 +365,7 @@ document.addEventListener('click', async (ev) => {
   if (act === 'connect') return void connect();
   if (act === 'pick') return void connect(b.dataset.uuid);
   if (act === 'which') return void sayWhatWeSee();
+  if (act === 'again') return void (await load(), status(null));
 
   const run = async (fn) => {
     ROOM.busy = true;
