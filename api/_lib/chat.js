@@ -1,4 +1,4 @@
-/* The room.
+/* Studio.
  *
  * One room, for anyone holding any TAO at all. A single edition copy held for a
  * single day is a voice, and the threshold sits there on purpose: the room is
@@ -26,12 +26,12 @@ export function chatMessage({ action, text, target, address, issued, until }) {
      of the person being asked to trust it. */
   const closing = action === 'sign in'
     ? [
-      'Signing opens the room until the date above. It moves nothing and spends nothing.',
+      'Signing opens Studio until the date above. It moves nothing and spends nothing.',
       'Until then this browser can speak here without asking again.',
     ]
-    : ['Signing speaks in the room. It moves nothing and spends nothing.'];
+    : ['Signing speaks in Studio. It moves nothing and spends nothing.'];
   return [
-    'MintFace ... the room',
+    'MintFace ... Studio',
     '',
     `Action: ${action}`,
     ...(text != null ? [`Message: ${text}`] : []),
@@ -62,7 +62,7 @@ export function checkMessage(text, cfg) {
     .trim();
   if (!t) return { error: 'say something' };
   if (t.length > Number(cfg.max_chars)) {
-    return { error: `${t.length} characters, and the room's limit is ${cfg.max_chars}` };
+    return { error: `${t.length} characters, and Studio's limit is ${cfg.max_chars}` };
   }
   if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(t)) {
     return { error: 'that message carries characters this page cannot show' };

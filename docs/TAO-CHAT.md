@@ -49,6 +49,8 @@ So the signature moved up a level rather than away. One signature says this brow
 
 **Live-ness is a poll.** Six seconds, paused while the tab is hidden, asking only for what has been said since the number the page already has. A quiet room costs one small answer. No sockets, as instructed.
 
+**The name.** It is Studio, not The Room, as of 2026-08-25. Worth knowing: `/studio` was already taken by the Artist Virtual Studio, the nudges page, which is publicly reachable and titled "Artist Virtual Studio". So Studio lives at `/chat` and two things on the site now have Studio in the name. The AVS is linked from exactly one place ... the nudges line on a collector page ... so nothing collides in a footer, but it is worth settling deliberately rather than by accident.
+
 **Where it is.** `/chat`, linked from the footer of every page on both sites, and from a line on each collector page. Reading takes no wallet and no sign-in; the composer only appears once a wallet is connected and the room has said it may speak.
 
 **Checks.** `scripts/chat/test-chat.mjs`, thirty-five cases against the real route with real signatures and a stand-in Redis whose clock the test winds forward — which is the only way to check a fifteen second floor without waiting fifteen seconds. It covers the whole of item 11 and then some: speaking with four TAO, refusal at zero, public reading logged out, both rate limits and their windows passing, delete and restore, mute and unmute and what a muted wallet can still see, and paging past a hundred.

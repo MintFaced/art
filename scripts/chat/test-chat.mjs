@@ -428,6 +428,18 @@ head('One signature, then thirty days of it');
   ok(still.status === 200, 'and signing each message is still a way to speak', still.body.error);
 }
 
+head('One name, in every place a person reads it');
+{
+  const text = chatMessage({ action: 'say', text: 'x', address: A(visco), issued: '2026-08-25T00:00:00.000Z' });
+  ok(text.startsWith('MintFace ... Studio'), 'the sentence the wallet shows names Studio', text.split('\n')[0]);
+  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  ok(page.includes("'MintFace ... Studio',"), 'and the page builds the same first line');
+  ok(!/the room/i.test(text), 'with nothing left of the old name in it');
+  const refused = await say(nobody, 'Let me in.');
+  ok(/Studio is for anyone holding TAO/.test(refused.body.error || ''),
+    'and the refusal calls it Studio too', refused.body.error);
+}
+
 head('The sentence says the date, not a length');
 {
   /* If the closing lines said "for a week" and the config said thirty days,
@@ -445,7 +457,7 @@ head('The sentence says the date, not a length');
 
   // and both halves build it identically, which is the thing that breaks silently
   const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
-  const closing = 'Signing opens the room until the date above. It moves nothing and spends nothing.';
+  const closing = 'Signing opens Studio until the date above. It moves nothing and spends nothing.';
   ok(page.includes(closing) && text.includes(closing),
     'the page and the server write the same closing line');
 }

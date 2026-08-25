@@ -46,7 +46,7 @@ async function config(origin) {
   return cfg;
 }
 
-const SHUT = 'The room is for anyone holding TAO. One edition copy held for a day is enough.';
+const SHUT = 'Studio is for anyone holding TAO. One MintFace artwork, held a little while, is enough.';
 
 /** What the register knows about a wallet: what it holds, and what to call it. */
 async function whois(origin, address) {
@@ -78,7 +78,7 @@ export async function GET(request) {
   }
 
   let cfg;
-  try { cfg = await config(origin); } catch (e) { return json({ error: 'the room is not reachable' }, 503); }
+  try { cfg = await config(origin); } catch (e) { return json({ error: 'Studio is not reachable' }, 503); }
   const db = chatStore(pipe, cfg);
   const isArtist = Boolean(viewer && cfg.artist[viewer]);
 
@@ -103,7 +103,7 @@ export async function GET(request) {
         role: gate.role,
         can_speak: gate.ok && !muted,
         muted,
-        why: muted ? 'This wallet is muted in the room. You can still read.' : (gate.ok ? null : gate.why),
+        why: muted ? 'This wallet is muted in Studio. You can still read.' : (gate.ok ? null : gate.why),
         artist: isArtist,
       };
     }
@@ -113,7 +113,7 @@ export async function GET(request) {
       me, max_chars: cfg.max_chars, session_days: Number(cfg.session_days || 7), store: true,
     });
   } catch (e) {
-    return json({ error: 'the room is not reachable' }, 503);
+    return json({ error: 'Studio is not reachable' }, 503);
   }
 }
 
@@ -121,7 +121,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   const origin = useRequestOrigin(request) || siteOrigin();
-  if (!storeConfigured()) return json({ error: 'the room is not open yet' }, 503);
+  if (!storeConfigured()) return json({ error: 'Studio is not open yet' }, 503);
 
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400); }
@@ -134,7 +134,7 @@ export async function POST(request) {
   if (!ACTIONS.includes(action)) return json({ error: 'no such action' }, 400);
 
   let cfg;
-  try { cfg = await config(origin); } catch (e) { return json({ error: 'the room is not reachable' }, 503); }
+  try { cfg = await config(origin); } catch (e) { return json({ error: 'Studio is not reachable' }, 503); }
   const db = chatStore(pipe, cfg);
 
   /* Who is doing this, settled once and before anything else.
@@ -176,7 +176,7 @@ export async function POST(request) {
       return json({ error: 'that signature does not match the wallet' }, 401);
     }
     if (await db.isMuted(address)) {
-      return json({ error: 'This wallet is muted in the room. You can still read.' }, 403);
+      return json({ error: 'This wallet is muted in Studio. You can still read.' }, 403);
     }
     const fresh = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
     await db.openSession(fresh, address, days * 86400);
@@ -189,7 +189,7 @@ export async function POST(request) {
 
   /* ---- the whole moderation toolset ---- */
   if (action !== 'say') {
-    if (!isArtist) return json({ error: 'the room is moderated by the artist' }, 403);
+    if (!isArtist) return json({ error: 'Studio is moderated by the artist' }, 403);
 
     if (action === 'mute' || action === 'unmute') {
       const target = lower(body.target);
@@ -221,7 +221,7 @@ export async function POST(request) {
   if (text.error) return json({ error: text.error }, 400);
 
   if (await db.isMuted(address)) {
-    return json({ error: 'This wallet is muted in the room. You can still read.' }, 403);
+    return json({ error: 'This wallet is muted in Studio. You can still read.' }, 403);
   }
 
   const who = await whois(origin, address);
