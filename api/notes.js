@@ -100,7 +100,8 @@ async function taoOf(origin, address) {
 
 /** One row as the stream and a collector's own list read it. */
 const rowOf = (r) => ({
-  id: r.id, work: r.work, title: r.title || null, at: r.at, role: r.role,
+  id: r.id, work: r.work, title: r.title || null, image: r.image || null,
+  at: r.at, role: r.role, tao_at_post: r.tao_at_post || 0,
   name: r.name || null, address: r.address, text: r.text,
   visibility: r.visibility, edited: Boolean(r.edited_at),
 });
@@ -277,6 +278,10 @@ export async function POST(request) {
   const now = new Date().toISOString();
   const note = {
     id: noteId(), work: workId, title: hit.work.title || workId, collection: hit.collection.slug,
+    // the stream shows the work beside the words, and looking up eight hundred
+    // records to draw one page is not worth it for a path that rarely moves
+    image: (hit.work.assets && (hit.work.assets.display || hit.work.assets.image))
+      || (hit.work.digital && hit.work.digital.image) || null,
     address, name: who.name || (await nameOf(origin, address)),
     role: who.role, tao_at_post: who.role === 'senior' ? who.tao : (tao || 0),
     held_since: who.role === 'collector' ? (heldSince(hit.work, address) || now) : null,

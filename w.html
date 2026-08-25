@@ -221,46 +221,53 @@ details summary:hover{color:var(--ink)}
 
 
 /* ---------- notes ---------- */
-/* A layer of other people's writing on the artist's page, so it stays quieter
-   than everything around it: hairlines, mono labels, and no avatars, badges or
-   counts of approval. Words only. */
-.notes{margin-top:36px;border-top:1px solid var(--rule);padding-top:20px}
-.notes h2,.notes .head{font-family:var(--font-mono);font-weight:400;font-size:10.5px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:0 0 6px}
-.notes .head{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
-.notes .head button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;
+/* A row in the Details table, so it wears the table's language: the label in
+   sans on the left, the value on the right, one hairline underneath. The note
+   itself is the exception ... it is prose, and prose in tabular mono is a
+   receipt. Everything around it stays mono and small. */
+.nt-row th{vertical-align:top}
+.nt-row .nt-act{display:block;margin-top:6px;font-family:var(--font-mono);font-weight:400;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.nt-row .nt-act button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;
   text-transform:inherit;color:var(--faint);cursor:pointer}
-.notes .head button:hover{color:var(--ink)}
-.nt{padding:16px 0;border-bottom:1px solid var(--rule)}
-.nt:last-child{border-bottom:0}
-.nt .lab{font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--faint)}
-.nt .lab .who{color:var(--muted)}
-.nt .lab .tao{font-variant-numeric:tabular-nums}
-.nt p{white-space:pre-wrap;overflow-wrap:anywhere;margin:9px 0 0;font-size:15px;line-height:1.68;color:#2c2924}
-.nt .foot{margin-top:9px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--faint);display:flex;gap:16px;flex-wrap:wrap}
-.nt .foot button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;
+.nt-row .nt-act button:hover{color:var(--ink)}
+.nt-row td{font-family:var(--font-sans);font-size:13px}
+.nt{padding:0 0 2px}
+.nt + .nt{margin-top:16px;padding-top:16px;border-top:1px solid var(--rule)}
+.nt p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font-size:14px;line-height:1.65;color:#2c2924}
+.nt-by{margin-top:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint);line-height:1.8}
+.nt.own{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
+.nt-acts{margin-top:6px;display:flex;gap:14px;font-family:var(--font-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase}
+.nt-acts button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;
   text-transform:inherit;color:var(--faint);cursor:pointer}
-.nt .foot button:hover{color:var(--ink)}
-.nt.mine{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
-.nt.hidden-note{opacity:.5}
-.nt-form{padding:16px 0;border-top:1px solid var(--rule)}
-.nt-form textarea{width:100%;min-height:92px;resize:vertical;background:transparent;
-  border:1px solid var(--rule);color:var(--ink);padding:11px 12px;font-family:var(--font-sans);
-  font-size:15px;line-height:1.6}
-.nt-form textarea:focus{outline:none;border-color:var(--mark)}
-.nt-form .row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.nt-form .row label{display:inline-flex;align-items:center;gap:7px;cursor:pointer;letter-spacing:inherit}
-.nt-form .row .count{font-variant-numeric:tabular-nums}
-.nt-form .row .count.over{color:#a33}
-.nt-form .go{background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;
-  padding:7px 14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
-.nt-form .go:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
-.nt-form .go:disabled{opacity:.45;cursor:default}
-.nt-say{font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--muted);margin-top:10px}
+.nt-acts button:hover{color:var(--ink)}
+.nt-all{display:block;margin-top:12px;background:none;border:0;padding:0;cursor:pointer;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.nt-all:hover{color:var(--ink)}
+
+/* the value becomes the editor, in place */
+.nt-edit textarea{width:100%;min-height:88px;resize:vertical;background:transparent;
+  border:1px solid var(--rule);color:var(--ink);padding:10px 11px;
+  font-family:var(--font-sans);font-size:14px;line-height:1.6}
+.nt-edit textarea:focus{outline:none;border-color:var(--mark)}
+.nt-edit-foot{display:flex;align-items:center;gap:16px;margin-top:9px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.nt-edit-foot label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;letter-spacing:inherit}
+.nt-edit-foot .nt-count{margin-left:auto;font-variant-numeric:tabular-nums}
+.nt-edit-foot .nt-count.over{color:#a33}
+.nt-go{background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;padding:6px 12px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.nt-go:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.nt-go:disabled{opacity:.45;cursor:default}
+.nt-say{margin-top:9px;font-family:var(--font-mono);font-size:10.5px;line-height:1.7;color:var(--muted)}
 .nt-say.bad{color:#a33}
+
+/* former collectors, in the provenance fold where their tenure already lives */
+.nt-prov{margin-top:20px;padding-top:16px;border-top:1px solid var(--rule)}
+.nt-prov-head{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint);margin-bottom:12px}
 
 @media(max-width:640px){
   .bar{padding:18px 20px}
@@ -378,7 +385,13 @@ function detailRows(work, collection) {
   }
   if (MF.animationUrl(work)) rows.push(['Motion', 'Yes, plays under the still']);
 
-  return `<table class="rows">${rows.map(([k, v]) => `<tr><th>${e(k)}</th><td>${v}</td></tr>`).join('')}</table>`;
+  /* Notes are the last row, filled in once they load. They live in the table
+     rather than in a section of their own because that is what they are: one
+     more thing that is true about this work, beside its year and its medium.
+     The row stays out of the document entirely until there is something in it
+     or somebody who may write in it. */
+  return `<table class="rows">${rows.map(([k, v]) => `<tr><th>${e(k)}</th><td>${v}</td></tr>`).join('')}`
+    + '<tr class="nt-row" id="ntRow" hidden><th></th><td></td></tr></table>';
 }
 
 // Traits come off chain as they were written, in their own order.
@@ -444,6 +457,7 @@ function provenanceFold(work) {
         <table class="rows">
           ${rows.map(([k, v, mono]) => `<tr><th>${e(k)}</th><td class="${mono ? 'mono' : ''}">${v}</td></tr>`).join('')}
         </table>
+        <div id="provNotes" hidden></div>
         ${links.length ? `<div class="chain-links">${links.map(([t, u]) => `<a href="${e(u)}" target="_blank" rel="noopener">${e(t)}</a>`).join('')}</div>` : ''}
       </div>
     </details>`;
@@ -742,8 +756,6 @@ function render(work, collection, meta) {
         ${traitRows(traits)}
       </div>` : ''}
 
-      <section class="notes" id="notes" hidden></section>
-
       <div style="margin-top:30px">
         ${provenanceFold(work)}
         ${holdersBlock(work)}
@@ -767,14 +779,21 @@ function render(work, collection, meta) {
 }
 
 /* ---------- notes ---------- */
-/* A work grows a layer of writing: the artist, whoever holds it, and the
-   collectors who have held enough for long enough to be worth hearing from.
-   The page asks who the connected wallet is before offering a form, so nobody
-   is invited to sign something that will be refused.
-
-   Nothing here is drawn at all until the store exists. Until then a work page
-   is exactly the page it was. */
-const NOTES = { id: null, wallet: null, data: null, open: false, prov: false, writing: null, busy: false, say: null };
+/* A work grows a line of writing, in the Details table, as its last row.
+ *
+ * Not a section of its own. A note is one more thing that is true about this
+ * work, beside its year and its medium, and putting it in the table says that
+ * more plainly than a heading ever could. The row shows the newest note; where
+ * there are more, they unfold underneath it in the same table language.
+ *
+ * Writing happens in the row. There is no page to go to and no dialogue to
+ * open ... the value becomes an input, and saving turns it back into a note.
+ *
+ * And the row is silent when it has nothing to say. No public note and no
+ * right to write one, and it never enters the document at all: no empty state,
+ * no explanation of a thing you cannot do. Absence is silent.
+ */
+const NOTES = { id: null, wallet: null, data: null, open: false, writing: null, busy: false, say: null };
 
 // the same sentence api/_lib/notes.js builds, to the character
 const noteSentence = ({ action, work, text, visibility, address, issued }) => [
@@ -792,18 +811,10 @@ const noteSentence = ({ action, work, text, visibility, address, issued }) => [
 
 async function wireNotes(work) {
   NOTES.id = work.id;
-  const el = document.getElementById('notes');
-  if (!el) return;
-  el.addEventListener('click', onNoteClick);
-  el.addEventListener('input', (ev) => {
-    if (!ev.target.matches('#ntText') || !NOTES.writing) return;
-    NOTES.writing.text = ev.target.value;
-    const max = (NOTES.data && NOTES.data.max_chars) || 500;
-    const c = el.querySelector('#ntCount');
-    if (c) { c.textContent = `${ev.target.value.length}/${max}`; c.classList.toggle('over', ev.target.value.length > max); }
-    const go = el.querySelector('#ntGo');
-    if (go) go.disabled = !ev.target.value.trim() || ev.target.value.length > max;
-  });
+  /* Who is here, asked of the wallet rather than of the person. A wallet
+     already connected to this site answers without a prompt; one that is not
+     says nothing, and nothing is what the page then offers. */
+  NOTES.wallet = await MF.knownAccount();
   await loadNotes();
 }
 
@@ -817,108 +828,118 @@ async function loadNotes() {
   drawNotes();
 }
 
-/* Written straight into the DOM rather than through drawNotes(), because the
-   thing it most needs to report ... a signature sitting in a wallet ... happens
-   while a half-written note is in the box. */
+/* Written into the row rather than through a redraw, so saying something does
+   not take a half-written note out from under the person writing it. */
 const notesSay = (text, bad) => {
   NOTES.say = text ? { text, bad: Boolean(bad) } : null;
-  const el = document.querySelector('#notes .nt-say');
+  const el = document.getElementById('ntSay');
   if (!el) { drawNotes(); return; }
   el.textContent = text || '';
   el.classList.toggle('bad', Boolean(bad));
   el.hidden = !text;
 };
 
-function noteCard(n) {
-  const who = n.kind === 'artist' ? "Artist's note"
-    : n.kind === 'provenance' ? `Provenance note <span class="who">&middot; ${e(n.byline)}, ${e(n.tenure)}</span>`
-      : `Collector's note <span class="who">&middot; ${e(n.byline)}</span>${n.tao ? ` <span class="tao">&middot; ${n.tao.toLocaleString('en-NZ')} TAO</span>` : ''}`;
-  const foot = [
-    n.visibility === 'private' ? '<span>Private to you</span>' : '',
-    n.hidden ? '<span>Hidden</span>' : '',
-    n.edited ? '<span>(edited)</span>' : '',
-    n.can_edit ? `<button data-act="edit" data-id="${e(n.id)}">Edit</button>` : '',
-    n.can_edit ? `<button data-act="delete" data-id="${e(n.id)}">Delete</button>` : '',
-    n.can_hide && !n.mine ? `<button data-act="${n.hidden ? 'show' : 'hide'}" data-id="${e(n.id)}">${n.hidden ? 'Show' : 'Hide'}</button>` : '',
-  ].filter(Boolean).join('');
-  return `<article class="nt${n.mine ? ' mine' : ''}${n.hidden ? ' hidden-note' : ''}">
-    <div class="lab">${who}</div>
-    <p>${e(n.text)}</p>
-    ${foot ? `<div class="foot">${foot}</div>` : ''}
-  </article>`;
+const noteDate = (s) => {
+  const d = new Date(s);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' });
+};
+const wearTao = (n) => {
+  const v = Math.floor(Number(n) || 0);
+  if (v >= 1000000) return `${(v / 1000000).toFixed(2).replace(/\.?0+$/, '')}M`;
+  if (v >= 1000) return `${(v / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  return String(v);
+};
+
+/** NAME · ROLE · DATE, in the small mono the table uses for its labels. */
+function byline(n) {
+  const role = n.kind === 'artist' ? 'Artist'
+    : n.kind === 'provenance' ? e(n.tenure)
+      : n.tao ? `Collector &middot; ${wearTao(n.tao)} TAO`
+        : 'Collector';
+  const bits = [e(n.byline), role, e(noteDate(n.at))];
+  if (n.visibility === 'private') bits.push('Private to you');
+  if (n.edited) bits.push('edited');
+  return `<div class="nt-by">${bits.join(' &middot; ')}</div>`;
 }
 
-function noteForm() {
+function noteBlock(n, { own } = {}) {
+  const acts = [];
+  if (n.can_edit) acts.push(`<button data-act="edit" data-id="${e(n.id)}">Edit</button>`);
+  if (n.can_edit) acts.push(`<button data-act="delete" data-id="${e(n.id)}">Delete</button>`);
+  if (n.can_hide && !n.mine) acts.push(`<button data-act="hide" data-id="${e(n.id)}">Hide</button>`);
+  return `<div class="nt${own ? ' own' : ''}">
+    <p>${e(n.text)}</p>
+    ${byline(n)}
+    ${acts.length ? `<div class="nt-acts">${acts.join('')}</div>` : ''}
+  </div>`;
+}
+
+function noteEditor() {
   const w = NOTES.writing;
   const max = (NOTES.data && NOTES.data.max_chars) || 500;
   const me = (NOTES.data && NOTES.data.me) || {};
-  const priv = Boolean(me.can_be_private) && !w.id;
+  const canPrivate = Boolean(me.can_be_private) && !w.id;
   const len = (w.text || '').length;
-  return `<div class="nt-form">
-    <textarea id="ntText" maxlength="${max + 40}" placeholder="${w.id ? '' : 'Write about the work.'}"
-      spellcheck="true">${e(w.text || '')}</textarea>
-    <div class="row">
-      ${priv ? `<label><input type="checkbox" id="ntPriv"${w.visibility === 'private' ? ' checked' : ''}> Keep this one private</label>` : '<span></span>'}
-      <span class="count${len > max ? ' over' : ''}" id="ntCount">${len}/${max}</span>
-    </div>
-    <div class="row">
-      <button class="go" data-act="cancel">Cancel</button>
-      <button class="go" id="ntGo" data-act="post"${len && len <= max ? '' : ' disabled'}>${w.id ? 'Save' : 'Sign and post'}</button>
+  return `<div class="nt-edit">
+    <textarea id="ntText" maxlength="${max + 40}" placeholder="Write about the work." spellcheck="true">${e(w.text || '')}</textarea>
+    <div class="nt-edit-foot">
+      ${canPrivate ? `<label><input type="checkbox" id="ntPriv"${w.visibility === 'private' ? ' checked' : ''}> Private to me</label>` : '<span></span>'}
+      <span class="nt-count${len > max ? ' over' : ''}" id="ntCount">${len}/${max}</span>
+      <button class="nt-go" id="ntGo" data-act="post"${len && len <= max ? '' : ' disabled'}>${w.id ? 'Save' : 'Sign and add'}</button>
     </div>
   </div>`;
 }
 
 function drawNotes() {
-  const el = document.getElementById('notes');
-  if (!el) return;
+  const row = document.getElementById('ntRow');
+  const prov = document.getElementById('provNotes');
+  if (!row) return;
+
   const d = NOTES.data;
-  // no store, no room. The page is the page it always was.
-  if (!d || d.store === false) { el.hidden = true; el.innerHTML = ''; return; }
+  const list = (d && d.notes) || [];
+  const gone = (d && d.provenance) || [];
+  const me = d && d.me;
 
-  const list = d.notes || [];
-  const prov = d.provenance || [];
-  const fold = Number(d.fold_after || 3);
-  const folded = list.length > fold && !NOTES.open;
-  const shown = folded ? list.slice(0, fold) : list;
-  const me = d.me;
+  /* Provenance notes sit with the provenance, which is where a former
+     collector's tenure already lives. */
+  if (prov) {
+    if (gone.length) {
+      prov.innerHTML = `<div class="nt-prov"><div class="nt-prov-head">Notes from former collectors</div>`
+        + gone.map((n) => noteBlock(n)).join('') + '</div>';
+      prov.hidden = false;
+    } else { prov.innerHTML = ''; prov.hidden = true; }
+  }
 
-  // nothing written, nobody who could write: leave the page alone
-  if (!list.length && !prov.length && !(me && me.can_write) && !NOTES.writing && !NOTES.say) {
-    el.hidden = true; el.innerHTML = '';
+  // no store, nothing written, nobody who may write: the row never appears
+  if (!d || d.store === false || (!list.length && !(me && me.can_write) && !NOTES.writing)) {
+    row.hidden = true;
+    row.querySelector('th').innerHTML = '';
+    row.querySelector('td').innerHTML = '';
     return;
   }
 
-  const action = NOTES.writing ? ''
-    : me && me.can_write ? '<button data-act="write">Write a note</button>'
-      : me ? ''
-        : '<button data-act="write">Write a note</button>';
+  const mine = NOTES.wallet ? list.find((n) => n.mine) : null;
+  const act = NOTES.writing ? `<button data-act="cancel">Cancel</button>`
+    : me && me.can_write ? `<button data-act="${mine ? 'edit' : 'write'}"${mine ? ` data-id="${e(mine.id)}"` : ''}>${mine ? 'Edit' : 'Add a note'}</button>`
+      : '';
 
-  const head = `<div class="head"><span>Notes${folded ? ` &middot; ${list.length}` : ''}</span>${action}</div>`;
-  const more = folded ? `<div class="head"><button data-act="open">Read all ${list.length}</button></div>` : '';
-  const provFold = prov.length
-    ? `<div class="head" style="margin-top:18px"><button data-act="prov">Provenance notes &middot; ${prov.length}</button></div>`
-      + (NOTES.prov ? prov.map(noteCard).join('') : '')
-    : '';
-  const say = `<div class="nt-say${NOTES.say && NOTES.say.bad ? ' bad' : ''}"${NOTES.say ? '' : ' hidden'}>${e(NOTES.say ? NOTES.say.text : '')}</div>`;
+  const fold = (d.fold_after || 3);
+  const shown = NOTES.writing ? [] : (NOTES.open ? list : list.slice(0, 1));
+  const rest = list.length - shown.length;
 
-  el.innerHTML = head + shown.map(noteCard).join('') + more
-    + (NOTES.writing ? noteForm() : '') + say + provFold;
-  el.hidden = false;
+  row.querySelector('th').innerHTML = `Notes${act ? `<span class="nt-act">${act}</span>` : ''}`;
+  row.querySelector('td').innerHTML =
+    (NOTES.writing ? noteEditor() : shown.map((n) => noteBlock(n, { own: n.mine })).join(''))
+    + (!NOTES.writing && rest > 0 ? `<button class="nt-all" data-act="open">All notes &middot; ${list.length}</button>` : '')
+    + (!NOTES.writing && NOTES.open && list.length > 1 ? `<button class="nt-all" data-act="close">Fewer</button>` : '')
+    + `<div class="nt-say" id="ntSay"${NOTES.say ? '' : ' hidden'}>${e(NOTES.say ? NOTES.say.text : '')}</div>`;
+  row.hidden = false;
+  void fold;
+
   if (NOTES.writing) {
-    const t = el.querySelector('#ntText');
+    const t = document.getElementById('ntText');
     if (t && document.activeElement !== t) { t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
   }
-}
-
-/* Connecting connects. No signature is asked for here and none is needed:
-   there is no session, so there is nothing to sign until there are words. */
-async function notesConnect() {
-  try {
-    NOTES.wallet = await MF.connect();
-  } catch (err) { notesSay(String(err.message || err), true); return false; }
-  NOTES.say = null;
-  await loadNotes();
-  return true;
 }
 
 async function notesSend(payload) {
@@ -927,7 +948,7 @@ async function notesSend(payload) {
   const signature = await MF.sign(message, NOTES.wallet, (state, why) => {
     if (state === 'requested') notesSay('Signature requested ... check your wallet.');
     if (state === 'slow') notesSay('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
-    if (state === 'signed') notesSay('Signed. Sending.');
+    if (state === 'signed') notesSay('Signed. Saving.');
     if (state === 'failed') notesSay(why, true);
   });
   const r = await fetch('/api/notes', {
@@ -939,21 +960,27 @@ async function notesSend(payload) {
   return j;
 }
 
-async function onNoteClick(ev) {
-  const b = ev.target.closest('button[data-act]');
+document.addEventListener('input', (ev) => {
+  if (!ev.target.matches('#ntText') || !NOTES.writing) return;
+  NOTES.writing.text = ev.target.value;
+  const max = (NOTES.data && NOTES.data.max_chars) || 500;
+  const c = document.getElementById('ntCount');
+  if (c) { c.textContent = `${ev.target.value.length}/${max}`; c.classList.toggle('over', ev.target.value.length > max); }
+  const go = document.getElementById('ntGo');
+  if (go) go.disabled = !ev.target.value.trim() || ev.target.value.length > max;
+});
+
+document.addEventListener('click', async (ev) => {
+  const b = ev.target.closest('.nt-row button[data-act], #provNotes button[data-act]');
   if (!b || NOTES.busy) return;
   const act = b.dataset.act;
   const id = b.dataset.id;
-  const el = document.getElementById('notes');
 
   if (act === 'open') { NOTES.open = true; drawNotes(); return; }
-  if (act === 'prov') { NOTES.prov = !NOTES.prov; drawNotes(); return; }
+  if (act === 'close') { NOTES.open = false; drawNotes(); return; }
   if (act === 'cancel') { NOTES.writing = null; NOTES.say = null; drawNotes(); return; }
 
   if (act === 'write') {
-    if (!NOTES.wallet && !(await notesConnect())) return;
-    const me = NOTES.data && NOTES.data.me;
-    if (!me || !me.can_write) { notesSay(me ? me.why : 'this wallet may not write here', true); return; }
     NOTES.writing = { id: null, text: '', visibility: 'public' };
     NOTES.say = null;
     drawNotes();
@@ -961,7 +988,8 @@ async function onNoteClick(ev) {
   }
 
   if (act === 'edit') {
-    const n = (NOTES.data.notes || []).concat(NOTES.data.provenance || []).find((x) => x.id === id);
+    const all = ((NOTES.data.notes || []).concat(NOTES.data.provenance || []));
+    const n = all.find((x) => x.id === id);
     if (!n) return;
     NOTES.writing = { id, text: n.text, visibility: n.visibility };
     NOTES.say = null;
@@ -972,54 +1000,38 @@ async function onNoteClick(ev) {
   const run = async (fn) => {
     NOTES.busy = true;
     b.disabled = true;
-    const label = b.textContent;
-    b.textContent = 'Waiting on the wallet';
-    try {
-      await fn();
-    } catch (err) {
-      // MF.sign has already written its own reason, and it is the better one
-      notesSay(String((err && err.message) || err), true);
-    } finally {
-      NOTES.busy = false;
-      if (document.body.contains(b)) { b.disabled = false; b.textContent = label; }
-    }
+    try { await fn(); } catch (err) { notesSay(String((err && err.message) || err), true); }
+    finally { NOTES.busy = false; }
   };
 
   if (act === 'delete') {
     if (!window.confirm('Delete this note? It does not come back.')) return;
-    await run(async () => {
+    return run(async () => {
       await notesSend({ action: 'delete', id, work: NOTES.id });
-      NOTES.writing = null;
+      NOTES.writing = null; NOTES.say = null;
       await loadNotes();
-      notesSay(null);
     });
-    return;
   }
 
-  if (act === 'hide' || act === 'show') {
-    await run(async () => {
-      await notesSend({ action: act, id, work: NOTES.id });
+  if (act === 'hide') {
+    return run(async () => {
+      await notesSend({ action: 'hide', id, work: NOTES.id });
       await loadNotes();
     });
-    return;
   }
 
   if (act === 'post') {
-    const text = (el.querySelector('#ntText') || {}).value || '';
-    const box = el.querySelector('#ntPriv');
+    const text = (document.getElementById('ntText') || {}).value || '';
+    const box = document.getElementById('ntPriv');
     const visibility = box && box.checked ? 'private' : 'public';
-    await run(async () => {
-      if (NOTES.writing.id) {
-        await notesSend({ action: 'edit', id: NOTES.writing.id, work: NOTES.id, text });
-      } else {
-        await notesSend({ action: 'write', work: NOTES.id, text, visibility });
-      }
-      NOTES.writing = null; NOTES.open = true;
+    return run(async () => {
+      if (NOTES.writing.id) await notesSend({ action: 'edit', id: NOTES.writing.id, work: NOTES.id, text });
+      else await notesSend({ action: 'write', work: NOTES.id, text, visibility });
+      NOTES.writing = null; NOTES.say = null; NOTES.open = true;
       await loadNotes();
-      notesSay(null);
     });
   }
-}
+});
 
 function wireZoom(work) {
   // a film or a living SVG is already doing something; taking it over with a

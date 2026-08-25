@@ -1310,6 +1310,25 @@ const MF = {
     }));
   },
 
+  /* Who is here, without asking anybody anything.
+     eth_accounts prompts nothing: a wallet already connected to this site
+     answers, and one that is not returns an empty list. It is the only way a
+     page can know whether to offer a writer their pen before they have said
+     they want it ... and offering it only to people who can use it is the
+     difference between an affordance and an advertisement. */
+  async knownAccount() {
+    try {
+      const list = await this.wallets();
+      for (const w of list) {
+        try {
+          const accounts = await w.provider.request({ method: 'eth_accounts' });
+          if (accounts && accounts[0]) { this._wallet = w; return String(accounts[0]).toLowerCase(); }
+        } catch (e) { /* a provider that will not answer is not the one */ }
+      }
+    } catch (e) { /* no wallet here at all */ }
+    return null;
+  },
+
   /** What this browser looks like, in words a person can read back to us. */
   async walletReport() {
     const list = await this.wallets();
