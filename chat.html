@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Room ... MintFace</title>
+<meta name="description" content="One room, for anyone holding TAO. Public to read.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:720px;margin:0 auto;padding:60px 28px 0}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);line-height:.96;margin:0;letter-spacing:-.035em}
+.sub{font-size:13px;color:var(--muted);margin-top:20px;max-width:44em;line-height:1.7}
+.room{max-width:720px;margin:0 auto;padding:24px 28px 40px}
+
+.earlier{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);background:none;border:0;padding:14px 0;cursor:pointer;display:block;width:100%;text-align:left;
+  border-bottom:1px solid var(--rule)}
+.earlier:hover{color:var(--ink)}
+
+.m{padding:16px 0;border-bottom:1px solid var(--rule)}
+.m:last-child{border-bottom:0}
+.m .who{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
+.m .who .tao{color:var(--faint);font-variant-numeric:tabular-nums}
+.m .who .at{color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
+.m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font-size:15px;line-height:1.68;color:#2c2924}
+.m .gone{margin:8px 0 0;font-family:var(--font-mono);font-size:11.5px;color:var(--faint)}
+.m.mine{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
+.m .mod{margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  display:flex;gap:16px;color:var(--faint)}
+.m .mod button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;
+  color:var(--faint);cursor:pointer}
+.m .mod button:hover{color:var(--ink)}
+
+.speak{max-width:720px;margin:0 auto;padding:0 28px 110px}
+.speak .box{border-top:1px solid var(--rule);padding-top:18px}
+.speak textarea{width:100%;min-height:84px;resize:vertical;background:transparent;border:1px solid var(--rule);
+  color:var(--ink);padding:11px 12px;font-family:var(--font-sans);font-size:15px;line-height:1.6}
+.speak textarea:focus{outline:none;border-color:var(--mark)}
+.speak .row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.speak .count{font-variant-numeric:tabular-nums}
+.speak .count.over{color:#a33}
+.speak .go{background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;padding:8px 15px;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+.speak .go:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.speak .go:disabled{opacity:.45;cursor:default}
+.say{font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--muted);margin-top:10px}
+.say.bad{color:#a33}
+.empty{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding:34px 0}
+
+@media(max-width:640px){
+  .mast{padding:34px 20px 0}
+  .room{padding:18px 20px 30px}
+  .speak{padding:0 20px 80px}
+  .m .who .at{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/notes">Notes</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="https://collectors.mintface.art/">Collectors</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+/* The room.
+ *
+ * A guestbook that happens to be live. It reads downward like a page rather
+ * than upward like a feed, it loads earlier when asked rather than infinitely,
+ * and it polls every few seconds because a salon is not a trading floor.
+ *
+ * Reading takes nothing. The composer only appears once a wallet is connected
+ * and the room has said it may speak, so nobody is invited to sign something
+ * that will be refused.
+ */
+const e = MF.escape;
+const ROOM = {
+  wallet: null, rows: [], total: 0, start: 0, more: false, me: null,
+  max: 500, busy: false, say: null, draft: '', timer: null,
+};
+
+const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
+const stamp = (s) => {
+  const d = new Date(s);
+  if (isNaN(d)) return '';
+  const day = d.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
+  const time = d.toLocaleTimeString('en-NZ', { hour: '2-digit', minute: '2-digit', hour12: false });
+  return `${day} ${time}`;
+};
+
+// the same sentence api/_lib/chat.js builds, to the character
+const sentence = ({ action, text, target, address, issued }) => [
+  'MintFace ... the room',
+  '',
+  `Action: ${action}`,
+  ...(text != null ? [`Message: ${text}`] : []),
+  ...(target ? [`Subject: ${target}`] : []),
+  `Wallet: ${address}`,
+  `Issued: ${issued}`,
+  '',
+  'Signing speaks in the room. It moves nothing and spends nothing.',
+].join('\n');
+
+const api = async (qs) => {
+  const q = new URLSearchParams(qs || {});
+  if (ROOM.wallet) q.set('viewer', ROOM.wallet);
+  const r = await fetch(`/api/chat${q.toString() ? `?${q}` : ''}`, { headers: { accept: 'application/json' } });
+  return r.ok ? r.json() : null;
+};
+
+async function load() {
+  const d = await api();
+  if (!d) { ROOM.rows = []; draw(); return; }
+  ROOM.rows = d.messages || [];
+  ROOM.total = d.total || 0;
+  ROOM.start = d.start || 0;
+  ROOM.more = Boolean(d.more);
+  ROOM.me = d.me || null;
+  ROOM.max = d.max_chars || 500;
+  ROOM.open = d.store !== false;
+  draw();
+}
+
+async function earlier() {
+  if (!ROOM.more || ROOM.busy) return;
+  ROOM.busy = true;
+  const d = await api({ before: String(ROOM.start) });
+  ROOM.busy = false;
+  if (!d) return;
+  ROOM.rows = (d.messages || []).concat(ROOM.rows);
+  ROOM.start = d.start || 0;
+  ROOM.more = Boolean(d.more);
+  draw({ keep: true });
+}
+
+/* Polling, not sockets. A quiet room costs one small answer every few seconds,
+   which is the right price for a room where somebody speaks twice a day. */
+async function poll() {
+  if (ROOM.busy || document.hidden) return;
+  const d = await api({ since: String(ROOM.total) });
+  if (!d || !d.messages || !d.messages.length) return;
+  ROOM.rows = ROOM.rows.concat(d.messages);
+  ROOM.total = d.total || ROOM.total + d.messages.length;
+  draw({ toEnd: true });
+}
+
+function card(m) {
+  const mine = ROOM.wallet && m.address === ROOM.wallet;
+  const mod = ROOM.me && ROOM.me.artist ? `<div class="mod">
+      <button data-act="${m.deleted ? 'restore' : 'delete'}" data-n="${m.n}">${m.deleted ? 'Restore' : 'Delete'}</button>
+      <button data-act="mute" data-who="${e(m.address)}">Mute this wallet</button>
+    </div>` : '';
+  const words = m.text == null
+    ? '<p class="gone">Taken down.</p>'
+    : `<p>${e(m.text)}${m.deleted ? '' : ''}</p>`;
+  return `<article class="m${mine ? ' mine' : ''}">
+    <div class="who">
+      <span>${e(m.name || short(m.address))}</span>
+      <span class="tao">&middot; ${e(m.worn)} TAO</span>
+      <span class="at">${e(stamp(m.at))}</span>
+    </div>
+    ${words}
+    ${mod}
+  </article>`;
+}
+
+function composer() {
+  const me = ROOM.me;
+  if (!ROOM.open) return '';
+  if (!ROOM.wallet) {
+    return `<div class="box"><div class="row" style="justify-content:flex-start">
+      <button class="go" data-act="connect">Connect a wallet to speak</button>
+    </div></div>`;
+  }
+  if (!me || !me.can_speak) {
+    return `<div class="box"><div class="say">${e((me && me.why) || 'This wallet cannot speak in the room.')}</div></div>`;
+  }
+  const len = ROOM.draft.length;
+  return `<div class="box">
+    <textarea id="text" placeholder="Say something." spellcheck="true" maxlength="${ROOM.max + 40}">${e(ROOM.draft)}</textarea>
+    <div class="row">
+      <span>${e(me.name || short(ROOM.wallet))} &middot; ${e(String(me.tao.toLocaleString('en-NZ')))} TAO</span>
+      <span class="count${len > ROOM.max ? ' over' : ''}" id="count">${len}/${ROOM.max}</span>
+    </div>
+    <div class="row" style="justify-content:flex-end">
+      <button class="go" id="go" data-act="say"${len && len <= ROOM.max ? '' : ' disabled'}>Sign and say</button>
+    </div>
+  </div>`;
+}
+
+function draw({ keep = false, toEnd = false } = {}) {
+  const before = keep ? document.documentElement.scrollHeight : 0;
+  const say = ROOM.say ? `<div class="say${ROOM.say.bad ? ' bad' : ''}">${e(ROOM.say.text)}</div>` : '';
+
+  document.getElementById('main').innerHTML = `
+    <section class="mast">
+      <h1>The Room</h1>
+      <div class="sub">One room, for anyone holding TAO. A single edition copy held for a single day is a voice.
+      Public to read, wallet or no wallet. Nothing said here is ever removed from the record.</div>
+    </section>
+    <section class="room" id="log">
+      ${ROOM.more ? '<button class="earlier" data-act="earlier">Read earlier</button>' : ''}
+      ${ROOM.rows.length ? ROOM.rows.map(card).join('') : '<div class="empty">Nobody has said anything yet.</div>'}
+    </section>
+    <section class="speak">${composer()}${say}</section>`;
+
+  if (keep) window.scrollBy(0, document.documentElement.scrollHeight - before);
+  if (toEnd) window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  const t = document.getElementById('text');
+  if (t && ROOM.focus) { t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
+}
+
+async function connect() {
+  if (!window.ethereum) {
+    ROOM.say = { text: 'No wallet found in this browser. Rainbow, MetaMask or any injected wallet will do.', bad: true };
+    draw();
+    return false;
+  }
+  try {
+    const [a] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    ROOM.wallet = String(a).toLowerCase();
+  } catch (err) {
+    ROOM.say = { text: 'The wallet did not connect.', bad: true };
+    draw();
+    return false;
+  }
+  ROOM.say = null;
+  ROOM.focus = true;
+  await load();
+  return true;
+}
+
+async function send(payload) {
+  const issued = new Date().toISOString();
+  const message = sentence({ ...payload, address: ROOM.wallet, issued });
+  const signature = await window.ethereum.request({ method: 'personal_sign', params: [message, ROOM.wallet] });
+  const r = await fetch('/api/chat', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ ...payload, address: ROOM.wallet, issued, signature }),
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || 'that did not go through');
+  return j;
+}
+
+document.addEventListener('input', (ev) => {
+  if (!ev.target.matches('#text')) return;
+  ROOM.draft = ev.target.value;
+  const c = document.getElementById('count');
+  if (c) { c.textContent = `${ROOM.draft.length}/${ROOM.max}`; c.classList.toggle('over', ROOM.draft.length > ROOM.max); }
+  const go = document.getElementById('go');
+  if (go) go.disabled = !ROOM.draft.trim() || ROOM.draft.length > ROOM.max;
+});
+
+document.addEventListener('click', async (ev) => {
+  const b = ev.target.closest('button[data-act]');
+  if (!b || ROOM.busy) return;
+  const act = b.dataset.act;
+
+  if (act === 'earlier') return earlier();
+  if (act === 'connect') return void connect();
+
+  const run = async (fn) => {
+    ROOM.busy = true;
+    b.disabled = true;
+    try { await fn(); } catch (err) { ROOM.say = { text: String(err.message || err), bad: true }; draw(); }
+    ROOM.busy = false;
+  };
+
+  if (act === 'say') {
+    const text = (document.getElementById('text') || {}).value || '';
+    return run(async () => {
+      await send({ action: 'say', text });
+      ROOM.draft = '';
+      ROOM.say = null;
+      ROOM.focus = true;
+      await load();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+  }
+
+  if (act === 'delete' || act === 'restore') {
+    return run(async () => {
+      await send({ action: act, target: String(b.dataset.n) });
+      ROOM.say = null;
+      await load();
+    });
+  }
+
+  if (act === 'mute') {
+    const who = b.dataset.who;
+    if (!window.confirm(`Mute ${who}? They can still read, and nothing in the room will say so.`)) return;
+    return run(async () => {
+      await send({ action: 'mute', target: who });
+      ROOM.say = { text: `${who} is muted.`, bad: false };
+      await load();
+    });
+  }
+});
+
+load().then(() => {
+  ROOM.timer = setInterval(poll, 6000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
+});
+</script>
+</body>
+</html>

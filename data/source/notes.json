@@ -1,11 +1,6 @@
 {
- "_note": "Who may write a note on a work, and how much. Read by api/notes.js and nothing else ... see docs/ARTWORK-NOTES.md.",
- "version": 1,
- "artist": {
-  "_note": "Signs as the artist. Any work, any time.",
-  "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180": "mintface.eth",
-  "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7": "ryanj.eth"
- },
+ "_note": "How much may be said on a work, and by whom. Read by api/notes.js. The artist's wallets live in data/source/artist.json ... see docs/ARTWORK-NOTES.md.",
+ "version": 2,
  "senior_tao": 69000,
  "_senior_note": "A thousand days of a single 1/1. Checked against current TAO at post time: selling below the line closes the privilege for new notes and leaves the old ones standing.",
  "max_chars": 500,

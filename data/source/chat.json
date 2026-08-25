@@ -1,0 +1,11 @@
+{
+ "_note": "The room. Read by api/chat.js. The artist's wallets live in data/source/artist.json ... see docs/TAO-CHAT.md.",
+ "version": 1,
+ "min_tao": 1,
+ "_min_note": "Any TAO at all is a voice. One edition copy held for one day is enough, and that is the point of the threshold being where it is.",
+ "max_chars": 500,
+ "seconds_between": 15,
+ "burst": 10,
+ "burst_window_seconds": 600,
+ "page": 50
+}

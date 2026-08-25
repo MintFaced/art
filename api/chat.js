@@ -1,0 +1,207 @@
+import { verifyMessage } from 'viem';
+import { useRequestOrigin, siteOrigin } from './_lib/data.js';
+import { storeConfigured, pipe } from './_lib/kv.js';
+import { chatStore, chatMessage, checkMessage, render } from './_lib/chat.js';
+
+/* The room.
+ *
+ * Reading takes no wallet and no sign-in, because a room nobody can look into
+ * is not part of a site, it is a door. Speaking takes any TAO at all, checked
+ * against the register at the moment of speaking.
+ *
+ * The same rig as the notes and the nudges: a wallet signs a sentence saying
+ * what it is about to say, and that signature authorises that one message.
+ * There is no session, so there is nothing to expire and nothing to steal, and
+ * the words approved in the wallet are the words that appear.
+ */
+
+const CORS = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET, POST, OPTIONS',
+  'access-control-allow-headers': 'content-type',
+};
+const json = (b, s = 200) => new Response(JSON.stringify(b, null, 1), {
+  status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...CORS },
+});
+const lower = (a) => String(a || '').toLowerCase();
+const ACTIONS = ['say', 'delete', 'restore', 'mute', 'unmute'];
+
+export function OPTIONS() {
+  return new Response(null, { status: 204, headers: CORS });
+}
+
+const at = async (origin, p) => {
+  const r = await fetch(`${origin}/${p}`, { headers: { accept: 'application/json' } });
+  if (!r.ok) throw new Error(`${p}: ${r.status}`);
+  return r.json();
+};
+
+async function config(origin) {
+  const [cfg, artist] = await Promise.all([
+    at(origin, 'data/source/chat.json'),
+    at(origin, 'data/source/artist.json'),
+  ]);
+  cfg.artist = Object.fromEntries(Object.entries(artist.wallets || {}).filter(([k]) => k.startsWith('0x')));
+  return cfg;
+}
+
+/** What the register knows about a wallet: what it holds, and what to call it. */
+async function whois(origin, address) {
+  const a = lower(address);
+  const [tao, name] = await Promise.all([
+    at(origin, 'data/tao.json').then((t) => {
+      const w = t.wallets && t.wallets[a];
+      return w ? w.tao : 0;
+    }).catch(() => 0),
+    at(origin, 'data/collectors.json').then((r) => {
+      const hit = (r.collectors || []).find((c) => lower(c.address) === a);
+      return hit ? (hit.display_name || hit.ens || null) : null;
+    }).catch(() => null),
+  ]);
+  return { tao, name };
+}
+
+/* ---------------------------------------------------------------- reading */
+
+export async function GET(request) {
+  const origin = useRequestOrigin(request) || siteOrigin();
+  const url = new URL(request.url);
+  const viewer = lower(url.searchParams.get('viewer') || '');
+  const before = url.searchParams.get('before');
+  const since = url.searchParams.get('since');
+
+  if (!storeConfigured()) {
+    return json({ messages: [], total: 0, more: false, store: false });
+  }
+
+  let cfg;
+  try { cfg = await config(origin); } catch (e) { return json({ error: 'the room is not reachable' }, 503); }
+  const db = chatStore(pipe, cfg);
+  const isArtist = Boolean(viewer && cfg.artist[viewer]);
+
+  try {
+    /* The poll. Nothing but what has been said since, so a quiet room costs a
+       length and an empty answer. Fifteen hundred bytes a minute per reader,
+       which is what a salon is worth and no more. */
+    if (since != null) {
+      const { rows, total } = await db.since(Number(since) || 0);
+      return json({ messages: rows.map((r) => render(r, { isArtist })), total, store: true });
+    }
+
+    const page = await db.page({ before: before == null ? null : Number(before), limit: Number(cfg.page) || 50 });
+    let me = null;
+    if (/^0x[0-9a-f]{40}$/.test(viewer)) {
+      const who = await whois(origin, viewer);
+      const muted = await db.isMuted(viewer);
+      me = {
+        tao: who.tao, name: who.name,
+        can_speak: !muted && who.tao >= Number(cfg.min_tao || 1),
+        muted,
+        why: muted ? 'This wallet is muted in the room. You can still read.'
+          : who.tao >= Number(cfg.min_tao || 1) ? null
+            : 'The room is for anyone holding TAO. One edition copy held for a day is enough.',
+        artist: isArtist,
+      };
+    }
+    return json({
+      messages: page.rows.map((r) => render(r, { isArtist })),
+      start: page.start, end: page.end, total: page.total, more: page.more,
+      me, max_chars: cfg.max_chars, store: true,
+    });
+  } catch (e) {
+    return json({ error: 'the room is not reachable' }, 503);
+  }
+}
+
+/* ---------------------------------------------------------------- speaking */
+
+export async function POST(request) {
+  const origin = useRequestOrigin(request) || siteOrigin();
+  if (!storeConfigured()) return json({ error: 'the room is not open yet' }, 503);
+
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400); }
+
+  const address = lower(body.address);
+  const action = String(body.action || 'say');
+  const signature = String(body.signature || '');
+  const issued = String(body.issued || '');
+
+  if (!/^0x[0-9a-f]{40}$/.test(address)) return json({ error: 'that is not a wallet address' }, 400);
+  if (!ACTIONS.includes(action)) return json({ error: 'no such action' }, 400);
+  if (!signature.startsWith('0x')) return json({ error: 'a signature is required' }, 400);
+  const age = Date.now() - Date.parse(issued);
+  if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
+    return json({ error: 'that signature has gone stale, please sign again' }, 400);
+  }
+
+  let cfg;
+  try { cfg = await config(origin); } catch (e) { return json({ error: 'the room is not reachable' }, 503); }
+  const db = chatStore(pipe, cfg);
+  const isArtist = Boolean(cfg.artist[address]);
+
+  const verify = async (payload) => {
+    const message = chatMessage({ ...payload, address, issued });
+    try { return await verifyMessage({ address, message, signature }); } catch (e) { return false; }
+  };
+
+  /* ---- the whole moderation toolset ---- */
+  if (action !== 'say') {
+    if (!isArtist) return json({ error: 'the room is moderated by the artist' }, 403);
+
+    if (action === 'mute' || action === 'unmute') {
+      const target = lower(body.target);
+      if (!/^0x[0-9a-f]{40}$/.test(target)) return json({ error: 'mute a wallet address' }, 400);
+      if (!(await verify({ action, target }))) return json({ error: 'that signature does not match the wallet' }, 401);
+      if (action === 'mute') await db.mute(target); else await db.unmute(target);
+      return json({ ok: true, muted: await db.muted() });
+    }
+
+    /* One field, `target`, for every moderation action: the wallet for a mute,
+       the message number for a deletion. It is sent and signed identically, so
+       there is no mapping between what the browser puts in the body and what it
+       puts in the sentence, and therefore nothing for the two to disagree
+       about. Signatures that fail for a field name are unbearable to debug. */
+    const n = Number(body.target);
+    if (!Number.isInteger(n) || n < 0) return json({ error: 'which message?' }, 400);
+    const row = await db.get(n);
+    if (!row) return json({ error: 'no such message' }, 404);
+    if (!(await verify({ action, target: String(body.target) }))) {
+      return json({ error: 'that signature does not match the wallet' }, 401);
+    }
+    row.deleted = action === 'delete';
+    await db.save(row);
+    return json({ ok: true, n, deleted: row.deleted, message: render(row, { isArtist: true }) });
+  }
+
+  /* ---- saying something ---- */
+  const text = checkMessage(body.text, cfg);
+  if (text.error) return json({ error: text.error }, 400);
+
+  if (await db.isMuted(address)) {
+    return json({ error: 'This wallet is muted in the room. You can still read.' }, 403);
+  }
+
+  const who = await whois(origin, address);
+  if (who.tao < Number(cfg.min_tao || 1)) {
+    return json({
+      error: 'The room is for anyone holding TAO. One edition copy held for a day is enough.',
+      tao: who.tao,
+    }, 403);
+  }
+
+  if (!(await verify({ action: 'say', text: text.text }))) {
+    return json({ error: 'that signature does not match the wallet' }, 401);
+  }
+
+  /* Spent only once the message is known to be good, so a refusal for its
+     words does not also cost somebody their fifteen seconds. */
+  const spend = await db.spend(address);
+  if (spend.error) return json({ error: spend.error }, 429);
+
+  const row = await db.say({
+    address, name: who.name, tao: who.tao,
+    text: text.text, at: new Date().toISOString(), deleted: false,
+  });
+  return json({ ok: true, message: render(row, { isArtist }) });
+}

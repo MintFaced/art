@@ -43,8 +43,12 @@ const at = async (origin, p) => {
 };
 
 async function config(origin) {
-  const cfg = await at(origin, 'data/source/notes.json');
-  cfg.artist = Object.fromEntries(Object.entries(cfg.artist || {}).filter(([k]) => k.startsWith('0x')));
+  // who Ryan is lives in one file, because the room asks the same question
+  const [cfg, artist] = await Promise.all([
+    at(origin, 'data/source/notes.json'),
+    at(origin, 'data/source/artist.json'),
+  ]);
+  cfg.artist = Object.fromEntries(Object.entries(artist.wallets || {}).filter(([k]) => k.startsWith('0x')));
   return cfg;
 }
 

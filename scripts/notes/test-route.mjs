@@ -63,10 +63,10 @@ const slug = index.work_index[WORK];
 if (!slug) { console.error(`${WORK} is not in the catalogue`); process.exit(1); }
 
 const notesCfg = {
-  version: 1,
-  artist: { [artist.address.toLowerCase()]: 'mintface.eth' },
+  version: 2,
   senior_tao: 69000, max_chars: 500, per_wallet_per_day: 20, fold_after: 3, index_keep: 200,
 };
+const artistFixture = { wallets: { [artist.address.toLowerCase()]: 'mintface.eth' } };
 const taoFixture = {
   generated: new Date().toISOString(), rates: {}, counts: {},
   wallets: {
@@ -87,6 +87,7 @@ const server = http.createServer(async (req, res) => {
     catch (e) { return send(200, [{ error: String(e.message) }]); }
   }
   if (u.pathname === '/data/source/notes.json') return send(200, notesCfg);
+  if (u.pathname === '/data/source/artist.json') return send(200, artistFixture);
   if (u.pathname === '/data/tao.json') return send(200, taoFixture);
   if (u.pathname === '/data/collectors.json') return send(200, { collectors: [] });
 
