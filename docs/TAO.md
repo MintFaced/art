@@ -45,3 +45,35 @@ Where the build departed from the spec above, and why.
 **Files.** `api/_lib/tao.js` is the engine and knows nothing about MintFace ... events and config in, totals out. `data/source/tao.json` holds the rates, exclusions, marketplace list and scope. That separation is for the extraction path noted above.
 
 **Checks.** `scripts/tao/test-engine.mjs` pins the accrual rules against arithmetic done by hand. `scripts/tao/check-replay.mjs` replays the whole history and compares the balances it lands on with the holders the ownership sweep found independently ... two methods agreeing, rather than one method agreeing with itself.
+
+---
+
+## v1.1 — integrity (2026-08-25)
+
+Answering docs/TAO-INTEGRITY.md. What the directive asked to have proved, and what proving it turned up.
+
+**The TAO cron is running.** It is scheduled, it authenticates, and it completes: `data/tao.json` was rewritten at 21:30 UTC on the 23rd and again on the 24th, and the totals moved by exactly one day's accrual each time. `CRON_SECRET`, `GITHUB_TOKEN`, `ETHERSCAN_API_KEY`, `RESEND_API_KEY` and `EMAIL_TO_ARTIST` are all set in production. There were no run records to show because nothing had ever been asked to write one; there are now.
+
+**What was actually wrong was Phase C, not the arithmetic.** Three faults, all of them in what the run does with the numbers rather than in the numbers:
+
+1. *The run shrank the register every night.* It rebuilt `data/collectors.json` from the TAO scope — canon and archive minus the patron collections — instead of from the catalogue. XNouns, We are The Line and the vault fell out, and with them 471 collectors and 296 collector pages: 3,681 people at 21:00 became 3,210 at 21:30, every night, and the morning sweep put them back. adacrow.eth's eleven works read as eight for twenty-three and a half hours out of twenty-four. TAO decides what earns. It was never meant to decide who is a collector.
+2. *Nothing wrote the leaderboard.* `data/collectors-register.json` is what the register table on collectors.mintface.art reads. It is derived on every rebuild and was written by nothing but a hand-run script, so while TAO was being recomputed nightly the table showing it was dated the 23rd. Both crons write it now.
+3. *A collector page carried a figure that could not be kept current.* Every one of the 808 pages moves every night, because time moved; rewriting them all is 808 commits. So the whole board is published instead as `data/tao/pages.json` — about forty kilobytes — and the page lays it over what it was served. Pages themselves are rewritten only for the wallets whose works actually changed hands. The number under a collector's name is now exact at the moment it is read, not at the moment their last trade settled.
+
+Both crons also pass the nudge weighings through the rebuild now. They did not, so a count that exists on the record was being dropped from the index nightly.
+
+**The run has phases.** `api/cron/tao.js` reads as A, B, C. Phase A extends the event history and produces the ownership diff before any arithmetic: what moved, from whom, to whom, and on what terms, with the transactions that arrived tonight classified ahead of the backlog so that no exit is described as a gift merely because nobody got to it. Phase B recomputes in full from the whole history, as before. Phase C writes: events, sales, totals, exits, register, leaderboard, slug map, overlay, the pages that moved, and the run record.
+
+**Run records.** `data/tao/runs.json`, ninety kept, newest first, also at `/tao/runs`. Each says when the run started and how long it took, which blocks were scanned, how many transfers went past on our own contracts, what changed hands and how it changed hands, which wallets were affected and what their totals were before and after, what the register counted afterwards, and how many transactions are still unread. A failed run writes a record too, with the reason.
+
+**Silence is now provable.** The run emails on: a failure; a gap since the previous run longer than 36 hours on a daily schedule, which is a run that did not happen; three runs in a row that changed nothing while our own contracts were busy; a contract with no event history, whose holders would accrue nothing without anyone noticing; and an exit that arrived tonight and went unread, since an unread exit is treated as a gift and keeps TAO that a sale would have taken.
+
+**The acceptance cases pass.** `scripts/tao/check-integrity.mjs` runs items 6 to 10 against the real history and prints the arithmetic for each: adacrow.eth's twelve sales and the 46,717 they cost her; a Geodetic Moment sold in 2022, where the seller's 195 days are taken back and the buyer's figure is 1,586 days at 69 and not one day more; First Selfie #89 given away nine days ago, where the sender keeps 89,888 and stops earning and the receiver starts at zero; and XCOFFEE, where two of three copies sold took back 7,976 of 11,965 — two thirds, exactly — and the copy that stayed carried on at 4.2 a day. Every wallet in `data/tao.json` is also recomputed from scratch by that script and compared; the two agree to the last unit.
+
+**Not fixed here.** `scripts/tao/check-replay.mjs` puts the replayed ownership at 98.4% agreement with the catalogue — 17 tokens of 1,075, mostly editions. That is the ownership sweep's ground to make up, not TAO's.
+
+### The ownership sweep, which had stopped
+
+Found while proving the above, and fixed in the same pass because the register depends on it. The sweep of 24 August 21:00 UTC wrote nothing at all: no cursor, no register, no run log. Its edition pass — new the previous morning — reads holder lists one token at a time from a paging indexer, and it runs before anything is written, so exceeding the three-hundred-second budget loses the entire night. A night that loses everything and a night when nothing moved leave behind exactly the same thing, which is why nobody was told.
+
+That pass now stops at a deadline and reports the editions it did not reach, so the rest of the run lands. And the sweep is wrapped: anything that throws or times out writes a failed run record and emails, rather than leaving the silence that made this hard to see.

@@ -45,6 +45,10 @@
       "destination": "/api/webhook"
     },
     {
+      "source": "/tao/runs",
+      "destination": "/data/tao/runs.json"
+    },
+    {
       "source": "/s/:key",
       "destination": "/api/studio"
     },

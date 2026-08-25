@@ -205,7 +205,37 @@ const offered = (w) => {
   return Boolean(o && (o.digital === true || o.painting === true || o.both === true));
 };
 
+/* Nothing in this run is written until the very end, which is right ... a
+   half-applied ownership sweep is worse than none. The cost is that anything
+   which throws or runs out of clock loses the whole night, cursor and run log
+   included, and leaves behind exactly what a night with no transfers leaves
+   behind: nothing. So the failure is caught here, recorded, and emailed. A
+   sweep that stopped must not be able to look like a quiet Tuesday. */
 export async function GET(request) {
+  const started = Date.now();
+  const dry = new URL(request.url).searchParams.get('dry') === '1';
+  try {
+    return await handle(request, started, dry);
+  } catch (err) {
+    const why = String(err && err.message ? err.message : err).slice(0, 300);
+    console.error('owners: run failed', why);
+    if (!dry) {
+      const rf = await readFile('data/owners-runs.json').catch(() => ({ sha: null, text: null }));
+      let runs = [];
+      if (rf.text) { try { runs = JSON.parse(rf.text).runs || []; } catch (e) { /* start again */ } }
+      await writeFile('data/owners-runs.json',
+        JSON.stringify({ _note: 'One line per sweep. A run that changes nothing while the chain is busy is the signal that something has stopped seeing.',
+          runs: [{ at: new Date(started).toISOString(), ok: false, ms: Date.now() - started, error: why }, ...runs].slice(0, 30) }, null, 1) + '\n',
+        `Owners run failed: ${why.slice(0, 60)}`, rf.sha || undefined).catch(() => {});
+      await send({ to: process.env.EMAIL_TO_ARTIST, subject: 'Ownership: the nightly sweep failed',
+        text: `The ownership sweep stopped with:\n\n  ${why}\n\nNothing was written, so the register is yesterday's and the cursor has not moved. The next run will cover both nights.\n\nThe last thirty runs are at https://mintface.art/data/owners-runs.json\n\nMintFace` }).catch(() => {});
+    }
+    return new Response(JSON.stringify({ ok: false, error: why }, null, 1),
+      { status: 500, headers: { 'content-type': 'application/json' } });
+  }
+}
+
+async function handle(request, started, dry) {
   const secret = process.env.CRON_SECRET;
   const auth = request.headers.get('authorization');
   if (!secret) {
@@ -216,7 +246,6 @@ export async function GET(request) {
   const key = process.env.ETHERSCAN_API_KEY;
   if (!key) return new Response('ETHERSCAN_API_KEY is not set', { status: 503 });
 
-  const dry = new URL(request.url).searchParams.get('dry') === '1';
   const index = JSON.parse((await readFile('data/index.json')).text);
   const slugs = (index.collections || []).map((c) => c.slug).filter((s) => s !== 'the-vault');
 
@@ -426,8 +455,17 @@ export async function GET(request) {
      appears is added, a holder whose balance is gone is removed, and nothing
      is ever put back on sale. Excluded addresses are recorded as holders with
      their real standing rather than as collectors. */
-  let editionsChecked = 0, holderRows = 0;
+  /* This pass reads holder lists one token at a time from an indexer that
+     pages, which is the slowest thing in the file and the only part whose cost
+     depends on how much moved. It runs before anything is written, so left
+     unbounded it can spend the whole three hundred seconds and take the cursor,
+     the register and the run log down with it ... which is what happened the
+     first night it ran. It now stops at the deadline and says what it did not
+     reach; those editions are a day stale, and the run still lands. */
+  const EDITION_DEADLINE = Number(process.env.OWNERS_EDITION_MS || 150000);
+  let editionsChecked = 0, holderRows = 0, editionsSkipped = 0;
   for (const [addr, ids] of editions) {
+    if (Date.now() - started > EDITION_DEADLINE) { editionsSkipped++; continue; }
     let logs = [];
     for (const topic of [T1155_ONE, T1155_MANY]) {
       try { logs = logs.concat(await sweep1155(addr, topic, since, HEAD, key)); }
@@ -573,12 +611,21 @@ export async function GET(request) {
          rather than recomputed here. */
       let tao = null;
       try { tao = JSON.parse((await readFile('data/tao.json')).text); } catch (e) { /* never built */ }
-      const d = deriveCollectors([...files.values()].map((f) => f.data), titleOf, priv, tao);
+      // and the nudge counts, for the same reason: derived here means dropped
+      // here unless they are handed in
+      let nudges = null;
+      try { nudges = JSON.parse((await readFile('data/nudge-weighings.json')).text); } catch (e) { /* none yet */ }
+      const d = deriveCollectors([...files.values()].map((f) => f.data), titleOf, priv, tao, nudges);
       const put = async (path, body, msg) => {
         const cur = await readFile(path).catch(() => ({ sha: null }));
         await writeFile(path, JSON.stringify(body, null, 1) + '\n', msg, cur.sha || undefined);
       };
       await put('data/collectors.json', d.index, `Collectors: ${d.index.counts.collectors}`);
+      /* The leaderboard. Derived on every rebuild since the day it was written
+         and, until now, written by nothing but a hand-run script ... so the
+         table the register renders was two days old while the figures behind
+         it were being recomputed nightly. */
+      await put('data/collectors-register.json', d.register, `Register: ${d.register.rows.length} ranked`);
       await put('data/collector-slugs.json', d.slugMap, 'Collectors: slug map');
       for (const p of d.all) {
         if (!p.has_page || !p.works.some((w) => changedWorks.has(w.id))) continue;
@@ -597,6 +644,11 @@ export async function GET(request) {
   }
 
   for (const id of born) applied.push(`born ${id}`);
+  if (editionsSkipped) {
+    flagged.push({ id: 'editions', slug: 'editions',
+      why: `${editionsSkipped} edition contract${editionsSkipped === 1 ? '' : 's'} were not reached before the run's deadline`,
+      action: 'their holders are a day stale; the next run picks them up from the same cursor' });
+  }
   const summary = `owners: ${applied.length} applied, ${flagged.length} flagged, ${ledgerCleared} ledger cleared, ${born.length} newly minted, ${editionsChecked} editions re-read, `
     + `blocks ${since}-${HEAD}, full sweep of ${fullContract}, ${collectorsWritten} collector pages`;
   console.log(summary);
@@ -614,7 +666,8 @@ export async function GET(request) {
   const entry = {
     at: new Date().toISOString(), since, head: HEAD,
     applied: applied.length, flagged: flagged.length, born: born.length,
-    editions: editionsChecked, chain_events: chainEvents, ok: true,
+    editions: editionsChecked, editions_skipped: editionsSkipped,
+    chain_events: chainEvents, ms: Date.now() - started, ok: true,
   };
   const recent = [entry, ...(runLog.runs || [])].slice(0, 30);
   const quiet = [];
