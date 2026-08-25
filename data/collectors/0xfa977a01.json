@@ -12,8 +12,8 @@
   "collections": 6
  },
  "first_collected": "2022-12-12T11:54:11.000Z",
- "last_collected": "2025-05-16T10:36:23.000000Z",
- "tao": 168285,
+ "last_collected": "2025-03-12T21:15:23.000Z",
+ "tao": 168902,
  "tao_rate": 236.4,
  "tao_rank": 70,
  "collections": [
@@ -33,13 +33,13 @@
    "works": 2
   },
   {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
    "works": 1
   },
   {
-   "slug": "geodetic-world",
-   "title": "Geodetic World",
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 1
   },
   {
@@ -50,18 +50,6 @@
  ],
  "works": [
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T10:36:23.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1948
-  },
-  {
    "id": "seize-and-share-anxn-3250",
    "title": "Anxn",
    "collection": "seize-and-share",
@@ -71,7 +59,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 2219
+   "tao": 2230
   },
   {
    "id": "geodetic-onchain-4",
@@ -83,7 +71,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null,
-   "tao": 2353
+   "tao": 2364
   },
   {
    "id": "patrimora-10",
@@ -95,7 +83,7 @@
    "unique": true,
    "image": "patrimora/patrimora-10-image.png",
    "orientation": null,
-   "tao": 38660
+   "tao": 38840
   },
   {
    "id": "patrimora-156",
@@ -107,7 +95,7 @@
    "unique": true,
    "image": "patrimora/patrimora-156-image.png",
    "orientation": null,
-   "tao": 38660
+   "tao": 38840
   },
   {
    "id": "geodetic-world-86",
@@ -119,7 +107,7 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-86-display.webp",
    "orientation": "square",
-   "tao": 71142
+   "tao": 71322
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -131,7 +119,19 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5669
+   "tao": 5680
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1959
   },
   {
    "id": "xlife-51",
@@ -143,7 +143,7 @@
    "unique": false,
    "image": "xlife/xlife-51-image.gif",
    "orientation": null,
-   "tao": 3031
+   "tao": 3042
   },
   {
    "id": "xlife-49",
@@ -155,7 +155,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 2248
+   "tao": 2259
   },
   {
    "id": "xlife-40",
@@ -167,7 +167,7 @@
    "unique": false,
    "image": "xlife/xlife-40-image.gif",
    "orientation": null,
-   "tao": 2353
+   "tao": 2364
   }
  ]
 }
