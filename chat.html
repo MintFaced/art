@@ -33,7 +33,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .m .who .artist{color:var(--ink);letter-spacing:.18em}
 .m .mod{margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   display:flex;gap:16px;color:var(--faint)}
-.m .mod button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;
+.m .mod button{background:none;border:0;padding:0 2px;font-family:var(--font-mono);font-size:13px;line-height:1;
   color:var(--faint);cursor:pointer}
 .m .mod button:hover{color:var(--ink)}
 
@@ -94,7 +94,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 const e = MF.escape;
 const ROOM = {
   wallet: null, rows: [], total: 0, start: 0, more: false, me: null,
-  max: 500, busy: false, say: null, draft: '', timer: null, pick: null, asking: false,
+  max: 500, days: 7, busy: false, say: null, draft: '', timer: null, pick: null, asking: false,
 };
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
@@ -107,17 +107,49 @@ const stamp = (s) => {
 };
 
 // the same sentence api/_lib/chat.js builds, to the character
-const sentence = ({ action, text, target, address, issued }) => [
+const sentence = ({ action, text, target, address, issued, until }) => [
   'MintFace ... the room',
   '',
   `Action: ${action}`,
   ...(text != null ? [`Message: ${text}`] : []),
   ...(target ? [`Subject: ${target}`] : []),
   `Wallet: ${address}`,
+  ...(until ? [`Until: ${until}`] : []),
   `Issued: ${issued}`,
   '',
-  'Signing speaks in the room. It moves nothing and spends nothing.',
+  ...(action === 'sign in'
+    ? ['Signing opens the room for a week. It moves nothing and spends nothing.',
+      'Until then this browser can speak here without asking again.']
+    : ['Signing speaks in the room. It moves nothing and spends nothing.']),
 ].join('\n');
+
+/* One signature, then a week of it.
+ *
+ * A wallet tap per sentence is right for something you do twice a year and
+ * wrong for a room: it turns a conversation into a series of approvals, and on
+ * a hardware wallet it turns it into a series of walks to the drawer. So the
+ * signature moves up a level. You sign that this browser may speak as you until
+ * a stated date, and the sentence you approve says exactly that.
+ *
+ * The token means nothing on its own ... the store holds what it stands for,
+ * and the server reads the address from there and never from the request. A
+ * stolen one buys a week of talking in one room and nothing else, and closing
+ * the session or waiting out the week ends it.
+ */
+const KEEP = 'mintface.room.session';
+const held = () => {
+  try { return JSON.parse(localStorage.getItem(KEEP) || 'null'); } catch (err) { return null; }
+};
+const keep = (v) => {
+  try { v ? localStorage.setItem(KEEP, JSON.stringify(v)) : localStorage.removeItem(KEEP); }
+  catch (err) { /* a browser with storage switched off signs per message, which still works */ }
+};
+const mySession = () => {
+  const v = held();
+  if (!v || !v.token || !ROOM.wallet || v.address !== ROOM.wallet) return null;
+  if (v.until && Date.parse(v.until) < Date.now()) { keep(null); return null; }
+  return v;
+};
 
 const api = async (qs) => {
   const q = new URLSearchParams(qs || {});
@@ -135,6 +167,7 @@ async function load() {
   ROOM.more = Boolean(d.more);
   ROOM.me = d.me || null;
   ROOM.max = d.max_chars || 500;
+  ROOM.days = d.session_days || 7;
   ROOM.open = d.store !== false;
   draw();
 }
@@ -168,9 +201,15 @@ function card(m) {
      nought, which says the opposite of the truth ... the wallets are excluded
      from accrual because he is the one being patronised, not the patron. */
   const isArtist = m.role === 'artist';
+  /* One character each. The artist is the only person who ever sees these and
+     he knows what they are; spelling them out put moderation furniture under
+     every message in the room. */
   const mod = ROOM.me && ROOM.me.artist ? `<div class="mod">
-      <button data-act="${m.deleted ? 'restore' : 'delete'}" data-n="${m.n}">${m.deleted ? 'Restore' : 'Delete'}</button>
-      <button data-act="mute" data-who="${e(m.address)}">Mute this wallet</button>
+      <button data-act="${m.deleted ? 'restore' : 'delete'}" data-n="${m.n}"
+        title="${m.deleted ? 'Put this message back' : 'Take this message down'}"
+        aria-label="${m.deleted ? 'Restore this message' : 'Delete this message'}">${m.deleted ? '&#8635;' : '&times;'}</button>
+      <button data-act="mute" data-who="${e(m.address)}"
+        title="Mute this wallet" aria-label="Mute this wallet">&minus;</button>
     </div>` : '';
   const words = m.text == null
     ? '<p class="gone">Taken down.</p>'
@@ -220,6 +259,13 @@ function composer() {
         <button class="go" data-act="again">Check again</button>
       </div></div>`;
   }
+  if (!mySession()) {
+    return `<div class="box">
+      <div class="say">Signed in as ${e(me.name || short(ROOM.wallet))}${me.role === 'artist' ? ', the artist' : ''}. One signature opens the room for a week.</div>
+      <div class="row" style="justify-content:flex-start;gap:20px">
+        <button class="go" data-act="signin">Sign in to the room</button>
+      </div></div>`;
+  }
   const len = ROOM.draft.length;
   return `<div class="box">
     <textarea id="text" placeholder="Say something." spellcheck="true" maxlength="${ROOM.max + 40}">${e(ROOM.draft)}</textarea>
@@ -227,8 +273,9 @@ function composer() {
       <span>${e(me.name || short(ROOM.wallet))}${me.role === 'artist' ? ' &middot; the artist' : ` &middot; ${e(Number(me.tao || 0).toLocaleString('en-NZ'))} TAO`}</span>
       <span class="count${len > ROOM.max ? ' over' : ''}" id="count">${len}/${ROOM.max}</span>
     </div>
-    <div class="row" style="justify-content:flex-end">
-      <button class="go" id="go" data-act="say"${ROOM.busy || !(len && len <= ROOM.max) ? ' disabled' : ''}>${ROOM.busy ? 'Waiting on the wallet' : 'Sign and say'}</button>
+    <div class="row" style="justify-content:space-between">
+      <button class="go" data-act="signout" style="border-color:transparent">Sign out</button>
+      <button class="go" id="go" data-act="say"${ROOM.busy || !(len && len <= ROOM.max) ? ' disabled' : ''}>${ROOM.busy ? 'Sending' : 'Say it'}</button>
     </div>
   </div>`;
 }
@@ -329,22 +376,51 @@ async function sayWhatWeSee() {
   status(bits.join(' · '), !r.count);
 }
 
-async function send(payload) {
-  const issued = new Date().toISOString();
-  const message = sentence({ ...payload, address: ROOM.wallet, issued });
-  const signature = await MF.sign(message, ROOM.wallet, (state, why) => {
-    if (state === 'requested') status('Signature requested ... check your wallet.');
-    if (state === 'slow') status('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
-    if (state === 'signed') status('Signed. Sending.');
-    if (state === 'failed') status(why, true);
-  });
+const askWallet = (message) => MF.sign(message, ROOM.wallet, (state, why) => {
+  if (state === 'requested') status('Signature requested ... check your wallet.');
+  if (state === 'slow') status('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
+  if (state === 'signed') status('Signed.');
+  if (state === 'failed') status(why, true);
+});
+
+const post = async (body) => {
   const r = await fetch('/api/chat', {
     method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ ...payload, address: ROOM.wallet, issued, signature }),
+    body: JSON.stringify(body),
   });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(j.error || 'that did not go through');
+  if (!r.ok) { const e = new Error(j.error || 'that did not go through'); e.expired = Boolean(j.expired); throw e; }
   return j;
+};
+
+/** The one signature. */
+async function signIn() {
+  const issued = new Date().toISOString();
+  const days = ROOM.days || 7;
+  const until = new Date(Date.parse(issued) + days * 86400000).toISOString();
+  const signature = await askWallet(sentence({ action: 'sign in', address: ROOM.wallet, issued, until }));
+  const j = await post({ action: 'sign in', address: ROOM.wallet, issued, until, signature });
+  keep({ address: ROOM.wallet, token: j.token, until: j.until });
+  status(`Signed in until ${new Date(j.until).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long' })}. No more wallet prompts here until then.`);
+  return j;
+}
+
+async function send(payload) {
+  const s = mySession();
+  if (s) {
+    try {
+      return await post({ ...payload, token: s.token });
+    } catch (err) {
+      if (!err.expired) throw err;
+      keep(null);                                  // the week is up; ask for another
+      status('That sign-in has run out.', true);
+      draw();
+      throw err;
+    }
+  }
+  const issued = new Date().toISOString();
+  const signature = await askWallet(sentence({ ...payload, address: ROOM.wallet, issued }));
+  return post({ ...payload, address: ROOM.wallet, issued, signature });
 }
 
 document.addEventListener('input', (ev) => {
@@ -366,11 +442,19 @@ document.addEventListener('click', async (ev) => {
   if (act === 'pick') return void connect(b.dataset.uuid);
   if (act === 'which') return void sayWhatWeSee();
   if (act === 'again') return void (await load(), status(null));
+  if (act === 'signout') {
+    const s0 = mySession();
+    keep(null);
+    if (s0) post({ action: 'sign out', token: s0.token }).catch(() => {});
+    status('Signed out.');
+    draw();
+    return;
+  }
 
   const run = async (fn) => {
     ROOM.busy = true;
     b.disabled = true;
-    b.textContent = 'Waiting on the wallet';
+    if (b.dataset.act === 'say') b.textContent = 'Sending';
     try {
       await fn();
     } catch (err) {
@@ -383,6 +467,10 @@ document.addEventListener('click', async (ev) => {
       if (document.body.contains(b)) { b.disabled = false; b.textContent = 'Sign and say'; }
     }
   };
+
+  if (act === 'signin') {
+    return run(async () => { await signIn(); await load(); });
+  }
 
   if (act === 'say') {
     const text = (document.getElementById('text') || {}).value || '';

@@ -38,6 +38,7 @@ const redis = ([cmd, ...a]) => {
     }
     case 'GET': reap(a[0]); return str.has(a[0]) ? str.get(a[0]) : null;
     case 'MGET': return a.map((k) => { reap(k); return str.has(k) ? str.get(k) : null; });
+    case 'DEL': { reap(a[0]); const had = str.delete(a[0]); ttl.delete(a[0]); return had ? 1 : 0; }
     case 'INCR': { reap(a[0]); const v = (Number(str.get(a[0])) || 0) + 1; str.set(a[0], String(v)); return v; }
     case 'EXPIRE': ttl.set(a[0], NOW + Number(a[1]) * 1000); return 1;
     case 'RPUSH': L(a[0]).push(...a.slice(1)); return L(a[0]).length;
@@ -67,7 +68,7 @@ const A = (x) => x.address.toLowerCase();
 
 const chatCfg = {
   version: 1, min_tao: 1, max_chars: 500,
-  seconds_between: 15, burst: 10, burst_window_seconds: 600, page: 50,
+  seconds_between: 15, burst: 10, burst_window_seconds: 600, page: 50, session_days: 7,
 };
 const artistFixture = { wallets: { [A(artist)]: 'mintface.eth' } };
 const taoFixture = {
@@ -107,7 +108,7 @@ process.env.KV_REST_API_URL = ORIGIN;
 process.env.KV_REST_API_TOKEN = 'test';
 
 const { GET, POST } = await import('../../api/chat.js');
-const { chatMessage, chatStore, wearTao } = await import('../../api/_lib/chat.js');
+const { chatMessage, chatStore, wearTao, sessionUntil } = await import('../../api/_lib/chat.js');
 const { pipe } = await import('../../api/_lib/kv.js');
 
 let failed = 0, ran = 0;
@@ -133,6 +134,26 @@ const post = async (account, payload) => {
   return { status: r.status, body: await r.json() };
 };
 const say = async (account, text) => { advance(20000); return post(account, { action: 'say', text }); };
+
+/** The one signature, the way the page does it. */
+const signIn = async (account) => {
+  const issued = new Date().toISOString();
+  const address = A(account);
+  const until = sessionUntil(issued, chatCfg.session_days);
+  const signature = await account.signMessage({ message: chatMessage({ action: 'sign in', address, issued, until }) });
+  const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ action: 'sign in', address, issued, until, signature }),
+  }));
+  return { status: r.status, body: await r.json() };
+};
+const withToken = async (token, payload) => {
+  const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ ...payload, token }),
+  }));
+  return { status: r.status, body: await r.json() };
+};
 
 /* ================= speaking ================= */
 head('Who may speak');
@@ -349,6 +370,86 @@ head('History, past a hundred');
   const poll2 = await get(`since=${total}`);
   ok(poll2.body.messages.length === 1 && poll2.body.messages[0].text === 'Something new.',
     'and picks up exactly what was said after it');
+}
+
+/* ================= one signature, then a week ================= */
+head('One signature, then a week of it');
+{
+  const opened = await signIn(visco);
+  ok(opened.status === 200 && opened.body.token && opened.body.until,
+    'one signature opens the room', opened.body.error || `until ${opened.body.until}`);
+  const token = opened.body.token;
+  ok(token.length >= 32, 'the token is long enough not to be guessed', `${token.length} characters`);
+  ok(Date.parse(opened.body.until) - Date.now() > 6 * 86400000, 'and it lasts the week');
+
+  advance(20000);
+  const one = await withToken(token, { action: 'say', text: 'No wallet prompt for this one.' });
+  ok(one.status === 200 && one.body.ok, 'and then messages need no signature at all', one.body.error);
+  advance(20000);
+  const two = await withToken(token, { action: 'say', text: 'Nor this one.' });
+  ok(two.status === 200, 'nor the next', two.body.error);
+  ok(two.body.message.address === A(visco), 'written under the wallet that signed in', two.body.message.address);
+
+  /* The address comes from the token, never from the request. A field saying
+     who you are, beside a token that already says so, is a lock with the door
+     left open next to it. */
+  advance(20000);
+  const spoof = await withToken(token, { action: 'say', text: 'Signed, allegedly, by someone else.', address: A(loud) });
+  ok(spoof.status === 200 && spoof.body.message.address === A(visco),
+    'and an address in the body is ignored entirely', spoof.body.message.address);
+
+  const junk = await withToken('0000000000000000000000000000000000000000', { action: 'say', text: 'Hello.' });
+  ok(junk.status === 401 && junk.body.expired === true,
+    'a token that means nothing is refused, and says to sign in again',
+    `${junk.status} ${junk.body.error}`);
+
+  const short = await withToken('abc', { action: 'say', text: 'Hello.' });
+  ok(short.status === 401, 'and so is a stub of one');
+
+  /* A session buys a week of talking in one room and nothing else. */
+  const asRich = await withToken(token, { action: 'delete', target: '0' });
+  ok(asRich.status === 403, 'a collector session does not become a moderator session',
+    `${asRich.status} ${asRich.body.error}`);
+
+  const gone = await withToken(token, { action: 'sign out' });
+  ok(gone.status === 200 && gone.body.signed_out, 'signing out closes it');
+  advance(20000);
+  const after = await withToken(token, { action: 'say', text: 'Still here?' });
+  ok(after.status === 401 && after.body.expired === true, 'and the token stops working at once',
+    `${after.status} ${after.body.error}`);
+
+  // signing per message still works, for a wallet that would rather
+  advance(20000);
+  const still = await say(visco, 'Signed this one by hand.');
+  ok(still.status === 200, 'and signing each message is still a way to speak', still.body.error);
+}
+
+head('The artist signs in the same way');
+{
+  const opened = await signIn(artist);
+  ok(opened.status === 200 && opened.body.token, 'the artist opens a week too', opened.body.error);
+  advance(20000);
+  const said = await withToken(opened.body.token, { action: 'say', text: 'Working today.' });
+  ok(said.status === 200 && said.body.message.role === 'artist',
+    'and speaks as the artist without another prompt', said.body.error);
+  const target = (await get()).body.messages.find((x) => x.address === A(visco));
+  const cut = await withToken(opened.body.token, { action: 'delete', target: String(target.n) });
+  ok(cut.status === 200 && cut.body.deleted === true,
+    'and moderates without one either ... which is the whole point of the change', cut.body.error);
+  await withToken(opened.body.token, { action: 'restore', target: String(target.n) });
+
+  const muted = await withToken(opened.body.token, { action: 'mute', target: A(nobody) });
+  ok(muted.status === 200, 'mute as well', muted.body.error);
+  await withToken(opened.body.token, { action: 'unmute', target: A(nobody) });
+}
+
+head('A muted wallet cannot sign in around it');
+{
+  await post(artist, { action: 'mute', target: A(oneCopy) });
+  const tried = await signIn(oneCopy);
+  ok(tried.status === 403 && /muted/.test(tried.body.error || ''),
+    'the door is shut at sign-in as well as at the message', `${tried.status} ${tried.body.error}`);
+  await post(artist, { action: 'unmute', target: A(oneCopy) });
 }
 
 head('Wearing the leaderboard lightly');

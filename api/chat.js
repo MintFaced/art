@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
-import { chatStore, chatMessage, checkMessage, render } from './_lib/chat.js';
+import { chatStore, chatMessage, checkMessage, render, sessionUntil } from './_lib/chat.js';
 import { loadArtist, isArtist as artistIs, taoGate, ARTIST_NAME } from './_lib/artist.js';
 
 /* The room.
@@ -25,7 +25,7 @@ const json = (b, s = 200) => new Response(JSON.stringify(b, null, 1), {
   status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...CORS },
 });
 const lower = (a) => String(a || '').toLowerCase();
-const ACTIONS = ['say', 'delete', 'restore', 'mute', 'unmute'];
+const ACTIONS = ['sign in', 'sign out', 'say', 'delete', 'restore', 'mute', 'unmute'];
 
 export function OPTIONS() {
   return new Response(null, { status: 204, headers: CORS });
@@ -110,7 +110,7 @@ export async function GET(request) {
     return json({
       messages: page.rows.map((r) => render(r, { isArtist, artist: cfg.artist })),
       start: page.start, end: page.end, total: page.total, more: page.more,
-      me, max_chars: cfg.max_chars, store: true,
+      me, max_chars: cfg.max_chars, session_days: Number(cfg.session_days || 7), store: true,
     });
   } catch (e) {
     return json({ error: 'the room is not reachable' }, 503);
@@ -126,28 +126,66 @@ export async function POST(request) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400); }
 
-  const address = lower(body.address);
   const action = String(body.action || 'say');
   const signature = String(body.signature || '');
   const issued = String(body.issued || '');
+  const token = String(body.token || '');
 
-  if (!/^0x[0-9a-f]{40}$/.test(address)) return json({ error: 'that is not a wallet address' }, 400);
   if (!ACTIONS.includes(action)) return json({ error: 'no such action' }, 400);
-  if (!signature.startsWith('0x')) return json({ error: 'a signature is required' }, 400);
-  const age = Date.now() - Date.parse(issued);
-  if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
-    return json({ error: 'that signature has gone stale, please sign again' }, 400);
-  }
 
   let cfg;
   try { cfg = await config(origin); } catch (e) { return json({ error: 'the room is not reachable' }, 503); }
   const db = chatStore(pipe, cfg);
-  const isArtist = Boolean(cfg.artist[address]);
 
+  /* Who is doing this, settled once and before anything else.
+     A session says so, and where it does the request is not asked ... the
+     address in the body is ignored entirely, because a token that says who you
+     are and a field that also says who you are is a lock with the door left
+     open beside it. Without a session, the signature says so instead, and that
+     is still a supported way to speak: signing every message is the right trade
+     for a wallet you touch twice a year. */
+  let address = null;
+  let bySession = false;
+  if (token && action !== 'sign in') {
+    address = await db.whoseSession(token);
+    if (!address) return json({ error: 'that sign-in has run out. Sign in again.', expired: true }, 401);
+    bySession = true;
+  } else {
+    address = lower(body.address);
+    if (!/^0x[0-9a-f]{40}$/.test(address)) return json({ error: 'that is not a wallet address' }, 400);
+    if (!signature.startsWith('0x')) return json({ error: 'a signature is required' }, 400);
+    const age = Date.now() - Date.parse(issued);
+    if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
+      return json({ error: 'that signature has gone stale, please sign again' }, 400);
+    }
+  }
+
+  const isArtist = Boolean(cfg.artist[address]);
   const verify = async (payload) => {
+    if (bySession) return true;                     // already established, once
     const message = chatMessage({ ...payload, address, issued });
     try { return await verifyMessage({ address, message, signature }); } catch (e) { return false; }
   };
+
+  /* ---- opening and closing the week ---- */
+  if (action === 'sign in') {
+    const days = Number(cfg.session_days || 7);
+    const until = sessionUntil(issued, days);
+    if (!until) return json({ error: 'bad request' }, 400);
+    if (!(await verify({ action: 'sign in', until }))) {
+      return json({ error: 'that signature does not match the wallet' }, 401);
+    }
+    if (await db.isMuted(address)) {
+      return json({ error: 'This wallet is muted in the room. You can still read.' }, 403);
+    }
+    const fresh = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
+    await db.openSession(fresh, address, days * 86400);
+    return json({ ok: true, token: fresh, until, address });
+  }
+  if (action === 'sign out') {
+    await db.closeSession(token);
+    return json({ ok: true, signed_out: true });
+  }
 
   /* ---- the whole moderation toolset ---- */
   if (action !== 'say') {

@@ -17,7 +17,13 @@
 const lower = (a) => String(a || '').toLowerCase();
 
 /** The sentence a wallet signs. */
-export function chatMessage({ action, text, target, address, issued }) {
+export function chatMessage({ action, text, target, address, issued, until }) {
+  const closing = action === 'sign in'
+    ? [
+      'Signing opens the room for a week. It moves nothing and spends nothing.',
+      'Until then this browser can speak here without asking again.',
+    ]
+    : ['Signing speaks in the room. It moves nothing and spends nothing.'];
   return [
     'MintFace ... the room',
     '',
@@ -25,10 +31,20 @@ export function chatMessage({ action, text, target, address, issued }) {
     ...(text != null ? [`Message: ${text}`] : []),
     ...(target ? [`Subject: ${target}`] : []),
     `Wallet: ${address}`,
+    ...(until ? [`Until: ${until}`] : []),
     `Issued: ${issued}`,
     '',
-    'Signing speaks in the room. It moves nothing and spends nothing.',
+    ...closing,
   ].join('\n');
+}
+
+/* When a signature signed at `issued` runs out. Both sides work it out from the
+   same two numbers rather than one telling the other, so there is nothing to
+   disagree about and nothing to tamper with. */
+export function sessionUntil(issued, days) {
+  const t = Date.parse(issued);
+  if (!Number.isFinite(t)) return null;
+  return new Date(t + Number(days) * 86400000).toISOString();
 }
 
 /** What may be said, and how much of it. */
@@ -85,6 +101,7 @@ export const keys = {
   muted: 'chat:muted',
   floor: (a) => `chat:floor:${lower(a)}`,
   burst: (a) => `chat:burst:${lower(a)}`,
+  session: (t) => `chat:s:${t}`,
 };
 
 export function chatStore(pipe, cfg = {}) {
@@ -159,6 +176,30 @@ export function chatStore(pipe, cfg = {}) {
     async muted() {
       const [x] = await pipe([['SMEMBERS', keys.muted]]);
       return x || [];
+    },
+
+    /* ---- one signature, then a week of speaking ----
+       The token is minted on the server and only ever means anything there: the
+       browser holds an opaque string, the store holds what it stands for.
+       Nothing about the wallet can be read out of it, a stolen one buys a week
+       of talking in one room and nothing else, and it stops mattering the
+       moment it is closed or the week is up.
+
+       The address a message is written under comes from the token and never
+       from the request. A session already says who you are; letting the body
+       say it as well would be leaving the door open beside the lock. */
+    async openSession(token, address, seconds) {
+      await pipe([['SET', keys.session(token), lower(address), 'EX', String(Math.floor(seconds))]]);
+      return token;
+    },
+    async whoseSession(token) {
+      if (!token || typeof token !== 'string' || token.length < 16) return null;
+      const [a] = await pipe([['GET', keys.session(token)]]);
+      return a ? String(a).toLowerCase() : null;
+    },
+    async closeSession(token) {
+      if (!token) return;
+      await pipe([['DEL', keys.session(token)]]);
     },
 
     /* ---- how often ----
