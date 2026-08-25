@@ -12,19 +12,19 @@
   "collections": 3
  },
  "first_collected": "2022-05-09T23:16:19.000000Z",
- "last_collected": "2025-05-16T10:34:47.000000Z",
- "tao": 14216,
+ "last_collected": "2022-12-07T15:48:35.000Z",
+ "tao": 14249,
  "tao_rate": 12.6,
  "tao_rank": 597,
  "collections": [
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   },
   {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   },
   {
@@ -35,18 +35,6 @@
  ],
  "works": [
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T10:34:47.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1948
-  },
-  {
    "id": "seize-and-share-xdecal-2590",
    "title": "XDecal",
    "collection": "seize-and-share",
@@ -56,7 +44,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
    "orientation": null,
-   "tao": 5689
+   "tao": 5700
   },
   {
    "id": "2022-10k-2",
@@ -68,7 +56,19 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6578
+   "tao": 6589
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1959
   }
  ]
 }
