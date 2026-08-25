@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2026-03-08T21:06:11.000000Z",
- "last_collected": "2026-05-14T20:56:11.000000Z",
- "tao": 27280,
+ "last_collected": "2026-03-08T21:06:11.000000Z",
+ "tao": 27662,
  "tao_rate": 146.4,
  "tao_rank": 402,
  "collections": [
@@ -35,18 +35,6 @@
  ],
  "works": [
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2026-05-14T20:56:11.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 876
-  },
-  {
    "id": "patrimora-180",
    "title": "Patrimora #180",
    "collection": "patrimora",
@@ -56,7 +44,7 @@
    "unique": true,
    "image": "patrimora/patrimora-180-image.png",
    "orientation": null,
-   "tao": 11550
+   "tao": 11731
   },
   {
    "id": "patrimora-181",
@@ -68,7 +56,19 @@
    "unique": true,
    "image": "patrimora/patrimora-181-image.png",
    "orientation": null,
-   "tao": 11550
+   "tao": 11731
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 887
   },
   {
    "id": "xlife-49",
@@ -80,7 +80,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 3302
+   "tao": 3313
   }
  ]
 }
