@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes ... MintFace</title>
+<meta name="description" content="What the artist and the collectors have written on the works.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:760px;margin:0 auto;padding:60px 28px 8px}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,92px);line-height:.96;margin:0;letter-spacing:-.035em}
+.sub{font-size:13px;color:var(--muted);margin-top:22px;max-width:46em;line-height:1.7}
+.stream{max-width:760px;margin:0 auto;padding:28px 28px 110px}
+.row{padding:26px 0;border-bottom:1px solid var(--rule)}
+.row:last-child{border-bottom:0}
+.row .lab{font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.row .lab .who{color:var(--muted)}
+.row p{white-space:pre-wrap;overflow-wrap:anywhere;margin:9px 0 0;font-size:15px;line-height:1.68;color:#2c2924}
+.row .on{margin-top:10px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.row .on a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
+.row .on a:hover{color:var(--ink);border-color:var(--ink)}
+.empty{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding:40px 0}
+@media(max-width:640px){
+  .mast{padding:34px 20px 6px}
+  .stream{padding:20px 20px 80px}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+  <a class="smallcaps" href="/collections">Collections</a>
+</header>
+
+<main id="main"><div class="loading">Loading</div></main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="/vault">The Vault</a>
+  <a class="smallcaps" href="https://collectors.mintface.art/">Collectors</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+/* The notes, in one stream.
+ *
+ * The layer is only legible one work at a time on the work pages, which is
+ * right for reading a single painting and wrong for seeing that a conversation
+ * is going on at all. This is the same rows, in the order they were written.
+ * Public notes only, because that is the only kind there is to read.
+ */
+const e = MF.escape;
+const by = new URLSearchParams(location.search).get('by');
+const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
+const when = (s) => {
+  const d = new Date(s);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' });
+};
+
+const title = (id) => String(id || '')
+  .replace(/-(\d+)$/, ' #$1')
+  .replace(/-/g, ' ')
+  .replace(/\b\w/g, (c) => c.toUpperCase());
+
+function row(n) {
+  const label = n.role === 'artist' ? "Artist's note"
+    : `Collector's note <span class="who">&middot; ${e(n.name || short(n.address))}</span>`;
+  return `<article class="row">
+    <div class="lab">${label} &middot; ${e(when(n.at))}</div>
+    <p>${e(n.text)}</p>
+    <div class="on"><a href="/w/${encodeURIComponent(n.work)}">${e(n.title || title(n.work))}</a></div>
+  </article>`;
+}
+
+(async function () {
+  const url = by ? `/api/notes?address=${encodeURIComponent(by)}` : '/api/notes?recent=60';
+  let d = null;
+  try { d = await fetch(url, { headers: { accept: 'application/json' } }).then((r) => (r.ok ? r.json() : null)); }
+  catch (err) { d = null; }
+
+  const notes = (d && d.notes) || [];
+  document.title = by ? `Notes by ${short(by)} ... MintFace` : 'Notes ... MintFace';
+
+  const head = by
+    ? `<h1>Notes</h1><div class="sub">Written by ${e(short(by))}. <a href="/notes">All notes</a>.</div>`
+    : `<h1>Notes</h1><div class="sub">The artist writes on any work. Whoever holds a work writes on that one.
+       A collector above 69,000 TAO writes anywhere. Everything here is public; some notes are not, and stay
+       between a work and the person holding it.</div>`;
+
+  document.getElementById('main').innerHTML = `
+    <section class="mast">${head}</section>
+    <section class="stream">${notes.length
+      ? notes.map(row).join('')
+      : '<div class="empty">Nothing written yet.</div>'}</section>`;
+})();
+</script>
+</body>
+</html>
