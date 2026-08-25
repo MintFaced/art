@@ -1,18 +1,18 @@
 {
  "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
- "generated": "2026-08-23T20:03:44.975Z",
+ "generated": "2026-08-25T20:03:09.350Z",
  "sources": [
   "foundation",
   "opensea"
  ],
  "counts": {
   "checked": 1394,
-  "owner_unresolved": 60,
+  "owner_unresolved": 61,
   "escrowed": 30,
   "priced": 76,
   "auction": 21,
   "opensea": 67,
-  "carried_forward": 1
+  "carried_forward": 2
  },
  "works": {
   "geodetic-world-2": {
@@ -77,23 +77,11 @@
    "auction_id": "356140",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/21"
   },
-  "geodetic-world-22": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "356141",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/22"
-  },
   "geodetic-world-26": {
    "venue": "foundation",
    "kind": "auction",
    "auction_id": "358491",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/26"
-  },
-  "geodetic-world-30": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "358493",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/30"
   },
   "geodetic-world-31": {
    "venue": "foundation",
@@ -204,6 +192,14 @@
    "price_wei": "100000000000000000",
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/518"
+  },
+  "seize-and-share-accessdenied-mp4-2882": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.03,
+   "price_wei": "30000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/2882"
   },
   "artificial-flowers-21": {
    "venue": "opensea",
@@ -808,13 +804,18 @@
    "expires": "2027-02-19T06:29:25.000Z",
    "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
   },
-  "seize-and-share-accessdenied-mp4-2882": {
+  "geodetic-world-22": {
    "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 0.03,
-   "price_wei": "30000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/2882",
+   "kind": "auction",
+   "auction_id": "356141",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/22",
+   "carried_forward": true
+  },
+  "geodetic-world-30": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "358493",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/30",
    "carried_forward": true
   }
  }
