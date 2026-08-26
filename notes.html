@@ -26,6 +26,8 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,92px);l
 .row p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font-size:15px;line-height:1.68;color:#2c2924}
 .row .lab{margin-top:9px;font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.85}
 .row .lab .who{color:var(--muted)}
+.row .lab a.who{text-decoration:none;border-bottom:1px solid transparent}
+.row .lab a.who:hover{color:var(--ink);border-color:var(--ink)}
 .row .on{margin-top:8px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
 .row .on a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
 .row .on a:hover{color:var(--ink);border-color:var(--ink)}
@@ -102,13 +104,24 @@ function role(n) {
   return 'Collector';
 }
 
+/* Whoever wrote it, linked to their page on the register. Quiet: the rule
+   arrives under the pointer rather than sitting under every name in the stream,
+   which would set the column as a list of links rather than as a byline. A
+   collector with no page renders unlinked, as they do everywhere else. */
+function who(n) {
+  const label = e(n.name || short(n.address));
+  return n.url
+    ? `<a class="who" href="${e(n.url)}">${label}</a>`
+    : `<span class="who">${label}</span>`;
+}
+
 function row(n) {
   const href = `/w/${encodeURIComponent(n.work)}`;
   return `<article class="row">
     <a class="shot" href="${href}">${shot(n)}</a>
     <div class="body">
       <p>${e(n.text)}</p>
-      <div class="lab"><span class="who">${e(n.name || short(n.address))}</span> &middot; ${role(n)} &middot; ${e(when(n.at))}</div>
+      <div class="lab">${who(n)} &middot; ${role(n)} &middot; ${e(when(n.at))}</div>
       <div class="on"><a href="${href}">${e(n.title || title(n.work))}</a></div>
     </div>
   </article>`;

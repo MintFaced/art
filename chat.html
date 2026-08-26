@@ -27,18 +27,62 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
   color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
 .m .who .tao{color:var(--faint);font-variant-numeric:tabular-nums}
 .m .who .at{color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
+/* A name goes to the page that holds it. No rule at rest: forty messages with
+   a hairline under every name reads as a form rather than as a conversation.
+   The rule arrives under the pointer, which is the house link worn quietly. */
+.m .who a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
+.m .who a:hover{border-color:var(--ink)}
 .m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font-size:15px;line-height:1.68;color:#2c2924}
 .m .gone{margin:8px 0 0;font-family:var(--font-mono);font-size:11.5px;color:var(--faint)}
 .m.mine{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
 .m .who .artist{color:var(--ink);letter-spacing:.18em}
+/* A tag inside a sentence. It sits in the prose, so it takes the prose's rule
+   rather than the small-caps line's: visible at rest, because a name in the
+   middle of a paragraph has to be findable without hovering over it. */
+.m p a.tag,.m p span.tag{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.m p a.tag:hover{border-color:var(--ink)}
+.m p span.tag{border-bottom-color:var(--rule);color:var(--muted)}
+/* Being spoken to. The hairline, not a colour ... the single green on this
+   site is for availability and nothing else, and a room that shouted in colour
+   every time somebody said your name would be a room you stopped opening. */
+.m.at{border-left:1px solid var(--ink);margin-left:-13px;padding-left:12px}
 .m .mod{margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   display:flex;gap:16px;color:var(--faint)}
 .m .mod button{background:none;border:0;padding:0 2px;font-family:var(--font-mono);font-size:13px;line-height:1;
   color:var(--faint);cursor:pointer}
 .m .mod button:hover{color:var(--ink)}
 
+/* Who you are in here, and what waited for you. One line under the masthead,
+   in the measuring voice, because both halves of it are facts about a wallet.
+   It is only ever drawn for somebody signed in ... a room cannot tell a reader
+   they were mentioned without knowing who is reading. */
+.you{margin-top:16px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
+.you a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
+.you a:hover{border-color:var(--ink)}
+.you .said{color:var(--ink)}
+.you .said::before{content:'\00b7';color:var(--rule);margin-right:10px}
+
 .speak{max-width:720px;margin:0 auto;padding:0 28px 110px}
+/* The @ list. It sits under the box it is filling in, in the same measured
+   voice as the rest of the furniture, and it is a list of people rather than a
+   menu of options ... so each row carries what the register knows about them. */
+.at-list{position:absolute;left:0;right:0;top:100%;z-index:20;background:var(--paper);
+  border:1px solid var(--rule);max-height:246px;overflow-y:auto;margin-top:-1px}
+.at-list button{display:flex;width:100%;gap:12px;align-items:baseline;text-align:left;
+  background:none;border:0;border-bottom:1px solid var(--rule);padding:9px 12px;cursor:pointer;
+  font-family:var(--font-sans);font-size:14px;color:var(--ink)}
+.at-list button:last-child{border-bottom:0}
+.at-list button[aria-selected="true"]{background:#f2efe9}
+.at-list .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.at-list .sub{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
+.at-none{padding:10px 12px;font-family:var(--font-mono);font-size:11px;color:var(--faint)}
 .speak .box{border-top:1px solid var(--rule);padding-top:18px}
+/* The list hangs off the box it is filling in, not off the composer: anchored
+   to the whole composer it opened below the buttons, half a screen from the
+   caret that summoned it. */
+.speak .field{position:relative}
 .speak textarea{width:100%;min-height:84px;resize:vertical;background:transparent;border:1px solid var(--rule);
   color:var(--ink);padding:11px 12px;font-family:var(--font-sans);font-size:15px;line-height:1.6}
 .speak textarea:focus{outline:none;border-color:var(--mark)}
@@ -94,7 +138,16 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 const e = MF.escape;
 const ROOM = {
   wallet: null, rows: [], total: 0, start: 0, more: false, me: null,
-  max: 500, days: 7, busy: false, say: null, draft: '', timer: null, pick: null, asking: false,
+  max: 500, maxTags: 5, days: 7, busy: false, say: null, draft: '', timer: null, pick: null, asking: false,
+  /* The @ list, and where in the box it is filling in. `from` is the index of
+     the @ itself, so accepting a name replaces exactly what was typed after it
+     and nothing either side. */
+  tag: { open: false, from: -1, q: '', rows: [], pick: 0, seq: 0 },
+  caret: null, autoSpace: null,
+  /* What waited for you, kept for the visit rather than for the request. The
+     room marks your mentions read the moment it has drawn them, so the number
+     would otherwise vanish out from under the line reporting it. */
+  waiting: null, marked: false,
 };
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
@@ -168,9 +221,23 @@ async function load() {
   ROOM.more = Boolean(d.more);
   ROOM.me = d.me || null;
   ROOM.max = d.max_chars || 500;
+  ROOM.maxTags = d.max_tags || 5;
   ROOM.days = d.session_days || 7;
   ROOM.open = d.store !== false;
+  /* Held once. A reload is a new visit and asks the question again; a redraw
+     inside this one keeps the answer it was given. */
+  if (ROOM.waiting === null && ROOM.me && ROOM.me.mentions) ROOM.waiting = ROOM.me.mentions.unseen || 0;
   draw();
+  markSeen();
+}
+
+/* Read. Sent once the count has been drawn, so the visit that showed it is the
+   visit that clears it. It needs a sign-in and nothing else. */
+async function markSeen() {
+  if (ROOM.marked || !ROOM.me || !mySession()) return;
+  ROOM.marked = true;
+  const s = mySession();
+  try { await post({ action: 'seen', token: s.token }); } catch (err) { /* it will be marked next visit */ }
 }
 
 async function earlier() {
@@ -188,13 +255,41 @@ async function earlier() {
 /* Polling, not sockets. A quiet room costs one small answer every few seconds,
    which is the right price for a room where somebody speaks twice a day. */
 async function poll() {
-  if (ROOM.busy || document.hidden) return;
+  // never under an open @ list, or under somebody's hands: a redraw would take
+  // the list, the caret and the half-written sentence with it
+  if (ROOM.busy || document.hidden || ROOM.tag.open) return;
   const d = await api({ since: String(ROOM.total) });
   if (!d || !d.messages || !d.messages.length) return;
   ROOM.rows = ROOM.rows.concat(d.messages);
   ROOM.total = d.total || ROOM.total + d.messages.length;
   draw({ toEnd: true });
 }
+
+/* The sentence, with its tags said as they read now.
+ *
+ * The server sends the text as it was typed and the tags as ranges over it,
+ * each carrying a wallet and whatever that wallet is called this minute. So a
+ * message written when somebody was 0x6140f00e reads with their name in it the
+ * day after they choose one, and nothing stored had to change for that. */
+function words(m) {
+  if (m.text == null) return '<p class="gone">Taken down.</p>';
+  const tags = (m.mentions || []).slice().sort((a, b) => a.start - b.start);
+  let out = '';
+  let i = 0;
+  for (const t of tags) {
+    if (t.start < i) continue;                     // overlapping ranges: the first wins
+    out += e(m.text.slice(i, t.start));
+    const label = `@${t.name}`;
+    // somebody the register will not name in public has no page to point at
+    out += t.url
+      ? `<a class="tag" href="${e(t.url)}">${e(label)}</a>`
+      : `<span class="tag">${e(label)}</span>`;
+    i = t.start + t.len;
+  }
+  return `<p>${out + e(m.text.slice(i))}</p>`;
+}
+
+const namesMe = (m) => Boolean(ROOM.wallet && (m.mentions || []).some((t) => t.address === ROOM.wallet));
 
 function card(m) {
   const mine = ROOM.wallet && m.address === ROOM.wallet;
@@ -212,16 +307,19 @@ function card(m) {
       <button data-act="mute" data-who="${e(m.address)}"
         title="Mute this wallet" aria-label="Mute this wallet">&minus;</button>
     </div>` : '';
-  const words = m.text == null
-    ? '<p class="gone">Taken down.</p>'
-    : `<p>${e(m.text)}${m.deleted ? '' : ''}</p>`;
-  return `<article class="m${mine ? ' mine' : ''}${isArtist ? ' by-artist' : ''}">
+  /* The name goes where the person is. A collector to their page on the
+     register, the artist to the front door ... it is one register across two
+     deploys, so it opens in this tab like any other page of it. Anybody with
+     no page renders as they always did, unlinked. */
+  const label = e(isArtist ? 'MintFace' : (m.name || short(m.address)));
+  const who = m.url ? `<a href="${e(m.url)}">${label}</a>` : label;
+  return `<article class="m${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}">
     <div class="who">
-      <span${isArtist ? ' class="artist"' : ''}>${e(isArtist ? 'MintFace' : (m.name || short(m.address)))}</span>
+      <span${isArtist ? ' class="artist"' : ''}>${who}</span>
       ${isArtist ? '<span class="tao">&middot; the artist</span>' : `<span class="tao">&middot; ${e(m.worn)} TAO</span>`}
       <span class="at">${e(stamp(m.at))}</span>
     </div>
-    ${words}
+    ${words(m)}
     ${mod}
   </article>`;
 }
@@ -269,7 +367,12 @@ function composer() {
   }
   const len = ROOM.draft.length;
   return `<div class="box">
-    <textarea id="text" placeholder="Say something." spellcheck="true" maxlength="${ROOM.max + 40}">${e(ROOM.draft)}</textarea>
+    <div class="field">
+      <textarea id="text" placeholder="Say something. Type @ to name somebody." spellcheck="true"
+        aria-autocomplete="list" aria-expanded="${ROOM.tag.open}" aria-controls="atList"
+        maxlength="${ROOM.max + 40}">${e(ROOM.draft)}</textarea>
+      ${tagList()}
+    </div>
     <div class="row">
       <span>${e(me.name || short(ROOM.wallet))}${me.role === 'artist' ? ' &middot; the artist' : ` &middot; ${e(Number(me.tao || 0).toLocaleString('en-NZ'))} TAO`}</span>
       <span class="count${len > ROOM.max ? ' over' : ''}" id="count">${len}/${ROOM.max}</span>
@@ -279,6 +382,139 @@ function composer() {
       <button class="go" id="go" data-act="say"${ROOM.busy || !(len && len <= ROOM.max) ? ' disabled' : ''}>${ROOM.busy ? 'Sending' : 'Say it'}</button>
     </div>
   </div>`;
+}
+
+/* You, in the room's own header.
+ *
+ * Your name where everybody else's is, linked to the same page theirs are, and
+ * beside it what was waiting. No email and no push: the room tells you inside
+ * the room, which is the only place the telling belongs. Nothing is drawn for
+ * a reader who has not said who they are ... there is nobody to have mentioned.
+ */
+function youLine() {
+  const me = ROOM.me;
+  if (!me || !ROOM.wallet) return '';
+  const label = e(me.name || short(ROOM.wallet));
+  const who = me.url ? `<a href="${e(me.url)}">${label}</a>` : label;
+  const n = ROOM.waiting || 0;
+  /* A first visit counts everything, because none of it has been read ... but
+     there is no last visit to say "since" about, so the line does not claim
+     there was one. */
+  const first = Boolean(me.mentions && me.mentions.first_visit);
+  const said = n
+    ? `<span class="said">${n} mention${n === 1 ? '' : 's'}${first ? '' : ' since your last visit'}</span>`
+    : '';
+  return `<div class="you">${who}${said}</div>`;
+}
+
+/* Naming somebody.
+ *
+ * An @ opens the register, not a contact list: everybody who holds a MintFace
+ * work is in it, whether or not they have ever been in this room. The rows
+ * carry a name and what stands behind it ... the ENS the chain answers with,
+ * or the address ... because two collectors can read alike and the wallet is
+ * the thing that cannot.
+ *
+ * What is stored is the wallet. This list is only how a person finds it.
+ */
+function tagList() {
+  const t = ROOM.tag;
+  if (!t.open) return '';
+  if (!t.rows.length) {
+    return `<div class="at-list" id="atList" role="listbox">
+      <div class="at-none">${t.q ? 'Nobody on the register reads like that.' : 'Keep typing a name.'}</div>
+    </div>`;
+  }
+  return `<div class="at-list" id="atList" role="listbox">${t.rows.map((c, i) => {
+    // what a name rests on, said once: the ENS where there is one, the wallet where there is not
+    const under = c.ens && c.ens !== c.name ? c.ens : short(c.address);
+    return `<button type="button" role="option" data-act="attag" data-i="${i}"
+      aria-selected="${i === t.pick}"><span class="nm">${e(c.name)}</span><span class="sub">${e(under)}</span></button>`;
+  }).join('')}</div>`;
+}
+
+const shutTag = () => { ROOM.tag = { ...ROOM.tag, open: false, from: -1, q: '', rows: [], pick: 0 }; };
+
+/* The @ under the caret, or nothing.
+ *
+ * It walks back from the caret to an @ that begins a word, and gives up at a
+ * space too many or a line break: a name is thirty-two characters and at most
+ * a few words, and everything past that is prose that happens to contain an
+ * email address. */
+function tagUnderCaret(text, caret) {
+  const upto = text.slice(0, caret);
+  const at = upto.lastIndexOf('@');
+  if (at < 0) return null;
+  if (at > 0 && !/[\s([{<"']/.test(upto[at - 1])) return null;
+  const q = upto.slice(at + 1);
+  if (q.includes('\n') || q.length > 40 || q.split(' ').length > 4) return null;
+  return { from: at, q };
+}
+
+/* Asked of the register, and only ever answered into the box it was asked from.
+   A sequence number rather than a debounce alone: two keystrokes in flight can
+   land out of order, and the older answer overwriting the newer one is how a
+   list ends up showing the results for half a word. */
+async function askTags(q, from) {
+  const seq = ++ROOM.tag.seq;
+  let rows = [];
+  try {
+    const r = await fetch(`/api/names?q=${encodeURIComponent(q)}&limit=8`,
+      { headers: { accept: 'application/json' } });
+    rows = r.ok ? ((await r.json()).collectors || []) : [];
+  } catch (err) { rows = []; }
+  if (seq !== ROOM.tag.seq) return;
+  ROOM.tag = { ...ROOM.tag, open: true, from, q, rows, pick: 0 };
+  paintTags();
+}
+
+// the list redraws on its own, because redrawing the composer would take the
+// caret and the half-written sentence with it
+function paintTags() {
+  const field = document.querySelector('.speak .field');
+  if (!field) return;
+  const old = document.getElementById('atList');
+  const html = tagList();
+  if (old) old.outerHTML = html || '';
+  else if (html) document.getElementById('text').insertAdjacentHTML('afterend', html);
+  const t = document.getElementById('text');
+  if (t) t.setAttribute('aria-expanded', String(ROOM.tag.open));
+}
+
+/* Accepting a name writes the name, and the name alone. The wallet behind it
+   is worked out again on the server when the message is said, from these very
+   characters ... so there is one answer to who was tagged rather than the
+   page's answer and the register's. */
+function takeTag(i) {
+  const t = ROOM.tag;
+  const c = t.rows[i == null ? t.pick : i];
+  const box = document.getElementById('text');
+  if (!c || !box || t.from < 0) return;
+  const caret = box.selectionStart;
+  const before = box.value.slice(0, t.from);
+  const after = box.value.slice(caret);
+  const written = `@${c.name}`;
+  const spaced = !after.startsWith(' ');
+  box.value = `${before}${written}${spaced ? ' ' : ''}${after}`;
+  ROOM.draft = box.value;
+  const pos = before.length + written.length + 1;
+  box.setSelectionRange(pos, pos);
+  ROOM.caret = pos;
+  /* The space is right nine times in ten and wrong the tenth, which is when the
+     next thing typed is a question mark. So it is offered rather than imposed:
+     where it sits is remembered, and the next keystroke may take it back. */
+  ROOM.autoSpace = spaced ? pos - 1 : null;
+  shutTag();
+  paintTags();
+  countUp();
+  box.focus();
+}
+
+function countUp() {
+  const c = document.getElementById('count');
+  if (c) { c.textContent = `${ROOM.draft.length}/${ROOM.max}`; c.classList.toggle('over', ROOM.draft.length > ROOM.max); }
+  const go = document.getElementById('go');
+  if (go) go.disabled = !ROOM.draft.trim() || ROOM.draft.length > ROOM.max;
 }
 
 /* The status line is written straight into the DOM rather than through draw(),
@@ -302,6 +538,7 @@ function draw({ keep = false, toEnd = false } = {}) {
     <section class="mast">
       <h1>Studio</h1>
       <div class="sub">chillin' in the studio talking art with each other. TAO gets you in. All can read. Own 1x MintFace artwork, chat in Studio.</div>
+      ${youLine()}
     </section>
     <section class="room" id="log">
       ${ROOM.more ? '<button class="earlier" data-act="earlier">Read earlier</button>' : ''}
@@ -312,7 +549,14 @@ function draw({ keep = false, toEnd = false } = {}) {
   if (keep) window.scrollBy(0, document.documentElement.scrollHeight - before);
   if (toEnd) window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   const t = document.getElementById('text');
-  if (t && ROOM.focus) { t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
+  /* A redraw rebuilds the box, and rebuilding the box puts the caret at the
+     start of somebody's half-written sentence. Where it was is remembered and
+     put back; where it was never noted, the end is the right guess. */
+  if (t && ROOM.focus) {
+    t.focus();
+    const at = ROOM.caret == null ? t.value.length : Math.min(ROOM.caret, t.value.length);
+    t.setSelectionRange(at, at);
+  }
 }
 
 /* Connecting connects, and nothing else. No signature is asked for here, and
@@ -423,13 +667,74 @@ async function send(payload) {
   return post({ ...payload, address: ROOM.wallet, issued, signature });
 }
 
+let tagTimer = null;
 document.addEventListener('input', (ev) => {
   if (!ev.target.matches('#text')) return;
   ROOM.draft = ev.target.value;
-  const c = document.getElementById('count');
-  if (c) { c.textContent = `${ROOM.draft.length}/${ROOM.max}`; c.classList.toggle('over', ROOM.draft.length > ROOM.max); }
-  const go = document.getElementById('go');
-  if (go) go.disabled = !ROOM.draft.trim() || ROOM.draft.length > ROOM.max;
+  ROOM.caret = ev.target.selectionStart;
+  countUp();
+
+  /* Is there an @ under the caret? Asked on every keystroke and answered off
+     the register a beat later, because a register of three and a half thousand
+     is a question for the server and a question worth not asking four times a
+     word. */
+  const found = tagUnderCaret(ROOM.draft, ROOM.caret);
+  clearTimeout(tagTimer);
+  if (!found) {
+    if (ROOM.tag.open) { shutTag(); paintTags(); }
+    return;
+  }
+  if (!ROOM.tag.open) { ROOM.tag = { ...ROOM.tag, open: true, from: found.from, q: found.q, rows: [], pick: 0 }; paintTags(); }
+  tagTimer = setTimeout(() => askTags(found.q, found.from), 120);
+});
+
+/* The list is keyboard first. A name is chosen with the keys already on the
+   name ... up, down, enter ... and escape leaves the @ where it was typed
+   rather than undoing it, because a person who means to write an email address
+   should not have the page argue with them about it. */
+/* Taking the space back.
+ *
+ * Accepting a name writes a space after it, because the next thing somebody
+ * types is nearly always another word. When it is a question mark instead, the
+ * space is a typographic error the page committed on their behalf ... "@Ariki
+ * of Ahuriri ? It is the best of them" ... and they would have to notice it and
+ * reach back for it. So the one keystroke that follows may undo it, and any
+ * other keystroke ends the offer. */
+document.addEventListener('keydown', (ev) => {
+  if (!ev.target.matches('#text')) return;
+  if (ROOM.autoSpace != null) {
+    const at = ROOM.autoSpace;
+    ROOM.autoSpace = null;
+    if (ev.key.length === 1 && /[?!,.;:)\]}]/.test(ev.key)
+      && ev.target.selectionStart === at + 1 && ev.target.selectionEnd === at + 1
+      && ev.target.value[at] === ' ') {
+      const v = ev.target.value;
+      ev.target.value = v.slice(0, at) + v.slice(at + 1);
+      ev.target.setSelectionRange(at, at);
+      ROOM.draft = ev.target.value;
+      ROOM.caret = at;
+    }
+  }
+  if (!ROOM.tag.open) return;
+  const rows = ROOM.tag.rows;
+  if (ev.key === 'Escape') { ev.preventDefault(); shutTag(); paintTags(); return; }
+  if (!rows.length) return;
+  if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+    ev.preventDefault();
+    const step = ev.key === 'ArrowDown' ? 1 : -1;
+    ROOM.tag.pick = (ROOM.tag.pick + step + rows.length) % rows.length;
+    paintTags();
+    return;
+  }
+  if (ev.key === 'Enter' || ev.key === 'Tab') { ev.preventDefault(); takeTag(); }
+});
+
+// clicking anywhere that is not the list closes it, the way a menu closes
+document.addEventListener('click', (ev) => {
+  if (!ROOM.tag.open) return;
+  if (ev.target.closest('#atList') || ev.target.matches('#text')) return;
+  shutTag();
+  paintTags();
 });
 
 document.addEventListener('click', async (ev) => {
@@ -437,6 +742,7 @@ document.addEventListener('click', async (ev) => {
   if (!b || ROOM.busy) return;
   const act = b.dataset.act;
 
+  if (act === 'attag') return takeTag(Number(b.dataset.i));
   if (act === 'earlier') return earlier();
   if (act === 'connect') return void connect();
   if (act === 'pick') return void connect(b.dataset.uuid);
@@ -451,9 +757,22 @@ document.addEventListener('click', async (ev) => {
     return;
   }
 
+  /* Busy, and then not busy.
+   *
+   * Two things went wrong here and both were invisible until somebody watched
+   * the screen. The button was relabelled 'Sign and say' whatever it had been
+   * ... so muting a wallet renamed the mute button ... and, worse, an action
+   * that redraws the composer under itself left the room drawn while it was
+   * still busy: signing in rendered the send button from `ROOM.busy === true`
+   * and it read 'Sending' from then until somebody else spoke.
+   *
+   * So the label is put back rather than invented, and where the button this
+   * ran from is no longer on the page, the room is drawn again now that it is
+   * idle. Nothing else knows to do it: the redraw happened inside the work. */
   const run = async (fn) => {
     ROOM.busy = true;
     b.disabled = true;
+    const was = b.textContent;
     if (b.dataset.act === 'say') b.textContent = 'Sending';
     try {
       await fn();
@@ -464,12 +783,15 @@ document.addEventListener('click', async (ev) => {
       status(String((err && err.message) || err), true);
     } finally {
       ROOM.busy = false;
-      if (document.body.contains(b)) { b.disabled = false; b.textContent = 'Sign and say'; }
+      if (document.body.contains(b)) { b.disabled = false; b.textContent = was; }
+      else draw();
     }
   };
 
   if (act === 'signin') {
-    return run(async () => { await signIn(); await load(); });
+    // signing in is when the room first knows who you are, so it is the first
+    // moment it can say what was waiting for you
+    return run(async () => { await signIn(); ROOM.waiting = null; ROOM.marked = false; await load(); });
   }
 
   if (act === 'say') {
@@ -477,6 +799,8 @@ document.addEventListener('click', async (ev) => {
     return run(async () => {
       await send({ action: 'say', text });
       ROOM.draft = '';
+      ROOM.caret = null;
+      shutTag();
       ROOM.focus = true;
       await load();
       status(null);

@@ -998,9 +998,35 @@ const MF = {
     return slug ? `https://collectors.mintface.art/${encodeURIComponent(slug)}` : null;
   },
 
-  collectorName(collector) {
+  /* Names chosen since the catalogue was last built.
+   *
+   * The catalogue and the register are nightly files, and a name is not a
+   * nightly thing: a collector sets one and expects to see it. So the ones set
+   * since are published on their own ... a few kilobytes, cached at the edge
+   * for half a minute ... and laid over the record the way the live TAO board
+   * already is on a collector page.
+   *
+   * A page that cannot reach it shows the name the record was built with. A
+   * little behind, and never wrong in kind. */
+  async names() {
+    if (this._names !== undefined) return this._names;
+    try {
+      const r = await fetch('https://mintface.art/api/names', { headers: { accept: 'application/json' } });
+      this._names = r.ok ? (await r.json()).names || {} : {};
+    } catch (e) { this._names = {}; }
+    return this._names;
+  },
+
+  /**
+   * What to call a collector.
+   * The order is the register's, and it is the same everywhere: the name Ryan
+   * wrote down, then the name they chose, then their ENS, then the address.
+   * @param names  MF.names(), where the caller has awaited it
+   */
+  collectorName(collector, names) {
     if (!collector) return null;
-    return collector.display_name || collector.ens || this.shortAddress(collector.address);
+    const chosen = (names || this._names || {})[String(collector.address || '').toLowerCase()];
+    return collector.display_name || chosen || collector.ens || this.shortAddress(collector.address);
   },
 
   shortAddress(a) {
@@ -1341,6 +1367,28 @@ const MF = {
       secure: typeof window === 'undefined' || window.isSecureContext !== false,
       count: list.length,
     };
+  },
+
+  /**
+   * Who is already here, without asking anybody anything.
+   *
+   * eth_accounts prompts nothing and opens nothing: it answers only where this
+   * site has already been authorised, and answers empty otherwise. That is
+   * exactly the question a page wants when it is deciding whether to offer
+   * somebody an edit on their own record ... asking a wallet to unlock so the
+   * page can decide whether to show a button would be the wrong way round.
+   *
+   * @returns the lowercased address, or null
+   */
+  async quiet() {
+    const list = await this.wallets().catch(() => []);
+    for (const w of list) {
+      try {
+        const accounts = await w.provider.request({ method: 'eth_accounts' });
+        if (accounts && accounts[0]) { this._wallet = w; return String(accounts[0]).toLowerCase(); }
+      } catch (e) { /* a provider that will not answer is not the one */ }
+    }
+    return null;
   },
 
   /**

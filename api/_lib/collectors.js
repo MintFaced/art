@@ -39,6 +39,21 @@ const shortOf = (a, n) => a.slice(0, 2 + n);
  *                     TAO is computed from ownership history, which this
  *                     function has no sight of.
  */
+/**
+ * The register, as a file.
+ *
+ * One row per line. The register is three and a half thousand rows of ten
+ * numbers, and pretty-printing it puts every one of those numbers on a line of
+ * its own: a nightly diff of forty-four thousand lines, in which the handful
+ * that actually changed cannot be found. Both callers write it through here so
+ * the file does not change shape depending on which of them ran last.
+ */
+export function registerFile(register) {
+  return `{\n "_note": ${JSON.stringify(register._note)},\n "generated": ${JSON.stringify(register.generated)},\n`
+    + ` "fields": ${JSON.stringify(register.fields)},\n "rows": [\n`
+    + register.rows.map((r) => '  ' + JSON.stringify(r)).join(',\n') + '\n ]\n}\n';
+}
+
 export function deriveCollectors(collections, titleOf, privateList = new Set(), tao = null, nudges = null) {
   // how many distinct nudges each wallet has weighed in on
   const weighed = new Map();
@@ -170,11 +185,18 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
   const register = {
     _note: 'Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.',
     generated: new Date().toISOString(),
-    fields: ['address', 'name', 'slug', 'private', 'works', 'unique', 'tao', 'rate', 'last', 'rank'],
+    /* The ENS sits beside the name rather than inside it. `name` is what to
+       call somebody and has always been the overlay where there is one; `ens`
+       is what the chain says, unchanged. Two fields where there was one is what
+       lets a reader tell a name Ryan wrote down from a name the chain resolved
+       ... which is the difference between a name a collector may override with
+       their own and a name that outranks it. See api/_lib/names.js. */
+    fields: ['address', 'name', 'ens', 'slug', 'private', 'works', 'unique', 'tao', 'rate', 'last', 'rank'],
     rows: all.slice().sort((a, b) => (b.tao || 0) - (a.tao || 0) || b.counts.works - a.counts.works)
       .map((p) => [
         p.address,
         p.display_name || p.ens || '',
+        p.ens || '',
         p.has_page ? p.slug : '',
         p.private ? 1 : 0,
         p.counts.works,

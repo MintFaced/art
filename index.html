@@ -256,6 +256,9 @@ function heroMarkup(work, collection, pool) {
       // the vault is not a collector, and says so in its own words
       tail = '<span class="state"><span class="dot vaulted"></span> Vaulted</span>';
     } else {
+      /* Named but not linked: the whole hero is already a link to the work,
+         and a link inside a link is not a thing a browser can draw. The
+         attribution under the title on the work page is where it leads. */
       const name = MF.collectorName(work.collector) || (work.physical && work.physical.collector);
       tail = name ? `<span class="state">Collected by ${e(name)}</span>` : '<span class="state">Collected</span>';
     }
@@ -348,7 +351,12 @@ async function fillVault() {
 
 async function hero(home, idx) {
   const el = document.getElementById('hero');
+  /* The rate, and the names chosen since the catalogue was built. Both are
+     small, both are wanted before the hero draws, and neither is worth a
+     redraw ... a collector who set a name this morning should be named on the
+     front page this morning, not after a flicker. */
   try { HERO_FX = await MF.fx(); } catch { /* the figure falls back to nothing */ }
+  await MF.names().catch(() => ({}));
 
   const first = nextPool(home);
   if (first) {

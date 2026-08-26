@@ -42,7 +42,8 @@ h1{
   margin:0 0 6px;letter-spacing:-.005em;
 }
 .byline{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
-.byline a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.byline a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.byline a:hover{border-color:var(--ink)}
 
 /* ---------- tabs ---------- */
 .tabs{display:flex;gap:26px;border-bottom:1px solid var(--rule);margin-bottom:0}
@@ -130,6 +131,9 @@ details summary:hover{color:var(--ink)}
 .sheet .body{padding:22px 28px 40px;overflow-y:auto;flex:1}
 .sheet h2{font-family:var(--font-sans);font-weight:400;font-size:30px;line-height:1.1;margin:6px 0 4px}
 .sheet .which{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:26px}
+/* the collection name, linked as it is under the title on the page behind */
+.sheet .which a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.sheet .which a:hover{border-color:var(--ink)}
 .step{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:26px 0 12px}
 .choice{
   display:flex;justify-content:space-between;align-items:baseline;gap:14px;width:100%;
@@ -218,6 +222,10 @@ details summary:hover{color:var(--ink)}
 .state .sub{font-family:var(--font-mono);font-weight:400;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .note{font-family:var(--font-sans);font-weight:400;font-size:16px;line-height:1.55;color:#2c2924;margin:12px 0 0}
 .holders{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.9}
+/* one row per holder, so a name can be swapped for a linked one in place */
+.holders .hold{display:inline}
+.holders a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.holders a:hover{color:var(--ink);border-color:var(--ink)}
 
 
 /* ---------- notes ---------- */
@@ -226,6 +234,8 @@ details summary:hover{color:var(--ink)}
    itself is the exception ... it is prose, and prose in tabular mono is a
    receipt. Everything around it stays mono and small. */
 .nt-row th{vertical-align:top}
+.nt-by .nt-who{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
+.nt-by .nt-who:hover{border-color:var(--ink)}
 .nt-row .nt-act{display:block;margin-top:6px;font-family:var(--font-mono);font-weight:400;
   font-size:10px;letter-spacing:.16em;text-transform:uppercase}
 .nt-row .nt-act button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;
@@ -649,6 +659,12 @@ function actionBlock(work, collection) {
   return '';
 }
 
+/* Who else holds a copy.
+ *
+ * Named and, where the register gives them a page, linked to it ... the same
+ * treatment the attribution under the title gets, because it is the same fact
+ * about the same people. The names and the links are laid in afterwards by
+ * nameHolders(), so the fold reads correctly whether or not either arrives. */
 function holdersBlock(work) {
   if (!work.holders || work.holders.length < 2) return '';
   const named = work.holders.filter((h) => h.display_name || h.ens).slice(0, 12);
@@ -656,7 +672,8 @@ function holdersBlock(work) {
   return `<details>
     <summary>Collectors</summary>
     <div class="fold-body">
-      <div class="holders">${named.map((h) => e(h.display_name || h.ens)).join('<br>')}${work.holders.length > named.length ? `<br><span class="pending">and ${work.holders.length - named.length} more</span>` : ''}</div>
+      <div class="holders" id="holders">${named.map((h) =>
+        `<span class="hold" data-a="${e(String(h.address || '').toLowerCase())}">${e(h.display_name || h.ens)}</span>`).join('<br>')}${work.holders.length > named.length ? `<br><span class="pending">and ${work.holders.length - named.length} more</span>` : ''}</div>
     </div>
   </details>`;
 }
@@ -699,6 +716,22 @@ function wireMotion() {
   });
 }
 
+/* Two Burdens &middot; 2024.
+ *
+ * The collection is a place on this site and the year is a fact about the work,
+ * so only one of them is a link. The year stays plain for the same reason a
+ * date in the details table is plain: there is nothing at the other end of it.
+ * The sequence sits between them and is likewise only a number.
+ */
+function collectionLine(work, collection) {
+  const bits = [
+    `<a href="/c/${e(collection.slug)}">${e(collection.title)}</a>`,
+    work.sequence ? e(work.sequence) : null,
+    MF.year(work, collection) ? e(MF.year(work, collection)) : null,
+  ].filter(Boolean);
+  return bits.join(' &middot; ');
+}
+
 // some contracts title a work with the mint number alone
 function displayTitle(work, collection) {
   const t = (work.title || '').trim();
@@ -735,7 +768,7 @@ function render(work, collection, meta) {
     ${stage(work)}
     <div class="col">
       <h1>${e(shown)}</h1>
-      <div class="byline">${[collection.title, work.sequence, MF.year(work, collection)].filter(Boolean).map(e).join(' &middot; ')}</div>
+      <div class="byline">${collectionLine(work, collection)}</div>
       ${collectedLine(work)}
 
       <div class="tabs" role="tablist">
@@ -856,7 +889,13 @@ function byline(n) {
     : n.kind === 'provenance' ? e(n.tenure)
       : n.tao ? `Collector &middot; ${wearTao(n.tao)} TAO`
         : 'Collector';
-  const bits = [e(n.byline), role, e(noteDate(n.at))];
+  /* Whoever wrote it, linked to their page. A note is signed work, and a
+     signature you cannot follow is half a signature. Anyone the register will
+     not name in public renders unlinked, exactly as they do everywhere else. */
+  const who = n.url
+    ? `<a class="nt-who" href="${e(n.url)}">${e(n.byline)}</a>`
+    : e(n.byline);
+  const bits = [who, role, e(noteDate(n.at))];
   if (n.visibility === 'private') bits.push('Private to you');
   if (n.edited) bits.push('edited');
   return `<div class="nt-by">${bits.join(' &middot; ')}</div>`;
@@ -1262,12 +1301,18 @@ function amountIn(option, currency) {
 const headlinePrice = (option) =>
   amountIn(option, option.eth != null ? 'ETH' : MF.currency());
 
+/* The same line the work page carries under its title, in the slide-over that
+   sits over it. It is the same fact, so it is the same link ... a collection
+   name that leads somewhere on the page and nowhere in the panel would be the
+   panel quietly disagreeing with the page it opened from. */
+const which = (work, collection) => collectionLine(work, collection);
+
 function stepWhat() {
   const opts = optionsFor(ACQ.work, ACQ.collection);
   if (opts.length === 1) { ACQ.what = opts[0].key; return stepHow(); }
   SHEET.body().innerHTML = `
     <h2>${e(ACQ.work.title || 'Untitled')}</h2>
-    <div class="which">${e(ACQ.collection.title)}</div>
+    <div class="which">${which(ACQ.work, ACQ.collection)}</div>
     <div class="step">What would you like</div>
     ${opts.map((o) => `<button class="choice" data-what="${o.key}" aria-pressed="false">
       <span class="what">${e(o.label)}<span class="sub">${e(o.sub)}</span>${o.extra ? `<span class="add">${e(o.extra)}</span>` : ''}</span>
@@ -1563,11 +1608,28 @@ function thanksIfPaid() {
     if (listing) hit.work.listing = listing;
     render(hit.work, hit.collection, idx._meta || {});
 
-    // link the attribution to the collector's page, if they have one
+    /* Name and link the people on this page from the register.
+     *
+     * Both arrive after the render on purpose. The catalogue was built last
+     * night and the register answers now, so a collector who chose a name this
+     * morning is named this morning; and the slug map decides which of them
+     * have pages worth pointing at. Neither is required for the page to read
+     * correctly, which is why neither is awaited before it draws. */
+    const [slugs, names] = await Promise.all([MF.collectorSlugs(), MF.names()]);
     const slot = document.getElementById('collectorName');
     if (slot && hit.work.collector) {
-      const url = MF.collectorUrl(hit.work.collector, await MF.collectorSlugs());
+      const said = MF.collectorName(hit.work.collector, names);
+      if (said) slot.textContent = said;
+      const url = MF.collectorUrl(hit.work.collector, slugs);
+      // one register across two deploys, so it opens in this tab like any page
       if (url) slot.innerHTML = `<a href="${e(url)}">${e(slot.textContent)}</a>`;
+    }
+    for (const el of document.querySelectorAll('#holders .hold')) {
+      const a = el.dataset.a;
+      const chosen = names[a];
+      if (chosen) el.textContent = chosen;
+      const url = MF.collectorUrl({ address: a }, slugs);
+      if (url) el.innerHTML = `<a href="${e(url)}">${e(el.textContent)}</a>`;
     }
   } catch (err) {
     document.getElementById('main').innerHTML = `<div class="loading">Could not load this work</div>`;

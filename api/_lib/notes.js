@@ -116,11 +116,24 @@ export function checkVisibility({ role, visibility }) {
  * How one stored note reads now, to this viewer.
  * @returns null when it must not be rendered at all
  */
-export function render(note, { holders, viewer, isArtist, currentAcquired }) {
+export function render(note, { holders, viewer, isArtist, currentAcquired, register }) {
   if (!note) return null;
   const author = lower(note.address);
   const stillHolds = holders.has(author);
   const me = Boolean(viewer && lower(viewer) === author);
+  /* What the author is called now, and where their page is.
+     The name stored on the note is what the register said the day it was
+     written; the register is asked again here, so a collector who renames is
+     renamed on everything they have ever written. It falls back to the stored
+     name for a wallet the register has since lost sight of. */
+  const who = register ? register.who(author) : null;
+  /* The register first, so a rename reaches a note written a year ago. The name
+     stored on the note second, for an author the register no longer holds: a
+     collector who has sold up leaves it, and a byline should not turn back into
+     a hex string when they do. */
+  const asks = (fallback) => (who && who.known && !who.private ? who.name : null)
+    || (who && who.private ? who.name : null) || note.name || fallback;
+  const url = register ? register.urlOf(author) : null;
 
   /* A private note belongs to a tenancy. While its author holds the work it is
      theirs to read; once the work has gone it renders to nobody, author and
@@ -137,19 +150,21 @@ export function render(note, { holders, viewer, isArtist, currentAcquired }) {
     hidden: Boolean(note.hidden),
     id: note.id, work: note.work, text: note.text, at: note.at,
     edited: Boolean(note.edited_at), edited_at: note.edited_at || null,
-    address: note.address, name: note.name || null,
+    address: note.address, name: asks(null), url,
     visibility: note.visibility, mine: me,
     can_edit: me, can_hide: Boolean(isArtist),
   };
 
   if (note.role === 'artist') {
-    return { ...base, kind: 'artist', label: "Artist's note", byline: note.name || 'MintFace' };
+    // his page is the front door; he has no collector page and never will
+    return { ...base, kind: 'artist', label: "Artist's note", byline: note.name || ARTIST_NAME,
+      url: 'https://mintface.art/' };
   }
 
   if (stillHolds) {
     return {
       ...base, kind: 'collector', label: "Collector's note",
-      byline: note.name || short(note.address),
+      byline: asks(short(note.address)),
       ...(note.role === 'senior' ? { tao: note.tao_at_post || null } : {}),
     };
   }
@@ -163,7 +178,7 @@ export function render(note, { holders, viewer, isArtist, currentAcquired }) {
       : (from ? `collector since ${from}` : 'a former collector');
     return {
       ...base, kind: 'provenance', label: 'Provenance note',
-      byline: note.name || short(note.address), tenure,
+      byline: asks(short(note.address)), tenure,
     };
   }
 
@@ -171,7 +186,7 @@ export function render(note, { holders, viewer, isArtist, currentAcquired }) {
      is not tied to this work, so nothing about it has changed. */
   return {
     ...base, kind: 'collector', label: "Collector's note",
-    byline: note.name || short(note.address), tao: note.tao_at_post || null,
+    byline: asks(short(note.address)), tao: note.tao_at_post || null,
   };
 }
 

@@ -2,6 +2,8 @@ import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { tally, latest, isOpen, weighMessage, SIDES } from './_lib/nudges.js';
+import { loadRegister } from './_lib/register.js';
+import { storeConfigured, pipe } from './_lib/kv.js';
 
 /* Weighing TAO behind a Yes or a No.
  *
@@ -33,12 +35,25 @@ const taoReader = (tao) => (addr) => {
   return w ? w.tao : 0;
 };
 
+const at = async (origin, p) => {
+  const r = await fetch(`${origin}/${p}`, { headers: { accept: 'application/json' } });
+  if (!r.ok) throw new Error(`${p}: ${r.status}`);
+  return r.json();
+};
+
+/* Who weighed in, named and linked as the register reads them today.
+   A ledger is a public record of who steered a decision, so the name on it has
+   to be the name that person answers to now ... and it has to lead somewhere,
+   because a row that says a name and goes nowhere is a row you cannot check. */
+const registerFor = (origin) => loadRegister(at, origin, storeConfigured() ? pipe : null).catch(() => null);
+
 /** Everything the studio page needs, in one request. */
 export async function GET(request) {
   const origin = useRequestOrigin(request) || siteOrigin();
   let data;
   try { data = await load(origin); } catch (e) { return json({ error: 'the studio is not reachable' }, 503); }
   const readTao = taoReader(data.tao);
+  const register = await registerFor(origin);
   const url = new URL(request.url);
   const who = url.searchParams.get('address');
 
@@ -54,7 +69,17 @@ export async function GET(request) {
       open: isOpen(n), banked: Boolean(n.banked), outcome: n.outcome || null,
       totals: t.totals, counts: t.counts, total: t.total, collectors: t.collectors,
       share: t.share, result: t.result,
-      ledger: (t.ledger || []).map((r) => ({ address: r.address, name: r.name || null, side: r.side, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
+      ledger: (t.ledger || []).map((r) => {
+        const w = register ? register.who(r.address) : null;
+        return {
+          address: r.address,
+          // the register's name, or the one the weighing was recorded under for
+          // a wallet it no longer holds
+          name: (w && w.known ? w.name : null) || r.name || (w ? w.name : null) || null,
+          url: register ? register.urlOf(r.address) : null,
+          side: r.side, weight: r.weight, at: r.at, clamped: Boolean(r.clamped),
+        };
+      }),
       mine: mine ? { side: mine.side, amount: mine.amount, at: mine.at } : null,
     };
   }).sort((a, b) => Number(b.open) - Number(a.open) || String(b.closes).localeCompare(String(a.closes)));
@@ -105,13 +130,13 @@ export async function POST(request) {
   try { ok = await verifyMessage({ address, message, signature }); } catch (e) { ok = false; }
   if (!ok) return json({ error: 'that signature does not match the wallet' }, 401);
 
-  // the register knows their name; the ledger shows it rather than a hex string
-  let name = null;
-  try {
-    const reg = await fetch(`${origin}/data/collectors.json`).then((r) => r.json());
-    const hit = (reg.collectors || []).find((c) => lower(c.address) === address);
-    name = hit ? (hit.display_name || hit.ens || null) : null;
-  } catch (e) { /* a name is a courtesy */ }
+  /* The register knows their name; the ledger keeps it rather than a hex
+     string. It is only a fallback, since every read resolves the name again
+     from the register ... but a weighing is a permanent record, and a record
+     that can say who made it without a lookup is a better record. */
+  const registerNow = await registerFor(origin);
+  const whoNow = registerNow ? registerNow.who(address) : null;
+  const name = whoNow && !whoNow.private ? whoNow.name : null;
 
   const file = await readFile('data/nudge-weighings.json');
   const store = JSON.parse(file.text);

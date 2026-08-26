@@ -14,7 +14,17 @@
  * cases can run the real thing.
  */
 
+import { dressTags } from './names.js';
+import { ARTIST_NAME as ARTIST } from './artist.js';
+
 const lower = (a) => String(a || '').toLowerCase();
+
+/* What to call the author of a stored row.
+   The register first, because a rename should reach everything they ever said.
+   The name written into the row second, for somebody the register no longer
+   holds ... a collector who has sold up leaves it, and their words should not
+   turn back into a hex string when they do. */
+const said = (who, stored) => (who && who.known ? who.name : (stored || (who && who.name) || null));
 
 /** The sentence a wallet signs. */
 export function chatMessage({ action, text, target, address, issued, until }) {
@@ -81,24 +91,49 @@ export function wearTao(n) {
 
 /**
  * How one stored message reads now.
+ *
+ * Now, not then. The name written into the row is what the register said on the
+ * day, and the register is asked again here ... so a collector who renames on
+ * Tuesday is renamed on every message they have ever left, and the tags in
+ * everybody else's messages follow them. A message is a thing that was said; a
+ * name is a thing that is true, and the two do not have to be frozen together.
+ * The stored name stays as the fallback for a wallet the register has since
+ * lost sight of.
+ *
  * A deleted message leaves its place rather than its words: the room should
  * show that something was said and taken down, not pretend the conversation
  * never had a gap in it. The artist sees what it was, and can put it back.
+ *
+ * @param register  api/_lib/register.js, or nothing where a caller has none
  */
-export function render(row, { isArtist, artist } = {}) {
+export function render(row, { isArtist, artist, register } = {}) {
   if (!row) return null;
   /* Read from the row where it was written down, and from the config where it
      was not: a message said before the artist was known as the artist should
      still read as his. */
   const mine = row.role === 'artist'
     || Boolean(artist && artist[String(row.address || '').toLowerCase()]);
+  const who = register ? register.who(row.address) : null;
+  /* Whose name links where. A collector goes to their page on the register; the
+     artist goes to the front door, which is the only page he has. Anyone the
+     register will not name in public ... a private collector, or a wallet below
+     the threshold that has never been given a page ... is drawn unlinked, which
+     is the same restraint the register table already shows. */
+  const url = mine ? 'https://mintface.art/' : (register ? register.urlOf(row.address) : null);
   const base = mine
-    ? { n: row.n, address: row.address, name: 'MintFace', role: 'artist', tao: null, worn: null,
-        at: row.at, deleted: Boolean(row.deleted) }
-    : { n: row.n, address: row.address, name: row.name || null, role: 'collector',
-        tao: row.tao || 0, worn: wearTao(row.tao), at: row.at, deleted: Boolean(row.deleted) };
-  if (row.deleted && !isArtist) return { ...base, text: null };
-  return { ...base, text: row.text, ...(isArtist ? { can_delete: true } : {}) };
+    ? { n: row.n, address: row.address, name: ARTIST, role: 'artist', tao: null, worn: null,
+        url, at: row.at, deleted: Boolean(row.deleted) }
+    : { n: row.n, address: row.address, name: said(who, row.name), role: 'collector',
+        tao: row.tao || 0, worn: wearTao(row.tao), url, at: row.at, deleted: Boolean(row.deleted) };
+  if (row.deleted && !isArtist) return { ...base, text: null, mentions: [] };
+  return {
+    ...base,
+    text: row.text,
+    /* The tags, said as they read now. The row keeps wallets and offsets; what
+       a wallet is called is looked up at the moment of drawing. */
+    mentions: register ? dressTags(row.text, row.mentions, register) : [],
+    ...(isArtist ? { can_delete: true } : {}),
+  };
 }
 
 export const keys = {
@@ -107,8 +142,18 @@ export const keys = {
   muted: 'chat:muted',
   floor: (a) => `chat:floor:${lower(a)}`,
   burst: (a) => `chat:burst:${lower(a)}`,
+  tags: (a) => `chat:tags:${lower(a)}`,
   session: (t) => `chat:s:${t}`,
+  /* One list per tagged wallet, holding message numbers. A mention count is
+     then a length rather than a walk of the whole room, which matters because
+     the room is kept forever and the count is asked for on every load. */
+  mentions: (a) => `chat:at:${lower(a)}`,
+  seen: (a) => `chat:seen:${lower(a)}`,
 };
+
+/* How many mentions of one wallet are worth keeping. Anybody who has been
+   tagged five hundred times since they last looked has been told. */
+const MENTIONS_KEPT = 500;
 
 export function chatStore(pipe, cfg = {}) {
   const parse = (s) => { try { return typeof s === 'string' ? JSON.parse(s) : s; } catch (e) { return null; } };
@@ -172,6 +217,41 @@ export function chatStore(pipe, cfg = {}) {
       return row;
     },
 
+    /* ---- being spoken to ----
+       A tag is stored on the message as a wallet, and mirrored here as a
+       number, so the room can answer two questions cheaply: has anybody said
+       my name, and how many times since I last looked. Nothing is emailed and
+       nothing is pushed ... the room tells you inside the room, which is where
+       you were going to read it anyway. */
+    async mention(addresses, n) {
+      const list = [...new Set((addresses || []).map(lower))].filter(Boolean);
+      if (!list.length) return 0;
+      const cmds = [];
+      for (const a of list) {
+        cmds.push(['RPUSH', keys.mentions(a), String(n)]);
+        cmds.push(['LTRIM', keys.mentions(a), String(-MENTIONS_KEPT), '-1']);
+      }
+      await pipe(cmds);
+      return list.length;
+    },
+    /** How many times this wallet has been named since it last came in. */
+    async mentionsSince(address, seen) {
+      const [rows] = await pipe([['LRANGE', keys.mentions(address), '0', '-1']]);
+      const nums = (rows || []).map(Number).filter((x) => Number.isFinite(x));
+      const from = Number(seen);
+      const unseen = Number.isFinite(from) ? nums.filter((x) => x >= from) : nums;
+      return { total: nums.length, unseen: unseen.length, last: nums.length ? nums[nums.length - 1] : null };
+    },
+    async lastSeen(address) {
+      const [x] = await pipe([['GET', keys.seen(address)]]);
+      return x == null ? null : Number(x);
+    },
+    /* Marked on the way in, not on the way out. A count that says "since your
+       last visit" has to be reset by the visit, and this is the visit. */
+    async markSeen(address, n) {
+      await pipe([['SET', keys.seen(address), String(Math.max(0, Number(n) || 0))]]);
+    },
+
     /* ---- muting ---- */
     async isMuted(address) {
       const [x] = await pipe([['SISMEMBER', keys.muted, lower(address)]]);
@@ -220,6 +300,25 @@ export function chatStore(pipe, cfg = {}) {
       if (Number(count) === 1) await pipe([['EXPIRE', keys.burst(address), String(cfg.burst_window_seconds || 600)]]);
       if (Number(count) > Number(cfg.burst || 10)) {
         return { error: `${cfg.burst || 10} messages in ${Math.round((cfg.burst_window_seconds || 600) / 60)} minutes is plenty. Let it breathe.` };
+      }
+      return { ok: true, count: Number(count) };
+    },
+
+    /* Tags ride the same window as the messages carrying them.
+       A message limit alone does not limit tagging: ten messages naming eight
+       people each is eighty notifications inside the allowance, which is the
+       whole of the spam. So the names spent are counted over the same ten
+       minutes as the messages, and run out first. */
+    async spendTags(address, n, cfg2 = {}) {
+      const many = Math.max(0, Number(n) || 0);
+      if (!many) return { ok: true, count: 0 };
+      const cap = Number(cfg2.tag_burst || cfg.tag_burst || 25);
+      const [count] = await pipe([['INCRBY', keys.tags(address), String(many)]]);
+      if (Number(count) === many) {
+        await pipe([['EXPIRE', keys.tags(address), String(cfg.burst_window_seconds || 600)]]);
+      }
+      if (Number(count) > cap) {
+        return { error: `${cap} names in ${Math.round((cfg.burst_window_seconds || 600) / 60)} minutes is plenty. Say something to them instead.` };
       }
       return { ok: true, count: Number(count) };
     },

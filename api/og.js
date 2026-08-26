@@ -1,6 +1,8 @@
 import { ImageResponse } from '@vercel/og';
 import { readFileSync } from 'node:fs';
 import { nzdToUsd } from './_lib/fx.js';
+import { loadRegister } from './_lib/register.js';
+import { storeConfigured, pipe } from './_lib/kv.js';
 
 /* Link previews as exhibition posters.
  *
@@ -38,6 +40,24 @@ const get = async (p) => {
   if (!r.ok) throw new Error(`${p}: ${r.status}`);
   return r.json();
 };
+/* An OG card is the register speaking to somebody who has not arrived yet, so
+   it says the same name the register says. Held for the life of one invocation
+   ... a card draws one name and there is nothing to gain by asking twice. */
+let REGISTER;
+const register = async () => {
+  if (REGISTER !== undefined) return REGISTER;
+  REGISTER = await loadRegister((_o, p) => get(p), ORIGIN, storeConfigured() ? pipe : null).catch(() => null);
+  return REGISTER;
+};
+/** What to call a wallet on a card, or nothing where there is nothing to say. */
+const nameOf = async (address, fallback = null) => {
+  if (!address) return fallback;
+  const reg = await register();
+  if (!reg) return fallback;
+  const who = reg.who(address);
+  return who.private ? 'A PRIVATE COLLECTOR' : (who.name || fallback);
+};
+
 const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
 const upper = (s) => String(s || '').toUpperCase();
 
@@ -147,7 +167,8 @@ async function workCard(id) {
     dot = 'AVAILABLE';
   } else if (work.status === 'acquired') {
     const c = work.collector || {};
-    const who = c.display_name || c.ens || (c.address ? c.address.slice(0, 6) + '…' + c.address.slice(-4) : null);
+    const fallback = c.display_name || c.ens || (c.address ? c.address.slice(0, 6) + '…' + c.address.slice(-4) : null);
+    const who = await nameOf(c.address, fallback);
     third = who ? `COLLECTED BY ${upper(who)}` : 'COLLECTED';
   } else if (work.status === 'vaulted') {
     third = 'VAULTED · MINTESTATE.ETH';
@@ -185,7 +206,8 @@ async function collectionCard(slug) {
 async function collectorCard(slug) {
   const page = await get(`data/collectors/${encodeURIComponent(slug)}.json`).catch(() => null);
   if (!page || page.private) return null;
-  const name = page.display_name || page.ens || (page.address.slice(0, 6) + '…' + page.address.slice(-4));
+  const name = await nameOf(page.address,
+    page.display_name || page.ens || (page.address.slice(0, 6) + '…' + page.address.slice(-4)));
   // their highest-earning holding stands for them
   const top = (page.works || []).slice().sort((a, b) => (b.tao || 0) - (a.tao || 0))[0];
   /* A collector's work rows carry one image key, and it is the webp display

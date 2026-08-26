@@ -1,7 +1,7 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { mintsSince, readToken, buildRecord } from '../_lib/discover.js';
 import { send } from '../_lib/email.js';
-import { deriveCollectors } from '../_lib/collectors.js';
+import { deriveCollectors, registerFile } from '../_lib/collectors.js';
 
 /* Daily ownership reconciliation.
  *
@@ -667,7 +667,14 @@ async function handle(request, started, dry) {
          and, until now, written by nothing but a hand-run script ... so the
          table the register renders was two days old while the figures behind
          it were being recomputed nightly. */
-      await put('data/collectors-register.json', d.register, `Register: ${d.register.rows.length} ranked`);
+      /* Through registerFile rather than put: the register is written one row
+         per line, so the nightly diff shows the rows that moved rather than
+         forty-four thousand lines of reformatted numbers. */
+      {
+        const cur = await readFile('data/collectors-register.json').catch(() => ({ sha: null }));
+        await writeFile('data/collectors-register.json', registerFile(d.register),
+          `Register: ${d.register.rows.length} ranked`, cur.sha || undefined);
+      }
       await put('data/collector-slugs.json', d.slugMap, 'Collectors: slug map');
       for (const p of d.all) {
         if (!p.has_page || !p.works.some((w) => changedWorks.has(w.id))) continue;

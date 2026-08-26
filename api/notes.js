@@ -5,6 +5,7 @@ import {
   notesStore, noteMessage, noteId, today, standing, checkText, checkVisibility,
   arrange, holdersOf, heldSince,
 } from './_lib/notes.js';
+import { loadRegister } from './_lib/register.js';
 
 /* The notes layer.
  *
@@ -83,12 +84,27 @@ async function holdsNow(work, address) {
   }
 }
 
-async function nameOf(origin, address) {
-  try {
-    const reg = await at(origin, 'data/collectors.json');
-    const hit = (reg.collectors || []).find((c) => lower(c.address) === lower(address));
-    return hit ? (hit.display_name || hit.ens || null) : null;
-  } catch (e) { return null; }
+/* The register, for the names and the links.
+ *
+ * It is asked for on every read as well as every write, because a byline shows
+ * what its author is called now rather than what they were called when they
+ * wrote it. A register that will not load costs the page its links and its
+ * fresh names, and nothing else: the stored name stands in.
+ *
+ * Once per request, and only where a request needs it. Half a megabyte is not
+ * worth fetching twice to answer one question about one wallet, and it is not
+ * worth fetching at all on a path that never draws a name.
+ */
+function registry(origin) {
+  let waiting = null;
+  return () => (waiting || (waiting = loadRegister(at, origin, storeConfigured() ? pipe : null).catch(() => null)));
+}
+
+async function nameOf(register, address) {
+  const reg = await register();
+  if (!reg) return null;
+  const who = reg.who(address);
+  return who.private ? null : who.name;
 }
 async function taoOf(origin, address) {
   try {
@@ -99,12 +115,19 @@ async function taoOf(origin, address) {
 }
 
 /** One row as the stream and a collector's own list read it. */
-const rowOf = (r) => ({
-  id: r.id, work: r.work, title: r.title || null, image: r.image || null,
-  at: r.at, role: r.role, tao_at_post: r.tao_at_post || 0,
-  name: r.name || null, address: r.address, text: r.text,
-  visibility: r.visibility, edited: Boolean(r.edited_at),
-});
+const rowOf = (r, register) => {
+  const who = register ? register.who(r.address) : null;
+  return {
+    id: r.id, work: r.work, title: r.title || null, image: r.image || null,
+    at: r.at, role: r.role, tao_at_post: r.tao_at_post || 0,
+    // named and linked as the register reads today, not as the row was written,
+    // and as the row was written for an author the register no longer holds
+    name: (who && who.known ? who.name : null) || r.name || (who ? who.name : null) || null,
+    url: r.role === 'artist' ? 'https://mintface.art/' : (register ? register.urlOf(r.address) : null),
+    address: r.address, text: r.text,
+    visibility: r.visibility, edited: Boolean(r.edited_at),
+  };
+};
 
 /** The date whoever holds it now came by it, which ends the previous tenure. */
 function currentAcquired(work) {
@@ -132,6 +155,7 @@ export async function GET(request) {
   let cfg;
   try { cfg = await config(origin); } catch (e) { return json({ error: 'the notes are not reachable' }, 503); }
   const db = notesStore(pipe, cfg);
+  const register = registry(origin);
 
   try {
     if (workId) {
@@ -157,7 +181,8 @@ export async function GET(request) {
       }
 
       const rows = await db.byWork(workId);
-      const out = arrange(rows, { holders, viewer, isArtist, currentAcquired: currentAcquired(hit.work) });
+      const out = arrange(rows, { holders, viewer, isArtist, register: await register(),
+        currentAcquired: currentAcquired(hit.work) });
       return json({ ...out, work: workId, me, fold_after: cfg.fold_after, max_chars: cfg.max_chars,
         senior_tao: cfg.senior_tao, store: true });
     }
@@ -169,9 +194,10 @@ export async function GET(request) {
       const rows = await db.byWallet(address, 200);
       const mine = viewer && viewer === lower(address);
       const shown = rows.filter((r) => !r.hidden && (r.visibility === 'public' || mine));
+      const said = await register();
       return json({
         address: lower(address), count: shown.length,
-        notes: shown.slice(0, 60).map(rowOf),
+        notes: shown.slice(0, 60).map((r) => rowOf(r, said)),
         store: true,
       });
     }
@@ -179,7 +205,8 @@ export async function GET(request) {
     if (wantRecent) {
       const rows = await db.recent(Math.min(100, Number(wantRecent) || 50));
       const live = rows.filter((r) => !r.hidden && r.visibility === 'public');
-      return json({ notes: live.map(rowOf), store: true });
+      const said = await register();
+      return json({ notes: live.map((r) => rowOf(r, said)), store: true });
     }
   } catch (e) {
     return json({ error: 'the notes are not reachable' }, 503);
@@ -255,6 +282,7 @@ export async function POST(request) {
   const text = checkText(body.text, cfg);
   if (text.error) return json({ error: text.error }, 400);
 
+  const register = registry(origin);
   const chain = await holdsNow(hit.work, address);
   const holders = holdersOf(hit.work);
   if (chain.holds) holders.add(address);
@@ -282,7 +310,7 @@ export async function POST(request) {
     // records to draw one page is not worth it for a path that rarely moves
     image: (hit.work.assets && (hit.work.assets.display || hit.work.assets.image))
       || (hit.work.digital && hit.work.digital.image) || null,
-    address, name: who.name || (await nameOf(origin, address)),
+    address, name: who.name || (await nameOf(register, address)),
     role: who.role, tao_at_post: who.role === 'senior' ? who.tao : (tao || 0),
     held_since: who.role === 'collector' ? (heldSince(hit.work, address) || now) : null,
     text: text.text, visibility: vis.visibility, hidden: false,
@@ -292,7 +320,7 @@ export async function POST(request) {
 
   const rows = await db.byWork(workId);
   const out = arrange(rows, {
-    holders, viewer: address, isArtist,
+    holders, viewer: address, isArtist, register: await register(),
     currentAcquired: currentAcquired(hit.work),
   });
   return json({ ok: true, id: note.id, verified: chain.how, ...out });

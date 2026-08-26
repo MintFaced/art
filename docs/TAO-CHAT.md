@@ -56,3 +56,22 @@ So the signature moved up a level rather than away. One signature says this brow
 **Checks.** `scripts/chat/test-chat.mjs`, thirty-five cases against the real route with real signatures and a stand-in Redis whose clock the test winds forward — which is the only way to check a fifteen second floor without waiting fifteen seconds. It covers the whole of item 11 and then some: speaking with four TAO, refusal at zero, public reading logged out, both rate limits and their windows passing, delete and restore, mute and unmute and what a muted wallet can still see, and paging past a hundred.
 
 **Noted, not built.** Per-collection rooms. And nothing here asks what kind of mind holds a wallet, so the first agent to buy on the AI rail gets its seat without a line of code changing.
+
+---
+
+## Names and tagging (2026-08-26)
+
+Two things arrived together because they interlock: a collector can say what the register should call them, and Studio can name people.
+
+**Names.** `docs/NAMES.md` has the whole of it. What the room cares about is that a name is resolved when a message is drawn rather than frozen when it was said, so a rename reaches every message its author ever left, and every tag anybody ever wrote about them. The room reads `data/collectors-register.json` now rather than `data/collectors.json` — which fixes something that had been quietly wrong since the room opened: `collectors.json` holds only the collectors with pages, so a wallet holding a single edition copy, welcome here by design, was speaking under a short address even where the chain had a name for it.
+
+**The register on the poll.** The register is half a megabyte and the poll runs every few seconds in every open tab, so it is fetched only when there is something to name: a quiet room still costs a length and an empty answer, which is the whole reason the poll exists.
+
+**Tags are wallets.** The browser sends the sentence; the server reads it against the register and stores the wallets and the character ranges they were written over. The name is never stored. A message signed when somebody was `0x6140f00e` reads with their name in it the day after they choose one, and nothing stored changed.
+
+**Names link.** A collector's name on a message goes to their page on the register; MINTFACE goes to the front door, which is the only page he has; a private collector, or anyone below the threshold that gives a page, is drawn unlinked exactly as the register table already draws them. Same tab — it is one register across two deploys, not an external site.
+
+**Being told happens in the room.** A hairline down the left of a message that names you, and a count in the header since your last visit. No email and no push. The count is cleared by the visit that showed it.
+
+**Two things a browser found that no route test could.** The send button was rendered from `ROOM.busy` while the action that redrew the composer was still inside its own `try`, so signing in left it reading 'Sending' until somebody else spoke; and the `finally` relabelled whatever button had been clicked to 'Sign and say', so muting a wallet renamed the mute control. The label is now put back rather than invented, and where the button an action ran from is no longer on the page, the room is drawn again now that it is idle.
+

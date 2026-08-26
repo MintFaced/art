@@ -74,6 +74,13 @@ const taoFixture = {
     [small.address.toLowerCase()]: { tao: 4200, rate: 4.2, lost: 0, sales: 0, works: {} },
   },
 };
+const registerFile = {
+  fields: ['address', 'name', 'ens', 'slug', 'private', 'works', 'unique', 'tao', 'rate', 'last', 'rank'],
+  rows: [
+    [senior.address.toLowerCase(), 'senior.eth', 'senior.eth', 'senior.eth', 0, 30, 8, 210000, 500, '2026-08-01', 1],
+    [small.address.toLowerCase(), '', '', '', 0, 1, 0, 4200, 20, '2026-07-01', 2],
+  ],
+};
 
 /* ---------- one origin serving the site's data and the stand-in store ---------- */
 const body = (req) => new Promise((res) => { let b = ''; req.on('data', (d) => { b += d; }).on('end', () => res(b)); });
@@ -90,6 +97,9 @@ const server = http.createServer(async (req, res) => {
   if (u.pathname === '/data/source/artist.json') return send(200, artistFixture);
   if (u.pathname === '/data/tao.json') return send(200, taoFixture);
   if (u.pathname === '/data/collectors.json') return send(200, { collectors: [] });
+  /* The register, which is where a byline gets its name and its link. A note is
+     signed work and a signature you cannot follow is half a signature. */
+  if (u.pathname === '/data/collectors-register.json') return send(200, registerFile);
 
   const file = path.join(ROOT, u.pathname.replace(/^\/+/, ''));
   if (u.pathname.startsWith('/data/') && fs.existsSync(file)) {
@@ -149,6 +159,13 @@ head(`The route, against ${WORK} out of data/c/${slug}.json`);
   ok(s.status === 200 && s.body.ok, 'a wallet with 210,000 TAO may write on it too', s.body.error);
   const seniorNote = (s.body.notes || []).find((x) => x.address === senior.address.toLowerCase());
   ok(seniorNote && seniorNote.tao === 210000, 'and their TAO at posting is carried', seniorNote && String(seniorNote.tao));
+  /* A byline is signed work, so it says who and leads to them. Both come from
+     the register at read time, which is what lets a rename reach a note written
+     a year ago without anything stored being rewritten. */
+  ok(seniorNote && seniorNote.byline === 'senior.eth'
+    && seniorNote.url === 'https://collectors.mintface.art/senior.eth',
+    'and the byline is named and linked from the register',
+    seniorNote && `${seniorNote.byline} -> ${seniorNote.url}`);
 
   const n = await post(small, { action: 'write', work: WORK, text: 'Nice.', visibility: 'public' });
   ok(n.status === 403 && /69,000/.test(n.body.error || ''), 'a wallet with 4,200 TAO is refused, and told why',

@@ -24,6 +24,8 @@ const alive = (k) => !ttl.has(k) || ttl.get(k) > NOW;
 const reap = (k) => { if (!alive(k)) { str.delete(k); ttl.delete(k); } };
 const L = (k) => { if (!list.has(k)) list.set(k, []); return list.get(k); };
 const S = (k) => { if (!sets.has(k)) sets.set(k, new Set()); return sets.get(k); };
+const hashes = new Map();
+const H = (k) => { if (!hashes.has(k)) hashes.set(k, new Map()); return hashes.get(k); };
 
 const redis = ([cmd, ...a]) => {
   const c = String(cmd).toUpperCase();
@@ -51,6 +53,20 @@ const redis = ([cmd, ...a]) => {
       if (s1 < 0) s1 = rows.length + s1;
       return rows.slice(s0, s1 + 1);
     }
+    case 'INCRBY': { reap(a[0]); const v = (Number(str.get(a[0])) || 0) + Number(a[1]); str.set(a[0], String(v)); return v; }
+    case 'LTRIM': {
+      const rows = L(a[0]);
+      let [s0, s1] = [Number(a[1]), Number(a[2])];
+      if (s0 < 0) s0 = Math.max(0, rows.length + s0);
+      if (s1 < 0) s1 = rows.length + s1;
+      list.set(a[0], rows.slice(s0, s1 + 1));
+      return 'OK';
+    }
+    case 'HSET': { const h = H(a[0]); for (let i = 1; i < a.length; i += 2) h.set(a[i], a[i + 1]); return 1; }
+    case 'HSETNX': { const h = H(a[0]); if (h.has(a[1])) return 0; h.set(a[1], a[2]); return 1; }
+    case 'HGET': { const h = H(a[0]); return h.has(a[1]) ? h.get(a[1]) : null; }
+    case 'HDEL': { const h = H(a[0]); return h.delete(a[1]) ? 1 : 0; }
+    case 'HGETALL': { const out = []; for (const [k, v] of H(a[0])) out.push(k, v); return out; }
     case 'SADD': S(a[0]).add(a[1]); return 1;
     case 'SREM': return S(a[0]).delete(a[1]) ? 1 : 0;
     case 'SISMEMBER': return S(a[0]).has(a[1]) ? 1 : 0;
@@ -86,6 +102,18 @@ const register = {
     { address: A(loud), ens: 'enthusiast.eth', display_name: null },
   ],
 };
+/* The room reads data/collectors-register.json rather than the index: the
+   index holds only the eight hundred collectors with pages, and a wallet
+   holding one edition copy is welcome here by design. */
+const registerFile = {
+  fields: ['address', 'name', 'ens', 'slug', 'private', 'works', 'unique', 'tao', 'rate', 'last', 'rank'],
+  rows: [
+    [A(visco), 'visco.eth', 'visco.eth', 'visco.eth', 0, 83, 11, 1493717, 1162, '2026-08-21', 1],
+    [A(loud), 'enthusiast.eth', 'enthusiast.eth', 'enthusiast.eth', 0, 12, 3, 90000, 200, '2026-08-01', 2],
+    [A(oneCopy), '', '', '', 0, 1, 0, 4, 4.2, '2026-08-20', 3],
+    [A(nobody), '', '', '', 0, 0, 0, 0, 0, null, 4],
+  ],
+};
 
 /* ---------- one origin ---------- */
 const body = (req) => new Promise((res) => { let b = ''; req.on('data', (d) => { b += d; }).on('end', () => res(b)); });
@@ -101,6 +129,7 @@ const server = http.createServer(async (req, res) => {
   if (u.pathname === '/data/source/artist.json') return send(200, artistFixture);
   if (u.pathname === '/data/tao.json') return send(200, taoFixture);
   if (u.pathname === '/data/collectors.json') return send(200, register);
+  if (u.pathname === '/data/collectors-register.json') return send(200, registerFile);
   res.writeHead(404); res.end('no');
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));

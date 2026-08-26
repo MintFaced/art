@@ -60,6 +60,8 @@ h1 em{font-style:italic;display:block;font-size:.3em;color:var(--muted);letter-s
 .ledger .w{font-family:var(--font-mono);font-size:12.5px;text-align:right;white-space:nowrap}
 .ledger .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .ledger tr:last-child td{border-bottom:0}
+.ledger td a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
+.ledger td a:hover{border-color:var(--ink)}
 .banked{font-family:var(--font-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);margin:18px 0 0}
 .outcome{font-size:15px;line-height:1.65;color:#3a362f;margin:12px 0 0;max-width:34em}
 .empty{font-size:15px;color:var(--faint);padding:8px 0 0}
@@ -123,12 +125,20 @@ function bars(x) {
     </div>`).join('')}</div>`;
 }
 
+/* A ledger row says who steered, so it leads to them. A weighing is a public
+   record of influence and a name in it that goes nowhere is a name nobody can
+   check ... which is most of what makes a ledger worth publishing. */
+function ledgerWho(r) {
+  const label = e(r.name || short(r.address));
+  return r.url ? `<a href="${e(r.url)}">${label}</a>` : label;
+}
+
 function ledger(x) {
   if (!x.ledger.length) return '<p class="empty">Nobody has weighed in yet.</p>';
   return `<div class="ledger"><table>
     <thead><tr><th>Collector</th><th>Side</th><th class="w">Weighed</th></tr></thead>
     <tbody>${x.ledger.map((r) => `<tr>
-      <td>${e(r.name || short(r.address))}</td>
+      <td>${ledgerWho(r)}</td>
       <td class="s">${e(r.side)}${r.clamped ? ' &middot; clamped' : ''}</td>
       <td class="w">${n(r.weight)}</td>
     </tr>`).join('')}</tbody>

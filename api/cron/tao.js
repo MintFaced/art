@@ -1,6 +1,6 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { computeTao } from '../_lib/tao.js';
-import { deriveCollectors } from '../_lib/collectors.js';
+import { deriveCollectors, registerFile } from '../_lib/collectors.js';
 import { loadRuns, saveRuns, hoursSince } from '../_lib/runs.js';
 import { send } from '../_lib/email.js';
 
@@ -474,7 +474,14 @@ async function run({ key, dry, started, prior, url }) {
       const d = deriveCollectors(all, titleOf, priv, tao, nudges);
       registerCounts = d.index.counts;
       await put('data/collectors.json', d.index, `Collectors: TAO to ${tao.generated.slice(0, 10)}`);
-      await put('data/collectors-register.json', d.register, `Register: ${d.register.rows.length} ranked by TAO`);
+      /* Through registerFile rather than put, as in api/cron/owners.js: the
+         register is written one row per line, so the nightly diff shows the
+         rows that moved rather than the whole file reformatted. */
+      {
+        const cur = await readFile('data/collectors-register.json').catch(() => ({ sha: null }));
+        await writeFile('data/collectors-register.json', registerFile(d.register),
+          `Register: ${d.register.rows.length} ranked by TAO`, cur.sha || undefined);
+      }
       await put('data/collector-slugs.json', d.slugMap, 'Collectors: slug map');
 
       /* A collector page carries its own TAO, and every page's figure moves
