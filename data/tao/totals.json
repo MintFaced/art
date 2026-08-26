@@ -1,0 +1,13 @@
+{
+ "_note": "One row per successful TAO recompute, newest first. A failed run writes nothing here, so a delta is always the change between two totals that were both computed.",
+ "keep": 400,
+ "rows": [
+  {
+   "run_id": "rmtalygg6",
+   "run_at": "2026-08-26T21:30:59.000Z",
+   "head_block": 25842086,
+   "total_tao": 71941036,
+   "address_count": 3438
+  }
+ ]
+}
