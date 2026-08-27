@@ -1,0 +1,21 @@
+# The nightly TAO cron, run cold on every push.
+#
+# It exists because a temporal dead zone reached production and failed there for
+# real: `ownersAge` was read twenty lines above its own declaration, so the cron
+# threw at the last step of a five minute job, every night, after doing all the
+# work and before writing any of it down. Nothing caught it because nothing had
+# ever executed that path outside production. The file parses, and the failure
+# is a runtime one in the last five per cent of the run.
+#
+# So this does not check arithmetic. It checks that every line executes.
+name: test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test

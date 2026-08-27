@@ -514,25 +514,6 @@ async function run({ key, dry, started, prior, url }) {
     }
   }
 
-  /* ---- the run record, and the thing that pages us ---- */
-  const gap = hoursSince(prior.runs, started);
-  const entry = {
-    run_id: runId, at: new Date(started).toISOString(), ok: true, ms: Date.now() - started, dry: dry || undefined,
-    blocks: { from: scannedFrom, to: HEAD, scanned: Math.max(0, HEAD - scannedFrom + 1) },
-    chain_events: chainEvents,
-    changed_hands: { works: movements.length, sales: movements.filter((m) => m.how === 'sale').length,
-      transfers: movements.filter((m) => m.how === 'transfer').length, mints: movements.filter((m) => m.how === 'mint').length },
-    wallets_affected: affected.size,
-    tao: { live: tao.counts.tao_live, was: wasLive, delta: wasLive == null ? null : tao.counts.tao_live - wasLive,
-      lost_to_sales: tao.counts.tao_lost_to_sales, wallets: tao.counts.wallets },
-    register: registerCounts,
-    classified, unclassified, events: tao.counts.events,
-    owners_cursor_age_hours: ownersAge == null ? null : Math.round(ownersAge * 10) / 10,
-    files: written.length, pages: pagesWritten,
-    movements: movements.slice(0, 25),
-    movers,
-  };
-
   /* The sweep half an hour before this one has been stopping dead without
      saying so, three nights running, because it was being killed by the
      platform before its own catch could run. A process cannot be relied on to
@@ -554,6 +535,26 @@ async function run({ key, dry, started, prior, url }) {
         + `TAO is unaffected: it reads its own event history, not the register.`);
     }
   } catch (e) { alarms.push('the ownership sweep has no cursor at all ... it has never finished'); }
+
+  /* ---- the run record, and the thing that pages us ---- */
+  const gap = hoursSince(prior.runs, started);
+  const entry = {
+    run_id: runId, at: new Date(started).toISOString(), ok: true, ms: Date.now() - started, dry: dry || undefined,
+    blocks: { from: scannedFrom, to: HEAD, scanned: Math.max(0, HEAD - scannedFrom + 1) },
+    chain_events: chainEvents,
+    changed_hands: { works: movements.length, sales: movements.filter((m) => m.how === 'sale').length,
+      transfers: movements.filter((m) => m.how === 'transfer').length, mints: movements.filter((m) => m.how === 'mint').length },
+    wallets_affected: affected.size,
+    tao: { live: tao.counts.tao_live, was: wasLive, delta: wasLive == null ? null : tao.counts.tao_live - wasLive,
+      lost_to_sales: tao.counts.tao_lost_to_sales, wallets: tao.counts.wallets },
+    register: registerCounts,
+    classified, unclassified, events: tao.counts.events,
+    owners_cursor_age_hours: ownersAge == null ? null : Math.round(ownersAge * 10) / 10,
+    files: written.length, pages: pagesWritten,
+    movements: movements.slice(0, 25),
+    movers,
+  };
+
 
   if (gap != null && gap > MAX_GAP_HOURS) {
     alarms.push(`the previous run was ${Math.round(gap)} hours ago, on a daily schedule ... at least one run did not happen`);
