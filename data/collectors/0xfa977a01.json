@@ -12,7 +12,7 @@
   "collections": 6
  },
  "first_collected": "2022-12-12T11:54:11.000Z",
- "last_collected": "2025-05-16T10:36:23.000000Z",
+ "last_collected": "2025-03-12T21:15:23.000Z",
  "tao": 169378,
  "tao_rate": 236.4,
  "tao_rank": 70,
@@ -33,13 +33,13 @@
    "works": 2
   },
   {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
    "works": 1
   },
   {
-   "slug": "geodetic-world",
-   "title": "Geodetic World",
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 1
   },
   {
@@ -49,18 +49,6 @@
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T10:36:23.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1967
-  },
   {
    "id": "seize-and-share-anxn-3250",
    "title": "Anxn",
@@ -168,6 +156,18 @@
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
    "tao": 5688
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1967
   }
  ]
 }
