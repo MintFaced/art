@@ -2,6 +2,19 @@
  "_note": "One line per sweep. A run that changes nothing while the chain is busy is the signal that something has stopped seeing.",
  "runs": [
   {
+   "at": "2026-08-28T21:02:19.100Z",
+   "since": 25850779,
+   "head": 25856335,
+   "applied": 2,
+   "flagged": 4,
+   "born": 0,
+   "editions": 2,
+   "editions_skipped": 0,
+   "chain_events": 544,
+   "ms": 134939,
+   "ok": true
+  },
+  {
    "at": "2026-08-28T02:24:50.851Z",
    "since": 25849163,
    "head": 25850779,
