@@ -120,7 +120,11 @@ function inline(s, tags, depth) {
     else if (m[3] != null) {
       const href = safeHref(m[3]);
       if (!href) { on(); continue; }                 // a link to nowhere is the characters that were typed
-      marks.push({ a, b, kind: 'link', href, text: m[2] || shownUrl(m[3]) });
+      /* A label that is itself the URL is worn the way a bare one is: scheme
+         off, and short if it is long. Otherwise two ways of writing the same
+         link read as two different links sitting under each other. */
+      const label = m[2] || '';
+      marks.push({ a, b, kind: 'link', href, text: safeHref(label) ? shownUrl(label) : (label || shownUrl(m[3])) });
     } else if (m[4] != null) marks.push({ a, b, kind: 'strong', inner: [a + 2, b - 2] });
     else if (m[5] != null) marks.push({ a, b, kind: 'em', inner: [a + 1, b - 1] });
     else if (m[6] != null) {

@@ -77,6 +77,10 @@ head('A very small markdown');
     'and a link to nowhere is text, never a broken tag', renderProse('[nowhere](javascript:alert(1))'));
   ok(renderProse('a \\*b\\* c') === 'a *b* c', 'an escaped asterisk is an asterisk');
 
+  const same = renderProse('gm [https://x.com/mintface/status/2093](https://x.com/mintface/status/2093)');
+  ok(same.includes('>x.com/mintface/status/2093</a>'),
+    'a label that is itself the URL is worn the way a bare one is', same);
+
   const both = renderProse('**a [link](https://x.com/y) inside**');
   ok(both.includes('<strong>a <a class="lnk"') && both.endsWith(' inside</strong>'),
     'one thing may sit inside another, once', both);
