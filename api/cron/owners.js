@@ -120,11 +120,47 @@ async function holdersOf(contract, ids) {
     await sleep(100);
   }
   if (!total.size) return null;
-  return [...total.values()].map((h) => {
-    const a = h.address.toLowerCase();
-    const status = ARTIST.has(a) ? 'artist_held' : (a === VAULT ? 'vaulted' : (ESCROW[a] ? 'listed' : 'acquired'));
-    return { address: h.address, ens: h.ens || ARTIST_NAME[a] || null, display_name: null, qty: h.qty, acquired: null, status };
-  });
+  return [...total.values()].map(holderRow);
+}
+
+/* An excluded address is recorded as a holder with its real standing rather
+   than quietly dropped: the vault holding four copies is a fact about the
+   edition, and a register that hid it would not add up. */
+function holderRow(h) {
+  const a = String(h.address).toLowerCase();
+  const status = ARTIST.has(a) ? 'artist_held' : (a === VAULT ? 'vaulted' : (ESCROW[a] ? 'listed' : 'acquired'));
+  return { address: h.address, ens: h.ens || ARTIST_NAME[a] || null, display_name: null, qty: h.qty, acquired: null, status };
+}
+
+/* Who holds an ERC-721 edition now.
+ *
+ * An edition on a 721 contract is one artwork minted as many separate tokens,
+ * each with one owner, so there are no balances to ask for: the holders
+ * endpoint the 1155 pass uses answers an empty list for these, which is exactly
+ * how they came to be skipped. The owner of each token is read instead and the
+ * copies are added up per wallet, which gives the same shape of answer.
+ */
+async function ownersOf721(contract, ids) {
+  const total = new Map();
+  for (const id of ids) {
+    let owner = null;
+    for (let i = 0; i < 3; i++) {
+      try {
+        const r = await fetch(`${BS}/tokens/${contract}/instances/${encodeURIComponent(id)}`, { headers: { accept: 'application/json' } });
+        if (r.ok) { owner = (await r.json()).owner || null; break; }
+        if (r.status === 404) break;
+      } catch (e) { /* retry */ }
+      await sleep(500 * (i + 1));
+    }
+    const a = String((owner && owner.hash) || '').toLowerCase();
+    if (!a || BURN.has(a)) continue;
+    const prev = total.get(a) || { address: owner.hash, ens: owner.ens_domain_name || null, qty: 0 };
+    prev.qty += 1;
+    total.set(a, prev);
+    await sleep(100);
+  }
+  if (!total.size) return null;
+  return [...total.values()].map(holderRow);
 }
 
 
@@ -241,6 +277,11 @@ export async function GET(request) {
    run that is killed before it writes is a run that never happened as far as
    anything downstream can tell. */
 const FULL_SWEEP_BY = Number(process.env.OWNERS_FULL_SWEEP_MS || 90000);
+/* Read in two places now, one of them above where it used to be declared. This
+   file has been stopped dead twice by a const used before its line, and both
+   times it read as a chain problem. It lives out here where nothing can be
+   earlier than it. */
+const EDITION_DEADLINE = Number(process.env.OWNERS_EDITION_MS || 210000);
 
 async function handle(request, started, dry) {
   const secret = process.env.CRON_SECRET;
@@ -382,9 +423,67 @@ async function handle(request, started, dry) {
       // ---- guard two: an edition is judged by all of its tokens or not at all,
       // so only the contract swept in full tonight is eligible to be recounted
       if (isEdition) {
-        if (c !== fullContract) continue;
-        const ids = w.token_ids || [];
+        const ids = (w.token_ids || []).map(String);
         if (!ids.length) continue;
+
+        /* ---- who holds an ERC-721 edition ----
+         *
+         * The counts below were the whole of what this branch did, and counts
+         * are not what a collector page reads: it reads `holders`, the rows
+         * saying which wallets hold copies. Nothing in this file ever wrote
+         * those for a 721 edition. The 1155 pass writes them, and a 721 edition
+         * is not in its list, so Seize And Share, Roads & Rivers and Geodetic
+         * Memory ... eighty-three works and two and a half thousand holder
+         * rows ... were maintained by a script run by hand and by nothing else.
+         * A collector who bought one on the secondary market never appeared on
+         * their own page, while TAO, which reads the chain directly and not
+         * this file, had them the same night. The two disagreed for months.
+         *
+         * So: when a copy moves, the work's holders are read again. Only works
+         * that moved, on the same deadline as the editions pass, and the full
+         * sweep still reconciles the counts below against the whole log.
+         */
+        const movedNow = new Map();
+        for (const id of ids) {
+          const hit = owner.get(`${c}|${id}`) || (c === fullContract ? full.get(`${c}|${id}`) : null);
+          if (hit) movedNow.set(id, hit);
+        }
+        if (movedNow.size && Date.now() - started < EDITION_DEADLINE) {
+          const fresh = await ownersOf721(c, ids);
+          if (!fresh) {
+            flagged.push({ id: w.id, slug, why: 'a copy moved but the indexer would not say who holds this edition now',
+              action: 'holders are a day stale; it is read again tomorrow' });
+          } else {
+            /* A row says when as well as who. The date a holder already had is
+               theirs and is kept ... buying a second copy does not restart how
+               long they have held the first ... and a wallet arriving tonight
+               is dated by the transfer that brought it. Without this the whole
+               list would come back undated and every one of these collectors
+               would sort last under "most recent". */
+            const was = w.holders || [];
+            const when = new Map();
+            for (const h of movedNow.values()) when.set(h.to, h.ts);
+            const rows = fresh.map((h) => {
+              const a = h.address.toLowerCase();
+              const had = was.find((x) => String(x.address).toLowerCase() === a);
+              return { ...h,
+                ens: h.ens || (had && had.ens) || null,
+                display_name: (had && had.display_name) || null,
+                acquired: (had && had.acquired) || when.get(a) || null };
+            });
+            if (!dry) {
+              w.holders = rows;
+              w.edition = { ...(w.edition || {}), type: 'edition', minted: ids.length,
+                holders: rows.length,
+                artist_held: rows.filter((h) => ARTIST.has(h.address.toLowerCase())).reduce((n, h) => n + h.qty, 0),
+                vaulted: rows.filter((h) => h.address.toLowerCase() === VAULT).reduce((n, h) => n + h.qty, 0) };
+            }
+            applied.push(`edition ${w.id}: ${was.length} -> ${rows.length} holders`);
+            touched.add(slug); changedWorks.add(w.id);
+          }
+        }
+
+        if (c !== fullContract) continue;
         const seen = ids.map((t) => full.get(`${c}|${t}`)).filter(Boolean).map((o) => o.to);
         if (seen.length < ids.length * 0.9) continue;      // too little of the edition resolved to judge it
         const burned = seen.filter((o) => BURN.has(o)).length;
@@ -504,7 +603,6 @@ async function handle(request, started, dry) {
      the register and the run log down with it ... which is what happened the
      first night it ran. It now stops at the deadline and says what it did not
      reach; those editions are a day stale, and the run still lands. */
-  const EDITION_DEADLINE = Number(process.env.OWNERS_EDITION_MS || 210000);
   let editionsChecked = 0, holderRows = 0, editionsSkipped = 0;
   for (const [addr, ids] of editions) {
     if (Date.now() - started > EDITION_DEADLINE) { editionsSkipped++; continue; }

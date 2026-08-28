@@ -1226,6 +1226,41 @@ const MF = {
     return out;
   },
 
+  /* ---------- saying how it went ----------
+   *
+   * Every wallet step reports its outcome, and a failure may never leave the
+   * page looking exactly as it did before. That rule is written here because
+   * three separate features broke it in the same way and each looked like a
+   * different bug: Studio's artist gate, a room that could not read a wallet's
+   * standing, and "Is this you?" on a collector page ... which set its reason
+   * into a line that only exists while the name editor is open, and threw it
+   * away every other time. What a person sees in all three is a button that
+   * does nothing, so they press it again. That is the loop.
+   *
+   * The hole was always the same shape: a page holding a message with nowhere
+   * to put it. So the line is not something a page may forget to draw. Draw one
+   * and this writes into it; draw none and this puts one where the message
+   * belongs. A page chooses where its reasons appear, never whether they do.
+   *
+   * @param host  the element the line lives in, or its id
+   * @param text  what happened, in one line. Empty clears it.
+   */
+  say(host, text, bad) {
+    if (typeof document === 'undefined') return false;
+    const at = typeof host === 'string' ? document.getElementById(host) : host;
+    if (!at) return false;
+    let el = at.matches && at.matches('[data-say]') ? at : at.querySelector('[data-say]');
+    if (!el) {
+      el = document.createElement('div');
+      el.setAttribute('data-say', '');
+      at.appendChild(el);
+    }
+    el.textContent = text || '';
+    el.className = `said${bad ? ' bad' : ''}`;
+    el.hidden = !text;
+    return true;
+  },
+
   /**
    * @param message  the sentence, as the server will rebuild it
    * @param address  the wallet, lowercased

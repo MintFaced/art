@@ -148,7 +148,7 @@ function ledger(x) {
 function openCard(x) {
   const mine = x.mine;
   const pick = chosen[x.id] || (mine && mine.side) || null;
-  return `<div class="nudge">
+  return `<div class="nudge" id="nudge-${e(x.id)}">
     <p class="q">${e(x.question)}</p>
     <div class="when">Nudge #${x.number} &middot; closes ${e(day(x.closes))}</div>
     ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
@@ -170,7 +170,7 @@ function openCard(x) {
 }
 
 function bankedCard(x) {
-  return `<div class="nudge">
+  return `<div class="nudge" id="nudge-${e(x.id)}">
     <p class="q">${e(x.question)}</p>
     <div class="when">Nudge #${x.number} &middot; closed ${e(day(x.closes))}</div>
     ${bars(x)}
@@ -211,12 +211,18 @@ async function connect() {
   draw();
 }
 
+/* A refusal is told, or it did not happen.
+   This used to give up where the line was missing ... a banked nudge has none,
+   and a redraw can take one away mid-signature ... which left a wallet step
+   failing into nothing. MF.say puts a line on the card rather than dropping
+   what there was to say. */
 function say(id, text, bad) {
   const el = $(`say-${id}`);
-  if (!el) return;
+  if (!el) return MF.say(`nudge-${id}`, text, bad);
   el.textContent = text;
   el.className = bad ? 'said bad' : 'said';
   el.hidden = !text;
+  return true;
 }
 
 async function weigh(id) {
