@@ -48,23 +48,8 @@
    "works": 2
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-home",
-   "title": "Geodetic Home",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
-   "works": 1
-  },
-  {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "pixelarcade",
+   "title": "PixelArcade",
    "works": 1
   },
   {
@@ -73,8 +58,23 @@
    "works": 1
   },
   {
-   "slug": "pixelarcade",
-   "title": "PixelArcade",
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   }
  ],
@@ -102,18 +102,6 @@
    "image": "geodetic-home/geodetic-home-5-display.webp",
    "orientation": null,
    "tao": 2969
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-07-13T21:55:59.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1787
   },
   {
    "id": "seize-and-share-dreaming-honey-3257",
@@ -668,18 +656,6 @@
    "tao": 5584
   },
   {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-04T18:25:59.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5590
-  },
-  {
    "id": "xlife-5",
    "title": "WEN MINT",
    "collection": "xlife",
@@ -1064,6 +1040,18 @@
    "tao": 114010
   },
   {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1787
+  },
+  {
    "id": "first-selfie-53",
    "title": "First Selfie #52 CryptoCrystal",
    "collection": "first-selfie",
@@ -1074,6 +1062,18 @@
    "image": "first-selfie/first-selfie-53-image.gif",
    "orientation": null,
    "tao": 90662
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5590
   }
  ]
 }
