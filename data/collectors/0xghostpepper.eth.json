@@ -12,7 +12,7 @@
   "collections": 4
  },
  "first_collected": "2024-04-22T03:05:11.000000Z",
- "last_collected": "2025-05-17T01:14:35.000000Z",
+ "last_collected": "2025-02-09T00:42:47.000000Z",
  "tao": 54040,
  "tao_rate": 94.2,
  "tao_rank": 284,
@@ -23,6 +23,11 @@
    "works": 2
   },
   {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 1
+  },
+  {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
    "works": 1
@@ -31,26 +36,9 @@
    "slug": "id-please",
    "title": "ID Please",
    "works": 1
-  },
-  {
-   "slug": "patrimora",
-   "title": "Patrimora",
-   "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-17T01:14:35.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 5897
-  },
   {
    "id": "geodetic-onchain-4",
    "title": "Patrimora",
@@ -98,6 +86,18 @@
    "image": "xlife/xlife-48-image.gif",
    "orientation": null,
    "tao": 3602
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 5897
   }
  ]
 }
