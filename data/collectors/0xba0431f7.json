@@ -18,11 +18,6 @@
  "tao_rank": 91,
  "collections": [
   {
-   "slug": "id-please",
-   "title": "ID Please",
-   "works": 1
-  },
-  {
    "slug": "pixelarcade",
    "title": "PixelArcade",
    "works": 1
@@ -30,6 +25,11 @@
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   },
   {
@@ -55,18 +55,6 @@
    "image": "pixelarcade/pixelarcade-22-image.svg",
    "orientation": null,
    "tao": 455
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T16:35:23.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1966
   },
   {
    "id": "xlife-51",
@@ -103,6 +91,18 @@
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
    "tao": 5949
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1966
   }
  ]
 }
