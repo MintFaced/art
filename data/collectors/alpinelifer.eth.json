@@ -28,6 +28,11 @@
    "works": 2
   },
   {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
    "slug": "2022-10k",
    "title": "2022 (10k Project)",
    "works": 1
@@ -35,11 +40,6 @@
   {
    "slug": "first-selfie",
    "title": "First Selfie",
-   "works": 1
-  },
-  {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
    "works": 1
   }
  ],
@@ -126,18 +126,6 @@
    "image": "xlife/xlife-12-image.gif",
    "orientation": null,
    "tao": 5468
-  },
-  {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-02-01T01:43:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5476
   },
   {
    "id": "xlife-11",
@@ -233,6 +221,18 @@
    "image": "first-selfie/first-selfie-95-image.gif",
    "orientation": null,
    "tao": 90662
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5476
   }
  ]
 }
