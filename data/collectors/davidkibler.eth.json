@@ -33,8 +33,8 @@
    "works": 3
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 2
   },
   {
@@ -43,18 +43,13 @@
    "works": 2
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 2
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-moments",
-   "title": "Geodetic Moments",
+   "slug": "two-burdens",
+   "title": "Two Burdens",
    "works": 1
   },
   {
@@ -63,8 +58,13 @@
    "works": 1
   },
   {
-   "slug": "two-burdens",
-   "title": "Two Burdens",
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   }
  ],
@@ -418,18 +418,6 @@
    "tao": 5580
   },
   {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-07T07:14:35.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5580
-  },
-  {
    "id": "xlife-5",
    "title": "WEN MINT",
    "collection": "xlife",
@@ -584,6 +572,18 @@
    "image": "first-selfie/first-selfie-78-image.gif",
    "orientation": null,
    "tao": 90662
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5580
   }
  ]
 }
