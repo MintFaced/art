@@ -28,11 +28,6 @@
    "works": 9
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
-   "works": 1
-  },
-  {
    "slug": "geodetic-memory",
    "title": "Geodetic Memory",
    "works": 1
@@ -40,6 +35,11 @@
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
+   "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   }
  ],
@@ -199,18 +199,6 @@
    "image": "xlife/xlife-7-image.gif",
    "orientation": null,
    "tao": 5556
-  },
-  {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-04T04:04:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5593
   },
   {
    "id": "xlife-5",
@@ -406,6 +394,18 @@
    "unique": true,
    "image": "xnouns/xnouns-93-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5593
   }
  ]
 }
