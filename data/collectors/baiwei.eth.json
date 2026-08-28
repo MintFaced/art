@@ -15,16 +15,16 @@
  "last_collected": "2026-08-21T23:52:35.000Z",
  "tao": 2375,
  "tao_rate": 73.2,
- "tao_rank": 2964,
+ "tao_rank": 2963,
  "collections": [
-  {
-   "slug": "id-please",
-   "title": "ID Please",
-   "works": 1
-  },
   {
    "slug": "patrimora",
    "title": "Patrimora",
+   "works": 1
+  },
+  {
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   },
   {
@@ -47,18 +47,6 @@
    "tao": 408
   },
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T10:36:23.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1967
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
@@ -68,6 +56,18 @@
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1967
   }
  ]
 }
