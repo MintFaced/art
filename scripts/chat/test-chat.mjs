@@ -115,6 +115,22 @@ const registerFile = {
   ],
 };
 
+/* The catalogue, for the family cards. A work URL pasted into the room is
+   answered off this rather than by fetching our own front end. */
+const siteIndexFixture = {
+  _meta: { version: '1.0.0' },
+  work_index: { 'geodetic-1': 'geodetic-moments' },
+  collections: [{ slug: 'geodetic-moments', title: 'Geodetic Moments', year: '2024', medium: 'Photography' }],
+  config: {},
+};
+const collectionFixture = {
+  slug: 'geodetic-moments', title: 'Geodetic Moments', year: '2024',
+  works: [{
+    id: 'geodetic-1', title: 'Road to Waipukurau', status: 'available',
+    collection: 'geodetic-moments', assets: { display: 'geodetic-moments/1-display.webp' },
+  }],
+};
+
 /* ---------- one origin ---------- */
 const body = (req) => new Promise((res) => { let b = ''; req.on('data', (d) => { b += d; }).on('end', () => res(b)); });
 const server = http.createServer(async (req, res) => {
@@ -130,6 +146,8 @@ const server = http.createServer(async (req, res) => {
   if (u.pathname === '/data/tao.json') return send(200, taoFixture);
   if (u.pathname === '/data/collectors.json') return send(200, register);
   if (u.pathname === '/data/collectors-register.json') return send(200, registerFile);
+  if (u.pathname === '/data/index.json') return send(200, siteIndexFixture);
+  if (u.pathname === '/data/c/geodetic-moments.json') return send(200, collectionFixture);
   res.writeHead(404); res.end('no');
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
@@ -524,6 +542,73 @@ head('Wearing the leaderboard lightly');
   ok(wearTao(1493717) === '1.49M' && wearTao(69000) === '69K' && wearTao(4200) === '4.2K' && wearTao(4) === '4',
     'TAO reads roughly, not exactly',
     [1493717, 69000, 4200, 4].map(wearTao).join(', '));
+}
+
+head('The text layer, on messages already in the log');
+{
+  /* Nothing here is stored as markup. These are said as plain characters, the
+     way every message in the room was said before any of this existed, and the
+     links come out of the drawing rather than out of the row. */
+  const raw = await say(visco, 'the piece is at https://x.com/mintface/status/1934 ... **worth a look**');
+  ok(raw.status === 200, 'a message with a raw URL in it goes in as it always did', raw.body.error);
+  const drawn = (await get()).body.messages.find((m) => m.n === raw.body.message.n);
+  ok(drawn.text.includes('https://x.com/mintface/status/1934'),
+    'the row still holds the characters that were typed', drawn.text);
+  ok(drawn.html.includes('<a class="lnk" href="https://x.com/mintface/status/1934"'),
+    'and it reads back with a working link, retroactively', drawn.html);
+  ok(drawn.html.includes('<strong>worth a look</strong>'), 'and its markdown, likewise');
+
+  const attack = await say(loud, '<script>alert(1)</script> and <img src=x onerror=alert(1)>');
+  const shown = (await get()).body.messages.find((m) => m.n === attack.body.message.n);
+  ok(!/<script|<img/i.test(shown.html) && shown.html.startsWith('&lt;script&gt;'),
+    'and a tag somebody typed is text on a page kept forever', shown.html.slice(0, 60));
+}
+
+head('What the links turn out to be');
+{
+  const work = await say(visco, 'this one: https://mintface.art/w/geodetic-1');
+  const who = await say(loud, 'and https://collectors.mintface.art/visco.eth knows it');
+  const seeded = await say(oneCopy, 'the thread: https://x.com/mintface/status/1934');
+  /* A card fetched once is kept forever, so the seeded one stands for a fetch
+     that already happened ... which is exactly what every reader after the
+     first one gets. */
+  await pipe([['SET', 'chat:card:https://x.com/mintface/status/1934', JSON.stringify({
+    kind: 'site', url: 'https://x.com/mintface/status/1934', domain: 'x.com',
+    title: 'MintFace on X', description: 'Nine works, one road.',
+  })]]);
+
+  const ns = [work, who, seeded].map((r) => r.body.message.n).join(',');
+  const d = (await get(`cards=${ns}`)).body;
+  const w = d.cards['https://mintface.art/w/geodetic-1'];
+  ok(w && w.kind === 'work' && w.title === 'Road to Waipukurau',
+    'a work URL is answered off the catalogue, not scraped', JSON.stringify(w));
+  ok(w && /Available/.test(w.note) && /Geodetic Moments/.test(w.note) && /display\.webp$/.test(w.thumb || ''),
+    'with its collection, its standing and a thumbnail of our own', w && w.note);
+
+  const c = d.cards['https://collectors.mintface.art/visco.eth'];
+  ok(c && c.kind === 'collector' && c.title === 'visco.eth' && c.note === '1.49M TAO',
+    'a collector URL is their name and their TAO, off the register', JSON.stringify(c));
+
+  const x = d.cards['https://x.com/mintface/status/1934'];
+  ok(x && x.title === 'MintFace on X' && x.domain === 'x.com' && !x.thumb,
+    'and somebody else\'s link is a card of words, with no picture in it', JSON.stringify(x));
+}
+
+head('A preview is not a fetch anybody asked for');
+{
+  /* The room's own test server is on the loopback, so a URL pointing at it is
+     the exact thing an SSRF would try ... and it is the one URL in this file
+     that must come back with nothing. */
+  const inside = await say(visco, `have a look at ${ORIGIN}/data/tao.json`);
+  const d = (await get(`cards=${inside.body.message.n}`)).body;
+  const key = Object.keys(d.cards)[0];
+  ok(d.cards[key] === false, 'a link into a private address gets no card', `${key} → ${d.cards[key]}`);
+  const [held] = await pipe([['GET', `chat:card:${key}`]]);
+  ok(/"fail":true/.test(String(held)), 'and the room remembers not to try it again today', String(held));
+
+  const none = (await get('cards=999999')).body;
+  ok(none.cards && Object.keys(none.cards).length === 0,
+    'and a message number that carries no link asks for nothing');
 }
 
 server.close();

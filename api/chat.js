@@ -5,6 +5,8 @@ import { chatStore, chatMessage, checkMessage, render, sessionUntil } from './_l
 import { loadArtist, isArtist as artistIs, taoGate, ARTIST_NAME } from './_lib/artist.js';
 import { loadRegister } from './_lib/register.js';
 import { parseTags, tagIndex } from './_lib/names.js';
+import { linksIn } from './_lib/text.js';
+import { cardStore, familyKind, fetchCard, ourCard } from './_lib/cards.js';
 
 /* The room.
  *
@@ -28,6 +30,14 @@ const json = (b, s = 200) => new Response(JSON.stringify(b, null, 1), {
 });
 const lower = (a) => String(a || '').toLowerCase();
 const ACTIONS = ['sign in', 'sign out', 'say', 'seen', 'delete', 'restore', 'mute', 'unmute'];
+
+/* What one request for link previews may cost. A page is fifty messages, and
+   a message may carry three links, so the caps are what keeps a page of the log
+   from becoming a hundred and fifty outbound requests. The rest are asked for
+   again on the next page, which is where a reader is going anyway. */
+const MOST_ROWS = 60;
+const MOST_CARDS = 24;
+const MOST_FETCHES = 4;
 
 export function OPTIONS() {
   return new Response(null, { status: 204, headers: CORS });
@@ -74,6 +84,7 @@ export async function GET(request) {
   const viewer = lower(url.searchParams.get('viewer') || '');
   const before = url.searchParams.get('before');
   const since = url.searchParams.get('since');
+  const cards = url.searchParams.get('cards');
 
   if (!storeConfigured()) {
     return json({ messages: [], total: 0, more: false, store: false });
@@ -103,6 +114,52 @@ export async function GET(request) {
       if (!rows.length) return json({ messages: [], total, store: true });
       const dress = { isArtist, artist: cfg.artist, register: await register() };
       return json({ messages: rows.map((r) => render(r, dress)), total, store: true });
+    }
+
+    /* ---- what the links turn out to be ----
+     *
+     * Asked for by message number, after a page has been drawn, and answered
+     * from the URLs those rows actually carry. That is the whole of the SSRF
+     * story: the room never fetches a URL somebody hands it, only URLs already
+     * in the log, which took TAO and a signature to put there. Everything else
+     * ... the scheme, the hostname, every redirect ... is checked again in
+     * api/_lib/cards.js before a single request leaves.
+     *
+     * A second request rather than part of the page, because a preview is worth
+     * waiting for and a message is not. The room draws, and the cards arrive
+     * under it a moment later.
+     */
+    if (cards != null) {
+      const ns = String(cards).split(',').map(Number).filter((n) => Number.isInteger(n) && n >= 0);
+      const rows = await db.many(ns.slice(0, MOST_ROWS));
+      const urls = [];
+      for (const row of rows) {
+        if (!row || row.deleted) continue;
+        for (const u of linksIn(row.text)) if (!urls.includes(u)) urls.push(u);
+      }
+      const want = urls.slice(0, MOST_CARDS);
+      const ours = want.filter((u) => familyKind(u));
+      const theirs = want.filter((u) => !familyKind(u));
+      const store = cardStore(pipe);
+      const held = theirs.length ? await store.many(theirs).catch(() => ({})) : {};
+      const missing = theirs.filter((u) => !held[u]).slice(0, MOST_FETCHES);
+      const mine = ours.length
+        ? await register().then((r) => Promise.all(ours.map(async (u) =>
+          [u, await ourCard(u, { origin, at, register: r }).catch(() => null)])))
+        : [];
+      /* Fetched once and kept, so the log never goes back to a site it has
+         already read ... including the failures, which are kept for a day so a
+         page that is down does not cost every reader a timeout. */
+      const got = await Promise.all(missing.map(async (u) => {
+        const c = await fetchCard(u).catch(() => null);
+        await store.keep(u, c).catch(() => { /* the card stands without being kept */ });
+        return [u, c];
+      }));
+      const out = {};
+      for (const u of theirs) if (held[u]) out[u] = held[u].fail ? false : held[u];
+      for (const [u, c] of got) out[u] = c || false;
+      for (const [u, c] of mine) out[u] = c || false;
+      return json({ cards: out, store: true });
     }
 
     const dress = { isArtist, artist: cfg.artist, register: await register() };

@@ -42,6 +42,35 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .m p a.tag,.m p span.tag{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
 .m p a.tag:hover{border-color:var(--ink)}
 .m p span.tag{border-bottom-color:var(--rule);color:var(--muted)}
+/* A link in the prose, and the small markdown the room allows.
+   The house treatment for a link is the one a name already has: no colour, a
+   hairline at rest, and the ink arriving under the pointer. A URL is set to
+   break where it must, because a pasted address is the one thing in a message
+   that has no spaces in it and would otherwise push the measure out. */
+.m p a.lnk{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);overflow-wrap:anywhere}
+.m p a.lnk:hover{border-color:var(--ink)}
+.m p strong{font-weight:600}
+.m p em{font-style:italic}
+
+/* What a link turns out to be.
+   The register's own voice, and the same block the marks on a work page are
+   drawn in: a hairline, the domain in mono above, the title in the sans. No
+   picture unless it is one of ours ... a preview that hotlinks somebody's
+   banner puts it in a log kept forever, and the room is for words anyway. */
+.cards{display:flex;flex-direction:column;gap:8px;margin-top:11px}
+.card{display:flex;gap:12px;align-items:flex-start;max-width:34em;padding:11px 13px;
+  border:1px solid var(--rule);text-decoration:none;transition:border-color .18s ease}
+.card:hover,.card:focus-visible{border-color:var(--ink)}
+.cthumb{width:44px;height:44px;flex:none;object-fit:cover;background:#f2efe9}
+.cbody{display:flex;flex-direction:column;gap:3px;min-width:0}
+.cdom{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctitle{font-family:var(--font-sans);font-weight:500;font-size:13px;line-height:1.42;color:var(--ink);
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cdesc{font-size:12.5px;line-height:1.5;color:var(--muted);
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cnote{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
 /* Being spoken to. The hairline, not a colour ... the single green on this
    site is for availability and nothing else, and a room that shouted in colour
    every time somebody said your name would be a room you stopped opening. */
@@ -148,7 +177,15 @@ const ROOM = {
      room marks your mentions read the moment it has drawn them, so the number
      would otherwise vanish out from under the line reporting it. */
   waiting: null, marked: false,
+  /* What the links turn out to be, url -> card, or false for a link that has
+     nothing to show. Held for the visit: a card is fetched once by the room and
+     kept in the store forever, so this is only about not asking twice on one
+     page. */
+  cards: {},
 };
+
+// ours across two deploys, and so opened in this tab like any other page of it
+const HOME = ['mintface.art', 'collectors.mintface.art'];
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
 const stamp = (s) => {
@@ -229,6 +266,7 @@ async function load() {
   if (ROOM.waiting === null && ROOM.me && ROOM.me.mentions) ROOM.waiting = ROOM.me.mentions.unseen || 0;
   draw();
   markSeen();
+  askCards();
 }
 
 /* Read. Sent once the count has been drawn, so the visit that showed it is the
@@ -250,6 +288,7 @@ async function earlier() {
   ROOM.start = d.start || 0;
   ROOM.more = Boolean(d.more);
   draw({ keep: true });
+  askCards();
 }
 
 /* Polling, not sockets. A quiet room costs one small answer every few seconds,
@@ -263,30 +302,57 @@ async function poll() {
   ROOM.rows = ROOM.rows.concat(d.messages);
   ROOM.total = d.total || ROOM.total + d.messages.length;
   draw({ toEnd: true });
+  askCards();
 }
 
-/* The sentence, with its tags said as they read now.
+/* The sentence, as the room draws it now.
  *
- * The server sends the text as it was typed and the tags as ranges over it,
- * each carrying a wallet and whatever that wallet is called this minute. So a
- * message written when somebody was 0x6140f00e reads with their name in it the
- * day after they choose one, and nothing stored had to change for that. */
+ * The splicing used to happen here: the server sent the text as it was typed
+ * and the tags as ranges over it, and the page cut one into the other. It is
+ * done on the server now, because there is more to do than tags ... links, and
+ * the little markdown the room allows ... and a log that is public and kept
+ * forever is not a place to keep two escapers and hope they agree. There is one
+ * renderer, in api/_lib/text.js, and it is the one the acceptance cases run.
+ *
+ * What arrives is markup that file wrote, character by character, around text
+ * it escaped first. Nothing a collector types ever reaches the page as markup.
+ * The escaped text stands in where an older payload has no html on it. */
 function words(m) {
   if (m.text == null) return '<p class="gone">Taken down.</p>';
-  const tags = (m.mentions || []).slice().sort((a, b) => a.start - b.start);
-  let out = '';
-  let i = 0;
-  for (const t of tags) {
-    if (t.start < i) continue;                     // overlapping ranges: the first wins
-    out += e(m.text.slice(i, t.start));
-    const label = `@${t.name}`;
-    // somebody the register will not name in public has no page to point at
-    out += t.url
-      ? `<a class="tag" href="${e(t.url)}">${e(label)}</a>`
-      : `<span class="tag">${e(label)}</span>`;
-    i = t.start + t.len;
+  return `<p>${m.html == null ? e(m.text) : m.html}</p>`;
+}
+
+/* What a link turns out to be, drawn under the message that carried it.
+   Only the ones the room has an answer for: a fetch that failed, or a site with
+   nothing to say about itself, leaves the bare link and says nothing about it. */
+function cardsFor(links) {
+  return (links || []).map((u) => ROOM.cards[u])
+    .filter((c) => c && typeof c === 'object')
+    .map((c) => {
+      const away = !HOME.includes(c.domain);
+      const thumb = c.thumb ? `<img class="cthumb" src="${e(c.thumb)}" alt="" loading="lazy" decoding="async">` : '';
+      const under = c.description ? `<span class="cdesc">${e(c.description)}</span>`
+        : (c.note ? `<span class="cnote">${e(c.note)}</span>` : '');
+      return `<a class="card" href="${e(c.url)}"${away ? ' target="_blank" rel="nofollow ugc noopener noreferrer"' : ''}>`
+        + `${thumb}<span class="cbody"><span class="cdom">${e(c.domain)}</span>`
+        + `<span class="ctitle">${e(c.title)}</span>${under}</span></a>`;
+    }).join('');
+}
+
+/* Asked for after the page is on screen, and painted into the messages that
+   were waiting for them. Not through draw(): a card arriving is no reason to
+   rebuild the composer under somebody's half-written sentence. */
+async function askCards() {
+  const want = ROOM.rows.filter((m) => !m.deleted && (m.links || []).length
+    && m.links.some((u) => ROOM.cards[u] === undefined)).map((m) => m.n);
+  if (!want.length) return;
+  const d = await api({ cards: want.slice(-60).join(',') }).catch(() => null);
+  if (!d || !d.cards) return;
+  Object.assign(ROOM.cards, d.cards);
+  for (const m of ROOM.rows) {
+    const box = document.getElementById(`cards-${m.n}`);
+    if (box) box.innerHTML = cardsFor(m.links);
   }
-  return `<p>${out + e(m.text.slice(i))}</p>`;
 }
 
 const namesMe = (m) => Boolean(ROOM.wallet && (m.mentions || []).some((t) => t.address === ROOM.wallet));
@@ -313,6 +379,10 @@ function card(m) {
      no page renders as they always did, unlinked. */
   const label = e(isArtist ? 'MintFace' : (m.name || short(m.address)));
   const who = m.url ? `<a href="${e(m.url)}">${label}</a>` : label;
+  /* The place the cards go, drawn empty and filled a moment later. Reserved
+     here rather than inserted later so a redraw keeps whatever has arrived. */
+  const links = m.deleted ? [] : (m.links || []);
+  const cards = links.length ? `<div class="cards" id="cards-${m.n}">${cardsFor(links)}</div>` : '';
   return `<article class="m${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}">
     <div class="who">
       <span${isArtist ? ' class="artist"' : ''}>${who}</span>
@@ -320,6 +390,7 @@ function card(m) {
       <span class="at">${e(stamp(m.at))}</span>
     </div>
     ${words(m)}
+    ${cards}
     ${mod}
   </article>`;
 }

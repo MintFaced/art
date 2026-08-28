@@ -75,3 +75,25 @@ Two things arrived together because they interlock: a collector can say what the
 
 **Two things a browser found that no route test could.** The send button was rendered from `ROOM.busy` while the action that redrew the composer was still inside its own `try`, so signing in left it reading 'Sending' until somebody else spoke; and the `finally` relabelled whatever button had been clicked to 'Sign and say', so muting a wallet renamed the mute control. The label is now put back rather than invented, and where the button an action ran from is no longer on the page, the room is drawn again now that it is idle.
 
+
+---
+
+## The text layer (2026-08-28)
+
+A message could say a URL and not link it, which is the one place the room read as unfinished rather than as spare. So: bare URLs become links, a very small markdown is allowed, and a link gets a card under it saying what it turns out to be.
+
+**Render-time, never stored.** The row keeps the characters somebody typed and nothing else, and `api/_lib/text.js` turns them into a paragraph at the moment of drawing. That is what makes it reach backwards: the messages left before any of this existed, with a raw URL sitting in them as text, came back with working links in them and nothing stored had to change. It is the same argument the names layer already made — a message is a thing that was said, and how it reads is a thing that is true now.
+
+**The splicing moved to the server.** The page used to cut the tags into the text itself. It does not any more, because there is more to splice than tags and a log that is public and kept forever is not a place to keep two escapers and hope they agree. There is one renderer, it is the one the acceptance cases run, and what reaches the page is markup that file wrote character by character around text it escaped first. Nothing a collector types ever arrives as markup.
+
+**The subset, and what is not in it.** `**bold**`, `*italic*`, `[words](url)`, and bare URLs. No headings, no images, no code fences, no raw HTML, ever. Markdown that does not come off renders as the characters that were typed — a half-written link is somebody mid-sentence, not an error — and a `[link](javascript:...)` is text, never a tag. Names outrank all of it: markup may hold a tag (`**@visco.eth**` is a sentence somebody meant) and may never cut one in half.
+
+**Cards, in the register's own voice.** A hairline, the domain in mono, the title in the sans — the block the marks at the foot of a work page are already drawn in. No images from anywhere else on purpose: a preview that hotlinks somebody's three megabyte banner puts it in a log kept forever, pointed at a server that never agreed to serve it. A fetch that fails, or a page with nothing to say about itself, leaves the bare link and says nothing about it.
+
+**The family discount.** `mintface.art` and `collectors.mintface.art` are not scraped. A work URL is answered off the catalogue — thumbnail, title, collection, standing — and a collector URL off the register, as their name and their TAO. Both are read fresh every time rather than cached: a work that sold this morning should say so this afternoon. The register quoting itself should look native, not scraped.
+
+**The fetch is on a short leash.** Previews are asked for by message number, after a page is drawn, and answered from the URLs those rows actually carry — so the room only ever fetches URLs that are already in the log, which took TAO and a signature to put there. On top of that: http and https only, no credentials in the URL, no ports but 80 and 443, no hostname that is not a dotted public name, and every redirect put back through the same check before it is followed. A URL that passes and then 302s to the loopback is the oldest way through a check that only looks once, and there is a case for exactly that. Four fetches a request, a four second timeout, 256KB read, HTML only.
+
+**Fetched once, kept forever.** A card is stored per URL beside the log, so the room never goes back to a site it has already read; a failure is kept for a day, long enough that a page that is down does not cost every reader a timeout and short enough that a page that comes back is seen to.
+
+**Checks.** `scripts/chat/test-text.mjs`, sixty-three cases on the rules alone — the escaping, the trailing full stop that is not part of the address, every private address written six ways, the redirect into one — and `scripts/chat/test-chat.mjs` grew to eighty-five, which now includes a message already in the log reading back with a live link, a `<script>` rendering as text, a work card, a collector card, and a link into a private address getting nothing.

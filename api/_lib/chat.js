@@ -16,6 +16,7 @@
 
 import { dressTags } from './names.js';
 import { ARTIST_NAME as ARTIST } from './artist.js';
+import { renderProse, linksIn } from './text.js';
 
 const lower = (a) => String(a || '').toLowerCase();
 
@@ -125,13 +126,23 @@ export function render(row, { isArtist, artist, register } = {}) {
         url, at: row.at, deleted: Boolean(row.deleted) }
     : { n: row.n, address: row.address, name: said(who, row.name), role: 'collector',
         tao: row.tao || 0, worn: wearTao(row.tao), url, at: row.at, deleted: Boolean(row.deleted) };
-  if (row.deleted && !isArtist) return { ...base, text: null, mentions: [] };
+  if (row.deleted && !isArtist) return { ...base, text: null, html: null, links: [], mentions: [] };
+  /* The tags, said as they read now. The row keeps wallets and offsets; what
+     a wallet is called is looked up at the moment of drawing. */
+  const mentions = register ? dressTags(row.text, row.mentions, register) : [];
   return {
     ...base,
     text: row.text,
-    /* The tags, said as they read now. The row keeps wallets and offsets; what
-       a wallet is called is looked up at the moment of drawing. */
-    mentions: register ? dressTags(row.text, row.mentions, register) : [],
+    /* The sentence as it reads, rather than as it was typed: the tags spliced
+       in, the URLs made clickable, and the little markdown the room allows.
+       Built here, at the moment of drawing, and never stored ... which is why a
+       message left before any of this existed comes back with its links live.
+       The page prints this as it stands, so nothing but this file's own markup
+       ever reaches it, wrapped around text this file escaped first. */
+    html: renderProse(row.text, mentions),
+    /* What the message points at, for the cards under it. */
+    links: linksIn(row.text),
+    mentions,
     ...(isArtist ? { can_delete: true } : {}),
   };
 }
@@ -196,6 +207,11 @@ export function chatStore(pipe, cfg = {}) {
     async get(n) {
       const [row] = await pipe([['GET', keys.msg(n)]]);
       return parse(row);
+    },
+
+    /** A handful of rows by number, for the cards a drawn page asks about. */
+    async many(ns) {
+      return read([...new Set((ns || []).filter((n) => Number.isInteger(n) && n >= 0))]);
     },
 
     /**
