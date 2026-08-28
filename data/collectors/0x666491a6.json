@@ -15,7 +15,7 @@
  "last_collected": "2026-08-23T05:25:47.000000Z",
  "tao": 480,
  "tao_rate": 102.6,
- "tao_rank": 3169,
+ "tao_rank": 3168,
  "collections": [
   {
    "slug": "xlife",
@@ -114,18 +114,6 @@
    "tao": 19
   },
   {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2026-08-23T05:25:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 19
-  },
-  {
    "id": "pixelarcade-62",
    "title": "Thirty-Two-Bit Tableau XVII",
    "collection": "pixelarcade",
@@ -136,6 +124,18 @@
    "image": "pixelarcade/pixelarcade-62-image.svg",
    "orientation": null,
    "tao": 323
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 19
   }
  ]
 }
