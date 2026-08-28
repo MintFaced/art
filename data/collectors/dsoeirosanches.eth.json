@@ -12,7 +12,7 @@
   "collections": 3
  },
  "first_collected": "2024-06-27T05:57:59.000000Z",
- "last_collected": "2025-05-20T22:00:11.000000Z",
+ "last_collected": "2025-05-10T08:20:11.000000Z",
  "tao": 98289,
  "tao_rate": 167.4,
  "tao_rank": 160,
@@ -34,18 +34,6 @@
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-20T22:00:11.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 3915
-  },
   {
    "id": "xlife-65",
    "title": "Casting Vote",
@@ -129,6 +117,18 @@
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
    "tao": 3324
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 3915
   }
  ]
 }
