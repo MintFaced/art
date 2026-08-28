@@ -11,7 +11,7 @@
   "editions": 22,
   "collections": 3
  },
- "first_collected": "2025-05-16T10:36:23.000000Z",
+ "first_collected": "2025-09-28T10:34:35.000000Z",
  "last_collected": "2025-09-28T10:36:11.000000Z",
  "tao": 55789,
  "tao_rate": 165.6,
@@ -23,13 +23,13 @@
    "works": 21
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   },
   {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   }
  ],
@@ -45,18 +45,6 @@
    "image": "xlife/xlife-10-image.gif",
    "orientation": null,
    "tao": 2801
-  },
-  {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-09-28T10:36:11.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 1400
   },
   {
    "id": "xlife-46",
@@ -292,7 +280,7 @@
    "collection": "id-please",
    "group": "archive",
    "genre": null,
-   "acquired": "2025-05-16T10:36:23.000000Z",
+   "acquired": null,
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null,
@@ -309,6 +297,18 @@
    "image": "first-selfie/first-selfie-34-image.gif",
    "orientation": null,
    "tao": 23009
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 1400
   }
  ]
 }
