@@ -12,7 +12,7 @@
   "collections": 9
  },
  "first_collected": "2025-07-09T00:57:59.000000Z",
- "last_collected": "2025-12-26T03:41:47.000000Z",
+ "last_collected": "2025-09-08T05:24:23.000000Z",
  "tao": 117939,
  "tao_rate": 278.4,
  "tao_rank": 122,
@@ -38,8 +38,8 @@
    "works": 2
   },
   {
-   "slug": "geodetic-home",
-   "title": "Geodetic Home",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -53,29 +53,17 @@
    "works": 1
   },
   {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-12-26T03:41:47.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1027
-  },
   {
    "id": "geodetic-home-5",
    "title": "Geodetic Home",
@@ -125,28 +113,16 @@
    "tao": 1742
   },
   {
-   "id": "geodetic-onchain-1",
-   "title": "Geodetic Moment Light",
-   "collection": "geodetic-onchain",
-   "group": "geodetic",
-   "genre": "Design",
+   "id": "roads-and-rivers-204",
+   "title": "Roads and Rivers #31 #1/2",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
    "acquired": "2025-07-09T00:57:59.000000Z",
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-1-display.png",
-   "orientation": null,
-   "tao": 5190
-  },
-  {
-   "id": "geodetic-onchain-3",
-   "title": "Geodetic Signal",
-   "collection": "geodetic-onchain",
-   "group": "geodetic",
-   "genre": "Design",
-   "acquired": "2025-07-09T00:57:59.000000Z",
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
-   "orientation": null,
-   "tao": 5190
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-204-display.webp",
+   "orientation": "landscape",
+   "tao": 28626
   },
   {
    "id": "geodetic-world-60",
@@ -173,16 +149,28 @@
    "tao": 28626
   },
   {
-   "id": "roads-and-rivers-204",
-   "title": "Roads and Rivers #31 #1/2",
-   "collection": "roads-and-rivers",
-   "group": "core",
-   "genre": "Photography",
+   "id": "geodetic-onchain-1",
+   "title": "Geodetic Moment Light",
+   "collection": "geodetic-onchain",
+   "group": "geodetic",
+   "genre": "Design",
    "acquired": "2025-07-09T00:57:59.000000Z",
-   "unique": true,
-   "image": "roads-and-rivers/roads-and-rivers-204-display.webp",
-   "orientation": "landscape",
-   "tao": 28626
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-1-display.png",
+   "orientation": null,
+   "tao": 5190
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "group": "geodetic",
+   "genre": "Design",
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null,
+   "tao": 5190
   },
   {
    "id": "xlife-33",
@@ -279,6 +267,18 @@
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
    "tao": 1742
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1027
   },
   {
    "id": "xnouns-384",
