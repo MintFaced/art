@@ -12,7 +12,7 @@
   "collections": 9
  },
  "first_collected": "2025-07-09T00:48:47.000000Z",
- "last_collected": "2025-12-26T03:45:59.000000Z",
+ "last_collected": "2025-09-08T05:25:47.000000Z",
  "tao": 192755,
  "tao_rate": 468.6,
  "tao_rank": 62,
@@ -38,16 +38,6 @@
    "works": 2
   },
   {
-   "slug": "geodetic-home",
-   "title": "Geodetic Home",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-moments",
-   "title": "Geodetic Moments",
-   "works": 1
-  },
-  {
    "slug": "geodetic-world",
    "title": "Geodetic World",
    "works": 1
@@ -58,24 +48,22 @@
    "works": 1
   },
   {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
+   "works": 1
+  },
+  {
    "slug": "id-please",
    "title": "ID Please",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-12-26T03:45:59.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1027
-  },
   {
    "id": "geodetic-home-5",
    "title": "Geodetic Home",
@@ -137,30 +125,6 @@
    "tao": 28626
   },
   {
-   "id": "geodetic-moments-83",
-   "title": "Geodetic Moment #83",
-   "collection": "geodetic-moments",
-   "group": "geodetic",
-   "genre": "Photography",
-   "acquired": "2025-07-09T00:48:47.000000Z",
-   "unique": true,
-   "image": "geodetic-moments/geodetic-moments-83-display.webp",
-   "orientation": null,
-   "tao": 28626
-  },
-  {
-   "id": "geodetica-41",
-   "title": "Geodetica #41",
-   "collection": "geodetica",
-   "group": "geodetic",
-   "genre": "AI",
-   "acquired": "2025-07-09T00:48:47.000000Z",
-   "unique": true,
-   "image": "geodetica/geodetica-41-display.webp",
-   "orientation": "square",
-   "tao": 28626
-  },
-  {
    "id": "patrimora-95",
    "title": "Patrimora #95",
    "collection": "patrimora",
@@ -193,6 +157,30 @@
    "acquired": "2025-07-09T00:48:47.000000Z",
    "unique": true,
    "image": "patrimora/patrimora-105-image.png",
+   "orientation": null,
+   "tao": 28626
+  },
+  {
+   "id": "geodetica-41",
+   "title": "Geodetica #41",
+   "collection": "geodetica",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-41-display.webp",
+   "orientation": "square",
+   "tao": 28626
+  },
+  {
+   "id": "geodetic-moments-83",
+   "title": "Geodetic Moment #83",
+   "collection": "geodetic-moments",
+   "group": "geodetic",
+   "genre": "Photography",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "geodetic-moments/geodetic-moments-83-display.webp",
    "orientation": null,
    "tao": 28626
   },
@@ -291,6 +279,18 @@
    "image": "xlife/xlife-45-image.gif",
    "orientation": null,
    "tao": 1742
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1027
   },
   {
    "id": "xnouns-411",
