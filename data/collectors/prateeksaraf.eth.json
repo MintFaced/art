@@ -12,7 +12,7 @@
   "collections": 7
  },
  "first_collected": "2022-05-27T05:58:09.000000Z",
- "last_collected": "2025-05-16T15:23:59.000000Z",
+ "last_collected": "2024-10-05T07:49:11.000000Z",
  "tao": 97724,
  "tao_rate": 75.6,
  "tao_rank": 162,
@@ -38,11 +38,6 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
-   "works": 1
-  },
-  {
    "slug": "geodetic-memory",
    "title": "Geodetic Memory",
    "works": 1
@@ -51,21 +46,14 @@
    "slug": "id-please",
    "title": "ID Please",
    "works": 1
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
+   "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T15:23:59.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1966
-  },
   {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
@@ -243,6 +231,18 @@
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
    "tao": 6525
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1966
   }
  ]
 }
