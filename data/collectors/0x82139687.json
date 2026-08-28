@@ -28,19 +28,24 @@
    "works": 3
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
    "works": 2
   },
   {
-   "slug": "geodetic-moments",
-   "title": "Geodetic Moments",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 2
   },
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
    "works": 2
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
   },
   {
    "slug": "geodetic-memory",
@@ -50,11 +55,6 @@
   {
    "slug": "id-please",
    "title": "ID Please",
-   "works": 1
-  },
-  {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
    "works": 1
   }
  ],
@@ -70,18 +70,6 @@
    "image": "xlife/xlife-66-image.gif",
    "orientation": null,
    "tao": 21109
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T10:36:23.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1967
   },
   {
    "id": "xlife-58",
@@ -262,6 +250,18 @@
    "image": "geodetic-moments/geodetic-moments-66-display.webp",
    "orientation": null,
    "tao": 109668
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1967
   }
  ]
 }
