@@ -38,13 +38,13 @@
    "works": 2
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
+   "slug": "pixelarcade",
+   "title": "PixelArcade",
    "works": 1
   },
   {
-   "slug": "pixelarcade",
-   "title": "PixelArcade",
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   }
  ],
@@ -386,18 +386,6 @@
    "tao": 5571
   },
   {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-04T03:59:11.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5593
-  },
-  {
    "id": "xlife-2",
    "title": "X Mode",
    "collection": "xlife",
@@ -633,6 +621,18 @@
    "unique": true,
    "image": "xnouns/xnouns-170-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5593
   }
  ]
 }
