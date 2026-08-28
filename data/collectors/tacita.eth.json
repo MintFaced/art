@@ -12,7 +12,7 @@
   "collections": 6
  },
  "first_collected": "2022-12-14T19:15:11.000Z",
- "last_collected": "2025-05-16T14:42:11.000000Z",
+ "last_collected": "2025-02-09T00:42:47.000000Z",
  "tao": 252564,
  "tao_rate": 278.4,
  "tao_rank": 39,
@@ -33,11 +33,6 @@
    "works": 2
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
-   "works": 1
-  },
-  {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
    "works": 1
@@ -46,21 +41,14 @@
    "slug": "id-please",
    "title": "ID Please",
    "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
+   "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T14:42:11.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1966
-  },
   {
    "id": "geodetic-onchain-4",
    "title": "Patrimora",
@@ -252,6 +240,18 @@
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
    "tao": 11357
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1966
   },
   {
    "id": "first-selfie-6",
