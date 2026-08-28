@@ -12,10 +12,10 @@
   "collections": 2
  },
  "first_collected": "2022-12-24T04:36:11.000Z",
- "last_collected": "2022-12-24T04:36:11.000Z",
- "tao": 16784,
+ "last_collected": "2023-01-02T04:56:23.000000Z",
+ "tao": 16842,
  "tao_rate": 12.6,
- "tao_rank": 574,
+ "tao_rank": 575,
  "collections": [
   {
    "slug": "xlife",
@@ -30,6 +30,30 @@
  ],
  "works": [
   {
+   "id": "xlife-5",
+   "title": "WEN MINT",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-02T04:56:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-5-image.gif",
+   "orientation": null,
+   "tao": 5601
+  },
+  {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-02T02:25:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null,
+   "tao": 5601
+  },
+  {
    "id": "seize-and-share-anxn-3250",
    "title": "Anxn",
    "collection": "seize-and-share",
@@ -39,31 +63,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 5619
-  },
-  {
-   "id": "xlife-5",
-   "title": "WEN MINT",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-5-image.gif",
-   "orientation": null,
-   "tao": 5582
-  },
-  {
-   "id": "xlife-4",
-   "title": "XCOFFEE",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-4-image.gif",
-   "orientation": null,
-   "tao": 5582
+   "tao": 5639
   }
  ]
 }

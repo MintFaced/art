@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-05-10T17:04:51.000000Z",
- "last_collected": "2022-12-27T05:14:47.000000Z",
- "tao": 97040,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 97370,
  "tao_rate": 71.4,
  "tao_rank": 163,
  "collections": [
@@ -40,6 +40,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -49,7 +60,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 72894
+   "tao": 73147
   },
   {
    "id": "roads-or-rivers-bridging",
@@ -61,7 +72,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-bridging-image.jpg",
    "orientation": null,
-   "tao": 5695
+   "tao": 5715
   },
   {
    "id": "roads-or-rivers-roads",
@@ -73,7 +84,18 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-roads-image.jpg",
    "orientation": null,
-   "tao": 5720
+   "tao": 5739
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-21T00:54:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-1-image.png",
+   "orientation": null
   },
   {
    "id": "seize-and-share-a-meditation-on-gn-478",
@@ -85,7 +107,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
    "orientation": null,
-   "tao": 6153
+   "tao": 6173
   },
   {
    "id": "2022-10k-2",
@@ -97,29 +119,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6575
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-1",
-   "title": "The Line Artist 001 to 100",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-1-image.png",
-   "orientation": null
+   "tao": 6594
   }
  ]
 }

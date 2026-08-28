@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-04-16T02:24:05.000000Z",
- "last_collected": "2022-07-10T14:44:30.000Z",
- "tao": 19594,
+ "last_collected": "2024-10-05T07:51:35.000000Z",
+ "tao": 19652,
  "tao_rate": 12.6,
  "tao_rank": 488,
  "collections": [
@@ -40,6 +40,28 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:51:35.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
@@ -49,7 +71,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6319
+   "tao": 6339
   },
   {
    "id": "2022-10k-2",
@@ -61,7 +83,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6574
+   "tao": 6593
   },
   {
    "id": "geodetic-onchain-1",
@@ -73,29 +95,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6678
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-6",
-   "title": "The Line continues",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-6-image.png",
-   "orientation": null
+   "tao": 6698
   }
  ]
 }

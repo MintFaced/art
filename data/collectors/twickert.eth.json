@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-06-06T03:34:29.000000Z",
- "last_collected": "2022-09-25T11:28:23.000Z",
- "tao": 18483,
+ "last_collected": "2024-10-05T07:53:11.000000Z",
+ "tao": 18541,
  "tao_rate": 12.6,
  "tao_rank": 522,
  "collections": [
@@ -35,6 +35,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:53:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-freedom-to-live-1654",
    "title": "Freedom to Live",
    "collection": "seize-and-share",
@@ -44,7 +55,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 11993
+   "tao": 12032
   },
   {
    "id": "2022-10k-1",
@@ -56,18 +67,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6464
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 6483
   }
  ]
 }

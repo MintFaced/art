@@ -12,10 +12,10 @@
   "collections": 2
  },
  "first_collected": "2022-12-16T19:02:35.000Z",
- "last_collected": "2022-12-16T19:02:35.000Z",
- "tao": 13067,
+ "last_collected": "2025-06-28T22:00:23.000000Z",
+ "tao": 13125,
  "tao_rate": 12.6,
- "tao_rank": 609,
+ "tao_rank": 607,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -30,6 +30,18 @@
  ],
  "works": [
   {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-06-28T22:00:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-63-image.png",
+   "orientation": null,
+   "tao": 1784
+  },
+  {
    "id": "seize-and-share-freedom-to-live-1654",
    "title": "Freedom to Live",
    "collection": "seize-and-share",
@@ -39,7 +51,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5651
+   "tao": 5670
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -51,19 +63,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5651
-  },
-  {
-   "id": "xlife-63",
-   "title": "Metadata Wars",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-63-image.png",
-   "orientation": null,
-   "tao": 1765
+   "tao": 5670
   }
  ]
 }

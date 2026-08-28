@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-11-24T05:09:35.000Z",
- "last_collected": "2023-07-04T02:44:23.000000Z",
- "tao": 88944,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 89255,
  "tao_rate": 67.2,
  "tao_rank": 178,
  "collections": [
@@ -40,6 +40,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-journey",
    "title": "The Journey",
    "collection": "roads-and-rivers",
@@ -49,7 +60,40 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-journey-image.jpg",
    "orientation": null,
-   "tao": 9627
+   "tao": 9666
+  },
+  {
+   "id": "we-are-the-line-7",
+   "title": "The Line Artist Allowlist",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-07-03T00:40:35.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-7-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
   },
   {
    "id": "roads-or-rivers-up-only",
@@ -61,7 +105,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-up-only-image.jpg",
    "orientation": null,
-   "tao": 11207
+   "tao": 11246
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -73,7 +117,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5655
+   "tao": 5674
   },
   {
    "id": "seize-and-share-anxn-3250",
@@ -85,7 +129,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 5620
+   "tao": 5639
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -97,7 +141,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5637
+   "tao": 5656
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -109,7 +153,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5653
+   "tao": 5673
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -121,7 +165,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11319
+   "tao": 11358
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -133,7 +177,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5666
+   "tao": 5685
   },
   {
    "id": "seize-and-share-griftercity-2690",
@@ -145,7 +189,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
    "orientation": null,
-   "tao": 5666
+   "tao": 5686
   },
   {
    "id": "roads-or-rivers-the-reservoir",
@@ -157,7 +201,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-reservoir-image.jpg",
    "orientation": null,
-   "tao": 5700
+   "tao": 5719
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -169,7 +213,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5717
+   "tao": 5737
   },
   {
    "id": "seize-and-share-grimalkin-2312",
@@ -181,7 +225,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null,
-   "tao": 5726
+   "tao": 5745
   },
   {
    "id": "seize-and-share-convoy-2223",
@@ -193,51 +237,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-convoy-2223-display.webp",
    "orientation": null,
-   "tao": 5745
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-7",
-   "title": "The Line Artist Allowlist",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-7-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-6",
-   "title": "The Line continues",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-6-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
+   "tao": 5765
   },
   {
    "id": "xnouns-88",

@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-03-06T07:02:26.000000Z",
- "last_collected": "2022-08-19T01:56:11.000Z",
- "tao": 23365,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 23443,
  "tao_rate": 16.8,
  "tao_rank": 456,
  "collections": [
@@ -40,6 +40,40 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-38",
+   "title": "Goodnight Doom",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-12-04T01:51:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-38-image.gif",
+   "orientation": null,
+   "tao": 4190
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-4-image.png",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-a-meditation-on-gn-478",
    "title": "A Meditation on gn",
    "collection": "seize-and-share",
@@ -49,7 +83,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
    "orientation": null,
-   "tao": 12307
+   "tao": 12346
   },
   {
    "id": "geodetic-onchain-1",
@@ -61,41 +95,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6850
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-4",
-   "title": "The Line Artist 101 to 201",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-4-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-38",
-   "title": "Goodnight Doom",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-38-image.gif",
-   "orientation": null,
-   "tao": 4171
+   "tao": 6869
   }
  ]
 }

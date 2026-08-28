@@ -11,20 +11,20 @@
   "editions": 2,
   "collections": 3
  },
- "first_collected": "2026-08-21T23:52:35.000Z",
+ "first_collected": "2024-10-05T07:49:11.000000Z",
  "last_collected": "2026-08-21T23:52:35.000Z",
- "tao": 2228,
+ "tao": 2375,
  "tao_rate": 73.2,
- "tao_rank": 2967,
+ "tao_rank": 2964,
  "collections": [
-  {
-   "slug": "patrimora",
-   "title": "Patrimora",
-   "works": 1
-  },
   {
    "slug": "id-please",
    "title": "ID Please",
+   "works": 1
+  },
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
    "works": 1
   },
   {
@@ -44,7 +44,7 @@
    "unique": true,
    "image": "patrimora/patrimora-182-image.png",
    "orientation": null,
-   "tao": 269
+   "tao": 408
   },
   {
    "id": "id-please-362",
@@ -52,11 +52,11 @@
    "collection": "id-please",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-05-16T10:36:23.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null,
-   "tao": 1959
+   "tao": 1967
   },
   {
    "id": "we-are-the-line-8",
@@ -64,7 +64,7 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null

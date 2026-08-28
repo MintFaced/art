@@ -12,8 +12,8 @@
   "collections": 8
  },
  "first_collected": "2022-02-19T02:39:41.000000Z",
- "last_collected": "2024-04-21T22:49:59.000000Z",
- "tao": 261664,
+ "last_collected": "2024-10-05T07:53:11.000000Z",
+ "tao": 262458,
  "tao_rate": 171.6,
  "tao_rank": 37,
  "collections": [
@@ -60,6 +60,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:53:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "geodetica-76",
    "title": "Geodetica #76",
    "collection": "geodetica",
@@ -69,7 +80,19 @@
    "unique": true,
    "image": "geodetica/geodetica-76-display.webp",
    "orientation": "square",
-   "tao": 58879
+   "tao": 59199
+  },
+  {
+   "id": "xlife-40",
+   "title": "AI Swear",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-12-15T01:11:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-40-image.gif",
+   "orientation": null,
+   "tao": 4144
   },
   {
    "id": "geodetic-world-73",
@@ -81,7 +104,7 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-73-display.webp",
    "orientation": "square",
-   "tao": 70601
+   "tao": 70920
   },
   {
    "id": "roads-or-rivers-bridging",
@@ -93,7 +116,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-bridging-image.jpg",
    "orientation": null,
-   "tao": 5695
+   "tao": 5715
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -105,7 +128,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5713
+   "tao": 5732
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -117,7 +140,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5723
+   "tao": 5742
   },
   {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
@@ -129,7 +152,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 5931
+   "tao": 5950
   },
   {
    "id": "seize-and-share-a-meditation-on-gn-478",
@@ -141,7 +164,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
    "orientation": null,
-   "tao": 6153
+   "tao": 6173
   },
   {
    "id": "2022-10k-2",
@@ -153,7 +176,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6582
+   "tao": 6601
   },
   {
    "id": "geodetic-onchain-1",
@@ -165,30 +188,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6913
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-40",
-   "title": "AI Swear",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-40-image.gif",
-   "orientation": null,
-   "tao": 4125
+   "tao": 6933
   }
  ]
 }

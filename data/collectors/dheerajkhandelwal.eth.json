@@ -12,10 +12,10 @@
   "collections": 2
  },
  "first_collected": "2022-07-10T21:50:08.000Z",
- "last_collected": "2022-07-10T21:50:08.000Z",
- "tao": 6318,
+ "last_collected": "2024-10-05T07:50:47.000000Z",
+ "tao": 6337,
  "tao_rate": 4.2,
- "tao_rank": 2186,
+ "tao_rank": 2192,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -30,24 +30,12 @@
  ],
  "works": [
   {
-   "id": "geodetic-memory-geodetic-memory",
-   "title": "Geodetic Memory",
-   "collection": "geodetic-memory",
-   "group": "geodetic",
-   "genre": "Photography / AI",
-   "acquired": "2022-07-10T21:50:08.000Z",
-   "unique": false,
-   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
-   "orientation": "landscape",
-   "tao": 6318
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:50:47.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
@@ -58,10 +46,22 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-5-image.png",
    "orientation": null
+  },
+  {
+   "id": "geodetic-memory-geodetic-memory",
+   "title": "Geodetic Memory",
+   "collection": "geodetic-memory",
+   "group": "geodetic",
+   "genre": "Photography / AI",
+   "acquired": "2022-07-10T21:50:08.000Z",
+   "unique": false,
+   "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
+   "orientation": "landscape",
+   "tao": 6337
   }
  ]
 }

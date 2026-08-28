@@ -11,11 +11,11 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 5195,
+ "first_collected": "2023-01-15T23:51:11.000000Z",
+ "last_collected": "2024-10-05T07:50:47.000000Z",
+ "tao": 5215,
  "tao_rate": 4.2,
- "tao_rank": 2695,
+ "tao_rank": 2697,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -35,7 +35,7 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:50:47.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
@@ -46,20 +46,9 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-07-03T02:36:59.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-7-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
    "orientation": null
   },
   {
@@ -68,11 +57,22 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-04-04T03:48:47.000000Z",
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 5195
+   "tao": 5215
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
   }
  ]
 }

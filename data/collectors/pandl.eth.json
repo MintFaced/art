@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-08-23T03:34:39.000Z",
- "last_collected": "2022-12-24T02:10:35.000Z",
- "tao": 134945,
+ "last_collected": "2023-01-02T02:52:59.000000Z",
+ "tao": 135381,
  "tao_rate": 94.2,
  "tao_rank": 94,
  "collections": [
@@ -35,6 +35,18 @@
  ],
  "works": [
   {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-02T02:52:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-3-image.gif",
+   "orientation": null,
+   "tao": 5601
+  },
+  {
    "id": "seize-and-share-grimalkin-2312",
    "title": "Grimalkin",
    "collection": "seize-and-share",
@@ -44,7 +56,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null,
-   "tao": 5620
+   "tao": 5639
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -56,7 +68,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5620
+   "tao": 5639
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -68,7 +80,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5620
+   "tao": 5639
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -80,7 +92,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5765
+   "tao": 5784
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -92,7 +104,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5918
+   "tao": 5938
   },
   {
    "id": "geodetica-58",
@@ -104,19 +116,7 @@
    "unique": true,
    "image": "geodetica/geodetica-58-display.webp",
    "orientation": "square",
-   "tao": 100818
-  },
-  {
-   "id": "xlife-3",
-   "title": "New Year, New X",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-3-image.gif",
-   "orientation": null,
-   "tao": 5582
+   "tao": 101137
   }
  ]
 }

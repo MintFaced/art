@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-09-25T17:54:59.000Z",
- "last_collected": "2022-09-25T17:54:59.000Z",
- "tao": 9091,
+ "last_collected": "2024-10-05T07:53:11.000000Z",
+ "tao": 9130,
  "tao_rate": 8.4,
  "tao_rank": 1267,
  "collections": [
@@ -35,24 +35,12 @@
  ],
  "works": [
   {
-   "id": "seize-and-share-freedom-to-live-1654",
-   "title": "Freedom to Live",
-   "collection": "seize-and-share",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2022-09-25T17:54:59.000Z",
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
-   "orientation": null,
-   "tao": 5995
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:53:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
@@ -63,11 +51,23 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-08-16T01:26:59.000000Z",
    "unique": false,
    "image": "xlife/xlife-50-image.gif",
    "orientation": null,
-   "tao": 3096
+   "tao": 3115
+  },
+  {
+   "id": "seize-and-share-freedom-to-live-1654",
+   "title": "Freedom to Live",
+   "collection": "seize-and-share",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2022-09-25T17:54:59.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
+   "orientation": null,
+   "tao": 6015
   }
  ]
 }

@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-05-09T00:47:31.000000Z",
- "last_collected": "2022-07-11T02:44:24.000Z",
- "tao": 15457,
+ "last_collected": "2024-10-05T07:49:59.000000Z",
+ "tao": 15496,
  "tao_rate": 8.4,
  "tao_rank": 589,
  "collections": [
@@ -35,6 +35,28 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:59.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
@@ -44,7 +66,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6317
+   "tao": 6336
   },
   {
    "id": "2022-10k-2",
@@ -56,29 +78,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6582
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
+   "tao": 6601
   }
  ]
 }

@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-07-09T16:37:26.000Z",
- "last_collected": "2022-12-16T14:47:59.000Z",
- "tao": 35957,
+ "last_collected": "2023-01-02T00:27:23.000000Z",
+ "tao": 36073,
  "tao_rate": 25.2,
  "tao_rank": 347,
  "collections": [
@@ -35,6 +35,18 @@
  ],
  "works": [
   {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-02T00:27:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null,
+   "tao": 5602
+  },
+  {
    "id": "seize-and-share-accessdenied-mp4-2882",
    "title": "AccessDenied.mp4",
    "collection": "seize-and-share",
@@ -44,7 +56,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5651
+   "tao": 5671
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -56,7 +68,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 5975
+   "tao": 5995
   },
   {
    "id": "seize-and-share-gm-518",
@@ -68,7 +80,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-518-display.webp",
    "orientation": null,
-   "tao": 6099
+   "tao": 6119
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -80,19 +92,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12646
-  },
-  {
-   "id": "xlife-4",
-   "title": "XCOFFEE",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-4-image.gif",
-   "orientation": null,
-   "tao": 5582
+   "tao": 12685
   }
  ]
 }

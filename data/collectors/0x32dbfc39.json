@@ -11,9 +11,9 @@
   "editions": 3,
   "collections": 2
  },
- "first_collected": "2022-12-27T03:29:59.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 11215,
+ "first_collected": "2022-10-31T00:16:11.000000Z",
+ "last_collected": "2023-01-15T23:51:11.000000Z",
+ "tao": 11254,
  "tao_rate": 8.4,
  "tao_rank": 1219,
  "collections": [
@@ -30,6 +30,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -39,18 +50,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 11215
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
+   "tao": 11254
   },
   {
    "id": "we-are-the-line-4",
@@ -58,7 +58,7 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-4-image.png",
    "orientation": null

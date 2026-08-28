@@ -11,11 +11,11 @@
   "editions": 3,
   "collections": 1
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 5281,
+ "first_collected": "2025-06-29T21:21:11.000000Z",
+ "last_collected": "2025-06-30T04:50:59.000000Z",
+ "tao": 5340,
  "tao_rate": 12.6,
- "tao_rank": 2685,
+ "tao_rank": 2683,
  "collections": [
   {
    "slug": "xlife",
@@ -25,28 +25,16 @@
  ],
  "works": [
   {
-   "id": "xlife-56",
-   "title": "Late Stage Memeism",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-56-image.gif",
-   "orientation": null,
-   "tao": 1761
-  },
-  {
    "id": "xlife-26",
    "title": "Hidden Folder",
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-06-30T04:50:59.000000Z",
    "unique": false,
    "image": "xlife/xlife-26-image.gif",
    "orientation": null,
-   "tao": 1760
+   "tao": 1779
   },
   {
    "id": "xlife-23",
@@ -54,11 +42,23 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-06-30T04:20:23.000000Z",
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 1760
+   "tao": 1779
+  },
+  {
+   "id": "xlife-56",
+   "title": "Late Stage Memeism",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-06-29T21:21:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-56-image.gif",
+   "orientation": null,
+   "tao": 1780
   }
  ]
 }

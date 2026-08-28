@@ -11,11 +11,11 @@
   "editions": 1,
   "collections": 4
  },
- "first_collected": "2024-08-23T07:53:47.000000Z",
+ "first_collected": "2024-05-16T15:50:11.000000Z",
  "last_collected": "2024-08-24T08:08:35.000000Z",
- "tao": 211779,
+ "tao": 213075,
  "tao_rate": 280.2,
- "tao_rank": 53,
+ "tao_rank": 52,
  "collections": [
   {
    "slug": "two-burdens",
@@ -49,7 +49,7 @@
    "unique": true,
    "image": "geodetica/geodetica-34-display.webp",
    "orientation": "square",
-   "tao": 50297
+   "tao": 50616
   },
   {
    "id": "two-burdens-26",
@@ -61,7 +61,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-26-display.webp",
    "orientation": "square",
-   "tao": 50366
+   "tao": 50685
   },
   {
    "id": "two-burdens-17",
@@ -73,7 +73,19 @@
    "unique": true,
    "image": "two-burdens/two-burdens-17-display.webp",
    "orientation": "square",
-   "tao": 50366
+   "tao": 50686
+  },
+  {
+   "id": "xlife-18",
+   "title": "Sound Choice",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-05-16T15:50:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-18-image.gif",
+   "orientation": null,
+   "tao": 3499
   },
   {
    "id": "first-selfie-101",
@@ -85,19 +97,7 @@
    "unique": true,
    "image": "first-selfie/first-selfie-101-image.gif",
    "orientation": null,
-   "tao": 57268
-  },
-  {
-   "id": "xlife-18",
-   "title": "Sound Choice",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-18-image.gif",
-   "orientation": null,
-   "tao": 3480
+   "tao": 57588
   }
  ]
 }

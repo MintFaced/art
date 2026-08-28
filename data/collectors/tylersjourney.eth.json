@@ -12,10 +12,10 @@
   "collections": 3
  },
  "first_collected": "2022-03-15T01:34:31.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 12420,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 12459,
  "tao_rate": 8.4,
- "tao_rank": 838,
+ "tao_rank": 839,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -35,6 +35,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -44,7 +55,18 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-21T00:54:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-1-image.png",
+   "orientation": null
   },
   {
    "id": "geodetic-onchain-2",
@@ -56,29 +78,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 6813
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-1",
-   "title": "The Line Artist 001 to 100",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-1-image.png",
-   "orientation": null
+   "tao": 6832
   }
  ]
 }

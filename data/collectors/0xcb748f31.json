@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-05-09T10:10:27.000000Z",
- "last_collected": "2022-05-09T10:10:27.000000Z",
- "tao": 6580,
+ "last_collected": "2024-10-05T07:51:35.000000Z",
+ "tao": 6600,
  "tao_rate": 4.2,
  "tao_rank": 2053,
  "collections": [
@@ -30,24 +30,12 @@
  ],
  "works": [
   {
-   "id": "2022-10k-2",
-   "title": "10k Project",
-   "collection": "2022-10k",
-   "group": "feature",
-   "genre": "Design",
-   "acquired": "2022-05-09T10:10:27.000000Z",
-   "unique": false,
-   "image": "2022-10k/2022-10k-2-display.webp",
-   "orientation": null,
-   "tao": 6580
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:51:35.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
@@ -58,10 +46,22 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-6-image.png",
    "orientation": null
+  },
+  {
+   "id": "2022-10k-2",
+   "title": "10k Project",
+   "collection": "2022-10k",
+   "group": "feature",
+   "genre": "Design",
+   "acquired": "2022-05-09T10:10:27.000000Z",
+   "unique": false,
+   "image": "2022-10k/2022-10k-2-display.webp",
+   "orientation": null,
+   "tao": 6600
   }
  ]
 }

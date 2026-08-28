@@ -11,11 +11,11 @@
   "editions": 4,
   "collections": 3
  },
- "first_collected": "2025-09-11T22:13:23.000000Z",
+ "first_collected": "2024-10-05T07:53:11.000000Z",
  "last_collected": "2025-09-11T22:14:11.000000Z",
- "tao": 4351,
+ "tao": 4409,
  "tao_rate": 12.6,
- "tao_rank": 2727,
+ "tao_rank": 2728,
  "collections": [
   {
    "slug": "roads-and-rivers",
@@ -44,7 +44,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 1450
+   "tao": 1469
   },
   {
    "id": "roads-or-rivers-roads",
@@ -56,18 +56,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-roads-image.jpg",
    "orientation": null,
-   "tao": 1450
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 1469
   },
   {
    "id": "xlife-2",
@@ -75,11 +64,22 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-09-11T22:11:35.000000Z",
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 1450
+   "tao": 1469
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:53:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }

@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-12-07T15:48:35.000Z",
- "last_collected": "2022-12-16T17:34:23.000Z",
- "tao": 11340,
+ "last_collected": "2024-10-05T07:53:11.000000Z",
+ "tao": 11379,
  "tao_rate": 8.4,
  "tao_rank": 1189,
  "collections": [
@@ -30,6 +30,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:53:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-accessdenied-mp4-2882",
    "title": "AccessDenied.mp4",
    "collection": "seize-and-share",
@@ -39,7 +50,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5651
+   "tao": 5670
   },
   {
    "id": "seize-and-share-xdecal-2590",
@@ -51,18 +62,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
    "orientation": null,
-   "tao": 5689
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 5708
   }
  ]
 }

@@ -12,8 +12,8 @@
   "collections": 9
  },
  "first_collected": "2025-07-09T00:57:59.000000Z",
- "last_collected": "2025-09-08T05:24:23.000000Z",
- "tao": 117378,
+ "last_collected": "2025-12-26T03:41:47.000000Z",
+ "tao": 117939,
  "tao_rate": 278.4,
  "tao_rank": 122,
  "collections": [
@@ -38,8 +38,8 @@
    "works": 2
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
    "works": 1
   },
   {
@@ -53,17 +53,29 @@
    "works": 1
   },
   {
-   "slug": "geodetic-home",
-   "title": "Geodetic Home",
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   },
   {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   }
  ],
  "works": [
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-12-26T03:41:47.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1027
+  },
   {
    "id": "geodetic-home-5",
    "title": "Geodetic Home",
@@ -74,7 +86,7 @@
    "unique": false,
    "image": "geodetic-home/geodetic-home-5-display.webp",
    "orientation": null,
-   "tao": 1477
+   "tao": 1485
   },
   {
    "id": "seize-and-share-a-meditation-on-gn-478",
@@ -86,7 +98,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
    "orientation": null,
-   "tao": 1733
+   "tao": 1742
   },
   {
    "id": "seize-and-share-birth-of-gm-543",
@@ -98,7 +110,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
    "orientation": null,
-   "tao": 1733
+   "tao": 1742
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -110,43 +122,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "roads-and-rivers-204",
-   "title": "Roads and Rivers #31 #1/2",
-   "collection": "roads-and-rivers",
-   "group": "core",
-   "genre": "Photography",
-   "acquired": "2025-07-09T00:57:59.000000Z",
-   "unique": true,
-   "image": "roads-and-rivers/roads-and-rivers-204-display.webp",
-   "orientation": "landscape",
-   "tao": 28487
-  },
-  {
-   "id": "geodetic-world-60",
-   "title": "Geodetic Glacier",
-   "collection": "geodetic-world",
-   "group": "geodetic",
-   "genre": "AI",
-   "acquired": "2025-07-09T00:57:59.000000Z",
-   "unique": true,
-   "image": "geodetic-world/geodetic-world-60-display.webp",
-   "orientation": "square",
-   "tao": 28487
-  },
-  {
-   "id": "geodetica-79",
-   "title": "Geodetica #79",
-   "collection": "geodetica",
-   "group": "geodetic",
-   "genre": "AI",
-   "acquired": "2025-07-09T00:57:59.000000Z",
-   "unique": true,
-   "image": "geodetica/geodetica-79-display.webp",
-   "orientation": "square",
-   "tao": 28487
+   "tao": 1742
   },
   {
    "id": "geodetic-onchain-1",
@@ -158,7 +134,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 5173
+   "tao": 5190
   },
   {
    "id": "geodetic-onchain-3",
@@ -170,19 +146,139 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
    "orientation": null,
-   "tao": 5173
+   "tao": 5190
   },
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
+   "id": "geodetic-world-60",
+   "title": "Geodetic Glacier",
+   "collection": "geodetic-world",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-60-display.webp",
+   "orientation": "square",
+   "tao": 28626
+  },
+  {
+   "id": "geodetica-79",
+   "title": "Geodetica #79",
+   "collection": "geodetica",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-79-display.webp",
+   "orientation": "square",
+   "tao": 28626
+  },
+  {
+   "id": "roads-and-rivers-204",
+   "title": "Roads and Rivers #31 #1/2",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": true,
+   "image": "roads-and-rivers/roads-and-rivers-204-display.webp",
+   "orientation": "landscape",
+   "tao": 28626
+  },
+  {
+   "id": "xlife-33",
+   "title": "CC0 King",
+   "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
    "unique": false,
-   "image": "id-please/id-please-362-display.webp",
+   "image": "xlife/xlife-33-image.gif",
    "orientation": null,
-   "tao": 1019
+   "tao": 1742
+  },
+  {
+   "id": "xlife-29",
+   "title": "Modern Kings",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-29-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-22",
+   "title": "2 Trillion",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-22-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-13",
+   "title": "AI Gobshite",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-13-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-3-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-2",
+   "title": "X Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:57:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-2-image.gif",
+   "orientation": null,
+   "tao": 1742
   },
   {
    "id": "xnouns-384",
@@ -205,102 +301,6 @@
    "unique": true,
    "image": "xnouns/xnouns-348-image.avif",
    "orientation": null
-  },
-  {
-   "id": "xlife-33",
-   "title": "CC0 King",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-33-image.gif",
-   "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "xlife-29",
-   "title": "Modern Kings",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-29-image.gif",
-   "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "xlife-22",
-   "title": "2 Trillion",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-22-image.gif",
-   "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "xlife-13",
-   "title": "AI Gobshite",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-13-image.gif",
-   "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "xlife-4",
-   "title": "XCOFFEE",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-4-image.gif",
-   "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "xlife-3",
-   "title": "New Year, New X",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-3-image.gif",
-   "orientation": null,
-   "tao": 1733
-  },
-  {
-   "id": "xlife-2",
-   "title": "X Mode",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-2-image.gif",
-   "orientation": null,
-   "tao": 1733
   }
  ]
 }

@@ -11,11 +11,11 @@
   "editions": 3,
   "collections": 1
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 5197,
+ "first_collected": "2024-09-01T19:21:23.000000Z",
+ "last_collected": "2026-08-21T07:34:23.000000Z",
+ "tao": 5256,
  "tao_rate": 12.6,
- "tao_rank": 2693,
+ "tao_rank": 2695,
  "collections": [
   {
    "slug": "xlife",
@@ -25,16 +25,28 @@
  ],
  "works": [
   {
+   "id": "xlife-10",
+   "title": "Fake Rare XCOPY",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2026-08-21T07:34:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-10-image.gif",
+   "orientation": null,
+   "tao": 27
+  },
+  {
    "id": "xlife-64",
    "title": "Begin Again",
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-04-01T23:03:59.000000Z",
    "unique": false,
    "image": "xlife/xlife-64-image.png",
    "orientation": null,
-   "tao": 2134
+   "tao": 2154
   },
   {
    "id": "xlife-51",
@@ -42,23 +54,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-09-01T19:21:23.000000Z",
    "unique": false,
    "image": "xlife/xlife-51-image.gif",
    "orientation": null,
-   "tao": 3026
-  },
-  {
-   "id": "xlife-10",
-   "title": "Fake Rare XCOPY",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-10-image.gif",
-   "orientation": null,
-   "tao": 8
+   "tao": 3045
   }
  ]
 }

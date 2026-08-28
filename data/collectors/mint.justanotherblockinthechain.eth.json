@@ -11,9 +11,9 @@
   "editions": 2,
   "collections": 3
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 10479,
+ "first_collected": "2024-10-01T02:12:35.000000Z",
+ "last_collected": "2025-05-16T15:39:11.000000Z",
+ "tao": 10496,
  "tao_rate": 8.4,
  "tao_rank": 1252,
  "collections": [
@@ -40,11 +40,23 @@
    "collection": "id-please",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-05-16T15:39:11.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null,
-   "tao": 1958
+   "tao": 1966
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-10-01T02:12:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2922
   },
   {
    "id": "xnouns-506",
@@ -474,18 +486,6 @@
    "unique": true,
    "image": "xnouns/xnouns-61-image.avif",
    "orientation": null
-  },
-  {
-   "id": "xlife-52",
-   "title": "Max Brain",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-52-image.gif",
-   "orientation": null,
-   "tao": 2913
   }
  ]
 }

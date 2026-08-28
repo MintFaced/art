@@ -11,11 +11,11 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 12022,
+ "first_collected": "2025-01-06T03:48:11.000000Z",
+ "last_collected": "2025-06-01T20:55:47.000000Z",
+ "tao": 12073,
  "tao_rate": 25.2,
- "tao_rank": 855,
+ "tao_rank": 852,
  "collections": [
   {
    "slug": "xlife",
@@ -35,35 +35,11 @@
    "collection": "id-please",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-06-01T20:55:47.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null,
-   "tao": 1890
-  },
-  {
-   "id": "xlife-66",
-   "title": "Fake ID",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-66-image.gif",
-   "orientation": null,
-   "tao": 5731
-  },
-  {
-   "id": "xlife-58",
-   "title": "Self Stoic",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-58-image.png",
-   "orientation": null,
-   "tao": 2506
+   "tao": 1898
   },
   {
    "id": "xlife-52",
@@ -71,11 +47,35 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-05-31T21:18:23.000000Z",
    "unique": false,
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
-   "tao": 1894
+   "tao": 1902
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-27T23:55:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-66-image.gif",
+   "orientation": null,
+   "tao": 5757
+  },
+  {
+   "id": "xlife-58",
+   "title": "Self Stoic",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-01-06T03:48:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-58-image.png",
+   "orientation": null,
+   "tao": 2514
   }
  ]
 }

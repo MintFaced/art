@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-07-11T12:06:00.000Z",
- "last_collected": "2022-12-20T00:32:35.000Z",
- "tao": 100388,
+ "last_collected": "2024-10-05T07:50:47.000000Z",
+ "tao": 100718,
  "tao_rate": 71.4,
  "tao_rank": 157,
  "collections": [
@@ -40,6 +40,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:50:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-rememes-3252",
    "title": "ReMemes",
    "collection": "seize-and-share",
@@ -49,7 +60,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5637
+   "tao": 5656
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -61,7 +72,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5652
+   "tao": 5671
   },
   {
    "id": "seize-and-share-trashyad-2592",
@@ -73,7 +84,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
    "orientation": null,
-   "tao": 5689
+   "tao": 5708
   },
   {
    "id": "seize-and-share-grimalkin-2312",
@@ -85,7 +96,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null,
-   "tao": 17180
+   "tao": 17238
   },
   {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
@@ -97,7 +108,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 17777
+   "tao": 17836
   },
   {
    "id": "seize-and-share-eth-is-finite-1805",
@@ -109,7 +120,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null,
-   "tao": 17865
+   "tao": 17923
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -121,7 +132,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 11952
+   "tao": 11991
   },
   {
    "id": "seize-and-share-10k-buidling-643",
@@ -133,7 +144,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null,
-   "tao": 6001
+   "tao": 6021
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -145,18 +156,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12631
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 12670
   }
  ]
 }

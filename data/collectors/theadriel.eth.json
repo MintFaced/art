@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-07-09T01:11:43.000Z",
- "last_collected": "2022-07-09T01:11:43.000Z",
- "tao": 34154,
+ "last_collected": "2024-08-30T00:28:47.000000Z",
+ "tao": 34290,
  "tao_rate": 29.4,
  "tao_rank": 359,
  "collections": [
@@ -30,6 +30,30 @@
  ],
  "works": [
   {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-08-30T00:28:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 6114
+  },
+  {
+   "id": "xlife-24",
+   "title": "Anon",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-04-16T22:35:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-24-image.gif",
+   "orientation": null,
+   "tao": 15485
+  },
+  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
@@ -39,31 +63,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12652
-  },
-  {
-   "id": "xlife-51",
-   "title": "Secure the JPEGs",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-51-image.gif",
-   "orientation": null,
-   "tao": 6075
-  },
-  {
-   "id": "xlife-24",
-   "title": "Anon",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-24-image.gif",
-   "orientation": null,
-   "tao": 15426
+   "tao": 12691
   }
  ]
 }

@@ -11,9 +11,9 @@
   "editions": 6,
   "collections": 3
  },
- "first_collected": "2025-12-02T22:31:35.000000Z",
+ "first_collected": "2024-10-20T22:26:59.000000Z",
  "last_collected": "2025-12-02T22:31:35.000000Z",
- "tao": 37292,
+ "tao": 37491,
  "tao_rate": 98.4,
  "tao_rank": 343,
  "collections": [
@@ -23,13 +23,13 @@
    "works": 5
   },
   {
-   "slug": "two-burdens",
-   "title": "Two Burdens",
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   },
   {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "two-burdens",
+   "title": "Two Burdens",
    "works": 1
   }
  ],
@@ -44,7 +44,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-7-display.webp",
    "orientation": "portrait",
-   "tao": 18351
+   "tao": 18490
   },
   {
    "id": "id-please-362",
@@ -52,35 +52,11 @@
    "collection": "id-please",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-05-16T10:36:23.000000Z",
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null,
-   "tao": 1959
-  },
-  {
-   "id": "xlife-52",
-   "title": "Max Brain",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-52-image.gif",
-   "orientation": null,
-   "tao": 2830
-  },
-  {
-   "id": "xlife-51",
-   "title": "Secure the JPEGs",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-51-image.gif",
-   "orientation": null,
-   "tao": 2830
+   "tao": 1967
   },
   {
    "id": "xlife-49",
@@ -88,11 +64,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-21T01:57:23.000000Z",
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 5660
+   "tao": 5677
   },
   {
    "id": "xlife-48",
@@ -100,11 +76,35 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-21T01:57:23.000000Z",
    "unique": false,
    "image": "xlife/xlife-48-image.gif",
    "orientation": null,
-   "tao": 2830
+   "tao": 2838
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-10-20T22:26:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2839
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-10-20T22:26:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 2839
   },
   {
    "id": "xlife-17",
@@ -112,11 +112,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-20T22:26:59.000000Z",
    "unique": false,
    "image": "xlife/xlife-17-image.gif",
    "orientation": null,
-   "tao": 2830
+   "tao": 2839
   }
  ]
 }

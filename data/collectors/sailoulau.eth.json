@@ -12,8 +12,8 @@
   "collections": 9
  },
  "first_collected": "2025-07-09T00:48:47.000000Z",
- "last_collected": "2025-09-08T05:25:47.000000Z",
- "tao": 191811,
+ "last_collected": "2025-12-26T03:45:59.000000Z",
+ "tao": 192755,
  "tao_rate": 468.6,
  "tao_rank": 62,
  "collections": [
@@ -38,6 +38,16 @@
    "works": 2
   },
   {
+   "slug": "geodetic-home",
+   "title": "Geodetic Home",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
    "slug": "geodetic-world",
    "title": "Geodetic World",
    "works": 1
@@ -48,22 +58,24 @@
    "works": 1
   },
   {
-   "slug": "geodetic-moments",
-   "title": "Geodetic Moments",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-home",
-   "title": "Geodetic Home",
-   "works": 1
-  },
-  {
    "slug": "id-please",
    "title": "ID Please",
    "works": 1
   }
  ],
  "works": [
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-12-26T03:45:59.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1027
+  },
   {
    "id": "geodetic-home-5",
    "title": "Geodetic Home",
@@ -74,7 +86,7 @@
    "unique": false,
    "image": "geodetic-home/geodetic-home-5-display.webp",
    "orientation": null,
-   "tao": 1477
+   "tao": 1485
   },
   {
    "id": "roads-or-rivers-another-wei",
@@ -86,7 +98,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-another-wei-image.jpg",
    "orientation": null,
-   "tao": 1505
+   "tao": 1514
   },
   {
    "id": "roads-or-rivers-the-gap",
@@ -98,7 +110,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-gap-image.jpg",
    "orientation": null,
-   "tao": 1505
+   "tao": 1514
   },
   {
    "id": "roads-or-rivers-roads",
@@ -110,7 +122,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-roads-image.jpg",
    "orientation": null,
-   "tao": 1505
+   "tao": 1514
   },
   {
    "id": "geodetic-world-66",
@@ -122,55 +134,7 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-66-display.webp",
    "orientation": "square",
-   "tao": 28487
-  },
-  {
-   "id": "patrimora-95",
-   "title": "Patrimora #95",
-   "collection": "patrimora",
-   "group": "core",
-   "genre": "Generative",
-   "acquired": "2025-07-09T00:48:47.000000Z",
-   "unique": true,
-   "image": "patrimora/patrimora-95-image.png",
-   "orientation": null,
-   "tao": 28487
-  },
-  {
-   "id": "patrimora-104",
-   "title": "Patrimora #104",
-   "collection": "patrimora",
-   "group": "core",
-   "genre": "Generative",
-   "acquired": "2025-07-09T00:48:47.000000Z",
-   "unique": true,
-   "image": "patrimora/patrimora-104-image.png",
-   "orientation": null,
-   "tao": 28487
-  },
-  {
-   "id": "patrimora-105",
-   "title": "Patrimora #105",
-   "collection": "patrimora",
-   "group": "core",
-   "genre": "Generative",
-   "acquired": "2025-07-09T00:48:47.000000Z",
-   "unique": true,
-   "image": "patrimora/patrimora-105-image.png",
-   "orientation": null,
-   "tao": 28487
-  },
-  {
-   "id": "geodetica-41",
-   "title": "Geodetica #41",
-   "collection": "geodetica",
-   "group": "geodetic",
-   "genre": "AI",
-   "acquired": "2025-07-09T00:48:47.000000Z",
-   "unique": true,
-   "image": "geodetica/geodetica-41-display.webp",
-   "orientation": "square",
-   "tao": 28487
+   "tao": 28626
   },
   {
    "id": "geodetic-moments-83",
@@ -182,19 +146,151 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-83-display.webp",
    "orientation": null,
-   "tao": 28487
+   "tao": 28626
   },
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
+   "id": "geodetica-41",
+   "title": "Geodetica #41",
+   "collection": "geodetica",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-41-display.webp",
+   "orientation": "square",
+   "tao": 28626
+  },
+  {
+   "id": "patrimora-95",
+   "title": "Patrimora #95",
+   "collection": "patrimora",
+   "group": "core",
+   "genre": "Generative",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-95-image.png",
+   "orientation": null,
+   "tao": 28626
+  },
+  {
+   "id": "patrimora-104",
+   "title": "Patrimora #104",
+   "collection": "patrimora",
+   "group": "core",
+   "genre": "Generative",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-104-image.png",
+   "orientation": null,
+   "tao": 28626
+  },
+  {
+   "id": "patrimora-105",
+   "title": "Patrimora #105",
+   "collection": "patrimora",
+   "group": "core",
+   "genre": "Generative",
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": true,
+   "image": "patrimora/patrimora-105-image.png",
+   "orientation": null,
+   "tao": 28626
+  },
+  {
+   "id": "xlife-68",
+   "title": "Don't Let The Clowns Edit Your JPEGS",
+   "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
    "unique": false,
-   "image": "id-please/id-please-362-display.webp",
+   "image": "xlife/xlife-68-image.gif",
    "orientation": null,
-   "tao": 1019
+   "tao": 1742
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-66-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-65",
+   "title": "Casting Vote",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-65-image.png",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-61",
+   "title": "Tired of Winning",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-61-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-56",
+   "title": "Late Stage Memeism",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-56-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-55",
+   "title": "Faded Summer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-55-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 1742
+  },
+  {
+   "id": "xlife-45",
+   "title": "Mostly Worthless",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-09T00:48:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-45-image.gif",
+   "orientation": null,
+   "tao": 1742
   },
   {
    "id": "xnouns-411",
@@ -217,102 +313,6 @@
    "unique": true,
    "image": "xnouns/xnouns-336-image.avif",
    "orientation": null
-  },
-  {
-   "id": "xlife-68",
-   "title": "Don't Let The Clowns Edit Your JPEGS",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-68-image.gif",
-   "orientation": null,
-   "tao": 1734
-  },
-  {
-   "id": "xlife-66",
-   "title": "Fake ID",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-66-image.gif",
-   "orientation": null,
-   "tao": 1734
-  },
-  {
-   "id": "xlife-65",
-   "title": "Casting Vote",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-65-image.png",
-   "orientation": null,
-   "tao": 1734
-  },
-  {
-   "id": "xlife-61",
-   "title": "Tired of Winning",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-61-image.gif",
-   "orientation": null,
-   "tao": 1734
-  },
-  {
-   "id": "xlife-56",
-   "title": "Late Stage Memeism",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-56-image.gif",
-   "orientation": null,
-   "tao": 1734
-  },
-  {
-   "id": "xlife-55",
-   "title": "Faded Summer",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-55-image.gif",
-   "orientation": null,
-   "tao": 1734
-  },
-  {
-   "id": "xlife-52",
-   "title": "Max Brain",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-52-image.gif",
-   "orientation": null,
-   "tao": 1734
-  },
-  {
-   "id": "xlife-45",
-   "title": "Mostly Worthless",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-45-image.gif",
-   "orientation": null,
-   "tao": 1734
   }
  ]
 }

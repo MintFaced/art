@@ -13,9 +13,9 @@
  },
  "first_collected": "2022-03-20T04:30:05.000000Z",
  "last_collected": "2026-08-21T05:31:47.000000Z",
- "tao": 12541,
+ "tao": 12899,
  "tao_rate": 77.4,
- "tao_rank": 830,
+ "tao_rank": 619,
  "collections": [
   {
    "slug": "roads-and-rivers",
@@ -44,7 +44,18 @@
    "unique": true,
    "image": "roads-and-rivers/roads-and-rivers-18-display.webp",
    "orientation": "landscape",
-   "tao": 141
+   "tao": 460
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -56,7 +67,18 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-4-image.png",
+   "orientation": null
   },
   {
    "id": "geodetic-onchain-2",
@@ -68,29 +90,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 6791
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-4",
-   "title": "The Line Artist 101 to 201",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-4-image.png",
-   "orientation": null
+   "tao": 6811
   }
  ]
 }

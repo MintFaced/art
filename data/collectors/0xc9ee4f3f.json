@@ -11,9 +11,9 @@
   "editions": 4,
   "collections": 3
  },
- "first_collected": "2023-07-04T07:38:59.000000Z",
- "last_collected": "2023-07-04T07:38:59.000000Z",
- "tao": 9067,
+ "first_collected": "2023-05-21T04:42:23.000000Z",
+ "last_collected": "2024-10-05T07:50:47.000000Z",
+ "tao": 9106,
  "tao_rate": 8.4,
  "tao_rank": 1268,
  "collections": [
@@ -35,6 +35,29 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:50:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-35",
+   "title": "Loading Pepe",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-11-14T05:07:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-35-image.gif",
+   "orientation": null,
+   "tao": 4274
+  },
+  {
    "id": "roads-or-rivers-the-journey",
    "title": "The Journey",
    "collection": "roads-and-rivers",
@@ -44,18 +67,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-journey-image.jpg",
    "orientation": null,
-   "tao": 4813
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 4832
   },
   {
    "id": "we-are-the-line-6",
@@ -63,22 +75,10 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-6-image.png",
    "orientation": null
-  },
-  {
-   "id": "xlife-35",
-   "title": "Loading Pepe",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-35-image.gif",
-   "orientation": null,
-   "tao": 4254
   }
  ]
 }

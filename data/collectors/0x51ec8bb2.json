@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-11-18T16:40:23.000000Z",
- "last_collected": "2022-11-18T16:40:23.000000Z",
- "tao": 94777,
+ "last_collected": "2023-01-22T17:23:59.000000Z",
+ "tao": 95096,
  "tao_rate": 69,
  "tao_rank": 169,
  "collections": [
@@ -30,6 +30,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-22T17:23:59.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
+  },
+  {
    "id": "geodetica-83",
    "title": "Geodetica #83",
    "collection": "geodetica",
@@ -39,18 +50,7 @@
    "unique": true,
    "image": "geodetica/geodetica-83-display.webp",
    "orientation": "square",
-   "tao": 94777
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
+   "tao": 95096
   }
  ]
 }

@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-07-17T09:08:10.000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 18189,
+ "last_collected": "2024-10-05T07:51:35.000000Z",
+ "tao": 18248,
  "tao_rate": 12.6,
  "tao_rank": 532,
  "collections": [
@@ -35,6 +35,28 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:51:35.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -44,7 +66,18 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-4-image.png",
+   "orientation": null
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -56,40 +89,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12582
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-6",
-   "title": "The Line continues",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-6-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-4",
-   "title": "The Line Artist 101 to 201",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-4-image.png",
-   "orientation": null
+   "tao": 12621
   }
  ]
 }

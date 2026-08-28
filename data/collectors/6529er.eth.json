@@ -12,10 +12,10 @@
   "collections": 5
  },
  "first_collected": "2022-05-09T23:03:17.000000Z",
- "last_collected": "2022-12-05T19:00:59.000Z",
- "tao": 35492,
+ "last_collected": "2025-03-03T21:21:11.000000Z",
+ "tao": 35628,
  "tao_rate": 29.4,
- "tao_rank": 353,
+ "tao_rank": 354,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -45,6 +45,29 @@
  ],
  "works": [
   {
+   "id": "xlife-62",
+   "title": "I AM TECH SUPPORT",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-03-03T21:21:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-62-image.png",
+   "orientation": null,
+   "tao": 4552
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-don-t-trust-clowns-2451",
    "title": "Don't Trust Clowns",
    "collection": "seize-and-share",
@@ -54,7 +77,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-don-t-trust-clowns-2451-display.webp",
    "orientation": null,
-   "tao": 5697
+   "tao": 5716
   },
   {
    "id": "seize-and-share-birth-of-gm-543",
@@ -66,7 +89,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-birth-of-gm-543-display.webp",
    "orientation": null,
-   "tao": 6064
+   "tao": 6083
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -78,7 +101,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12638
+   "tao": 12677
   },
   {
    "id": "2022-10k-2",
@@ -90,30 +113,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6578
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-62",
-   "title": "I AM TECH SUPPORT",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-62-image.png",
-   "orientation": null,
-   "tao": 4514
+   "tao": 6597
   }
  ]
 }

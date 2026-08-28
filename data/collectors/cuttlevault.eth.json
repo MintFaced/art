@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-09-28T16:20:35.000000Z",
- "last_collected": "2022-11-18T19:07:23.000Z",
- "tao": 23828,
+ "last_collected": "2025-05-27T23:55:23.000000Z",
+ "tao": 23944,
  "tao_rate": 25.2,
  "tao_rank": 452,
  "collections": [
@@ -40,6 +40,30 @@
  ],
  "works": [
   {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-27T23:55:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-66-image.gif",
+   "orientation": null,
+   "tao": 3838
+  },
+  {
+   "id": "xlife-58",
+   "title": "Self Stoic",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-01-06T03:48:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-58-image.png",
+   "orientation": null,
+   "tao": 2514
+  },
+  {
    "id": "seize-and-share-cc0-the-movie-2204",
    "title": "CC0 The Movie",
    "collection": "seize-and-share",
@@ -49,7 +73,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-cc0-the-movie-2204-display.webp",
    "orientation": null,
-   "tao": 5768
+   "tao": 5788
   },
   {
    "id": "xnouns-8",
@@ -72,7 +96,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5781
+   "tao": 5801
   },
   {
    "id": "2022-10k-3",
@@ -84,31 +108,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-3-display.webp",
    "orientation": null,
-   "tao": 5983
-  },
-  {
-   "id": "xlife-66",
-   "title": "Fake ID",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-66-image.gif",
-   "orientation": null,
-   "tao": 3799
-  },
-  {
-   "id": "xlife-58",
-   "title": "Self Stoic",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-58-image.png",
-   "orientation": null,
-   "tao": 2495
+   "tao": 6002
   }
  ]
 }

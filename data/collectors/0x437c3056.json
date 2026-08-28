@@ -11,9 +11,9 @@
   "editions": 3,
   "collections": 3
  },
- "first_collected": "2025-07-02T07:24:47.000000Z",
+ "first_collected": "2024-08-30T00:28:47.000000Z",
  "last_collected": "2025-07-02T07:24:47.000000Z",
- "tao": 38768,
+ "tao": 38941,
  "tao_rate": 85.8,
  "tao_rank": 336,
  "collections": [
@@ -44,31 +44,7 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-62-display.webp",
    "orientation": null,
-   "tao": 28951
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1957
-  },
-  {
-   "id": "xlife-51",
-   "title": "Secure the JPEGs",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-51-image.gif",
-   "orientation": null,
-   "tao": 6097
+   "tao": 29090
   },
   {
    "id": "xlife-46",
@@ -76,11 +52,35 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-07-02T07:24:47.000000Z",
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 1762
+   "tao": 1770
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-16T18:08:59.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1966
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-08-30T00:28:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 6114
   }
  ]
 }

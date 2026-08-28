@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-12-16T11:49:47.000Z",
- "last_collected": "2022-12-16T11:49:47.000Z",
- "tao": 111676,
+ "last_collected": "2023-02-07T05:06:47.000000Z",
+ "tao": 112073,
  "tao_rate": 85.8,
  "tao_rank": 131,
  "collections": [
@@ -35,6 +35,42 @@
  ],
  "works": [
   {
+   "id": "xlife-13",
+   "title": "AI Gobshite",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-02-07T05:06:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-13-image.gif",
+   "orientation": null,
+   "tao": 5450
+  },
+  {
+   "id": "xlife-12",
+   "title": "Xchequer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-02-02T23:17:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-12-image.gif",
+   "orientation": null,
+   "tao": 5468
+  },
+  {
+   "id": "xlife-10",
+   "title": "Fake Rare XCOPY",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-30T09:52:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-10-image.gif",
+   "orientation": null,
+   "tao": 5483
+  },
+  {
    "id": "seize-and-share-accessdenied-mp4-2882",
    "title": "AccessDenied.mp4",
    "collection": "seize-and-share",
@@ -44,7 +80,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5652
+   "tao": 5671
   },
   {
    "id": "first-selfie-91",
@@ -56,43 +92,7 @@
    "unique": true,
    "image": "first-selfie/first-selfie-91-image.gif",
    "orientation": null,
-   "tao": 89645
-  },
-  {
-   "id": "xlife-13",
-   "title": "AI Gobshite",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-13-image.gif",
-   "orientation": null,
-   "tao": 5430
-  },
-  {
-   "id": "xlife-12",
-   "title": "Xchequer",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-12-image.gif",
-   "orientation": null,
-   "tao": 5448
-  },
-  {
-   "id": "xlife-10",
-   "title": "Fake Rare XCOPY",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-10-image.gif",
-   "orientation": null,
-   "tao": 5463
+   "tao": 89964
   }
  ]
 }

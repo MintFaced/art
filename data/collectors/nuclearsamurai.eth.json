@@ -11,9 +11,9 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 7028,
+ "first_collected": "2023-05-21T04:42:23.000000Z",
+ "last_collected": "2024-10-05T07:51:35.000000Z",
+ "tao": 7067,
  "tao_rate": 8.4,
  "tao_rank": 1303,
  "collections": [
@@ -35,20 +35,9 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:51:35.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-6",
-   "title": "The Line continues",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-6-image.png",
    "orientation": null
   },
   {
@@ -57,11 +46,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-01T02:38:59.000000Z",
    "unique": false,
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
-   "tao": 2902
+   "tao": 2922
   },
   {
    "id": "xlife-40",
@@ -69,11 +58,22 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-12-15T01:11:47.000000Z",
    "unique": false,
    "image": "xlife/xlife-40-image.gif",
    "orientation": null,
-   "tao": 4125
+   "tao": 4144
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
   }
  ]
 }

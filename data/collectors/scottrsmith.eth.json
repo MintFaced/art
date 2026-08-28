@@ -12,10 +12,10 @@
   "collections": 4
  },
  "first_collected": "2022-08-18T03:09:22.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 35604,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 35721,
  "tao_rate": 25.2,
- "tao_rank": 351,
+ "tao_rank": 352,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -40,6 +40,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -49,7 +60,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
   },
   {
    "id": "seize-and-share-xdecal-2590",
@@ -61,7 +72,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
    "orientation": null,
-   "tao": 5689
+   "tao": 5708
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-4-image.png",
+   "orientation": null
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -73,7 +95,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5994
+   "tao": 6013
   },
   {
    "id": "seize-and-share-10k-buidling-643",
@@ -85,7 +107,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null,
-   "tao": 6001
+   "tao": 6021
   },
   {
    "id": "seize-and-share-a-meditation-on-gn-478",
@@ -97,7 +119,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-a-meditation-on-gn-478-display.webp",
    "orientation": null,
-   "tao": 6153
+   "tao": 6173
   },
   {
    "id": "2022-10k-1",
@@ -109,29 +131,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6157
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-4",
-   "title": "The Line Artist 101 to 201",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-4-image.png",
-   "orientation": null
+   "tao": 6177
   }
  ]
 }

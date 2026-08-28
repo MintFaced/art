@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-12-28T00:33:11.000000Z",
- "last_collected": "2022-12-28T00:59:47.000000Z",
- "tao": 112077,
+ "last_collected": "2023-01-02T00:39:35.000000Z",
+ "tao": 112465,
  "tao_rate": 84,
  "tao_rank": 130,
  "collections": [
@@ -30,6 +30,42 @@
  ],
  "works": [
   {
+   "id": "xlife-5",
+   "title": "WEN MINT",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-02T00:39:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-5-image.gif",
+   "orientation": null,
+   "tao": 5602
+  },
+  {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-01T05:44:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-3-image.gif",
+   "orientation": null,
+   "tao": 5605
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2022-12-30T04:03:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5621
+  },
+  {
    "id": "roads-or-rivers-twisted",
    "title": "Twisted",
    "collection": "roads-and-rivers",
@@ -39,7 +75,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-twisted-image.jpg",
    "orientation": null,
-   "tao": 22415
+   "tao": 22492
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -51,43 +87,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 72890
-  },
-  {
-   "id": "xlife-5",
-   "title": "WEN MINT",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-5-image.gif",
-   "orientation": null,
-   "tao": 5582
-  },
-  {
-   "id": "xlife-3",
-   "title": "New Year, New X",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-3-image.gif",
-   "orientation": null,
-   "tao": 5586
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5602
+   "tao": 73142
   }
  ]
 }

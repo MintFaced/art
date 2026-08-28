@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-09-25T09:51:35.000Z",
- "last_collected": "2022-12-27T07:12:47.000000Z",
- "tao": 183415,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 184026,
  "tao_rate": 132,
  "tao_rank": 64,
  "collections": [
@@ -40,6 +40,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-ford",
    "title": "The Ford",
    "collection": "roads-and-rivers",
@@ -49,7 +60,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-ford-image.jpg",
    "orientation": null,
-   "tao": 5606
+   "tao": 5626
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -61,7 +72,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5616
+   "tao": 5635
   },
   {
    "id": "seize-and-share-anxn-3250",
@@ -73,7 +84,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 5619
+   "tao": 5639
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -85,7 +96,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5637
+   "tao": 5656
   },
   {
    "id": "seize-and-share-trashyad-2592",
@@ -97,7 +108,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
    "orientation": null,
-   "tao": 5688
+   "tao": 5707
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -109,7 +120,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5703
+   "tao": 5722
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -121,7 +132,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5715
+   "tao": 5734
   },
   {
    "id": "seize-and-share-grimalkin-2312",
@@ -133,7 +144,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null,
-   "tao": 5724
+   "tao": 5743
   },
   {
    "id": "seize-and-share-convoy-2223",
@@ -145,7 +156,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-convoy-2223-display.webp",
    "orientation": null,
-   "tao": 5745
+   "tao": 5765
   },
   {
    "id": "seize-and-share-lucky-kevin-2023",
@@ -157,7 +168,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-lucky-kevin-2023-display.webp",
    "orientation": null,
-   "tao": 5814
+   "tao": 5833
   },
   {
    "id": "roads-and-rivers-27",
@@ -169,7 +180,18 @@
    "unique": true,
    "image": "roads-and-rivers/roads-and-rivers-27-display.webp",
    "orientation": "landscape",
-   "tao": 96617
+   "tao": 96936
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-21T00:54:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-1-image.png",
+   "orientation": null
   },
   {
    "id": "seize-and-share-certificate-of-mint-1918",
@@ -181,7 +203,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
    "orientation": null,
-   "tao": 5914
+   "tao": 5934
   },
   {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
@@ -193,7 +215,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 11869
+   "tao": 11908
   },
   {
    "id": "seize-and-share-eth-is-finite-1805",
@@ -205,7 +227,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null,
-   "tao": 6030
+   "tao": 6050
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -217,29 +239,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 6113
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-1",
-   "title": "The Line Artist 001 to 100",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-1-image.png",
-   "orientation": null
+   "tao": 6132
   },
   {
    "id": "xnouns-128",

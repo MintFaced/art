@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-07-11T11:02:57.000Z",
- "last_collected": "2022-09-25T13:17:47.000Z",
- "tao": 12312,
+ "last_collected": "2024-10-05T07:51:35.000000Z",
+ "tao": 12351,
  "tao_rate": 8.4,
  "tao_rank": 843,
  "collections": [
@@ -35,6 +35,28 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:51:35.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-freedom-to-live-1654",
    "title": "Freedom to Live",
    "collection": "seize-and-share",
@@ -44,7 +66,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5996
+   "tao": 6015
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -56,29 +78,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6316
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-6",
-   "title": "The Line continues",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-6-image.png",
-   "orientation": null
+   "tao": 6335
   }
  ]
 }

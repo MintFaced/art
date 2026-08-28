@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-12-27T18:54:11.000000Z",
- "last_collected": "2022-12-27T18:57:59.000000Z",
- "tao": 106176,
+ "last_collected": "2024-10-05T07:49:59.000000Z",
+ "tao": 106554,
  "tao_rate": 81.6,
  "tao_rank": 141,
  "collections": [
@@ -40,6 +40,40 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:59.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-13",
+   "title": "AI Gobshite",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-02-07T21:59:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-13-image.gif",
+   "orientation": null,
+   "tao": 5447
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-keep-truckin",
    "title": "Keep Truckin'",
    "collection": "roads-and-rivers",
@@ -49,7 +83,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-keep-truckin-image.jpg",
    "orientation": null,
-   "tao": 5604
+   "tao": 5624
   },
   {
    "id": "roads-or-rivers-the-shortcut",
@@ -61,7 +95,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-shortcut-image.jpg",
    "orientation": null,
-   "tao": 5604
+   "tao": 5624
   },
   {
    "id": "first-selfie-77",
@@ -73,41 +107,7 @@
    "unique": true,
    "image": "first-selfie/first-selfie-77-image.gif",
    "orientation": null,
-   "tao": 89504
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-13",
-   "title": "AI Gobshite",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-13-image.gif",
-   "orientation": null,
-   "tao": 5427
+   "tao": 89823
   }
  ]
 }

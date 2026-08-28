@@ -12,8 +12,8 @@
   "collections": 3
  },
  "first_collected": "2022-09-25T15:32:47.000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 23105,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 23183,
  "tao_rate": 16.8,
  "tao_rank": 461,
  "collections": [
@@ -35,6 +35,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -44,7 +55,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -56,7 +67,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5717
+   "tao": 5737
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -68,7 +79,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5784
+   "tao": 5803
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-4-image.png",
+   "orientation": null
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -80,29 +102,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5996
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-4",
-   "title": "The Line Artist 101 to 201",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-4-image.png",
-   "orientation": null
+   "tao": 6015
   }
  ]
 }

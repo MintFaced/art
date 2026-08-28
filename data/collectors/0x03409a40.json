@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-12-27T13:31:35.000000Z",
- "last_collected": "2022-12-28T00:50:35.000000Z",
- "tao": 50390,
+ "last_collected": "2023-01-02T00:37:47.000000Z",
+ "tao": 50565,
  "tao_rate": 37.8,
  "tao_rank": 290,
  "collections": [
@@ -30,6 +30,42 @@
  ],
  "works": [
   {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-02T00:37:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null,
+   "tao": 5602
+  },
+  {
+   "id": "xlife-2",
+   "title": "X Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2022-12-31T22:09:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-2-image.gif",
+   "orientation": null,
+   "tao": 5606
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2022-12-31T22:09:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5606
+  },
+  {
    "id": "roads-or-rivers-up-only",
    "title": "Up Only",
    "collection": "roads-and-rivers",
@@ -39,7 +75,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-up-only-image.jpg",
    "orientation": null,
-   "tao": 5603
+   "tao": 5623
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -51,7 +87,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 16817
+   "tao": 16875
   },
   {
    "id": "roads-or-rivers-the-shortcut",
@@ -63,7 +99,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-shortcut-image.jpg",
    "orientation": null,
-   "tao": 5605
+   "tao": 5625
   },
   {
    "id": "roads-or-rivers-keep-truckin",
@@ -75,43 +111,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-keep-truckin-image.jpg",
    "orientation": null,
-   "tao": 5605
-  },
-  {
-   "id": "xlife-4",
-   "title": "XCOFFEE",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-4-image.gif",
-   "orientation": null,
-   "tao": 5582
-  },
-  {
-   "id": "xlife-2",
-   "title": "X Mode",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-2-image.gif",
-   "orientation": null,
-   "tao": 5587
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5587
+   "tao": 5625
   }
  ]
 }

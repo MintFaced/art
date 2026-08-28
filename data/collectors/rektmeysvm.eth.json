@@ -12,8 +12,8 @@
   "collections": 5
  },
  "first_collected": "2022-06-06T01:54:25.000000Z",
- "last_collected": "2022-10-10T07:03:47.000Z",
- "tao": 39687,
+ "last_collected": "2024-10-01T03:42:47.000000Z",
+ "tao": 39823,
  "tao_rate": 29.4,
  "tao_rank": 331,
  "collections": [
@@ -45,6 +45,18 @@
  ],
  "works": [
   {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-10-01T03:42:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2922
+  },
+  {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
    "title": "Roads and Rivers Traffic",
    "collection": "roads-and-rivers",
@@ -54,7 +66,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 5934
+   "tao": 5953
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -66,7 +78,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 5976
+   "tao": 5995
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -78,7 +90,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5997
+   "tao": 6016
   },
   {
    "id": "seize-and-share-gm-518",
@@ -90,7 +102,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-518-display.webp",
    "orientation": null,
-   "tao": 6095
+   "tao": 6115
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -102,7 +114,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6316
+   "tao": 6335
   },
   {
    "id": "2022-10k-1",
@@ -114,19 +126,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6464
-  },
-  {
-   "id": "xlife-52",
-   "title": "Max Brain",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-52-image.gif",
-   "orientation": null,
-   "tao": 2902
+   "tao": 6484
   }
  ]
 }

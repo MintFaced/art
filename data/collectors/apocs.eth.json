@@ -11,11 +11,11 @@
   "editions": 3,
   "collections": 3
  },
- "first_collected": "2026-08-21T05:08:23.000000Z",
+ "first_collected": "2023-03-28T22:19:23.000000Z",
  "last_collected": "2026-08-21T05:08:23.000000Z",
- "tao": 7621,
+ "tao": 7980,
  "tao_rate": 77.4,
- "tao_rank": 1290,
+ "tao_rank": 1285,
  "collections": [
   {
    "slug": "xlife",
@@ -44,18 +44,7 @@
    "unique": true,
    "image": "pixelarcade/pixelarcade-39-image.svg",
    "orientation": null,
-   "tao": 142
-  },
-  {
-   "id": "we-are-the-line-7",
-   "title": "The Line Artist Allowlist",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-7-image.png",
-   "orientation": null
+   "tao": 462
   },
   {
    "id": "xlife-62",
@@ -63,11 +52,22 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-03-03T21:21:11.000000Z",
    "unique": false,
    "image": "xlife/xlife-62-image.png",
    "orientation": null,
-   "tao": 2257
+   "tao": 2276
+  },
+  {
+   "id": "we-are-the-line-7",
+   "title": "The Line Artist Allowlist",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-07-03T04:00:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-7-image.png",
+   "orientation": null
   },
   {
    "id": "xlife-17",
@@ -75,11 +75,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-03-28T22:19:23.000000Z",
    "unique": false,
    "image": "xlife/xlife-17-image.gif",
    "orientation": null,
-   "tao": 5222
+   "tao": 5241
   }
  ]
 }

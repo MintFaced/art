@@ -12,10 +12,10 @@
   "collections": 5
  },
  "first_collected": "2022-07-11T23:58:50.000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 17777,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 17836,
  "tao_rate": 12.6,
- "tao_rank": 547,
+ "tao_rank": 546,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -45,6 +45,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -54,7 +65,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
   },
   {
    "id": "seize-and-share-line-of-gm-1989",
@@ -66,7 +77,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-line-of-gm-1989-display.webp",
    "orientation": null,
-   "tao": 5856
+   "tao": 5875
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-21T00:54:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-1-image.png",
+   "orientation": null
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -78,29 +100,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6313
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-1",
-   "title": "The Line Artist 001 to 100",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-1-image.png",
-   "orientation": null
+   "tao": 6333
   },
   {
    "id": "xnouns-198",

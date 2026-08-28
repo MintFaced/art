@@ -13,7 +13,7 @@
  },
  "first_collected": "2025-07-13T21:02:35.000000Z",
  "last_collected": "2025-07-13T21:45:11.000000Z",
- "tao": 89024,
+ "tao": 90040,
  "tao_rate": 219.6,
  "tao_rank": 177,
  "collections": [
@@ -49,7 +49,19 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-50-display.webp",
    "orientation": "square",
-   "tao": 27971
+   "tao": 28290
+  },
+  {
+   "id": "xlife-66",
+   "title": "Fake ID",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-07-13T21:34:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-66-image.gif",
+   "orientation": null,
+   "tao": 3444
   },
   {
    "id": "geodetica-74",
@@ -61,7 +73,7 @@
    "unique": true,
    "image": "geodetica/geodetica-74-display.webp",
    "orientation": "square",
-   "tao": 27972
+   "tao": 28291
   },
   {
    "id": "two-burdens-4",
@@ -73,19 +85,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-4-display.webp",
    "orientation": "portrait",
-   "tao": 27973
-  },
-  {
-   "id": "xlife-66",
-   "title": "Fake ID",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-66-image.gif",
-   "orientation": null,
-   "tao": 3405
+   "tao": 28292
   },
   {
    "id": "xlife-64",
@@ -93,11 +93,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-07-13T21:02:35.000000Z",
    "unique": false,
    "image": "xlife/xlife-64-image.png",
    "orientation": null,
-   "tao": 1702
+   "tao": 1722
   }
  ]
 }

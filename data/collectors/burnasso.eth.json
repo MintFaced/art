@@ -12,8 +12,8 @@
   "collections": 5
  },
  "first_collected": "2022-05-13T15:09:23.000000Z",
- "last_collected": "2024-08-26T09:02:11.000000Z",
- "tao": 105484,
+ "last_collected": "2025-04-01T23:16:23.000000Z",
+ "tao": 106017,
  "tao_rate": 115.2,
  "tao_rank": 143,
  "collections": [
@@ -45,6 +45,41 @@
  ],
  "works": [
   {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-04-01T23:16:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-64-image.png",
+   "orientation": null,
+   "tao": 2154
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:53:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-51",
+   "title": "Secure the JPEGs",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-08-30T00:28:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-51-image.gif",
+   "orientation": null,
+   "tao": 6114
+  },
+  {
    "id": "two-burdens-22",
    "title": "Untitled III",
    "collection": "two-burdens",
@@ -54,7 +89,19 @@
    "unique": true,
    "image": "two-burdens/two-burdens-22-display.webp",
    "orientation": "square",
-   "tao": 50156
+   "tao": 50475
+  },
+  {
+   "id": "xlife-49",
+   "title": "Pebble Hype",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-06-27T08:59:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-49-image.gif",
+   "orientation": null,
+   "tao": 3324
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -66,7 +113,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5637
+   "tao": 5656
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -78,7 +125,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5961
+   "tao": 5980
   },
   {
    "id": "seize-and-share-mint-face-367",
@@ -90,7 +137,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-367-image.png",
    "orientation": null,
-   "tao": 25650
+   "tao": 25728
   },
   {
    "id": "2022-10k-2",
@@ -102,54 +149,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6563
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-64",
-   "title": "Begin Again",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-64-image.png",
-   "orientation": null,
-   "tao": 2134
-  },
-  {
-   "id": "xlife-51",
-   "title": "Secure the JPEGs",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-51-image.gif",
-   "orientation": null,
-   "tao": 6075
-  },
-  {
-   "id": "xlife-49",
-   "title": "Pebble Hype",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-49-image.gif",
-   "orientation": null,
-   "tao": 3305
+   "tao": 6582
   }
  ]
 }

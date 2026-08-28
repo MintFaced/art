@@ -12,8 +12,8 @@
   "collections": 7
  },
  "first_collected": "2022-07-10T23:29:18.000Z",
- "last_collected": "2023-11-25T04:00:47.000000Z",
- "tao": 109699,
+ "last_collected": "2025-04-01T23:06:47.000000Z",
+ "tao": 110174,
  "tao_rate": 102.6,
  "tao_rank": 133,
  "collections": [
@@ -55,6 +55,41 @@
  ],
  "works": [
   {
+   "id": "xlife-64",
+   "title": "Begin Again",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-04-01T23:06:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-64-image.png",
+   "orientation": null,
+   "tao": 2154
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-10-01T02:38:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2922
+  },
+  {
    "id": "geodetic-world-8",
    "title": "Geodetic Isolation",
    "collection": "geodetic-world",
@@ -64,7 +99,30 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-8-display.webp",
    "orientation": "landscape",
-   "tao": 69146
+   "tao": 69465
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-18",
+   "title": "Sound Choice",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-03-14T06:33:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-18-image.gif",
+   "orientation": null,
+   "tao": 5303
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -76,7 +134,18 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-21T00:54:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-1-image.png",
+   "orientation": null
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -88,7 +157,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 11985
+   "tao": 12024
   },
   {
    "id": "geodetic-onchain-3",
@@ -100,7 +169,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
    "orientation": null,
-   "tao": 6305
+   "tao": 6325
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -112,76 +181,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6327
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-6",
-   "title": "The Line continues",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-6-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-1",
-   "title": "The Line Artist 001 to 100",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-1-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-64",
-   "title": "Begin Again",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-64-image.png",
-   "orientation": null,
-   "tao": 2134
-  },
-  {
-   "id": "xlife-52",
-   "title": "Max Brain",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-52-image.gif",
-   "orientation": null,
-   "tao": 2902
-  },
-  {
-   "id": "xlife-18",
-   "title": "Sound Choice",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-18-image.gif",
-   "orientation": null,
-   "tao": 5283
+   "tao": 6347
   }
  ]
 }

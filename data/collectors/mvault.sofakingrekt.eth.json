@@ -11,11 +11,11 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 17619,
+ "first_collected": "2024-04-20T10:59:59.000000Z",
+ "last_collected": "2025-05-27T23:55:23.000000Z",
+ "tao": 17687,
  "tao_rate": 33.6,
- "tao_rank": 551,
+ "tao_rank": 550,
  "collections": [
   {
    "slug": "xlife",
@@ -30,28 +30,28 @@
  ],
  "works": [
   {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1959
-  },
-  {
    "id": "xlife-66",
    "title": "Fake ID",
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-05-27T23:55:23.000000Z",
    "unique": false,
    "image": "xlife/xlife-66-image.gif",
    "orientation": null,
-   "tao": 9552
+   "tao": 9595
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-16T10:36:23.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1967
   },
   {
    "id": "xlife-58",
@@ -59,11 +59,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-01-06T03:48:11.000000Z",
    "unique": false,
    "image": "xlife/xlife-58-image.png",
    "orientation": null,
-   "tao": 2506
+   "tao": 2514
   },
   {
    "id": "xlife-48",
@@ -71,11 +71,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-04-20T10:59:59.000000Z",
    "unique": false,
    "image": "xlife/xlife-48-image.gif",
    "orientation": null,
-   "tao": 3601
+   "tao": 3609
   }
  ]
 }

@@ -12,10 +12,10 @@
   "collections": 3
  },
  "first_collected": "2022-03-15T01:19:28.000000Z",
- "last_collected": "2022-03-15T01:19:28.000000Z",
- "tao": 6813,
+ "last_collected": "2024-10-05T07:51:35.000000Z",
+ "tao": 6832,
  "tao_rate": 4.2,
- "tao_rank": 1309,
+ "tao_rank": 1311,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -35,24 +35,12 @@
  ],
  "works": [
   {
-   "id": "geodetic-onchain-1",
-   "title": "Geodetic Moment Light",
-   "collection": "geodetic-onchain",
-   "group": "geodetic",
-   "genre": "Design",
-   "acquired": "2022-03-15T01:19:28.000000Z",
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-1-display.png",
-   "orientation": null,
-   "tao": 6813
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:51:35.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
@@ -63,10 +51,22 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-6-image.png",
    "orientation": null
+  },
+  {
+   "id": "geodetic-onchain-1",
+   "title": "Geodetic Moment Light",
+   "collection": "geodetic-onchain",
+   "group": "geodetic",
+   "genre": "Design",
+   "acquired": "2022-03-15T01:19:28.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-1-display.png",
+   "orientation": null,
+   "tao": 6832
   },
   {
    "id": "xnouns-187",

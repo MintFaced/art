@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-05-09T00:47:31.000000Z",
- "last_collected": "2022-05-09T00:47:31.000000Z",
- "tao": 23341,
+ "last_collected": "2023-01-01T05:44:23.000000Z",
+ "tao": 23419,
  "tao_rate": 16.8,
  "tao_rank": 457,
  "collections": [
@@ -30,6 +30,42 @@
  ],
  "works": [
   {
+   "id": "xlife-3",
+   "title": "New Year, New X",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-01T05:44:23.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-3-image.gif",
+   "orientation": null,
+   "tao": 5605
+  },
+  {
+   "id": "xlife-2",
+   "title": "X Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-01T03:28:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-2-image.gif",
+   "orientation": null,
+   "tao": 5606
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-01T03:26:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5606
+  },
+  {
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
@@ -39,43 +75,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6582
-  },
-  {
-   "id": "xlife-3",
-   "title": "New Year, New X",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-3-image.gif",
-   "orientation": null,
-   "tao": 5586
-  },
-  {
-   "id": "xlife-2",
-   "title": "X Mode",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-2-image.gif",
-   "orientation": null,
-   "tao": 5586
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5586
+   "tao": 6601
   }
  ]
 }

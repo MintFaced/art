@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2025-02-05T15:03:47.000000Z",
- "last_collected": "2025-02-09T00:42:47.000000Z",
- "tao": 97989,
+ "last_collected": "2025-05-20T22:39:47.000000Z",
+ "tao": 98352,
  "tao_rate": 180,
  "tao_rank": 159,
  "collections": [
@@ -40,6 +40,30 @@
  ],
  "works": [
   {
+   "id": "xlife-65",
+   "title": "Casting Vote",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-20T22:39:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-65-image.png",
+   "orientation": null,
+   "tao": 1948
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-05-20T22:37:35.000000Z",
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 15608
+  },
+  {
    "id": "geodetic-onchain-4",
    "title": "Patrimora",
    "collection": "geodetic-onchain",
@@ -49,7 +73,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null,
-   "tao": 2364
+   "tao": 2372
   },
   {
    "id": "patrimora-6",
@@ -61,7 +85,7 @@
    "unique": true,
    "image": "patrimora/patrimora-6-image.png",
    "orientation": null,
-   "tao": 39072
+   "tao": 39211
   },
   {
    "id": "patrimora-7",
@@ -73,31 +97,7 @@
    "unique": true,
    "image": "patrimora/patrimora-7-image.png",
    "orientation": null,
-   "tao": 39072
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 15540
-  },
-  {
-   "id": "xlife-65",
-   "title": "Casting Vote",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-65-image.png",
-   "orientation": null,
-   "tao": 1940
+   "tao": 39211
   }
  ]
 }

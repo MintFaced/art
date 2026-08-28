@@ -12,8 +12,8 @@
   "collections": 5
  },
  "first_collected": "2022-07-15T03:28:05.000Z",
- "last_collected": "2023-09-25T21:09:23.000000Z",
- "tao": 91102,
+ "last_collected": "2024-10-05T07:50:47.000000Z",
+ "tao": 91480,
  "tao_rate": 81.6,
  "tao_rank": 173,
  "collections": [
@@ -45,6 +45,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:50:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "geodetic-world-4",
    "title": "Geodetic New York",
    "collection": "geodetic-world",
@@ -54,7 +65,30 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-4-display.webp",
    "orientation": "landscape",
-   "tao": 73305
+   "tao": 73624
+  },
+  {
+   "id": "xlife-23",
+   "title": "XFlex Media",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-04-04T03:47:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-23-image.gif",
+   "orientation": null,
+   "tao": 5215
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -66,41 +100,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12601
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-23",
-   "title": "XFlex Media",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-23-image.gif",
-   "orientation": null,
-   "tao": 5195
+   "tao": 12640
   },
   {
    "id": "xnouns-206",

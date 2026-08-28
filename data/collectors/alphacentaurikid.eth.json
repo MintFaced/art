@@ -12,10 +12,10 @@
   "collections": 3
  },
  "first_collected": "2022-03-06T08:48:24.000000Z",
- "last_collected": "2022-11-16T22:32:23.000Z",
- "tao": 21465,
+ "last_collected": "2025-03-21T04:39:47.000000Z",
+ "tao": 21562,
  "tao_rate": 21,
- "tao_rank": 477,
+ "tao_rank": 478,
  "collections": [
   {
    "slug": "xlife",
@@ -35,6 +35,42 @@
  ],
  "works": [
   {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-03-21T04:39:47.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-63-image.png",
+   "orientation": null,
+   "tao": 2203
+  },
+  {
+   "id": "xlife-58",
+   "title": "Self Stoic",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2025-01-06T22:08:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-58-image.png",
+   "orientation": null,
+   "tao": 2511
+  },
+  {
+   "id": "xlife-38",
+   "title": "Goodnight Doom",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-12-06T02:55:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-38-image.gif",
+   "orientation": null,
+   "tao": 4182
+  },
+  {
    "id": "seize-and-share-winter-shade-2135",
    "title": "Winter Shade",
    "collection": "seize-and-share",
@@ -44,7 +80,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5776
+   "tao": 5795
   },
   {
    "id": "geodetic-onchain-2",
@@ -56,43 +92,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 6849
-  },
-  {
-   "id": "xlife-63",
-   "title": "Metadata Wars",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-63-image.png",
-   "orientation": null,
-   "tao": 2184
-  },
-  {
-   "id": "xlife-58",
-   "title": "Self Stoic",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-58-image.png",
-   "orientation": null,
-   "tao": 2492
-  },
-  {
-   "id": "xlife-38",
-   "title": "Goodnight Doom",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-38-image.gif",
-   "orientation": null,
-   "tao": 4162
+   "tao": 6869
   }
  ]
 }

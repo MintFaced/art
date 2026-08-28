@@ -12,10 +12,10 @@
   "collections": 2
  },
  "first_collected": "2025-07-27T23:33:23.000000Z",
- "last_collected": "2025-07-27T23:33:23.000000Z",
- "tao": 1643,
+ "last_collected": "2025-07-28T04:22:11.000000Z",
+ "tao": 1662,
  "tao_rate": 4.2,
- "tao_rank": 3127,
+ "tao_rank": 3126,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -30,24 +30,12 @@
  ],
  "works": [
   {
-   "id": "roads-or-rivers-the-line",
-   "title": "The Line",
-   "collection": "roads-and-rivers",
-   "group": "core",
-   "genre": "Photography",
-   "acquired": "2025-07-27T23:33:23.000000Z",
-   "unique": false,
-   "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
-   "orientation": null,
-   "tao": 1643
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-07-28T04:22:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
@@ -58,10 +46,22 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-07-27T23:57:59.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-5-image.png",
    "orientation": null
+  },
+  {
+   "id": "roads-or-rivers-the-line",
+   "title": "The Line",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
+   "acquired": "2025-07-27T23:33:23.000000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
+   "orientation": null,
+   "tao": 1662
   }
  ]
 }

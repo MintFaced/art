@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-06-03T07:49:32.000000Z",
- "last_collected": "2022-07-28T23:03:18.000000Z",
- "tao": 18037,
+ "last_collected": "2023-03-05T19:30:35.000000Z",
+ "tao": 18096,
  "tao_rate": 12.6,
  "tao_rank": 539,
  "collections": [
@@ -30,6 +30,18 @@
  ],
  "works": [
   {
+   "id": "xlife-17",
+   "title": "You're on Mute",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-03-05T19:30:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-17-image.gif",
+   "orientation": null,
+   "tao": 5338
+  },
+  {
    "id": "2022-10k-4",
    "title": "10k Ghosted",
    "collection": "2022-10k",
@@ -39,7 +51,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-4-display.webp",
    "orientation": null,
-   "tao": 6242
+   "tao": 6261
   },
   {
    "id": "2022-10k-2",
@@ -51,19 +63,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6476
-  },
-  {
-   "id": "xlife-17",
-   "title": "You're on Mute",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-17-image.gif",
-   "orientation": null,
-   "tao": 5319
+   "tao": 6495
   }
  ]
 }

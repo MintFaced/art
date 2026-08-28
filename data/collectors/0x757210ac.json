@@ -11,11 +11,11 @@
   "editions": 3,
   "collections": 2
  },
- "first_collected": "2026-06-07T17:42:47.000Z",
+ "first_collected": "2026-06-07T17:12:59.000000Z",
  "last_collected": "2026-06-07T17:42:47.000Z",
- "tao": 964,
+ "tao": 1022,
  "tao_rate": 12.6,
- "tao_rank": 3158,
+ "tao_rank": 3155,
  "collections": [
   {
    "slug": "xlife",
@@ -39,19 +39,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null,
-   "tao": 321
-  },
-  {
-   "id": "xlife-31",
-   "title": "Visualize XValue Blue",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-31-image.gif",
-   "orientation": null,
-   "tao": 321
+   "tao": 340
   },
   {
    "id": "xlife-20",
@@ -59,11 +47,23 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2026-06-07T17:25:35.000000Z",
    "unique": false,
    "image": "xlife/xlife-20-image.gif",
    "orientation": null,
-   "tao": 321
+   "tao": 340
+  },
+  {
+   "id": "xlife-31",
+   "title": "Visualize XValue Blue",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2026-06-07T17:12:59.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-31-image.gif",
+   "orientation": null,
+   "tao": 341
   }
  ]
 }

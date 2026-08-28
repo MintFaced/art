@@ -11,11 +11,11 @@
   "editions": 4,
   "collections": 3
  },
- "first_collected": "2022-11-15T02:40:59.000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 11537,
+ "first_collected": "2022-10-31T00:16:11.000000Z",
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 11895,
  "tao_rate": 77.4,
- "tao_rank": 1178,
+ "tao_rank": 1162,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -35,6 +35,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -44,7 +55,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -56,18 +67,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5784
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 5803
   },
   {
    "id": "we-are-the-line-4",
@@ -75,7 +75,7 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-4-image.png",
    "orientation": null

@@ -12,8 +12,8 @@
   "collections": 7
  },
  "first_collected": "2022-05-10T20:15:24.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 52905,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 53080,
  "tao_rate": 37.8,
  "tao_rank": 285,
  "collections": [
@@ -55,6 +55,51 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-2",
+   "title": "X Mode",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-11-04T02:44:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-2-image.gif",
+   "orientation": null,
+   "tao": 4316
+  },
+  {
+   "id": "we-are-the-line-7",
+   "title": "The Line Artist Allowlist",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-07-18T03:26:35.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-7-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -64,7 +109,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -76,7 +121,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5716
+   "tao": 5736
   },
   {
    "id": "seize-and-share-grimalkin-2312",
@@ -88,7 +133,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null,
-   "tao": 5725
+   "tao": 5745
   },
   {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
@@ -100,7 +145,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 5926
+   "tao": 5946
   },
   {
    "id": "geodetic-onchain-3",
@@ -112,7 +157,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
    "orientation": null,
-   "tao": 6313
+   "tao": 6332
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -124,7 +169,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6333
+   "tao": 6352
   },
   {
    "id": "seize-and-share-mint-face-229",
@@ -136,7 +181,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
    "orientation": null,
-   "tao": 6409
+   "tao": 6429
   },
   {
    "id": "2022-10k-2",
@@ -148,52 +193,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6574
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-7",
-   "title": "The Line Artist Allowlist",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-7-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-2",
-   "title": "X Mode",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-2-image.gif",
-   "orientation": null,
-   "tao": 4297
+   "tao": 6594
   }
  ]
 }

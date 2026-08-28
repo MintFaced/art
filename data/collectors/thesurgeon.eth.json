@@ -11,11 +11,11 @@
   "editions": 3,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 4471,
+ "first_collected": "2024-10-05T07:53:11.000000Z",
+ "last_collected": "2025-05-11T23:16:47.000000Z",
+ "tao": 4510,
  "tao_rate": 8.4,
- "tao_rank": 2723,
+ "tao_rank": 2724,
  "collections": [
   {
    "slug": "xlife",
@@ -30,27 +30,16 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "xlife-65",
    "title": "Casting Vote",
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-05-11T23:16:47.000000Z",
    "unique": false,
    "image": "xlife/xlife-65-image.png",
    "orientation": null,
-   "tao": 1966
+   "tao": 1986
   },
   {
    "id": "xlife-45",
@@ -58,11 +47,22 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2025-01-04T00:35:35.000000Z",
    "unique": false,
    "image": "xlife/xlife-45-image.gif",
    "orientation": null,
-   "tao": 2504
+   "tao": 2523
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:53:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }

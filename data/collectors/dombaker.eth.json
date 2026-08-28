@@ -12,10 +12,10 @@
   "collections": 8
  },
  "first_collected": "2022-02-19T01:49:14.000000Z",
- "last_collected": "2023-10-14T04:32:23.000000Z",
- "tao": 219268,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 220023,
  "tao_rate": 163.2,
- "tao_rank": 50,
+ "tao_rank": 49,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -60,6 +60,29 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-10-01T22:06:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2918
+  },
+  {
    "id": "geodetic-world-89",
    "title": "Geodetic Quarry",
    "collection": "geodetic-world",
@@ -69,7 +92,30 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-89-display.webp",
    "orientation": "square",
-   "tao": 72042
+   "tao": 72361
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-05T01:57:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5589
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -81,7 +127,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -93,7 +139,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6325
+   "tao": 6345
   },
   {
    "id": "2022-10k-2",
@@ -105,7 +151,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6577
+   "tao": 6597
   },
   {
    "id": "geodetic-onchain-2",
@@ -117,7 +163,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 6657
+   "tao": 6676
   },
   {
    "id": "geodetic-moments-95",
@@ -129,53 +175,7 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-95-display.webp",
    "orientation": null,
-   "tao": 113588
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-52",
-   "title": "Max Brain",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-52-image.gif",
-   "orientation": null,
-   "tao": 2899
-  },
-  {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5570
+   "tao": 113907
   }
  ]
 }

@@ -11,11 +11,11 @@
   "editions": 4,
   "collections": 2
  },
- "first_collected": null,
- "last_collected": null,
- "tao": 5539,
+ "first_collected": "2023-05-21T04:42:23.000000Z",
+ "last_collected": "2024-12-02T19:49:11.000000Z",
+ "tao": 5577,
  "tao_rate": 8.4,
- "tao_rank": 2654,
+ "tao_rank": 2650,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -30,38 +30,27 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-6",
-   "title": "The Line continues",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-6-image.png",
-   "orientation": null
-  },
-  {
    "id": "xlife-55",
    "title": "Faded Summer",
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-12-02T19:49:11.000000Z",
    "unique": false,
    "image": "xlife/xlife-55-image.gif",
    "orientation": null,
-   "tao": 2639
+   "tao": 2658
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:51:35.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   },
   {
    "id": "xlife-52",
@@ -69,11 +58,22 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-01T22:06:35.000000Z",
    "unique": false,
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
-   "tao": 2899
+   "tao": 2918
+  },
+  {
+   "id": "we-are-the-line-6",
+   "title": "The Line continues",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-05-21T04:42:23.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
   }
  ]
 }

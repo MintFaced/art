@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2022-09-25T19:35:35.000Z",
- "last_collected": "2022-12-20T00:32:35.000Z",
- "tao": 35107,
+ "last_collected": "2023-01-05T06:01:35.000000Z",
+ "tao": 35224,
  "tao_rate": 25.2,
  "tao_rank": 356,
  "collections": [
@@ -30,6 +30,18 @@
  ],
  "works": [
   {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-05T06:01:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5588
+  },
+  {
    "id": "seize-and-share-rememes-3252",
    "title": "ReMemes",
    "collection": "seize-and-share",
@@ -39,7 +51,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5637
+   "tao": 5656
   },
   {
    "id": "seize-and-share-eth-is-finite-1805",
@@ -51,7 +63,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null,
-   "tao": 11910
+   "tao": 11949
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -63,19 +75,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 11990
-  },
-  {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5569
+   "tao": 12029
   }
  ]
 }

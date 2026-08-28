@@ -12,8 +12,8 @@
   "collections": 2
  },
  "first_collected": "2023-10-14T04:04:59.000000Z",
- "last_collected": "2023-10-14T04:04:59.000000Z",
- "tao": 72043,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 72363,
  "tao_rate": 69,
  "tao_rank": 207,
  "collections": [
@@ -30,6 +30,17 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "geodetic-world-48",
    "title": "Geodetic Dune",
    "collection": "geodetic-world",
@@ -39,18 +50,7 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-48-display.webp",
    "orientation": "square",
-   "tao": 72043
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 72363
   }
  ]
 }

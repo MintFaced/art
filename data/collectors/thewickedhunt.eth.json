@@ -12,10 +12,10 @@
   "collections": 2
  },
  "first_collected": "2022-10-29T09:38:11.000Z",
- "last_collected": "2022-10-29T09:38:11.000Z",
- "tao": 5854,
+ "last_collected": "2024-10-05T07:50:47.000000Z",
+ "tao": 5873,
  "tao_rate": 4.2,
- "tao_rank": 2338,
+ "tao_rank": 2342,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -30,24 +30,12 @@
  ],
  "works": [
   {
-   "id": "seize-and-share-line-of-gm-1989",
-   "title": "Line of gm",
-   "collection": "seize-and-share",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2022-10-29T09:38:11.000Z",
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-line-of-gm-1989-display.webp",
-   "orientation": null,
-   "tao": 5854
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2024-10-05T07:50:47.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
@@ -58,10 +46,22 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-5-image.png",
    "orientation": null
+  },
+  {
+   "id": "seize-and-share-line-of-gm-1989",
+   "title": "Line of gm",
+   "collection": "seize-and-share",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2022-10-29T09:38:11.000Z",
+   "unique": false,
+   "image": "seize-and-share/seize-and-share-line-of-gm-1989-display.webp",
+   "orientation": null,
+   "tao": 5873
   }
  ]
 }

@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-08-13T07:11:16.000000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 17355,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 17413,
  "tao_rate": 12.6,
  "tao_rank": 556,
  "collections": [
@@ -40,6 +40,29 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2023-01-05T05:53:35.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5588
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -49,7 +72,18 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
+  },
+  {
+   "id": "we-are-the-line-4",
+   "title": "The Line Artist 101 to 201",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-31T00:16:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-4-image.png",
+   "orientation": null
   },
   {
    "id": "2022-10k-4",
@@ -61,41 +95,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-4-display.webp",
    "orientation": null,
-   "tao": 6178
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-4",
-   "title": "The Line Artist 101 to 201",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-4-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5569
+   "tao": 6197
   }
  ]
 }

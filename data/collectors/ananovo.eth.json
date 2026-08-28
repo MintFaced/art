@@ -12,10 +12,10 @@
   "collections": 3
  },
  "first_collected": "2022-05-27T08:48:10.000000Z",
- "last_collected": "2022-10-07T22:42:11.000Z",
- "tao": 12449,
+ "last_collected": "2024-10-05T07:50:47.000000Z",
+ "tao": 12488,
  "tao_rate": 8.4,
- "tao_rank": 834,
+ "tao_rank": 836,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -35,6 +35,28 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:50:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2023-01-15T23:51:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
+  },
+  {
    "id": "seize-and-share-stored-digital-value-1830",
    "title": "Stored Digital Value",
    "collection": "seize-and-share",
@@ -44,7 +66,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-stored-digital-value-1830-image.gif",
    "orientation": null,
-   "tao": 5944
+   "tao": 5963
   },
   {
    "id": "2022-10k-1",
@@ -56,29 +78,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6505
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
+   "tao": 6524
   }
  ]
 }

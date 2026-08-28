@@ -6,21 +6,26 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 0,
-  "editions": 4,
-  "collections": 3
+  "editions": 5,
+  "collections": 4
  },
  "first_collected": "2022-06-21T00:30:01.000Z",
- "last_collected": "2022-12-27T03:29:59.000000Z",
- "tao": 12009,
- "tao_rate": 8.4,
- "tao_rank": 852,
+ "last_collected": "2026-08-23T06:59:23.000000Z",
+ "tao": 12067,
+ "tao_rate": 12.6,
+ "tao_rank": 853,
  "collections": [
   {
    "slug": "we-are-the-line",
    "title": "We are The Line",
    "works": 2
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
+   "works": 1
   },
   {
    "slug": "roads-and-rivers",
@@ -35,6 +40,29 @@
  ],
  "works": [
   {
+   "id": "geodetic-onchain-1",
+   "title": "Geodetic Moment Light",
+   "collection": "geodetic-onchain",
+   "group": "geodetic",
+   "genre": "Design",
+   "acquired": "2026-08-23T06:59:23.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-1-display.png",
+   "orientation": null,
+   "tao": 19
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -44,7 +72,18 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5607
+   "tao": 5627
+  },
+  {
+   "id": "we-are-the-line-1",
+   "title": "The Line Artist 001 to 100",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2022-10-21T00:54:47.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-1-image.png",
+   "orientation": null
   },
   {
    "id": "seize-and-share-mint-face-229",
@@ -56,29 +95,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
    "orientation": null,
-   "tao": 6401
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-1",
-   "title": "The Line Artist 001 to 100",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-1-image.png",
-   "orientation": null
+   "tao": 6421
   }
  ]
 }

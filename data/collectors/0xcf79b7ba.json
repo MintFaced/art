@@ -12,8 +12,8 @@
   "collections": 4
  },
  "first_collected": "2022-04-22T00:43:55.000000Z",
- "last_collected": "2022-05-13T21:17:15.000000Z",
- "tao": 18339,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 18397,
  "tao_rate": 12.6,
  "tao_rank": 527,
  "collections": [
@@ -40,6 +40,29 @@
  ],
  "works": [
   {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": "2024-10-05T07:49:11.000000Z",
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "xlife-52",
+   "title": "Max Brain",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": "2024-10-01T02:23:11.000000Z",
+   "unique": false,
+   "image": "xlife/xlife-52-image.gif",
+   "orientation": null,
+   "tao": 2922
+  },
+  {
    "id": "2022-10k-2",
    "title": "10k Project",
    "collection": "2022-10k",
@@ -49,7 +72,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6562
+   "tao": 6581
   },
   {
    "id": "geodetic-onchain-1",
@@ -61,30 +84,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6653
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "xlife-52",
-   "title": "Max Brain",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-52-image.gif",
-   "orientation": null,
-   "tao": 2902
+   "tao": 6673
   }
  ]
 }
