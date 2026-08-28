@@ -12,11 +12,16 @@
   "collections": 3
  },
  "first_collected": "2025-02-05T00:51:59.000000Z",
- "last_collected": "2025-05-17T20:20:23.000000Z",
+ "last_collected": "2025-02-09T00:42:47.000000Z",
  "tao": 43586,
  "tao_rate": 77.4,
  "tao_rank": 307,
  "collections": [
+  {
+   "slug": "patrimora",
+   "title": "Patrimora",
+   "works": 1
+  },
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
@@ -26,26 +31,9 @@
    "slug": "id-please",
    "title": "ID Please",
    "works": 1
-  },
-  {
-   "slug": "patrimora",
-   "title": "Patrimora",
-   "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-17T20:20:23.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1961
-  },
   {
    "id": "geodetic-onchain-4",
    "title": "Patrimora",
@@ -69,6 +57,18 @@
    "image": "patrimora/patrimora-102-image.png",
    "orientation": null,
    "tao": 39252
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1961
   }
  ]
 }
