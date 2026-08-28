@@ -38,13 +38,13 @@
    "works": 2
   },
   {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
+   "slug": "geodetica",
+   "title": "Geodetica",
    "works": 1
   },
   {
-   "slug": "geodetica",
-   "title": "Geodetica",
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
    "works": 1
   }
  ],
@@ -98,42 +98,6 @@
    "tao": 1691
   },
   {
-   "id": "geodetic-onchain-1",
-   "title": "Geodetic Moment Light",
-   "collection": "geodetic-onchain",
-   "group": "geodetic",
-   "genre": "Design",
-   "acquired": "2025-07-21T01:21:35.000000Z",
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-1-display.png",
-   "orientation": null,
-   "tao": 1691
-  },
-  {
-   "id": "geodetic-onchain-3",
-   "title": "Geodetic Signal",
-   "collection": "geodetic-onchain",
-   "group": "geodetic",
-   "genre": "Design",
-   "acquired": "2025-07-21T01:21:35.000000Z",
-   "unique": false,
-   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
-   "orientation": null,
-   "tao": 1691
-  },
-  {
-   "id": "geodetica-67",
-   "title": "Geodetica #67",
-   "collection": "geodetica",
-   "group": "geodetic",
-   "genre": "AI",
-   "acquired": "2025-07-21T01:21:35.000000Z",
-   "unique": true,
-   "image": "geodetica/geodetica-67-display.webp",
-   "orientation": "square",
-   "tao": 27796
-  },
-  {
    "id": "patrimora-94",
    "title": "Patrimora #94",
    "collection": "patrimora",
@@ -168,6 +132,42 @@
    "image": "patrimora/patrimora-101-image.png",
    "orientation": null,
    "tao": 27796
+  },
+  {
+   "id": "geodetica-67",
+   "title": "Geodetica #67",
+   "collection": "geodetica",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2025-07-21T01:21:35.000000Z",
+   "unique": true,
+   "image": "geodetica/geodetica-67-display.webp",
+   "orientation": "square",
+   "tao": 27796
+  },
+  {
+   "id": "geodetic-onchain-1",
+   "title": "Geodetic Moment Light",
+   "collection": "geodetic-onchain",
+   "group": "geodetic",
+   "genre": "Design",
+   "acquired": "2025-07-21T01:21:35.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-1-display.png",
+   "orientation": null,
+   "tao": 1691
+  },
+  {
+   "id": "geodetic-onchain-3",
+   "title": "Geodetic Signal",
+   "collection": "geodetic-onchain",
+   "group": "geodetic",
+   "genre": "Design",
+   "acquired": "2025-07-21T01:21:35.000000Z",
+   "unique": false,
+   "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
+   "orientation": null,
+   "tao": 1691
   },
   {
    "id": "xlife-68",
@@ -307,7 +307,7 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": "2025-07-21T01:21:35.000000Z",
+   "acquired": null,
    "unique": false,
    "image": "xlife/xlife-6-image.gif",
    "orientation": null,
