@@ -12,7 +12,7 @@
   "collections": 7
  },
  "first_collected": "2022-02-19T02:13:29.000000Z",
- "last_collected": "2023-01-05T02:12:59.000000Z",
+ "last_collected": "2022-11-02T12:52:11.000Z",
  "tao": 196556,
  "tao_rate": 123.6,
  "tao_rank": 61,
@@ -28,13 +28,8 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -43,8 +38,13 @@
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   },
   {
@@ -54,18 +54,6 @@
   }
  ],
  "works": [
-  {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-05T02:12:59.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 5589
-  },
   {
    "id": "seize-and-share-freedom-to-live-1654",
    "title": "Freedom to Live",
@@ -173,6 +161,18 @@
    "image": "geodetic-moments/geodetic-moments-6-display.webp",
    "orientation": null,
    "tao": 113906
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 5589
   }
  ]
 }
