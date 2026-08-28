@@ -8,8 +8,21 @@
 # is a runtime one in the last five per cent of the run.
 #
 # So this does not check arithmetic. It checks that every line executes.
+#
+# Which it could not do for its first two days: there was no install step, so
+# there were no dependencies, and the run died on the first `import` of a real
+# package. A hundred runs failed in a row, all of them for a reason that had
+# nothing to do with the code under test ... a check that cannot pass is not a
+# check, it is a red light nobody reads any more.
+#
+# The cron writes data on its own to this repo, several commits a night, and
+# none of those can change whether a line of code executes. They do not run it.
 name: test
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - 'data/**'
+  pull_request:
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -18,4 +31,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+      - run: npm ci
       - run: npm test
