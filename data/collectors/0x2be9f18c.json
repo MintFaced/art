@@ -12,7 +12,7 @@
   "collections": 3
  },
  "first_collected": "2024-10-01T02:12:35.000000Z",
- "last_collected": "2025-05-16T15:38:11.000000Z",
+ "last_collected": "2024-10-07T01:25:47.000000Z",
  "tao": 55779,
  "tao_rate": 81.6,
  "tao_rank": 279,
@@ -23,29 +23,17 @@
    "works": 2
   },
   {
-   "slug": "id-please",
-   "title": "ID Please",
+   "slug": "two-burdens",
+   "title": "Two Burdens",
    "works": 1
   },
   {
-   "slug": "two-burdens",
-   "title": "Two Burdens",
+   "slug": "id-please",
+   "title": "ID Please",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T15:38:11.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1966
-  },
   {
    "id": "xlife-54",
    "title": "Medal Winner",
@@ -81,6 +69,18 @@
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
    "tao": 2922
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1966
   }
  ]
 }
