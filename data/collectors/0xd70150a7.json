@@ -12,7 +12,7 @@
   "collections": 7
  },
  "first_collected": "2022-05-28T05:36:57.000000Z",
- "last_collected": "2025-05-16T15:34:23.000000Z",
+ "last_collected": "2024-10-01T02:12:35.000000Z",
  "tao": 142964,
  "tao_rate": 105,
  "tao_rank": 86,
@@ -28,8 +28,8 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -48,24 +48,12 @@
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-05-16T15:34:23.000000Z",
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 1966
-  },
   {
    "id": "xlife-52",
    "title": "Max Brain",
@@ -245,6 +233,18 @@
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
    "tao": 6521
+  },
+  {
+   "id": "id-please-362",
+   "title": "ID Please",
+   "collection": "id-please",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "id-please/id-please-362-display.webp",
+   "orientation": null,
+   "tao": 1966
   }
  ]
 }
