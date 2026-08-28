@@ -38,8 +38,8 @@
    "works": 4
   },
   {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
+   "slug": "patrimora",
+   "title": "Patrimora",
    "works": 2
   },
   {
@@ -48,18 +48,18 @@
    "works": 2
   },
   {
-   "slug": "patrimora",
-   "title": "Patrimora",
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 2
-  },
-  {
-   "slug": "first-selfie",
-   "title": "First Selfie",
-   "works": 1
   },
   {
    "slug": "geodetic-home",
    "title": "Geodetic Home",
+   "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   }
  ],
@@ -569,18 +569,6 @@
    "tao": 5520
   },
   {
-   "id": "xlife-6",
-   "title": "Xcepted",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-07T20:00:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-6-image.gif",
-   "orientation": null,
-   "tao": 11155
-  },
-  {
    "id": "xlife-7",
    "title": "Happy X Day",
    "collection": "xlife",
@@ -982,6 +970,18 @@
    "unique": true,
    "image": "xnouns/xnouns-21-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-6",
+   "title": "Xcepted",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-6-image.gif",
+   "orientation": null,
+   "tao": 11155
   }
  ]
 }
