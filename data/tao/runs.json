@@ -3,6 +3,103 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmtewax1q",
+   "at": "2026-08-29T21:31:21.422Z",
+   "ok": true,
+   "ms": 31776,
+   "blocks": {
+    "from": 25820496,
+    "to": 25863615,
+    "scanned": 43120
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 2,
+    "sales": 2,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 3,
+   "tao": {
+    "live": 72129057,
+    "was": 72063866,
+    "delta": 65191,
+    "lost_to_sales": 275319,
+    "wallets": 3437
+   },
+   "register": {
+    "collectors": 3681,
+    "with_page": 808,
+    "private": 0,
+    "named": 1211
+   },
+   "classified": 2,
+   "unclassified": 0,
+   "events": 13093,
+   "owners_cursor_age_hours": 24.5,
+   "files": 8,
+   "pages": 0,
+   "movements": [
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-08-29T14:35:59.000Z",
+     "block": 25861542,
+     "tx": "0xc1f830cdb51838ee2682ba6a8155870a4daa4cacc949388dd5b25498c9f591e0",
+     "from": "0x464065e33dc0214e087759f04e9dccc40ba3150e",
+     "to": "0x2d13c884c4c418664abb1b4a7f491dd89247e42e",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-08-29T14:36:47.000Z",
+     "block": 25861546,
+     "tx": "0x8cc07de20b41039f2a8b6d9bf64a7f9232fda3300d7cfb6a82d3498e88745053",
+     "from": "0x478818924d4eb945df38ac4d64f291b0edfebe9a",
+     "to": "0x2d13c884c4c418664abb1b4a7f491dd89247e42e",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0x464065e33dc0214e087759f04e9dccc40ba3150e",
+     "before": 9,
+     "after": 0,
+     "delta": -9,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0x478818924d4eb945df38ac4d64f291b0edfebe9a",
+     "before": 3,
+     "after": 0,
+     "delta": -3,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0x2d13c884c4c418664abb1b4a7f491dd89247e42e",
+     "before": 0,
+     "after": 2,
+     "delta": 2,
+     "gained": 2
+    }
+   ]
+  },
+  {
    "run_id": "rmtdgtzms",
    "at": "2026-08-28T21:30:31.204Z",
    "ok": true,
