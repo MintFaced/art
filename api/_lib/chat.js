@@ -28,7 +28,7 @@ const lower = (a) => String(a || '').toLowerCase();
 const said = (who, stored) => (who && who.known ? who.name : (stored || (who && who.name) || null));
 
 /** The sentence a wallet signs. */
-export function chatMessage({ action, text, target, address, issued, until }) {
+export function chatMessage({ action, text, target, address, issued, until, reply, emoji }) {
   /* The closing lines never name a duration. The Until line above already says
      exactly when this runs out, to the second, and it is worked out from the
      config ... so changing the length of a sign-in changes one number and the
@@ -40,12 +40,20 @@ export function chatMessage({ action, text, target, address, issued, until }) {
       'Signing opens Studio until the date above. It moves nothing and spends nothing.',
       'Until then this browser can speak here without asking again.',
     ]
-    : ['Signing speaks in Studio. It moves nothing and spends nothing.'];
+    : action === 'react'
+      ? ['Signing leaves a reaction in Studio. It moves nothing and spends nothing.']
+      : ['Signing speaks in Studio. It moves nothing and spends nothing.'];
+  /* What a reply is answering, and which mark a reaction leaves, are both in
+     the sentence. They are part of what was said: a page that could change the
+     message a signature is hung under, or turn a cherry into a fire, would be
+     signing something other than what was approved. */
   return [
     'MintFace ... Studio',
     '',
     `Action: ${action}`,
     ...(text != null ? [`Message: ${text}`] : []),
+    ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
+    ...(emoji ? [`Reaction: ${emoji}`] : []),
     ...(target ? [`Subject: ${target}`] : []),
     `Wallet: ${address}`,
     ...(until ? [`Until: ${until}`] : []),
@@ -90,6 +98,26 @@ export function wearTao(n) {
   return String(v);
 }
 
+/* ---------------------------------------------------------------- marks */
+
+/* The set is small on purpose, and it is Ryan's to change: it lives in
+   data/source/chat.json, and this list is only what stands in where a config
+   has not said. Eight would already be a keyboard; six is a nod. */
+export const REACTIONS = ['\ud83c\udf52', '\u2764\ufe0f', '\ud83d\udc4d', '\ud83d\udd25', '\ud83d\ude02', '\u2726'];
+
+export const reactionSet = (cfg = {}) => {
+  const list = Array.isArray(cfg.reactions) && cfg.reactions.length ? cfg.reactions : REACTIONS;
+  return list.map((x) => String(x)).slice(0, 8);
+};
+
+/** One of Studio's marks, or nothing. Never what a browser felt like sending:
+    the log is kept forever, so what may go into it is a list, not a length. */
+export function checkReaction(emoji, cfg) {
+  const e = String(emoji == null ? '' : emoji);
+  if (!reactionSet(cfg).includes(e)) return { error: 'that is not one of Studio\'s reactions' };
+  return { emoji: e };
+}
+
 /**
  * How one stored message reads now.
  *
@@ -107,7 +135,8 @@ export function wearTao(n) {
  *
  * @param register  api/_lib/register.js, or nothing where a caller has none
  */
-export function render(row, { isArtist, artist, register } = {}) {
+export function render(row, dress = {}) {
+  const { isArtist, artist, register, parents, reactions, viewer, cfg } = dress;
   if (!row) return null;
   /* Read from the row where it was written down, and from the config where it
      was not: a message said before the artist was known as the artist should
@@ -126,6 +155,14 @@ export function render(row, { isArtist, artist, register } = {}) {
         url, at: row.at, deleted: Boolean(row.deleted) }
     : { n: row.n, address: row.address, name: said(who, row.name), role: 'collector',
         tao: row.tao || 0, worn: wearTao(row.tao), url, at: row.at, deleted: Boolean(row.deleted) };
+  /* What this message was answering, said as it reads now. The row keeps a
+     message number and nothing else, so a reply survives its author renaming
+     ... and survives that author being renamed by somebody else's hand. */
+  base.reply = answering(row, dress);
+  /* A deleted message takes its reactions down with it. They are not removed
+     ... nothing in this room is ... but a mark stands under something that was
+     said, and the room is not going to leave six cherries under a gap. */
+  base.reactions = row.deleted ? [] : marksOf(reactions && reactions[row.n], viewer, cfg);
   if (row.deleted && !isArtist) return { ...base, text: null, html: null, links: [], mentions: [] };
   /* The tags, said as they read now. The row keeps wallets and offsets; what
      a wallet is called is looked up at the moment of drawing. */
@@ -147,6 +184,55 @@ export function render(row, { isArtist, artist, register } = {}) {
   };
 }
 
+/* What a reply is answering.
+ *
+ * Stored as a message number and resolved at the moment of drawing, which is
+ * the same argument the names layer already made: a message is a thing that
+ * was said, and who said it is a thing that is true now. A reply written when
+ * somebody was `0x6140f00e` reads with their name in it the day after they
+ * choose one, and nothing stored changed.
+ *
+ * A message whose parent cannot be found still says it was a reply. The room
+ * does not quietly turn an answer back into a remark. */
+function answering(row, { parents, register, artist } = {}) {
+  const n = Number(row && row.reply);
+  if (!Number.isInteger(n) || n < 0) return null;
+  const p = parents ? parents[n] : null;
+  if (!p) return { n, address: null, name: null, url: null, deleted: false, found: false };
+  const mine = p.role === 'artist' || Boolean(artist && artist[lower(p.address)]);
+  const who = register ? register.who(p.address) : null;
+  return {
+    n,
+    address: p.address,
+    name: mine ? ARTIST : said(who, p.name),
+    url: mine ? 'https://mintface.art/' : (register ? register.urlOf(p.address) : null),
+    deleted: Boolean(p.deleted),
+    found: true,
+  };
+}
+
+/* The marks under a message: which ones, how many, and whether one of them is
+   yours. Counted in the config's order, and anything the config has since
+   dropped is kept on the end rather than swept away ... the marks are part of
+   the record, and a room that erased them because a list was edited would be
+   rewriting what people did. */
+export function marksOf(held, viewer, cfg) {
+  if (!held) return [];
+  const me = lower(viewer);
+  const order = reactionSet(cfg || {});
+  const seen = new Set();
+  const out = [];
+  const put = (emoji) => {
+    const wallets = held[emoji];
+    if (!wallets || !wallets.length || seen.has(emoji)) return;
+    seen.add(emoji);
+    out.push({ emoji, count: wallets.length, mine: Boolean(me && wallets.includes(me)) });
+  };
+  for (const emoji of order) put(emoji);
+  for (const emoji of Object.keys(held)) put(emoji);
+  return out;
+}
+
 export const keys = {
   msg: (n) => `chat:m:${n}`,
   log: 'chat:log',
@@ -160,6 +246,15 @@ export const keys = {
      the room is kept forever and the count is asked for on every load. */
   mentions: (a) => `chat:at:${lower(a)}`,
   seen: (a) => `chat:seen:${lower(a)}`,
+  /* One hash per message, a field per wallet per mark. The field carries both,
+     so one of each per wallet per message is a fact about the key rather than
+     something the room has to remember to check. */
+  marks: (n) => `chat:rx:${n}`,
+  /* One number, bumped by every mark left or taken back. The poll carries it,
+     so a room where nobody has reacted since you loaded costs a digit, and the
+     page only goes asking what the marks are when this has moved. */
+  markv: 'chat:rxv',
+  spentMarks: (a) => `chat:rxs:${lower(a)}`,
 };
 
 /* How many mentions of one wallet are worth keeping. Anybody who has been
@@ -256,7 +351,16 @@ export function chatStore(pipe, cfg = {}) {
       const nums = (rows || []).map(Number).filter((x) => Number.isFinite(x));
       const from = Number(seen);
       const unseen = Number.isFinite(from) ? nums.filter((x) => x >= from) : nums;
-      return { total: nums.length, unseen: unseen.length, last: nums.length ? nums[nums.length - 1] : null };
+      return {
+        total: nums.length,
+        unseen: unseen.length,
+        last: nums.length ? nums[nums.length - 1] : null,
+        /* The earliest one you have not read, because that is where the cherry
+           takes you. Not the latest: being told your name was said is being
+           told to go back and read from there, and a room that dropped you at
+           the newest of six mentions would have you scrolling up for the rest. */
+        next: unseen.length ? unseen[0] : null,
+      };
     },
     async lastSeen(address) {
       const [x] = await pipe([['GET', keys.seen(address)]]);
@@ -266,6 +370,77 @@ export function chatStore(pipe, cfg = {}) {
        last visit" has to be reset by the visit, and this is the visit. */
     async markSeen(address, n) {
       await pipe([['SET', keys.seen(address), String(Math.max(0, Number(n) || 0))]]);
+    },
+
+    /* ---- the marks under a message ----
+       A hash per message, a field per wallet per mark, so one of each per
+       wallet per message needs no counting and no locking: the field is either
+       there or it is not, and pressing it again takes it back.
+
+       Nothing is stored about who reacted beyond the wallet, which is the same
+       thing the message above it already says out loud. Reading them is public
+       like everything else here; leaving one takes TAO, like speaking. */
+    async react(n, address, emoji) {
+      const field = `${lower(address)}:${emoji}`;
+      const [had] = await pipe([['HGET', keys.marks(n), field]]);
+      if (had == null) {
+        await pipe([['HSET', keys.marks(n), field, String(Date.now())], ['INCR', keys.markv]]);
+        return { on: true };
+      }
+      await pipe([['HDEL', keys.marks(n), field], ['INCR', keys.markv]]);
+      return { on: false };
+    },
+
+    /** The marks on a handful of messages: { n: { emoji: [wallet, ...] } }. */
+    async marks(ns) {
+      const list = [...new Set((ns || []).filter((n) => Number.isInteger(n) && n >= 0))];
+      if (!list.length) return {};
+      const rows = await pipe(list.map((n) => ['HGETALL', keys.marks(n)]));
+      const out = {};
+      list.forEach((n, i) => {
+        /* Upstash answers a hash as a flat list; some versions answer an
+           object. Both are read, because a store that changes its mind about
+           that should not empty the reactions off a log kept forever. */
+        const raw = rows[i];
+        const fields = [];
+        if (Array.isArray(raw)) for (let k = 0; k < raw.length; k += 2) fields.push(String(raw[k]));
+        else if (raw && typeof raw === 'object') fields.push(...Object.keys(raw));
+        if (!fields.length) return;
+        const held = {};
+        for (const f of fields) {
+          const cut = f.indexOf(':');
+          if (cut < 0) continue;
+          const wallet = lower(f.slice(0, cut));
+          const emoji = f.slice(cut + 1);
+          if (!emoji) continue;
+          (held[emoji] || (held[emoji] = [])).push(wallet);
+        }
+        if (Object.keys(held).length) out[n] = held;
+      });
+      return out;
+    },
+
+    /** Where the marks are up to. One number, for the poll to compare. */
+    async marksVersion() {
+      const [v] = await pipe([['GET', keys.markv]]);
+      return Number(v) || 0;
+    },
+
+    /* Marks ride their own budget over the same ten minutes as the messages.
+       They cost a keystroke rather than a sentence, so the floor between
+       messages would be absurd here ... reacting to three things in a row is
+       reading, not flooding ... but a room where one wallet can write a
+       thousand hash fields a minute is a room with a hole in it. */
+    async spendMarks(address) {
+      const cap = Number(cfg.reaction_burst || 60);
+      const [count] = await pipe([['INCR', keys.spentMarks(address)]]);
+      if (Number(count) === 1) {
+        await pipe([['EXPIRE', keys.spentMarks(address), String(cfg.burst_window_seconds || 600)]]);
+      }
+      if (Number(count) > cap) {
+        return { error: `${cap} reactions in ${Math.round((cfg.burst_window_seconds || 600) / 60)} minutes is plenty.` };
+      }
+      return { ok: true, count: Number(count) };
     },
 
     /* ---- muting ---- */

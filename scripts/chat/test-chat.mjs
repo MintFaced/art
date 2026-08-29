@@ -86,6 +86,8 @@ const A = (x) => x.address.toLowerCase();
 const chatCfg = {
   version: 1, min_tao: 1, max_chars: 500,
   seconds_between: 15, burst: 10, burst_window_seconds: 600, page: 50, session_days: 30,
+  reactions: ['\u{1F352}', '\u2764\ufe0f', '\u{1F44D}', '\u{1F525}', '\u{1F602}', '\u2726'],
+  reaction_burst: 60,
 };
 const artistFixture = { wallets: { [A(artist)]: 'mintface.eth' } };
 const taoFixture = {
@@ -182,6 +184,10 @@ const post = async (account, payload) => {
   return { status: r.status, body: await r.json() };
 };
 const say = async (account, text) => { advance(20000); return post(account, { action: 'say', text }); };
+const answer = async (account, text, reply) => { advance(20000); return post(account, { action: 'say', text, reply: String(reply) }); };
+const react = async (account, target, emoji) => post(account, { action: 'react', target: String(target), emoji });
+const CHERRY = '\u{1F352}';
+const HEART = '\u2764\ufe0f';
 
 /** The one signature, the way the page does it. */
 const signIn = async (account) => {
@@ -609,6 +615,246 @@ head('A preview is not a fetch anybody asked for');
   const none = (await get('cards=999999')).body;
   ok(none.cards && Object.keys(none.cards).length === 0,
     'and a message number that carries no link asks for nothing');
+}
+
+/* ================= answering somebody ================= */
+head('A reply is a message number, and nothing else');
+{
+  advance(700000);       // a clean burst window: ten in ten minutes, and these say more
+  const first = await say(visco, 'Waipukurau in that light is the whole collection.');
+  const n = first.body.message.n;
+  const back = await answer(oneCopy, 'It is the one I keep going back to.', n);
+  ok(back.status === 200 && back.body.ok, 'a message may answer another one', back.body.error);
+  ok(back.body.message.reply && back.body.message.reply.n === n,
+    'and carries the number it is answering', JSON.stringify(back.body.message.reply));
+  ok(back.body.message.reply.name === 'visco.eth',
+    'said with the name the register gives that wallet today, not one stored on the row',
+    back.body.message.reply.name);
+  ok(back.body.message.reply.address === A(visco) && back.body.message.reply.url,
+    'pointed at the person as well as the message', back.body.message.reply.url);
+
+  /* The row keeps a number. Not a name, not an address, not a copy of the
+     words ... which is the whole reason a rename reaches it. */
+  const stored = await chatStore(pipe, chatCfg).get(back.body.message.n);
+  ok(stored.reply === n && !('reply_name' in stored),
+    'and the row itself holds the number alone', JSON.stringify(stored.reply));
+
+  const anyone = (await get()).body.messages.find((m) => m.n === back.body.message.n);
+  ok(anyone.reply && anyone.reply.n === n && anyone.reply.name === 'visco.eth',
+    'which is how a reader with no wallet sees it too', JSON.stringify(anyone.reply));
+
+  const nowhere = await answer(visco, 'Answering the void.', 999999);
+  ok(nowhere.status === 404, 'answering a message that was never said is refused', `${nowhere.status}`);
+  const negative = await answer(visco, 'Answering minus one.', -1);
+  ok(negative.status === 400, 'and so is a number that is not a message', `${negative.status}`);
+}
+
+head('Changing what a reply answers, after signing, is refused');
+{
+  advance(700000);       // a clean burst window: ten in ten minutes, and these say more
+  advance(20000);
+  const issued = new Date().toISOString();
+  const address = A(visco);
+  const signature = await visco.signMessage({
+    message: chatMessage({ action: 'say', text: 'Agreed.', reply: '0', address, issued }),
+  });
+  const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ action: 'say', text: 'Agreed.', reply: '1', address, issued, signature }),
+  }));
+  ok(r.status === 401, 'the message a signature is hung under is part of what was signed', String(r.status));
+}
+
+head('Being answered is being told');
+{
+  advance(700000);       // a clean burst window: ten in ten minutes, and these say more
+  const before = (await get(`viewer=${A(loud)}`)).body.me.mentions;
+  const his = await say(loud, 'The Geodetic prints read differently in person.');
+  const reply = await answer(visco, 'They do. The paper is half of it.', his.body.message.n);
+  ok(reply.status === 200, 'somebody answers, naming nobody', reply.body.error);
+  const after = (await get(`viewer=${A(loud)}`)).body.me.mentions;
+  ok(after.unseen === before.unseen + 1,
+    'and the person answered is told, though their name is nowhere in the sentence',
+    `${before.unseen} → ${after.unseen}`);
+
+  /* Answering yourself is a way of writing, not a way of being told. */
+  const mine = (await get(`viewer=${A(visco)}`)).body.me.mentions;
+  await answer(visco, 'Though the light does most of it.', reply.body.message.n);
+  const still = (await get(`viewer=${A(visco)}`)).body.me.mentions;
+  ok(still.unseen === mine.unseen, 'answering yourself is not', `${mine.unseen} → ${still.unseen}`);
+}
+
+head('The cherry takes you to the earliest one you have not read');
+{
+  const m = (await get(`viewer=${A(loud)}`)).body.me.mentions;
+  ok(Number.isInteger(m.next), 'the room says where to go, not just how many', String(m.next));
+  ok(m.unseen === m.total && m.next != null,
+    'and it is the earliest of them, because that is where reading starts',
+    `${m.unseen} unseen of ${m.total}, first at ${m.next}`);
+
+  const opened = await signIn(loud);
+  const read = await withToken(opened.body.token, { action: 'seen' });
+  ok(read.status === 200 && read.body.seen, 'pressing it marks them read', read.body.error);
+  const done = (await get(`viewer=${A(loud)}`)).body.me.mentions;
+  ok(done.unseen === 0 && done.next === null,
+    'and the cherry has nowhere left to take you', JSON.stringify(done));
+  await withToken(opened.body.token, { action: 'sign out' });
+}
+
+/* ================= the marks ================= */
+head('A mark under something somebody said');
+{
+  advance(700000);       // a clean burst window: ten in ten minutes, and these say more
+  const said = await say(visco, 'This is the one.');
+  const n = said.body.message.n;
+
+  const one = await react(oneCopy, n, CHERRY);
+  ok(one.status === 200 && one.body.on === true, 'a wallet with TAO leaves a mark', one.body.error);
+  ok(one.body.reactions.length === 1 && one.body.reactions[0].count === 1 && one.body.reactions[0].mine,
+    'counted, and known to be theirs', JSON.stringify(one.body.reactions));
+
+  const again = await react(oneCopy, n, CHERRY);
+  ok(again.status === 200 && again.body.on === false, 'pressing it again takes it back', again.body.error);
+  ok(again.body.reactions.length === 0, 'and the count goes with it', JSON.stringify(again.body.reactions));
+
+  await react(oneCopy, n, CHERRY);
+  const twice = await react(oneCopy, n, CHERRY);
+  await react(oneCopy, n, CHERRY);
+  ok(twice.body.on === false, 'one of each per wallet per message, whatever the order of pressing');
+
+  const two = await react(loud, n, CHERRY);
+  ok(two.body.reactions[0].count === 2, 'two wallets are two', JSON.stringify(two.body.reactions));
+  const heart = await react(loud, n, HEART);
+  ok(heart.body.reactions.length === 2, 'and one wallet may leave more than one kind',
+    JSON.stringify(heart.body.reactions));
+
+  /* Reading them takes nothing, like everything else in this room ... and a
+     reader with no wallet is nobody's mark. */
+  const open = (await get()).body.messages.find((x) => x.n === n);
+  ok(open.reactions.length === 2 && open.reactions.every((r) => r.mine === false),
+    'a reader with no wallet sees the marks and owns none of them', JSON.stringify(open.reactions));
+  const his = (await get(`viewer=${A(loud)}`)).body.messages.find((x) => x.n === n);
+  ok(his.reactions.every((r) => r.mine === true), 'and the wallet that left them is told which are theirs');
+
+  /* The order is the config's order, so the room reads the same everywhere. */
+  ok(open.reactions[0].emoji === CHERRY && open.reactions[1].emoji === HEART,
+    'drawn in the order the config sets, not the order they arrived',
+    open.reactions.map((r) => r.emoji).join(' '));
+
+  const junk = await react(visco, n, '\u{1F480}');
+  ok(junk.status === 400, 'a mark Studio does not offer is refused', `${junk.status} ${junk.body.error}`);
+  const empty = await react(visco, n, '');
+  ok(empty.status === 400, 'and so is nothing at all');
+  const nowhere = await react(visco, 999999, CHERRY);
+  ok(nowhere.status === 404, 'and a message that was never said');
+}
+
+head('Reacting takes TAO, like speaking');
+{
+  advance(700000);       // a clean burst window: ten in ten minutes, and these say more
+  const said = await say(visco, 'Marks cost what words cost.');
+  const n = said.body.message.n;
+  const broke = await react(nobody, n, CHERRY);
+  ok(broke.status === 403 && /holding TAO/.test(broke.body.error || ''),
+    'a wallet with no TAO cannot leave one, and is told why', `${broke.status} ${broke.body.error}`);
+
+  const quiet = privateKeyToAccount(generatePrivateKey());
+  taoFixture.wallets[A(quiet)] = { tao: 12 };
+  await post(artist, { action: 'mute', target: A(quiet) });
+  const muted = await react(quiet, n, CHERRY);
+  ok(muted.status === 403 && /muted/.test(muted.body.error || ''),
+    'and a muted wallet cannot react around the mute', `${muted.status} ${muted.body.error}`);
+  await post(artist, { action: 'unmute', target: A(quiet) });
+  const freed = await react(quiet, n, CHERRY);
+  ok(freed.status === 200, 'and can once it is lifted', freed.body.error);
+
+  /* The mark and the message it goes under are both in the sentence. */
+  const issued = new Date().toISOString();
+  const address = A(visco);
+  const signature = await visco.signMessage({
+    message: chatMessage({ action: 'react', emoji: CHERRY, target: String(n), address, issued }),
+  });
+  const swapped = await POST(new Request(`${ORIGIN}/api/chat`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ action: 'react', emoji: HEART, target: String(n), address, issued, signature }),
+  }));
+  ok(swapped.status === 401, 'so a cherry cannot be signed and a heart sent', String(swapped.status));
+}
+
+head('Taking a message down takes its marks with it');
+{
+  advance(700000);       // a clean burst window: ten in ten minutes, and these say more
+  const said = await say(visco, 'Something that will not last.');
+  const n = said.body.message.n;
+  await react(oneCopy, n, CHERRY);
+  await react(loud, n, HEART);
+  const up = (await get()).body.messages.find((x) => x.n === n);
+  ok(up.reactions.length === 2, 'two marks under it', JSON.stringify(up.reactions));
+
+  const down = await post(artist, { action: 'delete', target: String(n) });
+  ok(down.status === 200 && down.body.message.reactions.length === 0,
+    'taken down, and the marks go with it', JSON.stringify(down.body.message.reactions));
+  const gone = (await get()).body.messages.find((x) => x.n === n);
+  ok(gone.text === null && gone.reactions.length === 0,
+    'which is what everybody else sees too', JSON.stringify(gone.reactions));
+
+  const late = await react(visco, n, CHERRY);
+  ok(late.status === 400, 'and nothing new can be put under a gap', `${late.status} ${late.body.error}`);
+  const answering = await answer(visco, 'Answering something that is not there.', n);
+  ok(answering.status === 400, 'nor answered', `${answering.status} ${answering.body.error}`);
+
+  /* Hidden, not removed. Everything in this room is kept. */
+  const back = await post(artist, { action: 'restore', target: String(n) });
+  ok(back.status === 200 && back.body.message.reactions.length === 2,
+    'and putting it back puts them back, because nothing was ever deleted',
+    JSON.stringify(back.body.message.reactions));
+}
+
+head('The marks are one number on the poll');
+{
+  advance(700000);       // a clean burst window: ten in ten minutes, and these say more
+  const said = await say(visco, 'A quiet room costs a digit.');
+  const n = said.body.message.n;
+  const first = (await get(`since=${(await get()).body.total}`)).body;
+  ok(Number.isInteger(first.rx), 'the poll carries where the marks are up to', String(first.rx));
+  await react(loud, n, CHERRY);
+  const second = (await get(`since=${(await get()).body.total}`)).body;
+  ok(second.rx > first.rx, 'and it moves when somebody reacts', `${first.rx} → ${second.rx}`);
+
+  const asked = (await get(`rx=${n}&viewer=${A(loud)}`)).body;
+  ok(asked.reactions[n] && asked.reactions[n][0].count === 1 && asked.reactions[n][0].mine,
+    'so the page can ask what is under a message without asking for the message',
+    JSON.stringify(asked.reactions[n]));
+  const stranger = (await get(`rx=${n}`)).body;
+  ok(stranger.reactions[n][0].mine === false, 'and a reader with no wallet owns none of it');
+}
+
+head('The room hands the page its own alphabet');
+{
+  const d = (await get()).body;
+  ok(Array.isArray(d.emoji) && d.emoji.length && d.emoji.length <= 8,
+    'the marks come from the config, and there are fewer than eight of them',
+    (d.emoji || []).join(' '));
+  ok(d.emoji[0] === CHERRY, 'the cherry first, because it is the house one', d.emoji[0]);
+  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  ok(!/const EMOJI = \[/.test(page) && /ROOM\.emoji = d\.emoji/.test(page),
+    'and the page draws the set it is given rather than one of its own');
+}
+
+head('The page opens at the latest thing anybody said');
+{
+  const d = (await get()).body;
+  ok(d.end === d.total, 'a page with no `before` on it ends at the newest message',
+    `${d.start}\u2013${d.end} of ${d.total}`);
+  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  ok(/load\(\{ bottom: true \}\)/.test(page), 'and the room is opened at the foot of it');
+  ok(/IntersectionObserver/.test(page), 'with earlier arriving upward as a reader goes looking');
+  ok(/Shift|shiftKey/.test(page) && /ev\.key === 'Enter' && !ev\.shiftKey/.test(page),
+    'return sends, and shift and return is a new line');
+  ok(/hover: none/.test(page) && /!TOUCH/.test(page),
+    'except on a touch screen, where return stays the return key');
 }
 
 server.close();

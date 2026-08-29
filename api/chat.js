@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
-import { chatStore, chatMessage, checkMessage, render, sessionUntil } from './_lib/chat.js';
+import { chatStore, chatMessage, checkMessage, checkReaction, marksOf, reactionSet, render, sessionUntil } from './_lib/chat.js';
 import { loadArtist, isArtist as artistIs, taoGate, ARTIST_NAME } from './_lib/artist.js';
 import { loadRegister } from './_lib/register.js';
 import { parseTags, tagIndex } from './_lib/names.js';
@@ -29,7 +29,7 @@ const json = (b, s = 200) => new Response(JSON.stringify(b, null, 1), {
   status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...CORS },
 });
 const lower = (a) => String(a || '').toLowerCase();
-const ACTIONS = ['sign in', 'sign out', 'say', 'seen', 'delete', 'restore', 'mute', 'unmute'];
+const ACTIONS = ['sign in', 'sign out', 'say', 'react', 'seen', 'delete', 'restore', 'mute', 'unmute'];
 
 /* What one request for link previews may cost. A page is fifty messages, and
    a message may carry three links, so the caps are what keeps a page of the log
@@ -76,6 +76,32 @@ async function whois(origin, address, register) {
   return { tao, name: who && who.known ? who.name : null };
 }
 
+/* What a page of the log needs beyond its own rows.
+ *
+ * Two lookups, both by message number and both batched: the messages these
+ * ones are replying to, and the marks left under them. A reply stores a number
+ * and nothing else ... not a name, not an address ... so the parent has to be
+ * read to be drawn, and reading fifty of them in one MGET is the difference
+ * between that being free and that being a page load.
+ *
+ * The rows already in hand stand in for themselves: a conversation is mostly
+ * replies to things a few lines up, so most of this asks the store for nothing.
+ */
+async function dressing(db, rows, base) {
+  const have = new Set(rows.map((r) => r.n));
+  const want = [...new Set(rows
+    .map((r) => Number(r.reply))
+    .filter((n) => Number.isInteger(n) && n >= 0 && !have.has(n)))].slice(0, MOST_ROWS);
+  const [fetched, reactions] = await Promise.all([
+    want.length ? db.many(want).catch(() => []) : Promise.resolve([]),
+    db.marks(rows.filter((r) => !r.deleted).map((r) => r.n)).catch(() => ({})),
+  ]);
+  const parents = {};
+  for (const r of rows) parents[r.n] = r;
+  for (const r of fetched) parents[r.n] = r;
+  return { ...base, parents, reactions };
+}
+
 /* ---------------------------------------------------------------- reading */
 
 export async function GET(request) {
@@ -85,6 +111,7 @@ export async function GET(request) {
   const before = url.searchParams.get('before');
   const since = url.searchParams.get('since');
   const cards = url.searchParams.get('cards');
+  const rx = url.searchParams.get('rx');
 
   if (!storeConfigured()) {
     return json({ messages: [], total: 0, more: false, store: false });
@@ -111,9 +138,29 @@ export async function GET(request) {
        which is what a salon is worth and no more. */
     if (since != null) {
       const { rows, total } = await db.since(Number(since) || 0);
-      if (!rows.length) return json({ messages: [], total, store: true });
-      const dress = { isArtist, artist: cfg.artist, register: await register() };
-      return json({ messages: rows.map((r) => render(r, dress)), total, store: true });
+      /* The marks are one number on the poll rather than a page of counts.
+         A reader with fifty messages on screen cannot be asked what is under
+         each of them every six seconds, and nearly always the answer is the
+         same as last time ... so the room carries where the marks are up to,
+         and the page goes and looks only when that has moved. */
+      const marks = await db.marksVersion().catch(() => 0);
+      if (!rows.length) return json({ messages: [], total, rx: marks, store: true });
+      const dress = await dressing(db, rows,
+        { isArtist, artist: cfg.artist, register: await register(), viewer, cfg });
+      return json({ messages: rows.map((r) => render(r, dress)), total, rx: marks, store: true });
+    }
+
+    /* ---- what is under a message now ----
+       Asked for by number, the way the cards are, and answered without the
+       messages themselves: a mark arriving is no reason to redraw a room with
+       somebody's half-written sentence in it. */
+    if (rx != null) {
+      const ns = String(rx).split(',').map(Number).filter((n) => Number.isInteger(n) && n >= 0);
+      const rows = await db.many(ns.slice(0, MOST_ROWS));
+      const held = await db.marks(rows.filter((r) => !r.deleted).map((r) => r.n));
+      const out = {};
+      for (const row of rows) out[row.n] = row.deleted ? [] : marksOf(held[row.n], viewer, cfg);
+      return json({ reactions: out, rx: await db.marksVersion().catch(() => 0), store: true });
     }
 
     /* ---- what the links turn out to be ----
@@ -162,8 +209,9 @@ export async function GET(request) {
       return json({ cards: out, store: true });
     }
 
-    const dress = { isArtist, artist: cfg.artist, register: await register() };
+    const base = { isArtist, artist: cfg.artist, register: await register(), viewer, cfg };
     const page = await db.page({ before: before == null ? null : Number(before), limit: Number(cfg.page) || 50 });
+    const dress = await dressing(db, page.rows, base);
     let me = null;
     if (/^0x[0-9a-f]{40}$/.test(viewer)) {
       const who = await whois(origin, viewer, dress.register);
@@ -188,14 +236,19 @@ export async function GET(request) {
            visit counts everything. It is the useful answer: arriving to find
            you were named is the whole reason the count exists. Only the wording
            changes ... there is no last visit to say "since" about. */
-        mentions: { unseen: said.unseen, total: said.total, first_visit: seen == null },
+        /* `next` is where the cherry takes you: the earliest one you have not
+           read. The count is not cleared by arriving any more ... the cherry
+           is the notifier, and an unread mark that clears itself the moment
+           you glance at the page is not one. Pressing it is what marks it. */
+        mentions: { unseen: said.unseen, total: said.total, next: said.next, first_visit: seen == null },
       };
     }
     return json({
       messages: page.rows.map((r) => render(r, dress)),
       start: page.start, end: page.end, total: page.total, more: page.more,
       me, max_chars: cfg.max_chars, max_tags: Number(cfg.max_tags || 5),
-      session_days: Number(cfg.session_days || 7), store: true,
+      session_days: Number(cfg.session_days || 7),
+      emoji: reactionSet(cfg), rx: await db.marksVersion().catch(() => 0), store: true,
     });
   } catch (e) {
     return json({ error: 'Studio is not reachable' }, 503);
@@ -283,6 +336,50 @@ export async function POST(request) {
     return json({ ok: true, seen: true });
   }
 
+  /* ---- a mark under something somebody said ----
+   *
+   * The same door as speaking: TAO to leave one, nothing at all to read them.
+   * A reaction is a smaller thing than a sentence and it is still a thing you
+   * did in a room kept forever, so it is signed like one ... and the mark and
+   * the message it is under are both in the sentence, so a page cannot hang a
+   * fire under a message you meant to put a cherry on.
+   *
+   * Pressing it again takes it back. One of each per wallet per message is a
+   * fact about the key it is stored under rather than a rule anything has to
+   * enforce.
+   */
+  if (action === 'react') {
+    const n = Number(body.target);
+    if (!Number.isInteger(n) || n < 0) return json({ error: 'react to which message?' }, 400);
+    const mark = checkReaction(body.emoji, cfg);
+    if (mark.error) return json({ error: mark.error }, 400);
+
+    const row = await db.get(n);
+    if (!row) return json({ error: 'no such message' }, 404);
+    /* A deleted message takes its marks down with it, so it cannot take new
+       ones. The ones already there stay in the data with everything else. */
+    if (row.deleted) return json({ error: 'that message was taken down' }, 400);
+
+    if (await db.isMuted(address)) {
+      return json({ error: 'This wallet is muted in Studio. You can still read.' }, 403);
+    }
+    const reg = await loadRegister(at, origin, pipe).catch(() => null);
+    const me = await whois(origin, address, reg);
+    const may = taoGate({ artist: cfg.artist, address, tao: me.tao, min: cfg.min_tao || 1, why: SHUT });
+    if (!may.ok) return json({ error: may.why, tao: may.tao }, 403);
+
+    if (!(await verify({ action: 'react', emoji: mark.emoji, target: String(body.target) }))) {
+      return json({ error: 'that signature does not match the wallet' }, 401);
+    }
+    const spent = await db.spendMarks(address);
+    if (spent.error) return json({ error: spent.error }, 429);
+
+    const put = await db.react(n, address, mark.emoji);
+    const held = await db.marks([n]);
+    return json({ ok: true, n, emoji: mark.emoji, on: put.on,
+      reactions: marksOf(held[n], address, cfg), rx: await db.marksVersion().catch(() => 0) });
+  }
+
   /* ---- the whole moderation toolset ---- */
   if (action !== 'say') {
     if (!isArtist) return json({ error: 'Studio is moderated by the artist' }, 403);
@@ -310,13 +407,38 @@ export async function POST(request) {
     row.deleted = action === 'delete';
     await db.save(row);
     const register = await loadRegister(at, origin, pipe).catch(() => null);
-    return json({ ok: true, n, deleted: row.deleted,
-      message: render(row, { isArtist: true, artist: cfg.artist, register }) });
+    /* Dressed like any other row, so putting a message back puts its marks and
+       its reply line back with it rather than leaving them off until a reload. */
+    const dress = await dressing(db, [row],
+      { isArtist: true, artist: cfg.artist, register, viewer: address, cfg });
+    return json({ ok: true, n, deleted: row.deleted, message: render(row, dress) });
   }
 
   /* ---- saying something ---- */
   const text = checkMessage(body.text, cfg);
   if (text.error) return json({ error: text.error }, 400);
+
+  /* What this is answering, if anything.
+   *
+   * A message number, checked here and stored as a number: not a name, not an
+   * address, not a copy of what was said. That is what lets a reply survive
+   * everything downstream of it ... the author renaming, the register learning
+   * an ENS it did not have, the parent being taken down and put back. The
+   * number was handed out once and is never reused, which is the same property
+   * the whole log is built on.
+   *
+   * It goes in the sentence, so a page cannot quietly hang somebody's words
+   * under a message they never read. */
+  let reply = null;
+  let answered = null;
+  if (body.reply != null && body.reply !== '') {
+    reply = Number(body.reply);
+    if (!Number.isInteger(reply) || reply < 0) return json({ error: 'reply to which message?' }, 400);
+    const parent = await db.get(reply);
+    if (!parent) return json({ error: 'no such message' }, 404);
+    if (parent.deleted) return json({ error: 'that message was taken down' }, 400);
+    answered = lower(parent.address) || null;
+  }
 
   if (await db.isMuted(address)) {
     return json({ error: 'This wallet is muted in Studio. You can still read.' }, 403);
@@ -345,7 +467,7 @@ export async function POST(request) {
     return json({ error: `${distinct.length} names in one message, and Studio's limit is ${maxTags}.` }, 400);
   }
 
-  if (!(await verify({ action: 'say', text: text.text }))) {
+  if (!(await verify({ action: 'say', text: text.text, reply: reply == null ? null : String(reply) }))) {
     return json({ error: 'that signature does not match the wallet' }, 401);
   }
 
@@ -360,9 +482,17 @@ export async function POST(request) {
     address, role: gate.role,
     name: gate.role === 'artist' ? ARTIST_NAME : who.name,
     tao: gate.role === 'artist' ? 0 : who.tao,
-    text: text.text, mentions, at: new Date().toISOString(), deleted: false,
+    text: text.text, mentions, reply, at: new Date().toISOString(), deleted: false,
   });
-  /* Tagging yourself is a way of writing, not a way of being told. */
-  await db.mention(distinct.filter((a) => a !== address), row.n);
-  return json({ ok: true, message: render(row, { isArtist, artist: cfg.artist, register }) });
+  /* Tagging yourself is a way of writing, not a way of being told ... and
+     answering somebody is telling them, whether or not their name is in the
+     sentence. A reply that did not reach the person it was written to would be
+     a reply nobody ever saw, and the cherry is the only notifier this room
+     has. Replying to yourself, like naming yourself, is neither. */
+  const told = new Set(distinct);
+  if (answered) told.add(answered);
+  await db.mention([...told].filter((a) => a !== address), row.n);
+  const dress = await dressing(db, [row],
+    { isArtist, artist: cfg.artist, register, viewer: address, cfg });
+  return json({ ok: true, message: render(row, dress) });
 }

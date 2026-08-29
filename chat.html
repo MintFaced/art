@@ -20,6 +20,23 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
   color:var(--faint);background:none;border:0;padding:14px 0;cursor:pointer;display:block;width:100%;text-align:left;
   border-bottom:1px solid var(--rule)}
 .earlier:hover{color:var(--ink)}
+.earlier:disabled{cursor:default}
+
+/* The masthead, and the cherry in the corner of it.
+   The room's one notifier, and it is a state rather than a movement: grey and
+   quiet until somebody has said your name, then simply itself. The same energy
+   as the green dot on a work page ... colour arriving is the whole event. */
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.cherry{display:flex;align-items:center;gap:8px;background:none;border:0;padding:8px 0 0;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:var(--faint);
+  text-transform:uppercase;flex:none}
+.cherry .fruit{font-size:19px;line-height:1;filter:grayscale(1);opacity:.3;
+  transition:opacity .35s ease,filter .35s ease}
+.cherry .n{font-variant-numeric:tabular-nums}
+button.cherry{cursor:pointer}
+button.cherry .fruit{filter:none;opacity:1}
+button.cherry .n{color:var(--ink)}
+button.cherry:hover .n{border-bottom:1px solid var(--ink)}
 
 .m{padding:16px 0;border-bottom:1px solid var(--rule)}
 .m:last-child{border-bottom:0}
@@ -34,6 +51,18 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .m .who a:hover{border-color:var(--ink)}
 .m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font-size:15px;line-height:1.68;color:#2c2924}
 .m .gone{margin:8px 0 0;font-family:var(--font-mono);font-size:11.5px;color:var(--faint)}
+/* What a message is answering, said above it in the house dialect. One line,
+   the arrow and a name, and it goes where the message it answers is. */
+.m .re{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 7px}
+.m .re a,.m .re button{color:inherit;background:none;border:0;padding:0;cursor:pointer;
+  font:inherit;letter-spacing:inherit;text-transform:inherit;text-decoration:none;
+  border-bottom:1px solid transparent}
+.m .re a:hover,.m .re button:hover{color:var(--muted);border-bottom-color:var(--rule)}
+/* Arriving at a message somebody pointed you to. A ground that fades rather
+   than a highlight that stays: it says here, and then it stops saying it. */
+.m.found{background:#f4f1eb;box-shadow:0 0 0 8px #f4f1eb}
+.m{transition:background-color 1.1s ease,box-shadow 1.1s ease}
 .m.mine{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
 .m .who .artist{color:var(--ink);letter-spacing:.18em}
 /* A tag inside a sentence. It sits in the prose, so it takes the prose's rule
@@ -81,6 +110,32 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
   color:var(--faint);cursor:pointer}
 .m .mod button:hover{color:var(--ink)}
 
+/* Under a message: what people made of it. The marks are always there because
+   they are part of the record; the two ways in are up in the measuring line,
+   and arrive under the pointer. */
+.acts{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px}
+.rxn{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--rule);
+  padding:2px 8px;cursor:pointer;line-height:1.5;transition:border-color .18s ease}
+.rxn .e{font-size:12.5px;line-height:1}
+.rxn .c{font-family:var(--font-mono);font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.rxn:hover{border-color:var(--muted)}
+.rxn.mine{border-color:var(--mark)}
+.rxn.mine .c{color:var(--ink)}
+/* Reply and React live in the measuring line rather than in a row of their
+   own. A row of their own has to be there whether or not anybody is looking at
+   it, or the message grows a line taller under the pointer; this line is there
+   anyway, and they simply arrive in it. */
+.quiet{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  background:none;border:0;padding:0 1px;color:var(--faint);cursor:pointer;
+  opacity:0;transition:opacity .18s ease}
+.m .who .quiet{margin-left:2px}
+.m:hover .quiet,.m:focus-within .quiet,.m.open .quiet{opacity:1}
+.quiet:hover{color:var(--ink)}
+@media(hover:none){.quiet{opacity:.65}}
+.pal{display:inline-flex;gap:1px;border:1px solid var(--rule);padding:2px}
+.pal button{background:none;border:0;padding:3px 6px;font-size:15px;line-height:1;cursor:pointer;opacity:.7}
+.pal button:hover,.pal button:focus-visible{opacity:1;background:#f2efe9;outline:none}
+
 /* Who you are in here, and what waited for you. One line under the masthead,
    in the measuring voice, because both halves of it are facts about a wallet.
    It is only ever drawn for somebody signed in ... a room cannot tell a reader
@@ -89,8 +144,6 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
   text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
 .you a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
 .you a:hover{border-color:var(--ink)}
-.you .said{color:var(--ink)}
-.you .said::before{content:'\00b7';color:var(--rule);margin-right:10px}
 
 .speak{max-width:720px;margin:0 auto;padding:0 28px 110px}
 /* The @ list. It sits under the box it is filling in, in the same measured
@@ -108,6 +161,14 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
   color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
 .at-none{padding:10px 12px;font-family:var(--font-mono);font-size:11px;color:var(--faint)}
 .speak .box{border-top:1px solid var(--rule);padding-top:18px}
+/* Who you are answering, above the box you are answering them in. */
+.replying{display:flex;align-items:baseline;gap:12px;margin-bottom:9px;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.replying button{background:none;border:0;padding:0 2px;cursor:pointer;color:var(--faint);
+  font-family:var(--font-mono);font-size:13px;line-height:1}
+.replying button:hover{color:var(--ink)}
+.replying .quote{color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  text-transform:none;letter-spacing:.04em;min-width:0}
 /* The list hangs off the box it is filling in, not off the composer: anchored
    to the whole composer it opened below the buttons, half a screen from the
    caret that summoned it. */
@@ -129,9 +190,14 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 
 @media(max-width:640px){
   .mast{padding:34px 20px 0}
+  .cherry{padding-top:4px}
   .room{padding:18px 20px 30px}
   .speak{padding:0 20px 80px}
   .m .who .at{margin-left:0;width:100%}
+  /* The line of what you are answering keeps the name and drops the quote:
+     a nowrap sentence in a flex row is the one thing on this page that would
+     push the measure out on a phone. */
+  .replying .quote{display:none}
 }
 </style>
 </head>
@@ -173,10 +239,18 @@ const ROOM = {
      and nothing either side. */
   tag: { open: false, from: -1, q: '', rows: [], pick: 0, seq: 0 },
   caret: null, autoSpace: null,
-  /* What waited for you, kept for the visit rather than for the request. The
-     room marks your mentions read the moment it has drawn them, so the number
-     would otherwise vanish out from under the line reporting it. */
-  waiting: null, marked: false,
+  /* What waited for you. The cherry is the notifier now, and an unread mark
+     that clears itself the moment you glance at the page is not one: the count
+     stands until the cherry is pressed, and pressing it is what marks it read.
+     `next` is the earliest one you have not seen, which is where it takes you. */
+  waiting: 0, next: null,
+  /* Who you are answering, as a message number, and which message has its
+     palette open. Both are about the page rather than about the log. */
+  replyTo: null, palette: null,
+  /* Studio's marks, and where they are up to. The poll carries the number; the
+     page goes and asks what the marks actually are only when it has moved,
+     so a room where nobody has reacted since you loaded costs one digit. */
+  emoji: [], rxv: 0,
   /* What the links turn out to be, url -> card, or false for a link that has
      nothing to show. Held for the visit: a card is fetched once by the room and
      kept in the store forever, so this is only about not asking twice on one
@@ -186,6 +260,23 @@ const ROOM = {
 
 // ours across two deploys, and so opened in this tab like any other page of it
 const HOME = ['mintface.art', 'collectors.mintface.art'];
+
+/* A keyboard sends with return; a thumb does not.
+ *
+ * On a phone the return key is the return key, because the software keyboard
+ * has no shift to hold and taking newlines away from somebody typing with two
+ * thumbs is taking away the only paragraph break they have. SAY IT is the send
+ * on a touch screen, and it always was. */
+const TOUCH = (() => {
+  try { return window.matchMedia('(hover: none) and (pointer: coarse)').matches; }
+  catch (err) { return false; }
+})();
+
+/* Whether the reader is at the bottom of the room, asked before anything is
+   added to it. A message arriving should follow you down when you are at the
+   latest, and must not haul you there when you are reading last winter. */
+const nearBottom = (slack = 140) =>
+  window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - slack;
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
 const stamp = (s) => {
@@ -197,11 +288,13 @@ const stamp = (s) => {
 };
 
 // the same sentence api/_lib/chat.js builds, to the character
-const sentence = ({ action, text, target, address, issued, until }) => [
+const sentence = ({ action, text, target, address, issued, until, reply, emoji }) => [
   'MintFace ... Studio',
   '',
   `Action: ${action}`,
   ...(text != null ? [`Message: ${text}`] : []),
+  ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
+  ...(emoji ? [`Reaction: ${emoji}`] : []),
   ...(target ? [`Subject: ${target}`] : []),
   `Wallet: ${address}`,
   ...(until ? [`Until: ${until}`] : []),
@@ -210,7 +303,9 @@ const sentence = ({ action, text, target, address, issued, until }) => [
   ...(action === 'sign in'
     ? ['Signing opens Studio until the date above. It moves nothing and spends nothing.',
       'Until then this browser can speak here without asking again.']
-    : ['Signing speaks in Studio. It moves nothing and spends nothing.']),
+    : action === 'react'
+      ? ['Signing leaves a reaction in Studio. It moves nothing and spends nothing.']
+      : ['Signing speaks in Studio. It moves nothing and spends nothing.']),
 ].join('\n');
 
 /* One signature, then a month of it.
@@ -249,7 +344,14 @@ const api = async (qs) => {
   return r.ok ? r.json() : null;
 };
 
-async function load() {
+/* The room opens at the latest thing anybody said.
+ *
+ * This is a log kept forever, and a log kept forever that opens at its
+ * beginning is a room you scroll through years of to reach this afternoon.
+ * So: the newest page, drawn, and the view put at the foot of it before the
+ * first paint. Earlier arrives upward, a page at a time, when a reader goes
+ * looking for it. */
+async function load({ bottom = false } = {}) {
   const d = await api();
   if (!d) { ROOM.rows = []; draw(); return; }
   ROOM.rows = d.messages || [];
@@ -260,35 +362,51 @@ async function load() {
   ROOM.max = d.max_chars || 500;
   ROOM.maxTags = d.max_tags || 5;
   ROOM.days = d.session_days || 7;
+  ROOM.emoji = d.emoji || ROOM.emoji;
+  ROOM.rxv = d.rx || 0;
   ROOM.open = d.store !== false;
-  /* Held once. A reload is a new visit and asks the question again; a redraw
-     inside this one keeps the answer it was given. */
-  if (ROOM.waiting === null && ROOM.me && ROOM.me.mentions) ROOM.waiting = ROOM.me.mentions.unseen || 0;
-  draw();
-  markSeen();
+  /* Taken from the room every time rather than held for the visit. The count
+     is not cleared by arriving any more, so the server's answer is the answer
+     until the cherry is pressed. */
+  if (ROOM.me && ROOM.me.mentions) {
+    ROOM.waiting = ROOM.me.mentions.unseen || 0;
+    ROOM.next = ROOM.me.mentions.next;
+  } else {
+    ROOM.waiting = 0;
+    ROOM.next = null;
+  }
+  draw({ toBottom: bottom });
   askCards();
 }
 
-/* Read. Sent once the count has been drawn, so the visit that showed it is the
-   visit that clears it. It needs a sign-in and nothing else. */
+/* Read. Sent by the cherry, and by nothing else: it is the notifier, so it is
+   the thing that marks its own count read. A sign-in and nothing more ... the
+   worst a stolen token does here is mark somebody's own mentions read. */
 async function markSeen() {
-  if (ROOM.marked || !ROOM.me || !mySession()) return;
-  ROOM.marked = true;
   const s = mySession();
-  try { await post({ action: 'seen', token: s.token }); } catch (err) { /* it will be marked next visit */ }
+  if (!s) return;
+  try { await post({ action: 'seen', token: s.token }); } catch (err) { /* next visit */ }
 }
 
+/* Earlier, a page at a time. The guard is on the affordance rather than on the
+   work, because the cherry walks back through the log with this and cannot be
+   held off by its own busy flag. */
 async function earlier() {
   if (!ROOM.more || ROOM.busy) return;
   ROOM.busy = true;
+  try { await pullEarlier(); } finally { ROOM.busy = false; }
+}
+
+async function pullEarlier() {
+  if (!ROOM.more) return false;
   const d = await api({ before: String(ROOM.start) });
-  ROOM.busy = false;
-  if (!d) return;
+  if (!d) return false;
   ROOM.rows = (d.messages || []).concat(ROOM.rows);
   ROOM.start = d.start || 0;
   ROOM.more = Boolean(d.more);
   draw({ keep: true });
   askCards();
+  return true;
 }
 
 /* Polling, not sockets. A quiet room costs one small answer every few seconds,
@@ -298,11 +416,36 @@ async function poll() {
   // the list, the caret and the half-written sentence with it
   if (ROOM.busy || document.hidden || ROOM.tag.open) return;
   const d = await api({ since: String(ROOM.total) });
-  if (!d || !d.messages || !d.messages.length) return;
+  if (!d) return;
+  /* The marks, in one number. Where it has moved, and only there, the page
+     goes and asks what is actually under the messages it is showing. */
+  if (d.rx != null && d.rx !== ROOM.rxv) { ROOM.rxv = d.rx; askMarks(); }
+  if (!d.messages || !d.messages.length) return;
+  /* Asked before anything is added. Somebody speaking should follow you down
+     when you are at the latest and must not haul you there when you are not. */
+  const following = nearBottom();
   ROOM.rows = ROOM.rows.concat(d.messages);
   ROOM.total = d.total || ROOM.total + d.messages.length;
-  draw({ toEnd: true });
+  told(d.messages);
+  draw({ toEnd: following });
   askCards();
+}
+
+/* Somebody has said your name, or answered you, while you were sitting here.
+   Counted on the page rather than asked for: the poll already carries the
+   messages, and the cherry only has to know that one of them was about you. */
+function told(fresh) {
+  if (!ROOM.me || !ROOM.wallet) return;
+  let more = 0;
+  for (const m of fresh) {
+    if (m.address === ROOM.wallet) continue;
+    if (!namesMe(m) && !(m.reply && m.reply.address === ROOM.wallet)) continue;
+    more += 1;
+    if (ROOM.next == null) ROOM.next = m.n;
+  }
+  if (!more) return;
+  ROOM.waiting += more;
+  paintCherry();
 }
 
 /* The sentence, as the room draws it now.
@@ -349,10 +492,47 @@ async function askCards() {
   const d = await api({ cards: want.slice(-60).join(',') }).catch(() => null);
   if (!d || !d.cards) return;
   Object.assign(ROOM.cards, d.cards);
+  /* A card arriving makes the room taller. Somebody sitting at the latest
+     message should stay at the latest message rather than be pushed a card's
+     height up it, which is what opening at the bottom is for. */
+  const following = nearBottom();
   for (const m of ROOM.rows) {
     const box = document.getElementById(`cards-${m.n}`);
     if (box) box.innerHTML = cardsFor(m.links);
   }
+  if (following) window.scrollTo(0, document.documentElement.scrollHeight);
+}
+
+/* What is under the messages on screen now.
+ *
+ * Asked for by number, the way the cards are, and painted into the messages
+ * that were waiting for them. Not through draw(): somebody pressing a cherry
+ * three rooms away is no reason to rebuild the composer under a half-written
+ * sentence. Only the messages whose marks actually changed are redrawn. */
+async function askMarks() {
+  const ns = ROOM.rows.filter((m) => !m.deleted).map((m) => m.n).slice(-60);
+  if (!ns.length) return;
+  const d = await api({ rx: ns.join(',') }).catch(() => null);
+  if (!d || !d.reactions) return;
+  if (d.rx != null) ROOM.rxv = d.rx;
+  for (const m of ROOM.rows) {
+    const now = d.reactions[m.n];
+    if (!now) continue;
+    if (JSON.stringify(now) === JSON.stringify(m.reactions || [])) continue;
+    m.reactions = now;
+    repaint(m.n);
+  }
+}
+
+const rowAt = (n) => ROOM.rows.find((m) => m.n === Number(n)) || null;
+
+/* One message, redrawn where it stands. A reaction, a deletion or a message
+   put back changes one article and nothing else on the page, and rebuilding
+   the room for it would take the scroll position and the composer with it. */
+function repaint(n) {
+  const m = rowAt(n);
+  const el = document.getElementById(`m-${n}`);
+  if (m && el) el.outerHTML = card(m);
 }
 
 const namesMe = (m) => Boolean(ROOM.wallet && (m.mentions || []).some((t) => t.address === ROOM.wallet));
@@ -379,20 +559,80 @@ function card(m) {
      no page renders as they always did, unlinked. */
   const label = e(isArtist ? 'MintFace' : (m.name || short(m.address)));
   const who = m.url ? `<a href="${e(m.url)}">${label}</a>` : label;
+  const answering = replyLine(m);
+  const acts = actsRow(m);
+  const ways = waysIn(m);
   /* The place the cards go, drawn empty and filled a moment later. Reserved
      here rather than inserted later so a redraw keeps whatever has arrived. */
   const links = m.deleted ? [] : (m.links || []);
   const cards = links.length ? `<div class="cards" id="cards-${m.n}">${cardsFor(links)}</div>` : '';
-  return `<article class="m${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}">
+  return `<article class="m${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}${ROOM.palette === m.n ? ' open' : ''}" id="m-${m.n}">
+    ${answering}
     <div class="who">
       <span${isArtist ? ' class="artist"' : ''}>${who}</span>
       ${isArtist ? '<span class="tao">&middot; the artist</span>' : `<span class="tao">&middot; ${e(m.worn)} TAO</span>`}
+      ${ways}
       <span class="at">${e(stamp(m.at))}</span>
     </div>
     ${words(m)}
     ${cards}
+    ${acts}
     ${mod}
   </article>`;
+}
+
+/* What a message is answering, above it, in the house dialect.
+ *
+ * The row stores a message number. The name here is resolved by the room at
+ * the moment of drawing, exactly as the name on the message itself is ... so a
+ * collector renaming on Tuesday is renamed in every reply anybody ever wrote
+ * to them, and nothing stored had to change.
+ *
+ * It goes where it points. Clicking walks back through the log if it has to. */
+function replyLine(m) {
+  const r = m.reply;
+  if (!r) return '';
+  if (!r.found) return '<div class="re">&#8627; replying to a message that is no longer here</div>';
+  const name = e(r.name || short(r.address));
+  return `<div class="re">&#8627; replying to <button type="button" data-act="goto" data-n="${r.n}"
+    title="Go to that message">${name}</button>${r.deleted ? ' <span>&middot; taken down</span>' : ''}</div>`;
+}
+
+/* Under a message: what people made of it.
+ *
+ * The marks are part of the record and are drawn for everybody, signed in or
+ * not ... reading them is public like everything else here. Leaving one takes
+ * TAO, like speaking. A deleted message carries none of it: its marks go down
+ * with it, and there is nothing left to react to. */
+function actsRow(m) {
+  if (m.deleted) return '';
+  const marks = (m.reactions || []).map((r) => `<button class="rxn${r.mine ? ' mine' : ''}" data-act="rx"
+    data-n="${m.n}" data-e="${e(r.emoji)}" title="${r.mine ? 'Take yours back' : 'Add yours'}"
+    aria-pressed="${r.mine ? 'true' : 'false'}"><span class="e">${e(r.emoji)}</span><span class="c">${r.count}</span></button>`).join('');
+  const palette = ROOM.palette === m.n && mayAct()
+    ? `<span class="pal">${(ROOM.emoji || []).map((x) => `<button type="button" data-act="rx"
+        data-n="${m.n}" data-e="${e(x)}" title="${e(x)}">${e(x)}</button>`).join('')}</span>`
+    : '';
+  if (!marks && !palette) return '';
+  return `<div class="acts">${marks}${palette}</div>`;
+}
+
+/* Offered exactly when the composer is a box you can type in: a wallet the
+   room will let speak, signed in for the month. Studio's other rig ... a
+   signature per action ... still works and the route still takes it, but a tap
+   on a cherry that opens a hardware wallet is not what a tap on a cherry
+   should do. Signing in is one signature and then neither asks again. */
+const mayAct = () => Boolean(ROOM.me && ROOM.me.can_speak && mySession());
+
+/* The two quiet ways in, in the measuring line above the words. Always in the
+   page and invisible until the pointer is over the message, so nothing moves
+   when they arrive and forty messages do not each carry two buttons nobody is
+   looking at. On a touch screen there is no pointer to arrive under, so they
+   simply sit there, faintly. */
+function waysIn(m) {
+  if (m.deleted || !mayAct() || ROOM.palette === m.n) return '';
+  return `<button class="quiet" data-act="reply" data-n="${m.n}">Reply</button>
+    <button class="quiet" data-act="palette" data-n="${m.n}" aria-label="React to this message">React</button>`;
 }
 
 function composer() {
@@ -438,6 +678,7 @@ function composer() {
   }
   const len = ROOM.draft.length;
   return `<div class="box">
+    ${replyingTo()}
     <div class="field">
       <textarea id="text" placeholder="Say something. Type @ to name somebody." spellcheck="true"
         aria-autocomplete="list" aria-expanded="${ROOM.tag.open}" aria-controls="atList"
@@ -455,27 +696,62 @@ function composer() {
   </div>`;
 }
 
+/* Who you are answering, above the box you are answering them in.
+   The number is what is sent; the name is only how the page says it back. */
+function replyingTo() {
+  if (ROOM.replyTo == null) return '';
+  const m = rowAt(ROOM.replyTo);
+  const name = m ? (m.role === 'artist' ? 'MintFace' : (m.name || short(m.address))) : `message ${ROOM.replyTo}`;
+  const quote = m && m.text ? m.text.replace(/\s+/g, ' ').slice(0, 90) : '';
+  return `<div class="replying">
+    <span>&#8627; Replying to ${e(name)}</span>
+    ${quote ? `<span class="quote">${e(quote)}</span>` : ''}
+    <button type="button" data-act="unreply" title="Not a reply" aria-label="Cancel the reply">&times;</button>
+  </div>`;
+}
+
 /* You, in the room's own header.
  *
- * Your name where everybody else's is, linked to the same page theirs are, and
- * beside it what was waiting. No email and no push: the room tells you inside
- * the room, which is the only place the telling belongs. Nothing is drawn for
- * a reader who has not said who they are ... there is nobody to have mentioned.
- */
+ * Your name where everybody else's is, linked to the same page theirs are.
+ * What was waiting for you used to be said here as a sentence; it is the
+ * cherry now, up in the corner, and one notifier is enough. */
 function youLine() {
   const me = ROOM.me;
   if (!me || !ROOM.wallet) return '';
   const label = e(me.name || short(ROOM.wallet));
   const who = me.url ? `<a href="${e(me.url)}">${label}</a>` : label;
+  return `<div class="you">${who}</div>`;
+}
+
+/* The cherry.
+ *
+ * The room's one notifier, in the corner of its header, and a state rather
+ * than a movement: grey and dormant while nobody has said your name, itself
+ * the moment somebody has. The same energy as the single green dot elsewhere
+ * on this site ... colour arriving is the whole event, and nothing bounces.
+ *
+ * Pressing it goes to the earliest thing you have not read, walking back
+ * through the log to find it if it is older than what is on screen, and marks
+ * the count read on the way. Dormant it is not a button at all: there is
+ * nowhere for it to take you, and a control that does nothing is worse than a
+ * mark that says nothing. */
+function cherry() {
   const n = ROOM.waiting || 0;
-  /* A first visit counts everything, because none of it has been read ... but
-     there is no last visit to say "since" about, so the line does not claim
-     there was one. */
-  const first = Boolean(me.mentions && me.mentions.first_visit);
-  const said = n
-    ? `<span class="said">${n} mention${n === 1 ? '' : 's'}${first ? '' : ' since your last visit'}</span>`
-    : '';
-  return `<div class="you">${who}${said}</div>`;
+  const live = Boolean(n && ROOM.me && ROOM.wallet);
+  const fruit = '<span class="fruit" aria-hidden="true">&#127826;</span>';
+  if (!live) {
+    const why = ROOM.me ? 'Nobody has said your name since you last looked.' : 'Studio tells you here when somebody says your name.';
+    return `<span class="cherry" id="cherry" title="${why}">${fruit}</span>`;
+  }
+  return `<button class="cherry" id="cherry" data-act="cherry"
+    title="Go to the first of them" aria-label="${n} unread mention${n === 1 ? '' : 's'}. Go to the first of them.">
+    ${fruit}<span class="n">${n}</span></button>`;
+}
+
+// redrawn on its own, because the count changes while somebody is mid-sentence
+function paintCherry() {
+  const el = document.getElementById('cherry');
+  if (el) el.outerHTML = cherry();
 }
 
 /* Naming somebody.
@@ -601,24 +877,32 @@ function status(text, bad) {
   el.hidden = !text;
 }
 
-function draw({ keep = false, toEnd = false } = {}) {
+function draw({ keep = false, toEnd = false, toBottom = false } = {}) {
   const before = keep ? document.documentElement.scrollHeight : 0;
   const say = `<div class="say${ROOM.say && ROOM.say.bad ? ' bad' : ''}" id="say"${ROOM.say ? '' : ' hidden'}>${e(ROOM.say ? ROOM.say.text : '')}</div>`;
 
   document.getElementById('main').innerHTML = `
     <section class="mast">
-      <h1>Studio</h1>
+      <div class="head">
+        <h1>Studio</h1>
+        ${cherry()}
+      </div>
       <div class="sub">chillin' in the studio talking art with each other. TAO gets you in. All can read. Own 1x MintFace artwork, chat in Studio.</div>
       ${youLine()}
     </section>
     <section class="room" id="log">
-      ${ROOM.more ? '<button class="earlier" data-act="earlier">Read earlier</button>' : ''}
+      ${ROOM.more ? '<button class="earlier" id="earlier" data-act="earlier">&#8593; Earlier</button>' : ''}
       ${ROOM.rows.length ? ROOM.rows.map(card).join('') : '<div class="empty">Nobody has said anything yet.</div>'}
     </section>
     <section class="speak">${composer()}${say}</section>`;
 
   if (keep) window.scrollBy(0, document.documentElement.scrollHeight - before);
+  /* The foot of the room, without the journey. Opening at the latest message
+     is the whole point of it, and gliding there through a year of history is
+     both slower and stranger than simply being there. */
+  if (toBottom) window.scrollTo(0, document.documentElement.scrollHeight);
   if (toEnd) window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  watchTop();
   const t = document.getElementById('text');
   /* A redraw rebuilds the box, and rebuilding the box puts the caret at the
      start of somebody's half-written sentence. Where it was is remembered and
@@ -628,6 +912,46 @@ function draw({ keep = false, toEnd = false } = {}) {
     const at = ROOM.caret == null ? t.value.length : Math.min(ROOM.caret, t.value.length);
     t.setSelectionRange(at, at);
   }
+}
+
+/* History arrives upward, on its own, when a reader goes looking for it.
+ *
+ * The affordance at the top stays ... it is the thing that says there is more,
+ * and it is what a keyboard reaches for ... but nobody should have to press it
+ * once per fifty messages to read backwards through a year. It is watched
+ * instead, and coming into view is the press.
+ *
+ * The observer is hung on a fresh button every draw, so it fires once as it is
+ * hung. That is right: after a page is added the button sits a page further up
+ * and out of view, and it says nothing more until somebody goes back to it. */
+let watcher = null;
+function watchTop() {
+  if (watcher) { watcher.disconnect(); watcher = null; }
+  const el = document.getElementById('earlier');
+  if (!el || !ROOM.more || !window.IntersectionObserver) return;
+  watcher = new IntersectionObserver((entries) => {
+    if (entries.some((x) => x.isIntersecting)) earlier();
+  }, { rootMargin: '300px 0px 0px 0px' });
+  watcher.observe(el);
+}
+
+/* Going to a message, which may not be on the page yet.
+ *
+ * A reply points at a message number, and the room only holds the pages it has
+ * been asked for. So it walks backwards a page at a time until the number is
+ * in hand, which is the same walk a reader would make and rather quicker. */
+async function goTo(n) {
+  const want = Number(n);
+  if (!Number.isFinite(want)) return;
+  let guard = 0;
+  while (!rowAt(want) && ROOM.more && ROOM.start > want && guard++ < 60) {
+    if (!(await pullEarlier())) break;
+  }
+  const el = document.getElementById(`m-${want}`);
+  if (!el) { status('That message is further back than Studio could reach.', true); return; }
+  el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  el.classList.add('found');
+  setTimeout(() => el.classList.remove('found'), 1400);
 }
 
 /* Connecting connects, and nothing else. No signature is asked for here, and
@@ -772,6 +1096,12 @@ document.addEventListener('input', (ev) => {
  * reach back for it. So the one keystroke that follows may undo it, and any
  * other keystroke ends the offer. */
 document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape' && ROOM.palette != null && !ROOM.tag.open) {
+    const was = ROOM.palette;
+    ROOM.palette = null;
+    repaint(was);
+    return;
+  }
   if (!ev.target.matches('#text')) return;
   if (ROOM.autoSpace != null) {
     const at = ROOM.autoSpace;
@@ -786,6 +1116,22 @@ document.addEventListener('keydown', (ev) => {
       ROOM.caret = at;
     }
   }
+  /* Return sends; shift and return is a new line.
+   *
+   * A room is typed in, not filled in, and reaching for a button after every
+   * sentence is the difference between talking and filing. SAY IT stays where
+   * it is for a mouse and for a thumb ... and on a touch screen return stays
+   * the return key, because a software keyboard has no shift to hold and the
+   * only paragraph break a thumb has should not be taken away from it.
+   *
+   * The @ list has first claim on return: while it is open, return is choosing
+   * a name, which is the thing the hand was in the middle of. */
+  if (ev.key === 'Enter' && !ev.shiftKey && !ev.isComposing && !TOUCH && !ROOM.tag.open) {
+    ev.preventDefault();
+    if (!ROOM.busy) sayIt(null);
+    return;
+  }
+
   if (!ROOM.tag.open) return;
   const rows = ROOM.tag.rows;
   if (ev.key === 'Escape') { ev.preventDefault(); shutTag(); paintTags(); return; }
@@ -802,11 +1148,100 @@ document.addEventListener('keydown', (ev) => {
 
 // clicking anywhere that is not the list closes it, the way a menu closes
 document.addEventListener('click', (ev) => {
-  if (!ROOM.tag.open) return;
-  if (ev.target.closest('#atList') || ev.target.matches('#text')) return;
-  shutTag();
-  paintTags();
+  if (ROOM.tag.open && !ev.target.closest('#atList') && !ev.target.matches('#text')) {
+    shutTag();
+    paintTags();
+  }
+  /* And the palette likewise. Not when the press was the palette itself, or
+     the affordance that opened it ... that one is a toggle. */
+  if (ROOM.palette != null && !ev.target.closest('.pal') && !ev.target.closest('[data-act="palette"]')) {
+    const was = ROOM.palette;
+    ROOM.palette = null;
+    repaint(was);
+  }
 });
+
+/* Busy, and then not busy.
+ *
+ * Two things went wrong here and both were invisible until somebody watched
+ * the screen. The button was relabelled 'Sign and say' whatever it had been
+ * ... so muting a wallet renamed the mute button ... and, worse, an action
+ * that redraws the composer under itself left the room drawn while it was
+ * still busy: signing in rendered the send button from `ROOM.busy === true`
+ * and it read 'Sending' from then until somebody else spoke.
+ *
+ * So the label is put back rather than invented, and where the button this ran
+ * from is no longer on the page, the room is drawn again now that it is idle.
+ * Nothing else knows to do it: the redraw happened inside the work.
+ *
+ * The button may also be nothing at all, which is what pressing return is:
+ * then it is the send button that goes quiet for the duration, wherever it is.
+ */
+async function run(b, fn, { redraw = true } = {}) {
+  if (ROOM.busy) return;
+  ROOM.busy = true;
+  const was = b ? b.textContent : null;
+  if (b) { b.disabled = true; if (b.dataset.act === 'say') b.textContent = 'Sending'; }
+  else {
+    const go = document.getElementById('go');
+    if (go) { go.disabled = true; go.textContent = 'Sending'; }
+  }
+  try {
+    await fn();
+  } catch (err) {
+    /* MF.sign has already put its own reason on the line, and it is a better
+       one than the rethrow carries. Anything else that fails ... the network,
+       Studio refusing the message ... says so here. */
+    status(String((err && err.message) || err), true);
+  } finally {
+    ROOM.busy = false;
+    if (b && document.body.contains(b)) { b.disabled = false; b.textContent = was; }
+    else if (redraw) draw();
+  }
+}
+
+/* Saying it. One path, whichever way it was asked for: the button under the
+   pointer, or return on a keyboard. */
+async function sayIt(b) {
+  const box = document.getElementById('text');
+  const text = box ? box.value : '';
+  if (!text.trim() || text.length > ROOM.max) return;
+  const reply = ROOM.replyTo;
+  return run(b, async () => {
+    await send({ action: 'say', text, reply: reply == null ? null : String(reply) });
+    ROOM.draft = '';
+    ROOM.caret = null;
+    ROOM.replyTo = null;
+    shutTag();
+    ROOM.focus = true;
+    await load();
+    status(null);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  });
+}
+
+/* A mark under something somebody said.
+ *
+ * Pressing one you have already left takes it back, which is why there is no
+ * separate way to undo it. It takes TAO like speaking, so a reader who cannot
+ * speak is told that rather than sent to a wallet that will refuse. */
+async function mark(b, n, emoji) {
+  if (!ROOM.wallet) { status('Connect a wallet to react. Reading takes nothing.', true); return; }
+  if (!ROOM.me || !ROOM.me.can_speak) {
+    status((ROOM.me && ROOM.me.why) || 'This wallet cannot react in Studio.', true);
+    return;
+  }
+  if (!mySession()) { status(`Sign in to react. One signature opens Studio for ${ROOM.days} days.`, true); return; }
+  return run(b, async () => {
+    const j = await send({ action: 'react', target: String(n), emoji });
+    const m = rowAt(n);
+    if (m) m.reactions = j.reactions || [];
+    if (j.rx != null) ROOM.rxv = j.rx;
+    ROOM.palette = null;
+    repaint(n);
+    status(null);
+  }, { redraw: false });     // the work redrew the one article this ran from
+}
 
 document.addEventListener('click', async (ev) => {
   const b = ev.target.closest('button[data-act]');
@@ -815,10 +1250,48 @@ document.addEventListener('click', async (ev) => {
 
   if (act === 'attag') return takeTag(Number(b.dataset.i));
   if (act === 'earlier') return earlier();
+  if (act === 'goto') return void goTo(b.dataset.n);
   if (act === 'connect') return void connect();
   if (act === 'pick') return void connect(b.dataset.uuid);
   if (act === 'which') return void sayWhatWeSee();
   if (act === 'again') return void (await load(), status(null));
+
+  /* The palette, open under one message at a time. It is page state and
+     nothing else, so it repaints the message it belongs to and no more. */
+  if (act === 'palette' || act === 'unpalette') {
+    const was = ROOM.palette;
+    ROOM.palette = act === 'palette' ? Number(b.dataset.n) : null;
+    if (was != null) repaint(was);
+    if (ROOM.palette != null) repaint(ROOM.palette);
+    return;
+  }
+  if (act === 'rx') return void mark(b, Number(b.dataset.n), b.dataset.e);
+
+  /* Answering somebody. The composer says who, the log says nothing yet ...
+     a reply is a thing that was said, and nothing has been said. */
+  if (act === 'reply') {
+    ROOM.replyTo = Number(b.dataset.n);
+    ROOM.palette = null;
+    ROOM.focus = true;
+    draw();
+    const box = document.getElementById('text');
+    if (box) { box.focus(); box.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+    return;
+  }
+  if (act === 'unreply') { ROOM.replyTo = null; ROOM.focus = true; draw(); return; }
+
+  /* The cherry. Where it takes you, and the reading of it, are one press: it
+     is the notifier, so it is the thing that clears its own count. */
+  if (act === 'cherry') {
+    const to = ROOM.next;
+    ROOM.waiting = 0;
+    ROOM.next = null;
+    paintCherry();
+    markSeen();
+    if (to != null) await goTo(to);
+    return;
+  }
+
   if (act === 'signout') {
     const s0 = mySession();
     keep(null);
@@ -828,77 +1301,41 @@ document.addEventListener('click', async (ev) => {
     return;
   }
 
-  /* Busy, and then not busy.
-   *
-   * Two things went wrong here and both were invisible until somebody watched
-   * the screen. The button was relabelled 'Sign and say' whatever it had been
-   * ... so muting a wallet renamed the mute button ... and, worse, an action
-   * that redraws the composer under itself left the room drawn while it was
-   * still busy: signing in rendered the send button from `ROOM.busy === true`
-   * and it read 'Sending' from then until somebody else spoke.
-   *
-   * So the label is put back rather than invented, and where the button this
-   * ran from is no longer on the page, the room is drawn again now that it is
-   * idle. Nothing else knows to do it: the redraw happened inside the work. */
-  const run = async (fn) => {
-    ROOM.busy = true;
-    b.disabled = true;
-    const was = b.textContent;
-    if (b.dataset.act === 'say') b.textContent = 'Sending';
-    try {
-      await fn();
-    } catch (err) {
-      /* MF.sign has already put its own reason on the line, and it is a better
-         one than the rethrow carries. Anything else that fails ... the network,
-         Studio refusing the message ... says so here. */
-      status(String((err && err.message) || err), true);
-    } finally {
-      ROOM.busy = false;
-      if (document.body.contains(b)) { b.disabled = false; b.textContent = was; }
-      else draw();
-    }
-  };
-
   if (act === 'signin') {
     // signing in is when the room first knows who you are, so it is the first
     // moment it can say what was waiting for you
-    return run(async () => { await signIn(); ROOM.waiting = null; ROOM.marked = false; await load(); });
+    return run(b, async () => { await signIn(); await load(); });
   }
 
-  if (act === 'say') {
-    const text = (document.getElementById('text') || {}).value || '';
-    return run(async () => {
-      await send({ action: 'say', text });
-      ROOM.draft = '';
-      ROOM.caret = null;
-      shutTag();
-      ROOM.focus = true;
-      await load();
-      status(null);
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    });
-  }
+  if (act === 'say') return sayIt(b);
 
+  /* Taking a message down, and putting it back. One article changes, and the
+     room around it does not: a reader five pages up should not be thrown to
+     the foot of the log because the artist tidied something. */
   if (act === 'delete' || act === 'restore') {
-    return run(async () => {
-      await send({ action: act, target: String(b.dataset.n) });
-      await load();
+    return run(b, async () => {
+      const j = await send({ action: act, target: String(b.dataset.n) });
+      const n = Number(b.dataset.n);
+      const i = ROOM.rows.findIndex((m) => m.n === n);
+      if (i > -1 && j.message) ROOM.rows[i] = j.message;
+      repaint(n);
       status(null);
-    });
+    }, { redraw: false });
   }
 
   if (act === 'mute') {
     const who = b.dataset.who;
     if (!window.confirm(`Mute ${who}? They can still read, and nothing in Studio will say so.`)) return;
-    return run(async () => {
+    return run(b, async () => {
       await send({ action: 'mute', target: who });
-      await load();
       status(`${who} is muted.`);
     });
   }
 });
 
-load().then(() => {
+/* Open at the bottom. The room is a log kept forever, and a log kept forever
+   that opens at its first line is a room nobody reaches the end of. */
+load({ bottom: true }).then(() => {
   ROOM.timer = setInterval(poll, 6000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
 });
