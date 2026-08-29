@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-08-28T21:30:58.470Z",
+ "generated": "2026-08-29T21:02:23.721Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -14,15 +14,16 @@
   "wallets": 3438
  },
  "counts": {
-  "collectors": 3681,
+  "collectors": 3680,
   "with_page": 808,
   "private": 0,
-  "named": 1217
+  "named": 1152
  },
  "collectors": [
   {
    "address": "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8",
    "ens": "visco.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "visco.eth",
    "private": false,
@@ -42,6 +43,7 @@
   {
    "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
    "ens": "iagof.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "iagof.eth",
    "private": false,
@@ -61,6 +63,7 @@
   {
    "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
    "ens": "0xunix.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xunix.eth",
    "private": false,
@@ -80,6 +83,7 @@
   {
    "address": "0x128ad42b82c752c5b4c7f679231d8956c98038eb",
    "ens": "seizerdao.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "seizerdao.eth",
    "private": false,
@@ -91,7 +95,7 @@
     "collections": 2
    },
    "first_collected": "2022-12-07T02:43:59.000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z",
    "tao": 281898,
    "tao_rate": 210,
    "tao_rank": 35
@@ -99,6 +103,7 @@
   {
    "address": "0xc6400a5584db71e41b0e5dfbdc769b54b91256cd",
    "ens": "6529museum.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "6529museum.eth",
    "private": false,
@@ -118,6 +123,7 @@
   {
    "address": "0x13eee41d67b8d99e11174161d72cf8ccd194458c",
    "ens": "davidkibler.eth",
+   "fwd": null,
    "display_name": "davidkibler.eth",
    "slug": "davidkibler.eth",
    "private": false,
@@ -137,6 +143,7 @@
   {
    "address": "0x95b2db3f49b8a5365afacc6342f5ece0d253f8e0",
    "ens": "vvveary.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vvveary.eth",
    "private": false,
@@ -156,6 +163,7 @@
   {
    "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
    "ens": "piercedcat.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "piercedcat.eth",
    "private": false,
@@ -175,6 +183,7 @@
   {
    "address": "0x98dc45a0a69a60e63f7a042507ab38e4d492cd69",
    "ens": "mint.justanotherblockinthechain.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mint.justanotherblockinthechain.eth",
    "private": false,
@@ -186,7 +195,7 @@
     "collections": 3
    },
    "first_collected": "2024-10-01T02:12:35.000000Z",
-   "last_collected": "2025-05-16T15:39:11.000000Z",
+   "last_collected": "2024-10-01T02:12:35.000000Z",
    "tao": 10504,
    "tao_rate": 8.4,
    "tao_rank": 1252
@@ -194,6 +203,7 @@
   {
    "address": "0xd69e257ae6088b717ae6d2ddec9297703b4fb725",
    "ens": "mysterian.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mysterian.eth",
    "private": false,
@@ -213,6 +223,7 @@
   {
    "address": "0x32ffe815277ff53dd2a73557664e229899e6501e",
    "ens": "justanotherblockinthechain.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "justanotherblockinthechain.eth",
    "private": false,
@@ -232,6 +243,7 @@
   {
    "address": "0xc73ffb72eb85059908b6f72ef4b0d3b38d46e0ad",
    "ens": null,
+   "fwd": "magnivault.eth",
    "display_name": null,
    "slug": "0xc73ffb72",
    "private": false,
@@ -251,6 +263,7 @@
   {
    "address": "0x6140f00e4ff3936702e68744f2b5978885464cbb",
    "ens": "yungwknd.xyz",
+   "fwd": null,
    "display_name": null,
    "slug": "0x6140f00e",
    "private": false,
@@ -270,6 +283,7 @@
   {
    "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
    "ens": "imagebyandy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "imagebyandy.eth",
    "private": false,
@@ -289,6 +303,7 @@
   {
    "address": "0xffc15ef23f4ba7faf4b4d3c28a35a28f126bcc0d",
    "ens": "byoldme.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "byoldme.eth",
    "private": false,
@@ -308,6 +323,7 @@
   {
    "address": "0x7a5adc385831130a51c579cadedcad6780f6ab5f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x7a5adc38",
    "private": false,
@@ -327,6 +343,7 @@
   {
    "address": "0xc142dc5ceb96f73635d66b62bfde2a0eea4e4ce1",
    "ens": "sumofprimes.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sumofprimes.eth",
    "private": false,
@@ -346,6 +363,7 @@
   {
    "address": "0x93c4b4334f77d56a84a13077d7fc6f38e3ff833f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x93c4b433",
    "private": false,
@@ -365,6 +383,7 @@
   {
    "address": "0xee2c055f7706b9dfcd98cd5a23d5629d6316c0bd",
    "ens": "parachica.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "parachica.eth",
    "private": false,
@@ -384,6 +403,7 @@
   {
    "address": "0x0a1c6f1638adbe3873c7e8dad6c0e3b08285ba07",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0a1c6f16",
    "private": false,
@@ -403,6 +423,7 @@
   {
    "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
    "ens": "carlos28355.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "carlos28355.eth",
    "private": false,
@@ -422,6 +443,7 @@
   {
    "address": "0xe09c0d24725c5e3b191031aa43a84e19b9bb120b",
    "ens": null,
+   "fwd": "josephj.eth",
    "display_name": null,
    "slug": "0xe09c0d24",
    "private": false,
@@ -441,6 +463,7 @@
   {
    "address": "0x565465a0e19309ecb839319453e2c83aa0befdf2",
    "ens": "dinocelotti.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dinocelotti.eth",
    "private": false,
@@ -460,6 +483,7 @@
   {
    "address": "0x31f8e9b0c3da5ea19f06c6df7e88f3c60fdda1b4",
    "ens": null,
+   "fwd": null,
    "display_name": "firstladyart.eth",
    "slug": "firstladyart.eth",
    "private": false,
@@ -471,7 +495,7 @@
     "collections": 8
    },
    "first_collected": "2022-05-11T03:56:30.000000Z",
-   "last_collected": "2025-12-26T03:48:23.000000Z",
+   "last_collected": "2025-02-09T00:42:47.000000Z",
    "tao": 515027,
    "tao_rate": 870,
    "tao_rank": 12
@@ -479,6 +503,7 @@
   {
    "address": "0xc839de0fed241607d50aa4107ae582443b906e4c",
    "ens": "hugofaz.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hugofaz.eth",
    "private": false,
@@ -498,6 +523,7 @@
   {
    "address": "0x41254fe73d3b49f0fe3cc7743b4d40ef26bb338e",
    "ens": "jpghodl.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jpghodl.eth",
    "private": false,
@@ -517,6 +543,7 @@
   {
    "address": "0xafccebed934565586a749c66ff352b0fc871042b",
    "ens": "memevault1.web3at50.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "memevault1.web3at50.eth",
    "private": false,
@@ -527,7 +554,7 @@
     "editions": 22,
     "collections": 3
    },
-   "first_collected": "2025-05-16T10:36:23.000000Z",
+   "first_collected": "2025-09-28T10:34:35.000000Z",
    "last_collected": "2025-09-28T10:36:11.000000Z",
    "tao": 55952,
    "tao_rate": 165.6,
@@ -536,6 +563,7 @@
   {
    "address": "0xf7b6409b12a540947688f054dbf5b629fb3fc7d8",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf7b6409b",
    "private": false,
@@ -555,6 +583,7 @@
   {
    "address": "0x9e597a7e01ed135effb7e95bd017fe958e7656b8",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9e597a7e",
    "private": false,
@@ -574,6 +603,7 @@
   {
    "address": "0xde58879de5ca41367a5093dee41f622c167b94b4",
    "ens": null,
+   "fwd": null,
    "display_name": "sailoulau.eth",
    "slug": "sailoulau.eth",
    "private": false,
@@ -585,7 +615,7 @@
     "collections": 9
    },
    "first_collected": "2025-07-09T00:48:47.000000Z",
-   "last_collected": "2025-12-26T03:45:59.000000Z",
+   "last_collected": "2025-09-08T05:25:47.000000Z",
    "tao": 193217,
    "tao_rate": 468.6,
    "tao_rank": 62
@@ -593,6 +623,7 @@
   {
    "address": "0x410e7f16476faff4a4d7565d8b34245cb52dfdc2",
    "ens": "nesnft.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nesnft.eth",
    "private": false,
@@ -612,6 +643,7 @@
   {
    "address": "0xa1f05dbe26cdc2ede4f410a5c54fe6473b5d7071",
    "ens": null,
+   "fwd": null,
    "display_name": "ryanog.eth",
    "slug": "ryanog.eth",
    "private": false,
@@ -623,7 +655,7 @@
     "collections": 9
    },
    "first_collected": "2025-07-09T00:57:59.000000Z",
-   "last_collected": "2025-12-26T03:41:47.000000Z",
+   "last_collected": "2025-09-08T05:24:23.000000Z",
    "tao": 118213,
    "tao_rate": 278.4,
    "tao_rank": 122
@@ -631,6 +663,7 @@
   {
    "address": "0xc6aef9394574777c237fc10bb122589d36d13dc7",
    "ens": "awesomedave.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "awesomedave.eth",
    "private": false,
@@ -650,6 +683,7 @@
   {
    "address": "0xaab85567766043f4108d486b1c27535d0d57678e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xaab85567",
    "private": false,
@@ -669,6 +703,7 @@
   {
    "address": "0xa41341bab6588948da8503d1dfb0a0ab0ea269cb",
    "ens": "square-pixel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "square-pixel.eth",
    "private": false,
@@ -688,6 +723,7 @@
   {
    "address": "0x4936b305102f442080d4711f14c5f0318e3caf74",
    "ens": "madyak.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "madyak.eth",
    "private": false,
@@ -707,6 +743,7 @@
   {
    "address": "0x9b568c65c0f1bc630d44ef7bcb24a815343912f1",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9b568c65",
    "private": false,
@@ -721,11 +758,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xa891fde42e982148b5f2f6b06f04be8e706a190e",
    "ens": "wall2wall.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "wall2wall.eth",
    "private": false,
@@ -740,11 +778,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x33a34e27a81436ba9d79276406a285e89a8bd8a8",
    "ens": "tacita.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "tacita.eth",
    "private": false,
@@ -756,7 +795,7 @@
     "collections": 6
    },
    "first_collected": "2022-12-14T19:15:11.000Z",
-   "last_collected": "2025-05-16T14:42:11.000000Z",
+   "last_collected": "2025-02-09T00:42:47.000000Z",
    "tao": 252839,
    "tao_rate": 278.4,
    "tao_rank": 39
@@ -764,6 +803,7 @@
   {
    "address": "0x15fe6532890e9e9585462a935e335cf3ee38fc72",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x15fe6532",
    "private": false,
@@ -783,6 +823,7 @@
   {
    "address": "0xeeaf3bd19ebe8823abcc994538a930ee37a6dd3b",
    "ens": "christophejr.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "christophejr.eth",
    "private": false,
@@ -802,6 +843,7 @@
   {
    "address": "0xe65435797497d5be25f33d70d26698ec32dd6a0d",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe6543579",
    "private": false,
@@ -821,6 +863,7 @@
   {
    "address": "0xa903c06bf35286f6d1cdad25396748353979a44c",
    "ens": "benbodhi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "benbodhi.eth",
    "private": false,
@@ -840,6 +883,7 @@
   {
    "address": "0x5feadf8ef647da7f07584b3d33fcd565b79359a4",
    "ens": null,
+   "fwd": "bitcoinbond.eth",
    "display_name": null,
    "slug": "0x5feadf8e",
    "private": false,
@@ -859,6 +903,7 @@
   {
    "address": "0x82139687faae8a29851902783e02e699de0e0846",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x82139687",
    "private": false,
@@ -878,6 +923,7 @@
   {
    "address": "0xc25461af5e224b7aceeaf0eff443a239fd5040e6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xc25461af",
    "private": false,
@@ -897,6 +943,7 @@
   {
    "address": "0x1e7f2ef8bbde7fcaea03ba0c83d5d293d066f41c",
    "ens": "icdaywee.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "icdaywee.eth",
    "private": false,
@@ -916,6 +963,7 @@
   {
    "address": "0x1b49e7c19632d27b3362151ef1f1818e5eab69f7",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1b49e7c1",
    "private": false,
@@ -930,11 +978,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xfcab2f0f8e64bbda95e1c65d368e6cb22bc5a808",
    "ens": null,
+   "fwd": "sigpunk.eth",
    "display_name": null,
    "slug": "0xfcab2f0f",
    "private": false,
@@ -954,6 +1003,7 @@
   {
    "address": "0x7a79944ac7e770cfd13ec024a4b31b8c5efee60d",
    "ens": "alpinelifer.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "alpinelifer.eth",
    "private": false,
@@ -973,6 +1023,7 @@
   {
    "address": "0xd70150a7a5a42d4cd25974dae077a79a1547fcf2",
    "ens": null,
+   "fwd": "ggroogle.eth",
    "display_name": null,
    "slug": "0xd70150a7",
    "private": false,
@@ -984,7 +1035,7 @@
     "collections": 7
    },
    "first_collected": "2022-05-28T05:36:57.000000Z",
-   "last_collected": "2025-05-16T15:34:23.000000Z",
+   "last_collected": "2024-10-01T02:12:35.000000Z",
    "tao": 143067,
    "tao_rate": 105,
    "tao_rank": 86
@@ -992,6 +1043,7 @@
   {
    "address": "0xa5214719feb1d07b66292a5d4d0a2712bd048435",
    "ens": "prateeksaraf.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "prateeksaraf.eth",
    "private": false,
@@ -1003,7 +1055,7 @@
     "collections": 7
    },
    "first_collected": "2022-05-27T05:58:09.000000Z",
-   "last_collected": "2025-05-16T15:23:59.000000Z",
+   "last_collected": "2024-10-05T07:49:11.000000Z",
    "tao": 97799,
    "tao_rate": 75.6,
    "tao_rank": 162
@@ -1011,6 +1063,7 @@
   {
    "address": "0x40d2f4399d23f9afb82d0a6b73055f13208614f9",
    "ens": "mintsafe.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mintsafe.eth",
    "private": false,
@@ -1030,6 +1083,7 @@
   {
    "address": "0x43d4bdeeca8dd891e89ed80dac83b70bf2d1d753",
    "ens": "photox.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "photox.eth",
    "private": false,
@@ -1049,6 +1103,7 @@
   {
    "address": "0x9438160d839391bd22a2bc8cdcaab010063ba131",
    "ens": null,
+   "fwd": "badroibot.eth",
    "display_name": null,
    "slug": "0x9438160d",
    "private": false,
@@ -1068,6 +1123,7 @@
   {
    "address": "0xcf4485735f981bff764023f04c58d2db649b3b8d",
    "ens": "roanas.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "roanas.eth",
    "private": false,
@@ -1087,6 +1143,7 @@
   {
    "address": "0x856a4ed4c11a610cc2a4dd706f5642208bf6521d",
    "ens": "trentnorth.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "trentnorth.eth",
    "private": false,
@@ -1106,6 +1163,7 @@
   {
    "address": "0xd0b53c871a4c2ab5db77ad752aa950f781021982",
    "ens": "safe.regulardad.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "safe.regulardad.eth",
    "private": false,
@@ -1117,7 +1175,7 @@
     "collections": 3
    },
    "first_collected": "2025-01-25T13:32:35.000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2025-02-17T00:19:11.000000Z",
    "tao": 35812,
    "tao_rate": 63,
    "tao_rank": 351
@@ -1125,6 +1183,7 @@
   {
    "address": "0x96f123700044e61445dcae6df2de78dc754504f3",
    "ens": "sirkrahe.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sirkrahe.eth",
    "private": false,
@@ -1144,6 +1203,7 @@
   {
    "address": "0xf9eeea18a0ae0b90d0840d2b8501b4687822c2f1",
    "ens": "vault.justanotherblockinthechain.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vault.justanotherblockinthechain.eth",
    "private": false,
@@ -1163,6 +1223,7 @@
   {
    "address": "0xa20377b058e3e7fddf5ec14e8f64b17b9c8e744f",
    "ens": "lowenphast.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lowenphast.eth",
    "private": false,
@@ -1182,6 +1243,7 @@
   {
    "address": "0x3686a4b272c646ef6fbe34377337d95db7356e63",
    "ens": "hiten.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hiten.eth",
    "private": false,
@@ -1201,6 +1263,7 @@
   {
    "address": "0x91a3ebce4e0d326539c6e2720f25449774cb615e",
    "ens": "brucezayne.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "brucezayne.eth",
    "private": false,
@@ -1220,6 +1283,7 @@
   {
    "address": "0x18e0f9aadde970d74430cc8636a381ccfcd1f559",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x18e0f9aa",
    "private": false,
@@ -1239,6 +1303,7 @@
   {
    "address": "0x914361b591a8c8de83a0d4e23c7c6da2d226eefd",
    "ens": null,
+   "fwd": "kadinneill.eth",
    "display_name": null,
    "slug": "0x914361b5",
    "private": false,
@@ -1258,6 +1323,7 @@
   {
    "address": "0xf52a30142877e3b7d30f3f6bb2c6bc55b8888710",
    "ens": "astromarkc.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "astromarkc.eth",
    "private": false,
@@ -1277,6 +1343,7 @@
   {
    "address": "0x19d266792b28a441cb0f6a3334ba617ef18b50ee",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x19d26679",
    "private": false,
@@ -1296,6 +1363,7 @@
   {
    "address": "0x2777129e77c1ccf6c6987117bacfadcbd573f3a9",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x2777129e",
    "private": false,
@@ -1315,6 +1383,7 @@
   {
    "address": "0x7020965f33ae0458e45929d7771ba6f301c3d855",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x7020965f",
    "private": false,
@@ -1334,6 +1403,7 @@
   {
    "address": "0xb099a3c3043b262518d9b6cd4d5c9f589b15e2ad",
    "ens": "100series.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "100series.eth",
    "private": false,
@@ -1353,6 +1423,7 @@
   {
    "address": "0x81b55fbe66c5ffbb8468328e924af96a84438f14",
    "ens": "a7111a.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "a7111a.eth",
    "private": false,
@@ -1372,6 +1443,7 @@
   {
    "address": "0xbd751cac1fb27d930a6a0394d97c77908d94ad5d",
    "ens": "summernoka-x-x.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "summernoka-x-x.eth",
    "private": false,
@@ -1391,6 +1463,7 @@
   {
    "address": "0x257984b6b5bcfd665532649450242d4df1eb304f",
    "ens": "_xo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "_xo.eth",
    "private": false,
@@ -1410,6 +1483,7 @@
   {
    "address": "0xe6ce1bc6255fcc6598f07fab5d7c851c73c423c3",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe6ce1bc6",
    "private": false,
@@ -1429,6 +1503,7 @@
   {
    "address": "0xf1e1c701b49b1dc2405a9e8ef40f9f88802b80fa",
    "ens": "norcalguy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "norcalguy.eth",
    "private": false,
@@ -1448,6 +1523,7 @@
   {
    "address": "0xeeda4e9a5ca757e3a2dd9ab5d91e99c4a1ff0423",
    "ens": "0x69x0.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0x69x0.eth",
    "private": false,
@@ -1467,6 +1543,7 @@
   {
    "address": "0xbbc37f68e9876d64b2c55016081528ae0a85d8b2",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xbbc37f68",
    "private": false,
@@ -1486,6 +1563,7 @@
   {
    "address": "0xdf36b093cbc06522b68105c3d9141db188e980b6",
    "ens": "gmmoney.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "gmmoney.eth",
    "private": false,
@@ -1497,7 +1575,7 @@
     "collections": 5
    },
    "first_collected": "2022-07-11T04:53:37.000Z",
-   "last_collected": "2025-05-16T21:45:59.000000Z",
+   "last_collected": "2024-10-05T07:49:11.000000Z",
    "tao": 78387,
    "tao_rate": 58.8,
    "tao_rank": 196
@@ -1505,6 +1583,7 @@
   {
    "address": "0x832834fc5b0b35ffd4cf697c4ec08815ad8d6a52",
    "ens": "jassioberai.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jassioberai.eth",
    "private": false,
@@ -1524,6 +1603,7 @@
   {
    "address": "0x97d2b1b4a249ec77d56fd1576546996d14f7db1a",
    "ens": "lapislight.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lapislight.eth",
    "private": false,
@@ -1535,7 +1615,7 @@
     "collections": 3
    },
    "first_collected": "2023-01-04T07:46:47.000000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2024-04-05T23:31:47.000000Z",
    "tao": 54130,
    "tao_rate": 46.2,
    "tao_rank": 284
@@ -1543,6 +1623,7 @@
   {
    "address": "0x13c39b3e6e6159bc233fad90825f1f9f84fcb102",
    "ens": "ricardotakamura.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ricardotakamura.eth",
    "private": false,
@@ -1562,6 +1643,7 @@
   {
    "address": "0x26dd8c07cf666502f729daf1825268aaf964d2e3",
    "ens": "stellarglyphventures.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "stellarglyphventures.eth",
    "private": false,
@@ -1581,6 +1663,7 @@
   {
    "address": "0x376e451f04863508a7dce0b993354520e9acee71",
    "ens": "verymasa.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "verymasa.eth",
    "private": false,
@@ -1600,6 +1683,7 @@
   {
    "address": "0x39cc9c86e67baf2129b80fe3414c397492ea8026",
    "ens": "xcopy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "xcopy.eth",
    "private": false,
@@ -1619,6 +1703,7 @@
   {
    "address": "0x0bc3807ec262cb779b38d65b38158acc3bfede10",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0bc3807e",
    "private": false,
@@ -1633,11 +1718,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x3d91ad906c3969f86c588c988f721d5a735c6f81",
    "ens": "jonnypickles.eth",
+   "fwd": null,
    "display_name": "jonnypickles.eth",
    "slug": "jonnypickles.eth",
    "private": false,
@@ -1657,6 +1743,7 @@
   {
    "address": "0x91cb1ff4322559a5c5c67dba075ab081c255ba1f",
    "ens": "adacrow.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "adacrow.eth",
    "private": false,
@@ -1676,6 +1763,7 @@
   {
    "address": "0x4076eca4db9684fa1d9bfac231cb516889a33e5a",
    "ens": "genesis.articulate.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "genesis.articulate.eth",
    "private": false,
@@ -1695,6 +1783,7 @@
   {
    "address": "0x7dccc79361b0227a85c2ff788ca240d31f2a78d0",
    "ens": "incept.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "incept.eth",
    "private": false,
@@ -1714,6 +1803,7 @@
   {
    "address": "0x3c2550ddb9294c21d209999bdaa15f8249d0c161",
    "ens": "0xdariush.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xdariush.eth",
    "private": false,
@@ -1731,27 +1821,9 @@
    "tao_rank": 83
   },
   {
-   "address": "0xb6c4ce4eae85066f8fc45093d12444c8b89a6aa9",
-   "ens": "jasonophoto.eth",
-   "display_name": null,
-   "slug": "jasonophoto.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 11,
-    "one_of_ones": 1,
-    "editions": 10,
-    "collections": 8
-   },
-   "first_collected": "2022-05-09T10:13:16.000000Z",
-   "last_collected": "2025-05-30T00:20:11.000000Z",
-   "tao": 54719,
-   "tao_rate": 37.8,
-   "tao_rank": 282
-  },
-  {
    "address": "0xe874ba46982d7cbab5931a50c2dc81a7aeb80344",
    "ens": "newlightvisuals.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "newlightvisuals.eth",
    "private": false,
@@ -1771,6 +1843,7 @@
   {
    "address": "0x057117f9c9e95c2804c6133c6d63b32a519eec57",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x057117f9",
    "private": false,
@@ -1790,6 +1863,7 @@
   {
    "address": "0x09c52c99e701304332b5998227f07d2648e8a72c",
    "ens": "chagozzino.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "chagozzino.eth",
    "private": false,
@@ -1809,6 +1883,7 @@
   {
    "address": "0x4f99d481981f464d824592604f58bcee9cb8abf6",
    "ens": "none32x32.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "none32x32.eth",
    "private": false,
@@ -1828,6 +1903,7 @@
   {
    "address": "0x0f7a2eb5dfe07f58b73f2a61094bbd3541d3c520",
    "ens": "mattomalley.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mattomalley.eth",
    "private": false,
@@ -1847,6 +1923,7 @@
   {
    "address": "0x0b3b0f9046905f50e13d3ebe055ab21e838ec872",
    "ens": null,
+   "fwd": null,
    "display_name": "gissie.eth",
    "slug": "gissie.eth",
    "private": false,
@@ -1866,6 +1943,7 @@
   {
    "address": "0xfa977a0125c16a658a59ca1e59c7c48d58142226",
    "ens": null,
+   "fwd": "signaturepriest.eth",
    "display_name": null,
    "slug": "0xfa977a01",
    "private": false,
@@ -1877,7 +1955,7 @@
     "collections": 6
    },
    "first_collected": "2022-12-12T11:54:11.000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2025-03-12T21:15:23.000Z",
    "tao": 169612,
    "tao_rate": 236.4,
    "tao_rank": 70
@@ -1885,6 +1963,7 @@
   {
    "address": "0x1430997022e8ccf845af34596ef37f4754983f85",
    "ens": "apocalypseart.eth",
+   "fwd": null,
    "display_name": "apocalypseart.eth",
    "slug": "apocalypseart.eth",
    "private": false,
@@ -1904,6 +1983,7 @@
   {
    "address": "0x7b7ca7aa1034cde3d0d93fb2e6a6b3e4eb09bb60",
    "ens": "dombaker.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dombaker.eth",
    "private": false,
@@ -1923,6 +2003,7 @@
   {
    "address": "0x8c1f393c989c667ad20e3d9df72a4f778c5c64b2",
    "ens": "walavault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "walavault.eth",
    "private": false,
@@ -1942,6 +2023,7 @@
   {
    "address": "0xd26ce943636ca63a1810886fd1444d3dcaf738b3",
    "ens": "🏴‍☠🚂💨💨.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xd26ce943",
    "private": false,
@@ -1953,7 +2035,7 @@
     "collections": 7
    },
    "first_collected": "2022-02-19T02:13:29.000000Z",
-   "last_collected": "2023-01-05T02:12:59.000000Z",
+   "last_collected": "2022-11-02T12:52:11.000Z",
    "tao": 196678,
    "tao_rate": 123.6,
    "tao_rank": 61
@@ -1961,6 +2043,7 @@
   {
    "address": "0xb14617559e6bb564ce7826a354cc1db7030127ce",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb1461755",
    "private": false,
@@ -1972,7 +2055,7 @@
     "collections": 3
    },
    "first_collected": "2023-01-05T19:07:23.000Z",
-   "last_collected": "2026-04-18T18:55:35.000000Z",
+   "last_collected": "2026-04-18T17:32:11.000000Z",
    "tao": 20050,
    "tao_rate": 37.8,
    "tao_rank": 484
@@ -1980,6 +2063,7 @@
   {
    "address": "0xe53c5b4f841570d193e05a27bfafe1c554f14875",
    "ens": "icki.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "icki.eth",
    "private": false,
@@ -1997,8 +2081,29 @@
    "tao_rank": 85
   },
   {
+   "address": "0xb6c4ce4eae85066f8fc45093d12444c8b89a6aa9",
+   "ens": "jasonophoto.eth",
+   "fwd": null,
+   "display_name": null,
+   "slug": "jasonophoto.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 10,
+    "one_of_ones": 1,
+    "editions": 9,
+    "collections": 7
+   },
+   "first_collected": "2022-05-09T10:13:16.000000Z",
+   "last_collected": "2024-10-05T07:49:11.000000Z",
+   "tao": 54719,
+   "tao_rate": 37.8,
+   "tao_rank": 282
+  },
+  {
    "address": "0x930922b1114ed66734bd773184667b227520f43f",
    "ens": "spuddhism.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "spuddhism.eth",
    "private": false,
@@ -2018,6 +2123,7 @@
   {
    "address": "0x15ef9bb5d59fc204caab300d0c23d28da34e3535",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x15ef9bb5",
    "private": false,
@@ -2037,6 +2143,7 @@
   {
    "address": "0xbdd615f15447baf294411f2f82263851d15bcf5c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xbdd615f1",
    "private": false,
@@ -2056,6 +2163,7 @@
   {
    "address": "0x9ff3d60cef60e835f142ce5e13a180c70ac89549",
    "ens": "mrsinvisible.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mrsinvisible.eth",
    "private": false,
@@ -2075,6 +2183,7 @@
   {
    "address": "0xc97958ff5370c56b7e0e6fb58437f00702714d49",
    "ens": "glitchqueen.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "glitchqueen.eth",
    "private": false,
@@ -2094,6 +2203,7 @@
   {
    "address": "0x03477e844a5eaab2a03e225d5d32826d1007105e",
    "ens": null,
+   "fwd": "fishradich.eth",
    "display_name": null,
    "slug": "0x03477e84",
    "private": false,
@@ -2113,6 +2223,7 @@
   {
    "address": "0x01ab06f4eb304a6f804e26cbe5f16d23d06b68a5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x01ab06f4",
    "private": false,
@@ -2132,6 +2243,7 @@
   {
    "address": "0x595a1b38c53d8fb5fbdf68196f22ef79fe59c9e9",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x595a1b38",
    "private": false,
@@ -2151,6 +2263,7 @@
   {
    "address": "0x666491a68506564c97a17e697b0f96f52657a760",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x666491a6",
    "private": false,
@@ -2170,6 +2283,7 @@
   {
    "address": "0x7b0546d5847f5d6b2f0702e9e71ac0c371d54dca",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x7b0546d5",
    "private": false,
@@ -2189,6 +2303,7 @@
   {
    "address": "0x8af6e15ed513b5b73573f58158b1b0bbd5085ec7",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x8af6e15e",
    "private": false,
@@ -2208,6 +2323,7 @@
   {
    "address": "0xa1ef5ac40d7ea6de39faef3cda7bdd82e09240d6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa1ef5ac4",
    "private": false,
@@ -2227,6 +2343,7 @@
   {
    "address": "0xce7640ae90b7ebdecd188419a7c6fb0f3edc78be",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xce7640ae",
    "private": false,
@@ -2246,6 +2363,7 @@
   {
    "address": "0xfcbfe4130a0031558b10053f17b7597f428a59e8",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xfcbfe413",
    "private": false,
@@ -2265,6 +2383,7 @@
   {
    "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
    "ens": "burnasso.eth",
+   "fwd": null,
    "display_name": "burnasso.eth",
    "slug": "burnasso.eth",
    "private": false,
@@ -2284,6 +2403,7 @@
   {
    "address": "0xfb74eee69be0c2bd8fb42ee67b6b6c4e05cd9ddd",
    "ens": "craigreilly.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "craigreilly.eth",
    "private": false,
@@ -2303,6 +2423,7 @@
   {
    "address": "0xc457fee0564bf3eb972114762f62ab45c0e3590b",
    "ens": "rakeshpulapa.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rakeshpulapa.eth",
    "private": false,
@@ -2322,6 +2443,7 @@
   {
    "address": "0x895bef95023f591ebd1a9e8f53bed2b73702e4d1",
    "ens": "vivianeg.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vivianeg.eth",
    "private": false,
@@ -2341,6 +2463,7 @@
   {
    "address": "0x364d1935f30773eb5eef3355bd2f2675b6c5e4a1",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x364d1935",
    "private": false,
@@ -2360,6 +2483,7 @@
   {
    "address": "0x6ecae358e99dfdd1abe900bebe5f775431c12324",
    "ens": null,
+   "fwd": "defensesoap.eth",
    "display_name": null,
    "slug": "0x6ecae358",
    "private": false,
@@ -2379,6 +2503,7 @@
   {
    "address": "0xa38cd368705648904200675f3b10960be3975cf5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa38cd368",
    "private": false,
@@ -2398,6 +2523,7 @@
   {
    "address": "0xaec3f7e735505c2b787b05d67f4adaefe3dfd678",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xaec3f7e7",
    "private": false,
@@ -2409,7 +2535,7 @@
     "collections": 6
    },
    "first_collected": "2022-05-09T00:47:31.000000Z",
-   "last_collected": "2025-08-12T09:33:11.000000Z",
+   "last_collected": "2024-10-05T07:53:11.000000Z",
    "tao": 70760,
    "tao_rate": 50.4,
    "tao_rank": 211
@@ -2417,6 +2543,7 @@
   {
    "address": "0xd83dde5249bfb96b976873556f4d84236c8abf27",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd83dde52",
    "private": false,
@@ -2436,6 +2563,7 @@
   {
    "address": "0x665654f2d2a151be2d0f8e3697e6ce780f732af2",
    "ens": "artpleb.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "artpleb.eth",
    "private": false,
@@ -2455,6 +2583,7 @@
   {
    "address": "0x33bfd3ba3bd175148d1bb1ee87e865253fd265e5",
    "ens": "inkmuse.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "inkmuse.eth",
    "private": false,
@@ -2474,6 +2603,7 @@
   {
    "address": "0x7ef61cacd0c785eacdfe17649d1c5bcba676a858",
    "ens": "kkmoney.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "kkmoney.eth",
    "private": false,
@@ -2493,6 +2623,7 @@
   {
    "address": "0x862464bbd83d5743f9cf873c6ea3d187d0f909bf",
    "ens": "priyanka29.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "priyanka29.eth",
    "private": false,
@@ -2512,6 +2643,7 @@
   {
    "address": "0xf7174bd56541305b18222e88c1f3ab82776993a7",
    "ens": "sañctuary.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xf7174bd5",
    "private": false,
@@ -2531,6 +2663,7 @@
   {
    "address": "0xe322875fffb56f840456c7ba4742c125dd9cfd14",
    "ens": "giopetto.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "giopetto.eth",
    "private": false,
@@ -2550,6 +2683,7 @@
   {
    "address": "0xef5ab90a44b68d4f5e3f6be6af4bedb12cd2c66e",
    "ens": "rockshassa.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rockshassa.eth",
    "private": false,
@@ -2569,6 +2703,7 @@
   {
    "address": "0x8bf824d7e8a2dbbe6f47bd09721a8a3fdce09d63",
    "ens": "dsoeirosanches.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dsoeirosanches.eth",
    "private": false,
@@ -2580,7 +2715,7 @@
     "collections": 3
    },
    "first_collected": "2024-06-27T05:57:59.000000Z",
-   "last_collected": "2025-05-20T22:00:11.000000Z",
+   "last_collected": "2025-05-10T08:20:11.000000Z",
    "tao": 98454,
    "tao_rate": 167.4,
    "tao_rank": 160
@@ -2588,6 +2723,7 @@
   {
    "address": "0x9481d8bc76fb1b7d2f95733a6ec0b40d0cb1fffc",
    "ens": "nftacular.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nftacular.eth",
    "private": false,
@@ -2607,6 +2743,7 @@
   {
    "address": "0x05dba3798520986ae5ae4e7ecd3af0ef80b65278",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x05dba379",
    "private": false,
@@ -2626,6 +2763,7 @@
   {
    "address": "0x16dee223fc168abff7b979813cdf15866eed7e8d",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x16dee223",
    "private": false,
@@ -2645,6 +2783,7 @@
   {
    "address": "0x1f6b5d424c90e4834c1b4cd2c0e7adeaa941501e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1f6b5d42",
    "private": false,
@@ -2664,6 +2803,7 @@
   {
    "address": "0x8c2dabfea8751dd7901e35a015dc6c943ffa0d7c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x8c2dabfe",
    "private": false,
@@ -2683,6 +2823,7 @@
   {
    "address": "0xa8174abc36b3298356d273e512cd87223a2b3ffa",
    "ens": null,
+   "fwd": "vault.hafftka.eth",
    "display_name": null,
    "slug": "0xa8174abc",
    "private": false,
@@ -2702,6 +2843,7 @@
   {
    "address": "0x82cab9c4cfddc6ac54c988743e713a81234d2399",
    "ens": "akshayupadhya.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "akshayupadhya.eth",
    "private": false,
@@ -2721,6 +2863,7 @@
   {
    "address": "0xa16977865ab1e2eeab1068e71890b36de4bf95f3",
    "ens": "amtwo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "amtwo.eth",
    "private": false,
@@ -2740,6 +2883,7 @@
   {
    "address": "0x8889ebb11295f456541901f50bcb5f382047caac",
    "ens": "darrensrs.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "darrensrs.eth",
    "private": false,
@@ -2751,7 +2895,7 @@
     "collections": 5
    },
    "first_collected": "2022-04-23T03:04:13.000000Z",
-   "last_collected": "2025-05-16T10:34:47.000000Z",
+   "last_collected": "2025-01-07T05:01:23.000000Z",
    "tao": 40302,
    "tao_rate": 37.8,
    "tao_rank": 328
@@ -2759,6 +2903,7 @@
   {
    "address": "0xe23e0bd6e320c87367b0e4b797b42dc9b4fe7ca0",
    "ens": "dijaraj.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dijaraj.eth",
    "private": false,
@@ -2778,6 +2923,7 @@
   {
    "address": "0x6ec2997cf35457daa9de4cdc989c697d921b5285",
    "ens": "drleenft.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "drleenft.eth",
    "private": false,
@@ -2797,6 +2943,7 @@
   {
    "address": "0xd5df3f5022572f461459fc62dbbfaa54191fc551",
    "ens": "framesbyvik.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "framesbyvik.eth",
    "private": false,
@@ -2816,6 +2963,7 @@
   {
    "address": "0xa86d8add58edf1e77a20c6edea06de34465ec98e",
    "ens": "memusmaximus.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "memusmaximus.eth",
    "private": false,
@@ -2835,6 +2983,7 @@
   {
    "address": "0xc2547446c439be477dce96702fb1f9dfb61bab3a",
    "ens": "paulmoon.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "paulmoon.eth",
    "private": false,
@@ -2854,6 +3003,7 @@
   {
    "address": "0x8181dd699e486493027e4e21bf6d0c7b7c94055e",
    "ens": "sacha1823.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sacha1823.eth",
    "private": false,
@@ -2873,6 +3023,7 @@
   {
    "address": "0xaf12a9af19331fa9b89915537ce9d41bce5e4c5d",
    "ens": "scottrsmith.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "scottrsmith.eth",
    "private": false,
@@ -2892,6 +3043,7 @@
   {
    "address": "0x91e8be20d0dfb2293b97317e906223c1fa833a48",
    "ens": "secureid.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "secureid.eth",
    "private": false,
@@ -2911,6 +3063,7 @@
   {
    "address": "0xc85b3cbf81e63e0524717efc4e53dc12658b1fc5",
    "ens": "trailmix.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "trailmix.eth",
    "private": false,
@@ -2930,6 +3083,7 @@
   {
    "address": "0x4cffc2b4fb3114ca8cf9a2a244632d0176395348",
    "ens": "yumpling.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "yumpling.eth",
    "private": false,
@@ -2949,6 +3103,7 @@
   {
    "address": "0xcbfb9a917c2b45fbd8e820e66602ef26dff9cd40",
    "ens": "raithy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "raithy.eth",
    "private": false,
@@ -2968,6 +3123,7 @@
   {
    "address": "0x436a257ab8f9d8579594f493ffb81fa5245ada26",
    "ens": "nptacek.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nptacek.eth",
    "private": false,
@@ -2987,6 +3143,7 @@
   {
    "address": "0xf474e475fc675a37075ce0d9d5b4367d54c4d8fe",
    "ens": "drabstract.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "drabstract.eth",
    "private": false,
@@ -3006,6 +3163,7 @@
   {
    "address": "0x319af5203839970ccb04d2eda95c427941c498ae",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x319af520",
    "private": false,
@@ -3025,6 +3183,7 @@
   {
    "address": "0x974c16605e95d7c742d0a4ba79bd8e13ce4732f6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x974c1660",
    "private": false,
@@ -3044,6 +3203,7 @@
   {
    "address": "0xc99360f97475dcd02cbaa1940e0e6a2cb67186c8",
    "ens": "dollykabaria.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dollykabaria.eth",
    "private": false,
@@ -3063,6 +3223,7 @@
   {
    "address": "0xe6666ba861c4749e316756e3f599676d1184e77c",
    "ens": "mavin.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mavin.eth",
    "private": false,
@@ -3082,6 +3243,7 @@
   {
    "address": "0x266d5bdae1a0bb609b3de4c5c8aae4231e356bf7",
    "ens": "pandl.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "pandl.eth",
    "private": false,
@@ -3101,6 +3263,7 @@
   {
    "address": "0x5b046272cb9fde317ab73a836546e52b1f2d81f3",
    "ens": "sarahc.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sarahc.eth",
    "private": false,
@@ -3120,6 +3283,7 @@
   {
    "address": "0x03409a4010d6d23b3d91aa689a7c9cdc0d947da5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x03409a40",
    "private": false,
@@ -3139,6 +3303,7 @@
   {
    "address": "0x25780546b9937720791ba9a93f1aaf08746df36f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x25780546",
    "private": false,
@@ -3158,6 +3323,7 @@
   {
    "address": "0x32d53a21813debfcb33a2b1ff2a396bd3a06f818",
    "ens": null,
+   "fwd": "juancruz-vault.eth",
    "display_name": null,
    "slug": "0x32d53a21",
    "private": false,
@@ -3177,6 +3343,7 @@
   {
    "address": "0x34f5c36dfd35ef66c996eca754bc5e38165f31f4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x34f5c36d",
    "private": false,
@@ -3196,6 +3363,7 @@
   {
    "address": "0xb814f14996dd967a04e858ebe36120784ced4e36",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb814f149",
    "private": false,
@@ -3215,6 +3383,7 @@
   {
    "address": "0xc0efdd2b7616b1a469d5fc05dcc90f29647f03b2",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xc0efdd2b",
    "private": false,
@@ -3234,6 +3403,7 @@
   {
    "address": "0x36799ff7bf99602870b91572e2a897b06c91c87b",
    "ens": "arwinlevinson.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "arwinlevinson.eth",
    "private": false,
@@ -3253,6 +3423,7 @@
   {
    "address": "0x5b1022d859a46f42fcf24bcd8f5ab616e52b4800",
    "ens": "dart2021.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dart2021.eth",
    "private": false,
@@ -3272,6 +3443,7 @@
   {
    "address": "0x5e15052dfa1b27dfc5985d51d51dc0539c1c10ca",
    "ens": "followshadows.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "followshadows.eth",
    "private": false,
@@ -3291,6 +3463,7 @@
   {
    "address": "0xa2379150a951733abab8a79debfaeaa5f6194a66",
    "ens": "greisten.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "greisten.eth",
    "private": false,
@@ -3302,7 +3475,7 @@
     "collections": 4
    },
    "first_collected": "2022-12-24T04:24:59.000Z",
-   "last_collected": "2026-08-21T07:20:11.000000Z",
+   "last_collected": "2024-10-05T07:49:59.000000Z",
    "tao": 22552,
    "tao_rate": 21,
    "tao_rank": 467
@@ -3310,6 +3483,7 @@
   {
    "address": "0xa5dce742f3775059d9406342d2ecbb0ff8e3a3c2",
    "ens": "johndoe8891.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "johndoe8891.eth",
    "private": false,
@@ -3329,6 +3503,7 @@
   {
    "address": "0x46f655abf896301b72eb27b76f5e063899b9067c",
    "ens": "loosetooth.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "loosetooth.eth",
    "private": false,
@@ -3348,6 +3523,7 @@
   {
    "address": "0xab0e2f3c3c29deaa7c3ca0dacec97a33d5c26708",
    "ens": "muzeu.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "muzeu.eth",
    "private": false,
@@ -3367,6 +3543,7 @@
   {
    "address": "0x3f4a9bfaf9ecd4f321eb1a3b9394d90f16ac081e",
    "ens": "nilpossible.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nilpossible.eth",
    "private": false,
@@ -3386,6 +3563,7 @@
   {
    "address": "0x92c70f31efa47bd08b65f36079fba5668f3050c4",
    "ens": "rektmeysvm.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rektmeysvm.eth",
    "private": false,
@@ -3405,6 +3583,7 @@
   {
    "address": "0x4614865abd4748096b9aa924c4f8d2ed636b2df7",
    "ens": "thompsonart.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thompsonart.eth",
    "private": false,
@@ -3424,6 +3603,7 @@
   {
    "address": "0xde69bda76c17409242533e9ff6a8363846afd7d8",
    "ens": "topdown👑.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xde69bda7",
    "private": false,
@@ -3443,6 +3623,7 @@
   {
    "address": "0x587de9b9f765b056999fce807f310c58aea97c10",
    "ens": "wangmi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "wangmi.eth",
    "private": false,
@@ -3462,6 +3643,7 @@
   {
    "address": "0x388160a99390392278afdba240046b8b5e73f77b",
    "ens": "zigmarillion.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "zigmarillion.eth",
    "private": false,
@@ -3481,6 +3663,7 @@
   {
    "address": "0x421ab72a939becf0ef6dc607960d877da6e7b0c7",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x421ab72a",
    "private": false,
@@ -3495,11 +3678,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xd9c1780ff96a463d97cbb2f62e4dae0ccf8791e4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd9c1780f",
    "private": false,
@@ -3519,6 +3703,7 @@
   {
    "address": "0xe8a0cc457405c250a3142db639b3e058fd431510",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe8a0cc45",
    "private": false,
@@ -3538,6 +3723,7 @@
   {
    "address": "0x213f6b2680dce3e4d0924acff3e4e34520ef9ba1",
    "ens": "0x7.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0x7.eth",
    "private": false,
@@ -3557,6 +3743,7 @@
   {
    "address": "0xbd72d021d3cb334deb3151db905ee073b8eee518",
    "ens": "mightymoose.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mightymoose.eth",
    "private": false,
@@ -3576,6 +3763,7 @@
   {
    "address": "0xe485656ec623115bf2d445b925db5d63707bf74b",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe485656e",
    "private": false,
@@ -3595,6 +3783,7 @@
   {
    "address": "0xfc249d7e3248d17a079071c1cc26ec1674e8c981",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xfc249d7e",
    "private": false,
@@ -3614,6 +3803,7 @@
   {
    "address": "0x259dffee3680a5d1822903536a549797a9e6a153",
    "ens": "artjock.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "artjock.eth",
    "private": false,
@@ -3633,6 +3823,7 @@
   {
    "address": "0xdcffdb9fde25ab47d3412e3de4acf84ed034615a",
    "ens": "benizm.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "benizm.eth",
    "private": false,
@@ -3652,6 +3843,7 @@
   {
    "address": "0x53006f95def268f88dc1b8216654ab56f3afd052",
    "ens": "cuttlevault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cuttlevault.eth",
    "private": false,
@@ -3671,6 +3863,7 @@
   {
    "address": "0x3ac61447a75149ba67639100ecc92c76fb20941c",
    "ens": "fercaggiano.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "fercaggiano.eth",
    "private": false,
@@ -3690,6 +3883,7 @@
   {
    "address": "0xa8ef8e793210158ece2dbdb87b091f1574f0adb9",
    "ens": "leepengelly.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "leepengelly.eth",
    "private": false,
@@ -3709,6 +3903,7 @@
   {
    "address": "0xbeb15cb4e910fe9e730c48f55a4de49212203d10",
    "ens": "niloodian.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "niloodian.eth",
    "private": false,
@@ -3728,6 +3923,7 @@
   {
    "address": "0xee8df38386aa85be55fdf1460a61d656c51a5e3b",
    "ens": "web3bebop.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "web3bebop.eth",
    "private": false,
@@ -3747,6 +3943,7 @@
   {
    "address": "0x5f1db8d30744eed120fa29d7045a5d32e34c9724",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x5f1db8d3",
    "private": false,
@@ -3758,7 +3955,7 @@
     "collections": 5
    },
    "first_collected": "2022-08-03T07:28:31.000000Z",
-   "last_collected": "2025-06-19T07:49:11.000000Z",
+   "last_collected": "2024-10-01T02:12:35.000000Z",
    "tao": 29609,
    "tao_rate": 29.4,
    "tao_rank": 385
@@ -3766,6 +3963,7 @@
   {
    "address": "0x72eb30d3ca53f5e839325e2eacf535e70a9e6987",
    "ens": null,
+   "fwd": "nftlisa.eth",
    "display_name": null,
    "slug": "0x72eb30d3",
    "private": false,
@@ -3785,6 +3983,7 @@
   {
    "address": "0xee8bfacaa886d7b59bbdaa34b287f910559e7da4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xee8bfaca",
    "private": false,
@@ -3804,6 +4003,7 @@
   {
    "address": "0xe359ab04cec41ac8c62bc5016c10c749c7de5480",
    "ens": "6529er.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "6529er.eth",
    "private": false,
@@ -3823,6 +4023,7 @@
   {
    "address": "0x822ec855cc9f41b592622108e6f3565e976430c6",
    "ens": "aferg.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aferg.eth",
    "private": false,
@@ -3842,6 +4043,7 @@
   {
    "address": "0x5eefc3ae27be1483ad6b864b45ed72fc39e6bb6c",
    "ens": "aniltprabhakar.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aniltprabhakar.eth",
    "private": false,
@@ -3861,6 +4063,7 @@
   {
    "address": "0x1b6265a40839a331ace2d81bc82b6104703c0426",
    "ens": "chagozzinovault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "chagozzinovault.eth",
    "private": false,
@@ -3872,7 +4075,7 @@
     "collections": 4
    },
    "first_collected": "2022-06-01T19:27:53.000000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2022-12-16T12:10:11.000Z",
    "tao": 32395,
    "tao_rate": 25.2,
    "tao_rank": 362
@@ -3880,6 +4083,7 @@
   {
    "address": "0xc84d2bc55399de1f181c5adc01ee9b4e9a1f5efd",
    "ens": "danhawkvault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "danhawkvault.eth",
    "private": false,
@@ -3899,6 +4103,7 @@
   {
    "address": "0x9f35af4727fb91114563d8a8f779a792cb557f3f",
    "ens": "deconstruct-lab.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "deconstruct-lab.eth",
    "private": false,
@@ -3918,6 +4123,7 @@
   {
    "address": "0x5b33b6f41e87111b7d22685b297f086b5535034d",
    "ens": "dyker.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dyker.eth",
    "private": false,
@@ -3937,6 +4143,7 @@
   {
    "address": "0xdbd8fefa7f919825c22ab1a1ebfc5ce51340f1bb",
    "ens": "epicthundercat.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "epicthundercat.eth",
    "private": false,
@@ -3956,6 +4163,7 @@
   {
    "address": "0xf2a5d9c71ddc45ca98476d39f3dfc2f16dccab68",
    "ens": "foretwenty.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "foretwenty.eth",
    "private": false,
@@ -3975,6 +4183,7 @@
   {
    "address": "0xd722a299d14a19b56cddaeae0e1d5a5786424570",
    "ens": "jak.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jak.eth",
    "private": false,
@@ -3994,6 +4203,7 @@
   {
    "address": "0x1b8532be318e881a6d073b6b24aa584d76d017fe",
    "ens": "jhsbdn.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jhsbdn.eth",
    "private": false,
@@ -4013,6 +4223,7 @@
   {
    "address": "0xdc613e6ecba50027235ac03ab1a844b441e57b43",
    "ens": "katjak.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "katjak.eth",
    "private": false,
@@ -4032,6 +4243,7 @@
   {
    "address": "0xa431d9ae84cce1c1c6d28f8258b5b95bab930210",
    "ens": "lilbanana.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lilbanana.eth",
    "private": false,
@@ -4051,6 +4263,7 @@
   {
    "address": "0x75e5052d53dfef2dd831814b8da723900fa1e337",
    "ens": "longexposure.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "longexposure.eth",
    "private": false,
@@ -4070,6 +4283,7 @@
   {
    "address": "0x8fc11ab9a5f72a4f0d12199a72f474933bd71064",
    "ens": "masis.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "masis.eth",
    "private": false,
@@ -4089,6 +4303,7 @@
   {
    "address": "0xb70c3049982c09c18dcbf8596ccef6f5b3c239a3",
    "ens": "mesutfelat.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mesutfelat.eth",
    "private": false,
@@ -4108,6 +4323,7 @@
   {
    "address": "0x838a1c2f0cae94072332c346533acdc6c590971f",
    "ens": "olliesblog.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "olliesblog.eth",
    "private": false,
@@ -4127,6 +4343,7 @@
   {
    "address": "0x248458947c120ca057ec028b3fe7e4b3f26fdb3d",
    "ens": "omdegen.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "omdegen.eth",
    "private": false,
@@ -4146,6 +4363,7 @@
   {
    "address": "0x40e6d6e798dc878e12987ed978f23c2391f1f570",
    "ens": "ompsyram.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ompsyram.eth",
    "private": false,
@@ -4165,6 +4383,7 @@
   {
    "address": "0xc185d966f64480bedb2ed458e7d1a1e29d95231c",
    "ens": "ourline.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ourline.eth",
    "private": false,
@@ -4184,6 +4403,7 @@
   {
    "address": "0xf56e7796e42d01109d3eb99905da2d83e6cf2ba3",
    "ens": "toadboats.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "toadboats.eth",
    "private": false,
@@ -4203,6 +4423,7 @@
   {
    "address": "0x1439b4d5a72343b68f12398c649df99d76b2af53",
    "ens": "totty.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "totty.eth",
    "private": false,
@@ -4222,6 +4443,7 @@
   {
    "address": "0x690dabe81caf23ff4f855d27785d01da66ede8ca",
    "ens": "vantekai.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vantekai.eth",
    "private": false,
@@ -4241,6 +4463,7 @@
   {
    "address": "0x3d885cb987c00fe980c20e76e21c53313f43946a",
    "ens": "vault.brookr.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vault.brookr.eth",
    "private": false,
@@ -4252,7 +4475,7 @@
     "collections": 2
    },
    "first_collected": "2024-01-24T01:28:35.000000Z",
-   "last_collected": "2025-05-20T21:58:23.000000Z",
+   "last_collected": "2025-05-10T02:39:11.000000Z",
    "tao": 19156,
    "tao_rate": 29.4,
    "tao_rank": 505
@@ -4260,6 +4483,7 @@
   {
    "address": "0x4c6e348056b8d35075af1d92d521f9ffdea531e2",
    "ens": "xkiss.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "xkiss.eth",
    "private": false,
@@ -4279,6 +4503,7 @@
   {
    "address": "0x4dd5a4d1fcb6f8938aa8ad070aefe1b19e8f9c0c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x4dd5a4d1",
    "private": false,
@@ -4293,11 +4518,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xbd96ce810533583090b27afe327de711b401840e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xbd96ce81",
    "private": false,
@@ -4312,11 +4538,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x20be2aff79b1f330a798983c78c0e056f8627623",
    "ens": "jasonagogo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jasonagogo.eth",
    "private": false,
@@ -4331,11 +4558,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x360bd0e8ef21909115d520b924e72de923eff47e",
    "ens": "lostwisdom.eth",
+   "fwd": null,
    "display_name": "lostwisdom.eth",
    "slug": "lostwisdom.eth",
    "private": false,
@@ -4355,6 +4583,7 @@
   {
    "address": "0xbc1eb4359ab755af079f6ef77e3faac465e53eda",
    "ens": "👑29.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xbc1eb435",
    "private": false,
@@ -4374,6 +4603,7 @@
   {
    "address": "0x5683fb02d1d05e5a426f1f5907a7310512d78460",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x5683fb02",
    "private": false,
@@ -4393,6 +4623,7 @@
   {
    "address": "0x1a6f0dddb884854355023a2dfe26e9174f8e0290",
    "ens": "rabobi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rabobi.eth",
    "private": false,
@@ -4404,7 +4635,7 @@
     "collections": 3
    },
    "first_collected": "2022-12-07T15:48:35.000Z",
-   "last_collected": "2025-05-16T15:23:59.000000Z",
+   "last_collected": "2022-12-07T15:48:35.000Z",
    "tao": 7683,
    "tao_rate": 8.4,
    "tao_rank": 1290
@@ -4412,6 +4643,7 @@
   {
    "address": "0x89ecbbf60f39c8a6a345464958f88ba4d28cd37c",
    "ens": null,
+   "fwd": "memes-vault.eth",
    "display_name": null,
    "slug": "0x89ecbbf6",
    "private": false,
@@ -4431,6 +4663,7 @@
   {
    "address": "0x1e0486ee85dd758078d75c674f3d28efc4c899fc",
    "ens": "dsanches-vault.eth",
+   "fwd": null,
    "display_name": "dsanches-vault.eth",
    "slug": "dsanches-vault.eth",
    "private": false,
@@ -4450,6 +4683,7 @@
   {
    "address": "0xafaca46f253c85d4ba372f82a8a4f4b0dd5d7dfc",
    "ens": null,
+   "fwd": "peternitsch.eth",
    "display_name": null,
    "slug": "0xafaca46f",
    "private": false,
@@ -4469,6 +4703,7 @@
   {
    "address": "0xba0431f70833fe78d118f1e55bab3c8a526f303c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xba0431f7",
    "private": false,
@@ -4488,6 +4723,7 @@
   {
    "address": "0x6b159e840e28e009e930df3be6c06d1d70195cc7",
    "ens": "0xghostpepper.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xghostpepper.eth",
    "private": false,
@@ -4499,7 +4735,7 @@
     "collections": 4
    },
    "first_collected": "2024-04-22T03:05:11.000000Z",
-   "last_collected": "2025-05-17T01:14:35.000000Z",
+   "last_collected": "2025-02-09T00:42:47.000000Z",
    "tao": 54133,
    "tao_rate": 94.2,
    "tao_rank": 283
@@ -4507,6 +4743,7 @@
   {
    "address": "0xc619f81c6ae4081eeb1f485b2055d5c07af4d777",
    "ens": "0xjaymes.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xjaymes.eth",
    "private": false,
@@ -4526,6 +4763,7 @@
   {
    "address": "0x8179e48d959a4c41d5e0432ac05b30707149d649",
    "ens": "andremessina.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "andremessina.eth",
    "private": false,
@@ -4545,6 +4783,7 @@
   {
    "address": "0x87accabbdedce63379af9d246bb979a3a481534c",
    "ens": "artnftlove.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "artnftlove.eth",
    "private": false,
@@ -4564,6 +4803,7 @@
   {
    "address": "0xb3260a8a221c17dd81f2e3396cbb7ea2dc2a08de",
    "ens": "cooperpix.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cooperpix.eth",
    "private": false,
@@ -4583,6 +4823,7 @@
   {
    "address": "0x55206268c0daec618c42f04539516a0e43acf31b",
    "ens": "deriniti.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "deriniti.eth",
    "private": false,
@@ -4602,6 +4843,7 @@
   {
    "address": "0x49f49396c23e4b976e375231a210b04b93569b1b",
    "ens": "elenagraham.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "elenagraham.eth",
    "private": false,
@@ -4621,6 +4863,7 @@
   {
    "address": "0x14ddb398ce7a516c399a95b5d5c9a41326ec93de",
    "ens": "exlhot.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "exlhot.eth",
    "private": false,
@@ -4640,6 +4883,7 @@
   {
    "address": "0x4209c91d59985dd563213a139d2e1e66f7662d38",
    "ens": "greghollandjewel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "greghollandjewel.eth",
    "private": false,
@@ -4659,6 +4903,7 @@
   {
    "address": "0xd614f79b1b01d42bed92eb05b58f973be9a3dd3d",
    "ens": "keyrun.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "keyrun.eth",
    "private": false,
@@ -4678,6 +4923,7 @@
   {
    "address": "0xc68c7771ec6a6e5d67d62aa9c6f22df69865e401",
    "ens": "norcalguy2.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "norcalguy2.eth",
    "private": false,
@@ -4697,6 +4943,7 @@
   {
    "address": "0xaed8e151086a85d39166b80bb4b4cec2f6328a7a",
    "ens": "parradesys.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "parradesys.eth",
    "private": false,
@@ -4716,6 +4963,7 @@
   {
    "address": "0xcd241563f7288b5eb2b9b715f736232889b62d8b",
    "ens": "readypereone.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "readypereone.eth",
    "private": false,
@@ -4735,6 +4983,7 @@
   {
    "address": "0x44dd6be7a16dbce3676e9607269c8bdebd66dacf",
    "ens": "richiemills.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "richiemills.eth",
    "private": false,
@@ -4754,6 +5003,7 @@
   {
    "address": "0x08493a92a95d4e93bdbc49f66e7647f1445a9210",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x08493a92",
    "private": false,
@@ -4773,6 +5023,7 @@
   {
    "address": "0x2d17a7381c3a7af82e3bcf02173df197ae3fea4f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x2d17a738",
    "private": false,
@@ -4792,6 +5043,7 @@
   {
    "address": "0x3d675fb30e1c8ed2fc24569c7c6b32cd470325a5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x3d675fb3",
    "private": false,
@@ -4811,6 +5063,7 @@
   {
    "address": "0x6b6ff87ddedfb45891d07b9aa2525897f1a6b684",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x6b6ff87d",
    "private": false,
@@ -4830,6 +5083,7 @@
   {
    "address": "0x6fad91115dc942e27a2325bad5e03c3bf2bce5fb",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x6fad9111",
    "private": false,
@@ -4849,6 +5103,7 @@
   {
    "address": "0x833b6cac387e694dadb02b26d0c55e346b4c9c34",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x833b6cac",
    "private": false,
@@ -4868,6 +5123,7 @@
   {
    "address": "0xa9276b86e04058b70cd43916e8e666bc3ad5bc9a",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa9276b86",
    "private": false,
@@ -4887,6 +5143,7 @@
   {
    "address": "0xb1b81fd772169a18504aee662cbd5ebb4886e0d4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb1b81fd7",
    "private": false,
@@ -4906,6 +5163,7 @@
   {
    "address": "0xb4354fae53823e690a48aa3a5abed56036cec9f8",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb4354fae",
    "private": false,
@@ -4925,6 +5183,7 @@
   {
    "address": "0xc01c99b2543e28eff240e90384a1fd757a484927",
    "ens": null,
+   "fwd": "yakobelmoussa.eth",
    "display_name": null,
    "slug": "0xc01c99b2",
    "private": false,
@@ -4944,6 +5203,7 @@
   {
    "address": "0xd37905283adf21d3e628b423cbe20c4583ba9979",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd3790528",
    "private": false,
@@ -4963,6 +5223,7 @@
   {
    "address": "0xf41a3bb52d1e88d253079e2dc7092935730f2bf6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf41a3bb5",
    "private": false,
@@ -4982,6 +5243,7 @@
   {
    "address": "0xb40e296d1eb1aa2ce72bf687fff1a77c9c42c9f1",
    "ens": "0xtj.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xtj.eth",
    "private": false,
@@ -5001,6 +5263,7 @@
   {
    "address": "0x03ee832367e29a5cd001f65093283eabb5382b62",
    "ens": "alphacentaurikid.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "alphacentaurikid.eth",
    "private": false,
@@ -5020,6 +5283,7 @@
   {
    "address": "0x06dac6a2dcfa0f0dfb3e7e766515eef5b2c6399a",
    "ens": "anaisabel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "anaisabel.eth",
    "private": false,
@@ -5039,6 +5303,7 @@
   {
    "address": "0x6a6d2019ed5079f07e84d30b4d702a601eaaa5f6",
    "ens": "andyschwetz.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "andyschwetz.eth",
    "private": false,
@@ -5058,6 +5323,7 @@
   {
    "address": "0x534b8531e362da97d808ba2ab3959fa2597bef11",
    "ens": "aristhodle.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aristhodle.eth",
    "private": false,
@@ -5077,6 +5343,7 @@
   {
    "address": "0xf1d83de0ead95747f4ac184b36659c0d538309c8",
    "ens": "ayla.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ayla.eth",
    "private": false,
@@ -5096,6 +5363,7 @@
   {
    "address": "0x19e080e1cd70240c17002ff11dd02ad0508bcb12",
    "ens": "bluejayway.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bluejayway.eth",
    "private": false,
@@ -5115,6 +5383,7 @@
   {
    "address": "0x11a22b262e505d355f975e1e48a365b5d4811ae0",
    "ens": "bombaymalayali.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bombaymalayali.eth",
    "private": false,
@@ -5134,6 +5403,7 @@
   {
    "address": "0xb26c452e8ac20ae7445fcf46b6478d3984f5d8e9",
    "ens": "casanua.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "casanua.eth",
    "private": false,
@@ -5145,7 +5415,7 @@
     "collections": 4
    },
    "first_collected": "2022-07-09T11:01:21.000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2024-07-02T20:49:23.000000Z",
    "tao": 35873,
    "tao_rate": 29.4,
    "tao_rank": 350
@@ -5153,6 +5423,7 @@
   {
    "address": "0x7037f550b8176f4794e667c13516dc6a25f5c75a",
    "ens": "claudiuguraliuc.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "claudiuguraliuc.eth",
    "private": false,
@@ -5172,6 +5443,7 @@
   {
    "address": "0xf33f6c5302fee8dcaf6363f6862071092b3d56b0",
    "ens": "fvckfear.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "fvckfear.eth",
    "private": false,
@@ -5191,6 +5463,7 @@
   {
    "address": "0xb32044d6911effab4f19a143a9cecd886403003e",
    "ens": "gabriellamorton.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "gabriellamorton.eth",
    "private": false,
@@ -5210,6 +5483,7 @@
   {
    "address": "0x495624a0f21833b4b577d0d442b7207419a0f413",
    "ens": "icecry.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "icecry.eth",
    "private": false,
@@ -5229,6 +5503,7 @@
   {
    "address": "0xa1b32581ec3bb4c85f47806bfa8566ae08989870",
    "ens": "jusstin.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jusstin.eth",
    "private": false,
@@ -5248,6 +5523,7 @@
   {
    "address": "0x171446b041c6683e5f138b8a3f263bbffb8ee74a",
    "ens": "kingd.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "kingd.eth",
    "private": false,
@@ -5267,6 +5543,7 @@
   {
    "address": "0x2327dbcc6c2a3821a97c3d9004954970900441e2",
    "ens": "korbinianvogt.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "korbinianvogt.eth",
    "private": false,
@@ -5286,6 +5563,7 @@
   {
    "address": "0x020ef67cc7338689d34fbafa4446990ff1dcf4f8",
    "ens": "loopmaniac.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "loopmaniac.eth",
    "private": false,
@@ -5305,6 +5583,7 @@
   {
    "address": "0x3368b4733a4552b38b7d81c215d88cac4c78d8e5",
    "ens": "lunaleo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lunaleo.eth",
    "private": false,
@@ -5324,6 +5603,7 @@
   {
    "address": "0xe61c204d9ab083240a7c8522e636298261ff354e",
    "ens": "manishm.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "manishm.eth",
    "private": false,
@@ -5343,6 +5623,7 @@
   {
    "address": "0xa7efbb4a06a680f3b65c5861ec387408ceafbec8",
    "ens": "mbstuart.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mbstuart.eth",
    "private": false,
@@ -5362,6 +5643,7 @@
   {
    "address": "0x4808d5a2b6423abc0060465fdfd338c58e758690",
    "ens": "milibooo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "milibooo.eth",
    "private": false,
@@ -5381,6 +5663,7 @@
   {
    "address": "0xdc018add198ee371165f7413cc27849c5404c491",
    "ens": "mnopxart.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mnopxart.eth",
    "private": false,
@@ -5400,6 +5683,7 @@
   {
    "address": "0x040df97224a2d65df277ab4adb58596a42a9698c",
    "ens": "rachelstwood.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rachelstwood.eth",
    "private": false,
@@ -5419,6 +5703,7 @@
   {
    "address": "0x1f2df2c970307ab0be504a8b1bfca4347bca14e4",
    "ens": "seanconte.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "seanconte.eth",
    "private": false,
@@ -5438,6 +5723,7 @@
   {
    "address": "0x88d7d41e29612b643c445983c988d447d8ca37bc",
    "ens": "soulgecko.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "soulgecko.eth",
    "private": false,
@@ -5457,6 +5743,7 @@
   {
    "address": "0xc07a67f50eb5bf18fd0c140c702a3032faa3681c",
    "ens": "suffermore.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "suffermore.eth",
    "private": false,
@@ -5476,6 +5763,7 @@
   {
    "address": "0x50e05fa93c604b02f7c4d4b0aa328287b1545650",
    "ens": "suiluv.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "suiluv.eth",
    "private": false,
@@ -5495,6 +5783,7 @@
   {
    "address": "0x69cb3b1de24e08f1cfc2994171b6c6930498f750",
    "ens": "sundayfunday.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sundayfunday.eth",
    "private": false,
@@ -5514,6 +5803,7 @@
   {
    "address": "0xb68babf19df3889f5185576f7f657c9272923002",
    "ens": "synthetic.schizosthesia.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "synthetic.schizosthesia.eth",
    "private": false,
@@ -5533,6 +5823,7 @@
   {
    "address": "0x1e3a1348881f6d0a5e1cdc6bf19b88d98399b15a",
    "ens": "worldfamousphotographer.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "worldfamousphotographer.eth",
    "private": false,
@@ -5552,6 +5843,7 @@
   {
    "address": "0x74112baf5a50d45f455089ac8ea2dcc6c37261e6",
    "ens": "yhqphotos.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "yhqphotos.eth",
    "private": false,
@@ -5571,6 +5863,7 @@
   {
    "address": "0xfdfca754ba734df524f7a72e336aac8d159c9d96",
    "ens": "zenon44.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "zenon44.eth",
    "private": false,
@@ -5590,6 +5883,7 @@
   {
    "address": "0x0b9a068b61e79535b01a9d78ac4481b82bae6d07",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0b9a068b",
    "private": false,
@@ -5604,11 +5898,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x24055d456255f02e5b6287efe2d4111900e69d39",
    "ens": "crenmy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "crenmy.eth",
    "private": false,
@@ -5623,11 +5918,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xbe8fe12b9eb1ca2a593e6c070c71c294b6fe9f00",
    "ens": "poseidon.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "poseidon.eth",
    "private": false,
@@ -5647,6 +5943,7 @@
   {
    "address": "0x2debdf4427ccbcfdbc7f29d63964499a0ec184f6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x2debdf44",
    "private": false,
@@ -5666,6 +5963,7 @@
   {
    "address": "0xd0fefee51ac174206aed0f859ab73a0960b2523f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd0fefee5",
    "private": false,
@@ -5685,6 +5983,7 @@
   {
    "address": "0x6a886cbe6e1a062c1f4b179c8c8ede4847a04a70",
    "ens": "deemonie.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "deemonie.eth",
    "private": false,
@@ -5704,6 +6003,7 @@
   {
    "address": "0x7d88f221e9ecef9eef118e0d0e8a47f81b37e0b6",
    "ens": "gpebbles.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "gpebbles.eth",
    "private": false,
@@ -5715,7 +6015,7 @@
     "collections": 3
    },
    "first_collected": "2024-06-27T22:51:23.000000Z",
-   "last_collected": "2026-05-14T20:56:11.000000Z",
+   "last_collected": "2026-03-08T21:06:11.000000Z",
    "tao": 28102,
    "tao_rate": 146.4,
    "tao_rank": 402
@@ -5723,6 +6023,7 @@
   {
    "address": "0x7e3cdbbc82edd873f1cb9aa0ed45062fc6a5dbf6",
    "ens": "melzieq.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "melzieq.eth",
    "private": false,
@@ -5742,6 +6043,7 @@
   {
    "address": "0x1ee70dec1a631b7374344f6799a2826ea771ae30",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1ee70dec",
    "private": false,
@@ -5761,6 +6063,7 @@
   {
    "address": "0x2be9f18c46df11f05b581131af4d339c20c7254e",
    "ens": null,
+   "fwd": "vault.iagof.eth",
    "display_name": null,
    "slug": "0x2be9f18c",
    "private": false,
@@ -5772,7 +6075,7 @@
     "collections": 3
    },
    "first_collected": "2024-10-01T02:12:35.000000Z",
-   "last_collected": "2025-05-16T15:38:11.000000Z",
+   "last_collected": "2024-10-07T01:25:47.000000Z",
    "tao": 55859,
    "tao_rate": 81.6,
    "tao_rank": 278
@@ -5780,6 +6083,7 @@
   {
    "address": "0x437c3056e488b3ad705039770a8c9d7446258de6",
    "ens": null,
+   "fwd": "vault.eitzi.eth",
    "display_name": null,
    "slug": "0x437c3056",
    "private": false,
@@ -5799,6 +6103,7 @@
   {
    "address": "0x5563456491dd87cce83279816caedefd5e9f2d86",
    "ens": null,
+   "fwd": "sln4tra.eth",
    "display_name": null,
    "slug": "0x55634564",
    "private": false,
@@ -5809,7 +6114,7 @@
     "editions": 3,
     "collections": 3
    },
-   "first_collected": "2023-01-05T02:06:23.000000Z",
+   "first_collected": "2023-01-15T23:51:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
    "tao": 5593,
    "tao_rate": 4.2,
@@ -5818,6 +6123,7 @@
   {
    "address": "0x709e6c5abc1157986a3a9a236e1c94bca9e678c2",
    "ens": null,
+   "fwd": "smartcontrart.eth",
    "display_name": null,
    "slug": "0x709e6c5a",
    "private": false,
@@ -5837,6 +6143,7 @@
   {
    "address": "0x9addd91874b08f6856bf6b4a2263665d2bc0d933",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9addd918",
    "private": false,
@@ -5856,6 +6163,7 @@
   {
    "address": "0xf5b8104c727b5667bca098f940ffb2c1239b3c82",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf5b8104c",
    "private": false,
@@ -5875,6 +6183,7 @@
   {
    "address": "0x4ca1c22a3bff99415c1095dc22b3595d2c54c458",
    "ens": "apocs.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "apocs.eth",
    "private": false,
@@ -5894,6 +6203,7 @@
   {
    "address": "0x7cd29e0df7e442068e5751b638c9086fb62c50fa",
    "ens": "cadmonkey.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cadmonkey.eth",
    "private": false,
@@ -5913,6 +6223,7 @@
   {
    "address": "0xccb4e229fc4ebe2c8034960ca9a4b3ae5ef3a7bb",
    "ens": "chucknally.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "chucknally.eth",
    "private": false,
@@ -5932,6 +6243,7 @@
   {
    "address": "0x2a7999c9c0ae20e7b64a126f838351bbb6c120b4",
    "ens": "cmplx.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cmplx.eth",
    "private": false,
@@ -5951,6 +6263,7 @@
   {
    "address": "0xb00b82940af0328976a8cf291b2b580c5d87f7e5",
    "ens": "dosir.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dosir.eth",
    "private": false,
@@ -5970,6 +6283,7 @@
   {
    "address": "0xa88fe6fa01fcc112bb2164c6e37d63395b923e5f",
    "ens": "eitzi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "eitzi.eth",
    "private": false,
@@ -5989,6 +6303,7 @@
   {
    "address": "0x1712bf0c459dc5c85b78eee46642d169be0ae1bd",
    "ens": "heathernstout.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "heathernstout.eth",
    "private": false,
@@ -6008,6 +6323,7 @@
   {
    "address": "0x5cbb31e39ca93ca13d8e9f686bf749b14076bc65",
    "ens": "hisartwork.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hisartwork.eth",
    "private": false,
@@ -6027,6 +6343,7 @@
   {
    "address": "0xa8811a290c1690c39732118331329373693d9e2a",
    "ens": "jcode.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jcode.eth",
    "private": false,
@@ -6046,6 +6363,7 @@
   {
    "address": "0xd6dee643da993cf6be961f571cfaaacc444eccac",
    "ens": "saharaman.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "saharaman.eth",
    "private": false,
@@ -6065,6 +6383,7 @@
   {
    "address": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
    "ens": "symbiotech.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "symbiotech.eth",
    "private": false,
@@ -6084,6 +6403,7 @@
   {
    "address": "0xceed9585854f12f81a0103861b83b995a64ad915",
    "ens": "thenounishprof.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thenounishprof.eth",
    "private": false,
@@ -6103,6 +6423,7 @@
   {
    "address": "0x5ffd8de19910efff95df729c54699aebcee8f747",
    "ens": "vuja-de.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vuja-de.eth",
    "private": false,
@@ -6122,6 +6443,7 @@
   {
    "address": "0x8a23155cb36e2bd4bf230b8e1e792187ebcb7580",
    "ens": "zilchedhash.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "zilchedhash.eth",
    "private": false,
@@ -6141,6 +6463,7 @@
   {
    "address": "0x0aabac1408d397e5c875a28a1c9f6d052bf54d9a",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0aabac14",
    "private": false,
@@ -6160,6 +6483,7 @@
   {
    "address": "0x1059c7e69c743ed1cdd10380fd3127536d5eafc3",
    "ens": "0x0zahra.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0x0zahra.eth",
    "private": false,
@@ -6179,6 +6503,7 @@
   {
    "address": "0x1145b29b49f9b61d6178050b4b5e520255c2e565",
    "ens": null,
+   "fwd": "aussiebloke.eth",
    "display_name": null,
    "slug": "0x1145b29b",
    "private": false,
@@ -6190,7 +6515,7 @@
     "collections": 2
    },
    "first_collected": "2022-09-25T19:35:35.000Z",
-   "last_collected": "2023-01-05T06:01:35.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z",
    "tao": 35249,
    "tao_rate": 25.2,
    "tao_rank": 356
@@ -6198,6 +6523,7 @@
   {
    "address": "0x117f09a215e1eb69378ccade8a41f7de7c3411a0",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x117f09a2",
    "private": false,
@@ -6217,6 +6543,7 @@
   {
    "address": "0x2edb8bfb8caca74ddcf0a1914864a8e37bd4b000",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x2edb8bfb",
    "private": false,
@@ -6236,6 +6563,7 @@
   {
    "address": "0x3301463999f9882cb6285f97aa62b39a0dadaeec",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x33014639",
    "private": false,
@@ -6255,6 +6583,7 @@
   {
    "address": "0x362cf4be53248d0872ccbfba570254c08e2f3d09",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x362cf4be",
    "private": false,
@@ -6274,6 +6603,7 @@
   {
    "address": "0x36758c62c604ffaa7822b9c9bf4c6ccb61406f24",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x36758c62",
    "private": false,
@@ -6293,6 +6623,7 @@
   {
    "address": "0x474b6c2366128eacaea1b6e411171c06b49bdc97",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x474b6c23",
    "private": false,
@@ -6312,6 +6643,7 @@
   {
    "address": "0x53bd35217f5529eb8f9a5babe5bf833a6957d9d6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x53bd3521",
    "private": false,
@@ -6331,6 +6663,7 @@
   {
    "address": "0x56bdc5fe7f9752e7f5a381e394acfe72a724462b",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x56bdc5fe",
    "private": false,
@@ -6350,6 +6683,7 @@
   {
    "address": "0x7078394f073615f3d37b4591347797e1119a882a",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x7078394f",
    "private": false,
@@ -6369,6 +6703,7 @@
   {
    "address": "0x7f9d9715fc2e460c5895f99824a4aece18012953",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x7f9d9715",
    "private": false,
@@ -6388,6 +6723,7 @@
   {
    "address": "0xac84eb7001bd4983d58421b072379717ac1fee4f",
    "ens": null,
+   "fwd": "andginja.checkid.eth",
    "display_name": null,
    "slug": "0xac84eb70",
    "private": false,
@@ -6407,6 +6743,7 @@
   {
    "address": "0xadce3263b83c5d34ed04774a973d3ab5b56dec58",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xadce3263",
    "private": false,
@@ -6426,6 +6763,7 @@
   {
    "address": "0xb50c2b72e39de4049abd7e69ff72a8ce214a6f82",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb50c2b72",
    "private": false,
@@ -6445,6 +6783,7 @@
   {
    "address": "0x7fabb88d9c81fa3e2b1177c9a085f47c2390b08e",
    "ens": "0xbartender.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xbartender.eth",
    "private": false,
@@ -6464,6 +6803,7 @@
   {
    "address": "0xc9ee4f3f830516239842280fb285e78dd9cb0df8",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xc9ee4f3f",
    "private": false,
@@ -6483,6 +6823,7 @@
   {
    "address": "0xcf79b7ba24c70341e3fd5409381e1f00aab275d9",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xcf79b7ba",
    "private": false,
@@ -6502,6 +6843,7 @@
   {
    "address": "0xd20bf69b592b9176e46ec229f82d7f1bf65fc9b2",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd20bf69b",
    "private": false,
@@ -6521,6 +6863,7 @@
   {
    "address": "0xd444f003f3b7a5d52d5d388eec1fbd8dbfb95026",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd444f003",
    "private": false,
@@ -6540,6 +6883,7 @@
   {
    "address": "0x8bc303246b92b797cbd83e8527677402db2b2609",
    "ens": "0xshahrzad.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xshahrzad.eth",
    "private": false,
@@ -6559,6 +6903,7 @@
   {
    "address": "0xbece662e6b7c1e898c747a21281bcd602afc1367",
    "ens": "aagcreative.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aagcreative.eth",
    "private": false,
@@ -6578,6 +6923,7 @@
   {
    "address": "0x7021fcd14815f00b0e89841c458829739c05b00d",
    "ens": "amydigi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "amydigi.eth",
    "private": false,
@@ -6597,6 +6943,7 @@
   {
    "address": "0x97ad7704d47b5827a5cc18c2e57f8643f1bdaad3",
    "ens": "ananovo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ananovo.eth",
    "private": false,
@@ -6616,6 +6963,7 @@
   {
    "address": "0xe781fe7a6f65ee6b3efe66ed8f7f5c1e9f01cc55",
    "ens": "basedceo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "basedceo.eth",
    "private": false,
@@ -6635,6 +6983,7 @@
   {
    "address": "0xfd849d8cf365fe98bc60025ff7fab45cef0f557b",
    "ens": "boredsurgeon.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "boredsurgeon.eth",
    "private": false,
@@ -6654,6 +7003,7 @@
   {
    "address": "0x921887803bef20491fdd1ed3b0b3e0a102205131",
    "ens": "bornosor.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bornosor.eth",
    "private": false,
@@ -6673,6 +7023,7 @@
   {
    "address": "0x17726f58ba7350a33d08d1bbad623e155fa2daa0",
    "ens": "bowtiedtrousersnake.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bowtiedtrousersnake.eth",
    "private": false,
@@ -6692,6 +7043,7 @@
   {
    "address": "0x089d3d1a1d25f565bc556d7f10b0fb35ddfd2ce4",
    "ens": "brymnr.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "brymnr.eth",
    "private": false,
@@ -6711,6 +7063,7 @@
   {
    "address": "0x909d3c000baa83a64811ec0f41da55ec0ebb8a67",
    "ens": "bubits.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bubits.eth",
    "private": false,
@@ -6730,6 +7083,7 @@
   {
    "address": "0x3d4e27b8391809d572d44adedda01b4f4804361d",
    "ens": "cartcurt.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cartcurt.eth",
    "private": false,
@@ -6749,6 +7103,7 @@
   {
    "address": "0xc7b15ace7bc2cbc2a3e47f44ad272d7b752433b8",
    "ens": "charliert.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "charliert.eth",
    "private": false,
@@ -6768,6 +7123,7 @@
   {
    "address": "0xa8111288103cfa7199300d4fa83bfd8a8519669e",
    "ens": "cryptocu105.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cryptocu105.eth",
    "private": false,
@@ -6787,6 +7143,7 @@
   {
    "address": "0x523ede1d0f07c13951466404487d5ff19ea4ddbb",
    "ens": "davidloh.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "davidloh.eth",
    "private": false,
@@ -6806,6 +7163,7 @@
   {
    "address": "0x5fc13c5a541041f8fa12fab492d064435eb8d2f5",
    "ens": "deltasauce.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "deltasauce.eth",
    "private": false,
@@ -6825,6 +7183,7 @@
   {
    "address": "0xaaa9aca0d2aff48aab572de4d24088a80f2ae452",
    "ens": "dravanklab.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dravanklab.eth",
    "private": false,
@@ -6844,6 +7203,7 @@
   {
    "address": "0x6ebe7f9cda8619ab2c508ba6c8f6675836185e0c",
    "ens": "ericpare.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ericpare.eth",
    "private": false,
@@ -6863,6 +7223,7 @@
   {
    "address": "0x7fdab8c244e0b775edeeb9ebb8356b59068c6873",
    "ens": "exlawyervault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "exlawyervault.eth",
    "private": false,
@@ -6882,6 +7243,7 @@
   {
    "address": "0x17b73c47b92007cce78eb92bfed964ba2e5d118d",
    "ens": "fakememes69.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "fakememes69.eth",
    "private": false,
@@ -6901,6 +7263,7 @@
   {
    "address": "0x36eebc48da111b14b010a97abecf8bb68d10095c",
    "ens": "fathi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "fathi.eth",
    "private": false,
@@ -6920,6 +7283,7 @@
   {
    "address": "0x71cb0bbb26b37e30148203d05ec34ce88fe5c899",
    "ens": "fdilekyurdakul.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "fdilekyurdakul.eth",
    "private": false,
@@ -6939,6 +7303,7 @@
   {
    "address": "0x777480ff6351d131e4999c9aaa2c1afabf0be76d",
    "ens": "iamdude.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "iamdude.eth",
    "private": false,
@@ -6958,6 +7323,7 @@
   {
    "address": "0x86646054f1d16749b7832d0f111df44cf4a0d33f",
    "ens": "ivaavi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ivaavi.eth",
    "private": false,
@@ -6977,6 +7343,7 @@
   {
    "address": "0x547322faf3b4d0e16c8dda880da2bbd40ebd6109",
    "ens": "jonashangartner.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jonashangartner.eth",
    "private": false,
@@ -6996,6 +7363,7 @@
   {
    "address": "0xdad1d029d7ab8142beb1b882c9cad7c02da6a165",
    "ens": "jordaninglee.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jordaninglee.eth",
    "private": false,
@@ -7015,6 +7383,7 @@
   {
    "address": "0x5a8116f07937394e6ac2a51995ab6a054c08bf9e",
    "ens": "leafswan.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "leafswan.eth",
    "private": false,
@@ -7034,6 +7403,7 @@
   {
    "address": "0xe20be43f8745a9a11bf722334811aa4798ae400f",
    "ens": "liyat.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "liyat.eth",
    "private": false,
@@ -7053,6 +7423,7 @@
   {
    "address": "0x3a5e247429201d70fae0ff28e41fd8a1ca50af5a",
    "ens": "mattwalch.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mattwalch.eth",
    "private": false,
@@ -7072,6 +7443,7 @@
   {
    "address": "0x8f8b4759dc93ca55bd6997df719f20f581f10f5c",
    "ens": "mistertodd.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mistertodd.eth",
    "private": false,
@@ -7091,6 +7463,7 @@
   {
    "address": "0xc2aaec38c14b81332f6741f9fdc211c6bb6f894c",
    "ens": "murriohas.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "murriohas.eth",
    "private": false,
@@ -7110,6 +7483,7 @@
   {
    "address": "0x4f41ee8d83473da6a735b02701a2a2b1bee3b51a",
    "ens": "mvault.sofakingrekt.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mvault.sofakingrekt.eth",
    "private": false,
@@ -7129,6 +7503,7 @@
   {
    "address": "0x37b930d5b953d9e9df8b5d53379a410d855fccf3",
    "ens": "naime.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "naime.eth",
    "private": false,
@@ -7148,6 +7523,7 @@
   {
    "address": "0xa04611ac0438bdada004680628704151c8db044f",
    "ens": "nuclearsamurai.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nuclearsamurai.eth",
    "private": false,
@@ -7167,6 +7543,7 @@
   {
    "address": "0x6885c0a837c320f47a66df243c49a4e605ceb1ab",
    "ens": "oldirtypixel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "oldirtypixel.eth",
    "private": false,
@@ -7177,7 +7554,7 @@
     "editions": 4,
     "collections": 1
    },
-   "first_collected": "2023-01-04T03:54:11.000000Z",
+   "first_collected": "2023-04-02T01:21:59.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
    "tao": 68950,
    "tao_rate": 54.6,
@@ -7186,6 +7563,7 @@
   {
    "address": "0xb7ace9d178e5ff2321eff5f9b73899fede036569",
    "ens": "ovachinsky.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ovachinsky.eth",
    "private": false,
@@ -7205,6 +7583,7 @@
   {
    "address": "0x9553803357f9441ee426e701a1bd8031f814fcf0",
    "ens": "ph0t0s.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ph0t0s.eth",
    "private": false,
@@ -7224,6 +7603,7 @@
   {
    "address": "0x373d419979862c6845e74cee5ae1e075801b6abc",
    "ens": "pobedeen.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "pobedeen.eth",
    "private": false,
@@ -7243,6 +7623,7 @@
   {
    "address": "0x79a27148cb08422441c560f83729cb07721ea54f",
    "ens": "r0yart.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "r0yart.eth",
    "private": false,
@@ -7262,6 +7643,7 @@
   {
    "address": "0xc4cae0938241bde4e3ef6ae4b2e489eb88e2c57a",
    "ens": "realision.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "realision.eth",
    "private": false,
@@ -7281,6 +7663,7 @@
   {
    "address": "0xf49cc2079fa1280fbb535ac8f5ab31f12541e660",
    "ens": "renderjuice.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "renderjuice.eth",
    "private": false,
@@ -7300,6 +7683,7 @@
   {
    "address": "0xceae4ca7d082856d140f3672780029d6e90c3dcd",
    "ens": "reubenwu.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "reubenwu.eth",
    "private": false,
@@ -7319,6 +7703,7 @@
   {
    "address": "0x8611abf2e6fc4ba00e9e3d10cdb1e5382cde1f84",
    "ens": "ryanstruck.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ryanstruck.eth",
    "private": false,
@@ -7338,6 +7723,7 @@
   {
    "address": "0xcd9170edaa51e970114cbae25475f89c8f0de8cc",
    "ens": "sanqueira.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sanqueira.eth",
    "private": false,
@@ -7357,6 +7743,7 @@
   {
    "address": "0x06f549f0e578018095e93325bfaccdae3ca21df3",
    "ens": "saultphoto.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "saultphoto.eth",
    "private": false,
@@ -7376,6 +7763,7 @@
   {
    "address": "0x8a8035f056af830b7205c58c1dc037f826fc2b92",
    "ens": "serc.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "serc.eth",
    "private": false,
@@ -7395,6 +7783,7 @@
   {
    "address": "0x13c942e3f8be4faf966ef03e6038b33d000db22f",
    "ens": "siiid.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "siiid.eth",
    "private": false,
@@ -7414,6 +7803,7 @@
   {
    "address": "0x1288eb773f9ab5fd2368c870f02aaf97a7bfce9c",
    "ens": "slowhed.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "slowhed.eth",
    "private": false,
@@ -7433,6 +7823,7 @@
   {
    "address": "0xada00080816c264ece458eee56802c2521c2469e",
    "ens": "snarkcontracts.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "snarkcontracts.eth",
    "private": false,
@@ -7452,6 +7843,7 @@
   {
    "address": "0x32dd9f6885332ccf8633a18cb0c2e25e68fe03d1",
    "ens": "snjolfur.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "snjolfur.eth",
    "private": false,
@@ -7471,6 +7863,7 @@
   {
    "address": "0x4fc21517878b88dbee76f93cff2a3eab0d6304a3",
    "ens": "spellamin.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "spellamin.eth",
    "private": false,
@@ -7490,6 +7883,7 @@
   {
    "address": "0xddc9520acb5d1923412674a4ce07bb2e32ff0ac7",
    "ens": "srivatsansankaran.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "srivatsansankaran.eth",
    "private": false,
@@ -7509,6 +7903,7 @@
   {
    "address": "0xdf85b9146d73a852d7b900d1abd974f2a8119f57",
    "ens": "thedigitalcoy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thedigitalcoy.eth",
    "private": false,
@@ -7528,6 +7923,7 @@
   {
    "address": "0xc9a194bb6a3855b14dc4699cabe7b2881c3f6552",
    "ens": "tylekki.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "tylekki.eth",
    "private": false,
@@ -7547,6 +7943,7 @@
   {
    "address": "0x391a3699f430a4563097aec735b3c242108350ca",
    "ens": "tylersjourney.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "tylersjourney.eth",
    "private": false,
@@ -7566,6 +7963,7 @@
   {
    "address": "0x5e051c9106071baf1e4c087e3e06fdd17396a433",
    "ens": "valipokkann.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "valipokkann.eth",
    "private": false,
@@ -7585,6 +7983,7 @@
   {
    "address": "0xf9478e35fc9f3f18c4c3ad77f3391034c38c097e",
    "ens": "vandelight.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vandelight.eth",
    "private": false,
@@ -7604,6 +8003,7 @@
   {
    "address": "0x2a462fb59a5b0885b60ad31c5fe473d5ba0d79fd",
    "ens": "vault.ricodemus.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vault.ricodemus.eth",
    "private": false,
@@ -7615,7 +8015,7 @@
     "collections": 2
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
-   "last_collected": "2025-06-01T20:55:47.000000Z",
+   "last_collected": "2025-05-31T21:18:23.000000Z",
    "tao": 12097,
    "tao_rate": 25.2,
    "tao_rank": 852
@@ -7623,6 +8023,7 @@
   {
    "address": "0x8230a4cb486d9ae98710f4eff9d94bbc2f26e771",
    "ens": "visithra.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "visithra.eth",
    "private": false,
@@ -7642,6 +8043,7 @@
   {
    "address": "0xde203e26f91c33d9a9507a26a49a62650acb9a91",
    "ens": "vlwphotography.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vlwphotography.eth",
    "private": false,
@@ -7661,6 +8063,7 @@
   {
    "address": "0x1423d7ba74817a2617fa3e69b609a54e4daf6f79",
    "ens": "wildalps.art",
+   "fwd": null,
    "display_name": null,
    "slug": "0x1423d7ba",
    "private": false,
@@ -7680,6 +8083,7 @@
   {
    "address": "0x809dcc99c388767fb8bd9c25590f96c801aaebaf",
    "ens": "حماس.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0x809dcc99",
    "private": false,
@@ -7699,6 +8103,7 @@
   {
    "address": "0x001b26186552e79a318df256830a485bdbca4677",
    "ens": null,
+   "fwd": "01-01-2000.eth",
    "display_name": null,
    "slug": "0x001b2618",
    "private": false,
@@ -7718,6 +8123,7 @@
   {
    "address": "0x81c77f8ac639955a7bfd5f25f9ab533b0d388f34",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x81c77f8a",
    "private": false,
@@ -7732,11 +8138,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xd5f20543784f105f93ec06e918ae2d5e195b4438",
    "ens": "bossen.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bossen.eth",
    "private": false,
@@ -7751,11 +8158,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x1b2ff803d6dbea011ef30938e2c22260d0774dca",
    "ens": "captaincamobeard.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "captaincamobeard.eth",
    "private": false,
@@ -7770,11 +8178,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x49df36a77f819190a41368bc8aca8a54fb6d760d",
    "ens": "ilikecats.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ilikecats.eth",
    "private": false,
@@ -7794,6 +8203,7 @@
   {
    "address": "0x3a9ab042338acafa6a425e9557b9f451bed37eab",
    "ens": "tldreli5.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "tldreli5.eth",
    "private": false,
@@ -7808,11 +8218,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x10d503ffe3b10fc43285396de53d4df66a7a15e5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x10d503ff",
    "private": false,
@@ -7832,6 +8243,7 @@
   {
    "address": "0x8c36654b71c52bf8bf2ca8c3ec19bd4e83da7d11",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x8c36654b",
    "private": false,
@@ -7851,6 +8263,7 @@
   {
    "address": "0x89900edbf6b88e99ad849ea34d6e3df969631380",
    "ens": "madacollects.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "madacollects.eth",
    "private": false,
@@ -7870,6 +8283,7 @@
   {
    "address": "0xd77579d5f78708325393ceb14af25ad999c86500",
    "ens": "sweetbaby3zus.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sweetbaby3zus.eth",
    "private": false,
@@ -7889,6 +8303,7 @@
   {
    "address": "0xbf0d78ebe5e2c5a8ed9dbe42d539f5e8ea115d61",
    "ens": "symbiotechstudios.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "symbiotechstudios.eth",
    "private": false,
@@ -7908,6 +8323,7 @@
   {
    "address": "0xba9941758893819c506b79906a02ebdaac0e337c",
    "ens": "syrupnbbq.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "syrupnbbq.eth",
    "private": false,
@@ -7927,6 +8343,7 @@
   {
    "address": "0x04dd50bdd139a9981bbaca6451f79b22d5af3ecf",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x04dd50bd",
    "private": false,
@@ -7946,6 +8363,7 @@
   {
    "address": "0x180669310d089fafcbee40479ee719752d680d4e",
    "ens": null,
+   "fwd": "generative.eth",
    "display_name": null,
    "slug": "0x18066931",
    "private": false,
@@ -7965,6 +8383,7 @@
   {
    "address": "0x51e25bb517e9cfd207c9c733a1a4a915984e17cb",
    "ens": null,
+   "fwd": "vault.secureid.eth",
    "display_name": null,
    "slug": "0x51e25bb5",
    "private": false,
@@ -7976,7 +8395,7 @@
     "collections": 3
    },
    "first_collected": "2025-01-11T04:05:35.000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2025-01-11T04:06:35.000000Z",
    "tao": 45505,
    "tao_rate": 77.4,
    "tao_rank": 301
@@ -7984,6 +8403,7 @@
   {
    "address": "0xb6ea381cac9da2de47c6a760445bbeab2b1db480",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb6ea381c",
    "private": false,
@@ -8003,6 +8423,7 @@
   {
    "address": "0xf4959e582adc2d90a1b71d7e283d885225bcebdb",
    "ens": null,
+   "fwd": "champs.digijoint.eth",
    "display_name": null,
    "slug": "0xf4959e58",
    "private": false,
@@ -8022,6 +8443,7 @@
   {
    "address": "0xa32c8ac28ec0ac0a19497cb30884ce85d88894fe",
    "ens": "36529.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "36529.eth",
    "private": false,
@@ -8033,7 +8455,7 @@
     "collections": 3
    },
    "first_collected": "2025-02-05T00:51:59.000000Z",
-   "last_collected": "2025-05-17T20:20:23.000000Z",
+   "last_collected": "2025-02-09T00:42:47.000000Z",
    "tao": 43662,
    "tao_rate": 77.4,
    "tao_rank": 307
@@ -8041,6 +8463,7 @@
   {
    "address": "0x76e69bbc1acace9cf046a273b3ae38020d042452",
    "ens": "56529.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "56529.eth",
    "private": false,
@@ -8052,7 +8475,7 @@
     "collections": 3
    },
    "first_collected": "2025-02-05T00:50:59.000000Z",
-   "last_collected": "2025-05-17T20:21:47.000000Z",
+   "last_collected": "2025-02-09T00:42:47.000000Z",
    "tao": 43662,
    "tao_rate": 77.4,
    "tao_rank": 307
@@ -8060,6 +8483,7 @@
   {
    "address": "0x7cef7db4289005fd56dfa6c73bb2be6ec13bc250",
    "ens": "aakanksha.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aakanksha.eth",
    "private": false,
@@ -8079,6 +8503,7 @@
   {
    "address": "0x56616a6dac6252fdbbacc8ef5e739f4b26119f92",
    "ens": "awayiflew.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "awayiflew.eth",
    "private": false,
@@ -8098,6 +8523,7 @@
   {
    "address": "0x09bc641b6fa2308b030c312653f9675dfaa58e2b",
    "ens": "baiwei.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "baiwei.eth",
    "private": false,
@@ -8117,6 +8543,7 @@
   {
    "address": "0xe39ad57a33244300c2e0acfca24292434e2b9bae",
    "ens": "crimsonovoidchucker.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "crimsonovoidchucker.eth",
    "private": false,
@@ -8136,6 +8563,7 @@
   {
    "address": "0x452a9b6432cd228410f01a1da754449c8bafc85a",
    "ens": "cuatroceronueve.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cuatroceronueve.eth",
    "private": false,
@@ -8155,6 +8583,7 @@
   {
    "address": "0xa55bae6554a08576d7cc77c05348f3cee97beb14",
    "ens": "fuckingsendit.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "fuckingsendit.eth",
    "private": false,
@@ -8174,6 +8603,7 @@
   {
    "address": "0x95164c11db60941e60a262bbfe183ace6a34363e",
    "ens": "landandcityscapes.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "landandcityscapes.eth",
    "private": false,
@@ -8193,6 +8623,7 @@
   {
    "address": "0xce6041330e6d30a48d2065cf119454583180b3ef",
    "ens": "mfersrock.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mfersrock.eth",
    "private": false,
@@ -8212,6 +8643,7 @@
   {
    "address": "0x51c92564137510602710f742250101669b1e6f83",
    "ens": "phoenixfawkes25.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "phoenixfawkes25.eth",
    "private": false,
@@ -8231,6 +8663,7 @@
   {
    "address": "0xd7f624d0a67d09171b9555e2f43bde7acb16d79e",
    "ens": "ricodemus.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ricodemus.eth",
    "private": false,
@@ -8250,6 +8683,7 @@
   {
    "address": "0x855ae7f1e0ea6f754f4d30b92cdc43a7b045a0b8",
    "ens": "scizors.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "scizors.eth",
    "private": false,
@@ -8269,6 +8703,7 @@
   {
    "address": "0x98f1bda2d45ffaca73fcf2154e9e007871e14934",
    "ens": "thebenmeadows.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thebenmeadows.eth",
    "private": false,
@@ -8288,6 +8723,7 @@
   {
    "address": "0xf192fef5c9f90db31826e57e57a404e5be28f0e9",
    "ens": "xael.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "xael.eth",
    "private": false,
@@ -8307,6 +8743,7 @@
   {
    "address": "0xe50ae5655d227767ec3974a11da7e4f67476b96f",
    "ens": "🧔‍♀🧐😂.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xe50ae565",
    "private": false,
@@ -8326,6 +8763,7 @@
   {
    "address": "0x00550704a94cd95ed3a7b915e8ac8b505aec2553",
    "ens": null,
+   "fwd": "0xsparked.eth",
    "display_name": null,
    "slug": "0x00550704",
    "private": false,
@@ -8345,6 +8783,7 @@
   {
    "address": "0x00ba0b79fbf0c18034b753d3e2eedaae7bdf2aa2",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x00ba0b79",
    "private": false,
@@ -8364,6 +8803,7 @@
   {
    "address": "0x0bcf5544d234dd45f20fb3f9bac8abfdf0937054",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0bcf5544",
    "private": false,
@@ -8383,6 +8823,7 @@
   {
    "address": "0x0d177f1ae75b2cef54b1e866a365e5a903839736",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0d177f1a",
    "private": false,
@@ -8402,6 +8843,7 @@
   {
    "address": "0x0e1aa1f3d3557dc168a664c02cae7094cf0cedb3",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0e1aa1f3",
    "private": false,
@@ -8421,6 +8863,7 @@
   {
    "address": "0x107b2e855528f344556f8c766a6187326a2c2fa6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x107b2e85",
    "private": false,
@@ -8440,6 +8883,7 @@
   {
    "address": "0x111f412586d750951a603aee897afaf154746985",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x111f4125",
    "private": false,
@@ -8459,6 +8903,7 @@
   {
    "address": "0x11a5aa7a89307d60d4c2cf70d202a31857ac9758",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x11a5aa7a",
    "private": false,
@@ -8478,6 +8923,7 @@
   {
    "address": "0x1445c1930852d09bd01b48a3b0ab7a14f21bb528",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1445c193",
    "private": false,
@@ -8497,6 +8943,7 @@
   {
    "address": "0x172c7f0626aaffdd9b95dbed0b38544ef3dddb00",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x172c7f06",
    "private": false,
@@ -8516,6 +8963,7 @@
   {
    "address": "0x18f97c7a1622411c7f2434b9c6900120781437a0",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x18f97c7a",
    "private": false,
@@ -8535,6 +8983,7 @@
   {
    "address": "0x1cd24dc1187d7ee1779bd54f215053abe189a735",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1cd24dc1",
    "private": false,
@@ -8554,6 +9003,7 @@
   {
    "address": "0x321b0ccd207390fcb22b81e7ab139724511dbe8b",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x321b0ccd",
    "private": false,
@@ -8573,6 +9023,7 @@
   {
    "address": "0x32dbfc39e6330ccae7505a87519bac616c45e3ad",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x32dbfc39",
    "private": false,
@@ -8592,6 +9043,7 @@
   {
    "address": "0x343aca08aa8459ab018a8f543402763e8aff4b7f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x343aca08",
    "private": false,
@@ -8611,6 +9063,7 @@
   {
    "address": "0x374b358c5ee4aad856bc123bf9d1ab564e6caa8e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x374b358c",
    "private": false,
@@ -8630,6 +9083,7 @@
   {
    "address": "0x438ca90202f5bbbbd7f1730072886dbf9579057c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x438ca902",
    "private": false,
@@ -8649,6 +9103,7 @@
   {
    "address": "0x4525b5402a6d9eefc656e828b9391aa9dff2446c",
    "ens": null,
+   "fwd": "paymydoctor.eth",
    "display_name": null,
    "slug": "0x4525b540",
    "private": false,
@@ -8668,6 +9123,7 @@
   {
    "address": "0x46b2bd5c888e6d57a839c559fd6076f2c15a8cb1",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x46b2bd5c",
    "private": false,
@@ -8687,6 +9143,7 @@
   {
    "address": "0x48464efe55fbcae8ae0c992b306afcf21d4910cf",
    "ens": null,
+   "fwd": "g9ralt.eth",
    "display_name": null,
    "slug": "0x48464efe",
    "private": false,
@@ -8698,7 +9155,7 @@
     "collections": 3
    },
    "first_collected": "2022-07-30T00:33:29.000000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2024-04-21T22:17:47.000000Z",
    "tao": 11841,
    "tao_rate": 12.6,
    "tao_rank": 1167
@@ -8706,6 +9163,7 @@
   {
    "address": "0x4863cf7f803ea37e780a4f2790aabb3e46968b27",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x4863cf7f",
    "private": false,
@@ -8725,6 +9183,7 @@
   {
    "address": "0x4bc76402fc30602f48a59a1553d4748f9ee136a5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x4bc76402",
    "private": false,
@@ -8744,6 +9203,7 @@
   {
    "address": "0x4dd361e4df81b429913d772a7e22f92602f6f912",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x4dd361e4",
    "private": false,
@@ -8763,6 +9223,7 @@
   {
    "address": "0x5639e8a9eaa2bb07070c10c6d18d49473bdd88de",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x5639e8a9",
    "private": false,
@@ -8777,11 +9238,12 @@
    "last_collected": "2025-04-24T00:52:23.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x5c5edb285b7451b2155ec13c5d2eaff2ec6779ca",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x5c5edb28",
    "private": false,
@@ -8801,6 +9263,7 @@
   {
    "address": "0x5ea93bd269bfd21b9e19f73db5d51d189c35cdb3",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x5ea93bd2",
    "private": false,
@@ -8820,6 +9283,7 @@
   {
    "address": "0x69083e9cf68da3a2fedec4e987c452c2ab790635",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x69083e9c",
    "private": false,
@@ -8839,6 +9303,7 @@
   {
    "address": "0x6f10073d9154967b209f5c1cf578e42cd7a51b70",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x6f10073d",
    "private": false,
@@ -8858,6 +9323,7 @@
   {
    "address": "0x6fb8d222d20b38910ba5f4e9699c760004089e47",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x6fb8d222",
    "private": false,
@@ -8877,6 +9343,7 @@
   {
    "address": "0x70d6eb2b3b9a2a7d6d67c3f24c246bffc05b48ca",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x70d6eb2b",
    "private": false,
@@ -8896,6 +9363,7 @@
   {
    "address": "0x70ddda43d4f616263b1db0ec672cbd8795db13b1",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x70ddda43",
    "private": false,
@@ -8915,6 +9383,7 @@
   {
    "address": "0x71c01225bbebbc2e56339b2a69733c071101fc5a",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x71c01225",
    "private": false,
@@ -8934,6 +9403,7 @@
   {
    "address": "0x757210acc4cca94568ab4c698cb14aed3f490224",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x757210ac",
    "private": false,
@@ -8953,6 +9423,7 @@
   {
    "address": "0x75775181080b3684cc3be770ba070d1ecc1ec50d",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x75775181",
    "private": false,
@@ -8972,6 +9443,7 @@
   {
    "address": "0x79fc9bcfecf7bff03c6c99fa89584bacd03b4836",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x79fc9bcf",
    "private": false,
@@ -8991,6 +9463,7 @@
   {
    "address": "0x7c008e93b10b1f5c659bcfca0f41838196a16a40",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x7c008e93",
    "private": false,
@@ -9010,6 +9483,7 @@
   {
    "address": "0x87b895f37a93e76cf1c27ed68b38d77fee0f7867",
    "ens": null,
+   "fwd": "owlluminati.eth",
    "display_name": null,
    "slug": "0x87b895f3",
    "private": false,
@@ -9029,6 +9503,7 @@
   {
    "address": "0x89b664cbf1ffa0fda453830a56eb2f8abb42ac8c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x89b664cb",
    "private": false,
@@ -9048,6 +9523,7 @@
   {
    "address": "0x9c31993be9e616139a4f07092a3e1ff523a85f3c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9c31993b",
    "private": false,
@@ -9067,6 +9543,7 @@
   {
    "address": "0x9d0c97bae2870512e705d026a7ae74e0c5e07938",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9d0c97ba",
    "private": false,
@@ -9086,6 +9563,7 @@
   {
    "address": "0xa256cccb2542b045d76225eebacdf442ff47098c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa256cccb",
    "private": false,
@@ -9105,6 +9583,7 @@
   {
    "address": "0xa29af34d03af527ea2a2d388fb675e7b977b08ac",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa29af34d",
    "private": false,
@@ -9124,6 +9603,7 @@
   {
    "address": "0xbfde1b001f5446756f7b99b301c26ea6f9a721a4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xbfde1b00",
    "private": false,
@@ -9143,6 +9623,7 @@
   {
    "address": "0xc76162b6cdce01e78ba731047704b983490c73b4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xc76162b6",
    "private": false,
@@ -9162,6 +9643,7 @@
   {
    "address": "0xcae3ea73f8adedf03c1ab45b3c49e5c119a36126",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xcae3ea73",
    "private": false,
@@ -9181,6 +9663,7 @@
   {
    "address": "0xcb748f312b8e0557587862225697aae325052f7d",
    "ens": null,
+   "fwd": "gregwhitton.eth",
    "display_name": null,
    "slug": "0xcb748f31",
    "private": false,
@@ -9200,6 +9683,7 @@
   {
    "address": "0xcbc8cd253bf8032aacdca794c1ea3cbd12114c6e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xcbc8cd25",
    "private": false,
@@ -9219,6 +9703,7 @@
   {
    "address": "0xcc2dccf48f81c2b81686eaa1efd062dd906dfa65",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xcc2dccf4",
    "private": false,
@@ -9238,6 +9723,7 @@
   {
    "address": "0xcdb2961d0e2dab84d12b41d17b1ba7879201b6ea",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xcdb2961d",
    "private": false,
@@ -9257,6 +9743,7 @@
   {
    "address": "0xd2454d0545aaf38b43747c691ee648c360be7dab",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd2454d05",
    "private": false,
@@ -9276,6 +9763,7 @@
   {
    "address": "0xd36ecb072150adb69776247279e6000e1e06df3c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd36ecb07",
    "private": false,
@@ -9295,6 +9783,7 @@
   {
    "address": "0xd6208d782261c3df0015d15e4156ce80a32b6c22",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd6208d78",
    "private": false,
@@ -9314,6 +9803,7 @@
   {
    "address": "0xd76bf62f54e2af8b9a74924de857ee3cd6dcc6b4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd76bf62f",
    "private": false,
@@ -9333,6 +9823,7 @@
   {
    "address": "0xd7d16a716f6dfcef1e9553bf12136463f6414f1a",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd7d16a71",
    "private": false,
@@ -9352,6 +9843,7 @@
   {
    "address": "0xdc85bcd0f0e3f29f0637ebee04394988bdd06b83",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xdc85bcd0",
    "private": false,
@@ -9371,6 +9863,7 @@
   {
    "address": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe1ddc7f1",
    "private": false,
@@ -9390,6 +9883,7 @@
   {
    "address": "0xe4335022d67b72e9a5505418652da64dacc278db",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe4335022",
    "private": false,
@@ -9409,6 +9903,7 @@
   {
    "address": "0xe47b7432dd2cb6120bd8b08eac3dc50f766ff69a",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe47b7432",
    "private": false,
@@ -9428,6 +9923,7 @@
   {
    "address": "0xeeac6ac39ba78422116d28447af63a7d371fe679",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xeeac6ac3",
    "private": false,
@@ -9447,6 +9943,7 @@
   {
    "address": "0xf1133ca2ff1b4e5df7121566c0520199f8937e78",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf1133ca2",
    "private": false,
@@ -9466,6 +9963,7 @@
   {
    "address": "0xf3f8bafea43ee9062e18aad906a1ac6d25297ea6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf3f8bafe",
    "private": false,
@@ -9485,6 +9983,7 @@
   {
    "address": "0xfd16be417f7df067d7817e199124dcaa9c0847fd",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xfd16be41",
    "private": false,
@@ -9504,6 +10003,7 @@
   {
    "address": "0xfe0fb970566e5ee272692ce8b831f46317de639c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xfe0fb970",
    "private": false,
@@ -9523,6 +10023,7 @@
   {
    "address": "0xfebbaf01709baf5a4a2686124c4b1884072eaa28",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xfebbaf01",
    "private": false,
@@ -9542,6 +10043,7 @@
   {
    "address": "0xff0b01309ef6944ebe047c20b41d925dd8c521e4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xff0b0130",
    "private": false,
@@ -9561,6 +10063,7 @@
   {
    "address": "0xff7528c341e2374c68eb37272dba892ff5d2f91d",
    "ens": null,
+   "fwd": "tracyit.q00t.eth",
    "display_name": null,
    "slug": "0xff7528c3",
    "private": false,
@@ -9580,6 +10083,7 @@
   {
    "address": "0x8f9136e0b058b1696b4d9185d8f479656d92547d",
    "ens": "0xlbank.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0xlbank.eth",
    "private": false,
@@ -9599,6 +10103,7 @@
   {
    "address": "0x0843e80240f9304f3fe7059f25f3e1a66886a0eb",
    "ens": "adege.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "adege.eth",
    "private": false,
@@ -9610,7 +10115,7 @@
     "collections": 2
    },
    "first_collected": "2023-01-03T13:54:11.000000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2023-01-03T13:54:11.000000Z",
    "tao": 13171,
    "tao_rate": 12.6,
    "tao_rank": 606
@@ -9618,6 +10123,7 @@
   {
    "address": "0x7bc7481751d7fcb76d08f596b03ba1e42378ea27",
    "ens": "alejandrocartagena.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "alejandrocartagena.eth",
    "private": false,
@@ -9637,6 +10143,7 @@
   {
    "address": "0xdd8cf5a09e8e9d357211520e0a7382406b6faedb",
    "ens": "amassakoul.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "amassakoul.eth",
    "private": false,
@@ -9656,6 +10163,7 @@
   {
    "address": "0x2968da8a29d342e35dab40315638f22f425078ea",
    "ens": "annemckinnell.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "annemckinnell.eth",
    "private": false,
@@ -9675,6 +10183,7 @@
   {
    "address": "0xa3e64d3c38c442d87854d682463a1fee5e2a8d7e",
    "ens": "architech.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "architech.eth",
    "private": false,
@@ -9694,6 +10203,7 @@
   {
    "address": "0x9f6ae0370d74f0e591c64cec4a8ae0d627817014",
    "ens": "arsonic.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "arsonic.eth",
    "private": false,
@@ -9705,7 +10215,7 @@
     "collections": 3
    },
    "first_collected": "2022-11-18T19:47:23.000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2024-06-27T18:26:47.000000Z",
    "tao": 11090,
    "tao_rate": 12.6,
    "tao_rank": 1241
@@ -9713,6 +10223,7 @@
   {
    "address": "0x487ec4148ef7fbd9938d6a9e753200cded96f7f4",
    "ens": "artsarity.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "artsarity.eth",
    "private": false,
@@ -9732,6 +10243,7 @@
   {
    "address": "0x3783c56c35963d83742d1fe3eab546f61d0eb9c7",
    "ens": "ashtontekno.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ashtontekno.eth",
    "private": false,
@@ -9751,6 +10263,7 @@
   {
    "address": "0x69fde561275b85dbcd5081d1121bcae64fb83858",
    "ens": "astrodaddy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "astrodaddy.eth",
    "private": false,
@@ -9770,6 +10283,7 @@
   {
    "address": "0x646ae8d95575561fbd03f2490122d8fb2f4f41e2",
    "ens": "aswang.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aswang.eth",
    "private": false,
@@ -9789,6 +10303,7 @@
   {
    "address": "0x4fd4c35020cfd14f167bc1d888eb903d7a650768",
    "ens": "atmonez.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "atmonez.eth",
    "private": false,
@@ -9808,6 +10323,7 @@
   {
    "address": "0x251216dd3473ea5fcdbaffd0dd0826017f8e1b24",
    "ens": "bananajam.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bananajam.eth",
    "private": false,
@@ -9827,6 +10343,7 @@
   {
    "address": "0x3852471d266d9e2222ca9fdd922bafc904dc49e5",
    "ens": "batsoupyumvault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "batsoupyumvault.eth",
    "private": false,
@@ -9846,6 +10363,7 @@
   {
    "address": "0x9d3f31110d4e440460b8e605c55a54a261ab8224",
    "ens": "bkkbros.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bkkbros.eth",
    "private": false,
@@ -9865,6 +10383,7 @@
   {
    "address": "0xa62da2ea9f5bb03a58174060535ae32131973178",
    "ens": "bonafidehan.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bonafidehan.eth",
    "private": false,
@@ -9876,7 +10395,7 @@
     "collections": 3
    },
    "first_collected": "2022-05-09T23:16:19.000000Z",
-   "last_collected": "2025-05-16T10:34:47.000000Z",
+   "last_collected": "2022-12-07T15:48:35.000Z",
    "tao": 14286,
    "tao_rate": 12.6,
    "tao_rank": 597
@@ -9884,6 +10403,7 @@
   {
    "address": "0x177adf0f661ce080da1fa3f491f18e768182c2bf",
    "ens": "briancattelle.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "briancattelle.eth",
    "private": false,
@@ -9903,6 +10423,7 @@
   {
    "address": "0x0e15a265abf88d7019d8a0fcf800c04c56e2e858",
    "ens": "brooksgallery.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "brooksgallery.eth",
    "private": false,
@@ -9922,6 +10443,7 @@
   {
    "address": "0xcc6c1d21e8474b3578e69eb036c712ab08ffdfbb",
    "ens": "bsy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bsy.eth",
    "private": false,
@@ -9941,6 +10463,7 @@
   {
    "address": "0xac737c94aa0fbe6964002e7e94b4e8fc3c04d157",
    "ens": "byrob.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "byrob.eth",
    "private": false,
@@ -9960,6 +10483,7 @@
   {
    "address": "0x4348b57916e6674bc2c9efd3ab84cede61e1dd46",
    "ens": "cazandocielos.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cazandocielos.eth",
    "private": false,
@@ -9979,6 +10503,7 @@
   {
    "address": "0x318b5ca36a85db5f0eb1857bba0edbb0e56ff0c1",
    "ens": "charliertphoto.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "charliertphoto.eth",
    "private": false,
@@ -9998,6 +10523,7 @@
   {
    "address": "0xb79c26fafaafeb2835ff175d025db1b9deeedf5e",
    "ens": "chrishytha.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "chrishytha.eth",
    "private": false,
@@ -10017,6 +10543,7 @@
   {
    "address": "0x33de5f7c0dcffbbc399b603ff539250a2c132e3c",
    "ens": "clownphunk.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "clownphunk.eth",
    "private": false,
@@ -10036,6 +10563,7 @@
   {
    "address": "0x4a15e3d354043fdefbb8fa77a55da211f4058190",
    "ens": "commonman.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "commonman.eth",
    "private": false,
@@ -10055,6 +10583,7 @@
   {
    "address": "0x22098012d15b4ff9a2b1da8d658dae8e5d0d3fbb",
    "ens": "crimsonvault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "crimsonvault.eth",
    "private": false,
@@ -10074,6 +10603,7 @@
   {
    "address": "0x61315007451e00451305f63c93af8cdd866f6bc9",
    "ens": "cristinaspinei.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cristinaspinei.eth",
    "private": false,
@@ -10093,6 +10623,7 @@
   {
    "address": "0xb3d07e104d6cdec8589e3971e5df4ab6d7072ab0",
    "ens": "cryp2mama.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cryp2mama.eth",
    "private": false,
@@ -10112,6 +10643,7 @@
   {
    "address": "0xe89ef01e0df857c9dc38ca6b5d0b81234d800ba7",
    "ens": "crypt0warr10r.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "crypt0warr10r.eth",
    "private": false,
@@ -10131,6 +10663,7 @@
   {
    "address": "0xe082d4e79c8e9587deb8539f3454da340b0f5668",
    "ens": "cryptogossip.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "cryptogossip.eth",
    "private": false,
@@ -10150,6 +10683,7 @@
   {
    "address": "0x8715dcbf7394a4e6ad98ac5d112e7fb6c3ea9f70",
    "ens": "dankus.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dankus.eth",
    "private": false,
@@ -10169,6 +10703,7 @@
   {
    "address": "0x9b96980c1c018cb617f6653f6892e19ecf4f81e1",
    "ens": "deconstruct3d.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "deconstruct3d.eth",
    "private": false,
@@ -10188,6 +10723,7 @@
   {
    "address": "0xdd5cecf2835d465d490f79ad9773a848805a3219",
    "ens": "dheerajkhandelwal.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dheerajkhandelwal.eth",
    "private": false,
@@ -10207,6 +10743,7 @@
   {
    "address": "0x0c55e7d45f53b6999732a75917df6eb711e58674",
    "ens": "domesplitta.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "domesplitta.eth",
    "private": false,
@@ -10226,6 +10763,7 @@
   {
    "address": "0xf02fe5b5f57b0d75e4588919299f96f10da07f14",
    "ens": "donye.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "donye.eth",
    "private": false,
@@ -10245,6 +10783,7 @@
   {
    "address": "0x098bdf163c1ccab92c898ce696bc4d750c934c01",
    "ens": "duhveed.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "duhveed.eth",
    "private": false,
@@ -10264,6 +10803,7 @@
   {
    "address": "0x2f67a952b952593848d597102298acf9253b841b",
    "ens": "eggboi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "eggboi.eth",
    "private": false,
@@ -10283,6 +10823,7 @@
   {
    "address": "0xfd6e7bf39dd6f9debf8ec782b211bb549216cb09",
    "ens": "elaaddioui.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "elaaddioui.eth",
    "private": false,
@@ -10302,6 +10843,7 @@
   {
    "address": "0x46128db228f960860a79463c73c03a54c481b7da",
    "ens": "eloshi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "eloshi.eth",
    "private": false,
@@ -10321,6 +10863,7 @@
   {
    "address": "0x27f551611f6ccfd868dda75afd2b0b89c38bc791",
    "ens": "emmasamuel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "emmasamuel.eth",
    "private": false,
@@ -10340,6 +10883,7 @@
   {
    "address": "0x8469b7b08d30c63fea3a248a198de9d634b63d70",
    "ens": "empresstrash.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "empresstrash.eth",
    "private": false,
@@ -10354,11 +10898,12 @@
    "last_collected": "2024-10-05T07:50:47.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x757a21fbd39cccaff681e1930e273b9add0008db",
    "ens": "eniosta.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "eniosta.eth",
    "private": false,
@@ -10378,6 +10923,7 @@
   {
    "address": "0x2eae4738fe75c88cf1d6521433d30cfd85961992",
    "ens": "ericbleicher.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ericbleicher.eth",
    "private": false,
@@ -10397,6 +10943,7 @@
   {
    "address": "0xb46adfe7e10675b1e43f9132da7f00a9ad3642f3",
    "ens": "erikbulckens.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "erikbulckens.eth",
    "private": false,
@@ -10416,6 +10963,7 @@
   {
    "address": "0x109632e956ca6baf528fe5a9724c43b0c4a63fbe",
    "ens": "erinmcgean.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "erinmcgean.eth",
    "private": false,
@@ -10435,6 +10983,7 @@
   {
    "address": "0x9d3bea10a103635776ce77377c3079613b3238db",
    "ens": "g3rmv.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "g3rmv.eth",
    "private": false,
@@ -10454,6 +11003,7 @@
   {
    "address": "0xce990032a3ed14e197421270a9bec9e276bf2f31",
    "ens": "gareebaadmi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "gareebaadmi.eth",
    "private": false,
@@ -10473,6 +11023,7 @@
   {
    "address": "0xfd22004806a6846ea67ad883356be810f0428793",
    "ens": "genesis.punk6529.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "genesis.punk6529.eth",
    "private": false,
@@ -10484,7 +11035,7 @@
     "collections": 3
    },
    "first_collected": "2022-07-12T04:42:36.000Z",
-   "last_collected": "2025-05-16T10:34:47.000000Z",
+   "last_collected": "2024-11-27T04:10:47.000000Z",
    "tao": 14583,
    "tao_rate": 12.6,
    "tao_rank": 596
@@ -10492,6 +11043,7 @@
   {
    "address": "0xe410fe139e986ed5242e19b53806a9fa5ff1fd50",
    "ens": "giorgianza.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "giorgianza.eth",
    "private": false,
@@ -10511,6 +11063,7 @@
   {
    "address": "0x86ae37857534a842ac56a4eaeaaf83d02f46d1f8",
    "ens": "gpebbles6529ftw.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "gpebbles6529ftw.eth",
    "private": false,
@@ -10522,7 +11075,7 @@
     "collections": 2
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
-   "last_collected": "2026-03-18T14:48:11.000000Z",
+   "last_collected": "2025-05-27T23:55:23.000000Z",
    "tao": 14759,
    "tao_rate": 33.6,
    "tao_rank": 595
@@ -10530,6 +11083,7 @@
   {
    "address": "0xf6dfa4a1213f1d14f898f2eb840b1405984fe014",
    "ens": "granneberg.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "granneberg.eth",
    "private": false,
@@ -10549,6 +11103,7 @@
   {
    "address": "0xf3e1f9230ef6bb5646dc04879e67a3005cb69b37",
    "ens": "grantyun.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "grantyun.eth",
    "private": false,
@@ -10568,6 +11123,7 @@
   {
    "address": "0xc72f40a397453051349f73cf2e2a04fac06e37a3",
    "ens": "guidodisalle.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "guidodisalle.eth",
    "private": false,
@@ -10587,6 +11143,7 @@
   {
    "address": "0x4e1829da30cd7ae2f3e9915cb8c9f3f203ac7d83",
    "ens": "hariology.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hariology.eth",
    "private": false,
@@ -10606,6 +11163,7 @@
   {
    "address": "0x330c73488e897f67830acfc558e5664ec9b91fb5",
    "ens": "hashcurve.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hashcurve.eth",
    "private": false,
@@ -10625,6 +11183,7 @@
   {
    "address": "0x0220e0b5a23bf2419e643de74649a01bf77960ee",
    "ens": "hifomaxi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hifomaxi.eth",
    "private": false,
@@ -10644,6 +11203,7 @@
   {
    "address": "0x7c2f06ab61a94fe9760cc8d9ad35a33c0472cb8e",
    "ens": "iameni.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "iameni.eth",
    "private": false,
@@ -10663,6 +11223,7 @@
   {
    "address": "0x132781fba7b7350d7204e9e701eb07b974b24185",
    "ens": "iineslobo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "iineslobo.eth",
    "private": false,
@@ -10682,6 +11243,7 @@
   {
    "address": "0xd6d8e393824aac8ecaf4e1f689717bc001064abc",
    "ens": "ikertje.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ikertje.eth",
    "private": false,
@@ -10701,6 +11263,7 @@
   {
    "address": "0x19e7a132bd4b42f580f546197f42e19c42cdfe6c",
    "ens": "intrepid.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "intrepid.eth",
    "private": false,
@@ -10720,6 +11283,7 @@
   {
    "address": "0xa376d46b4966ae192dcb1fbc73fa2c89bbcbbca8",
    "ens": "irtaza14.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "irtaza14.eth",
    "private": false,
@@ -10739,6 +11303,7 @@
   {
    "address": "0x43b0bd27d5016e969193412933387b0dd4cf3e0a",
    "ens": "iwouldntbuyannft.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "iwouldntbuyannft.eth",
    "private": false,
@@ -10758,6 +11323,7 @@
   {
    "address": "0x7aba135f55e9b60d4c14275fde03e3a4d23fcada",
    "ens": "j3nn1b33.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "j3nn1b33.eth",
    "private": false,
@@ -10768,7 +11334,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2023-01-05T02:17:35.000000Z",
+   "first_collected": "2023-01-15T23:51:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
    "tao": 5593,
    "tao_rate": 4.2,
@@ -10777,6 +11343,7 @@
   {
    "address": "0x2a5595f487a15c9cca39bcdc17d551169d2552c5",
    "ens": "jamesandrew.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jamesandrew.eth",
    "private": false,
@@ -10796,6 +11363,7 @@
   {
    "address": "0xfe3b3f0d64f354b69a5b40d02f714e69ca4b09bd",
    "ens": "jeffbandman.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jeffbandman.eth",
    "private": false,
@@ -10807,7 +11375,7 @@
     "collections": 3
    },
    "first_collected": "2022-05-09T23:25:25.000000Z",
-   "last_collected": "2025-05-16T10:34:47.000000Z",
+   "last_collected": "2024-06-27T07:10:59.000000Z",
    "tao": 11902,
    "tao_rate": 12.6,
    "tao_rank": 1164
@@ -10815,6 +11383,7 @@
   {
    "address": "0x08e0a3e752d1338c0f02b986b9504f1009a962ca",
    "ens": "jeffmihaly.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jeffmihaly.eth",
    "private": false,
@@ -10834,6 +11403,7 @@
   {
    "address": "0xe9d2c5f794374cb87891f3c3933a1c44865738b1",
    "ens": "jenjpeterson.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jenjpeterson.eth",
    "private": false,
@@ -10853,6 +11423,7 @@
   {
    "address": "0xa58c598a2cc0235bec70e04adfdd29cf5869a6da",
    "ens": "jenmartin.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jenmartin.eth",
    "private": false,
@@ -10872,6 +11443,7 @@
   {
    "address": "0x6dadad611b4cec834902281d46c279b951c95db3",
    "ens": "jenvahlbruch.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jenvahlbruch.eth",
    "private": false,
@@ -10891,6 +11463,7 @@
   {
    "address": "0xaaef0206c3979c580da2b8b649bd18502d04353d",
    "ens": "jordcreates.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jordcreates.eth",
    "private": false,
@@ -10910,6 +11483,7 @@
   {
    "address": "0xfaeab24340ef750f67ee158deaafc82d34f019bd",
    "ens": "jrmolonlabe.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jrmolonlabe.eth",
    "private": false,
@@ -10929,6 +11503,7 @@
   {
    "address": "0x1a1427a73b7cb0f4ea3f71c6c8090c4366c8ebe1",
    "ens": "jsheps.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jsheps.eth",
    "private": false,
@@ -10948,6 +11523,7 @@
   {
    "address": "0x97cfe517d481ebdc6f1d321b690aa4cc1005dec3",
    "ens": "kaparetti.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "kaparetti.eth",
    "private": false,
@@ -10967,6 +11543,7 @@
   {
    "address": "0x8e2336d04480fc7eba123118536e967c23f458c5",
    "ens": "kiran46.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "kiran46.eth",
    "private": false,
@@ -10986,6 +11563,7 @@
   {
    "address": "0xfcbe1f6ec1c26c8f48bd835d650a3383ea1797c2",
    "ens": "koopmans.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "koopmans.eth",
    "private": false,
@@ -11005,6 +11583,7 @@
   {
    "address": "0xd1c6d8127312ba8715db4a666e7cab1af898abfe",
    "ens": "kostasphotography.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "kostasphotography.eth",
    "private": false,
@@ -11024,6 +11603,7 @@
   {
    "address": "0xc322e8ec33e9b0a34c7cd185c616087d9842ad50",
    "ens": "ldf.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ldf.eth",
    "private": false,
@@ -11043,6 +11623,7 @@
   {
    "address": "0xbddf499207d29e920c0500642567b43238b30fd3",
    "ens": "leftclickbuy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "leftclickbuy.eth",
    "private": false,
@@ -11062,6 +11643,7 @@
   {
    "address": "0x71a7702ff3d858a0853a918fb44c537740a8bde9",
    "ens": "lesliespurlock.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lesliespurlock.eth",
    "private": false,
@@ -11081,6 +11663,7 @@
   {
    "address": "0x98a34c0b364af1d2fe92f7a7d2993b01ec8bb2e6",
    "ens": "lilycallisto.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lilycallisto.eth",
    "private": false,
@@ -11100,6 +11683,7 @@
   {
    "address": "0xefb9d0f98bc9a909873158c0f832fa5a60fcf0eb",
    "ens": "lindakristiansen.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lindakristiansen.eth",
    "private": false,
@@ -11119,6 +11703,7 @@
   {
    "address": "0xb3e109b349f189b182239df384a3162b861b0cc8",
    "ens": "magic53.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "magic53.eth",
    "private": false,
@@ -11138,6 +11723,7 @@
   {
    "address": "0x822e60d79ecfd2d4525cb6192b6e9732d8b94bb6",
    "ens": "marcallen.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "marcallen.eth",
    "private": false,
@@ -11157,6 +11743,7 @@
   {
    "address": "0x13928eb9a86c8278a45b6ff2935c7730b58ac675",
    "ens": "maxmy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "maxmy.eth",
    "private": false,
@@ -11176,6 +11763,7 @@
   {
    "address": "0xd04fff37bfefd4b2439322620262a25cc17d0b91",
    "ens": "meeshuno.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "meeshuno.eth",
    "private": false,
@@ -11195,6 +11783,7 @@
   {
    "address": "0x2bcbef6ad4f83f019280e5aee300897a37310e31",
    "ens": "memes.100series.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "memes.100series.eth",
    "private": false,
@@ -11214,6 +11803,7 @@
   {
    "address": "0x02b294ed96e1175b8c71071a303e8a7d2396b017",
    "ens": "memes.chrisroc.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "memes.chrisroc.eth",
    "private": false,
@@ -11233,6 +11823,7 @@
   {
    "address": "0xcf8e055fb098c1f376a65d5184c4b2e08998896c",
    "ens": "meysvm.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "meysvm.eth",
    "private": false,
@@ -11252,6 +11843,7 @@
   {
    "address": "0x7d93f170dfd65d14d58682678b7a0d171f287c93",
    "ens": "mint.t04d4418.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mint.t04d4418.eth",
    "private": false,
@@ -11271,6 +11863,7 @@
   {
    "address": "0x8125ef62932875f3dfab6c9b39fa12c087397cb5",
    "ens": "misbehaving.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "misbehaving.eth",
    "private": false,
@@ -11290,6 +11883,7 @@
   {
    "address": "0xadd72e24a9e9117aa16d253cb421cb93b00240e3",
    "ens": "mleejr.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mleejr.eth",
    "private": false,
@@ -11309,6 +11903,7 @@
   {
    "address": "0x21339e2ce5ce1d7a19a28e774513619c0c6259da",
    "ens": "monikasart.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "monikasart.eth",
    "private": false,
@@ -11328,6 +11923,7 @@
   {
    "address": "0x023a3905e3b33634758871712f4293ddb919b67f",
    "ens": "monkeyversedao.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "monkeyversedao.eth",
    "private": false,
@@ -11347,6 +11943,7 @@
   {
    "address": "0xffdc43e03609c792bc62f4fd137ad80e4b9c294b",
    "ens": "mrdr4gon.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mrdr4gon.eth",
    "private": false,
@@ -11366,6 +11963,7 @@
   {
    "address": "0x2844a1f5c5164b9adae211df8931838a2d33b5ed",
    "ens": "mxvoid.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mxvoid.eth",
    "private": false,
@@ -11385,6 +11983,7 @@
   {
    "address": "0x8ca7e4a1f59495107bdc4c7b246691d89fd3a939",
    "ens": "navane.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "navane.eth",
    "private": false,
@@ -11404,6 +12003,7 @@
   {
    "address": "0xa81155b70662d44e07fb432d5e85abf7d9e1732a",
    "ens": "nft-teun.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nft-teun.eth",
    "private": false,
@@ -11423,6 +12023,7 @@
   {
    "address": "0x6f566a6672f615c2975f6c48224c46153e12ffcf",
    "ens": "nftvaultdiegorst.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nftvaultdiegorst.eth",
    "private": false,
@@ -11434,7 +12035,7 @@
     "collections": 2
    },
    "first_collected": "2024-07-11T12:11:23.000000Z",
-   "last_collected": "2025-05-16T10:36:23.000000Z",
+   "last_collected": "2024-08-21T15:35:47.000000Z",
    "tao": 8337,
    "tao_rate": 12.6,
    "tao_rank": 1277
@@ -11442,6 +12043,7 @@
   {
    "address": "0x8ef6130753404b73081021562aeea7df975eafeb",
    "ens": "niftybois.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "niftybois.eth",
    "private": false,
@@ -11461,6 +12063,7 @@
   {
    "address": "0x840f5d0fa8ac1f000287dfe54c97d4e76b058ef1",
    "ens": "nikilesunshine.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nikilesunshine.eth",
    "private": false,
@@ -11480,6 +12083,7 @@
   {
    "address": "0x3b4c6bfab875486e4344b0e8338f0279d147e6bf",
    "ens": "nkrandhawa.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nkrandhawa.eth",
    "private": false,
@@ -11494,11 +12098,12 @@
    "last_collected": "2024-10-05T07:51:35.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x147fcaeada9baee1da242d8b823ee809aa93b691",
    "ens": "noushadakampadam.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "noushadakampadam.eth",
    "private": false,
@@ -11518,6 +12123,7 @@
   {
    "address": "0xfb5b6f0a1073a5ac19672bc8925feed20d4ed5bc",
    "ens": "onurcabi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "onurcabi.eth",
    "private": false,
@@ -11537,6 +12143,7 @@
   {
    "address": "0x446b01c4d72ff31856363b121cf06361026e161d",
    "ens": "ozlembykvrn.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ozlembykvrn.eth",
    "private": false,
@@ -11556,6 +12163,7 @@
   {
    "address": "0xf06bed3f0dad7932d8d00fe48c36751f5c10be23",
    "ens": "paschamo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "paschamo.eth",
    "private": false,
@@ -11575,6 +12183,7 @@
   {
    "address": "0x373678e468a51b881bfd2f2957ec992072e0d78a",
    "ens": "patriciaklein.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "patriciaklein.eth",
    "private": false,
@@ -11594,6 +12203,7 @@
   {
    "address": "0x117dde66c2de2979ba4619d8d494fd20ffe96c2e",
    "ens": "personpixelated.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "personpixelated.eth",
    "private": false,
@@ -11613,6 +12223,7 @@
   {
    "address": "0x5abf7df46dff568e511b0a60429d316b90b98a9f",
    "ens": "ph📷tog.art",
+   "fwd": null,
    "display_name": null,
    "slug": "0x5abf7df4",
    "private": false,
@@ -11632,6 +12243,7 @@
   {
    "address": "0xdf4329a7fe5b265ee0fd7315432bfed7498157b7",
    "ens": "philgarcia.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "philgarcia.eth",
    "private": false,
@@ -11651,6 +12263,7 @@
   {
    "address": "0x29d7e1da8daca7a9d1edaec80255bbaf0eef594a",
    "ens": "photosbymvp.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "photosbymvp.eth",
    "private": false,
@@ -11670,6 +12283,7 @@
   {
    "address": "0xe72dcf20abaeb8f7a834811bebb14cb3f7232558",
    "ens": "pinkapewife.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "pinkapewife.eth",
    "private": false,
@@ -11689,6 +12303,7 @@
   {
    "address": "0xfddbe64dab03ff215569ce18780372d1219a7272",
    "ens": "pixelactivist.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "pixelactivist.eth",
    "private": false,
@@ -11708,6 +12323,7 @@
   {
    "address": "0x4d48b015da844b2a8a86ac4e8dedbbee5780e314",
    "ens": "poptoday.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "poptoday.eth",
    "private": false,
@@ -11727,6 +12343,7 @@
   {
    "address": "0xcb7504c4cb986e80ab4983b44263381f21273482",
    "ens": "producedbydav.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "producedbydav.eth",
    "private": false,
@@ -11746,6 +12363,7 @@
   {
    "address": "0x67a6009424cb2daeaaa9bcb414b48dea4befc265",
    "ens": "punk9112.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "punk9112.eth",
    "private": false,
@@ -11765,6 +12383,7 @@
   {
    "address": "0xda4ff7b6a1eb3176c347a3ffc56a26ee82fb6893",
    "ens": "rachstewartnz.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rachstewartnz.eth",
    "private": false,
@@ -11784,6 +12403,7 @@
   {
    "address": "0xc35152b4df68fbda0f5ba3603c7ebc113ac2ba76",
    "ens": "rasmy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rasmy.eth",
    "private": false,
@@ -11803,6 +12423,7 @@
   {
    "address": "0x0624b2e6fc69d4bf7ac5052cea71ebcd7c67bfc8",
    "ens": "rayvazquez.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rayvazquez.eth",
    "private": false,
@@ -11822,6 +12443,7 @@
   {
    "address": "0x7b5af6790381f932abae790e8b0d0ff50e287f8e",
    "ens": "regulardad.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "regulardad.eth",
    "private": false,
@@ -11841,6 +12463,7 @@
   {
    "address": "0x3d21d71aaf37a1a96abb3a8e57e0199a9a942b8d",
    "ens": "rememer.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rememer.eth",
    "private": false,
@@ -11860,6 +12483,7 @@
   {
    "address": "0x2cb3338f518b2d61470b4d1d503bdc84c1a04ecd",
    "ens": "resetnft.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "resetnft.eth",
    "private": false,
@@ -11879,6 +12503,7 @@
   {
    "address": "0x0aadeef83545196ccb2ce70fabf8be1afa3c9b87",
    "ens": "rik.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rik.eth",
    "private": false,
@@ -11898,6 +12523,7 @@
   {
    "address": "0x3e0914fc2b3b67a476142020b7d6990d01ad234e",
    "ens": "rocketgirlnft.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rocketgirlnft.eth",
    "private": false,
@@ -11917,6 +12543,7 @@
   {
    "address": "0x2d08cb1a341cdbe407ce1449ae7ea8947569d72d",
    "ens": "ruckdaschel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ruckdaschel.eth",
    "private": false,
@@ -11936,6 +12563,7 @@
   {
    "address": "0xba45a9551c9cd0f166f0119a1d087478f70fc813",
    "ens": "saisanjay.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "saisanjay.eth",
    "private": false,
@@ -11955,6 +12583,7 @@
   {
    "address": "0x9f128b52128027dd6ea9892f741519979d36fa34",
    "ens": "scamart.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "scamart.eth",
    "private": false,
@@ -11965,7 +12594,7 @@
     "editions": 3,
     "collections": 2
    },
-   "first_collected": "2023-01-05T01:51:11.000000Z",
+   "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
    "tao": 5593,
    "tao_rate": 4.2,
@@ -11974,6 +12603,7 @@
   {
    "address": "0x344a4c67ee8ae84b89bcde443f982c07ae5b1358",
    "ens": "shawnmoreton.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "shawnmoreton.eth",
    "private": false,
@@ -11993,6 +12623,7 @@
   {
    "address": "0x2da903666829f302b0501f76144339213259c260",
    "ens": "simonemonte.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "simonemonte.eth",
    "private": false,
@@ -12012,6 +12643,7 @@
   {
    "address": "0x84ea8215947e5484ee59818b789de9b4555bcfae",
    "ens": "singhvi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "singhvi.eth",
    "private": false,
@@ -12031,6 +12663,7 @@
   {
    "address": "0xc7d2d152dda8cf7a7860288c3db9a1a4ce29162b",
    "ens": "skywalker.dcl.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "skywalker.dcl.eth",
    "private": false,
@@ -12050,6 +12683,7 @@
   {
    "address": "0xf165f8a81e4a987d15258c371fc3f6b257cc5657",
    "ens": "spaceminer.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "spaceminer.eth",
    "private": false,
@@ -12069,6 +12703,7 @@
   {
    "address": "0xb6095324712ae350bd3bab367b151c4ab3ef6a9b",
    "ens": "stormysteph.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "stormysteph.eth",
    "private": false,
@@ -12088,6 +12723,7 @@
   {
    "address": "0x6f95f5eb03496765742b3dbeabd885d605946af0",
    "ens": "sunken0x.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "sunken0x.eth",
    "private": false,
@@ -12107,6 +12743,7 @@
   {
    "address": "0x942dfb0c7e87fb5f07e25ec7ff805e7f973cf929",
    "ens": "surrealcreations.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "surrealcreations.eth",
    "private": false,
@@ -12126,6 +12763,7 @@
   {
    "address": "0xe72eeb929e5aa9bb4f6a346376546a19708c100b",
    "ens": "th0mpson.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "th0mpson.eth",
    "private": false,
@@ -12145,6 +12783,7 @@
   {
    "address": "0x82f79d8090e32835f7fd7963f14f1aeb1faf2676",
    "ens": "theadriel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "theadriel.eth",
    "private": false,
@@ -12164,6 +12803,7 @@
   {
    "address": "0x82f59af2695e1e9823773ef055614f54cc5616c4",
    "ens": "thebaldedphotographer.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thebaldedphotographer.eth",
    "private": false,
@@ -12183,6 +12823,7 @@
   {
    "address": "0x8218a2445679e38f358e42f88fe2125c98440d59",
    "ens": "thehiddenwalls.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thehiddenwalls.eth",
    "private": false,
@@ -12202,6 +12843,7 @@
   {
    "address": "0x8081a75141dbc89f70d31eece08ff12cfe105e43",
    "ens": "thesurgeon.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thesurgeon.eth",
    "private": false,
@@ -12221,6 +12863,7 @@
   {
    "address": "0x2d913709fa6b87502af62b3b2f883cfb7024b655",
    "ens": "thewickedhunt.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thewickedhunt.eth",
    "private": false,
@@ -12240,6 +12883,7 @@
   {
    "address": "0x92a7bd65c8b2a9c9d98be8eaa92de46d1fbdefaf",
    "ens": "threepanelcrimes.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "threepanelcrimes.eth",
    "private": false,
@@ -12259,6 +12903,7 @@
   {
    "address": "0x8fc54e3d572012099f3f48369657d58f653e92e4",
    "ens": "timmboslice.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "timmboslice.eth",
    "private": false,
@@ -12278,6 +12923,7 @@
   {
    "address": "0x90451243ad2d7da2229fcaa263f460dff2e375ce",
    "ens": "tokyoluv.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "tokyoluv.eth",
    "private": false,
@@ -12297,6 +12943,7 @@
   {
    "address": "0x24fbadccd6684106e24065694ac87b0e98819235",
    "ens": "tonysellen.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "tonysellen.eth",
    "private": false,
@@ -12316,6 +12963,7 @@
   {
    "address": "0xe6afec39775d78c1868cb09a9003c4eed1f0b5bc",
    "ens": "transmarine.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "transmarine.eth",
    "private": false,
@@ -12335,6 +12983,7 @@
   {
    "address": "0x09b2f0988b6d24336b348c84c2764d2b4f85142f",
    "ens": "trupty.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "trupty.eth",
    "private": false,
@@ -12354,6 +13003,7 @@
   {
    "address": "0x66ec5ebf30c230976cfdf808a17fbd0add302537",
    "ens": "twickert.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "twickert.eth",
    "private": false,
@@ -12373,6 +13023,7 @@
   {
    "address": "0xec9df21e35582a6f368a82b4b1cd37431f1653b0",
    "ens": "twohands.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "twohands.eth",
    "private": false,
@@ -12392,6 +13043,7 @@
   {
    "address": "0xc2e8ed8cc0be70f91fc9aa903d5f4538719d7dec",
    "ens": "vault.amtwo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vault.amtwo.eth",
    "private": false,
@@ -12411,6 +13063,7 @@
   {
    "address": "0x47d539d4dd9b6f21ccabc5c96bbbf7071290938e",
    "ens": "vault.hugofaz.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vault.hugofaz.eth",
    "private": false,
@@ -12430,6 +13083,7 @@
   {
    "address": "0xc8f8e2f59dd95ff67c3d39109eca2e2a017d4c8a",
    "ens": "visualizevalue.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "visualizevalue.eth",
    "private": false,
@@ -12449,6 +13103,7 @@
   {
    "address": "0x26fca9a99e95be90447a25a1da852d870417aac9",
    "ens": "vogelbot.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "vogelbot.eth",
    "private": false,
@@ -12468,6 +13123,7 @@
   {
    "address": "0x0c2269109573faee2f1f0bad05aae00d027d292f",
    "ens": "y4si.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "y4si.eth",
    "private": false,
@@ -12487,6 +13143,7 @@
   {
    "address": "0x4d0838582cab6aa41cc2fb5e65f87f2958dae620",
    "ens": "yamudazu.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "yamudazu.eth",
    "private": false,
@@ -12506,6 +13163,7 @@
   {
    "address": "0x94a56709b6d37f866526e418a3bd318e957e56bf",
    "ens": "zayyarlin.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "zayyarlin.eth",
    "private": false,
@@ -12525,6 +13183,7 @@
   {
    "address": "0x0a148ab4952486f99619b05f221548a8c9b0de9f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x0a148ab4",
    "private": false,
@@ -12539,11 +13198,12 @@
    "last_collected": "2022-11-29T12:46:23.000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x11c632014d1cc64f73bc84e4e9768bf0fb5ac7f6",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x11c63201",
    "private": false,
@@ -12558,11 +13218,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x2afc032aaf6d7ead33fb05f9d42d874874dfb9d1",
    "ens": null,
+   "fwd": "vault.cryptospecie.eth",
    "display_name": null,
    "slug": "0x2afc032a",
    "private": false,
@@ -12577,11 +13238,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x3b33605a49803ce5bf936d61ec34a82dc9a8af67",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x3b33605a",
    "private": false,
@@ -12601,6 +13263,7 @@
   {
    "address": "0x5bcc66606177de24bbbe0baab63d92992c538a43",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x5bcc6660",
    "private": false,
@@ -12615,11 +13278,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x8c0ca6b72104dbb7095d8b349bccc2f60f24bf41",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x8c0ca6b7",
    "private": false,
@@ -12634,11 +13298,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xa7604f08cc11a23c42e5217ea17e9a70e9a43919",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa7604f08",
    "private": false,
@@ -12653,11 +13318,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xb681de23608f3b016abf32e7c9ac16e85c644c1d",
    "ens": null,
+   "fwd": "stupidus.eth",
    "display_name": null,
    "slug": "0xb681de23",
    "private": false,
@@ -12672,11 +13338,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xbb261e9c522d826886cf9d03b200e268a7ca36cb",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xbb261e9c",
    "private": false,
@@ -12696,6 +13363,7 @@
   {
    "address": "0xdfff2d6d699ac30714cc981f3be1db5250931013",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xdfff2d6d",
    "private": false,
@@ -12710,11 +13378,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xf853294251a3213d23fdfed4efe54903caebc985",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf8532942",
    "private": false,
@@ -12729,11 +13398,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xae291acb5941a8629f44b91c8edd3613401b03ab",
    "ens": "demonflipper.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "demonflipper.eth",
    "private": false,
@@ -12753,6 +13423,7 @@
   {
    "address": "0x2bdce39607ba5f3b6dceb6b3d61b34fb2b8da6f6",
    "ens": "emdub.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "emdub.eth",
    "private": false,
@@ -12767,11 +13438,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xedc1a397589a0236c4810883b7d559288a5fe7e1",
    "ens": "fattybuthappy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "fattybuthappy.eth",
    "private": false,
@@ -12786,11 +13458,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x8fbe34a4a6c38d44fd7642440908ee44067c00e4",
    "ens": "heydonttouchmethere.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "heydonttouchmethere.eth",
    "private": false,
@@ -12805,11 +13478,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x2d9cbc4ecfbd1b8f66aa798fd51585ae058daa8b",
    "ens": "metamu.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "metamu.eth",
    "private": false,
@@ -12824,11 +13498,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xe5358cab95014e2306815743793f16c93a8a5c70",
    "ens": "nnsregistry.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nnsregistry.eth",
    "private": false,
@@ -12843,11 +13518,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x08db792f0dc2492c67ba901adbe136e76648341c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x08db792f",
    "private": false,
@@ -12867,6 +13543,7 @@
   {
    "address": "0x102b68aa03c8098026fe944f013ec9ae4c49f1a1",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x102b68aa",
    "private": false,
@@ -12886,6 +13563,7 @@
   {
    "address": "0x437e59a28d34f755eb1654db31a0249c27cd8c7c",
    "ens": null,
+   "fwd": "vased.eth",
    "display_name": null,
    "slug": "0x437e59a2",
    "private": false,
@@ -12905,6 +13583,7 @@
   {
    "address": "0x51ec8bb228af8aed84d935e0cbed0fdb3fc39114",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x51ec8bb2",
    "private": false,
@@ -12924,6 +13603,7 @@
   {
    "address": "0x530a6d03359d14b43610e6aff80be3732c4a609f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x530a6d03",
    "private": false,
@@ -12943,6 +13623,7 @@
   {
    "address": "0x5aa60dbad729e57363221d95bc5f465dd502f6a4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x5aa60dba",
    "private": false,
@@ -12962,6 +13643,7 @@
   {
    "address": "0x68aa2b9f883e9ed303251d2cb170cf4fb58dc882",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x68aa2b9f",
    "private": false,
@@ -12981,6 +13663,7 @@
   {
    "address": "0x7dd8712c81695e6e3ea5aa3d1407e58b19b0e9b5",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x7dd8712c",
    "private": false,
@@ -13000,6 +13683,7 @@
   {
    "address": "0x8a7c1422fe789c276e21d1792afda90f638ac5cc",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x8a7c1422",
    "private": false,
@@ -13019,6 +13703,7 @@
   {
    "address": "0x94ff6a83a067cc9e6a4c0767792beda781a16375",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x94ff6a83",
    "private": false,
@@ -13038,6 +13723,7 @@
   {
    "address": "0x9ab421fe0d38c1deba5cadc72cd763de8bf62eab",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9ab421fe",
    "private": false,
@@ -13057,6 +13743,7 @@
   {
    "address": "0xa116583225ab2768fc6ebe9e305de17f657e8921",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa1165832",
    "private": false,
@@ -13076,6 +13763,7 @@
   {
    "address": "0xce5993291aada8cb38d9014f626a405e0f1128a4",
    "ens": null,
+   "fwd": "vault.scobel.eth",
    "display_name": null,
    "slug": "0xce599329",
    "private": false,
@@ -13095,6 +13783,7 @@
   {
    "address": "0xe483f7c09b4707e423f621c0d7453fb2c7eabc03",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe483f7c0",
    "private": false,
@@ -13114,6 +13803,7 @@
   {
    "address": "0xf37400284a7ef5e9bff3667c8330a43e29432e1c",
    "ens": null,
+   "fwd": "safe.mikavirt.eth",
    "display_name": null,
    "slug": "0xf3740028",
    "private": false,
@@ -13133,6 +13823,7 @@
   {
    "address": "0xa5137500e1bedbcb99881b76d4daadd54f9088cf",
    "ens": "aloroler.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aloroler.eth",
    "private": false,
@@ -13152,6 +13843,7 @@
   {
    "address": "0x20f30d8db95e333fe674d161ad1539b3931fa2d0",
    "ens": "ashiqmk.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ashiqmk.eth",
    "private": false,
@@ -13171,6 +13863,7 @@
   {
    "address": "0x41dd1c6338e5b3cdf9dc69e20dad9834ae36a6d3",
    "ens": "aventurine.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "aventurine.eth",
    "private": false,
@@ -13190,6 +13883,7 @@
   {
    "address": "0xc9cc85d6a45ddc91ebca87c6ba86f5993821c5a8",
    "ens": "dabb3r.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "dabb3r.eth",
    "private": false,
@@ -13209,6 +13903,7 @@
   {
    "address": "0xcb6a98d0c5b9ef1005a382bca9f475763c3d3e32",
    "ens": "debclarknz.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "debclarknz.eth",
    "private": false,
@@ -13228,6 +13923,7 @@
   {
    "address": "0x8f791f061d7f36dc07de081ad88f87d71be1585e",
    "ens": "flexcopy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "flexcopy.eth",
    "private": false,
@@ -13247,6 +13943,7 @@
   {
    "address": "0x387a161c6b25aa854100abaed39274e51aaffffd",
    "ens": "gami.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "gami.eth",
    "private": false,
@@ -13266,6 +13963,7 @@
   {
    "address": "0xe1d23eddf8f0f597a8582d86586999ffc41bb030",
    "ens": "greendude.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "greendude.eth",
    "private": false,
@@ -13285,6 +13983,7 @@
   {
    "address": "0x71eece7c9a6e68bed5ca071046cdccec20ff9808",
    "ens": "hqtxn.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hqtxn.eth",
    "private": false,
@@ -13304,6 +14003,7 @@
   {
    "address": "0x61b04d2b5cb1f1f8505e7b4e1cb3d9e8a0b15bae",
    "ens": "inceptionally.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "inceptionally.eth",
    "private": false,
@@ -13323,6 +14023,7 @@
   {
    "address": "0x6dbe7f53320da472f5be61012924f79079abd31c",
    "ens": "janny.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "janny.eth",
    "private": false,
@@ -13342,6 +14043,7 @@
   {
    "address": "0xc4d0af96a1c580fbc9e967776a1666c27ab933e4",
    "ens": "macgyver.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "macgyver.eth",
    "private": false,
@@ -13356,11 +14058,12 @@
    "last_collected": "2024-10-05T07:51:35.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xd35f84a9f82fbec2082b2b6c9afd20b4a8f7c959",
    "ens": "seizerpunk.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "seizerpunk.eth",
    "private": false,
@@ -13380,6 +14083,7 @@
   {
    "address": "0x7b09322d09b723b5babffc149d0a6b26c00b77b4",
    "ens": "spyguy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "spyguy.eth",
    "private": false,
@@ -13399,6 +14103,7 @@
   {
    "address": "0x46ff0e2d5c5425b7fd8e6ef7108b94956d90f8f8",
    "ens": "stephanvasement.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "stephanvasement.eth",
    "private": false,
@@ -13418,6 +14123,7 @@
   {
    "address": "0x047c4d7af709ae19d3bbbd5f9e10461d2554da00",
    "ens": "wugamlo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "wugamlo.eth",
    "private": false,
@@ -13437,6 +14143,7 @@
   {
    "address": "0xf8d0c9f300d0649861963ebae0bb568533619448",
    "ens": "zeroshape.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "zeroshape.eth",
    "private": false,
@@ -13456,6 +14163,7 @@
   {
    "address": "0x63f42bfc17b6ff3a7f487c406b8e006d0d4970c3",
    "ens": "🐹🐹🐹🐹.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0x63f42bfc",
    "private": false,
@@ -13470,11 +14178,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x26874d5915fb831e4771d647a5048561da3c0874",
    "ens": "💞forever.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0x26874d59",
    "private": false,
@@ -13489,11 +14198,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xfde5124db26916a8cd5f4d41d15deb50d68504dc",
    "ens": "0525.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "0525.eth",
    "private": false,
@@ -13508,11 +14218,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x01d5aad69b4f303671abd48e5e3cd20c368c566f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x01d5aad6",
    "private": false,
@@ -13532,6 +14243,7 @@
   {
    "address": "0x07123695bae8000b5bbc44c19c274470238b92a1",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x07123695",
    "private": false,
@@ -13551,6 +14263,7 @@
   {
    "address": "0x136bbfe37988f82f8585ed155615b75371489d45",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x136bbfe3",
    "private": false,
@@ -13570,6 +14283,7 @@
   {
    "address": "0x1aac098cf9ed6d8050dfc4fd4ab111cc3a1ff5de",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1aac098c",
    "private": false,
@@ -13584,11 +14298,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x1b9c993f2962d8f0faea3387b368a011f2b9d0ee",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1b9c993f",
    "private": false,
@@ -13608,6 +14323,7 @@
   {
    "address": "0x1ef15e6df74eb17470e6cfa8969fd23a5c23f4e7",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x1ef15e6d",
    "private": false,
@@ -13622,11 +14338,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x2443e22cbf5b6607e9a2df68a35b5f18cf525a76",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x2443e22c",
    "private": false,
@@ -13646,6 +14363,7 @@
   {
    "address": "0x2712d421570b562e3b33c9e0faae83198cf47892",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x2712d421",
    "private": false,
@@ -13660,11 +14378,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x2ac8ffa449827c507deea7072edf19edb6c4b1ba",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x2ac8ffa4",
    "private": false,
@@ -13684,6 +14403,7 @@
   {
    "address": "0x33145abe552d621f811c789ab3c20197b02553ef",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x33145abe",
    "private": false,
@@ -13703,6 +14423,7 @@
   {
    "address": "0x37545efe5b98ad7b0707d55aa68617ad9b8fc034",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x37545efe",
    "private": false,
@@ -13722,6 +14443,7 @@
   {
    "address": "0x3b93799ff5cbc717e6d0924514e09e694a4e23d7",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x3b93799f",
    "private": false,
@@ -13741,6 +14463,7 @@
   {
    "address": "0x3d3e41f3143a89537a39b32b673b50dd55bf570e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x3d3e41f3",
    "private": false,
@@ -13760,6 +14483,7 @@
   {
    "address": "0x3d98eb94a591b231d6912cb60328b75ff109aa04",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x3d98eb94",
    "private": false,
@@ -13774,11 +14498,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x45515827641e2091a73f747486ee9629ebd2e902",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x45515827",
    "private": false,
@@ -13793,11 +14518,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x45be0696852f129f42cbd772ab04b7c3c4a1e168",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x45be0696",
    "private": false,
@@ -13812,11 +14538,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x4745c1bf30a55d4903592206bb142003e884f8a4",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x4745c1bf",
    "private": false,
@@ -13836,6 +14563,7 @@
   {
    "address": "0x48c45b619c308b91ee1fa09a112bd4461d2c182c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x48c45b61",
    "private": false,
@@ -13850,11 +14578,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x4cbc4bac934f00c6b60b76dc63afd7d2e0c0ae7f",
    "ens": null,
+   "fwd": "articulate.eth",
    "display_name": null,
    "slug": "0x4cbc4bac",
    "private": false,
@@ -13874,6 +14603,7 @@
   {
    "address": "0x6079696f3d9fc53ba8350d8db44e048e6a3814b1",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x6079696f",
    "private": false,
@@ -13888,11 +14618,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x62ebc6375df0ff1bfcaa81185c1b113c1fd5483c",
    "ens": null,
+   "fwd": "dougfriesen.eth",
    "display_name": null,
    "slug": "0x62ebc637",
    "private": false,
@@ -13912,6 +14643,7 @@
   {
    "address": "0x69c144d56e10f2012da6c6edb1a6fb72955e209a",
    "ens": null,
+   "fwd": "kobeanddenzel.eth",
    "display_name": null,
    "slug": "0x69c144d5",
    "private": false,
@@ -13931,6 +14663,7 @@
   {
    "address": "0x6ca9d147e2f64e45b0bb4f83962f179f66c883ab",
    "ens": null,
+   "fwd": "9196.eth",
    "display_name": null,
    "slug": "0x6ca9d147",
    "private": false,
@@ -13950,6 +14683,7 @@
   {
    "address": "0x722e9468d7f8c2710b6dbfdf70f01b045aca1851",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x722e9468",
    "private": false,
@@ -13964,11 +14698,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x72703b554a7089f93ff1fc6cc6c0e623900a7b80",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x72703b55",
    "private": false,
@@ -13988,6 +14723,7 @@
   {
    "address": "0x73924aa28f23256d994e20803a6c63d9dd056d7d",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x73924aa2",
    "private": false,
@@ -14002,11 +14738,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x73dfe934241963cd96118c6dce3fb950a4170c3e",
    "ens": null,
+   "fwd": "blvckjoy.eth",
    "display_name": null,
    "slug": "0x73dfe934",
    "private": false,
@@ -14021,11 +14758,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x80b89390028cc3856e371cf4c35d0182c83c811d",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x80b89390",
    "private": false,
@@ -14045,6 +14783,7 @@
   {
    "address": "0x845f97e61d7e868b49cf3b980557de0860b11a79",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x845f97e6",
    "private": false,
@@ -14059,11 +14798,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x908c6a54dd6d892ab6cb48dbc892baf713224382",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x908c6a54",
    "private": false,
@@ -14078,11 +14818,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x93e318478f731c8ba93f2d2b64f722319151e9fd",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x93e31847",
    "private": false,
@@ -14097,11 +14838,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x999b5b1c6998a974a3684d89a995122304d11b2b",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x999b5b1c",
    "private": false,
@@ -14121,6 +14863,7 @@
   {
    "address": "0x9aaddc5040d2093dc0dafc0803cbfca822341bca",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9aaddc50",
    "private": false,
@@ -14140,6 +14883,7 @@
   {
    "address": "0x9dbdad4abcc48610b22d56a6bdd1aa7f97171b06",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0x9dbdad4a",
    "private": false,
@@ -14159,6 +14903,7 @@
   {
    "address": "0xa1ec8651e11a00cf36f49d4541d6d3fd082fef2e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xa1ec8651",
    "private": false,
@@ -14178,6 +14923,7 @@
   {
    "address": "0xacef91efa4e7467186e133d0fabb47ae1731cd9f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xacef91ef",
    "private": false,
@@ -14192,11 +14938,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xaf9cbe42d3fd186b5d0d04b0a1d424e6562fd7ba",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xaf9cbe42",
    "private": false,
@@ -14216,6 +14963,7 @@
   {
    "address": "0xb1058c959987e3513600eb5b4fd82aeee2a0e4f9",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb1058c95",
    "private": false,
@@ -14235,6 +14983,7 @@
   {
    "address": "0xb6b6e5b78c05b77babbe418f4ce78a7e5ddaaf20",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xb6b6e5b7",
    "private": false,
@@ -14249,11 +14998,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xbc15ac912c4af743eed5c0f033824de9de95cd4f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xbc15ac91",
    "private": false,
@@ -14268,11 +15018,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xc4d4125c83d1108df969dda998227fca80fd82dc",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xc4d4125c",
    "private": false,
@@ -14292,6 +15043,7 @@
   {
    "address": "0xc7270454a203d13a2b3ee27348ee9f4aac450539",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xc7270454",
    "private": false,
@@ -14311,6 +15063,7 @@
   {
    "address": "0xd54887f20cf95b292bc9f98e760d4278bb384b9f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd54887f2",
    "private": false,
@@ -14325,11 +15078,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xd67527ee8aef11f4264c54effd5dbb8e9a4c3800",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd67527ee",
    "private": false,
@@ -14349,6 +15103,7 @@
   {
    "address": "0xd6786fee06c76b8a1c5c4b0ac9025f29d347b69c",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd6786fee",
    "private": false,
@@ -14368,6 +15123,7 @@
   {
    "address": "0xd997ec5996b371dffe74adef48e83a9aa9d4e68f",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xd997ec59",
    "private": false,
@@ -14382,11 +15138,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xe175336c11b3e6ba4177084342644ed920f48189",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xe175336c",
    "private": false,
@@ -14406,6 +15163,7 @@
   {
    "address": "0xf5b4c4a7398662e0f5564f480b1166defa7f500e",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf5b4c4a7",
    "private": false,
@@ -14420,11 +15178,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xf6e9c766cad8b6ecf06accf64b57f92995be6e50",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf6e9c766",
    "private": false,
@@ -14444,6 +15203,7 @@
   {
    "address": "0xf794530e92d99690c70ce66c85d8b603c092e6ab",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xf794530e",
    "private": false,
@@ -14463,6 +15223,7 @@
   {
    "address": "0xfd30b90862f5259c84b36b42d2f7dac00a93a184",
    "ens": null,
+   "fwd": null,
    "display_name": null,
    "slug": "0xfd30b908",
    "private": false,
@@ -14477,11 +15238,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xb43d184ec7d4d2acb4ebc8db53f4031bca9319a4",
    "ens": "anonanonanon.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "anonanonanon.eth",
    "private": false,
@@ -14496,11 +15258,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x22f057b5189d796e9b56159774a701b563280b2c",
    "ens": "antification.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "antification.eth",
    "private": false,
@@ -14520,6 +15283,7 @@
   {
    "address": "0xd262254416d48fdb26e98335ad3b82225d9a6b71",
    "ens": "artbynic.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "artbynic.eth",
    "private": false,
@@ -14534,11 +15298,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x140d199e098d59b807566c4004233b34ed254121",
    "ens": "artistestate.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "artistestate.eth",
    "private": false,
@@ -14558,6 +15323,7 @@
   {
    "address": "0xd4f802ec4f588952a3a92fce0d5d3629e78d4f57",
    "ens": "awfuleye.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "awfuleye.eth",
    "private": false,
@@ -14577,6 +15343,7 @@
   {
    "address": "0xf9d71b5fb8345f2508c1302a74d4362deab7d104",
    "ens": "bloomz.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "bloomz.eth",
    "private": false,
@@ -14591,11 +15358,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x997953c94ac188051a8cf4318e6cd90ec48fb795",
    "ens": "botfrens.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "botfrens.eth",
    "private": false,
@@ -14610,11 +15378,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xd42d52b709829926531c64a32f2713b4dc8ea6f6",
    "ens": "catrussell.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "catrussell.eth",
    "private": false,
@@ -14634,6 +15403,7 @@
   {
    "address": "0xaf8c481eb42defb31ae67319382624a68e28f5e8",
    "ens": "chazzgold.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "chazzgold.eth",
    "private": false,
@@ -14653,6 +15423,7 @@
   {
    "address": "0x44c3cf2d964d7b2f9be5fa612b0cc436720f6ead",
    "ens": "codincowboy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "codincowboy.eth",
    "private": false,
@@ -14672,6 +15443,7 @@
   {
    "address": "0x607502216cfe3bfe8407ee5ef62e9a4cfefcb66c",
    "ens": "enricomoses.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "enricomoses.eth",
    "private": false,
@@ -14691,6 +15463,7 @@
   {
    "address": "0x78b68c09de611b5bad844bff74cf7bfe15f30ad8",
    "ens": "givemeone.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "givemeone.eth",
    "private": false,
@@ -14705,11 +15478,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x000ab07b26c48ef3caf9ec23520d86794c9fd74a",
    "ens": "gricu.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "gricu.eth",
    "private": false,
@@ -14724,11 +15498,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xcfc9336910420e2fb7b9c19f62a38bbac34dc352",
    "ens": "hot.giopetto.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "hot.giopetto.eth",
    "private": false,
@@ -14748,6 +15523,7 @@
   {
    "address": "0xc93c7f71581dfeaab59bed908888dac5689f312a",
    "ens": "humanityisthedevil.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "humanityisthedevil.eth",
    "private": false,
@@ -14767,6 +15543,7 @@
   {
    "address": "0x66298837aa0079c0d1a4ff7549f2aac8a79c383e",
    "ens": "itchyswordfish.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "itchyswordfish.eth",
    "private": false,
@@ -14781,11 +15558,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xa00e4ba46907fcbf84b3ba22c7b5689e6db827a0",
    "ens": "jcurve.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "jcurve.eth",
    "private": false,
@@ -14800,11 +15578,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x657c1f8421ae93e88fb3171f019779e87b0263ca",
    "ens": "juujuumama.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "juujuumama.eth",
    "private": false,
@@ -14824,6 +15603,7 @@
   {
    "address": "0xf42884e0a175a07b82354325d59be7d7d295e52a",
    "ens": "kilesa.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "kilesa.eth",
    "private": false,
@@ -14838,11 +15618,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xd38919a385cf9bbade3249dad91b8d880b42bee0",
    "ens": "leeacaster.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "leeacaster.eth",
    "private": false,
@@ -14862,6 +15643,7 @@
   {
    "address": "0xe39bd9e3af2054dd193b0d0217cfbd460f104902",
    "ens": "lel.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lel.eth",
    "private": false,
@@ -14876,11 +15658,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x30734d5ae63a2f368acfb3d3a15e180169254b8a",
    "ens": "lilping.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "lilping.eth",
    "private": false,
@@ -14895,11 +15678,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xf1f476f144df01480297dca47efca565e8b0c9f1",
    "ens": "meme-maxis.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "meme-maxis.eth",
    "private": false,
@@ -14919,6 +15703,7 @@
   {
    "address": "0x15c42c60620f55181348c2f5f4298eba70b0cbef",
    "ens": "mememerch.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mememerch.eth",
    "private": false,
@@ -14933,11 +15718,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x38545d73e9f15e92d21f1ddc71a109e8a67f6291",
    "ens": "meyou.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "meyou.eth",
    "private": false,
@@ -14952,11 +15738,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x3b3136d269480017d8b7a050deb0d7ed979b8075",
    "ens": "mihaic.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mihaic.eth",
    "private": false,
@@ -14971,11 +15758,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x8f6504b48c66eea4e9fbf64fe220e02f1cc4934e",
    "ens": "mikavirt.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mikavirt.eth",
    "private": false,
@@ -14995,6 +15783,7 @@
   {
    "address": "0xaa6c28a775ca64c4104057eff7d2f0a07ce89b29",
    "ens": "monkeywithoutaplan.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "monkeywithoutaplan.eth",
    "private": false,
@@ -15014,6 +15803,7 @@
   {
    "address": "0x6da0a1784de1abdde1734ba37eca3d560bf044c0",
    "ens": "mxjxn.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "mxjxn.eth",
    "private": false,
@@ -15033,6 +15823,7 @@
   {
    "address": "0x6519f68ca26c7f59deeabce7194da4d14e1f2847",
    "ens": "nameetvault.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nameetvault.eth",
    "private": false,
@@ -15052,6 +15843,7 @@
   {
    "address": "0x70353a9a3a2fe66ab44adecd61bb22b5928a6599",
    "ens": "nftspy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "nftspy.eth",
    "private": false,
@@ -15071,6 +15863,7 @@
   {
    "address": "0xbc3e746c622a4b8b3f70fcf43c0ff0d4c66452fe",
    "ens": "ojorb.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "ojorb.eth",
    "private": false,
@@ -15085,11 +15878,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x5091081516c8695dfa1bfde3d7b33480c2cb2fca",
    "ens": "paultm.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "paultm.eth",
    "private": false,
@@ -15109,6 +15903,7 @@
   {
    "address": "0x3eeb0543b4e0c0b6b7734d3e34a4fa884f71a7b0",
    "ens": "poorfren.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "poorfren.eth",
    "private": false,
@@ -15123,11 +15918,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x0f9c4213c040a39db2ba6f833472f739e61710b4",
    "ens": "python-h.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "python-h.eth",
    "private": false,
@@ -15147,6 +15943,7 @@
   {
    "address": "0x3ecdc26073e3bc662c2d0f9197fac19b29beb77c",
    "ens": "raghavagarwal.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "raghavagarwal.eth",
    "private": false,
@@ -15161,11 +15958,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x610d72c32e3ed5ba381851d25a6c1b543622e4d8",
    "ens": "rilax.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "rilax.eth",
    "private": false,
@@ -15185,6 +15983,7 @@
   {
    "address": "0x2d52f7bae61912f7217351443ea8a226996a3def",
    "ens": "s.sismo.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "s.sismo.eth",
    "private": false,
@@ -15199,11 +15998,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x5efdb6d8c798c2c2bea5b1961982a5944f92a5c1",
    "ens": "schmrypto.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "schmrypto.eth",
    "private": false,
@@ -15223,6 +16023,7 @@
   {
    "address": "0x2b0386bbdd314d8356c21f39be2491f975bd6361",
    "ens": "shibboleth.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "shibboleth.eth",
    "private": false,
@@ -15237,11 +16038,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x32eb30cae36e1c2e9271ca1c02da64e5c27cb465",
    "ens": "shitbilding.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "shitbilding.eth",
    "private": false,
@@ -15256,11 +16058,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0xff7609cc6c9743b6299f86df1e966da5c664401d",
    "ens": "spyceboy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "spyceboy.eth",
    "private": false,
@@ -15275,11 +16078,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x0f81bcfd6de8145d1cc6097622b07f23f1221648",
    "ens": "thedindy.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "thedindy.eth",
    "private": false,
@@ -15299,6 +16103,7 @@
   {
    "address": "0xcf4e26a7e7eae4b3840dd31c527096e1265ab990",
    "ens": "tigerwoodsburner.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "tigerwoodsburner.eth",
    "private": false,
@@ -15313,11 +16118,12 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3230
+   "tao_rank": 3229
   },
   {
    "address": "0x87d9c2d9990a9f3a18f1377ff20d9945f9eb3792",
    "ens": "uwumaxi.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "uwumaxi.eth",
    "private": false,
@@ -15337,6 +16143,7 @@
   {
    "address": "0xcee8ef3a9773d2aa6429a8b6d899969099b1fd98",
    "ens": "xcheox.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "xcheox.eth",
    "private": false,
@@ -15356,6 +16163,7 @@
   {
    "address": "0xf3fbb2c0a711529ef9b81fe59a5ef5b8f1e0eb27",
    "ens": "zipperhead.eth",
+   "fwd": null,
    "display_name": null,
    "slug": "zipperhead.eth",
    "private": false,
