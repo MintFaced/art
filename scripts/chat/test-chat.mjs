@@ -485,8 +485,13 @@ head('One name, in every place a person reads it');
 {
   const text = chatMessage({ action: 'say', text: 'x', address: A(visco), issued: '2026-08-25T00:00:00.000Z' });
   ok(text.startsWith('MintFace ... Studio'), 'the sentence the wallet shows names Studio', text.split('\n')[0]);
+  /* The browser's half of the sentence lives in mintface.js now, because the
+     nav signs the sign-in one on every page of both sites and this page signs
+     the rest of them. Two copies were bearable; four would not be. */
+  const runtime = fs.readFileSync(new URL('../../mintface.js', import.meta.url), 'utf8');
+  ok(runtime.includes("'MintFace ... Studio',"), 'and the browser builds the same first line');
   const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
-  ok(page.includes("'MintFace ... Studio',"), 'and the page builds the same first line');
+  ok(!page.includes("'MintFace ... Studio',"), 'from one place, rather than once per page that signs something');
   ok(!/the room/i.test(text), 'with nothing left of the old name in it');
   const refused = await say(nobody, 'Let me in.');
   ok(/Studio is for anyone holding TAO/.test(refused.body.error || ''),
@@ -509,10 +514,10 @@ head('The sentence says the date, not a length');
     text.split('\n').filter((l) => /open|Until/.test(l)).join(' / '));
 
   // and both halves build it identically, which is the thing that breaks silently
-  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  const runtime = fs.readFileSync(new URL('../../mintface.js', import.meta.url), 'utf8');
   const closing = 'Signing opens Studio until the date above. It moves nothing and spends nothing.';
-  ok(page.includes(closing) && text.includes(closing),
-    'the page and the server write the same closing line');
+  ok(runtime.includes(closing) && text.includes(closing),
+    'the browser and the server write the same closing line');
 }
 
 head('The artist signs in the same way');
@@ -849,12 +854,43 @@ head('The page opens at the latest thing anybody said');
   ok(d.end === d.total, 'a page with no `before` on it ends at the newest message',
     `${d.start}\u2013${d.end} of ${d.total}`);
   const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
-  ok(/load\(\{ bottom: true \}\)/.test(page), 'and the room is opened at the foot of it');
+  ok(/load\(\{ bottom: sent == null \}\)/.test(page),
+    'and the room is opened at the foot of it, unless the cherry sent you to a message');
   ok(/IntersectionObserver/.test(page), 'with earlier arriving upward as a reader goes looking');
   ok(/Shift|shiftKey/.test(page) && /ev\.key === 'Enter' && !ev\.shiftKey/.test(page),
     'return sends, and shift and return is a new line');
   ok(/hover: none/.test(page) && /!TOUCH/.test(page),
     'except on a touch screen, where return stays the return key');
+}
+
+head('What the nav asks, on every page of both sites');
+{
+  advance(700000);
+  /* The bar at the top of both deploys needs two facts and no messages. A
+     component that put a name in a corner by fetching fifty rows and their
+     marks would be paying for the room on every page of the catalogue. */
+  const light = await get(`me=1&viewer=${A(visco)}`);
+  ok(light.status === 200 && light.body.me, 'the room answers who a wallet is', light.body.error);
+  ok(light.body.messages === undefined,
+    'without a page of the log in it', JSON.stringify(Object.keys(light.body)));
+  ok(light.body.me.name === 'visco.eth' && light.body.me.url,
+    'with the name to draw and the page to link it to', `${light.body.me.name} ${light.body.me.url}`);
+  ok(Number.isInteger(light.body.session_days),
+    'and how long one signature lasts, so the nav can sign in without asking twice',
+    String(light.body.session_days));
+
+  /* The same answer to the same question, whoever is asking. A nav showing a
+     different number from the room it links into is worse than no number. */
+  const full = await get(`viewer=${A(visco)}`);
+  ok(JSON.stringify(light.body.me) === JSON.stringify(full.body.me),
+    'and it is the very same standing the room draws its own page from');
+
+  const nobodyAtAll = await get('me=1');
+  ok(nobodyAtAll.status === 200 && nobodyAtAll.body.me === null && nobodyAtAll.body.session_days,
+    'a reader with no wallet is nobody, and is still told what a signature would buy',
+    JSON.stringify(nobodyAtAll.body));
+  const junk = await get('me=1&viewer=not-a-wallet');
+  ok(junk.status === 200 && junk.body.me === null, 'and so is a viewer that is not an address');
 }
 
 server.close();

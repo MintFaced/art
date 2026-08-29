@@ -605,6 +605,11 @@ const MF = {
       this.apply();
       this.el.classList.add('on');
       this.el.setAttribute('aria-hidden', 'false');
+      /* The nav goes with it. The work is the whole screen in here, and the one
+         thing a bar that is always present must never do is sit over art. It is
+         held in place rather than removed, so nothing reflows underneath while
+         the page is covered. */
+      document.body.classList.add('zooming');
       document.body.style.overflow = 'hidden';
       const big = this.best(work);
       // still the same work, and worth swapping for
@@ -641,6 +646,7 @@ const MF = {
       if (!this.el) return;
       this.el.classList.remove('on', 'zoomed');
       this.el.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('zooming');
       document.body.style.overflow = '';
       this.work = null;
       // back to rest, so the next work does not open half zoomed and off centre
@@ -1483,3 +1489,276 @@ const MF = {
 };
 
 window.MF = MF;
+
+/* ═════════════════════════════════════════════════════════════
+   THE SESSION, AND THE NAV
+   One component, two deploys. mintface.art and collectors.mintface.art load
+   this file and mintface.css, so the bar at the top of both is the same bar
+   and changing it is one edit in one place.
+   ═════════════════════════════════════════════════════════════ */
+
+/* Where the room is, from wherever this page is served.
+ *
+ * On mintface.art and on any preview of it these stay relative, so a preview
+ * talks to its own API and links to its own pages. On collectors they become
+ * absolute, because the room and the catalogue live on the other deploy. */
+const AT_PEOPLE = location.hostname === 'collectors.mintface.art';
+MF.ART = AT_PEOPLE ? 'https://mintface.art' : '';
+MF.PEOPLE = AT_PEOPLE ? '' : 'https://collectors.mintface.art';
+
+/* ---------- the session ----------
+ *
+ * One signature says this browser may speak as you until a stated date, and
+ * the sentence approved in the wallet says exactly that. It opened as the
+ * room's own rig; it is the site's now, because the nav signs in with it and
+ * the nav is on every page.
+ *
+ * It is still per-origin: the token sits in this browser's storage for this
+ * hostname, so signing in on the catalogue does not yet sign you in on the
+ * register. When the cross-domain cookie lands, it lands here, once.
+ */
+MF.session = {
+  KEY: 'mintface.room.session',
+  api() { return `${MF.ART}/api/chat`; },
+
+  held() {
+    try { return JSON.parse(localStorage.getItem(this.KEY) || 'null'); }
+    catch (err) { return null; }
+  },
+  keep(v) {
+    try { v ? localStorage.setItem(this.KEY, JSON.stringify(v)) : localStorage.removeItem(this.KEY); }
+    catch (err) { /* a browser with storage switched off signs per message, which still works */ }
+  },
+  /** The session this browser holds, or nothing. A week that has run out is
+      nothing, and is cleared on the way past. */
+  current() {
+    const v = this.held();
+    if (!v || !v.token || !v.address) return null;
+    if (v.until && Date.parse(v.until) < Date.now()) { this.keep(null); return null; }
+    return v;
+  },
+  forget() { this.keep(null); },
+
+  /** The sentence a wallet signs. The same one api/_lib/chat.js builds, to the
+      character ... which is why it is written once here rather than in every
+      page that needs to sign something. */
+  sentence({ action, text, target, address, issued, until, reply, emoji }) {
+    return [
+      'MintFace ... Studio',
+      '',
+      `Action: ${action}`,
+      ...(text != null ? [`Message: ${text}`] : []),
+      ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
+      ...(emoji ? [`Reaction: ${emoji}`] : []),
+      ...(target ? [`Subject: ${target}`] : []),
+      `Wallet: ${address}`,
+      ...(until ? [`Until: ${until}`] : []),
+      `Issued: ${issued}`,
+      '',
+      ...(action === 'sign in'
+        ? ['Signing opens Studio until the date above. It moves nothing and spends nothing.',
+          'Until then this browser can speak here without asking again.']
+        : action === 'react'
+          ? ['Signing leaves a reaction in Studio. It moves nothing and spends nothing.']
+          : ['Signing speaks in Studio. It moves nothing and spends nothing.']),
+    ].join('\n');
+  },
+
+  async post(body) {
+    const r = await fetch(this.api(), {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { const err = new Error(j.error || 'that did not go through'); err.expired = Boolean(j.expired); throw err; }
+    return j;
+  },
+
+  /** Who the room says you are, and what waited for you. No messages: a nav
+      does not need a page of the log to put a name in a corner. */
+  async who(address) {
+    const q = new URLSearchParams({ me: '1' });
+    if (address) q.set('viewer', address);
+    const r = await fetch(`${this.api()}?${q}`, { headers: { accept: 'application/json' } });
+    return r.ok ? r.json() : null;
+  },
+
+  /** The one signature. */
+  async open(address, days, onState = () => {}) {
+    const issued = new Date().toISOString();
+    const until = new Date(Date.parse(issued) + Number(days) * 86400000).toISOString();
+    const signature = await MF.sign(this.sentence({ action: 'sign in', address, issued, until }), address, onState);
+    const j = await this.post({ action: 'sign in', address, issued, until, signature });
+    this.keep({ address, token: j.token, until: j.until });
+    return j;
+  },
+
+  async close() {
+    const s = this.current();
+    this.forget();
+    if (s) this.post({ action: 'sign out', token: s.token }).catch(() => {});
+  },
+};
+
+/* ---------- the nav ----------
+ *
+ * A rule with words on it. The mark, two places to go, and then who you are
+ * and what waited for you. Sticky, slim, no shadow, nothing about it changing
+ * on scroll: it is always there and it is never an event.
+ *
+ * The cherry used to live in the room's own header, which meant being named
+ * only reached you if you were already in the room. It lives here now, so a
+ * mention finds you halfway down a collection page and takes you to it.
+ */
+MF.nav = {
+  el: null,
+  me: null,
+  days: 30,
+  unseen: 0,
+  next: null,
+  busy: null,          // the label to show while a wallet is being asked
+  /* A page may take the cherry for itself. The room does: it is already
+     showing the messages, so it scrolls to the mention rather than reloading
+     the page it is on. Everywhere else the cherry is a link into the room. */
+  onCherry: null,
+
+  mount() {
+    if (document.body.dataset.nav === 'off') return null;
+    let el = document.querySelector('header.nav');
+    if (!el) {
+      el = document.createElement('header');
+      el.className = 'nav';
+      document.body.insertBefore(el, document.body.firstChild);
+    }
+    el.id = el.id || 'nav';
+    this.el = el;
+    this.draw();
+    this.wire();
+    this.refresh();
+    return el;
+  },
+
+  /* Drawn from what is known now, and drawn again when the room answers. A
+     browser holding a session knows its own address before anything is asked,
+     so somebody signed in never sees CONNECT flash in their own nav. */
+  draw() {
+    if (!this.el) return;
+    const e = MF.escape;
+    // /collections and /collections.html are the same page wearing two names
+    const here = location.pathname.replace(/\.html$/, '').replace(/\/$/, '');
+    const on = (path) => (!AT_PEOPLE && here === path ? ' aria-current="page"' : '');
+    const s = MF.session.current();
+    const name = this.me && this.me.name ? this.me.name
+      : (s ? MF.shortAddress(s.address) : null);
+    const url = this.me && this.me.url ? this.me.url : null;
+
+    let right;
+    if (this.busy) right = `<button type="button" data-nav="wait" disabled>${e(this.busy)}</button>`;
+    else if (!s) right = '<button type="button" data-nav="connect">Connect</button>';
+    else if (url) right = `<a class="you" href="${e(url)}">${e(name)}</a>`;
+    else right = `<span class="you">${e(name)}</span>`;
+
+    this.el.innerHTML = `
+      <a class="wordmark" href="${MF.ART || '/'}" aria-label="MintFace"><img
+        src="${MF.ART}/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+      <a href="${MF.ART}/collections"${on('/collections')}>Collections</a>
+      <a href="${MF.PEOPLE || '/'}"${AT_PEOPLE && here === '' ? ' aria-current="page"' : ''}>Collectors</a>
+      <span class="right">${this.cherry()}${right}</span>`;
+  },
+
+  /* Dormant it is not a button at all: there is nowhere for it to take you,
+     and a control that does nothing is worse than a mark that says nothing. */
+  cherry() {
+    const n = this.unseen || 0;
+    const fruit = '<span class="fruit" aria-hidden="true">&#127826;</span>';
+    if (!n) {
+      const why = MF.session.current()
+        ? 'Nobody has said your name in Studio since you last looked.'
+        : 'Studio tells you here when somebody says your name.';
+      return `<span class="cherry" title="${why}">${fruit}</span>`;
+    }
+    return `<button type="button" class="cherry" data-nav="cherry"
+      title="Go to the first of them in Studio"
+      aria-label="${n} unread mention${n === 1 ? '' : 's'} in Studio. Go to the first of them.">${fruit}<span class="n">${n}</span></button>`;
+  },
+
+  wire() {
+    if (this._wired) return;
+    this._wired = true;
+    document.addEventListener('click', (ev) => {
+      const b = ev.target.closest('[data-nav]');
+      if (!b || !this.el || !this.el.contains(b)) return;
+      if (b.dataset.nav === 'connect') { ev.preventDefault(); this.connect(); }
+      if (b.dataset.nav === 'cherry') { ev.preventDefault(); this.toMention(); }
+    });
+  },
+
+  /** What the room says about the wallet this browser is signed in as. */
+  async refresh() {
+    const s = MF.session.current();
+    if (!s) { this.me = null; this.unseen = 0; this.next = null; this.draw(); return; }
+    let d = null;
+    try { d = await MF.session.who(s.address); } catch (err) { d = null; }
+    if (!d) return;                       // the nav stands with what it had
+    if (d.session_days) this.days = d.session_days;
+    this.me = d.me || null;
+    const m = (d.me && d.me.mentions) || null;
+    this.unseen = m ? (m.unseen || 0) : 0;
+    this.next = m ? m.next : null;
+    this.draw();
+  },
+
+  /** Set from outside, by a page that is watching the room in real time. */
+  mentions(unseen, next) {
+    this.unseen = Math.max(0, Number(unseen) || 0);
+    this.next = next == null ? null : Number(next);
+    this.draw();
+  },
+
+  toMention() {
+    const n = this.next;
+    if (this.onCherry) { this.onCherry(n); return; }
+    location.href = n == null ? `${MF.ART}/chat` : `${MF.ART}/chat#m-${n}`;
+  },
+
+  /* Connecting, and then the one signature. The happy path happens here,
+     because making somebody leave the page they are on to say who they are is
+     the seam this bar exists to remove. Anything that needs more than a
+     sentence to explain ... two wallets answering at once, nothing answering
+     at all ... is handed to the room, where that apparatus already lives. */
+  async connect() {
+    const say = (label) => { this.busy = label; this.draw(); };
+    say('Connecting');
+    let address;
+    try {
+      address = await MF.connect();
+    } catch (err) {
+      this.busy = null;
+      if (err && err.code === 'many-providers') { location.href = `${MF.ART}/chat`; return; }
+      say(String((err && err.message) || err).slice(0, 40));
+      setTimeout(() => { this.busy = null; this.draw(); }, 4000);
+      return;
+    }
+    try {
+      const d = await MF.session.who(address);
+      if (d && d.session_days) this.days = d.session_days;
+      await MF.session.open(address, this.days, (state) => {
+        if (state === 'requested') say('Check your wallet');
+        if (state === 'slow') say('Still waiting');
+        if (state === 'signed') say('Signing in');
+      });
+      this.busy = null;
+      await this.refresh();
+    } catch (err) {
+      this.busy = null;
+      say(String((err && err.message) || err).slice(0, 40));
+      setTimeout(() => { this.busy = null; this.draw(); }, 4000);
+    }
+  },
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => MF.nav.mount());
+} else {
+  MF.nav.mount();
+}

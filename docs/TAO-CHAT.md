@@ -132,3 +132,18 @@ Leaving one takes TAO, like speaking; reading them takes nothing, like everythin
 **The ways in are quiet, and they are in the line that was already there.** REPLY and REACT sit in the mono line above the words and arrive under the pointer. A row of their own would have to be there whether or not anybody was looking at it, or every message would grow a line taller on hover; that line is there anyway. On a touch screen there is no pointer to arrive under, so they sit there faintly. They are offered exactly when the composer is a box you can type in — a wallet the room will let speak, signed in for the month. Signing per action still works and the route still takes it, but a tap on a cherry that opens a hardware wallet is not what a tap on a cherry should do.
 
 **Checks.** `scripts/chat/test-chat.mjs` is a hundred and thirty-six now: a reply carrying a number and reading back with today's name, a reply to nothing and a reply to a gap both refused, a reply changed after signing refused, being answered counting as being told and answering yourself not, the cherry pointing at the earliest unseen and going quiet once read, one mark per wallet per message however many times it is pressed, two wallets counting two, a mark Studio does not offer refused, no TAO and muted both refused, a cherry signed and a heart sent refused, a message taken down losing its marks and getting them back, and the poll's one number moving when somebody reacts.
+
+
+---
+
+## The cherry leaves the room (2026-08-29)
+
+The nav landed, and the cherry went into it. `docs/NAV.md` has the whole of it; what the room lost and gained is here.
+
+**One cherry, and it is not in here any more.** It was in the room's own masthead, which meant being named only reached you if you were already in the room — the one place you would have found out anyway. It is in the nav now, on every page of both deploys, so a mention finds you halfway down a collection page. Pressing it from anywhere else deep-links to `/chat#m-<n>`; the room reads that hash, opens at that message rather than at the latest, walks back through the log to reach it, and marks the count read on arrival. Pressing it *in* the room scrolls instead of reloading the page you are already on — `MF.nav.onCherry`, set by chat.html.
+
+**The session moved up a level again.** `MF.session` in `mintface.js` holds the token, the sentence and the sign-in, because the nav signs in with the same signature on every page and there cannot be two of it. The room keeps only its own question — is the session the wallet in hand — and the browser's half of the signed sentence now exists once rather than in every page that signs something.
+
+**A session says who you are.** The room used to wait for a connect that a signed-in reader has no reason to perform: it read `ROOM.wallet` from the wallet and nothing else, so somebody with thirty days left on a signature still saw "Connect a wallet to speak". The token is what speaks here and the wallet is only needed to sign, which a session is the standing permission not to do. It also stopped the nav and the composer disagreeing about who was reading.
+
+**Your name, once.** It was under the masthead, in the composer, and now in the nav. Two of those were the same fact. The masthead line has gone; the composer keeps its own because it says what you hold beside it, which is a different sentence.

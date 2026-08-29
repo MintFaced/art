@@ -57,6 +57,94 @@ img{max-width:100%;display:block}
 @media(max-width:640px){.wordmark img{height:19px}}
 .smallcaps{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none}
 .smallcaps:hover{color:var(--ink)}
+
+/* ---------- the nav ----------
+   One component, both deploys. mintface.art and collectors.mintface.art draw
+   the same bar from this file and from MF.nav in mintface.js, so the seam
+   between the two sites stops being something a reader has to notice.
+
+   A rule with words on it, not a toolbar: slim, no shadow, no ground of its
+   own beyond the paper the page is already on, and nothing about it changes on
+   scroll. It is always there, and it is never an event. */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:var(--paper);border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:24px;padding:0 28px;height:52px;
+}
+/* the mark sits at the left, smaller than it is on a masthead: this is chrome */
+.nav .wordmark img{height:17px}
+/* mono small caps throughout ... the measuring voice, because a nav is a set of
+   labels rather than a sentence */
+.nav a,.nav button{
+  font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  background:none;border:0;padding:0;cursor:pointer;white-space:nowrap;
+  border-bottom:1px solid transparent;line-height:1.4;
+}
+.nav a:hover,.nav button:hover{color:var(--ink)}
+.nav .you:hover{border-bottom-color:var(--ink)}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:18px;min-width:0}
+/* a long .eth name is truncated rather than allowed to push the bar out. It is
+   the one item here whose width is somebody else's decision, so it is the one
+   that gives: everything else in the bar is a fixed label. */
+.nav .you{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:14em;
+  min-width:0;flex:0 1 auto;display:inline-block}
+.nav [aria-current="page"]{color:var(--ink)}
+
+/* The cherry. The room's notifier, and it lives here now rather than in the
+   room's own header, so being named reaches you while you are reading a
+   collection page. A state rather than a movement: grey and dormant while
+   nobody has said your name, itself the moment somebody has. The same energy
+   as the availability dot ... colour arriving is the whole event. */
+.cherry{display:inline-flex;align-items:center;gap:7px;flex:none}
+.cherry .fruit{font-size:16px;line-height:1;filter:grayscale(1);opacity:.3;
+  transition:opacity .35s ease,filter .35s ease}
+.cherry .n{font-variant-numeric:tabular-nums}
+button.cherry .fruit{filter:none;opacity:1}
+button.cherry .n{color:var(--ink)}
+button.cherry:hover .n{border-bottom:1px solid var(--ink)}
+
+/* The lightbox suppresses it. The work is the whole screen there, and the one
+   thing this bar must never do is sit over art. Held in place rather than
+   removed, so nothing reflows underneath while the page is covered. */
+body.zooming .nav{opacity:0;pointer-events:none}
+
+/* And a page whose first thing is a work says so, and gets a bar that stays in
+   the flow of it.
+   The rule is the same rule either way: never over art. Everywhere else that
+   costs nothing, because what scrolls under the bar is words and thumbnails
+   and the bar is opaque paper. On a work page it is the work, full width and
+   nearly the height of the screen, and a paper bar shaving the top off a
+   painting as it goes past is the one thing this bar is not allowed to do.
+   Sliding it away would be motion, and coming back would be a reveal-on-scroll
+   ... so it simply scrolls with the page there, present at the top of the work
+   the way it always was, and back the moment you return to it. */
+body[data-nav="flow"] .nav{position:static}
+
+/* Nothing hides behind a hamburger: the labels tighten and the four items fit.
+   A menu that has to be opened to be read is not a nav, it is a drawer. */
+@media(max-width:640px){
+  .nav{gap:14px;padding:0 18px;height:46px}
+  .nav .wordmark img{height:15px}
+  .nav a,.nav button{font-size:9px;letter-spacing:.11em}
+  .nav .right{gap:13px}
+  .nav .you{max-width:7.5em}
+  .cherry{gap:5px}
+  .cherry .fruit{font-size:14px}
+}
+@media(max-width:380px){
+  .nav{gap:11px;padding:0 14px}
+  .nav .right{gap:10px}
+  .nav .you{max-width:5.5em}
+}
+/* the oldest phone still in circulation. Four items, still no hamburger. */
+@media(max-width:340px){
+  .nav{gap:8px;padding:0 10px}
+  .nav a,.nav button{font-size:8.5px;letter-spacing:.07em}
+  .nav .right{gap:8px}
+  .nav .you{max-width:4em}
+  .nav .wordmark img{height:13px}
+}
 .foot{padding:0 28px 60px;text-align:center}
 .foot a{margin:0 14px}
 .loading{padding:90px 28px;text-align:center;color:var(--faint);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-family:var(--font-sans);font-weight:500}

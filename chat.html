@@ -22,22 +22,6 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .earlier:hover{color:var(--ink)}
 .earlier:disabled{cursor:default}
 
-/* The masthead, and the cherry in the corner of it.
-   The room's one notifier, and it is a state rather than a movement: grey and
-   quiet until somebody has said your name, then simply itself. The same energy
-   as the green dot on a work page ... colour arriving is the whole event. */
-.head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
-.cherry{display:flex;align-items:center;gap:8px;background:none;border:0;padding:8px 0 0;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:var(--faint);
-  text-transform:uppercase;flex:none}
-.cherry .fruit{font-size:19px;line-height:1;filter:grayscale(1);opacity:.3;
-  transition:opacity .35s ease,filter .35s ease}
-.cherry .n{font-variant-numeric:tabular-nums}
-button.cherry{cursor:pointer}
-button.cherry .fruit{filter:none;opacity:1}
-button.cherry .n{color:var(--ink)}
-button.cherry:hover .n{border-bottom:1px solid var(--ink)}
-
 .m{padding:16px 0;border-bottom:1px solid var(--rule)}
 .m:last-child{border-bottom:0}
 .m .who{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
@@ -136,14 +120,9 @@ button.cherry:hover .n{border-bottom:1px solid var(--ink)}
 .pal button{background:none;border:0;padding:3px 6px;font-size:15px;line-height:1;cursor:pointer;opacity:.7}
 .pal button:hover,.pal button:focus-visible{opacity:1;background:#f2efe9;outline:none}
 
-/* Who you are in here, and what waited for you. One line under the masthead,
-   in the measuring voice, because both halves of it are facts about a wallet.
-   It is only ever drawn for somebody signed in ... a room cannot tell a reader
-   they were mentioned without knowing who is reading. */
-.you{margin-top:16px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
-.you a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
-.you a:hover{border-color:var(--ink)}
+/* Your name used to be said again under the masthead. The nav says it now, on
+   this page and on every other, and the composer says it a third time with
+   what you hold beside it ... which was two too many. */
 
 .speak{max-width:720px;margin:0 auto;padding:0 28px 110px}
 /* The @ list. It sits under the box it is filling in, in the same measured
@@ -190,7 +169,6 @@ button.cherry:hover .n{border-bottom:1px solid var(--ink)}
 
 @media(max-width:640px){
   .mast{padding:34px 20px 0}
-  .cherry{padding-top:4px}
   .room{padding:18px 20px 30px}
   .speak{padding:0 20px 80px}
   .m .who .at{margin-left:0;width:100%}
@@ -203,10 +181,7 @@ button.cherry:hover .n{border-bottom:1px solid var(--ink)}
 </head>
 <body>
 
-<header class="bar">
-  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
-  <a class="smallcaps" href="/collections">Collections</a>
-</header>
+<header class="nav" id="nav"></header>
 
 <main id="main"><div class="loading">Loading</div></main>
 
@@ -287,26 +262,10 @@ const stamp = (s) => {
   return `${day} ${time}`;
 };
 
-// the same sentence api/_lib/chat.js builds, to the character
-const sentence = ({ action, text, target, address, issued, until, reply, emoji }) => [
-  'MintFace ... Studio',
-  '',
-  `Action: ${action}`,
-  ...(text != null ? [`Message: ${text}`] : []),
-  ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
-  ...(emoji ? [`Reaction: ${emoji}`] : []),
-  ...(target ? [`Subject: ${target}`] : []),
-  `Wallet: ${address}`,
-  ...(until ? [`Until: ${until}`] : []),
-  `Issued: ${issued}`,
-  '',
-  ...(action === 'sign in'
-    ? ['Signing opens Studio until the date above. It moves nothing and spends nothing.',
-      'Until then this browser can speak here without asking again.']
-    : action === 'react'
-      ? ['Signing leaves a reaction in Studio. It moves nothing and spends nothing.']
-      : ['Signing speaks in Studio. It moves nothing and spends nothing.']),
-].join('\n');
+// the same sentence api/_lib/chat.js builds, to the character, written once
+// in mintface.js because the nav signs the sign-in one and this page signs the
+// rest of them
+const sentence = (parts) => MF.session.sentence(parts);
 
 /* One signature, then a month of it.
  *
@@ -322,19 +281,12 @@ const sentence = ({ action, text, target, address, issued, until, reply, emoji }
  * stolen one buys a week of talking in one room and nothing else, and closing
  * the session or waiting out the week ends it.
  */
-const KEEP = 'mintface.room.session';
-const held = () => {
-  try { return JSON.parse(localStorage.getItem(KEEP) || 'null'); } catch (err) { return null; }
-};
-const keep = (v) => {
-  try { v ? localStorage.setItem(KEEP, JSON.stringify(v)) : localStorage.removeItem(KEEP); }
-  catch (err) { /* a browser with storage switched off signs per message, which still works */ }
-};
+/* It is MF.session now, in mintface.js, because the nav signs in with the same
+   signature on every page of both sites and there must be one of it. What is
+   left here is the room's own question: is the session the wallet in hand? */
 const mySession = () => {
-  const v = held();
-  if (!v || !v.token || !ROOM.wallet || v.address !== ROOM.wallet) return null;
-  if (v.until && Date.parse(v.until) < Date.now()) { keep(null); return null; }
-  return v;
+  const v = MF.session.current();
+  return v && ROOM.wallet && v.address === ROOM.wallet ? v : null;
 };
 
 const api = async (qs) => {
@@ -375,6 +327,9 @@ async function load({ bottom = false } = {}) {
     ROOM.waiting = 0;
     ROOM.next = null;
   }
+  /* The cherry is in the nav, on every page of both sites. The room is only
+     the place that knows the number first. */
+  MF.nav.mentions(ROOM.waiting, ROOM.next);
   draw({ toBottom: bottom });
   askCards();
 }
@@ -445,7 +400,7 @@ function told(fresh) {
   }
   if (!more) return;
   ROOM.waiting += more;
-  paintCherry();
+  MF.nav.mentions(ROOM.waiting, ROOM.next);
 }
 
 /* The sentence, as the room draws it now.
@@ -710,49 +665,18 @@ function replyingTo() {
   </div>`;
 }
 
-/* You, in the room's own header.
- *
- * Your name where everybody else's is, linked to the same page theirs are.
- * What was waiting for you used to be said here as a sentence; it is the
- * cherry now, up in the corner, and one notifier is enough. */
-function youLine() {
-  const me = ROOM.me;
-  if (!me || !ROOM.wallet) return '';
-  const label = e(me.name || short(ROOM.wallet));
-  const who = me.url ? `<a href="${e(me.url)}">${label}</a>` : label;
-  return `<div class="you">${who}</div>`;
-}
-
-/* The cherry.
- *
- * The room's one notifier, in the corner of its header, and a state rather
- * than a movement: grey and dormant while nobody has said your name, itself
- * the moment somebody has. The same energy as the single green dot elsewhere
- * on this site ... colour arriving is the whole event, and nothing bounces.
- *
- * Pressing it goes to the earliest thing you have not read, walking back
- * through the log to find it if it is older than what is on screen, and marks
- * the count read on the way. Dormant it is not a button at all: there is
- * nowhere for it to take you, and a control that does nothing is worse than a
- * mark that says nothing. */
-function cherry() {
-  const n = ROOM.waiting || 0;
-  const live = Boolean(n && ROOM.me && ROOM.wallet);
-  const fruit = '<span class="fruit" aria-hidden="true">&#127826;</span>';
-  if (!live) {
-    const why = ROOM.me ? 'Nobody has said your name since you last looked.' : 'Studio tells you here when somebody says your name.';
-    return `<span class="cherry" id="cherry" title="${why}">${fruit}</span>`;
-  }
-  return `<button class="cherry" id="cherry" data-act="cherry"
-    title="Go to the first of them" aria-label="${n} unread mention${n === 1 ? '' : 's'}. Go to the first of them.">
-    ${fruit}<span class="n">${n}</span></button>`;
-}
-
-// redrawn on its own, because the count changes while somebody is mid-sentence
-function paintCherry() {
-  const el = document.getElementById('cherry');
-  if (el) el.outerHTML = cherry();
-}
+/* The cherry is the nav's now, on every page of both sites, so a mention
+   reaches somebody halfway down a collection page. In here it does not reload
+   the page it is already on: it scrolls to the mention, walking back through
+   the log to find it if it is older than what is on screen, and marks the
+   count read on the way. */
+MF.nav.onCherry = async (n) => {
+  ROOM.waiting = 0;
+  ROOM.next = null;
+  MF.nav.mentions(0, null);
+  markSeen();
+  if (n != null) await goTo(n);
+};
 
 /* Naming somebody.
  *
@@ -883,12 +807,8 @@ function draw({ keep = false, toEnd = false, toBottom = false } = {}) {
 
   document.getElementById('main').innerHTML = `
     <section class="mast">
-      <div class="head">
-        <h1>Studio</h1>
-        ${cherry()}
-      </div>
+      <h1>Studio</h1>
       <div class="sub">chillin' in the studio talking art with each other. TAO gets you in. All can read. Own 1x MintFace artwork, chat in Studio.</div>
-      ${youLine()}
     </section>
     <section class="room" id="log">
       ${ROOM.more ? '<button class="earlier" id="earlier" data-act="earlier">&#8593; Earlier</button>' : ''}
@@ -1022,25 +942,18 @@ const askWallet = (message) => MF.sign(message, ROOM.wallet, (state, why) => {
   if (state === 'failed') status(why, true);
 });
 
-const post = async (body) => {
-  const r = await fetch('/api/chat', {
-    method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  const j = await r.json().catch(() => ({}));
-  if (!r.ok) { const e = new Error(j.error || 'that did not go through'); e.expired = Boolean(j.expired); throw e; }
-  return j;
-};
+// one way in and out of the room, shared with the nav
+const post = (body) => MF.session.post(body);
 
-/** The one signature. */
+/** The one signature. The same one the nav asks for on any other page. */
 async function signIn() {
-  const issued = new Date().toISOString();
-  const days = ROOM.days || 7;
-  const until = new Date(Date.parse(issued) + days * 86400000).toISOString();
-  const signature = await askWallet(sentence({ action: 'sign in', address: ROOM.wallet, issued, until }));
-  const j = await post({ action: 'sign in', address: ROOM.wallet, issued, until, signature });
-  keep({ address: ROOM.wallet, token: j.token, until: j.until });
+  const j = await MF.session.open(ROOM.wallet, ROOM.days || 7, (state, why) => {
+    if (state === 'requested') status('Signature requested ... check your wallet.');
+    if (state === 'slow') status('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
+    if (state === 'failed') status(why, true);
+  });
   status(`Signed in until ${new Date(j.until).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' })}. No more wallet prompts here until then.`);
+  await MF.nav.refresh();
   return j;
 }
 
@@ -1051,7 +964,7 @@ async function send(payload) {
       return await post({ ...payload, token: s.token });
     } catch (err) {
       if (!err.expired) throw err;
-      keep(null);                                  // the week is up; ask for another
+      MF.session.forget();                         // the week is up; ask for another
       status('That sign-in has run out.', true);
       draw();
       throw err;
@@ -1280,24 +1193,11 @@ document.addEventListener('click', async (ev) => {
   }
   if (act === 'unreply') { ROOM.replyTo = null; ROOM.focus = true; draw(); return; }
 
-  /* The cherry. Where it takes you, and the reading of it, are one press: it
-     is the notifier, so it is the thing that clears its own count. */
-  if (act === 'cherry') {
-    const to = ROOM.next;
-    ROOM.waiting = 0;
-    ROOM.next = null;
-    paintCherry();
-    markSeen();
-    if (to != null) await goTo(to);
-    return;
-  }
-
   if (act === 'signout') {
-    const s0 = mySession();
-    keep(null);
-    if (s0) post({ action: 'sign out', token: s0.token }).catch(() => {});
+    await MF.session.close();
     status('Signed out.');
     draw();
+    MF.nav.refresh();
     return;
   }
 
@@ -1333,9 +1233,30 @@ document.addEventListener('click', async (ev) => {
   }
 });
 
+/* A session says who you are, so the room knows before a wallet is asked
+   anything. It used to wait for a connect that a signed-in reader has no
+   reason to perform: the token is what speaks here, and the wallet is only
+   needed to sign, which a session is the standing permission not to do. It is
+   also what makes the name in the nav and the name on the composer agree. */
+const signedIn = MF.session.current();
+if (signedIn) ROOM.wallet = signedIn.address;
+
+/* Where the cherry sends you from somewhere else on the site. The room opens
+   at that message rather than at the latest, walks back through the log to
+   find it, and marks the count read ... arriving is reading, when arriving is
+   something you asked for by name. */
+const sent = (location.hash.match(/^#m-(\d+)$/) || [])[1];
+
 /* Open at the bottom. The room is a log kept forever, and a log kept forever
    that opens at its first line is a room nobody reaches the end of. */
-load({ bottom: true }).then(() => {
+load({ bottom: sent == null }).then(async () => {
+  if (sent != null) {
+    ROOM.waiting = 0;
+    ROOM.next = null;
+    MF.nav.mentions(0, null);
+    markSeen();
+    await goTo(Number(sent));
+  }
   ROOM.timer = setInterval(poll, 6000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
 });

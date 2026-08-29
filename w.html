@@ -280,7 +280,6 @@ details summary:hover{color:var(--ink)}
   text-transform:uppercase;color:var(--faint);margin-bottom:12px}
 
 @media(max-width:640px){
-  .bar{padding:18px 20px}
   .stage{padding:2px 20px 0}
   .stage img,.stage video{max-height:none;width:100%}
   .col{padding:38px 20px 90px}
@@ -288,12 +287,12 @@ details summary:hover{color:var(--ink)}
 }
 </style>
 </head>
-<body>
+<!-- the work is the first thing on this page and very nearly the height of
+     the screen, so the nav stays in the flow rather than shaving the top off a
+     painting as it goes past. See body[data-nav="flow"] in mintface.css. -->
+<body data-nav="flow">
 
-<header class="bar">
-  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
-  <a class="smallcaps" id="up" href="/collections">Collections</a>
-</header>
+<header class="nav" id="nav"></header>
 
 <main id="main"><div class="loading">Loading</div></main>
 
@@ -757,10 +756,9 @@ function render(work, collection, meta) {
   const shown = displayTitle(work, collection);
   const traits = traitsOf(work);
   document.title = `${shown} ... MintFace`;
-  const up = document.getElementById('up');
-  up.textContent = collection.title;
-  up.href = `/c/${collection.slug}`;
-
+  /* The way back to the collection is the byline under the title, which links
+     it already. The header link that used to say it too has retired into the
+     one nav, where a work page has no business putting a third thing. */
   const desc = work.statement || work.subtitle || '';
   document.querySelector('meta[name="description"]').setAttribute('content', desc.slice(0, 180) || `${work.title} by MintFace.`);
 

@@ -76,6 +76,37 @@ async function whois(origin, address, register) {
   return { tao, name: who && who.known ? who.name : null };
 }
 
+/** Where a wallet stands in the room: what to call it, whether it may speak,
+ *  and what waited for it. Asked by the room when it draws a page, and by the
+ *  nav on every page of both sites, and it must be the same answer to both. */
+async function standing(db, origin, viewer, cfg, register, isArtist) {
+  const who = await whois(origin, viewer, register);
+  const muted = await db.isMuted(viewer);
+  const gate = taoGate({ artist: cfg.artist, address: viewer, tao: who.tao, min: cfg.min_tao || 1, why: SHUT });
+  /* Who has said your name since you were last in. Nothing is emailed and
+     nothing is pushed: the cherry tells you, wherever on the site you are. */
+  const seen = await db.lastSeen(viewer);
+  const said = await db.mentionsSince(viewer, seen == null ? 0 : seen);
+  return {
+    tao: gate.role === 'artist' ? null : who.tao,
+    name: gate.role === 'artist' ? ARTIST_NAME : who.name,
+    role: gate.role,
+    can_speak: gate.ok && !muted,
+    muted,
+    why: muted ? 'This wallet is muted in Studio. You can still read.' : (gate.ok ? null : gate.why),
+    artist: isArtist,
+    url: register ? register.urlOf(viewer) : null,
+    /* A wallet that has never been in has never read any of it, so a first
+       visit counts everything. It is the useful answer: arriving to find you
+       were named is the whole reason the count exists.
+       `next` is where the cherry takes you: the earliest one you have not
+       read. The count is not cleared by arriving ... the cherry is the
+       notifier, and an unread mark that clears itself the moment you glance at
+       a page is not one. Pressing it is what marks it. */
+    mentions: { unseen: said.unseen, total: said.total, next: said.next, first_visit: seen == null },
+  };
+}
+
 /* What a page of the log needs beyond its own rows.
  *
  * Two lookups, both by message number and both batched: the messages these
@@ -150,6 +181,19 @@ export async function GET(request) {
       return json({ messages: rows.map((r) => render(r, dress)), total, rx: marks, store: true });
     }
 
+    /* ---- who am I, and what waited for me ----
+     *
+     * The nav asks this on every page of both sites, so it answers without a
+     * page of the log in it: a bar that put a name in a corner should not cost
+     * fifty messages and their marks to draw. Everything else about `me` is
+     * worked out exactly as the room works it out, because it is the same
+     * answer to the same question. */
+    if (url.searchParams.get('me') != null) {
+      const days = Number(cfg.session_days || 7);
+      if (!/^0x[0-9a-f]{40}$/.test(viewer)) return json({ me: null, session_days: days, store: true });
+      return json({ me: await standing(db, origin, viewer, cfg, await register(), isArtist), session_days: days, store: true });
+    }
+
     /* ---- what is under a message now ----
        Asked for by number, the way the cards are, and answered without the
        messages themselves: a mark arriving is no reason to redraw a room with
@@ -212,37 +256,9 @@ export async function GET(request) {
     const base = { isArtist, artist: cfg.artist, register: await register(), viewer, cfg };
     const page = await db.page({ before: before == null ? null : Number(before), limit: Number(cfg.page) || 50 });
     const dress = await dressing(db, page.rows, base);
-    let me = null;
-    if (/^0x[0-9a-f]{40}$/.test(viewer)) {
-      const who = await whois(origin, viewer, dress.register);
-      const muted = await db.isMuted(viewer);
-      const gate = taoGate({ artist: cfg.artist, address: viewer, tao: who.tao, min: cfg.min_tao || 1, why: SHUT });
-      /* Who has said your name since you were last in.
-         Counted here and marked seen by the page once it has drawn it, so the
-         number survives being read and is gone by the next visit. Nothing is
-         emailed and nothing is pushed: the room notifies inside the room. */
-      const seen = await db.lastSeen(viewer);
-      const said = await db.mentionsSince(viewer, seen == null ? 0 : seen);
-      me = {
-        tao: gate.role === 'artist' ? null : who.tao,
-        name: gate.role === 'artist' ? ARTIST_NAME : who.name,
-        role: gate.role,
-        can_speak: gate.ok && !muted,
-        muted,
-        why: muted ? 'This wallet is muted in Studio. You can still read.' : (gate.ok ? null : gate.why),
-        artist: isArtist,
-        url: dress.register ? dress.register.urlOf(viewer) : null,
-        /* A wallet that has never been in has never read any of it, so a first
-           visit counts everything. It is the useful answer: arriving to find
-           you were named is the whole reason the count exists. Only the wording
-           changes ... there is no last visit to say "since" about. */
-        /* `next` is where the cherry takes you: the earliest one you have not
-           read. The count is not cleared by arriving any more ... the cherry
-           is the notifier, and an unread mark that clears itself the moment
-           you glance at the page is not one. Pressing it is what marks it. */
-        mentions: { unseen: said.unseen, total: said.total, next: said.next, first_visit: seen == null },
-      };
-    }
+    const me = /^0x[0-9a-f]{40}$/.test(viewer)
+      ? await standing(db, origin, viewer, cfg, dress.register, isArtist)
+      : null;
     return json({
       messages: page.rows.map((r) => render(r, dress)),
       start: page.start, end: page.end, total: page.total, more: page.more,

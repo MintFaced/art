@@ -111,10 +111,7 @@ input::placeholder{color:var(--faint)}
 </head>
 <body>
 
-<header class="bar">
-  <a class="wordmark" href="/" aria-label="MintFace"><img src="/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
-  <a class="smallcaps" href="/collections">Collections</a>
-</header>
+<header class="nav" id="nav"></header>
 
 <main id="main">
 
@@ -206,6 +203,7 @@ input::placeholder{color:var(--faint)}
   <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
 </footer>
 
+<script src="/mintface.js"></script>
 <script>
 const $ = (id) => document.getElementById(id);
 const e = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
