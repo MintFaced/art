@@ -28,7 +28,7 @@ const lower = (a) => String(a || '').toLowerCase();
 const said = (who, stored) => (who && who.known ? who.name : (stored || (who && who.name) || null));
 
 /** The sentence a wallet signs. */
-export function chatMessage({ action, text, target, address, issued, until, reply, emoji, domain }) {
+export function chatMessage({ action, text, target, address, issued, until, reply, emoji, domain, image }) {
   /* The closing lines never name a duration. The Until line above already says
      exactly when this runs out, to the second, and it is worked out from the
      config ... so changing the length of a sign-in changes one number and the
@@ -59,6 +59,7 @@ export function chatMessage({ action, text, target, address, issued, until, repl
     ...(domain ? [`Domain: ${domain}`] : []),
     ...(text != null ? [`Message: ${text}`] : []),
     ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
+    ...(image ? [`Picture: ${image}`] : []),
     ...(emoji ? [`Reaction: ${emoji}`] : []),
     ...(target ? [`Subject: ${target}`] : []),
     `Wallet: ${address}`,
@@ -169,7 +170,12 @@ export function render(row, dress = {}) {
      ... nothing in this room is ... but a mark stands under something that was
      said, and the room is not going to leave six cherries under a gap. */
   base.reactions = row.deleted ? [] : marksOf(reactions && reactions[row.n], viewer, cfg);
-  if (row.deleted && !isArtist) return { ...base, text: null, html: null, links: [], mentions: [] };
+  /* The picture goes down with the message, for everybody. The object stays in
+     the bucket ... nothing here is ever removed ... but a room that left a
+     photograph standing over the word `Taken down` would have taken nothing
+     down. The artist sees it, the way he sees the words. */
+  base.image = row.deleted && !isArtist ? null : shotOf(row);
+  if (row.deleted && !isArtist) return { ...base, text: null, html: null, links: [], mentions: [], image: null };
   /* The tags, said as they read now. The row keeps wallets and offsets; what
      a wallet is called is looked up at the moment of drawing. */
   const mentions = register ? dressTags(row.text, row.mentions, register) : [];
@@ -224,6 +230,21 @@ function answering(row, { parents, register, artist } = {}) {
     url: mine ? 'https://mintface.art/' : (register ? register.urlOf(p.address) : null),
     deleted: Boolean(p.deleted),
     found: true,
+  };
+}
+
+/* Where a message's picture actually is.
+   The row keeps a bucket key and the shape it was at; the address it is served
+   from is worked out here, so the day the bucket moves it moves in one line
+   rather than in every row ever written. */
+const ASSETS = 'https://assets.mintface.art';
+function shotOf(row) {
+  const im = row && row.image;
+  if (!im || !im.key) return null;
+  return {
+    url: `${ASSETS}/${String(im.key).split('/').map(encodeURIComponent).join('/')}`,
+    w: im.w || null,
+    h: im.h || null,
   };
 }
 

@@ -1,5 +1,5 @@
 import { readFile, writeFile } from '../_lib/repo.js';
-import { tally, latest } from '../_lib/nudges.js';
+import { tally, latest, palette, kindOf, CANDIDATES } from '../_lib/nudges.js';
 
 /* Banking a nudge.
  *
@@ -25,7 +25,9 @@ export async function GET(request) {
   const at = async (p) => (await fetch(`${site}/${p}`, { headers: { accept: 'application/json' } })).json();
 
   const tao = await at('data/tao.json');
-  const weighings = (await at('data/nudge-weighings.json')).weighings || [];
+  const said = await at('data/nudge-weighings.json');
+  const weighings = said.weighings || [];
+  const proposals = said.proposals || [];
   const file = await readFile('data/nudges.json');
   const store = JSON.parse(file.text);
   const readTao = (a) => {
@@ -38,7 +40,33 @@ export async function GET(request) {
   for (const n of store.nudges || []) {
     if (n.banked || n.published === false) continue;
     if (new Date(n.closes).getTime() > now) continue;
-    const t = tally(latest(weighings, n.id), readTao);
+    const rows = latest(weighings, n.id);
+
+    /* A nudge with candidates banks a colour, or banks the fact that no colour
+       reached the threshold. Both are records and the second is not a failure:
+       the studio undertook to paint what locked, and a lock that would have
+       been carried by three people or by one wallet's holding is not the thing
+       that was promised. */
+    if (kindOf(n) === CANDIDATES) {
+      const p = palette(rows, proposals.filter((x) => x.nudge === n.id), readTao, n);
+      n.banked = {
+        number: n.number, kind: CANDIDATES, rule: p.rule,
+        total: p.total, collectors: p.collectors,
+        leader: p.leader, locked: p.locked, why: p.why,
+        candidates: p.candidates.map((c) => ({
+          hex: c.hex, total: c.total, voters: c.voters, share: c.share,
+          proposed_by: c.proposed_by || null, proposed_name: c.proposed_name || null,
+          ledger: c.ledger.map((r) => ({ address: r.address, name: r.name || null,
+            candidate: r.candidate, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
+        })),
+        banked_at: new Date().toISOString(),
+      };
+      banked.push(`#${n.number} ${p.locked ? `locked ${p.locked.hex}` : 'no colour locked'}`
+        + ` ... ${Math.round(p.total)} TAO across ${p.collectors}`);
+      continue;
+    }
+
+    const t = tally(rows, readTao);
     n.banked = {
       number: n.number, totals: t.totals, counts: t.counts, total: t.total,
       collectors: t.collectors, share: t.share, result: t.result,

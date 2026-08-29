@@ -69,8 +69,22 @@ export async function POST(request) {
     store.nudges = store.nudges || [];
     const number = store.next_number || (store.nudges.length + 1);
     const id = `nudge-${number}`;
+    /* A nudge with candidates has no sides: the collectors propose the answers
+       and weigh on them, and a colour locks only if the leader carries enough
+       collectors and enough TAO at close. The thresholds live on the nudge so
+       a later one can ask for more or less without a deploy, and `promise` is
+       the studio undertaking to paint what locks ... which is the one thing
+       that makes this more than a steer, and belongs on the record rather than
+       in the page's copy. */
+    const kind = body.kind === 'candidates' ? 'candidates' : 'binary';
+    const lock = kind === 'candidates'
+      ? { voters: Math.max(1, Math.floor(Number(body.lock_voters) || 5)),
+        tao: Math.max(0, Math.floor(Number(body.lock_tao) || 500000)) }
+      : null;
     store.nudges.push({
-      id, number, question,
+      id, number, question, kind,
+      ...(lock ? { lock } : {}),
+      promise: String(body.promise || '').trim() || null,
       note: String(body.note || '').trim() || null,
       image: String(body.image || '').trim() || null,
       opens: new Date().toISOString(),

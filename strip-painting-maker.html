@@ -182,7 +182,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   <section class="sect">
     <h2>Palette</h2>
     <div class="swatches" id="swatches"></div>
-    <p class="swatch-note">Tap a swatch to drop it, minimum four. The red line sits outside the palette and never changes.</p>
+    <p class="swatch-note">Tap a swatch to drop it, minimum four. The red line sits outside the palette and never changes. <span id="taoNote"></span></p>
   </section>
 
   <div class="rule"></div>
@@ -544,6 +544,26 @@ function say(msg) {
 }
 
 draw();
+
+/* And the colour the collectors chose, once it is known. Asked for after the
+   maker is already on screen: a palette that waited on a fetch to draw itself
+   would be a slower page for the sake of one swatch. */
+readCommunityColour().then((c) => {
+  if (!c) return;
+  COMMUNITY = c;
+  /* It joins the palette rather than replacing anything. If it is already in
+     there it is simply marked, which is the case worth getting right: the
+     collectors may well choose a colour Strip Painting No. 1 already used. */
+  if (!S.palette.some((p) => p.hex.toLowerCase() === c.hex)) {
+    S.palette = [...S.palette, { hex: c.hex, w: 60 }];
+  }
+  const note = $('taoNote');
+  if (note) {
+    note.textContent = `The marked swatch is ${c.hex.toUpperCase()}, chosen by ${c.collectors} collector`
+      + `${c.collectors === 1 ? '' : 's'} weighing ${c.tao.toLocaleString('en-NZ')} TAO on nudge #${c.number}.`;
+  }
+  draw();
+});
 </script>
 </body>
 </html>

@@ -1,5 +1,23 @@
 {
- "_note": "Nudges: artist-authored questions the collectors weigh TAO behind. Authored in the studio, banked by api/cron/nudges.js. A nudge steers, it never commands.",
- "next_number": 1,
- "nudges": []
+ "_note": "Nudges: artist-authored questions the collectors weigh TAO behind. Authored in the studio, banked by api/cron/nudges.js. A nudge steers, it never commands ... except where the studio says otherwise on the nudge itself, which is what `promise` is for. A nudge with kind: candidates has no sides: collectors propose the answers and weigh on them, and one locks only if the leader carries `lock.voters` collectors AND `lock.tao` TAO at close. See docs/AVS-NUDGES.md.",
+ "next_number": 2,
+ "nudges": [
+  {
+   "id": "nudge-1",
+   "number": 1,
+   "kind": "candidates",
+   "lock": {
+    "voters": 5,
+    "tao": 500000
+   },
+   "question": "Choose a colour for the next Strip Painting.",
+   "note": "The painting will stand in Hastings CBD. Propose a colour, or put your TAO behind one that is already on the board. Weighed TAO is never spent and never moves — it is influence, and it stays yours.",
+   "promise": "MintFace will paint the colour this locks. A nudge steers; this one decides.",
+   "image": null,
+   "opens": null,
+   "closes": "2026-09-29T00:00:00.000Z",
+   "_publish_note": "Not published. The question, the thresholds and the promise are as briefed; the close date is a placeholder and the promise is the artist's to make in public. Set `closes` and turn `published` to true to open it.",
+   "published": false
+  }
+ ]
 }

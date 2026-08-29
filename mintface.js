@@ -595,6 +595,24 @@ const MF = {
       return d;
     },
 
+    /* A picture that is not a work.
+       The lightbox was built for the catalogue, where an image is one of many
+       sizes of a known thing. A photograph somebody put in the room is one
+       size of an unknown thing, and it opens the same way on the same paper,
+       because that is what the lightbox is for. */
+    show(src, alt) {
+      this.mount();
+      this.work = null;
+      this.scale = 1; this.x = 0; this.y = 0;
+      this.img.src = src;
+      this.img.alt = alt || '';
+      this.apply();
+      this.el.classList.add('on');
+      this.el.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('zooming');
+      document.body.style.overflow = 'hidden';
+    },
+
     async open(work, from) {
       this.mount();
       this.work = work;
@@ -1570,7 +1588,7 @@ MF.session = {
   /** The sentence a wallet signs. The same one api/_lib/chat.js builds, to the
       character ... which is why it is written once here rather than in every
       page that needs to sign something. */
-  sentence({ action, text, target, address, issued, until, reply, emoji, domain }) {
+  sentence({ action, text, target, address, issued, until, reply, emoji, domain, image }) {
     return [
       'MintFace ... Studio',
       '',
@@ -1578,6 +1596,7 @@ MF.session = {
       ...(domain ? [`Domain: ${domain}`] : []),
       ...(text != null ? [`Message: ${text}`] : []),
       ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
+      ...(image ? [`Picture: ${image}`] : []),
       ...(emoji ? [`Reaction: ${emoji}`] : []),
       ...(target ? [`Subject: ${target}`] : []),
       `Wallet: ${address}`,
@@ -1633,6 +1652,130 @@ MF.session = {
   async close() {
     try { await this.post({ action: 'sign out' }); } catch (err) { /* say so anyway */ }
     this.forget();
+  },
+};
+
+/* ---------- a picture, made fit to send ----------
+ *
+ * Everything here happens before a single byte leaves the browser, and the
+ * order of it is the point. The file is decoded, drawn onto a canvas at the
+ * size the room wants, and re-encoded off that canvas ... and a canvas has no
+ * idea what EXIF is. So the resize IS the strip: the GPS coordinates a phone
+ * writes into every photograph never leave the phone, not because anything
+ * went looking for them but because nothing carried them across.
+ *
+ * The orientation is the one piece of that metadata that has to survive, and
+ * it survives by being applied rather than copied: the bitmap is decoded with
+ * the rotation already baked in, so a photograph taken sideways arrives the
+ * way up it was taken and nothing downstream has to know why.
+ */
+MF.picture = {
+  LONG_EDGE: 2000,
+  TYPES: ['image/webp', 'image/jpeg'],
+
+  /** A file from a phone or a desktop, as the room will take it. */
+  async ready(file, { longEdge = this.LONG_EDGE, maxBytes = 1200 * 1024 } = {}) {
+    if (!file || !/^image\//.test(file.type || '')) throw new Error('that is not an image');
+    const bitmap = await this.decode(file);
+    const scale = Math.min(1, longEdge / Math.max(bitmap.width, bitmap.height));
+    const w = Math.max(1, Math.round(bitmap.width * scale));
+    const h = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(bitmap, 0, 0, w, h);
+    if (bitmap.close) bitmap.close();
+
+    /* WebP where the browser has it and JPEG where it does not, and then down
+       the quality rather than down the size: a photograph that has already
+       been made small should lose a little sharpness before it loses its
+       shape. Five steps, and if the fifth is still too big the picture is
+       genuinely too big and is said to be. */
+    let type = (await this.encodesWebp()) ? 'image/webp' : 'image/jpeg';
+    for (const q of [0.84, 0.76, 0.68, 0.58, 0.46]) {
+      let blob = await this.encode(canvas, type, q);
+      /* A browser that says it can encode WebP and then does not.
+         The feature test is a single pixel, which some engines answer from a
+         trivial path they never take for a real image ... and a composer that
+         sits on "Reading the picture" forever because an encoder never called
+         back is worse than a slightly larger JPEG. So the first one that does
+         not come back settles the format for the rest of this picture. */
+      if (blob === null && type === 'image/webp') {
+        this._webp = false;
+        type = 'image/jpeg';
+        blob = await this.encode(canvas, type, q);
+      }
+      if (blob === null) throw new Error('this browser would not encode that picture');
+      if (blob.size <= maxBytes) return { blob, type, w, h, data: await this.base64(blob) };
+    }
+    throw new Error('that picture will not come down to a size the room can keep');
+  },
+
+  /* Decoded with the rotation applied. createImageBitmap does it properly and
+     everywhere that matters; the <img> fallback is for a browser that has no
+     createImageBitmap, which by now also has no EXIF orientation problem. */
+  async decode(file) {
+    if (typeof createImageBitmap === 'function') {
+      try { return await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+      catch (err) { /* an option it does not know: fall through */ }
+      try { return await createImageBitmap(file); } catch (err) { /* and fall further */ }
+    }
+    const url = URL.createObjectURL(file);
+    try {
+      const img = await new Promise((res, rej) => {
+        const el = new Image();
+        el.onload = () => res(el);
+        el.onerror = () => rej(new Error('that image would not open'));
+        el.src = url;
+      });
+      return img;
+    } finally { setTimeout(() => URL.revokeObjectURL(url), 1000); }
+  },
+
+  /* toBlob, with a limit on how long it may say nothing.
+     It has no failure path of its own: an encoder that cannot do the job
+     simply never calls back, and the page waits for it forever. */
+  ENCODE_MS: 15000,
+  encode(canvas, type, quality) {
+    return new Promise((res) => {
+      let done = false;
+      const finish = (v) => { if (!done) { done = true; res(v); } };
+      setTimeout(() => finish(null), this.ENCODE_MS);
+      try { canvas.toBlob((b) => finish(b || null), type, quality); }
+      catch (err) { finish(null); }
+    });
+  },
+
+  /* Asked of a single pixel, and asked once.
+     This used to encode the whole resized photograph just to find out whether
+     the browser could encode it, which is two full encodes of a two-thousand
+     pixel image to produce one ... on a phone, which is where the pictures
+     come from, that is the difference between a moment and a wait. */
+  _webp: null,
+  async encodesWebp() {
+    if (this._webp !== null) return this._webp;
+    try {
+      const c = document.createElement('canvas');
+      c.width = 1; c.height = 1;
+      const blob = await new Promise((res) => c.toBlob(res, 'image/webp', 0.8));
+      this._webp = Boolean(blob && blob.type === 'image/webp');
+    } catch (err) { this._webp = false; }
+    return this._webp;
+  },
+
+  async base64(blob) {
+    const buf = new Uint8Array(await blob.arrayBuffer());
+    let s = '';
+    for (let i = 0; i < buf.length; i += 0x8000) s += String.fromCharCode.apply(null, buf.subarray(i, i + 0x8000));
+    return btoa(s);
+  },
+
+  /* The same fingerprint api/_lib/images.js computes, so a wallet signing
+     words with a picture attached is signing both. */
+  async fingerprint(blob) {
+    const buf = await blob.arrayBuffer();
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
   },
 };
 

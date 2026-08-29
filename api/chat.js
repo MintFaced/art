@@ -8,6 +8,8 @@ import { parseTags, tagIndex } from './_lib/names.js';
 import { linksIn } from './_lib/text.js';
 import { cardStore, familyKind, fetchCard, ourCard } from './_lib/cards.js';
 import { corsFor, cookieFrom, openCookies, clearCookies, domainOk, hostOf, TOKEN_COOKIE, WHO_COOKIE } from './_lib/session.js';
+import { checkImage, imageKey, imageFingerprint } from './_lib/images.js';
+import { putObject, r2Configured } from './_lib/r2.js';
 
 /* The room.
  *
@@ -276,7 +278,8 @@ export async function GET(request) {
       start: page.start, end: page.end, total: page.total, more: page.more,
       me, max_chars: cfg.max_chars, max_tags: Number(cfg.max_tags || 5),
       session_days: Number(cfg.session_days || 7),
-      emoji: reactionSet(cfg), rx: await db.marksVersion().catch(() => 0), store: true,
+      emoji: reactionSet(cfg), rx: await db.marksVersion().catch(() => 0),
+      max_image_kb: Number(cfg.max_image_kb || 1200), store: true,
     });
   } catch (e) {
     return respond(request, { error: 'Studio is not reachable' }, 503);
@@ -490,6 +493,17 @@ export async function POST(request) {
     return respond(request, { error: 'This wallet is muted in Studio. You can still read.' }, 403);
   }
 
+  /* The picture, checked before the signature is, because the signature covers
+     it: a wallet signing words with a photograph attached is signing both, and
+     the fingerprint the sentence carries has to be of bytes this side has
+     actually looked at. Nothing is spent and nothing is stored until it has
+     passed everything a message has to pass. */
+  const shot = checkImage(body.image, cfg);
+  if (shot.error) return respond(request, { error: shot.error }, 400);
+  if (!shot.none && !r2Configured()) {
+    return respond(request, { error: 'Studio cannot take pictures just now' }, 503);
+  }
+
   const register = await loadRegister(at, origin, pipe).catch(() => null);
   const who = await whois(origin, address, register);
   const gate = taoGate({ artist: cfg.artist, address, tao: who.tao, min: cfg.min_tao || 1, why: SHUT });
@@ -513,7 +527,15 @@ export async function POST(request) {
     return respond(request, { error: `${distinct.length} names in one message, and Studio's limit is ${maxTags}.` }, 400);
   }
 
-  if (!(await verify({ action: 'say', text: text.text, reply: reply == null ? null : String(reply) }))) {
+  /* The picture is in the sentence as its own fingerprint. A wallet signing
+     words with a photograph attached is signing both, and a page that could
+     swap the photograph after the fact would be putting a picture into a
+     permanent log under somebody's name without asking. */
+  if (!(await verify({
+    action: 'say', text: text.text,
+    reply: reply == null ? null : String(reply),
+    image: shot.none ? null : imageFingerprint(shot.bytes),
+  }))) {
     return respond(request, { error: 'that signature does not match the wallet' }, 401);
   }
 
@@ -524,11 +546,22 @@ export async function POST(request) {
   const spentTags = await db.spendTags(address, distinct.length, cfg);
   if (spentTags.error) return respond(request, { error: spentTags.error }, 429);
 
+  let image = null;
+  if (!shot.none) {
+    const key = imageKey(shot.ext);
+    try {
+      await putObject(key, shot.bytes, shot.type);
+    } catch (e) {
+      return respond(request, { error: 'that picture would not go up. Try again in a moment.' }, 502);
+    }
+    image = { key, type: shot.type, w: shot.w, h: shot.h, bytes: shot.bytes.length };
+  }
+
   const row = await db.say({
     address, role: gate.role,
     name: gate.role === 'artist' ? ARTIST_NAME : who.name,
     tao: gate.role === 'artist' ? 0 : who.tao,
-    text: text.text, mentions, reply, at: new Date().toISOString(), deleted: false,
+    text: text.text, mentions, reply, image, at: new Date().toISOString(), deleted: false,
   });
   /* Tagging yourself is a way of writing, not a way of being told ... and
      answering somebody is telling them, whether or not their name is in the

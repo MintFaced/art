@@ -46,3 +46,27 @@ The nudges and the room are one page at `/studio`. `/chat` is a permanent redire
 **Nothing about the mechanics changed.** Same `/api/nudge`, same sentence, same clamp, same ledger, same standing rule on every card. Two class names moved to stop the merge going quietly wrong — `.bar` became `.meter`, and everything the nudges draw now hangs off `.nudges` — because a `go` or an `empty` or a `bar` meaning one thing at the top of a page and another at the bottom is exactly how two components that were written apart start disagreeing.
 
 **Still no nudge has ever been authored.** `data/nudges.json` is empty and `next_number` is 1. The empty state says so plainly and the room carries the page in the meantime, which is the argument for merging them made out loud.
+
+---
+
+## Candidates, and a nudge that can decline to decide (2026-08-30)
+
+The pilot needed a shape the binary nudge does not have: a question where the collectors supply the answers as well as the weight. `kind: "candidates"` is that shape, and the Strip Painting colour is the first of them.
+
+**A candidate is a colour, not a row somebody owns.** The hex is the identity, so two collectors proposing the same red land on one swatch rather than splitting it, and the proposals list is a record of who said it first rather than a set of things to reconcile. `#c0392b`, `#C0392B` and `#C39` are the same candidate; the board keeps `#C0392B`.
+
+**Proposing is its own act, with its own signature, and it is not a weighing.** A colour goes on the board with nothing behind it and grows or does not — which is what a palette forming in public actually looks like, including the colours nobody backed. One proposal per wallet per nudge, and final: other people weigh on it, and a proposal that could be changed would move TAO somebody put behind one colour onto another without asking them.
+
+**The lock is two thresholds and both must hold.** Five distinct voters **and** 500,000 TAO on the leading colour, at close. Either alone is a way to be decided by one wallet or by a crowd holding nothing, and the acceptance cases pin both: nine hundred thousand TAO from a single wallet does not lock, and five wallets holding fifty TAO between them do not either. The numbers live on the nudge, so a later one can ask for more or less without a deploy.
+
+**And the clamp still bites.** A weighing counts for no more than the wallet's TAO at close, so a colour carried to six hundred thousand by somebody who has since sold down banks what they still hold — and may fall under the threshold because of it. What the studio undertook to paint is a colour the collectors still stood behind at close, not one they stood behind in May.
+
+**Not locking is a real outcome and the card says which half was short.** *The leading colour has the TAO and needs 5 collectors. It has 4.* The threshold is on the card the whole time the nudge is open, because a nudge that can decline to decide has to say so before it does — and once it is closed the banked line says what happened, so the threshold line stops repeating it.
+
+**On lock.** The swatch reads `#C0392B · CHOSEN` behind the ink rule the site marks everything with; the card banks `LOCKED · #C0392B · 512,340 TAO · 7 COLLECTORS`; the hex joins the Strip Painting Maker's palette as a marked slot, named `collectors` under it, sitting beside the red line as the other colour in that palette nobody at the screen chose. The provenance line a work carries changes voice for a locked colour — *Colour chosen by 512,340 TAO across 7 collectors · #C0392B · Nudge #1* — because "steered by" is not the whole truth where the studio undertook to paint the answer.
+
+**The promise is on the nudge, not in the page.** `promise` is a field, and it renders in the ink-ruled voice above the board: *MintFace will paint the colour this locks. A nudge steers; this one decides.* It is a thing the studio undertook rather than a thing the page says, and a nudge without it is still only a steer. The standing rule stays where it always was, at the top of the surface.
+
+**The first nudge is seeded and NOT published.** `data/nudges.json` carries it with the question, the note, the promise and the thresholds exactly as briefed. `published` is `false` and the close date is a placeholder thirty days out. **Two things are Ryan's**: the date, and whether to make that promise in public. Set `closes`, turn `published` to `true`, and it opens. `api/studio-api.js` now takes `kind`, `lock_voters`, `lock_tao` and `promise` on the `nudge` action — though the console still has no form that posts to it, for candidate nudges or binary ones.
+
+**Checks.** `scripts/tao/test-nudges.mjs`, now fifty-four: the board sorted by weight with the unbacked colours still on it, the same colour proposed twice landing as one swatch with the first proposer credited, both halves of the threshold failing alone, the clamp dragging a leader back under the line, hex parsing in every form, and a signature that names its colour so it cannot be spent on another.

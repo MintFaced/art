@@ -147,3 +147,33 @@ The nav landed, and the cherry went into it. `docs/NAV.md` has the whole of it; 
 **A session says who you are.** The room used to wait for a connect that a signed-in reader has no reason to perform: it read `ROOM.wallet` from the wallet and nothing else, so somebody with thirty days left on a signature still saw "Connect a wallet to speak". The token is what speaks here and the wallet is only needed to sign, which a session is the standing permission not to do. It also stopped the nav and the composer disagreeing about who was reading.
 
 **Your name, once.** It was under the masthead, in the composer, and now in the nav. Two of those were the same fact. The masthead line has gone; the composer keeps its own because it says what you hold beside it, which is a different sentence.
+
+---
+
+## Pictures (2026-08-30)
+
+A signed-in TAO holder can put one image on a message. Words are still required: a picture is something a message carries, not a message, and a log of bare photographs is a different room.
+
+**The resize is the strip.** The file never travels as a file. It is decoded, drawn onto a canvas at two thousand on the long edge, and re-encoded off that canvas — and a canvas has no idea what EXIF is. So the GPS coordinates a phone writes into every photograph never leave the phone, not because anything went looking for them but because nothing carried them across. WebP where the browser has it, JPEG where it does not, quality stepping down rather than size, capped at 1200KB.
+
+**Orientation survives by being applied rather than copied.** `createImageBitmap(file, { imageOrientation: 'from-image' })` bakes the rotation into the bitmap, so a photograph taken sideways arrives the way up it was taken and nothing downstream has to know why.
+
+**The server checks rather than trusts.** It sniffs the container against the claimed type, so a file that says WebP and is not gets refused; and it walks the JPEG segments and the WebP chunks for EXIF or XMP and refuses anything still carrying them. That turns "the page strips it" into "the room will not take it otherwise" — which is the version that holds when the bytes did not come through the page.
+
+**A picture is signed with the words it came with.** The sentence carries a sixteen-character fingerprint of the bytes rather than the bytes, because a wallet prompt is not going to show anybody a megabyte of base64 and they would not read it if it did. What it buys is that the picture attached to a signature is the picture that lands in the log.
+
+**One key, one bucket, one line to move it.** `chat/<year>/<random>.<ext>` in R2, and the row keeps the key rather than an address — the bucket can move; the log cannot. Nothing new to configure: the same R2 credentials the catalogue already uses.
+
+**It inherits the permanence rule.** Deleting a message takes its picture down for everybody, the artist still sees it as he still sees the words, and putting the message back puts the picture back, because nothing was ever removed. Inline at a modest height with the hairline every image on this site gets; a click opens it in the lightbox, on the same paper.
+
+**One thing the harness found that no review would have.** A browser can answer the WebP feature test on a single pixel and then never call back on a real image — headless Chrome does exactly that. A composer sitting on "Reading the picture" forever because an encoder never returned is worse than a slightly larger JPEG, so the encode is time-limited and the first one that does not come back settles the format for the rest of that picture. It was found by watching a real browser stall, and the fallback is watched working on that same stall.
+
+**Checks.** `scripts/chat/test-chat.mjs` is 211: a picture into a stand-in bucket and the key on the row, a file lying about its type, a file that is not an image, a photograph still carrying its camera data, one over the cap — and none of them reaching the bucket. Plus the signature covering the bytes, and the delete/restore round trip.
+
+## The reply bug, and the coercion behind it (2026-08-30)
+
+A collector reported two things: every message they sent after replying once appeared to reply to the same person, and clicking a name in that line jumped to that person's first message. One bug.
+
+A message that answers nothing is stored with `reply: null`. The render read `Number(row.reply)`, and `Number(null)` is `0`, which is a perfectly good message number — the first thing anybody ever said in this room. So every plain message written since replies shipped drew an answer line pointing at message zero, naming whoever said it, and the name in that line went to message zero. Nothing was sticky and no state was wrong: the chip was right, sending cleared it, the row held a null. The render was lying about the row. Messages from before replies existed have no `reply` key at all, `Number(undefined)` is `NaN`, and they were always fine — which is why it read as new.
+
+The guard is on the stored value now, before it is ever a number. And the reply line stopped overloading a name: the arrow goes to the message, the name goes to the person, the way every other name on this site does. Escape puts the chip down as well as the cross.

@@ -156,6 +156,23 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const ORIGIN = `http://127.0.0.1:${server.address().port}`;
 process.env.KV_REST_API_URL = ORIGIN;
 process.env.KV_REST_API_TOKEN = 'test';
+/* A stand-in bucket. R2 speaks S3 over HTTPS and the signing is exercised by
+   its own checks; what matters here is that a picture which passes every rule
+   is put somewhere and the key lands on the row, and that one which does not
+   never reaches the bucket at all. */
+process.env.R2_ACCOUNT_ID = 'test';
+process.env.R2_BUCKET = 'test';
+process.env.R2_ACCESS_KEY_ID = 'test';
+process.env.R2_SECRET_ACCESS_KEY = 'test';
+const PUT = [];
+const realFetch = globalThis.fetch;
+globalThis.fetch = async (url, opts) => {
+  if (String(url).includes('r2.cloudflarestorage.com')) {
+    PUT.push({ url: String(url), bytes: (opts && opts.body && opts.body.length) || 0 });
+    return new Response('', { status: 200 });
+  }
+  return realFetch(url, opts);
+};
 
 const { GET, POST } = await import('../../api/chat.js');
 const { chatMessage, chatStore, wearTao, sessionUntil, render } = await import('../../api/_lib/chat.js');
@@ -174,10 +191,18 @@ const get = async (qs = '') => {
   const r = await GET(new Request(`${ORIGIN}/api/chat${qs ? `?${qs}` : ''}`));
   return { status: r.status, body: await r.json() };
 };
+const { imageFingerprint } = await import('../../api/_lib/images.js');
+/* The browser signs a picture as a fingerprint and sends it as bytes, so this
+   does too. Signing the whole payload would be signing a megabyte of base64,
+   which is neither what a wallet shows nor what the server builds. */
+const forSigning = (payload) => (payload.image && payload.image.data
+  ? { ...payload, image: imageFingerprint(Buffer.from(payload.image.data, 'base64')) }
+  : payload);
+
 const post = async (account, payload) => {
   const issued = new Date().toISOString();
   const address = A(account);
-  const signature = await account.signMessage({ message: chatMessage({ ...payload, address, issued }) });
+  const signature = await account.signMessage({ message: chatMessage({ ...forSigning(payload), address, issued }) });
   const r = await POST(new Request(`${ORIGIN}/api/chat`, {
     method: 'POST', headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ ...payload, address, issued, signature }),
@@ -1128,6 +1153,145 @@ head('A name goes where the person is, and nowhere else');
   const sent = between('async function sayIt(b)', 'A mark under something');
   ok(/ROOM\.replyTo = null;/.test(sent) && /const reply = ROOM\.replyTo;/.test(sent),
     'sending reads it once and clears it, so the next message is plain unless asked otherwise');
+}
+
+/* ================= pictures ================= */
+head('A picture in a log that is kept forever');
+{
+  advance(700000);
+  /* A one-pixel JPEG, built by hand, with no metadata in it ... which is what
+     a canvas produces and therefore what the room expects to receive. */
+  const jpeg = Buffer.concat([
+    Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10]), Buffer.from('JFIF\x00'),
+    Buffer.from([0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00]),
+    Buffer.from([0xff, 0xda, 0x00, 0x02, 0x00]), Buffer.from([0x00, 0x00]),
+    Buffer.from([0xff, 0xd9]),
+  ]);
+  const pic = (over = {}) => ({ data: jpeg.toString('base64'), type: 'image/jpeg', w: 1600, h: 1200, ...over });
+
+  const before = PUT.length;
+  const said = await post(visco, { action: 'say', text: 'The light on the road this morning.', image: pic() });
+  ok(said.status === 200 && said.body.ok, 'a message may carry one', said.body.error);
+  ok(PUT.length === before + 1 && /\/chat\/\d{4}\//.test(PUT[PUT.length - 1].url),
+    'and it goes into the bucket under chat/, by year', PUT[PUT.length - 1].url.split('/test/')[1]);
+  const shown = said.body.message.image;
+  ok(shown && /^https:\/\/assets\.mintface\.art\/chat\//.test(shown.url) && shown.w === 1600,
+    'and the message says where it is and what shape it is', JSON.stringify(shown));
+
+  const back = (await get()).body.messages.find((m) => m.n === said.body.message.n);
+  ok(back.image && back.image.url === shown.url, 'which is how a reader with no wallet sees it too');
+
+  /* The row keeps a key, not a URL. The bucket can move; the log cannot. */
+  const row = await chatStore(pipe, chatCfg).get(said.body.message.n);
+  ok(row.image && row.image.key && !row.image.url && /^chat\//.test(row.image.key),
+    'the row keeps a bucket key rather than an address', JSON.stringify(row.image.key));
+}
+
+head('What the room will not take a picture of');
+{
+  advance(700000);
+  const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00,
+    0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0xff, 0xda, 0x00, 0x02, 0x00, 0xff, 0xd9]);
+  const withExif = Buffer.concat([
+    Buffer.from([0xff, 0xd8, 0xff, 0xe1, 0x00, 0x1c]), Buffer.from('Exif\x00\x00'),
+    Buffer.alloc(20), Buffer.from([0xff, 0xda, 0x00, 0x02, 0x00, 0xff, 0xd9]),
+  ]);
+  const before = PUT.length;
+
+  const lying = await post(loud, { action: 'say', text: 'Not what it says.', image: { data: jpeg.toString('base64'), type: 'image/webp' } });
+  ok(lying.status === 400 && /not the kind of image/.test(lying.body.error || ''),
+    'a file that is not the kind of image it claims to be', lying.body.error);
+
+  const notAnImage = await post(loud, { action: 'say', text: 'A zip, allegedly a photo.', image: { data: Buffer.from('PK\x03\x04 and then some more bytes').toString('base64'), type: 'image/jpeg' } });
+  ok(notAnImage.status === 400 && /not a JPEG or a WebP/.test(notAnImage.body.error || ''),
+    'nor something that is not an image at all', notAnImage.body.error);
+
+  /* The one that matters. People post from phones, and a phone writes where it
+     was standing into the file. The page strips it; the room refuses anything
+     that still has it, which turns a promise into a check. */
+  const gps = await post(loud, { action: 'say', text: 'Straight off the camera.', image: { data: withExif.toString('base64'), type: 'image/jpeg' } });
+  ok(gps.status === 400 && /camera data/.test(gps.body.error || ''),
+    'and a photograph that still carries its camera data', gps.body.error);
+
+  const huge = await post(loud, { action: 'say', text: 'Enormous.', image: { data: Buffer.concat([jpeg, Buffer.alloc(1400 * 1024)]).toString('base64'), type: 'image/jpeg' } });
+  ok(huge.status === 400 && /limit/.test(huge.body.error || ''), 'and one over the size the room keeps', huge.body.error);
+
+  const wrong = await post(loud, { action: 'say', text: 'Not really.', image: 'a string' });
+  ok(wrong.status === 400, 'and a picture that is not even a picture-shaped thing');
+
+  ok(PUT.length === before, 'and none of them reached the bucket', `${PUT.length - before} puts`);
+}
+
+head('A picture is signed with the words it came with');
+{
+  advance(700000);
+  const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00,
+    0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0xff, 0xda, 0x00, 0x02, 0x00, 0xff, 0xd9]);
+  const other = Buffer.concat([jpeg.subarray(0, jpeg.length - 2), Buffer.from([0x00, 0xff, 0xd9])]);
+    const issued = new Date().toISOString();
+  const address = A(visco);
+  const signature = await visco.signMessage({
+    message: chatMessage({ action: 'say', text: 'This one.', image: imageFingerprint(jpeg), address, issued }),
+  });
+  const swapped = await POST(new Request(`${ORIGIN}/api/chat`, {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ action: 'say', text: 'This one.', address, issued, signature,
+      image: { data: other.toString('base64'), type: 'image/jpeg' } }),
+  }));
+  ok(swapped.status === 401, 'the picture cannot be changed after signing', String(swapped.status));
+
+  const same = await POST(new Request(`${ORIGIN}/api/chat`, {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ action: 'say', text: 'This one.', address, issued, signature,
+      image: { data: jpeg.toString('base64'), type: 'image/jpeg' } }),
+  }));
+  ok(same.status === 200, 'and the one that was signed goes through', String(same.status));
+  const sentence = chatMessage({ action: 'say', text: 'x', image: imageFingerprint(jpeg), address, issued });
+  ok(/^Picture: [0-9a-f]{16}$/m.test(sentence),
+    'the wallet is shown a fingerprint rather than a megabyte of base64',
+    sentence.split('\n').find((l) => l.startsWith('Picture:')));
+}
+
+head('Taking a message down takes its picture with it');
+{
+  advance(700000);
+  const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00,
+    0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0xff, 0xda, 0x00, 0x02, 0x00, 0xff, 0xd9]);
+  const said = await post(oneCopy, { action: 'say', text: 'Here it is.', image: { data: jpeg.toString('base64'), type: 'image/jpeg' } });
+  const n = said.body.message.n;
+  ok(said.body.message.image, 'a message with a picture in it', said.body.error);
+
+  const down = await post(artist, { action: 'delete', target: String(n) });
+  ok(down.status === 200, 'taken down', down.body.error);
+  const gone = (await get()).body.messages.find((m) => m.n === n);
+  ok(gone.text === null && gone.image === null,
+    'and the picture goes with it, for everybody', JSON.stringify(gone.image));
+  const his = (await get(`viewer=${A(artist)}`)).body.messages.find((m) => m.n === n);
+  ok(his.image && his.image.url, 'the artist still sees it, the way he still sees the words');
+
+  const back = await post(artist, { action: 'restore', target: String(n) });
+  ok(back.status === 200 && back.body.message.image,
+    'and putting the message back puts the picture back, because nothing was ever removed');
+}
+
+head('The page resizes and strips before anything is sent');
+{
+  const page = fs.readFileSync(new URL('../../mintface.js', import.meta.url), 'utf8');
+  const pic = page.slice(page.indexOf('MF.picture = {'), page.indexOf('/* ---------- the nav'));
+  ok(/canvas\.getContext\('2d'\)/.test(pic) && /canvas\.toBlob/.test(pic),
+    'the picture is redrawn onto a canvas and re-encoded off it, which is the strip');
+  ok(/imageOrientation: 'from-image'/.test(pic),
+    'with the rotation applied rather than copied, so a sideways photograph arrives upright');
+  ok(/LONG_EDGE: 2000/.test(pic), 'two thousand on the long edge');
+  ok(/image\/webp/.test(pic) && /image\/jpeg/.test(pic), 'WebP where the browser has it, JPEG where it does not');
+  ok(/crypto\.subtle\.digest\('SHA-256'/.test(pic), 'and it fingerprints what it made, for the sentence');
+
+  const studio = fs.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
+  ok(/data-act="attach"/.test(studio) && /data-act="unattach"/.test(studio),
+    'the composer has a way to add one and a way to take it off again');
+  ok(/dropPicture\(\);/.test(studio.slice(studio.indexOf('async function sayIt'))),
+    'and sending clears it, like the reply chip');
+  ok(/MF\.zoom\.show\(/.test(studio), 'and a picture in the room opens in the lightbox');
 }
 
 server.close();

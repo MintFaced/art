@@ -7,7 +7,7 @@
  *
  *   node scripts/tao/test-nudges.mjs
  */
-import { tally, latest, isOpen, provenanceLine } from '../../api/_lib/nudges.js';
+import { tally, latest, isOpen, provenanceLine, palette, checkHex, lockRule, kindOf, proposeMessage, weighMessage } from '../../api/_lib/nudges.js';
 
 let pass = 0, fail = 0;
 const is = (label, got, want) => {
@@ -67,6 +67,106 @@ is('provenance line', provenanceLine({ total: 214000, collectors: 31, number: 3 
   'Steered by 214,000 TAO across 31 collectors · Nudge #3');
 is('one collector reads singular', provenanceLine({ total: 10, collectors: 1, number: 1 }),
   'Steered by 10 TAO across 1 collector · Nudge #1');
+
+/* ================= candidates, and the lock =================
+   The pilot: choose a colour for the next Strip Painting. The collectors
+   supply the answers as well as the weight, and the studio pre-commits to
+   painting whatever locks ... so the threshold has to be real. */
+const RED = '#C0392B', BLUE = '#2C3E50', GREEN = '#2A6529';
+const prop = (hex, address, at) => ({ nudge: 'p1', hex, address, at });
+const put = (address, hex, amount, at) => ({ nudge: 'p1', address, candidate: hex, amount, at });
+const five = { a: 300000, b: 120000, c: 90000, d: 40000, e: 30000, f: 5, g: 900000 };
+const holds = (x) => five[x] || 0;
+
+{
+  const p = palette(
+    [put('a', RED, 300000, '1'), put('b', RED, 120000, '2'), put('c', RED, 90000, '3'),
+      put('d', RED, 40000, '4'), put('e', RED, 30000, '5'), put('f', BLUE, 5, '6')],
+    [prop(RED, 'a', '1'), prop(BLUE, 'b', '2'), prop(GREEN, 'c', '3')], holds, null);
+  is('the board is sorted by weight', p.candidates.map((c) => c.hex), [RED, BLUE, GREEN]);
+  is('a colour nobody weighed on is still on the board', p.candidates[2].total, 0);
+  is('the leader carries its collectors', [p.leader.hex, p.leader.voters], [RED, 5]);
+  is('five collectors and 580,000 TAO locks it', p.locked && p.locked.hex, RED);
+  is('and there is nothing to explain', p.why, null);
+  is('the total is every colour together', p.total, 580005);
+  is('and the collectors are counted once each', p.collectors, 6);
+}
+
+{
+  /* Enough TAO, not enough people. One wallet cannot choose the colour the
+     studio has undertaken to paint. */
+  const p = palette([put('g', RED, 900000, '1')], [prop(RED, 'g', '1')], holds, null);
+  is('one wallet with nine hundred thousand does not lock it', p.locked, null);
+  is('and is told which half it is short of', /5 collectors/.test(p.why), true);
+}
+{
+  /* Enough people, not enough TAO. A crowd holding nothing cannot either. */
+  const light = { a: 10, b: 10, c: 10, d: 10, e: 10 };
+  const p = palette(
+    ['a', 'b', 'c', 'd', 'e'].map((x, i) => put(x, RED, 10, String(i))),
+    [prop(RED, 'a', '1')], (x) => light[x] || 0, null);
+  is('five collectors holding fifty TAO between them do not lock it', p.locked, null);
+  is('and are told which half', /500,000 TAO/.test(p.why), true);
+}
+{
+  const p = palette([], [], holds, null);
+  is('nothing proposed locks nothing', p.locked, null);
+  is('and says so plainly', p.why, 'Nobody proposed a colour.');
+}
+{
+  /* The clamp is the same clamp. Weigh six hundred thousand, sell down to
+     thirty thousand, and thirty thousand is what the colour carries. */
+  const p = palette(
+    ['a', 'b', 'c', 'd'].map((x, i) => put(x, RED, 200000, String(i))).concat([put('e', RED, 600000, '5')]),
+    [prop(RED, 'a', '1')], holds, null);
+  is('five weighings on one colour', p.candidates[0].voters, 5);
+  is('each clamped to what its wallet still holds', p.candidates[0].total, 200000 + 120000 + 90000 + 40000 + 30000);
+  is('and the ones that shrank say so', p.candidates[0].ledger.filter((r) => r.clamped).length, 4);
+  /* Which is the whole point of the clamp meeting the threshold: six hundred
+     thousand was said, four hundred and eighty thousand is held, and the
+     colour does not lock. What was promised is a colour the collectors still
+     stood behind at close, not one they stood behind in May. */
+  is('and the colour does not lock on TAO nobody holds any more', p.locked, null);
+}
+{
+  /* A colour is a colour, not a row somebody owns: the same red proposed by
+     two people is one swatch, and the first to say it keeps the credit. */
+  const p = palette([], [prop(RED, 'a', '2026-01-02'), prop('#c0392b', 'b', '2026-01-01')], holds, null);
+  is('the same colour twice is one swatch', p.candidates.length, 1);
+  is('and the credit goes to whoever said it first', p.candidates[0].proposed_by, 'b');
+  is('however it was typed', p.candidates[0].hex, RED);
+}
+{
+  const rule = lockRule({ lock: { voters: 2, tao: 100 } });
+  is('a nudge may set its own threshold', [rule.voters, rule.tao], [2, 100]);
+  is('and the pilot is the default', [lockRule(null).voters, lockRule(null).tao], [5, 500000]);
+}
+{
+  is('a colour is six hex digits', checkHex('c0392b').hex, RED);
+  is('however it is typed', checkHex('#C0392B').hex, RED);
+  is('three digits expand', checkHex('#abc').hex, '#AABBCC');
+  is('and anything else is refused', Boolean(checkHex('teal').error), true);
+  is('including one digit too many', Boolean(checkHex('#c0392b1').error), true);
+}
+{
+  /* A signature names the colour it is for, so it cannot be spent on another. */
+  const one = weighMessage({ nudge: 'q', candidate: RED, amount: 10, address: '0xa', issued: 'z' });
+  const two = weighMessage({ nudge: 'q', candidate: BLUE, amount: 10, address: '0xa', issued: 'z' });
+  is('a weighing names its colour', /^Colour: #C0392B$/m.test(one), true);
+  is('and two colours are two sentences', one === two, false);
+  is('a binary nudge still names a side', /^Side: YES$/m.test(weighMessage({ nudge: 'q', side: 'yes', amount: 1, address: '0xa', issued: 'z' })), true);
+  is('and proposing is its own sentence', /Proposing puts this colour on the board/.test(proposeMessage({ nudge: 'q', hex: RED, address: '0xa', issued: 'z' })), true);
+}
+{
+  is('a nudge with candidates says so', kindOf({ kind: 'candidates' }), 'candidates');
+  is('and anything else is a yes or a no', kindOf({}), 'binary');
+  is('a locked colour names itself in the provenance line',
+    provenanceLine({ total: 512340, collectors: 7, number: 1, locked: { hex: RED } }),
+    'Colour chosen by 512,340 TAO across 7 collectors · #C0392B · Nudge #1');
+  is('and a nudge that only steered says only that',
+    provenanceLine({ total: 214000, collectors: 31, number: 3 }),
+    'Steered by 214,000 TAO across 31 collectors · Nudge #3');
+}
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

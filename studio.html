@@ -64,6 +64,46 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .said{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);margin:12px 0 0}
 .nudges .said.bad{color:#8b3a2a;text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
+/* ---------- the board ----------
+   A palette forming in public. The swatch is the colour itself at the size a
+   colour needs to be judged at, and everything beside it is the register's own
+   voice: what is behind it, in mono, and who put it there.
+   The chosen one is marked by the ink rule the whole site marks things with,
+   never by a second colour ... the swatches are the only colour on this page
+   and adding another would be arguing with them. */
+.nudges .board{margin:22px 0 0;max-width:560px;display:flex;flex-direction:column;gap:1px}
+.nudges .swatch{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.nudges .swatch:last-child{border-bottom:0}
+.nudges .swatch .chip{width:46px;height:46px;flex:none;border:1px solid var(--rule);display:block}
+.nudges .swatch .on{display:flex;flex-direction:column;gap:3px;min-width:0}
+.nudges .swatch .hex{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--ink)}
+.nudges .swatch .weight{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+.nudges .swatch .weight b{font-weight:400;color:var(--ink)}
+.nudges .swatch .by{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--faint)}
+.nudges .swatch .by a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.nudges .swatch .by a:hover{border-color:var(--ink);color:var(--muted)}
+.nudges .swatch .pick{margin-left:auto;background:none;border:1px solid var(--rule);cursor:pointer;
+  padding:7px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);flex:none}
+.nudges .swatch .pick:hover{border-color:var(--ink);color:var(--ink)}
+.nudges .swatch .pick[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.nudges .swatch.mine .chip{box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--rule)}
+.nudges .swatch.chosen{margin-left:-14px;padding-left:12px;border-left:2px solid var(--ink)}
+.nudges .swatch.chosen .hex{text-transform:uppercase;letter-spacing:.14em}
+/* the threshold, said before it is met as well as after */
+.nudges .thresh{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
+  color:var(--muted);margin:16px 0 0;max-width:44em;line-height:1.7}
+/* what the studio undertook, which is what makes this one more than a steer */
+.nudges .promise{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);border-left:2px solid var(--ink);padding-left:14px;margin:16px 0 0;line-height:1.8}
+.nudges .propose{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0 0}
+.nudges .propose input[type="color"]{width:46px;height:36px;padding:0;border:1px solid var(--rule);
+  background:none;cursor:pointer}
+.nudges .weigh.ghosted{background:none;color:var(--muted);border:1px solid var(--rule)}
+.nudges .weigh.ghosted:hover{border-color:var(--ink);color:var(--ink)}
+
 .nudges .ledger{margin:22px 0 0;max-width:640px}
 .nudges .ledger table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .nudges .ledger th{text-align:left;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;
@@ -136,6 +176,26 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .m p a.lnk:hover{border-color:var(--ink)}
 .m p strong{font-weight:600}
 .m p em{font-style:italic}
+
+/* A picture in the room.
+   Modest on purpose: this is a place for words with the occasional picture in
+   it, so a photograph takes a few lines of height and opens properly when
+   somebody actually wants to look at it. The hairline is the frame every other
+   image on this site gets. */
+.m .shot{display:block;margin:11px 0 0;max-width:100%;max-height:320px;width:auto;height:auto;
+  border:1px solid var(--rule);cursor:zoom-in;background:#f2efe9}
+.m .shot:focus-visible{outline:none;border-color:var(--ink)}
+
+/* What is about to go up with a message. Shown at the size it will be sent,
+   so nothing about what arrives is a surprise ... including the line saying
+   the camera data has already gone. */
+.attached{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.attached img{width:56px;height:56px;object-fit:cover;border:1px solid var(--rule);flex:none;background:#f2efe9}
+.attached .what{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);min-width:0;overflow:hidden;text-overflow:ellipsis}
+.attached button{background:none;border:0;padding:0 2px;cursor:pointer;color:var(--faint);
+  font-family:var(--font-mono);font-size:13px;line-height:1;margin-left:auto}
+.attached button:hover{color:var(--ink)}
 
 /* What a link turns out to be.
    The register's own voice, and the same block the marks on a work page are
@@ -327,6 +387,10 @@ const ROOM = {
   /* Who you are answering, as a message number, and which message has its
      palette open. Both are about the page rather than about the log. */
   replyTo: null, palette: null,
+  /* One picture per message, held here until it is said. `shot` is what the
+     browser made of the file ... resized, re-encoded, stripped ... and it is
+     cleared by sending exactly as the reply chip is. */
+  shot: null, shooting: false,
   /* Studio's marks, and where they are up to. The poll carries the number; the
      page goes and asks what the marks actually are only when it has moved,
      so a room where nobody has reacted since you loaded costs one digit. */
@@ -418,6 +482,7 @@ async function load({ bottom = false } = {}) {
   ROOM.me = d.me || null;
   ROOM.max = d.max_chars || 500;
   ROOM.maxTags = d.max_tags || 5;
+  ROOM.maxImageKb = d.max_image_kb || 1200;
   ROOM.days = d.session_days || 7;
   ROOM.emoji = d.emoji || ROOM.emoji;
   ROOM.rxv = d.rx || 0;
@@ -626,6 +691,15 @@ function card(m) {
      here rather than inserted later so a redraw keeps whatever has arrived. */
   const links = m.deleted ? [] : (m.links || []);
   const cards = links.length ? `<div class="cards" id="cards-${m.n}">${cardsFor(links)}</div>` : '';
+  /* Modest, and clickable. The room is for words; a picture in it is a thing
+     somebody is showing you, not the page's subject, so it takes a few lines
+     of height and opens properly when it is actually being looked at. */
+  const shot = m.image
+    ? `<img class="shot" src="${e(m.image.url)}" alt="" loading="lazy" decoding="async"
+        ${m.image.w && m.image.h ? `width="${m.image.w}" height="${m.image.h}"` : ''}
+        data-act="shot" data-src="${e(m.image.url)}" tabindex="0" role="button"
+        aria-label="Open this picture">`
+    : '';
   return `<article class="m${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}${ROOM.palette === m.n ? ' open' : ''}" id="m-${m.n}">
     ${answering}
     <div class="who">
@@ -635,6 +709,7 @@ function card(m) {
       <span class="at">${e(stamp(m.at))}</span>
     </div>
     ${words(m)}
+    ${shot}
     ${cards}
     ${acts}
     ${mod}
@@ -746,6 +821,7 @@ function composer() {
   const len = ROOM.draft.length;
   return `<div class="box">
     ${replyingTo()}
+    ${attached()}
     <div class="field">
       <textarea id="text" placeholder="Say something. Type @ to name somebody." spellcheck="true"
         aria-autocomplete="list" aria-expanded="${ROOM.tag.open}" aria-controls="atList"
@@ -757,7 +833,10 @@ function composer() {
       <span class="count${len > ROOM.max ? ' over' : ''}" id="count">${len}/${ROOM.max}</span>
     </div>
     <div class="row" style="justify-content:space-between">
-      <button class="go" data-act="signout" style="border-color:transparent">Sign out</button>
+      <span style="display:flex;gap:16px;align-items:center">
+        <button class="go" data-act="signout" style="border-color:transparent">Sign out</button>
+        <button class="go" data-act="attach" style="border-color:transparent"${ROOM.shooting || ROOM.shot ? ' disabled' : ''}>${ROOM.shooting ? 'Reading the picture' : 'Add a picture'}</button>
+      </span>
       <button class="go" id="go" data-act="say"${ROOM.busy || !(len && len <= ROOM.max) ? ' disabled' : ''}>${ROOM.busy ? 'Sending' : 'Say it'}</button>
     </div>
   </div>`;
@@ -765,6 +844,20 @@ function composer() {
 
 /* Who you are answering, above the box you are answering them in.
    The number is what is sent; the name is only how the page says it back. */
+/* What is going up with this message, and the way to take it off again.
+   One picture, because a room is words with the occasional picture in it. It
+   is shown at the size it will be sent, so nobody is surprised by what
+   arrives, and it is cleared by sending like the reply chip. */
+function attached() {
+  if (!ROOM.shot) return '';
+  const s = ROOM.shot;
+  return `<div class="attached">
+    <img src="${e(s.preview)}" alt="">
+    <span class="what">${s.w}&times;${s.h} &middot; ${Math.round(s.blob.size / 1024)}KB &middot; camera data stripped</span>
+    <button type="button" data-act="unattach" title="Send without it" aria-label="Take the picture off">&times;</button>
+  </div>`;
+}
+
 /* The chip is not a description of the state, it is the state: if it is not on
    the screen, the message is not a reply. Both are drawn from the one value
    that is also the one sent, so there is nothing for them to disagree about. */
@@ -1071,10 +1164,15 @@ async function signIn() {
 }
 
 async function send(payload) {
+  /* The picture is signed as a fingerprint and sent as bytes, so the two parts
+     of the payload part company here rather than anywhere the caller has to
+     think about. */
+  const { fingerprint, ...body } = payload;
+  const payloadForSigning = { ...body, image: fingerprint || null };
   const s = mySession();
   if (s) {
     try {
-      return await post({ ...payload });
+      return await post({ ...body });
     } catch (err) {
       if (!err.expired) throw err;
       MF.session.forget();                         // the week is up; ask for another
@@ -1084,8 +1182,8 @@ async function send(payload) {
     }
   }
   const issued = new Date().toISOString();
-  const signature = await askWallet(sentence({ ...payload, address: ROOM.wallet, issued }));
-  return post({ ...payload, address: ROOM.wallet, issued, signature });
+  const signature = await askWallet(sentence({ ...payloadForSigning, address: ROOM.wallet, issued }));
+  return post({ ...body, address: ROOM.wallet, issued, signature });
 }
 
 let tagTimer = null;
@@ -1122,6 +1220,13 @@ document.addEventListener('input', (ev) => {
  * reach back for it. So the one keystroke that follows may undo it, and any
  * other keystroke ends the offer. */
 document.addEventListener('keydown', (ev) => {
+  /* It announces itself as a button to a screen reader, so it opens on the
+     keys a button opens on. */
+  if ((ev.key === 'Enter' || ev.key === ' ') && ev.target.matches && ev.target.matches('img[data-act="shot"]')) {
+    ev.preventDefault();
+    MF.zoom.show(ev.target.dataset.src, 'A picture from Studio');
+    return;
+  }
   if (ev.key === 'Escape' && ROOM.palette != null && !ROOM.tag.open) {
     const was = ROOM.palette;
     ROOM.palette = null;
@@ -1237,18 +1342,74 @@ async function run(b, fn, { redraw = true } = {}) {
   }
 }
 
+/* Choosing a picture.
+ *
+ * The file never goes anywhere as a file. It is decoded, drawn down to two
+ * thousand on the long edge and re-encoded off a canvas, which is what strips
+ * the camera data ... see MF.picture. What is held here is the result, and the
+ * composer shows it at the size it will actually be sent.
+ */
+let picker = null;
+function askForPicture() {
+  if (!picker) {
+    picker = document.createElement('input');
+    picker.type = 'file';
+    picker.accept = 'image/*';
+    picker.style.display = 'none';
+    picker.addEventListener('change', () => {
+      const file = picker.files && picker.files[0];
+      picker.value = '';
+      if (file) void takePicture(file);
+    });
+    document.body.appendChild(picker);
+  }
+  picker.click();
+}
+
+async function takePicture(file) {
+  ROOM.shooting = true;
+  ROOM.focus = true;
+  draw();
+  try {
+    const ready = await MF.picture.ready(file, { maxBytes: (ROOM.maxImageKb || 1200) * 1024 });
+    ROOM.shot = { ...ready, preview: URL.createObjectURL(ready.blob) };
+    status(null);
+  } catch (err) {
+    status(String((err && err.message) || err), true);
+  } finally {
+    ROOM.shooting = false;
+    ROOM.focus = true;
+    draw();
+  }
+}
+
+function dropPicture() {
+  if (ROOM.shot && ROOM.shot.preview) URL.revokeObjectURL(ROOM.shot.preview);
+  ROOM.shot = null;
+}
+
 /* Saying it. One path, whichever way it was asked for: the button under the
    pointer, or return on a keyboard. */
 async function sayIt(b) {
   const box = document.getElementById('text');
   const text = box ? box.value : '';
+  /* Words are still required. A picture is something a message carries, not a
+     message ... a log of bare photographs is a different room. */
   if (!text.trim() || text.length > ROOM.max) return;
   const reply = ROOM.replyTo;
+  const shot = ROOM.shot;
   return run(b, async () => {
-    await send({ action: 'say', text, reply: reply == null ? null : String(reply) });
+    await send({
+      action: 'say', text,
+      reply: reply == null ? null : String(reply),
+      image: shot ? { data: shot.data, type: shot.type, w: shot.w, h: shot.h } : null,
+      /* What goes in the sentence is the fingerprint, never the bytes. */
+      fingerprint: shot ? await MF.picture.fingerprint(shot.blob) : null,
+    });
     ROOM.draft = '';
     ROOM.caret = null;
     ROOM.replyTo = null;
+    dropPicture();
     shutTag();
     ROOM.focus = true;
     await load();
@@ -1281,7 +1442,10 @@ async function mark(b, n, emoji) {
 }
 
 document.addEventListener('click', async (ev) => {
-  const b = ev.target.closest('button[data-act]');
+  /* A picture is an <img> rather than a button ... it is a picture, and
+     wrapping it in a control to make one delegated selector happy would put a
+     button in the log. So the selector takes both. */
+  const b = ev.target.closest('button[data-act], img[data-act]');
   if (!b || ROOM.busy) return;
   const act = b.dataset.act;
 
@@ -1316,6 +1480,9 @@ document.addEventListener('click', async (ev) => {
     return;
   }
   if (act === 'unreply') { ROOM.replyTo = null; ROOM.focus = true; draw(); return; }
+  if (act === 'attach') { askForPicture(); return; }
+  if (act === 'shot') { MF.zoom.show(b.dataset.src, 'A picture from Studio'); return; }
+  if (act === 'unattach') { dropPicture(); ROOM.focus = true; draw(); return; }
 
   if (act === 'signout') {
     await MF.session.close();
@@ -1427,6 +1594,88 @@ function ledger(x) {
    of its own, which on a merged surface would be two connect buttons on one
    screen asking the same question ... so it takes the session, and where there
    is none it says the one thing that is true: sign in, up there. */
+/* ---------- a nudge with candidates ----------
+ *
+ * The collectors supply the answers as well as the weight. A colour goes on
+ * the board with nothing behind it and grows or does not, which is what the
+ * palette forming in public actually looks like ... including the colours
+ * nobody backed.
+ *
+ * Sorted by weight, so the board reads as it stands rather than as it was
+ * proposed. And the threshold is on the card the whole time, because a nudge
+ * that can decline to decide has to say so before it does.
+ */
+function swatches(x) {
+  const rule = x.rule || { voters: 5, tao: 500000 };
+  const locked = x.locked || null;
+  const list = (x.candidates || []).map((c) => {
+    const chosen = locked && locked.hex === c.hex;
+    const by = c.proposed_name || (c.proposed_by ? short(c.proposed_by) : null);
+    const who = by && c.proposed_url ? `<a href="${e(c.proposed_url)}">${e(by)}</a>` : (by ? e(by) : null);
+    const mine = x.mine && x.mine.candidate === c.hex;
+    return `<div class="swatch${chosen ? ' chosen' : ''}${mine ? ' mine' : ''}">
+      <span class="chip" style="background:${e(c.hex)}"></span>
+      <span class="on">
+        <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
+        <span class="weight"><b>${num(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
+        ${who ? `<span class="by">proposed by ${who}</span>` : ''}
+      </span>
+      ${x.open && mayWeigh() ? `<button type="button" class="pick" data-pick="${e(x.id)}" data-hex="${e(c.hex)}"
+        aria-pressed="${NUDGE.picked[x.id] === c.hex}">${mine ? 'Adjust' : 'Weigh'}</button>` : ''}
+    </div>`;
+  }).join('');
+  /* The threshold is on the card the whole time an answer is still possible,
+     because a nudge that can decline to decide has to say so before it does.
+     Once it is closed the banked line below says what happened, and saying it
+     twice two lines apart would be the card talking over itself. */
+  const thresh = !x.open
+    ? (locked ? '' : `<p class="thresh">${e(x.why || 'No colour reached the threshold.')}</p>`)
+    : `<p class="thresh">A colour locks at ${rule.voters} collectors and ${num(rule.tao)} TAO on it, both, at close.</p>`;
+  return `<div class="board">${list || '<p class="none">No colour has been proposed yet.</p>'}</div>${thresh}`;
+}
+
+/* Proposing is its own act with its own signature, and it is not a weighing.
+   One colour per wallet, and final: other people weigh on it, and a proposal
+   that could be changed would move their TAO onto a colour they never saw. */
+function proposer(x) {
+  if (!x.open || !mayWeigh()) return '';
+  if (x.proposed) return '<p class="said">You have put a colour on the board. Weigh TAO behind any of them.</p>';
+  return `<div class="propose">
+    <input type="color" id="hex-${e(x.id)}" value="#C0392B" aria-label="A colour to propose">
+    <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Propose this colour</button>
+    <span class="said">One colour per wallet, and it stays on the board.</span>
+  </div>`;
+}
+
+const mayWeigh = () => Boolean(MF.session.current());
+
+function candidateCard(x) {
+  const mine = x.mine;
+  return `<div class="nudge" id="nudge-${e(x.id)}">
+    <p class="q">${e(x.question)}</p>
+    <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}</div>
+    ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
+    ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
+    ${swatches(x)}
+    ${x.open ? `<div class="act">
+      ${mayWeigh()
+        ? `<input class="amt" id="amt-${e(x.id)}" type="text" inputmode="numeric" placeholder="TAO to weigh"
+             value="${mine ? mine.amount : ''}" aria-label="TAO to weigh">
+           <button class="weigh" data-weigh="${e(x.id)}">${mine ? 'Adjust' : 'Weigh'}</button>`
+        : ''}
+    </div>` : ''}
+    ${!x.open ? '' : (mayWeigh()
+      ? `<p class="said">Your TAO ${num(NUDGE.tao)}${mine && mine.candidate ? ` &middot; you weighed ${num(mine.amount)} on ${e(mine.candidate)}` : ''}</p>`
+      : '<p class="said">Sign in to propose or weigh. The same signature that opens the room opens this.</p>')}
+    ${proposer(x)}
+    <p class="said" id="say-${e(x.id)}" hidden></p>
+    ${x.open ? '' : `<p class="banked">${x.locked
+      ? `Locked &middot; ${e(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
+      : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
+    ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
+  </div>`;
+}
+
 function openCard(x) {
   const mine = x.mine;
   const pick = NUDGE.picked[x.id] || (mine && mine.side) || null;
@@ -1468,13 +1717,15 @@ function bankedCard(x) {
 
 const openNudges = () => ((NUDGE.state && NUDGE.state.nudges) || []).filter((x) => x.open);
 
+const cardFor = (x, closed) => (x.kind === 'candidates' ? candidateCard(x) : (closed ? bankedCard(x) : openCard(x)));
+
 function drawNudges() {
   const all = (NUDGE.state && NUDGE.state.nudges) || [];
   const open = all.filter((x) => x.open);
   const done = all.filter((x) => !x.open);
-  document.getElementById('open').innerHTML = open.map(openCard).join('');
+  document.getElementById('open').innerHTML = open.map((x) => cardFor(x, false)).join('');
   document.getElementById('banked').innerHTML = done.length
-    ? `<h2 class="sec">Banked</h2>${done.map(bankedCard).join('')}`
+    ? `<h2 class="sec">Banked</h2>${done.map((x) => cardFor(x, true)).join('')}`
     : (NUDGE.state ? '<h2 class="sec">Nudges</h2><p class="none">The studio has not asked anything yet.</p>' : '');
   /* The room draws the pointer that says a question is waiting, and only the
      room knows when its own composer has been rebuilt. */
@@ -1482,6 +1733,17 @@ function drawNudges() {
 }
 
 document.addEventListener('click', (ev) => {
+  const pick = ev.target.closest('.pick[data-pick]');
+  if (pick) {
+    NUDGE.picked[pick.dataset.pick] = pick.dataset.hex;
+    document.querySelectorAll(`.pick[data-pick="${pick.dataset.pick}"]`)
+      .forEach((x) => x.setAttribute('aria-pressed', String(x === pick)));
+    const box = document.getElementById(`amt-${pick.dataset.pick}`);
+    if (box) box.focus();
+    return;
+  }
+  const prop = ev.target.closest('[data-propose]');
+  if (prop) { void propose(prop.dataset.propose); return; }
   const side = ev.target.closest('.side[data-nudge]');
   if (side) {
     NUDGE.picked[side.dataset.nudge] = side.dataset.side;
@@ -1508,13 +1770,56 @@ function nudgeSay(id, text, bad) {
    with a number in it, and the number is what is signed. A month-long
    permission to put any amount of somebody's TAO behind anything is not a
    trade this page is willing to make on their behalf. */
+/* Putting a colour on the board. Its own signature, naming the colour, so a
+   proposal cannot be replayed as a different one. */
+async function propose(id) {
+  const s = MF.session.current();
+  if (!s) { nudgeSay(id, 'Sign in first ... the button is in the room below.', true); return; }
+  const x = openNudges().find((y) => y.id === id);
+  if (!x) return;
+  const input = document.getElementById(`hex-${id}`);
+  const hex = String((input || {}).value || '').toUpperCase();
+  if (!/^#[0-9A-F]{6}$/.test(hex)) { nudgeSay(id, 'Pick a colour first.', true); return; }
+
+  const issued = new Date().toISOString();
+  const message = [
+    'MintFace Artist Virtual Studio', '',
+    `Nudge: ${x.question}`, `Colour: ${hex}`,
+    `Wallet: ${s.address}`, `Issued: ${issued}`, '',
+    'Proposing puts this colour on the board for others to weigh.',
+    'It moves nothing and spends nothing.',
+  ].join('\n');
+
+  let signature;
+  try {
+    signature = await MF.sign(message, s.address, (state, why) => {
+      if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
+      if (state === 'slow') nudgeSay(id, 'Still waiting on the wallet.');
+      if (state === 'failed') nudgeSay(id, why, true);
+    });
+  } catch (err) { return; }
+
+  nudgeSay(id, 'Putting it on the board ...');
+  const r = await fetch('/api/nudge', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ action: 'propose', nudge: id, address: s.address, hex, issued, signature }),
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true); return; }
+  await loadNudges();
+  nudgeSay(id, `${hex} is on the board. Weigh TAO behind it, or leave it to others.`);
+}
+
 async function weigh(id) {
   const s = MF.session.current();
   if (!s) { nudgeSay(id, 'Sign in first ... the button is in the room below.', true); return; }
   const x = openNudges().find((y) => y.id === id);
   if (!x) return;
-  const side = NUDGE.picked[id] || (x.mine && x.mine.side);
-  if (!side) { nudgeSay(id, 'Pick a yes or a no first.', true); return; }
+  const colours = x.kind === 'candidates';
+  const candidate = colours ? (NUDGE.picked[id] || (x.mine && x.mine.candidate)) : null;
+  const side = colours ? null : (NUDGE.picked[id] || (x.mine && x.mine.side));
+  if (colours && !candidate) { nudgeSay(id, 'Pick a colour on the board first.', true); return; }
+  if (!colours && !side) { nudgeSay(id, 'Pick a yes or a no first.', true); return; }
   const box = document.getElementById(`amt-${id}`);
   const amount = Math.floor(Number(String((box || {}).value || '').replace(/[^0-9]/g, '')));
   if (!amount) { nudgeSay(id, 'How much of your TAO do you want behind it?', true); return; }
@@ -1523,7 +1828,9 @@ async function weigh(id) {
   const issued = new Date().toISOString();
   const message = [
     'MintFace Artist Virtual Studio', '',
-    `Nudge: ${x.question}`, `Side: ${side.toUpperCase()}`, `Weight: ${amount} TAO`,
+    `Nudge: ${x.question}`,
+    colours ? `Colour: ${String(candidate).toUpperCase()}` : `Side: ${String(side).toUpperCase()}`,
+    `Weight: ${amount} TAO`,
     `Wallet: ${s.address}`, `Issued: ${issued}`, '',
     'A nudge steers. It never commands.',
     'Weighing does not move or spend any TAO.',
@@ -1541,7 +1848,7 @@ async function weigh(id) {
   nudgeSay(id, 'Recording ...');
   const r = await fetch('/api/nudge', {
     method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ nudge: id, address: s.address, side, amount, issued, signature }),
+    body: JSON.stringify({ nudge: id, address: s.address, side, candidate, amount, issued, signature }),
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true); return; }

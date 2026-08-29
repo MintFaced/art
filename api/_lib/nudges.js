@@ -15,14 +15,144 @@
 
 export const SIDES = ['yes', 'no'];
 
-/** What a signer is asked to sign. Readable, and specific enough that a
- *  signature for one nudge cannot be replayed on another. */
-export function weighMessage({ nudge, side, amount, address, issued }) {
+/* ---------------------------------------------------------- candidates
+ *
+ * A nudge can also be a question with no fixed answers: the collectors supply
+ * those too. The pilot is a colour ... "choose a colour for the next Strip
+ * Painting" ... and it is the shape any nudge takes when the studio wants the
+ * options proposed rather than offered.
+ *
+ * A CANDIDATE IS A COLOUR. Not a row somebody owns: the hex is the identity,
+ * so two collectors proposing the same red land on the same swatch rather than
+ * splitting it, and the proposals list is a record of who said it first rather
+ * than a set of things to reconcile.
+ *
+ * And it can decline to decide. A colour locks only if the leader carries
+ * enough collectors and enough TAO, both, at close. A nudge that steered
+ * without deciding is a real outcome and the card says so ... which is the
+ * difference between a threshold and a formality.
+ */
+export const CANDIDATES = 'candidates';
+export const kindOf = (n) => (n && n.kind === CANDIDATES ? CANDIDATES : 'binary');
+
+/** The lock a candidate nudge is held to, with the pilot's numbers as default. */
+export const lockRule = (n) => ({
+  voters: Math.max(1, Math.floor(Number((n && n.lock && n.lock.voters) ?? 5))),
+  tao: Math.max(0, Math.floor(Number((n && n.lock && n.lock.tao) ?? 500000))),
+});
+
+/** A colour, as the register will keep it: #RRGGBB, upper case, or nothing. */
+export function checkHex(raw) {
+  const t = String(raw == null ? '' : raw).trim();
+  const m = /^#?([0-9a-fA-F]{6})$/.exec(t) || /^#?([0-9a-fA-F]{3})$/.exec(t);
+  if (!m) return { error: 'a colour is six hex digits, like #C0392B' };
+  const six = m[1].length === 3 ? m[1].split('').map((c) => c + c).join('') : m[1];
+  return { hex: `#${six.toUpperCase()}` };
+}
+
+/** What a wallet signs to put a colour on the board. */
+export function proposeMessage({ nudge, hex, address, issued }) {
   return [
     'MintFace Artist Virtual Studio',
     '',
     `Nudge: ${nudge}`,
-    `Side: ${side.toUpperCase()}`,
+    `Colour: ${hex}`,
+    `Wallet: ${address}`,
+    `Issued: ${issued}`,
+    '',
+    'Proposing puts this colour on the board for others to weigh.',
+    'It moves nothing and spends nothing.',
+  ].join('\n');
+}
+
+/**
+ * The board: every colour proposed, with what is behind it.
+ *
+ * The clamp is the same clamp ... a weighing counts for no more than the
+ * collector's TAO now, or at close once closed. A colour nobody has weighed on
+ * is still on the board with nothing behind it, because the palette forming in
+ * public is the point and an empty swatch is part of that picture.
+ */
+export function palette(weighings, proposals, taoOf, n = null) {
+  const by = new Map();
+  const put = (hex) => {
+    const key = String(hex).toUpperCase();
+    if (!by.has(key)) by.set(key, { hex: key, total: 0, voters: 0, ledger: [], proposed_by: null, proposed_at: null, proposed_name: null });
+    return by.get(key);
+  };
+
+  for (const p of proposals || []) {
+    const c = put(p.hex);
+    /* First said wins the credit, and nothing after it changes that. */
+    if (!c.proposed_at || String(p.at) < String(c.proposed_at)) {
+      c.proposed_at = p.at || null;
+      c.proposed_by = p.address || null;
+      c.proposed_name = p.name || null;
+    }
+  }
+
+  for (const w of weighings || []) {
+    if (!w.candidate) continue;
+    const c = put(w.candidate);
+    const held = Math.max(0, Math.floor(taoOf(w.address) || 0));
+    const weight = Math.min(Math.floor(w.amount) || 0, held);
+    c.ledger.push({ ...w, weight, clamped: weight < w.amount });
+    if (weight <= 0) continue;
+    c.total += weight;
+    c.voters += 1;
+  }
+
+  const candidates = [...by.values()];
+  const total = candidates.reduce((a, c) => a + c.total, 0);
+  const collectors = new Set();
+  for (const c of candidates) for (const r of c.ledger) if (r.weight > 0) collectors.add(String(r.address).toLowerCase());
+  for (const c of candidates) {
+    c.share = total ? c.total / total : 0;
+    c.ledger.sort((a, b) => (b.weight - a.weight) || String(b.at || '').localeCompare(String(a.at || '')));
+  }
+  /* Sorted by weight, so the palette reads as it stands. Ties fall back to
+     whichever was proposed first, which is the only tiebreak that is not
+     arbitrary and does not move under anybody. */
+  candidates.sort((a, b) => (b.total - a.total)
+    || (b.voters - a.voters)
+    || String(a.proposed_at || '').localeCompare(String(b.proposed_at || '')));
+
+  const rule = lockRule(n);
+  const leader = candidates[0] || null;
+  /* Enough people AND enough weight, on the leader, at close. Either alone is
+     a way to be decided by one wallet or by a crowd holding nothing. */
+  const holds = Boolean(leader && leader.voters >= rule.voters && leader.total >= rule.tao);
+  return {
+    kind: CANDIDATES,
+    candidates,
+    total,
+    collectors: collectors.size,
+    rule,
+    leader: leader ? { hex: leader.hex, total: leader.total, voters: leader.voters } : null,
+    locked: holds ? { hex: leader.hex, total: leader.total, voters: leader.voters } : null,
+    /* Said in the same breath as the numbers, so a card never has to work out
+       why nothing locked. */
+    why: holds ? null : (!leader
+      ? 'Nobody proposed a colour.'
+      : leader.voters < rule.voters && leader.total < rule.tao
+        ? `The leading colour needs ${rule.voters} collectors and ${rule.tao.toLocaleString('en-NZ')} TAO. It has ${leader.voters} and ${Math.round(leader.total).toLocaleString('en-NZ')}.`
+        : leader.voters < rule.voters
+          ? `The leading colour has the TAO and needs ${rule.voters} collectors. It has ${leader.voters}.`
+          : `The leading colour has the collectors and needs ${rule.tao.toLocaleString('en-NZ')} TAO. It has ${Math.round(leader.total).toLocaleString('en-NZ')}.`),
+  };
+}
+
+/** What a signer is asked to sign. Readable, and specific enough that a
+ *  signature for one nudge cannot be replayed on another. */
+export function weighMessage({ nudge, side, candidate, amount, address, issued }) {
+  return [
+    'MintFace Artist Virtual Studio',
+    '',
+    `Nudge: ${nudge}`,
+    /* A colour where the nudge has candidates, a side where it does not. One
+       line either way, and it names the thing the TAO is going behind, so a
+       signature for one colour cannot be spent on another. */
+    ...(candidate ? [`Colour: ${String(candidate).toUpperCase()}`] : [`Side: ${String(side).toUpperCase()}`]),
     `Weight: ${amount} TAO`,
     `Wallet: ${address}`,
     `Issued: ${issued}`,
@@ -86,5 +216,11 @@ export const isOpen = (n, now = new Date()) =>
 /** The line a work carries once a nudge shaped it. Permanent, and phrased the
  *  way the register phrases everything else. */
 export const provenanceLine = (banked) =>
-  `Steered by ${Math.round(banked.total).toLocaleString('en-NZ')} TAO across `
-  + `${banked.collectors} collector${banked.collectors === 1 ? '' : 's'} · Nudge #${banked.number}`;
+  (banked && banked.locked
+    /* A locked colour names itself. The line is what a work carries forever,
+       and "steered by" is not the whole truth where the studio undertook to
+       paint the answer ... it was chosen. */
+    ? `Colour chosen by ${Math.round(banked.total).toLocaleString('en-NZ')} TAO across `
+      + `${banked.collectors} collector${banked.collectors === 1 ? '' : 's'} · ${banked.locked.hex} · Nudge #${banked.number}`
+    : `Steered by ${Math.round(banked.total).toLocaleString('en-NZ')} TAO across `
+      + `${banked.collectors} collector${banked.collectors === 1 ? '' : 's'} · Nudge #${banked.number}`);
