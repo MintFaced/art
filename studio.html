@@ -111,6 +111,10 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
   font:inherit;letter-spacing:inherit;text-transform:inherit;text-decoration:none;
   border-bottom:1px solid transparent}
 .m .re a:hover,.m .re button:hover{color:var(--muted);border-bottom-color:var(--rule)}
+/* the arrow is the control that goes to the message; the name beside it is a
+   name, and goes where every other name on this site goes */
+.m .re .jump{margin-right:5px;border-bottom:0}
+.m .re .jump:hover{color:var(--ink)}
 /* Arriving at a message somebody pointed you to. A ground that fades rather
    than a highlight that stays: it says here, and then it stops saying it. */
 .m.found{background:#f4f1eb;box-shadow:0 0 0 8px #f4f1eb}
@@ -649,9 +653,16 @@ function replyLine(m) {
   const r = m.reply;
   if (!r) return '';
   if (!r.found) return '<div class="re">&#8627; replying to a message that is no longer here</div>';
-  const name = e(r.name || short(r.address));
-  return `<div class="re">&#8627; replying to <button type="button" data-act="goto" data-n="${r.n}"
-    title="Go to that message">${name}</button>${r.deleted ? ' <span>&middot; taken down</span>' : ''}</div>`;
+  /* Two things in this line and two things it can do, one each.
+     The arrow goes to the message. The name goes to the person, because that
+     is what a name does everywhere else on this site, and a name that did
+     something else here would be the one exception nobody could predict. It
+     was a single control doing both, and a collector reported exactly that. */
+  const label = e(r.name || short(r.address));
+  const name = r.url ? `<a href="${e(r.url)}">${label}</a>` : `<span>${label}</span>`;
+  return `<div class="re"><button type="button" class="jump" data-act="goto" data-n="${r.n}"
+      title="Go to the message this answers" aria-label="Go to the message this answers">&#8627;</button>
+    replying to ${name}${r.deleted ? ' <span>&middot; taken down</span>' : ''}</div>`;
 }
 
 /* Under a message: what people made of it.
@@ -754,6 +765,9 @@ function composer() {
 
 /* Who you are answering, above the box you are answering them in.
    The number is what is sent; the name is only how the page says it back. */
+/* The chip is not a description of the state, it is the state: if it is not on
+   the screen, the message is not a reply. Both are drawn from the one value
+   that is also the one sent, so there is nothing for them to disagree about. */
 function replyingTo() {
   if (ROOM.replyTo == null) return '';
   const m = rowAt(ROOM.replyTo);
@@ -762,7 +776,8 @@ function replyingTo() {
   return `<div class="replying">
     <span>&#8627; Replying to ${e(name)}</span>
     ${quote ? `<span class="quote">${e(quote)}</span>` : ''}
-    <button type="button" data-act="unreply" title="Not a reply" aria-label="Cancel the reply">&times;</button>
+    <button type="button" data-act="unreply" title="Not a reply (or press escape)"
+      aria-label="Cancel the reply">&times;</button>
   </div>`;
 }
 
@@ -1111,6 +1126,17 @@ document.addEventListener('keydown', (ev) => {
     const was = ROOM.palette;
     ROOM.palette = null;
     repaint(was);
+    return;
+  }
+  /* Escape puts the reply down. The chip is the whole of the truth about
+     whether this is a reply, so there has to be a way to take it off that is
+     not hunting for a small cross ... and escape is where a hand goes. It
+     comes after the @ list and the palette, both of which are more urgently
+     escapable, and it keeps whatever has been typed. */
+  if (ev.key === 'Escape' && ROOM.replyTo != null && !ROOM.tag.open && ROOM.palette == null) {
+    ROOM.replyTo = null;
+    ROOM.focus = true;
+    draw();
     return;
   }
   if (!ev.target.matches('#text')) return;

@@ -158,7 +158,7 @@ process.env.KV_REST_API_URL = ORIGIN;
 process.env.KV_REST_API_TOKEN = 'test';
 
 const { GET, POST } = await import('../../api/chat.js');
-const { chatMessage, chatStore, wearTao, sessionUntil } = await import('../../api/_lib/chat.js');
+const { chatMessage, chatStore, wearTao, sessionUntil, render } = await import('../../api/_lib/chat.js');
 const { pipe } = await import('../../api/_lib/kv.js');
 const { openCookies, clearCookies, corsFor, domainOk, TOKEN_COOKIE, WHO_COOKIE } = await import('../../api/_lib/session.js');
 
@@ -1062,6 +1062,72 @@ head('Credentials and a wildcard are not allowed together');
     && domainOk('mintface.art', new Request('https://mintface.art/api/chat'))
     && !domainOk('evil.example', new Request('https://mintface.art/api/chat')),
     'and the pair is a list of two, not a suffix match');
+}
+
+head("The reporter's sequence: reply once, then say two plain things");
+{
+  advance(700000);
+  /* The report was two symptoms and one coercion. A message that answers
+     nothing is stored with `reply: null`, and `Number(null)` is nought, which
+     is a perfectly good message number: the first thing anybody ever said in
+     this room. So every plain message written since replies shipped rendered
+     as an answer to message zero, the name in that line was whoever said it,
+     and clicking that name went to their first message. Nothing was sticky and
+     nothing was overloaded in the state ... the render was simply lying. */
+  const target = await say(visco, 'The one being answered.');
+  const answered = await answer(oneCopy, 'Answering it, once.', target.body.message.n);
+  ok(answered.body.message.reply && answered.body.message.reply.n === target.body.message.n,
+    'the reply is a reply', JSON.stringify(answered.body.message.reply));
+
+  const two = await say(oneCopy, 'A plain thing said afterwards.');
+  const three = await say(oneCopy, 'And another plain thing.');
+  ok(two.body.message.reply === null && three.body.message.reply === null,
+    'and the two plain messages after it are plain',
+    `${JSON.stringify(two.body.message.reply)} / ${JSON.stringify(three.body.message.reply)}`);
+
+  /* And as anybody else reads them back, which is where it was seen. */
+  const room = (await get()).body.messages;
+  const plain = room.filter((m) => !m.deleted && m.reply === null);
+  ok(plain.length > 5, 'and read back as plain by everybody else', `${plain.length} of ${room.length}`);
+  const first = (await get('before=1')).body.messages[0];
+  ok(first && first.n === 0 && first.reply === null,
+    'the very first message in the room answers nothing, as it must',
+    first ? `#${first.n} reply ${JSON.stringify(first.reply)}` : 'not found');
+  ok(!room.some((m) => m.reply && m.reply.n === 0 && m.n !== 1),
+    'and nothing that never answered it says it did');
+
+  /* The row itself keeps a null, which is what the guard has to survive. */
+  const stored = await chatStore(pipe, chatCfg).get(two.body.message.n);
+  ok(stored.reply === null, 'the row stores a null rather than a number', JSON.stringify(stored.reply));
+  ok(render(stored, {}).reply === null, 'and a null is not message zero');
+  ok(render({ ...stored, reply: 0 }, { parents: { 0: { n: 0, address: A(visco), name: 'visco.eth' } } }).reply.n === 0,
+    'while an actual answer to message zero still is one');
+}
+
+head('A name goes where the person is, and nowhere else');
+{
+  const page = fs.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
+  const line = page.slice(page.indexOf('function replyLine'), page.indexOf('function actsRow'));
+  ok(/data-act="goto"[^>]*>&#8627;</.test(line.replace(/\s+/g, ' ')),
+    'the arrow in a reply line is what goes to the message');
+  ok(/replying to \$\{name\}/.test(line) && /r\.url \? `<a href=/.test(line),
+    'and the name beside it is a link to their register page, like every other name');
+  ok(!/data-act="goto"[^`]*\$\{label\}/.test(line),
+    'the name is not also the control ... one action per element');
+
+  const between = (from, to) => {
+    const a = page.indexOf(from);
+    const b = page.indexOf(to, a + 1);
+    return a < 0 || b < 0 ? '' : page.slice(a, b);
+  };
+  const chip = between('function replyingTo()', '\n/*');
+  ok(/data-act="unreply"/.test(chip) && /Replying to/.test(chip),
+    'the chip says who is being answered and carries the way to take it off');
+  ok(/ROOM\.replyTo = null;/.test(between("ev.key === 'Escape' && ROOM.replyTo", 'return;')),
+    'and escape is the other way, because that is where a hand goes');
+  const sent = between('async function sayIt(b)', 'A mark under something');
+  ok(/ROOM\.replyTo = null;/.test(sent) && /const reply = ROOM\.replyTo;/.test(sent),
+    'sending reads it once and clears it, so the next message is plain unless asked otherwise');
 }
 
 server.close();

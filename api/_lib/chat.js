@@ -201,7 +201,17 @@ export function render(row, dress = {}) {
  * A message whose parent cannot be found still says it was a reply. The room
  * does not quietly turn an answer back into a remark. */
 function answering(row, { parents, register, artist } = {}) {
-  const n = Number(row && row.reply);
+  /* A message that answers nothing is stored with `reply: null`, and
+     `Number(null)` is 0, which is a perfectly good message number ... the very
+     first thing anybody said in this room. So every plain message written
+     since replies shipped rendered as an answer to message zero, and the name
+     in that line went wherever message zero went. Two bugs in one report, and
+     one coercion behind both of them.
+     The guard is on the stored value, before it is ever a number: absent,
+     null and empty are all "this answers nothing", and nothing else is. */
+  const raw = row ? row.reply : null;
+  if (raw == null || raw === '') return null;
+  const n = Number(raw);
   if (!Number.isInteger(n) || n < 0) return null;
   const p = parents ? parents[n] : null;
   if (!p) return { n, address: null, name: null, url: null, deleted: false, found: false };
