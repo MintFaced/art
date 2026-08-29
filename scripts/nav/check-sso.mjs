@@ -86,8 +86,12 @@ head(`Loading the register fresh (${REGISTER})`);
   ok(r.headers.get('access-control-allow-credentials') === 'true',
     'and lets it send the cookie');
   ok((r.headers.get('vary') || '').includes('Origin'), 'and says the answer varies by who asked');
-  ok(j.me && j.me.role, 'and knows who is reading, from the cookie alone ... no second prompt',
-    JSON.stringify(j.me && { role: j.me.role, can_speak: j.me.can_speak }));
+  /* `me` is only ever built for a viewer the route resolved, and this request
+     names none: no viewer in the query, nothing in the body, just the cookie.
+     A throwaway key holds no TAO, so its role is null and it may not speak ...
+     which is the correct answer about it, and not the thing being checked. */
+  ok(j.me && j.me.mentions, 'and knows who is reading, from the cookie alone ... no second prompt',
+    JSON.stringify(j.me && { role: j.me.role, mentions: j.me.mentions }));
 }
 
 head('Everybody else still reads it without a wallet');
@@ -110,7 +114,7 @@ head('And the reverse: signed in on the register');
     headers: { accept: 'application/json', origin: `https://${CATALOGUE}`, cookie: jar },
   });
   const j = await r.json().catch(() => ({}));
-  ok(j.me && j.me.role, 'and it reads on the catalogue with no second prompt either',
+  ok(j.me && j.me.mentions, 'and it reads on the catalogue with no second prompt either',
     JSON.stringify(j.me && { role: j.me.role }));
   await fetch(API, {
     method: 'POST', headers: { 'content-type': 'application/json', cookie: jar },
