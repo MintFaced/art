@@ -499,7 +499,7 @@ head('One name, in every place a person reads it');
      the rest of them. Two copies were bearable; four would not be. */
   const runtime = fs.readFileSync(new URL('../../mintface.js', import.meta.url), 'utf8');
   ok(runtime.includes("'MintFace ... Studio',"), 'and the browser builds the same first line');
-  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  const page = fs.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
   ok(!page.includes("'MintFace ... Studio',"), 'from one place, rather than once per page that signs something');
   ok(!/the room/i.test(text), 'with nothing left of the old name in it');
   const refused = await say(nobody, 'Let me in.');
@@ -852,7 +852,7 @@ head('The room hands the page its own alphabet');
     'the marks come from the config, and there are fewer than eight of them',
     (d.emoji || []).join(' '));
   ok(d.emoji[0] === CHERRY, 'the cherry first, because it is the house one', d.emoji[0]);
-  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  const page = fs.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
   ok(!/const EMOJI = \[/.test(page) && /ROOM\.emoji = d\.emoji/.test(page),
     'and the page draws the set it is given rather than one of its own');
 }
@@ -862,7 +862,7 @@ head('The page opens at the latest thing anybody said');
   const d = (await get()).body;
   ok(d.end === d.total, 'a page with no `before` on it ends at the newest message',
     `${d.start}\u2013${d.end} of ${d.total}`);
-  const page = fs.readFileSync(new URL('../../chat.html', import.meta.url), 'utf8');
+  const page = fs.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
   ok(/load\(\{ bottom: sent == null \}\)/.test(page),
     'and the room is opened at the foot of it, unless the cherry sent you to a message');
   ok(/IntersectionObserver/.test(page), 'with earlier arriving upward as a reader goes looking');

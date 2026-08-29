@@ -28,7 +28,7 @@ import { wearTao } from './chat.js';
 
 const ASSETS = process.env.ASSETS_PUBLIC_BASE || 'https://assets.mintface.art';
 const PROXY = 'https://images.weserv.nl/?url={url}&w={w}&output=webp&q=80&n=-1';
-const UA = 'MintFaceStudio/1.0 (+https://mintface.art/chat) link preview';
+const UA = 'MintFaceStudio/1.0 (+https://mintface.art/studio) link preview';
 
 /* ------------------------------------------------------------- the guard */
 

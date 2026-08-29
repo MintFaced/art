@@ -116,19 +116,34 @@ export function checkName(text, { ens = [] } = {}) {
  * What to call a wallet, in the one order that decides it everywhere.
  * @param overlay  the name Ryan wrote down, from the register
  * @param self     the name the collector chose, from the store
- * @param ens      their reverse record
+ * @param ens      their reverse record, which they set
+ * @param fwd      the one name that resolves to them, which they did not
  */
-export function nameFor({ overlay = null, self = null, ens = null, address = null } = {}) {
-  return overlay || self || ens || shortAddress(address) || null;
+export function nameFor({ overlay = null, self = null, ens = null, fwd = null, address = null } = {}) {
+  return overlay || self || ens || fwd || shortAddress(address) || null;
 }
 
-/** Where the name came from, for the page that has to explain itself. */
-export function sourceOf({ overlay = null, self = null, ens = null } = {}) {
+/* The fourth tier is last for a reason, and it is named apart from the third
+   wherever it is asked about.
+   A reverse record is a wallet saying what it is called. A forward pointer is
+   a name saying where it goes, which is a weaker claim in the direction that
+   matters: anybody can point a name at anybody's wallet. It is only worth
+   anything because it is the only one ... see api/_lib/ens.js ... and the
+   register keeps the two apart so the audit trail knows which tier named whom,
+   even though a reader sees no difference. */
+export function sourceOf({ overlay = null, self = null, ens = null, fwd = null } = {}) {
   if (overlay) return 'overlay';
   if (self) return 'self';
   if (ens) return 'ens';
+  if (fwd) return 'ens-forward';
   return 'address';
 }
+
+/* Where the name a person is reading came from, said once: whether it is
+   something anybody signed for or merely something that points their way. The
+   nudge to set a name is drawn from this ... a wallet on the fourth tier is
+   named, and still has not said so itself. */
+export const TIERS_UNCLAIMED = new Set(['ens-forward', 'address']);
 
 /* ---------------------------------------------------------- the register */
 
@@ -146,10 +161,15 @@ export function registerIndex(register) {
     const address = lower(r[col.address]);
     if (!address) continue;
     const ens = col.ens == null ? null : (r[col.ens] || null);
+    /* The one name that points here, where nothing points back. A column of
+       its own rather than folded into `ens`, because the two are different
+       claims and the register is the place that has to know which. */
+    const fwd = col.fwd == null ? null : (r[col.fwd] || null);
     const name = r[col.name] || null;
     byAddress.set(address, {
       address,
       ens,
+      fwd,
       name,
       /* The register writes one name field, which is the overlay where there is
          one and the ENS otherwise. Splitting them again here is what lets a
@@ -191,6 +211,7 @@ export function naming(rows, self = {}, special = {}) {
     const s = chosen.get(a) || null;
     const overlay = r ? r.overlay : null;
     const ens = r ? r.ens : null;
+    const fwd = r ? r.fwd : null;
     /* A private collector is a private collector wherever they are named. The
        name they chose is still theirs and still held; it is simply not what
        this register says out loud. */
@@ -206,13 +227,17 @@ export function naming(rows, self = {}, special = {}) {
          wrote back into a hex string. So callers are told, and keep the name
          the row was written under for a wallet the register no longer sees. */
       known: Boolean(r),
-      name: nameFor({ overlay, self: s, ens, address: a }),
+      name: nameFor({ overlay, self: s, ens, fwd, address: a }),
       slug: r ? r.slug || null : null,
       ens: ens || null,
+      /* Kept apart from `ens` all the way out to the caller. Nothing on the
+         register draws them differently; the difference is a fact about the
+         name, and facts about names are what this file is for. */
+      fwd: fwd || null,
       overlay: overlay || null,
       self: s,
       private: false,
-      source: sourceOf({ overlay, self: s, ens }),
+      source: sourceOf({ overlay, self: s, ens, fwd }),
       tao: r ? r.tao : 0,
     };
   };

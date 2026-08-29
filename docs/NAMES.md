@@ -81,3 +81,31 @@ Tags ride the same window as the messages carrying them. A message limit alone d
 `node scripts/names/test-names.mjs` — the real routes, real signatures, a stand-in store. It sets a name and watches it reach the room; renames a collector and checks that the message they left yesterday and the tag somebody else wrote about them both say the new name today, while the signed text is untouched; and walks the collision, impersonation, overlay, reset, log, mute and rate-limit cases.
 
 The pages themselves were walked through in a real browser: two local origins so the cross-origin POST and its preflight are exercised, the real HTML and the real handlers, and an EIP-6963 provider announced into the page with `personal_sign` forwarded to a key the harness holds. That is what caught the wallet prompt for a doomed name, the stale refusal, the autocomplete list anchored to the wrong element and the space before a question mark. None of them were visible to a route test, and all of them were obvious on screen.
+
+---
+
+## The fourth tier: one name pointing back (2026-08-29)
+
+```
+what Ryan wrote down  >  what they chose  >  their reverse record  >  the one name that resolves to them  >  the address
+```
+
+**The hole this fills.** A reverse record is something a wallet has to set, and plenty of people register a name, point it at their wallet, and never set the primary. The register's own case is `josephj.eth` — the second largest holding on the board, 982,859 TAO, reading as `0xe09c0d24` while josephj.eth has resolved to that wallet the whole time. The third tier asks *what is this address called*, which is the reverse record and had already been asked. This asks the other question — *what names resolve to this address* — which is a forward index, and only the subgraph can answer it.
+
+**One name or none.** If exactly one name resolves to a wallet, that is what the register calls it. Two, or twenty, and it says the address. Ambiguity is never guessed at, and the many-names case is exactly where an impersonation would live: pointing a name at somebody else's wallet costs nothing and proves nothing, and the only thing that makes a single pointer worth anything is that it is the only one. mintface.eth's own wallet has five names pointing at it, which is the rule demonstrating itself.
+
+**What it will not do.** A reverse record appearing anywhere outranks it. So does a name somebody signed for, and so does Ryan, whose reset power covers these like any other name — the tier is only ever consulted for a wallet nothing else names. And it never touches a slug: `nameSlug` reads the reverse record and the written-down name and is deliberately blind to this one, so a page URL is still minted from something somebody stands behind. The address slug stays alive either way, so nothing rots when a wallet moves between tiers.
+
+**Re-verified nightly, remembered never.** The ownership sweep asks the subgraph again on every run and keeps nothing from the night before. A name re-pointed somewhere else simply does not come back, and the wallet is an address again on that run. If the subgraph will not answer, the pass is skipped and yesterday's file stands rather than a hundred and fifty names disappearing into somebody else's outage — and the run flags it.
+
+**The audit trail knows which tier named whom.** `fwd` is its own column in `data/collectors-register.json`, appended rather than inserted so nothing that reads a column by name can be moved out from under; `source` reads `ens-forward` rather than `ens`; and `data/ens-forward.json` keeps the wallets that fell through as ambiguous, with the names that made them ambiguous. Nothing on the register looks different to a reader. The difference is a fact about the name, and this file is for facts about names.
+
+**Expired names and unreadable ones are not names.** A name past its expiry has stopped resolving, and a label the subgraph has never seen the preimage of — `[9f8c2a…].eth` — is nobody's name. Both are dropped before the one-name rule sees them, which matters: a wallet with one live name and one expired one is named, not ambiguous.
+
+**Where the data comes from, and the one thing to watch.** `api/_lib/ens.js`, against the ENS subgraph, in batches of two hundred with paging, because a truncated answer would read as "this wallet has one name" for a wallet that has six. The endpoint is `ENS_SUBGRAPH_URL` with the hosted service as the default. That hosted service has been deprecated for a while and answers anyway; when it stops, the replacement is a Graph gateway URL with a key in it, which is one environment variable rather than a deploy.
+
+**The backfill, run 2026-08-29.** 3,681 wallets. 1,217 already named by a stronger tier and not asked about. Of the 2,464 asked: **156 named by forward resolution**, **77 fell through as ambiguous**, 2,231 still a bare address. josephj.eth is the first of the 156 by TAO. The ambiguous list is the rule earning its keep — one wallet has twenty-two names pointing at it, another ten, another nine.
+
+**Teaching the gap.** A collector signed in on their own page, named by the fourth tier or by nothing, is told what is true: `josephj.eth resolves to this wallet, which is how the register knows to call it that. Nothing on chain says so from this end. Set a primary name in ENS and every site reads it, or choose one here.` Both unclaimed tiers get the same line, because a pointer names you and is still not you saying so, and a signature here remains stronger proof than any pointer. **This line did not previously exist** — the directive carried it forward from an earlier one, and there was nothing in the code to carry. It is new as of this change.
+
+**Acceptance.** `node scripts/names/test-ens.mjs` — forty-one cases with a stubbed subgraph that answers the query it is actually sent, so the batching, the paging, the retries and the one-name rule are exercised against the shape of a real answer. Expiry, unreadable labels, duplicate names, a wallet nothing points at, precedence against all three tiers above it, the register file round trip, a register from before the column existed, and the slug refusing to adopt it.

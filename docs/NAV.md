@@ -70,6 +70,8 @@ Signing in on the catalogue now signs you in on the register, and the other way 
 
 `LOGO · COLLECTIONS · COLLECTORS · STUDIO · 🍒 · NAME`, and it points at `/chat`.
 
+**Settled 2026-08-29: STUDIO points at `/studio`, and `/studio` is now the room and the nudges together.** The collision below was real and is closed. `/chat` is a permanent redirect. What follows is the note as it was written, and it is what the merge acted on.
+
 **The naming collision is live, not pending.** The brief allowed for nudges not being built yet. They are: `/studio` is the Artist Virtual Studio, titled that, publicly reachable, and it is where collectors weigh their TAO behind a yes or a no. So the site has a STUDIO in the nav going to `/chat` and an Artist Virtual Studio at `/studio`, and that is a real collision sitting in the open rather than a future one. **For Ryan to settle, not me.** The end-state the brief suggests — one studio surface with the room and the nudges on it — looks right from here: they are the same idea (TAO gets a voice) wearing two URLs, and the room is the livelier half. That is a page to design, not a rewrite: `/studio` grows the room into it, `/chat` keeps working, and the nav item stops being a small lie.
 
 **Absolute, in the way the rest of the bar is absolute.** The brief said hard-code `https://mintface.art/chat`. It is `${MF.ART}/chat`, which *is* that string on the register and stays relative on the catalogue — identical behaviour from collectors, and a preview deploy links to its own room rather than jumping a reviewer to production. Same rule COLLECTIONS already follows.

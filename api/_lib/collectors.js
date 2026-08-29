@@ -54,7 +54,13 @@ export function registerFile(register) {
     + register.rows.map((r) => '  ' + JSON.stringify(r)).join(',\n') + '\n ]\n}\n';
 }
 
-export function deriveCollectors(collections, titleOf, privateList = new Set(), tao = null, nudges = null) {
+export function deriveCollectors(collections, titleOf, privateList = new Set(), tao = null, nudges = null, forward = null) {
+  /* The fourth naming tier, handed in rather than derived here: it is an
+     answer from the ENS subgraph and this file does no network. One name or
+     none ... see api/_lib/ens.js ... and it is only ever consulted for a
+     wallet that has nothing stronger. */
+  const points = new Map(Object.entries((forward && forward.names) || {})
+    .map(([a, n]) => [String(a).toLowerCase(), String(n)]));
   // how many distinct nudges each wallet has weighed in on
   const weighed = new Map();
   for (const w of (nudges && nudges.weighings) || []) {
@@ -107,6 +113,9 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
       editions: p.works.filter((w) => !w.unique).length,
       collections: p.collections.size,
     };
+    /* Only where nothing stronger names them. A reverse record appearing
+       anywhere outranks this, and so does a name Ryan wrote down. */
+    p.fwd = (!p.ens && !p.display_name && points.get(p.address)) || null;
     const t = tao && tao.wallets ? tao.wallets[p.address] : null;
     p.tao = t ? t.tao : 0;
     p.tao_rate = t ? t.rate : 0;
@@ -124,6 +133,13 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
      record, so the recorded name is the only name it will ever have ... and
      /firstladyart.eth is what a person would type. The address always resolves
      as well, so nothing rots either way. */
+  /* The slug is deliberately blind to the fourth tier.
+     A page slug is a claim about identity that outlives a name: it is minted
+     from a reverse record or from a name Ryan wrote down, both of which
+     somebody stands behind. A name that merely points this way names the
+     person on the register and does not get to name their URL ... and the
+     address slug stays alive either way, so nothing rots when a tier changes
+     under somebody. */
   const nameSlug = (p) => {
     for (const n of [p.ens, p.display_name]) {
       const v = typeof n === 'string' ? n.trim().toLowerCase() : '';
@@ -165,7 +181,7 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
     || String(a.ens || a.address).localeCompare(String(b.ens || b.address)));
 
   const summary = (p) => ({
-    address: p.address, ens: p.ens, display_name: p.display_name,
+    address: p.address, ens: p.ens, fwd: p.fwd || null, display_name: p.display_name,
     slug: p.has_page ? p.slug : null, private: p.private, has_page: p.has_page,
     counts: p.counts, first_collected: p.first_collected, last_collected: p.last_collected,
     tao: p.tao || 0, tao_rate: p.tao_rate || 0, tao_rank: p.tao_rank || null,
@@ -191,7 +207,10 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
        lets a reader tell a name Ryan wrote down from a name the chain resolved
        ... which is the difference between a name a collector may override with
        their own and a name that outranks it. See api/_lib/names.js. */
-    fields: ['address', 'name', 'ens', 'slug', 'private', 'works', 'unique', 'tao', 'rate', 'last', 'rank'],
+    /* `fwd` is appended rather than placed: every reader of this file looks a
+       column up by name, and appending is the one change that cannot move a
+       column out from under a reader that does not. */
+    fields: ['address', 'name', 'ens', 'slug', 'private', 'works', 'unique', 'tao', 'rate', 'last', 'rank', 'fwd'],
     rows: all.slice().sort((a, b) => (b.tao || 0) - (a.tao || 0) || b.counts.works - a.counts.works)
       .map((p) => [
         p.address,
@@ -205,6 +224,7 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
         p.tao_rate || 0,
         dayOf(p.last_collected),
         p.tao_rank || 0,
+        p.fwd || '',
       ]),
   };
 

@@ -1659,6 +1659,10 @@ MF.nav = {
   onCherry: null,
 
   mount() {
+    /* No body, nothing to mount into. That happens where this file is read
+       rather than served ... a harness evaluating it to get at MF.sign ... and
+       it would happen for real if the script were ever moved into the head. */
+    if (typeof document === 'undefined' || !document.body) return null;
     if (document.body.dataset.nav === 'off') return null;
     let el = document.querySelector('header.nav');
     if (!el) {
@@ -1699,7 +1703,7 @@ MF.nav = {
         src="${MF.ART}/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
       <a href="${MF.ART}/collections"${on('/collections')}>Collections</a>
       <a href="${MF.PEOPLE || '/'}"${AT_PEOPLE && here === '' ? ' aria-current="page"' : ''}>Collectors</a>
-      <a href="${MF.ART}/chat"${on('/chat')}>Studio</a>
+      <a href="${MF.ART}/studio"${on('/studio')}>Studio</a>
       <span class="right">${this.cherry()}${right}</span>`;
   },
 
@@ -1755,7 +1759,7 @@ MF.nav = {
   toMention() {
     const n = this.next;
     if (this.onCherry) { this.onCherry(n); return; }
-    location.href = n == null ? `${MF.ART}/chat` : `${MF.ART}/chat#m-${n}`;
+    location.href = n == null ? `${MF.ART}/studio` : `${MF.ART}/studio#m-${n}`;
   },
 
   /* Connecting, and then the one signature. The happy path happens here,
@@ -1771,7 +1775,7 @@ MF.nav = {
       address = await MF.connect();
     } catch (err) {
       this.busy = null;
-      if (err && err.code === 'many-providers') { location.href = `${MF.ART}/chat`; return; }
+      if (err && err.code === 'many-providers') { location.href = `${MF.ART}/studio`; return; }
       say(String((err && err.message) || err).slice(0, 40));
       setTimeout(() => { this.busy = null; this.draw(); }, 4000);
       return;
@@ -1794,8 +1798,7 @@ MF.nav = {
   },
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => MF.nav.mount());
-} else {
-  MF.nav.mount();
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => MF.nav.mount());
+  else MF.nav.mount();
 }

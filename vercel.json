@@ -29,6 +29,11 @@
   },
   "redirects": [
     {
+      "source": "/chat",
+      "destination": "/studio",
+      "permanent": true
+    },
+    {
       "source": "/home",
       "destination": "/",
       "permanent": true

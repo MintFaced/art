@@ -28,3 +28,21 @@ Plus the standing rule, on every nudge: "A nudge steers. It never commands. The 
 
 ## Acceptance
 11. End to end: author a test nudge, weigh from two wallets, adjust one, close it, verify the clamp against a wallet whose TAO changed, confirm the banked record and ledger render, and the /mintwork authoring loop.
+
+---
+
+## One studio surface (2026-08-29)
+
+The nudges and the room are one page at `/studio`. `/chat` is a permanent redirect into it.
+
+**Why they were two.** They were built a fortnight apart and the room ended up called Studio while `/studio` was the nudges. That collision was flagged when STUDIO went into the nav pointing at `/chat`; this is it settled. They were always the same idea — TAO gets a voice — wearing two URLs, and the room was the livelier half by a distance: the nudges page has never had a nudge on it.
+
+**The layout is a scroll, not a set of tabs.** Top to bottom: the masthead and the framing, the banked nudges, the room, the open nudge, the composer. The order is doing one specific job. This page opens at the latest message, the way the room always has, so anything the studio is *asking* has to be where the reader lands — hence the open nudge sits between the last message and the box you would answer it in, framed rather than ruled off, because it is a question rather than another row of the log. The banked record goes up top, above the room, because a record is a thing you go and look at.
+
+**Four containers, one owner each.** `#banked` and `#open` belong to the nudges; `#log` and `#speak` belong to the room and are redrawn every time anybody speaks. The room used to rebuild the whole of `<main>`, which on a merged page would wipe a half-typed TAO amount every time a message arrived. The masthead is static HTML: it is the one part of this surface nothing rewrites.
+
+**One wallet, one connect.** The nudges page asked for its own wallet and kept its own. It takes the session now, so a page carrying two connect buttons asking the same question does not exist. Weighing still signs per weighing: the room's session says this browser may speak, and a month-long permission to put any amount of somebody's TAO behind anything is not a trade this page will make on their behalf.
+
+**Nothing about the mechanics changed.** Same `/api/nudge`, same sentence, same clamp, same ledger, same standing rule on every card. Two class names moved to stop the merge going quietly wrong — `.bar` became `.meter`, and everything the nudges draw now hangs off `.nudges` — because a `go` or an `empty` or a `bar` meaning one thing at the top of a page and another at the bottom is exactly how two components that were written apart start disagreeing.
+
+**Still no nudge has ever been authored.** `data/nudges.json` is empty and `next_number` is 1. The empty state says so plainly and the room carries the page in the meantime, which is the argument for merging them made out loud.

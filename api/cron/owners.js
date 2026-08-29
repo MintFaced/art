@@ -2,6 +2,7 @@ import { readFile, writeFile } from '../_lib/repo.js';
 import { mintsSince, readToken, buildRecord } from '../_lib/discover.js';
 import { send } from '../_lib/email.js';
 import { deriveCollectors, registerFile } from '../_lib/collectors.js';
+import { forwardPass } from '../_lib/ens.js';
 
 /* Daily ownership reconciliation.
  *
@@ -755,7 +756,41 @@ async function handle(request, started, dry) {
       // here unless they are handed in
       let nudges = null;
       try { nudges = JSON.parse((await readFile('data/nudge-weighings.json')).text); } catch (e) { /* none yet */ }
-      const d = deriveCollectors([...files.values()].map((f) => f.data), titleOf, priv, tao, nudges);
+      const cols = [...files.values()].map((f) => f.data);
+
+      /* The fourth naming tier, re-verified nightly.
+       *
+       * Derived once to find out who the register holds and which of them
+       * already have a name, then asked of the subgraph, then derived again
+       * with the answer. Two passes over what is already in memory, which
+       * costs nothing and means a wallet that arrived tonight is named tonight
+       * rather than tomorrow.
+       *
+       * This is also the re-verification: nothing here is remembered from
+       * yesterday. A name pointed somewhere else since the last run simply
+       * does not come back, and the wallet is an address again on this one.
+       * If the subgraph will not answer, the pass is skipped and the register
+       * keeps yesterday's fourth-tier names rather than losing a hundred and
+       * fifty names to somebody else's outage. */
+      let forward = null;
+      try {
+        const first = deriveCollectors(cols, titleOf, priv, tao, nudges);
+        const skip = new Set(first.all.filter((p) => p.ens || p.display_name || p.private).map((p) => p.address));
+        forward = await forwardPass(first.all.map((p) => p.address), { skip });
+      } catch (e) {
+        flagged.push({ id: 'ens-forward', slug: 'collectors', why: `the ENS subgraph did not answer: ${String(e.message || e).slice(0, 120)}`,
+          action: 'fourth-tier names are last night\'s' });
+        try { forward = JSON.parse((await readFile('data/ens-forward.json')).text); } catch (e2) { forward = null; }
+      }
+      if (forward && forward.counts && !dry) {
+        await writeFile('data/ens-forward.json', JSON.stringify({
+          _note: 'Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.',
+          generated: new Date().toISOString(), source: 'ens-subgraph', ...forward,
+        }, null, 1) + '\n', `ENS forward: ${forward.counts.named} named, ${forward.counts.ambiguous} ambiguous`,
+        (await readFile('data/ens-forward.json').catch(() => ({ sha: null }))).sha || undefined).catch(() => {});
+      }
+
+      const d = deriveCollectors(cols, titleOf, priv, tao, nudges, forward);
       const put = async (path, body, msg) => {
         const cur = await readFile(path).catch(() => ({ sha: null }));
         await writeFile(path, JSON.stringify(body, null, 1) + '\n', msg, cur.sha || undefined);

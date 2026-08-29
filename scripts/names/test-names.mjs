@@ -172,14 +172,20 @@ const say = async (account, text) => {
   }));
   return { status: r.status, body: await r.json() };
 };
+/* A sign-in names the site it was asked on. The check takes the two hosts of
+   the family plus whatever host is answering, which on the loopback is this. */
+const HERE = new URL(ORIGIN).hostname;
 const signIn = async (account) => {
   const issued = new Date().toISOString();
   const address = A(account);
+  const domain = HERE;
   const until = sessionUntil(issued, chatCfg.session_days);
-  const signature = await account.signMessage({ message: chatMessage({ action: 'sign in', address, issued, until }) });
+  const signature = await account.signMessage({
+    message: chatMessage({ action: 'sign in', address, issued, until, domain }),
+  });
   const r = await CHAT.POST(new Request(`${ORIGIN}/api/chat`, {
     method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ action: 'sign in', address, issued, until, signature }),
+    body: JSON.stringify({ action: 'sign in', address, issued, until, domain, signature }),
   }));
   return (await r.json()).token;
 };

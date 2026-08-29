@@ -3,8 +3,7 @@ import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 import { loadRegister } from './_lib/register.js';
 import {
-  namesStore, nameMessage, checkName, claimedBy, fold, NAME_MAX,
-} from './_lib/names.js';
+  namesStore, nameMessage, checkName, claimedBy, fold, NAME_MAX, TIERS_UNCLAIMED } from './_lib/names.js';
 import { chatStore } from './_lib/chat.js';
 import { isArtist as artistIs } from './_lib/artist.js';
 
@@ -56,6 +55,10 @@ const card = (who) => ({
   name: who.name,
   slug: who.slug || null,
   ens: who.ens || null,
+  /* Kept apart from `ens`. A reverse record is a wallet saying what it is
+     called; this is one name saying where it goes. They read the same and they
+     are not the same claim, and the page that offers to fix it needs to know. */
+  fwd: who.fwd || null,
   url: who.url || (who.slug ? `https://collectors.mintface.art/${encodeURIComponent(who.slug)}` : null),
   source: who.source,
   private: Boolean(who.private),
@@ -190,6 +193,11 @@ export async function GET(request) {
          type one without saying so would be a page that quietly did nothing. */
       outranked: Boolean(who.overlay),
       self: who.self || null,
+      /* Whether anything anybody signed for is naming this wallet.
+         A forward pointer names you on the register and is still not you
+         saying so, and neither is a bare address ... so both get the same
+         nudge, and a signature here remains stronger proof than any pointer. */
+      unclaimed: TIERS_UNCLAIMED.has(who.source),
       max_chars: NAME_MAX,
     }
     : null;

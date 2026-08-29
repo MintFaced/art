@@ -148,22 +148,51 @@ head('Four places to go, and Studio is one of them');
 {
   ok(/>Collections<\/a>/.test(runtime) && /Collectors<\/a>/.test(runtime) && /Studio<\/a>/.test(runtime),
     'the bar carries Collections, Collectors and Studio');
-  ok(/\$\{MF\.ART\}\/chat"\$\{on\('\/chat'\)\}>Studio/.test(runtime),
-    'Studio points at the room, absolute from the register and relative on the catalogue itself');
+  ok(/\$\{MF\.ART\}\/studio"\$\{on\('\/studio'\)\}>Studio/.test(runtime),
+    'Studio points at the studio, absolute from the register and relative on the catalogue itself');
   const order = runtime.slice(runtime.indexOf('class="wordmark"'), runtime.indexOf('class="right"'));
   ok(order.indexOf('Collections') < order.indexOf('Collectors')
     && order.indexOf('Collectors') < order.indexOf('Studio'),
     'in that order, and all of them left of the cherry');
 }
 
+head('One studio surface');
+{
+  const studio = fs.readFileSync(path.join(ART, 'studio.html'), 'utf8');
+  ok(!fs.existsSync(path.join(ART, 'chat.html')),
+    'the room and the nudges are one page, not two');
+  const vercel = JSON.parse(fs.readFileSync(path.join(ART, 'vercel.json'), 'utf8'));
+  ok((vercel.redirects || []).some((r) => r.source === '/chat' && r.destination === '/studio' && r.permanent),
+    'and /chat is a permanent redirect into it, so every link ever made still lands');
+
+  ok(/id="banked"/.test(studio) && /id="open"/.test(studio) && /id="log"/.test(studio) && /id="speak"/.test(studio),
+    'four containers, one owner each');
+  const order = ['id="banked"', 'id="log"', 'id="open"', 'id="speak"'].map((k) => studio.indexOf(k));
+  ok(order.every((x, i) => i === 0 || x > order[i - 1]),
+    'the record above the room, the open question at the foot of it, and the composer under that',
+    order.join(' < '));
+  ok(/getElementById\('log'\)\.innerHTML/.test(studio) && /getElementById\('speak'\)\.innerHTML/.test(studio)
+    && !/getElementById\('main'\)\.innerHTML/.test(studio),
+    'the room redraws its own two and never the nudges, which hold a half-typed number');
+
+  ok(/MF\.session\.current\(\)/.test(studio.slice(studio.indexOf('async function loadNudges'))),
+    'weighing takes the wallet the room already knows rather than asking for one of its own');
+  ok(!/id="connect"/.test(studio), 'so there is one connect on this page, not two');
+  ok(/A nudge steers\. It never commands\./.test(studio), 'and the standing rule came across with it');
+
+  const pages = [...artPages, ...peoplePages];
+  const stale = pages.filter((p) => /href="\/chat"|mintface\.art\/chat"/.test(p.text));
+  ok(!stale.length, 'and nothing still links to where it used to be', stale.map((p) => p.name).join(', '));
+}
+
 head('The cherry went global');
 {
-  ok(/\.cherry\{/.test(css) && !/\.cherry\{/.test(fs.readFileSync(path.join(ART, 'chat.html'), 'utf8')),
+  ok(/\.cherry\{/.test(css) && !/\.cherry\{/.test(fs.readFileSync(path.join(ART, 'studio.html'), 'utf8')),
     'it is drawn from the shared stylesheet now, not from the room');
   ok(/data-nav="cherry"/.test(runtime), 'and the nav is what draws it');
-  ok(/\$\{MF\.ART\}\/chat#m-\$\{n\}/.test(runtime),
+  ok(/\$\{MF\.ART\}\/studio#m-\$\{n\}/.test(runtime),
     'pressing it from anywhere else on the site deep-links into the room at the mention');
-  const chat = fs.readFileSync(path.join(ART, 'chat.html'), 'utf8');
+  const chat = fs.readFileSync(path.join(ART, 'studio.html'), 'utf8');
   ok(/MF\.nav\.onCherry = /.test(chat),
     'and in the room it takes it over, because scrolling beats reloading the page you are on');
   ok(/location\.hash\.match\(\/\^#m-\(\\d\+\)\$\/\)/.test(chat),
@@ -175,7 +204,7 @@ head('The cherry went global');
 head('One session, one sentence');
 {
   ok(/MF\.session = \{/.test(runtime), 'the session is in the shared runtime, where the nav can sign in with it');
-  const chat = fs.readFileSync(path.join(ART, 'chat.html'), 'utf8');
+  const chat = fs.readFileSync(path.join(ART, 'studio.html'), 'utf8');
   ok(!/localStorage\.getItem\('mintface\.room\.session'\)/.test(chat) && !/const KEEP = /.test(chat),
     'and the room no longer keeps its own copy of it');
   ok(/MF\.session\.sentence/.test(chat), 'nor its own copy of the sentence a wallet signs');
@@ -190,9 +219,9 @@ head('One sign-in, and the browser never touches the token');
     'the session is a cookie now, and localStorage appears only to be cleared out');
   ok(/credentials: 'include'/.test(runtime),
     'requests to the room carry it, which on the register is cross-origin and not cross-site');
-  const chat = fs.readFileSync(path.join(ART, 'chat.html'), 'utf8');
+  const chat = fs.readFileSync(path.join(ART, 'studio.html'), 'utf8');
   ok(!/token: s\.token/.test(chat) && !/j\.token/.test(chat),
-    'and nothing in the room handles a token any more', 'chat.html');
+    'and nothing in the room handles a token any more', 'studio.html');
   ok(/domain: location\.hostname|const domain = location\.hostname/.test(runtime),
     'a sign-in names the site it was asked on');
 }

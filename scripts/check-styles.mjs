@@ -4,7 +4,7 @@
 import fs from 'fs';
 const ROOT = new URL('../', import.meta.url).pathname;
 const shared = fs.readFileSync(ROOT + 'mintface.css', 'utf8');
-const pages = ['w.html', 'c.html', 'index.html', 'collections.html', 'geodetic.html', 'vault.html', 'f.html', 'provenance.html', 'exhibitions.html', 'patrimora.html', 'ai.html', 'strip-painting-maker.html', 'set.html', 'chat.html', 'notes.html', 'studio.html'];
+const pages = ['w.html', 'c.html', 'index.html', 'collections.html', 'geodetic.html', 'vault.html', 'f.html', 'provenance.html', 'exhibitions.html', 'patrimora.html', 'ai.html', 'strip-painting-maker.html', 'set.html', 'notes.html', 'studio.html'];
 const IGNORE = new Set(['in', 'open', 'stale', 'skel', 'empty', 'single', 'annex']); // state classes toggled at runtime
 
 let bad = 0;
