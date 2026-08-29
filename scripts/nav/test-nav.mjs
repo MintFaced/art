@@ -144,6 +144,18 @@ head('One component, both deploys');
   }
 }
 
+head('Four places to go, and Studio is one of them');
+{
+  ok(/>Collections<\/a>/.test(runtime) && /Collectors<\/a>/.test(runtime) && /Studio<\/a>/.test(runtime),
+    'the bar carries Collections, Collectors and Studio');
+  ok(/\$\{MF\.ART\}\/chat"\$\{on\('\/chat'\)\}>Studio/.test(runtime),
+    'Studio points at the room, absolute from the register and relative on the catalogue itself');
+  const order = runtime.slice(runtime.indexOf('class="wordmark"'), runtime.indexOf('class="right"'));
+  ok(order.indexOf('Collections') < order.indexOf('Collectors')
+    && order.indexOf('Collectors') < order.indexOf('Studio'),
+    'in that order, and all of them left of the cherry');
+}
+
 head('The cherry went global');
 {
   ok(/\.cherry\{/.test(css) && !/\.cherry\{/.test(fs.readFileSync(path.join(ART, 'chat.html'), 'utf8')),
@@ -169,6 +181,20 @@ head('One session, one sentence');
   ok(/MF\.session\.sentence/.test(chat), 'nor its own copy of the sentence a wallet signs');
   ok(/const signedIn = MF\.session\.current\(\);/.test(chat),
     'a session says who you are, so the room knows before a wallet is asked anything');
+}
+
+head('One sign-in, and the browser never touches the token');
+{
+  ok(!/localStorage/.test(runtime.slice(runtime.indexOf('MF.session = {'), runtime.indexOf('MF.nav = {')))
+    || /OLD_KEY/.test(runtime),
+    'the session is a cookie now, and localStorage appears only to be cleared out');
+  ok(/credentials: 'include'/.test(runtime),
+    'requests to the room carry it, which on the register is cross-origin and not cross-site');
+  const chat = fs.readFileSync(path.join(ART, 'chat.html'), 'utf8');
+  ok(!/token: s\.token/.test(chat) && !/j\.token/.test(chat),
+    'and nothing in the room handles a token any more', 'chat.html');
+  ok(/domain: location\.hostname|const domain = location\.hostname/.test(runtime),
+    'a sign-in names the site it was asked on');
 }
 
 console.log(`\n${'='.repeat(74)}`);

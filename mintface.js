@@ -1513,40 +1513,69 @@ MF.PEOPLE = AT_PEOPLE ? '' : 'https://collectors.mintface.art';
  * room's own rig; it is the site's now, because the nav signs in with it and
  * the nav is on every page.
  *
- * It is still per-origin: the token sits in this browser's storage for this
- * hostname, so signing in on the catalogue does not yet sign you in on the
- * register. When the cross-domain cookie lands, it lands here, once.
+ * It is one sign-in across both hosts. The token is a cookie scoped to
+ * .mintface.art, which the two of them share, so signing in on the catalogue
+ * signs you in on the register and the other way about. Same registrable
+ * domain, so SameSite=Lax carries it and nothing here is a third-party cookie.
+ *
+ * The token itself is HttpOnly and this file never sees it again ... which is
+ * a straight improvement on the localStorage it replaces, where any script on
+ * the page could read a month of somebody's session. What is left readable is
+ * a companion cookie carrying the two public facts the nav needs to draw
+ * itself: which wallet, and until when.
  */
 MF.session = {
-  KEY: 'mintface.room.session',
+  OLD_KEY: 'mintface.room.session',
+  WHO: 'mf_who',
   api() { return `${MF.ART}/api/chat`; },
 
-  held() {
-    try { return JSON.parse(localStorage.getItem(this.KEY) || 'null'); }
-    catch (err) { return null; }
+  cookie(name) {
+    const raw = document.cookie || '';
+    for (const bit of raw.split(';')) {
+      const s = bit.trim();
+      if (s.startsWith(`${name}=`)) return decodeURIComponent(s.slice(name.length + 1));
+    }
+    return null;
   },
-  keep(v) {
-    try { v ? localStorage.setItem(this.KEY, JSON.stringify(v)) : localStorage.removeItem(this.KEY); }
-    catch (err) { /* a browser with storage switched off signs per message, which still works */ }
-  },
-  /** The session this browser holds, or nothing. A week that has run out is
-      nothing, and is cleared on the way past. */
+
+  /** The session this browser holds, or nothing. A month that has run out is
+      nothing, and the credential behind this is the server's business. */
   current() {
-    const v = this.held();
-    if (!v || !v.token || !v.address) return null;
-    if (v.until && Date.parse(v.until) < Date.now()) { this.keep(null); return null; }
-    return v;
+    /* A session from before the cookie existed is in localStorage, on one host
+       only, and cannot be moved to the other without a signature anyway. It is
+       dropped rather than half-honoured: one re-login, and then it follows you
+       across both. */
+    try { if (localStorage.getItem(this.OLD_KEY)) localStorage.removeItem(this.OLD_KEY); }
+    catch (err) { /* storage switched off, nothing to clear */ }
+    const v = this.cookie(this.WHO);
+    if (!v) return null;
+    const cut = v.lastIndexOf('|');
+    const address = (cut < 0 ? v : v.slice(0, cut)).toLowerCase();
+    const until = cut < 0 ? null : v.slice(cut + 1);
+    if (!/^0x[0-9a-f]{40}$/.test(address)) return null;
+    if (until && Date.parse(until) < Date.now()) return null;
+    return { address, until };
   },
-  forget() { this.keep(null); },
+  /* Signing out is the server's to do: it holds the token and it is the only
+     thing that can unset an HttpOnly cookie. This is only for a browser that
+     could not reach it. */
+  forget() {
+    const dead = 'Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/';
+    try {
+      document.cookie = `${this.WHO}=; ${dead}`;
+      document.cookie = `${this.WHO}=; Domain=.mintface.art; ${dead}`;
+    } catch (err) { /* nothing to do */ }
+  },
 
   /** The sentence a wallet signs. The same one api/_lib/chat.js builds, to the
       character ... which is why it is written once here rather than in every
       page that needs to sign something. */
-  sentence({ action, text, target, address, issued, until, reply, emoji }) {
+  sentence({ action, text, target, address, issued, until, reply, emoji, domain }) {
     return [
       'MintFace ... Studio',
       '',
       `Action: ${action}`,
+      ...(domain ? [`Domain: ${domain}`] : []),
       ...(text != null ? [`Message: ${text}`] : []),
       ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
       ...(emoji ? [`Reaction: ${emoji}`] : []),
@@ -1567,6 +1596,11 @@ MF.session = {
   async post(body) {
     const r = await fetch(this.api(), {
       method: 'POST', headers: { 'content-type': 'application/json' },
+      /* The cookie rides along, which on the register means a cross-origin
+         request that is not a cross-site one. The room answers those with its
+         own origin echoed rather than a wildcard, because a wildcard and
+         credentials are not allowed together and should not be. */
+      credentials: 'include',
       body: JSON.stringify(body),
     });
     const j = await r.json().catch(() => ({}));
@@ -1579,24 +1613,26 @@ MF.session = {
   async who(address) {
     const q = new URLSearchParams({ me: '1' });
     if (address) q.set('viewer', address);
-    const r = await fetch(`${this.api()}?${q}`, { headers: { accept: 'application/json' } });
+    const r = await fetch(`${this.api()}?${q}`,
+      { headers: { accept: 'application/json' }, credentials: 'include' });
     return r.ok ? r.json() : null;
   },
 
-  /** The one signature. */
+  /** The one signature. It names the site it was asked on, so a signature
+      collected somewhere else cannot be spent here. */
   async open(address, days, onState = () => {}) {
     const issued = new Date().toISOString();
+    const domain = location.hostname;
     const until = new Date(Date.parse(issued) + Number(days) * 86400000).toISOString();
-    const signature = await MF.sign(this.sentence({ action: 'sign in', address, issued, until }), address, onState);
-    const j = await this.post({ action: 'sign in', address, issued, until, signature });
-    this.keep({ address, token: j.token, until: j.until });
-    return j;
+    const signature = await MF.sign(
+      this.sentence({ action: 'sign in', address, issued, until, domain }), address, onState);
+    // the cookies come back on this answer; nothing is kept here
+    return this.post({ action: 'sign in', address, issued, until, domain, signature });
   },
 
   async close() {
-    const s = this.current();
+    try { await this.post({ action: 'sign out' }); } catch (err) { /* say so anyway */ }
     this.forget();
-    if (s) this.post({ action: 'sign out', token: s.token }).catch(() => {});
   },
 };
 
@@ -1663,6 +1699,7 @@ MF.nav = {
         src="${MF.ART}/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
       <a href="${MF.ART}/collections"${on('/collections')}>Collections</a>
       <a href="${MF.PEOPLE || '/'}"${AT_PEOPLE && here === '' ? ' aria-current="page"' : ''}>Collectors</a>
+      <a href="${MF.ART}/chat"${on('/chat')}>Studio</a>
       <span class="right">${this.cherry()}${right}</span>`;
   },
 

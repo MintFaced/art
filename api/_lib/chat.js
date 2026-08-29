@@ -28,7 +28,7 @@ const lower = (a) => String(a || '').toLowerCase();
 const said = (who, stored) => (who && who.known ? who.name : (stored || (who && who.name) || null));
 
 /** The sentence a wallet signs. */
-export function chatMessage({ action, text, target, address, issued, until, reply, emoji }) {
+export function chatMessage({ action, text, target, address, issued, until, reply, emoji, domain }) {
   /* The closing lines never name a duration. The Until line above already says
      exactly when this runs out, to the second, and it is worked out from the
      config ... so changing the length of a sign-in changes one number and the
@@ -51,6 +51,12 @@ export function chatMessage({ action, text, target, address, issued, until, repl
     'MintFace ... Studio',
     '',
     `Action: ${action}`,
+    /* Where this was asked for. Only on the sign-in, which is the only thing
+       here that mints a credential and hands it to two hosts; every other
+       action carries what it authorises in its own words and is spent at
+       once. A sentence that named the site on all of them would be four more
+       lines in four more wallets for nothing. */
+    ...(domain ? [`Domain: ${domain}`] : []),
     ...(text != null ? [`Message: ${text}`] : []),
     ...(reply != null && reply !== '' ? [`Replying to: ${reply}`] : []),
     ...(emoji ? [`Reaction: ${emoji}`] : []),

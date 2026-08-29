@@ -7,6 +7,7 @@ import { loadRegister } from './_lib/register.js';
 import { parseTags, tagIndex } from './_lib/names.js';
 import { linksIn } from './_lib/text.js';
 import { cardStore, familyKind, fetchCard, ourCard } from './_lib/cards.js';
+import { corsFor, cookieFrom, openCookies, clearCookies, domainOk, hostOf, TOKEN_COOKIE, WHO_COOKIE } from './_lib/session.js';
 
 /* The room.
  *
@@ -20,14 +21,17 @@ import { cardStore, familyKind, fetchCard, ourCard } from './_lib/cards.js';
  * the words approved in the wallet are the words that appear.
  */
 
-const CORS = {
-  'access-control-allow-origin': '*',
-  'access-control-allow-methods': 'GET, POST, OPTIONS',
-  'access-control-allow-headers': 'content-type',
+/* The answer, and who may read it.
+ *
+ * A credentialed request cannot be answered with a wildcard, so the CORS
+ * headers are worked out per request rather than written once: the family gets
+ * its own origin echoed and permission to send the cookie, everything else
+ * gets the wildcard the room has always answered with. See _lib/session.js. */
+const respond = (request, b, s = 200, extra = null) => {
+  const h = new Headers({ 'content-type': 'application/json', 'cache-control': 'no-store', ...corsFor(request) });
+  for (const line of extra || []) h.append('set-cookie', line);
+  return new Response(JSON.stringify(b, null, 1), { status: s, headers: h });
 };
-const json = (b, s = 200) => new Response(JSON.stringify(b, null, 1), {
-  status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...CORS },
-});
 const lower = (a) => String(a || '').toLowerCase();
 const ACTIONS = ['sign in', 'sign out', 'say', 'react', 'seen', 'delete', 'restore', 'mute', 'unmute'];
 
@@ -39,8 +43,8 @@ const MOST_ROWS = 60;
 const MOST_CARDS = 24;
 const MOST_FETCHES = 4;
 
-export function OPTIONS() {
-  return new Response(null, { status: 204, headers: CORS });
+export function OPTIONS(request) {
+  return new Response(null, { status: 204, headers: corsFor(request) });
 }
 
 const at = async (origin, p) => {
@@ -138,19 +142,27 @@ async function dressing(db, rows, base) {
 export async function GET(request) {
   const origin = useRequestOrigin(request) || siteOrigin();
   const url = new URL(request.url);
-  const viewer = lower(url.searchParams.get('viewer') || '');
+  /* Who is reading. The page may say, and the room's own page does because it
+     already knows. A page that does not ... the nav on the register, arriving
+     with a cookie and nothing else ... is answered from the session instead,
+     which is the whole point of the session being a cookie. */
+  let viewer = lower(url.searchParams.get('viewer') || '');
   const before = url.searchParams.get('before');
   const since = url.searchParams.get('since');
   const cards = url.searchParams.get('cards');
   const rx = url.searchParams.get('rx');
 
   if (!storeConfigured()) {
-    return json({ messages: [], total: 0, more: false, store: false });
+    return respond(request, { messages: [], total: 0, more: false, store: false });
   }
 
   let cfg;
-  try { cfg = await config(origin); } catch (e) { return json({ error: 'Studio is not reachable' }, 503); }
+  try { cfg = await config(origin); } catch (e) { return respond(request, { error: 'Studio is not reachable' }, 503); }
   const db = chatStore(pipe, cfg);
+  if (!viewer) {
+    const held = cookieFrom(request, TOKEN_COOKIE);
+    if (held) viewer = (await db.whoseSession(held).catch(() => null)) || '';
+  }
   const isArtist = Boolean(viewer && cfg.artist[viewer]);
 
   /* Every name in the room is drawn from the register, because an old message
@@ -175,10 +187,10 @@ export async function GET(request) {
          same as last time ... so the room carries where the marks are up to,
          and the page goes and looks only when that has moved. */
       const marks = await db.marksVersion().catch(() => 0);
-      if (!rows.length) return json({ messages: [], total, rx: marks, store: true });
+      if (!rows.length) return respond(request, { messages: [], total, rx: marks, store: true });
       const dress = await dressing(db, rows,
         { isArtist, artist: cfg.artist, register: await register(), viewer, cfg });
-      return json({ messages: rows.map((r) => render(r, dress)), total, rx: marks, store: true });
+      return respond(request, { messages: rows.map((r) => render(r, dress)), total, rx: marks, store: true });
     }
 
     /* ---- who am I, and what waited for me ----
@@ -190,8 +202,8 @@ export async function GET(request) {
      * answer to the same question. */
     if (url.searchParams.get('me') != null) {
       const days = Number(cfg.session_days || 7);
-      if (!/^0x[0-9a-f]{40}$/.test(viewer)) return json({ me: null, session_days: days, store: true });
-      return json({ me: await standing(db, origin, viewer, cfg, await register(), isArtist), session_days: days, store: true });
+      if (!/^0x[0-9a-f]{40}$/.test(viewer)) return respond(request, { me: null, session_days: days, store: true });
+      return respond(request, { me: await standing(db, origin, viewer, cfg, await register(), isArtist), session_days: days, store: true });
     }
 
     /* ---- what is under a message now ----
@@ -204,7 +216,7 @@ export async function GET(request) {
       const held = await db.marks(rows.filter((r) => !r.deleted).map((r) => r.n));
       const out = {};
       for (const row of rows) out[row.n] = row.deleted ? [] : marksOf(held[row.n], viewer, cfg);
-      return json({ reactions: out, rx: await db.marksVersion().catch(() => 0), store: true });
+      return respond(request, { reactions: out, rx: await db.marksVersion().catch(() => 0), store: true });
     }
 
     /* ---- what the links turn out to be ----
@@ -250,7 +262,7 @@ export async function GET(request) {
       for (const u of theirs) if (held[u]) out[u] = held[u].fail ? false : held[u];
       for (const [u, c] of got) out[u] = c || false;
       for (const [u, c] of mine) out[u] = c || false;
-      return json({ cards: out, store: true });
+      return respond(request, { cards: out, store: true });
     }
 
     const base = { isArtist, artist: cfg.artist, register: await register(), viewer, cfg };
@@ -259,7 +271,7 @@ export async function GET(request) {
     const me = /^0x[0-9a-f]{40}$/.test(viewer)
       ? await standing(db, origin, viewer, cfg, dress.register, isArtist)
       : null;
-    return json({
+    return respond(request, {
       messages: page.rows.map((r) => render(r, dress)),
       start: page.start, end: page.end, total: page.total, more: page.more,
       me, max_chars: cfg.max_chars, max_tags: Number(cfg.max_tags || 5),
@@ -267,7 +279,7 @@ export async function GET(request) {
       emoji: reactionSet(cfg), rx: await db.marksVersion().catch(() => 0), store: true,
     });
   } catch (e) {
-    return json({ error: 'Studio is not reachable' }, 503);
+    return respond(request, { error: 'Studio is not reachable' }, 503);
   }
 }
 
@@ -275,20 +287,25 @@ export async function GET(request) {
 
 export async function POST(request) {
   const origin = useRequestOrigin(request) || siteOrigin();
-  if (!storeConfigured()) return json({ error: 'Studio is not open yet' }, 503);
+  if (!storeConfigured()) return respond(request, { error: 'Studio is not open yet' }, 503);
 
   let body;
-  try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400); }
+  try { body = await request.json(); } catch { return respond(request, { error: 'bad request' }, 400); }
 
   const action = String(body.action || 'say');
   const signature = String(body.signature || '');
   const issued = String(body.issued || '');
-  const token = String(body.token || '');
+  /* The cookie first, and the body only where there is no cookie.
+     The browser stops handling the token at all once it is HttpOnly; what is
+     left of the body path is the sign-per-message rig, which is still a
+     supported way to speak, and the acceptance cases, which have no cookie jar
+     and drive the route directly. */
+  const token = cookieFrom(request, TOKEN_COOKIE) || String(body.token || '');
 
-  if (!ACTIONS.includes(action)) return json({ error: 'no such action' }, 400);
+  if (!ACTIONS.includes(action)) return respond(request, { error: 'no such action' }, 400);
 
   let cfg;
-  try { cfg = await config(origin); } catch (e) { return json({ error: 'Studio is not reachable' }, 503); }
+  try { cfg = await config(origin); } catch (e) { return respond(request, { error: 'Studio is not reachable' }, 503); }
   const db = chatStore(pipe, cfg);
 
   /* Who is doing this, settled once and before anything else.
@@ -302,15 +319,15 @@ export async function POST(request) {
   let bySession = false;
   if (token && action !== 'sign in') {
     address = await db.whoseSession(token);
-    if (!address) return json({ error: 'that sign-in has run out. Sign in again.', expired: true }, 401);
+    if (!address) return respond(request, { error: 'that sign-in has run out. Sign in again.', expired: true }, 401);
     bySession = true;
   } else {
     address = lower(body.address);
-    if (!/^0x[0-9a-f]{40}$/.test(address)) return json({ error: 'that is not a wallet address' }, 400);
-    if (!signature.startsWith('0x')) return json({ error: 'a signature is required' }, 400);
+    if (!/^0x[0-9a-f]{40}$/.test(address)) return respond(request, { error: 'that is not a wallet address' }, 400);
+    if (!signature.startsWith('0x')) return respond(request, { error: 'a signature is required' }, 400);
     const age = Date.now() - Date.parse(issued);
     if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
-      return json({ error: 'that signature has gone stale, please sign again' }, 400);
+      return respond(request, { error: 'that signature has gone stale, please sign again' }, 400);
     }
   }
 
@@ -325,20 +342,33 @@ export async function POST(request) {
   if (action === 'sign in') {
     const days = Number(cfg.session_days || 7);
     const until = sessionUntil(issued, days);
-    if (!until) return json({ error: 'bad request' }, 400);
-    if (!(await verify({ action: 'sign in', until }))) {
-      return json({ error: 'that signature does not match the wallet' }, 401);
+    if (!until) return respond(request, { error: 'bad request' }, 400);
+    /* Where this was signed, named in the sentence the wallet showed.
+       It is not what lets the session cross the two hosts ... one API mints it
+       and one API validates it, and it would cross without this. What it buys
+       is that a signature collected on some other site cannot be spent here. */
+    const domain = String(body.domain || '');
+    if (!domainOk(domain, request)) {
+      return respond(request, { error: 'that signature was not signed for this site' }, 400);
+    }
+    if (!(await verify({ action: 'sign in', until, domain }))) {
+      return respond(request, { error: 'that signature does not match the wallet' }, 401);
     }
     if (await db.isMuted(address)) {
-      return json({ error: 'This wallet is muted in Studio. You can still read.' }, 403);
+      return respond(request, { error: 'This wallet is muted in Studio. You can still read.' }, 403);
     }
     const fresh = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
-    await db.openSession(fresh, address, days * 86400);
-    return json({ ok: true, token: fresh, until, address });
+    const seconds = days * 86400;
+    await db.openSession(fresh, address, seconds);
+    /* Scoped to the parent domain, so signing in on the catalogue signs you in
+       on the register. Same registrable domain, so Lax is enough and nothing
+       here is a third-party cookie. */
+    return respond(request, { ok: true, token: fresh, until, address }, 200,
+      openCookies({ token: fresh, address, until, host: hostOf(request), seconds }));
   }
   if (action === 'sign out') {
     await db.closeSession(token);
-    return json({ ok: true, signed_out: true });
+    return respond(request, { ok: true, signed_out: true }, 200, clearCookies(hostOf(request)));
   }
 
   /* ---- I have read the room ----
@@ -347,9 +377,9 @@ export async function POST(request) {
      sign-in and nothing else: a signature per glance would be absurd, and the
      worst a stolen token can do here is mark somebody's own mentions read. */
   if (action === 'seen') {
-    if (!bySession) return json({ error: 'sign in first' }, 401);
+    if (!bySession) return respond(request, { error: 'sign in first' }, 401);
     await db.markSeen(address, await db.length());
-    return json({ ok: true, seen: true });
+    return respond(request, { ok: true, seen: true });
   }
 
   /* ---- a mark under something somebody said ----
@@ -366,46 +396,46 @@ export async function POST(request) {
    */
   if (action === 'react') {
     const n = Number(body.target);
-    if (!Number.isInteger(n) || n < 0) return json({ error: 'react to which message?' }, 400);
+    if (!Number.isInteger(n) || n < 0) return respond(request, { error: 'react to which message?' }, 400);
     const mark = checkReaction(body.emoji, cfg);
-    if (mark.error) return json({ error: mark.error }, 400);
+    if (mark.error) return respond(request, { error: mark.error }, 400);
 
     const row = await db.get(n);
-    if (!row) return json({ error: 'no such message' }, 404);
+    if (!row) return respond(request, { error: 'no such message' }, 404);
     /* A deleted message takes its marks down with it, so it cannot take new
        ones. The ones already there stay in the data with everything else. */
-    if (row.deleted) return json({ error: 'that message was taken down' }, 400);
+    if (row.deleted) return respond(request, { error: 'that message was taken down' }, 400);
 
     if (await db.isMuted(address)) {
-      return json({ error: 'This wallet is muted in Studio. You can still read.' }, 403);
+      return respond(request, { error: 'This wallet is muted in Studio. You can still read.' }, 403);
     }
     const reg = await loadRegister(at, origin, pipe).catch(() => null);
     const me = await whois(origin, address, reg);
     const may = taoGate({ artist: cfg.artist, address, tao: me.tao, min: cfg.min_tao || 1, why: SHUT });
-    if (!may.ok) return json({ error: may.why, tao: may.tao }, 403);
+    if (!may.ok) return respond(request, { error: may.why, tao: may.tao }, 403);
 
     if (!(await verify({ action: 'react', emoji: mark.emoji, target: String(body.target) }))) {
-      return json({ error: 'that signature does not match the wallet' }, 401);
+      return respond(request, { error: 'that signature does not match the wallet' }, 401);
     }
     const spent = await db.spendMarks(address);
-    if (spent.error) return json({ error: spent.error }, 429);
+    if (spent.error) return respond(request, { error: spent.error }, 429);
 
     const put = await db.react(n, address, mark.emoji);
     const held = await db.marks([n]);
-    return json({ ok: true, n, emoji: mark.emoji, on: put.on,
+    return respond(request, { ok: true, n, emoji: mark.emoji, on: put.on,
       reactions: marksOf(held[n], address, cfg), rx: await db.marksVersion().catch(() => 0) });
   }
 
   /* ---- the whole moderation toolset ---- */
   if (action !== 'say') {
-    if (!isArtist) return json({ error: 'Studio is moderated by the artist' }, 403);
+    if (!isArtist) return respond(request, { error: 'Studio is moderated by the artist' }, 403);
 
     if (action === 'mute' || action === 'unmute') {
       const target = lower(body.target);
-      if (!/^0x[0-9a-f]{40}$/.test(target)) return json({ error: 'mute a wallet address' }, 400);
-      if (!(await verify({ action, target }))) return json({ error: 'that signature does not match the wallet' }, 401);
+      if (!/^0x[0-9a-f]{40}$/.test(target)) return respond(request, { error: 'mute a wallet address' }, 400);
+      if (!(await verify({ action, target }))) return respond(request, { error: 'that signature does not match the wallet' }, 401);
       if (action === 'mute') await db.mute(target); else await db.unmute(target);
-      return json({ ok: true, muted: await db.muted() });
+      return respond(request, { ok: true, muted: await db.muted() });
     }
 
     /* One field, `target`, for every moderation action: the wallet for a mute,
@@ -414,11 +444,11 @@ export async function POST(request) {
        puts in the sentence, and therefore nothing for the two to disagree
        about. Signatures that fail for a field name are unbearable to debug. */
     const n = Number(body.target);
-    if (!Number.isInteger(n) || n < 0) return json({ error: 'which message?' }, 400);
+    if (!Number.isInteger(n) || n < 0) return respond(request, { error: 'which message?' }, 400);
     const row = await db.get(n);
-    if (!row) return json({ error: 'no such message' }, 404);
+    if (!row) return respond(request, { error: 'no such message' }, 404);
     if (!(await verify({ action, target: String(body.target) }))) {
-      return json({ error: 'that signature does not match the wallet' }, 401);
+      return respond(request, { error: 'that signature does not match the wallet' }, 401);
     }
     row.deleted = action === 'delete';
     await db.save(row);
@@ -427,12 +457,12 @@ export async function POST(request) {
        its reply line back with it rather than leaving them off until a reload. */
     const dress = await dressing(db, [row],
       { isArtist: true, artist: cfg.artist, register, viewer: address, cfg });
-    return json({ ok: true, n, deleted: row.deleted, message: render(row, dress) });
+    return respond(request, { ok: true, n, deleted: row.deleted, message: render(row, dress) });
   }
 
   /* ---- saying something ---- */
   const text = checkMessage(body.text, cfg);
-  if (text.error) return json({ error: text.error }, 400);
+  if (text.error) return respond(request, { error: text.error }, 400);
 
   /* What this is answering, if anything.
    *
@@ -449,21 +479,21 @@ export async function POST(request) {
   let answered = null;
   if (body.reply != null && body.reply !== '') {
     reply = Number(body.reply);
-    if (!Number.isInteger(reply) || reply < 0) return json({ error: 'reply to which message?' }, 400);
+    if (!Number.isInteger(reply) || reply < 0) return respond(request, { error: 'reply to which message?' }, 400);
     const parent = await db.get(reply);
-    if (!parent) return json({ error: 'no such message' }, 404);
-    if (parent.deleted) return json({ error: 'that message was taken down' }, 400);
+    if (!parent) return respond(request, { error: 'no such message' }, 404);
+    if (parent.deleted) return respond(request, { error: 'that message was taken down' }, 400);
     answered = lower(parent.address) || null;
   }
 
   if (await db.isMuted(address)) {
-    return json({ error: 'This wallet is muted in Studio. You can still read.' }, 403);
+    return respond(request, { error: 'This wallet is muted in Studio. You can still read.' }, 403);
   }
 
   const register = await loadRegister(at, origin, pipe).catch(() => null);
   const who = await whois(origin, address, register);
   const gate = taoGate({ artist: cfg.artist, address, tao: who.tao, min: cfg.min_tao || 1, why: SHUT });
-  if (!gate.ok) return json({ error: gate.why, tao: gate.tao }, 403);
+  if (!gate.ok) return respond(request, { error: gate.why, tao: gate.tao }, 403);
 
   /* Who was tagged, worked out here rather than taken from the body.
    *
@@ -480,19 +510,19 @@ export async function POST(request) {
   const distinct = [...new Set(mentions.map((m) => m.address))];
   const maxTags = Number(cfg.max_tags || 5);
   if (distinct.length > maxTags) {
-    return json({ error: `${distinct.length} names in one message, and Studio's limit is ${maxTags}.` }, 400);
+    return respond(request, { error: `${distinct.length} names in one message, and Studio's limit is ${maxTags}.` }, 400);
   }
 
   if (!(await verify({ action: 'say', text: text.text, reply: reply == null ? null : String(reply) }))) {
-    return json({ error: 'that signature does not match the wallet' }, 401);
+    return respond(request, { error: 'that signature does not match the wallet' }, 401);
   }
 
   /* Spent only once the message is known to be good, so a refusal for its
      words does not also cost somebody their fifteen seconds. */
   const spend = await db.spend(address);
-  if (spend.error) return json({ error: spend.error }, 429);
+  if (spend.error) return respond(request, { error: spend.error }, 429);
   const spentTags = await db.spendTags(address, distinct.length, cfg);
-  if (spentTags.error) return json({ error: spentTags.error }, 429);
+  if (spentTags.error) return respond(request, { error: spentTags.error }, 429);
 
   const row = await db.say({
     address, role: gate.role,
@@ -510,5 +540,5 @@ export async function POST(request) {
   await db.mention([...told].filter((a) => a !== address), row.n);
   const dress = await dressing(db, [row],
     { isArtist, artist: cfg.artist, register, viewer: address, cfg });
-  return json({ ok: true, message: render(row, dress) });
+  return respond(request, { ok: true, message: render(row, dress) });
 }

@@ -124,11 +124,14 @@ body[data-nav="flow"] .nav{position:static}
 /* Nothing hides behind a hamburger: the labels tighten and the four items fit.
    A menu that has to be opened to be read is not a nav, it is a drawer. */
 @media(max-width:640px){
-  .nav{gap:14px;padding:0 18px;height:46px}
+  .nav{gap:12px;padding:0 16px;height:46px}
   .nav .wordmark img{height:15px}
-  .nav a,.nav button{font-size:9px;letter-spacing:.11em}
-  .nav .right{gap:13px}
-  .nav .you{max-width:7.5em}
+  .nav a,.nav button{font-size:9px;letter-spacing:.1em}
+  .nav .right{gap:12px}
+  /* the name is set tighter than the labels here: a label is a word being
+     read across, a name is a word being recognised, and every character of it
+     that survives the squeeze is worth more than the air around it */
+  .nav .you{max-width:9em;letter-spacing:.06em}
   .cherry{gap:5px}
   .cherry .fruit{font-size:14px}
 }

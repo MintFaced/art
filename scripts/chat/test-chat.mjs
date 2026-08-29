@@ -160,6 +160,7 @@ process.env.KV_REST_API_TOKEN = 'test';
 const { GET, POST } = await import('../../api/chat.js');
 const { chatMessage, chatStore, wearTao, sessionUntil } = await import('../../api/_lib/chat.js');
 const { pipe } = await import('../../api/_lib/kv.js');
+const { openCookies, clearCookies, corsFor, domainOk, TOKEN_COOKIE, WHO_COOKIE } = await import('../../api/_lib/session.js');
 
 let failed = 0, ran = 0;
 const ok = (cond, label, detail) => {
@@ -189,17 +190,25 @@ const react = async (account, target, emoji) => post(account, { action: 'react',
 const CHERRY = '\u{1F352}';
 const HEART = '\u2764\ufe0f';
 
+/* The host this test's route is answering on. A sign-in names the site it was
+   asked on, and the check accepts the two hosts of the family plus whatever
+   host is answering ... which is what lets a preview deploy sign into itself,
+   and what lets this run on the loopback. */
+const HERE = new URL(ORIGIN).hostname;
+
 /** The one signature, the way the page does it. */
-const signIn = async (account) => {
+const signIn = async (account, domain = HERE) => {
   const issued = new Date().toISOString();
   const address = A(account);
   const until = sessionUntil(issued, chatCfg.session_days);
-  const signature = await account.signMessage({ message: chatMessage({ action: 'sign in', address, issued, until }) });
+  const signature = await account.signMessage({
+    message: chatMessage({ action: 'sign in', address, issued, until, domain }),
+  });
   const r = await POST(new Request(`${ORIGIN}/api/chat`, {
     method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ action: 'sign in', address, issued, until, signature }),
+    body: JSON.stringify({ action: 'sign in', address, issued, until, domain, signature }),
   }));
-  return { status: r.status, body: await r.json() };
+  return { status: r.status, body: await r.json(), cookies: r.headers.getSetCookie() };
 };
 const withToken = async (token, payload) => {
   const r = await POST(new Request(`${ORIGIN}/api/chat`, {
@@ -891,6 +900,168 @@ head('What the nav asks, on every page of both sites');
     JSON.stringify(nobodyAtAll.body));
   const junk = await get('me=1&viewer=not-a-wallet');
   ok(junk.status === 200 && junk.body.me === null, 'and so is a viewer that is not an address');
+}
+
+/* ================= one sign-in, two hosts ================= */
+head('The sentence names the site it was asked on');
+{
+  advance(700000);
+  const good = await signIn(visco, 'mintface.art');
+  ok(good.status === 200 && good.body.token, 'a sign-in signed for the catalogue is taken', good.body.error);
+  const other = await signIn(visco, 'collectors.mintface.art');
+  ok(other.status === 200 && other.body.token,
+    'and one signed for the register is taken by the same API, which is the whole trick',
+    other.body.error);
+  const mine = await signIn(visco, HERE);
+  ok(mine.status === 200, 'and one signed for whatever host is answering, so a preview signs into itself');
+
+  const elsewhere = await signIn(visco, 'mintface.art.evil.example');
+  ok(elsewhere.status === 400 && /not signed for this site/.test(elsewhere.body.error || ''),
+    'a signature collected somewhere else cannot be spent here',
+    `${elsewhere.status} ${elsewhere.body.error}`);
+  const lookalike = await signIn(visco, 'mintfaceart');
+  ok(lookalike.status === 400, 'nor one signed for a name that only reads like ours');
+
+  /* And it is in the sentence, not merely in the request. A domain the server
+     checks but the wallet never showed would be a promise to nobody. */
+  const text = chatMessage({ action: 'sign in', address: A(visco),
+    issued: '2026-08-29T00:00:00.000Z', until: '2026-09-28T00:00:00.000Z', domain: 'mintface.art' });
+  ok(text.includes('Domain: mintface.art'), 'and the wallet is shown the site it is signing for',
+    text.split('\n')[3]);
+  const swapped = await (async () => {
+    const issued = new Date().toISOString();
+    const address = A(visco);
+    const until = sessionUntil(issued, chatCfg.session_days);
+    const signature = await visco.signMessage({
+      message: chatMessage({ action: 'sign in', address, issued, until, domain: 'mintface.art' }),
+    });
+    const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ action: 'sign in', address, issued, until,
+        domain: 'collectors.mintface.art', signature }),
+    }));
+    return { status: r.status };
+  })();
+  ok(swapped.status === 401, 'so the site cannot be changed after signing', String(swapped.status));
+
+  const none = await (async () => {
+    const issued = new Date().toISOString();
+    const address = A(visco);
+    const until = sessionUntil(issued, chatCfg.session_days);
+    const signature = await visco.signMessage({ message: chatMessage({ action: 'sign in', address, issued, until }) });
+    const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ action: 'sign in', address, issued, until, signature }),
+    }));
+    return { status: r.status };
+  })();
+  ok(none.status === 400, 'and a sign-in that names no site at all is not taken', String(none.status));
+}
+
+head('The session is a cookie the two hosts share');
+{
+  advance(700000);
+  const opened = await signIn(visco, 'mintface.art');
+  const jar = opened.cookies || [];
+  const tok = jar.find((c) => c.startsWith(`${TOKEN_COOKIE}=`));
+  const who = jar.find((c) => c.startsWith(`${WHO_COOKIE}=`));
+  ok(tok && who, 'signing in sets two cookies', jar.map((c) => c.split('=')[0]).join(', '));
+  ok(/HttpOnly/.test(tok), 'the credential is HttpOnly, so no script on either site can read it again');
+  ok(!/HttpOnly/i.test(who), 'and the one the nav draws from is not, because that is its whole job');
+  ok(/^mf_who=0x[0-9a-f]{40}%7C/i.test(who) || /^mf_who=0x[0-9a-f]{40}\|/i.test(who),
+    'and it carries a wallet and a date, which are public, and nothing else', who.split(';')[0]);
+  ok(/Secure/.test(tok) && /SameSite=Lax/.test(tok),
+    'Secure, and Lax ... the two hosts are one registrable domain, so nothing here is third-party');
+
+  /* The scoping itself, checked on the real hostnames rather than on the
+     loopback this route is answering from. */
+  const real = openCookies({ token: 'x'.repeat(64), address: A(visco), until: '2026-09-28T00:00:00.000Z',
+    host: 'mintface.art', seconds: 2592000 });
+  ok(real.every((c) => c.includes('Domain=.mintface.art')),
+    'set from the catalogue, it is scoped to the domain both hosts share', real[0].split(';')[1]);
+  const fromPeople = openCookies({ token: 'x'.repeat(64), address: A(visco), until: '2026-09-28T00:00:00.000Z',
+    host: 'collectors.mintface.art', seconds: 2592000 });
+  ok(fromPeople.every((c) => c.includes('Domain=.mintface.art')),
+    'and set from the register, the very same scope, so it goes both ways');
+  const preview = openCookies({ token: 'x'.repeat(64), address: A(visco), until: '2026-09-28T00:00:00.000Z',
+    host: 'art-abc123.vercel.app', seconds: 2592000 });
+  ok(preview.every((c) => !/Domain=/.test(c)),
+    'a preview deploy is a different registrable domain and keeps its session to itself');
+
+  ok(clearCookies('mintface.art').filter((c) => /Domain=\.mintface\.art/.test(c)).length === 2
+    && clearCookies('mintface.art').filter((c) => !/Domain=/.test(c)).length === 2,
+    'and signing out clears both the parent and the host, so a session from before the re-scope goes too',
+    `${clearCookies('mintface.art').length} lines`);
+}
+
+head('The cookie is what speaks, and the body no longer has to');
+{
+  advance(700000);
+  const opened = await signIn(visco, 'mintface.art');
+  const jar = opened.cookies || [];
+  const cookie = jar.map((c) => c.split(';')[0]).join('; ');
+
+  const said = await (async () => {
+    const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json', cookie },
+      body: JSON.stringify({ action: 'say', text: 'Said with a cookie and nothing else.' }),
+    }));
+    return { status: r.status, body: await r.json() };
+  })();
+  ok(said.status === 200 && said.body.message.address === A(visco),
+    'a message with no token in it at all, written under the wallet the cookie stands for',
+    said.body.error || said.body.message.address);
+
+  /* Who is reading, answered from the session rather than from a query string.
+     The nav on the register arrives with a cookie and nothing else. */
+  const seen = await GET(new Request(`${ORIGIN}/api/chat?me=1`, { headers: { cookie } }));
+  const body = await seen.json();
+  ok(body.me && body.me.name === 'visco.eth' && body.me.url,
+    'and the nav is told whose name to draw without having to say whose name to draw',
+    JSON.stringify(body.me && { name: body.me.name, url: body.me.url }));
+
+  const out = await (async () => {
+    const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json', cookie },
+      body: JSON.stringify({ action: 'sign out' }),
+    }));
+    return { status: r.status, cookies: r.headers.getSetCookie() };
+  })();
+  ok(out.status === 200 && out.cookies.every((c) => /Max-Age=0/.test(c)),
+    'and signing out unsets them, which only the server can do to an HttpOnly cookie',
+    `${out.cookies.length} cleared`);
+  const after = await (async () => {
+    const r = await POST(new Request(`${ORIGIN}/api/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json', cookie },
+      body: JSON.stringify({ action: 'say', text: 'Still here?' }),
+    }));
+    return r.status;
+  })();
+  ok(after === 401 || after === 400, 'and the cookie stops working at once', String(after));
+}
+
+head('Credentials and a wildcard are not allowed together');
+{
+  const fam = corsFor(new Request('https://mintface.art/api/chat',
+    { headers: { origin: 'https://collectors.mintface.art' } }));
+  ok(fam['access-control-allow-origin'] === 'https://collectors.mintface.art'
+    && fam['access-control-allow-credentials'] === 'true',
+    'the register is answered with its own origin and permission to send the cookie',
+    JSON.stringify(fam['access-control-allow-origin']));
+  ok(fam.vary === 'Origin', 'and the answer says it varies by who asked, so no cache hands one reader the other\'s');
+
+  const stranger = corsFor(new Request('https://mintface.art/api/chat',
+    { headers: { origin: 'https://somebody.example' } }));
+  ok(stranger['access-control-allow-origin'] === '*' && !stranger['access-control-allow-credentials'],
+    'everybody else keeps the wildcard the room has always answered with, and gets no credentials',
+    JSON.stringify(stranger['access-control-allow-origin']));
+  const bare = corsFor(new Request('https://mintface.art/api/chat'));
+  ok(bare['access-control-allow-origin'] === '*', 'and so does a request with no origin on it at all');
+
+  ok(domainOk('collectors.mintface.art', new Request('https://mintface.art/api/chat'))
+    && domainOk('mintface.art', new Request('https://mintface.art/api/chat'))
+    && !domainOk('evil.example', new Request('https://mintface.art/api/chat')),
+    'and the pair is a list of two, not a suffix match');
 }
 
 server.close();

@@ -340,7 +340,7 @@ async function load({ bottom = false } = {}) {
 async function markSeen() {
   const s = mySession();
   if (!s) return;
-  try { await post({ action: 'seen', token: s.token }); } catch (err) { /* next visit */ }
+  try { await post({ action: 'seen' }); } catch (err) { /* next visit */ }
 }
 
 /* Earlier, a page at a time. The guard is on the affordance rather than on the
@@ -961,7 +961,7 @@ async function send(payload) {
   const s = mySession();
   if (s) {
     try {
-      return await post({ ...payload, token: s.token });
+      return await post({ ...payload });
     } catch (err) {
       if (!err.expired) throw err;
       MF.session.forget();                         // the week is up; ask for another
