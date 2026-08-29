@@ -39,7 +39,15 @@ const collections = fs.readdirSync(path.join(ROOT, 'data/c'))
 // attaches it. If it has never been built the collectors still build fine.
 const tao = load('data/tao.json', null);
 const nudges = load('data/nudge-weighings.json', null);
-const d = deriveCollectors(collections, titleOf, privateList, tao, nudges);
+/* The fourth naming tier, as the crons read it. This script writes the same
+   file they do, so it has to write the same shape ... a hand-run rebuild that
+   quietly dropped two hundred names would be indistinguishable from a bad
+   night. See api/_lib/ens.js and docs/NAMES.md. */
+let forward = null;
+try { forward = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/ens-forward.json'), 'utf8')); }
+catch (e) { /* no pass has run yet */ }
+
+const d = deriveCollectors(collections, titleOf, privateList, tao, nudges, forward);
 
 if (DRY) {
   console.log(JSON.stringify(d.index.counts, null, 1));

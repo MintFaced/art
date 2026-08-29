@@ -470,8 +470,23 @@ async function run({ key, dry, started, prior, url }) {
       try { priv = new Set((((await get('data/source/collectors-private.json')).wallets) || []).map((w) => String(w).toLowerCase())); } catch (e) { /* nobody */ }
       let nudges = null;
       try { nudges = await get('data/nudge-weighings.json'); } catch (e) { /* none yet */ }
+      /* The fourth naming tier, read rather than recomputed.
+       *
+       * The ownership sweep half an hour ago asked the subgraph and wrote the
+       * answer down; this run reads it. Two sweeps a night against somebody
+       * else's index, to arrive at the same two hundred names, would be one
+       * question too many and one place too many to keep in step.
+       *
+       * It has to be read at all because this is the second thing tonight to
+       * write the register, and it goes last. It rebuilt the file thirty
+       * minutes after the pass and, not being handed the names, wrote the
+       * column empty over the top of them ... which is how the second largest
+       * holding on the board was named at 21:02 and a bare address at 21:31.
+       * A file with two writers has to have one shape. */
+      let forward = null;
+      try { forward = await get('data/ens-forward.json'); } catch (e) { /* no pass has run yet */ }
 
-      const d = deriveCollectors(all, titleOf, priv, tao, nudges);
+      const d = deriveCollectors(all, titleOf, priv, tao, nudges, forward);
       registerCounts = d.index.counts;
       await put('data/collectors.json', d.index, `Collectors: TAO to ${tao.generated.slice(0, 10)}`);
       /* Through registerFile rather than put, as in api/cron/owners.js: the

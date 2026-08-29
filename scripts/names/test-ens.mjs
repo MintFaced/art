@@ -10,6 +10,9 @@
 import { usableName, forwardName, namesPointingAt, forwardPass } from '../../api/_lib/ens.js';
 import { nameFor, sourceOf, registerIndex, naming, TIERS_UNCLAIMED } from '../../api/_lib/names.js';
 import { deriveCollectors } from '../../api/_lib/collectors.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 let failed = 0, ran = 0;
 const ok = (cond, label, detail) => {
@@ -185,6 +188,34 @@ head('The slug never adopts it');
   const bcol = Object.fromEntries(bare.register.fields.map((f, i) => [f, i]));
   ok(bare.register.rows.every((r) => r[bcol.fwd] === ''),
     'and with no pass at all the column is simply empty');
+}
+
+head('Everything that writes the register writes the same register');
+{
+  /* The file has three writers: two crons and a hand-run script. The tao cron
+     goes last, and on the first real night it rebuilt the register half an
+     hour after the pass without the names in hand and wrote the column empty
+     over the top of them. josephj.eth was named at 21:02 and a bare address at
+     21:31. So the guard is structural: anything that derives the register has
+     to be handed the fourth tier, and this is what says so. */
+  const writers = ['api/cron/owners.js', 'api/cron/tao.js', 'scripts/build-collectors.mjs'];
+  const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+  for (const w of writers) {
+    const text = fs.readFileSync(path.join(ROOT, w), 'utf8');
+    const calls = [...text.matchAll(/deriveCollectors\(([^)]*)\)/g)].map((m) => m[1]);
+    const writes = /registerFile\(/.test(text);
+    const derives = calls.filter((c) => c.split(',').length >= 6);
+    ok(!writes || derives.length > 0,
+      `${w} hands deriveCollectors the fourth tier`,
+      calls.map((c) => `${c.split(',').length} args`).join(' | '));
+  }
+  /* The one exception, stated rather than assumed: the ownership sweep derives
+     once with five arguments to find out who to ask about, then again with
+     six. A five-argument call there is the question, not the answer. */
+  const owners = fs.readFileSync(path.join(ROOT, 'api/cron/owners.js'), 'utf8');
+  ok(/const first = deriveCollectors\(cols, titleOf, priv, tao, nudges\);/.test(owners)
+    && /const d = deriveCollectors\(cols, titleOf, priv, tao, nudges, forward\);/.test(owners),
+    'and the sweep that asks derives twice on purpose: once to know who to ask about, once with the answer');
 }
 
 console.log(`\n${'='.repeat(74)}`);
