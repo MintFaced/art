@@ -66,6 +66,11 @@ export async function GET(request) {
     return {
       address: r.address,
       name: (w && w.known ? w.name : null) || r.name || (w ? w.name : null) || null,
+      /* A private collector reads as the register reads them everywhere: named
+         'Private collector', with no page to go to. `urlOf` already answers
+         null for them, and the flag is here so a card can draw the row in the
+         standing treatment rather than inferring it from a missing link. */
+      private: Boolean(w && w.private),
       url: register ? register.urlOf(r.address) : null,
       side: r.side || null, candidate: r.candidate || null,
       weight: r.weight, at: r.at, clamped: Boolean(r.clamped),
@@ -95,6 +100,11 @@ export async function GET(request) {
         rule: p.rule || lockRule(n),
         total: p.total, collectors: p.collectors,
         leader: p.leader || null, locked: p.locked || null, why: p.why || null,
+        progress: p.progress || null,
+        /* The public record, one row per collector and the row is where they
+           stand now. Newest first: on a board still forming, what just moved
+           is the interesting part. */
+        ledger: (p.ledger || []).map(dress),
         candidates: (p.candidates || []).map((c) => ({
           hex: c.hex, total: c.total, voters: c.voters, share: c.share,
           proposed_by: c.proposed_by || null,

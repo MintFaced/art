@@ -70,3 +70,14 @@ The pilot needed a shape the binary nudge does not have: a question where the co
 **The first nudge is seeded and NOT published.** `data/nudges.json` carries it with the question, the note, the promise and the thresholds exactly as briefed. `published` is `false` and the close date is a placeholder thirty days out. **Two things are Ryan's**: the date, and whether to make that promise in public. Set `closes`, turn `published` to `true`, and it opens. `api/studio-api.js` now takes `kind`, `lock_voters`, `lock_tao` and `promise` on the `nudge` action — though the console still has no form that posts to it, for candidate nudges or binary ones.
 
 **Checks.** `scripts/tao/test-nudges.mjs`, now fifty-four: the board sorted by weight with the unbacked colours still on it, the same colour proposed twice landing as one swatch with the first proposer credited, both halves of the threshold failing alone, the clamp dragging a leader back under the line, hex parsing in every form, and a signature that names its colour so it cannot be spent on another.
+
+### The public record on a candidate card (2026-08-30)
+
+**One row per collector, and the row is where they stand now.** Somebody who re-weighs, or moves their TAO from one colour to another, is one row on their latest position — not a history of edits. The card answers who stands where; every signature that got them there is in `data/nudge-weighings.json`, which appends and never rewrites. That is the split the AVS rules already made for binary nudges, applied to colours: side is a colour.
+
+**A row is a chip of the colour they backed, their name, what it is worth now, and when.** Newest first, because on a board still forming the interesting question is what just moved. Register conventions throughout: a name is a door to their register page, the figures are live and clamped so a row can shrink between readings and says `clamped` when it has, and a private collector reads as *Private collector* in the muted treatment and goes nowhere — the same restraint the register table shows.
+
+**Above it, how far the lock is.** `6 COLLECTORS · 812,000 TAO WEIGHED`, and then the leader against both thresholds as two hairline bars: `VOTERS 4 OF 5`, `TAO ON THE LEADER 402K OF 500K`. Two bars rather than one blended figure, because a nudge that has met one threshold has met neither, and a single number would be a number that does not exist. Each fills to its own fraction and stops at its own line.
+
+**Two class collisions bit on the way in, both from the merge.** A ledger name wearing `.quiet` — the room's hover affordance — was drawn at opacity nought, so every private and unnamed collector was invisible. A colour chip wearing `.dot` inherited the availability mark, which is round, nudged up two pixels, and the one place this site uses colour to mean something. Both were obvious on screen and invisible to a route test. There are now checks that the ledger wears neither.
+

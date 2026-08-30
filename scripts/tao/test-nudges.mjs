@@ -7,7 +7,9 @@
  *
  *   node scripts/tao/test-nudges.mjs
  */
+import { createRequire } from 'node:module';
 import { tally, latest, isOpen, provenanceLine, palette, checkHex, lockRule, kindOf, proposeMessage, weighMessage } from '../../api/_lib/nudges.js';
+const require2 = createRequire(import.meta.url);
 
 let pass = 0, fail = 0;
 const is = (label, got, want) => {
@@ -166,6 +168,80 @@ const holds = (x) => five[x] || 0;
   is('and a nudge that only steered says only that',
     provenanceLine({ total: 214000, collectors: 31, number: 3 }),
     'Steered by 214,000 TAO across 31 collectors · Nudge #3');
+}
+
+/* ================= the public record ================= */
+{
+  /* One row per collector, and the row is where they stand now. Somebody who
+     moves from blue to red is not two rows and not a history: the card is
+     who-stands-where, and every signature that got them there is in the
+     weighings file. */
+  const held = { a: 300000, b: 120000, c: 90000 };
+  const all = [
+    { nudge: 'p1', address: 'a', candidate: RED, amount: 300000, at: '2026-09-01T10:00:00Z' },
+    { nudge: 'p1', address: 'b', candidate: BLUE, amount: 120000, at: '2026-09-02T10:00:00Z' },
+    { nudge: 'p1', address: 'b', candidate: RED, amount: 120000, at: '2026-09-03T10:00:00Z' },
+    { nudge: 'p1', address: 'c', candidate: RED, amount: 90000, at: '2026-09-04T10:00:00Z' },
+  ];
+  const p = palette(latest(all, 'p1'), [prop(RED, 'a', '1'), prop(BLUE, 'b', '2')], (x) => held[x] || 0, null);
+  is('four weighings from three collectors is three rows', p.ledger.length, 3);
+  is('newest first', p.ledger.map((r) => r.address), ['c', 'b', 'a']);
+  is('the one who switched appears once', p.ledger.filter((r) => r.address === 'b').length, 1);
+  is('on the colour they are on now', p.ledger.find((r) => r.address === 'b').candidate, RED);
+  is('and blue keeps nothing they took away', p.candidates.find((c) => c.hex === BLUE).total, 0);
+  is('every row says which colour it is behind', p.ledger.every((r) => r.candidate), true);
+
+  /* Somebody who sold everything still stands somewhere. The row says nought
+     rather than disappearing: a ledger that quietly dropped people would be a
+     ledger you could not check against the total. */
+  const sold = palette(latest(all, 'p1'), [prop(RED, 'a', '1')], (x) => (x === 'a' ? 0 : held[x] || 0), null);
+  is('a collector who sold down keeps their row', sold.ledger.length, 3);
+  is('at nothing', sold.ledger.find((r) => r.address === 'a').weight, 0);
+  is('marked as clamped', sold.ledger.find((r) => r.address === 'a').clamped, true);
+  is('and is not counted among the collectors', sold.collectors, 2);
+}
+{
+  /* How far the lock is, as two fractions. Not one blended figure: a nudge
+     that met one threshold has met neither, and a single number would be a
+     number that does not exist. */
+  const held = { a: 380000, b: 1, c: 1, d: 1 };
+  const p = palette(
+    ['a', 'b', 'c', 'd'].map((x, i) => put(x, RED, held[x], String(i))),
+    [prop(RED, 'a', '1')], (x) => held[x] || 0, null);
+  is('the voters fraction', [p.progress.voters.at, p.progress.voters.of], [4, 5]);
+  is('the TAO fraction', [p.progress.tao.at, p.progress.tao.of], [380003, 500000]);
+  is('and it is short of both, so nothing locks', p.locked, null);
+
+  const none = palette([], [], () => 0, null);
+  is('with nothing proposed the fractions are nought', [none.progress.voters.at, none.progress.tao.at], [0, 0]);
+
+  const over = palette(
+    ['a', 'b', 'c', 'd', 'e', 'f'].map((x, i) => put(x, RED, 200000, String(i))),
+    [prop(RED, 'a', '1')], () => 200000, null);
+  is('past the line the fractions report what is actually there',
+    [over.progress.voters.at, over.progress.tao.at], [6, 1200000]);
+  is('and it locks', Boolean(over.locked), true);
+}
+{
+  /* The card, read as text. Two class collisions bit here on the way in ...
+     a ledger name wearing the room's hover affordance was drawn at opacity
+     nought, and a colour chip wearing the availability dot came out round ...
+     which is what a merged surface does when two components share a word. */
+  const fs2 = require2('node:fs');
+  const page = fs2.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
+  const led = page.slice(page.indexOf('function ledgerRows'), page.indexOf('function candidateCard'));
+  is('the ledger has a summary above it', /collector\$\{x\.collectors === 1/.test(led)
+    && /TAO weighed/.test(led), true);
+  is('a name with a page is a door', /r\.url && !r\.private \? `<a href=/.test(led), true);
+  is('a private collector is not', /class="anon"/.test(led), true);
+  is('the ledger does not wear the room\'s hover class', /class="quiet"/.test(led), false);
+  is('nor the availability dot', /class="dot"/.test(led), false);
+  is('and the colour chip is its own class', /class="hexdot"/.test(led), true);
+  is('the figures are the live ones, marked where they shrank', /r\.clamped \? '<span class="cl"/.test(led), true);
+  const bars = page.slice(page.indexOf('function thresholdBars'), page.indexOf('function ledgerRows'));
+  is('two bars, not one', (bars.match(/bar\('/g) || []).length, 2);
+  is('drawn in the house meter', /class="meter"/.test(bars) && /class="track"/.test(bars), true);
+  is('and each stops at its own line', /Math\.min\(1, at \/ of\)/.test(bars), true);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

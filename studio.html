@@ -43,7 +43,9 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .note{font-size:15px;line-height:1.65;color:#3a362f;margin:14px 0 0;max-width:34em}
 .nudges .shot{margin:18px 0 0;max-width:520px}
 .nudges .shot img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
-/* two hairline meters, the way every other measure on this site reads */
+/* two hairline meters, the way every other measure on this site reads. On a
+   candidate nudge they carry the two thresholds rather than two sides, which
+   is the same job: a fraction of something, drawn to scale. */
 .nudges .bars{margin:22px 0 0;max-width:520px}
 .nudges .meter{margin-bottom:12px}
 .nudges .meter .lab{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10.5px;
@@ -104,7 +106,32 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .weigh.ghosted{background:none;color:var(--muted);border:1px solid var(--rule)}
 .nudges .weigh.ghosted:hover{border-color:var(--ink);color:var(--ink)}
 
-.nudges .ledger{margin:22px 0 0;max-width:640px}
+/* The summary above the record. Two facts and nothing else: how many people,
+   and how much between them. */
+.nudges .tally{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);margin:26px 0 0;font-variant-numeric:tabular-nums}
+
+/* A colour in a ledger row. Small enough to be a mark rather than a swatch:
+   the board above is where a colour is judged, and here it is only saying
+   which one. */
+.nudges .ledger .c{width:18px;padding-left:0}
+/* Not .dot: that is the availability mark, the one place this site uses
+   colour to mean something, and it is round and translated up two pixels for
+   sitting in a line of type. This is a square of paint. */
+.nudges .ledger .hexdot{display:block;width:12px;height:12px;border:1px solid var(--rule);border-radius:0}
+.nudges .ledger .t{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);white-space:nowrap;text-align:right}
+/* A weighing that shrank because its wallet did. Said quietly beside the
+   figure rather than in a column of its own, because it is a fact about that
+   number rather than a fact about that collector. */
+.nudges .ledger .cl{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint);margin-left:6px}
+/* A private collector: named as the register names them, and going nowhere.
+   Not .quiet ... that is the room's hover affordance and sits at opacity nought
+   until the pointer is over a message, which made these names invisible. */
+.nudges .ledger .anon{color:var(--muted)}
+
+.nudges .ledger{margin:16px 0 0;max-width:640px}
 .nudges .ledger table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .nudges .ledger th{text-align:left;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;
   text-transform:uppercase;color:var(--muted);font-weight:400;padding:0 0 9px;border-bottom:1px solid var(--rule)}
@@ -1553,6 +1580,10 @@ const sent = (location.hash.match(/^#m-(\d+)$/) || [])[1];
 const NUDGE = { state: null, tao: 0, picked: {} };
 const num = (x) => Number(x || 0).toLocaleString('en-NZ');
 const dateOf = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+/* A ledger row is one of many and a nudge runs for a fortnight, so the day and
+   the month carry it. The year stays because the record outlives the nudge and
+   a banked card read in two years should not have to guess. */
+const shortDate = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' }) : '');
 
 async function loadNudges() {
   const s = MF.session.current();
@@ -1649,6 +1680,67 @@ function proposer(x) {
 
 const mayWeigh = () => Boolean(MF.session.current());
 
+/* TAO worn short, the way the room wears it: 380K, 1.49M, 420. The threshold
+   line is a comparison rather than a figure, and two seven-digit numbers side
+   by side are harder to compare than two short ones. */
+function worn(n) {
+  const v = Math.floor(Number(n) || 0);
+  if (v >= 1000000) return `${(v / 1000000).toFixed(2).replace(/\.?0+$/, '')}M`;
+  if (v >= 1000) return `${(v / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  return String(v);
+}
+
+/* How far the lock is, in the house hairline.
+   Two bars because there are two thresholds, and a nudge that met one of them
+   has met neither ... so showing a single blended figure would be showing a
+   number that does not exist. Each fills to its own fraction and stops. */
+function thresholdBars(x) {
+  const p = x.progress;
+  if (!p) return '';
+  const bar = (label, at, of, fmt) => {
+    const share = of > 0 ? Math.min(1, at / of) : 1;
+    return `<div class="meter">
+      <div class="lab"><span>${label}</span><span><b>${fmt(at)}</b> of ${fmt(of)}</span></div>
+      <div class="track"><div class="fill" style="width:${(share * 100).toFixed(1)}%"></div></div>
+    </div>`;
+  };
+  return `<div class="bars">
+    ${bar('Voters', p.voters.at, p.voters.of, (v) => String(v))}
+    ${bar('TAO on the leader', p.tao.at, p.tao.of, worn)}
+  </div>`;
+}
+
+/* The public record. Register culture: influence is public, a name is a door,
+   and the figures are the live ones ... a weighing is worth what its wallet
+   holds now, so a row can shrink between one reading and the next and says so
+   when it has.
+   One row per collector. Somebody who re-weighed or moved from one colour to
+   another has one row on their latest position: this is who stands where, and
+   the history of how they got there is in the weighings file with every
+   signature that made it. */
+function ledgerRows(x) {
+  const rows = x.ledger || [];
+  const summary = `<p class="tally">${x.collectors} collector${x.collectors === 1 ? '' : 's'}
+    &middot; ${num(x.total)} TAO weighed</p>`;
+  if (!rows.length) return `${summary}<p class="none">Nobody has weighed in yet.</p>`;
+  return `${summary}<div class="ledger"><table>
+    <thead><tr><th class="c"></th><th>Collector</th><th class="w">Weighed</th><th class="t">When</th></tr></thead>
+    <tbody>${rows.map((r) => {
+      const label = e(r.name || short(r.address));
+      /* A private collector is named as the register names them and goes
+         nowhere, which is the same restraint the register table shows. */
+      const who = r.url && !r.private ? `<a href="${e(r.url)}">${label}</a>` : `<span class="anon">${label}</span>`;
+      return `<tr>
+        <td class="c"><span class="hexdot" style="background:${e(r.candidate || '#fff')}"
+          title="${e(r.candidate || '')}"></span></td>
+        <td>${who}</td>
+        <td class="w">${num(r.weight)}${r.clamped ? '<span class="cl"> clamped</span>' : ''}</td>
+        <td class="t">${e(shortDate(r.at))}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
 function candidateCard(x) {
   const mine = x.mine;
   return `<div class="nudge" id="nudge-${e(x.id)}">
@@ -1657,6 +1749,8 @@ function candidateCard(x) {
     ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
     ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
     ${swatches(x)}
+    ${thresholdBars(x)}
+    ${ledgerRows(x)}
     ${x.open ? `<div class="act">
       ${mayWeigh()
         ? `<input class="amt" id="amt-${e(x.id)}" type="text" inputmode="numeric" placeholder="TAO to weigh"

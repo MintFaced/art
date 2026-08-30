@@ -52,7 +52,11 @@ export async function GET(request) {
       n.banked = {
         number: n.number, kind: CANDIDATES, rule: p.rule,
         total: p.total, collectors: p.collectors,
-        leader: p.leader, locked: p.locked, why: p.why,
+        leader: p.leader, locked: p.locked, why: p.why, progress: p.progress,
+        /* Frozen with everything else. The card keeps showing who stood where
+           at close, whatever anybody does with their TAO afterwards. */
+        ledger: p.ledger.map((r) => ({ address: r.address, name: r.name || null,
+          candidate: r.candidate, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
         candidates: p.candidates.map((c) => ({
           hex: c.hex, total: c.total, voters: c.voters, share: c.share,
           proposed_by: c.proposed_by || null, proposed_name: c.proposed_name || null,

@@ -117,6 +117,19 @@ export function palette(weighings, proposals, taoOf, n = null) {
     || (b.voters - a.voters)
     || String(a.proposed_at || '').localeCompare(String(b.proposed_at || '')));
 
+  /* The ledger: one row per collector, and the row is where they stand now.
+   *
+   * This is handed `latest()` output, so a collector who re-weighed or moved
+   * from one colour to another is already one row rather than a history ...
+   * which is what the card is for. The history is in the weighings file, which
+   * keeps every signature; the card is who stands where.
+   *
+   * Newest first, because the interesting question about a board that is still
+   * forming is what just moved. */
+  const ledger = [];
+  for (const c of candidates) for (const r of c.ledger) ledger.push({ ...r, candidate: c.hex });
+  ledger.sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
+
   const rule = lockRule(n);
   const leader = candidates[0] || null;
   /* Enough people AND enough weight, on the leader, at close. Either alone is
@@ -125,9 +138,18 @@ export function palette(weighings, proposals, taoOf, n = null) {
   return {
     kind: CANDIDATES,
     candidates,
+    ledger,
     total,
     collectors: collectors.size,
     rule,
+    /* How far the lock is, said as two fractions rather than as a verdict.
+       The room can see exactly what is short, and by how much, while there is
+       still time to do something about it ... which is the whole reason a
+       threshold is published before it is met. */
+    progress: {
+      voters: { at: leader ? leader.voters : 0, of: rule.voters },
+      tao: { at: leader ? leader.total : 0, of: rule.tao },
+    },
     leader: leader ? { hex: leader.hex, total: leader.total, voters: leader.voters } : null,
     locked: holds ? { hex: leader.hex, total: leader.total, voters: leader.voters } : null,
     /* Said in the same breath as the numbers, so a card never has to work out
