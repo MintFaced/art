@@ -1,4 +1,15 @@
 {
  "_note": "Every weighing, with its signature. The ledger is public because influence here is public. One wallet may weigh many times; the latest stands.",
- "weighings": []
+ "weighings": [],
+ "proposals": [
+  {
+   "nudge": "nudge-1",
+   "hex": "#0E5890",
+   "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+   "name": "0xunix.eth",
+   "at": "2026-08-30T00:04:16.098Z",
+   "issued": "2026-08-30T00:03:56.751Z",
+   "signature": "0xf725487670f62a24f60278188318dd3ad37b368602078d393cd5f54477e8a55957b236846c1d9504ab8fba6528069fa14c27d41dcc583642a5fd861127cb2a991b"
+  }
+ ]
 }
