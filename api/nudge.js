@@ -4,6 +4,8 @@ import { siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
 import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
+import { chatStore, SCOPE_WEIGH } from './_lib/chat.js';
+import { cookieFrom, TOKEN_COOKIE } from './_lib/session.js';
 
 /* Weighing TAO behind a Yes or a No.
  *
@@ -158,7 +160,25 @@ export async function POST(request) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400); }
 
-  const address = lower(body.address);
+  /* Who is doing this.
+   *
+   * The session first, and where there is one the request is not asked: the
+   * address in the body is ignored entirely, exactly as the room ignores it,
+   * because a token that says who you are beside a field that also says so is
+   * a lock with the door left open next to it.
+   *
+   * A session minted before weighing joined the sentence may not weigh. It is
+   * a perfectly good session and it may still speak; nobody agreed to this
+   * with it, so it is asked for one more signature the first time it tries. */
+  let session = null;
+  if (storeConfigured()) {
+    const token = cookieFrom(request, TOKEN_COOKIE);
+    if (token) session = await chatStore(pipe).session(token).catch(() => null);
+  }
+  if (session && session.scope < SCOPE_WEIGH) {
+    return json({ error: 'that sign-in was opened before weighing joined it. Sign in again and it will not ask twice.', rescope: true }, 401);
+  }
+  const address = session ? session.address : lower(body.address);
   const action = String(body.action || 'weigh');
   const side = String(body.side || '').toLowerCase();
   const amount = Math.floor(Number(body.amount));
@@ -168,12 +188,22 @@ export async function POST(request) {
 
   if (!/^0x[0-9a-f]{40}$/.test(address)) return json({ error: 'that is not a wallet address' }, 400);
   if (!['weigh', 'propose'].includes(action)) return json({ error: 'no such action' }, 400);
-  if (!signature.startsWith('0x')) return json({ error: 'a signature is required' }, 400);
-  // an old signature should not sit around waiting to be replayed
-  const age = Date.now() - Date.parse(issued);
-  if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
-    return json({ error: 'that signature has gone stale, please sign again' }, 400);
+  if (!session) {
+    /* Signing per act is still a way to do this, and still the only way
+       without a session. */
+    if (!signature.startsWith('0x')) return json({ error: 'a signature is required' }, 400);
+    // an old signature should not sit around waiting to be replayed
+    const age = Date.now() - Date.parse(issued);
+    if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
+      return json({ error: 'that signature has gone stale, please sign again' }, 400);
+    }
   }
+
+  /* The signature used to be the rate limit ... a wallet prompt per act is one
+     somebody's hand enforces. Taking it away takes that with it, and every act
+     here is a commit to the repository. */
+  const spent = storeConfigured() ? await nudgeStore(pipe).spend(address).catch(() => ({ ok: true })) : { ok: true };
+  if (spent.error) return json({ error: spent.error }, 429);
 
   let data;
   try { data = await load(origin); } catch (e) { return json({ error: 'the studio is not reachable' }, 503); }
@@ -200,10 +230,12 @@ export async function POST(request) {
     const colour = checkHex(body.hex);
     if (colour.error) return json({ error: colour.error }, 400);
 
-    const message = proposeMessage({ nudge: n.question, hex: colour.hex, address, issued });
-    let good = false;
-    try { good = await verifyMessage({ address, message, signature }); } catch (e) { good = false; }
-    if (!good) return json({ error: 'that signature does not match the wallet' }, 401);
+    if (!session) {
+      const message = proposeMessage({ nudge: n.question, hex: colour.hex, address, issued });
+      let good = false;
+      try { good = await verifyMessage({ address, message, signature }); } catch (e) { good = false; }
+      if (!good) return json({ error: 'that signature does not match the wallet' }, 401);
+    }
 
     const file = await readFile('data/nudge-weighings.json');
     const store = JSON.parse(file.text);
@@ -221,7 +253,11 @@ export async function POST(request) {
     const row = {
       nudge: n.id, hex: colour.hex, address,
       name: w0 && !w0.private ? w0.name : null,
-      at: new Date().toISOString(), issued, signature,
+      at: new Date().toISOString(),
+      /* What authorised this. A signature naming the colour, or the session ...
+         by its public name, never its token ... which a signature opened. The
+         chain is walkable either way: see sessionProof() in _lib/chat.js. */
+      ...(session ? { session: session.id } : { issued, signature }),
     };
     store.proposals = [...(store.proposals || []), row];
     /* Both copies. The repo is the permanent record with the signature on it;
@@ -273,10 +309,12 @@ export async function POST(request) {
     return json({ error: `that is more than this wallet holds. Its TAO is ${held.toLocaleString('en-NZ')}.` }, 400);
   }
 
-  const message = weighMessage({ nudge: n.question, side, candidate, amount, address, issued });
-  let ok = false;
-  try { ok = await verifyMessage({ address, message, signature }); } catch (e) { ok = false; }
-  if (!ok) return json({ error: 'that signature does not match the wallet' }, 401);
+  if (!session) {
+    const message = weighMessage({ nudge: n.question, side, candidate, amount, address, issued });
+    let ok = false;
+    try { ok = await verifyMessage({ address, message, signature }); } catch (e) { ok = false; }
+    if (!ok) return json({ error: 'that signature does not match the wallet' }, 401);
+  }
 
   /* The register knows their name; the ledger keeps it rather than a hex
      string. It is only a fallback, since every read resolves the name again
@@ -294,7 +332,8 @@ export async function POST(request) {
        and are folded as the whole of a wallet's position, which is what they
        were ... see allocations() in _lib/nudges.js. */
     ...(candidates ? { alloc: true } : {}),
-    at: new Date().toISOString(), issued, signature,
+    at: new Date().toISOString(),
+    ...(session ? { session: session.id } : { issued, signature }),
   };
   store.weighings = [...(store.weighings || []), row];
   if (storeConfigured()) await nudgeStore(pipe).add(row).catch(() => {});

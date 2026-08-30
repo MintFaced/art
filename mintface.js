@@ -1605,7 +1605,8 @@ MF.session = {
       '',
       ...(action === 'sign in'
         ? ['Signing opens Studio until the date above. It moves nothing and spends nothing.',
-          'Until then this browser can speak here without asking again.']
+          'Until then this browser can speak here, and weigh your TAO on the',
+          "studio's nudges, without asking again."]
         : action === 'react'
           ? ['Signing leaves a reaction in Studio. It moves nothing and spends nothing.']
           : ['Signing speaks in Studio. It moves nothing and spends nothing.']),

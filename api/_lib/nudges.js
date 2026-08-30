@@ -370,9 +370,37 @@ export function tally(weighings, taoOf) {
 const LIVE = 'nudge:live';
 const LIVE_KEPT = 5000;
 
+/* How often a wallet may move its weight about.
+ *
+ * The signature used to be the limiter. A wallet prompt per act is a rate
+ * limit somebody's hand enforces, and taking it away takes that away with it
+ * ... which matters more here than it looks, because every weighing is a
+ * commit to the repository. A loop would be a commit storm against somebody
+ * else's API before it was anything else.
+ *
+ * So: a few seconds between acts, and a cap over ten minutes that is generous
+ * for somebody spreading TAO across a board and mean for a script. */
+const WEIGH_FLOOR_SECONDS = 4;
+const WEIGH_BURST = 40;
+const WEIGH_WINDOW = 600;
+
 export function nudgeStore(pipe) {
   const parse = (x) => { try { return typeof x === 'string' ? JSON.parse(x) : x; } catch (e) { return null; } };
+  const floorKey = (a) => `nudge:floor:${String(a).toLowerCase()}`;
+  const burstKey = (a) => `nudge:burst:${String(a).toLowerCase()}`;
   return {
+    /* Spent only once an act is known to be good, so being refused for what it
+       said does not also cost somebody their few seconds. */
+    async spend(address) {
+      const [floor] = await pipe([['SET', floorKey(address), '1', 'NX', 'EX', String(WEIGH_FLOOR_SECONDS)]]);
+      if (floor === null) return { error: `one at a time. A moment.` };
+      const [count] = await pipe([['INCR', burstKey(address)]]);
+      if (Number(count) === 1) await pipe([['EXPIRE', burstKey(address), String(WEIGH_WINDOW)]]);
+      if (Number(count) > WEIGH_BURST) {
+        return { error: `${WEIGH_BURST} changes in ${Math.round(WEIGH_WINDOW / 60)} minutes is plenty. Let it settle.` };
+      }
+      return { ok: true };
+    },
     async add(row) {
       await pipe([['RPUSH', LIVE, JSON.stringify(row)], ['LTRIM', LIVE, String(-LIVE_KEPT), '-1']]);
       return row;
@@ -389,7 +417,11 @@ export function withLive(file, live) {
   const seen = new Set();
   const out = { weighings: [], proposals: [] };
   const put = (row, into) => {
-    const key = row && row.signature ? String(row.signature) : null;
+    /* Deduplicated by whatever names the act uniquely: the signature where one
+       was given, and otherwise the session and the moment, which together are
+       as unique as a signature and are both already on the row. */
+    const key = row && row.signature ? String(row.signature)
+      : (row && row.session ? `${row.session}@${row.at}@${row.candidate || row.hex || ''}` : null);
     if (key) { if (seen.has(key)) return; seen.add(key); }
     out[into].push(row);
   };

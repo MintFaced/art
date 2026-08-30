@@ -113,3 +113,17 @@ The store write is never allowed to fail the request. By the time it runs the si
 
 **Checks.** `scripts/tao/test-nudges.mjs`, now 128: splitting across two colours, editing one and finding the other exactly where it was, taking a colour back with nought, over-allocation refused with what is actually left, a sold-down wallet scaled in proportion with its stored amounts untouched, distinct-voter counting with split wallets, the lock reached by five split wallets and missed by four undivided ones — and `0xunix.eth`'s real three rows folding to the one position the old model gave them.
 
+### Weighing joins the session (2026-08-30)
+
+**No wallet prompt to weigh, propose, or adjust.** Sign in once — the same signature that opens the room — and the whole studio surface is open for thirty days.
+
+**Why this reverses a call I made two hours earlier.** Weighing signed per act, on the reasoning that a month-long permission to put any amount of somebody's TAO behind anything was not a trade to make on their behalf. That held while a wallet had one position. It stopped holding the moment weighing split: spreading TAO across a board *invites* adjusting, and a wallet prompt per adjustment fights the thing splitting is for. Spreading across three colours and changing your mind twice was five prompts, which on a hardware wallet is five walks to the drawer. It is the argument the room already settled — a tap per sentence is right for something you do twice a year and wrong for a room.
+
+**The risk is genuinely smaller than for speaking.** TAO never moves. A weighing is reversible by re-weighing. Every change is public in the ledger with a timestamp, so a hijacked one is visible rather than silent. The worst a stolen session does is misdirect influence in the window before it is noticed — against a session that could already post permanently in your name.
+
+**The sentence says what it authorises.** It used to read *this browser can speak here*; it now reads *can speak here, and weigh your TAO on the studio's nudges*. A wallet that approved one thing and got two is exactly what writing the sentence out is meant to prevent. **A session minted before that wording may still speak and may not weigh** — it is asked for one more signature the first time it tries, at the moment that makes sense, and never again.
+
+**The audit chain is made real rather than claimed.** AVS item 4 asks for the signature stored beside the weighing, and one signature now stands behind a month of acts. So the sign-in signature is written down instead of being verified and discarded, keyed by a hash of the session token — a stable public name for a session that cannot be used as one — and each weighing carries that name. Signature → session → every weighing it authorised, walkable, and the record outlives the session by a year. Signing per act is still supported and is still what happens without a session.
+
+**Something had to replace the wallet prompt as a rate limit.** That prompt was a limiter somebody's hand enforced, and every weighing is a commit to the repository: a loop would have been a commit storm against GitHub before it was anything else. Four seconds between acts, forty in ten minutes — generous for somebody spreading TAO across a board, mean for a script.
+

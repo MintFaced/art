@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
-import { chatStore, chatMessage, checkMessage, checkReaction, marksOf, reactionSet, render, sessionUntil } from './_lib/chat.js';
+import { chatStore, chatMessage, checkMessage, checkReaction, marksOf, reactionSet, render, sessionUntil, SCOPE } from './_lib/chat.js';
 import { loadArtist, isArtist as artistIs, taoGate, ARTIST_NAME } from './_lib/artist.js';
 import { loadRegister } from './_lib/register.js';
 import { parseTags, tagIndex } from './_lib/names.js';
@@ -362,7 +362,11 @@ export async function POST(request) {
     }
     const fresh = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
     const seconds = days * 86400;
-    await db.openSession(fresh, address, seconds);
+    /* The signature is written down rather than verified and discarded, now
+       that one of them stands behind a month of acts. It is what makes the
+       audit chain real: this signature opened this session, and these
+       weighings came from it. */
+    await db.openSession(fresh, address, seconds, SCOPE, { signature, issued, until, domain });
     /* Scoped to the parent domain, so signing in on the catalogue signs you in
        on the register. Same registrable domain, so Lax is enough and nothing
        here is a third-party cookie. */

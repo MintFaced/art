@@ -1725,6 +1725,14 @@ function proposer(x) {
 
 const mayWeigh = () => Boolean(MF.session.current());
 
+/* One way in and out of the nudges, carrying the session. Same origin, so the
+   cookie rides anyway; it is asked for explicitly because a preview or a
+   future host should not turn a weighing into an anonymous one. */
+const sendNudge = (body) => fetch('/api/nudge', {
+  method: 'POST', headers: { 'content-type': 'application/json' },
+  credentials: 'include', body: JSON.stringify(body),
+});
+
 /* TAO worn short, the way the room wears it: 380K, 1.49M, 420. The threshold
    line is a comparison rather than a figure, and two seven-digit numbers side
    by side are harder to compare than two short ones. */
@@ -1889,11 +1897,22 @@ function nudgeSay(id, text, bad) {
   return true;
 }
 
-/* One signature per weighing, and it is not the room's.
-   The room's session says this browser may speak; a weighing is a public act
-   with a number in it, and the number is what is signed. A month-long
-   permission to put any amount of somebody's TAO behind anything is not a
-   trade this page is willing to make on their behalf. */
+/* No signature, where the session already said who this is.
+ *
+ * It used to sign every weighing, on the reasoning that a month-long
+ * permission to put any amount of somebody's TAO behind anything was not a
+ * trade to make on a collector's behalf. That held while a wallet had one
+ * position. It does not hold now: spreading TAO across a board invites
+ * adjusting, and a wallet prompt per adjustment fights the thing splitting is
+ * for. It is the argument the room already settled ... a tap per sentence is
+ * right for something you do twice a year and wrong for a room.
+ *
+ * So the sentence says so. The sign-in a collector approves now names weighing
+ * as well as speaking, and a session opened before it said that may still
+ * speak and is asked once more the first time it weighs.
+ *
+ * Signing per act is still there, and is still what happens without a session.
+ */
 /* Putting a colour on the board. Its own signature, naming the colour, so a
    proposal cannot be replayed as a different one. */
 async function propose(id) {
@@ -1905,30 +1924,18 @@ async function propose(id) {
   const hex = String((input || {}).value || '').toUpperCase();
   if (!/^#[0-9A-F]{6}$/.test(hex)) { nudgeSay(id, 'Pick a colour first.', true); return; }
 
-  const issued = new Date().toISOString();
-  const message = [
-    'MintFace Artist Virtual Studio', '',
-    `Nudge: ${x.question}`, `Colour: ${hex}`,
-    `Wallet: ${s.address}`, `Issued: ${issued}`, '',
-    'Proposing puts this colour on the board for others to weigh.',
-    'It moves nothing and spends nothing.',
-  ].join('\n');
-
-  let signature;
-  try {
-    signature = await MF.sign(message, s.address, (state, why) => {
-      if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
-      if (state === 'slow') nudgeSay(id, 'Still waiting on the wallet.');
-      if (state === 'failed') nudgeSay(id, why, true);
-    });
-  } catch (err) { return; }
-
   nudgeSay(id, 'Putting it on the board ...');
-  const r = await fetch('/api/nudge', {
-    method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ action: 'propose', nudge: id, address: s.address, hex, issued, signature }),
-  });
-  const j = await r.json().catch(() => ({}));
+  let r = await sendNudge({ action: 'propose', nudge: id, address: s.address, hex });
+  let j = await r.json().catch(() => ({}));
+  if (!r.ok && j.rescope) {
+    nudgeSay(id, 'One more signature: your sign-in was opened before weighing joined it.');
+    try { await MF.session.open(s.address, ROOM.days || 30, (state, why) => {
+      if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
+      if (state === 'failed') nudgeSay(id, why, true);
+    }); } catch (err) { return; }
+    r = await sendNudge({ action: 'propose', nudge: id, address: s.address, hex });
+    j = await r.json().catch(() => ({}));
+  }
   if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true); return; }
   await loadNudges();
   nudgeSay(id, `${hex} is on the board. Weigh TAO behind it, or leave it to others.`);
@@ -1965,32 +1972,21 @@ async function weigh(id, hex) {
     nudgeSay(id, `That is more TAO than this wallet holds. Yours is ${num(NUDGE.tao)}.`, true); return;
   }
 
-  const issued = new Date().toISOString();
-  const message = [
-    'MintFace Artist Virtual Studio', '',
-    `Nudge: ${x.question}`,
-    colours ? `Colour: ${String(candidate).toUpperCase()}` : `Side: ${String(side).toUpperCase()}`,
-    `Weight: ${amount} TAO`,
-    `Wallet: ${s.address}`, `Issued: ${issued}`, '',
-    'A nudge steers. It never commands.',
-    'Weighing does not move or spend any TAO.',
-  ].join('\n');
-
-  let signature;
-  try {
-    signature = await MF.sign(message, s.address, (state, why) => {
-      if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
-      if (state === 'slow') nudgeSay(id, 'Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
-      if (state === 'failed') nudgeSay(id, why, true);
-    });
-  } catch (err) { return; }
-
   nudgeSay(id, 'Recording ...');
-  const r = await fetch('/api/nudge', {
-    method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ nudge: id, address: s.address, side, candidate, amount, issued, signature }),
-  });
-  const j = await r.json().catch(() => ({}));
+  let r = await sendNudge({ nudge: id, address: s.address, side, candidate, amount });
+  let j = await r.json().catch(() => ({}));
+  /* A session from before weighing joined the sentence. One signature puts it
+     right, and then it does not ask again ... which is the whole arrangement,
+     said at the moment it matters rather than in a banner nobody reads. */
+  if (!r.ok && j.rescope) {
+    nudgeSay(id, 'One more signature: your sign-in was opened before weighing joined it.');
+    try { await MF.session.open(s.address, ROOM.days || 30, (state, why) => {
+      if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
+      if (state === 'failed') nudgeSay(id, why, true);
+    }); } catch (err) { return; }
+    r = await sendNudge({ nudge: id, address: s.address, side, candidate, amount });
+    j = await r.json().catch(() => ({}));
+  }
   if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true); return; }
   await loadNudges();
   nudgeSay(id, amount > 0

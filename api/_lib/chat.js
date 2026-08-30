@@ -14,11 +14,27 @@
  * cases can run the real thing.
  */
 
+import { createHash } from 'node:crypto';
 import { dressTags } from './names.js';
 import { ARTIST_NAME as ARTIST } from './artist.js';
 import { renderProse, linksIn } from './text.js';
 
 const lower = (a) => String(a || '').toLowerCase();
+
+/* What a session opened today may do. One is speak, which is what every
+   session minted before weighing joined them agreed to; two is speak and
+   weigh, which is what the sentence says now. */
+export const SCOPE = 2;
+export const SCOPE_SPEAK = 1;
+export const SCOPE_WEIGH = 2;
+/* A year. The session is a month; the record of what authorised it is asked
+   about long after that, and it is four small fields. */
+const SESSION_PROOF_SECONDS = 365 * 86400;
+
+/** A stable public name for a session that cannot be used as one. */
+export function sessionId(token) {
+  return createHash('sha256').update(String(token)).digest('hex').slice(0, 16);
+}
 
 /* What to call the author of a stored row.
    The register first, because a rename should reach everything they ever said.
@@ -38,7 +54,13 @@ export function chatMessage({ action, text, target, address, issued, until, repl
   const closing = action === 'sign in'
     ? [
       'Signing opens Studio until the date above. It moves nothing and spends nothing.',
-      'Until then this browser can speak here without asking again.',
+      /* What the session actually authorises, named. It used to say "speak",
+         and then weighing joined it ... and a wallet that approved one thing
+         and got two is the whole reason this sentence is written out rather
+         than summarised. Weighing moves no TAO either: it is influence, and
+         the line above still holds for it word for word. */
+      'Until then this browser can speak here, and weigh your TAO on the',
+      'studio\'s nudges, without asking again.',
     ]
     : action === 'react'
       ? ['Signing leaves a reaction in Studio. It moves nothing and spends nothing.']
@@ -278,6 +300,9 @@ export const keys = {
   burst: (a) => `chat:burst:${lower(a)}`,
   tags: (a) => `chat:tags:${lower(a)}`,
   session: (t) => `chat:s:${t}`,
+  /* The signature behind a session, by the session's public name. Kept apart
+     from the session itself so it survives the session running out. */
+  proof: (id) => `chat:sp:${id}`,
   /* One list per tagged wallet, holding message numbers. A mention count is
      then a length rather than a walk of the whole room, which matters because
      the room is kept forever and the count is asked for on every load. */
@@ -502,14 +527,51 @@ export function chatStore(pipe, cfg = {}) {
        The address a message is written under comes from the token and never
        from the request. A session already says who you are; letting the body
        say it as well would be leaving the door open beside the lock. */
-    async openSession(token, address, seconds) {
-      await pipe([['SET', keys.session(token), lower(address), 'EX', String(Math.floor(seconds))]]);
+    /* What a session may do, and the signature that opened it.
+     *
+     * SCOPE. Sessions minted before weighing joined them approved a sentence
+     * that said "speak". They are still perfectly good sessions and they may
+     * still speak; they may not weigh, because nobody agreed to that. A number
+     * rather than a flag, so the next thing to join has somewhere to go.
+     *
+     * THE CHAIN. One signature now stands behind a month of acts, so it is
+     * written down rather than verified and discarded. The record is keyed by
+     * a hash of the token, which is a stable name for the session that cannot
+     * be used as one, and it outlives the session by a good margin: an audit
+     * of who authorised what is asked long after the month is up. */
+    async openSession(token, address, seconds, scope = SCOPE, proof = null) {
+      const value = JSON.stringify({ a: lower(address), s: Math.floor(scope) });
+      const cmds = [['SET', keys.session(token), value, 'EX', String(Math.floor(seconds))]];
+      if (proof) {
+        cmds.push(['SET', keys.proof(sessionId(token)), JSON.stringify({
+          address: lower(address), scope: Math.floor(scope), ...proof,
+        }), 'EX', String(SESSION_PROOF_SECONDS)]);
+      }
+      await pipe(cmds);
       return token;
     },
-    async whoseSession(token) {
+    /** The session behind a token: who, and what they may do. */
+    async session(token) {
       if (!token || typeof token !== 'string' || token.length < 16) return null;
-      const [a] = await pipe([['GET', keys.session(token)]]);
-      return a ? String(a).toLowerCase() : null;
+      const [raw] = await pipe([['GET', keys.session(token)]]);
+      if (!raw) return null;
+      const v = String(raw);
+      /* A session minted before scopes existed stored a bare address. It keeps
+         working, at the scope its sentence actually described. */
+      if (v.startsWith('0x')) return { address: v.toLowerCase(), scope: 1, id: sessionId(token) };
+      try {
+        const j = JSON.parse(v);
+        return { address: String(j.a).toLowerCase(), scope: Number(j.s) || 1, id: sessionId(token) };
+      } catch (e) { return null; }
+    },
+    async whoseSession(token) {
+      const s = await this.session(token);
+      return s ? s.address : null;
+    },
+    /** The signature that opened a session, by the session's public name. */
+    async sessionProof(id) {
+      const [raw] = await pipe([['GET', keys.proof(id)]]);
+      try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
     },
     async closeSession(token) {
       if (!token) return;

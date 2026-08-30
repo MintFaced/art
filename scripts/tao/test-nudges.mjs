@@ -430,5 +430,94 @@ const holds = (x) => five[x] || 0;
   is('and nothing is over-weight', after.over.length, 0);
 }
 
+/* ================= weighing without a wallet prompt ================= */
+{
+  /* A tiny store, enough for the session and the rate limit. */
+  const str = new Map(); const list = new Map(); let NOW = Date.now();
+  const ttl = new Map();
+  const alive = (k) => !ttl.has(k) || ttl.get(k) > NOW;
+  const fake = async (cmds) => cmds.map(([c, ...a]) => {
+    const k = a[0];
+    if (c === 'SET') {
+      if (!alive(k)) { str.delete(k); ttl.delete(k); }
+      if (a.includes('NX') && str.has(k)) return null;
+      str.set(k, a[1]);
+      const i = a.indexOf('EX');
+      if (i > -1) ttl.set(k, NOW + Number(a[i + 1]) * 1000);
+      return 'OK';
+    }
+    if (c === 'GET') { if (!alive(k)) { str.delete(k); ttl.delete(k); } return str.has(k) ? str.get(k) : null; }
+    if (c === 'INCR') { const v = (Number(str.get(k)) || 0) + 1; str.set(k, String(v)); return v; }
+    if (c === 'EXPIRE') { ttl.set(k, NOW + Number(a[1]) * 1000); return 1; }
+    if (c === 'RPUSH') { if (!list.has(k)) list.set(k, []); list.get(k).push(...a.slice(1)); return 1; }
+    if (c === 'LTRIM') return 'OK';
+    if (c === 'LRANGE') return list.get(k) || [];
+    throw new Error(`no ${c}`);
+  });
+
+  const { chatStore, sessionId, SCOPE, SCOPE_WEIGH } = await import('../../api/_lib/chat.js');
+  const { nudgeStore } = await import('../../api/_lib/nudges.js');
+  const db = chatStore(fake);
+  const W = '0x' + 'a'.repeat(40);
+
+  /* A session opened today may weigh. */
+  await db.openSession('t'.repeat(64), W, 3600, SCOPE, { signature: '0xsig', issued: 'i', until: 'u', domain: 'mintface.art' });
+  const now = await db.session('t'.repeat(64));
+  is('a session opened today says who and what it may do', [now.address, now.scope], [W, SCOPE]);
+  is('and it may weigh', now.scope >= SCOPE_WEIGH, true);
+
+  /* One opened before weighing joined the sentence may not, and is still a
+     perfectly good session for speaking. */
+  await fake([['SET', `chat:s:${'o'.repeat(64)}`, W]]);
+  const old = await db.session('o'.repeat(64));
+  is('a session from before scopes existed still works', old.address, W);
+  is('at the scope its sentence actually described', old.scope, 1);
+  is('so it may not weigh', old.scope >= SCOPE_WEIGH, false);
+  is('and the old accessor still answers for it', await db.whoseSession('o'.repeat(64)), W);
+
+  /* The chain: signature -> session -> weighings. The session's public name is
+     a hash of its token, so a weighing can carry it without carrying a
+     credential, and the proof outlives the session. */
+  const id = sessionId('t'.repeat(64));
+  const proof = await db.sessionProof(id);
+  is('the signature that opened a session is written down', proof.signature, '0xsig');
+  is('under a name that is not the token', id !== 't'.repeat(64) && id.length === 16, true);
+  is('and knowing the name does not give you the session', await db.session(id), null);
+
+  /* The wallet prompt used to be the rate limit. Something has to be. */
+  const rl = nudgeStore(fake);
+  is('one act goes through', (await rl.spend(W)).ok, true);
+  is('and a second in the same breath waits', Boolean((await rl.spend(W)).error), true);
+  NOW += 5000;
+  is('a few seconds later it does not', (await rl.spend(W)).ok, true);
+  let stopped = null;
+  for (let i = 0; i < 60 && !stopped; i++) { NOW += 5000; const r = await rl.spend(W); if (r.error) stopped = i; }
+  is('and a script runs into a cap over ten minutes', stopped !== null, true);
+
+  /* The overlay dedupes on whatever names an act, and a session row has no
+     signature to be named by. */
+  const row = { nudge: 'n', address: W, candidate: RED, amount: 1, at: '2026-09-01T00:00:00Z', session: id, alloc: true };
+  const twice = withLive({ weighings: [row], proposals: [] }, [row]);
+  is('a session weighing that has reached the file appears once', twice.weighings.length, 1);
+  const other = withLive({ weighings: [row], proposals: [] },
+    [{ ...row, at: '2026-09-01T00:05:00Z' }]);
+  is('and a later one from the same session is a second act', other.weighings.length, 2);
+}
+
+{
+  /* The sentence names what it authorises, on both sides, to the character. */
+  const fs3 = require2('node:fs');
+  const server = fs3.readFileSync(new URL('../../api/_lib/chat.js', import.meta.url), 'utf8');
+  const browser = fs3.readFileSync(new URL('../../mintface.js', import.meta.url), 'utf8');
+  const line = 'and weigh your TAO on the';
+  is('the sign-in sentence names weighing', server.includes(line) && browser.includes(line), true);
+  is('and it still promises nothing moves',
+    server.includes('It moves nothing and spends nothing.'), true);
+  const page = fs3.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
+  const weighFn = page.slice(page.indexOf('async function weigh('), page.indexOf('console.log') > 0 ? page.length : page.length);
+  is('the page no longer signs a weighing', /MF\.sign\(message/.test(weighFn), false);
+  is('and asks once more where a session predates the sentence', /j\.rescope/.test(page), true);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
