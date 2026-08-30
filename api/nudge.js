@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
-import { tally, latest, isOpen, weighMessage, proposeMessage, palette, checkHex, kindOf, lockRule, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { tally, latest, isOpen, weighMessage, proposeMessage, palette, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
 import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 
@@ -24,10 +24,14 @@ async function load(origin) {
     if (!r.ok) throw new Error(`${p}: ${r.status}`);
     return r.json();
   };
-  const [nudges, weighings, tao] = await Promise.all([
+  const [nudges, said, tao, live] = await Promise.all([
     at('data/nudges.json'), at('data/nudge-weighings.json'), at('data/tao.json'),
+    /* What has been said since the last deploy. The file is served from the
+       deployment and this site does not deploy on push, so without this a
+       collector signs, is told it landed, and finds the board empty. */
+    storeConfigured() ? nudgeStore(pipe).live().catch(() => []) : Promise.resolve([]),
   ]);
-  return { nudges, weighings, tao };
+  return { nudges, weighings: withLive(said, live), tao };
 
 }
 
@@ -202,11 +206,19 @@ export async function POST(request) {
     }
     const registerHere = await registerFor(origin);
     const w0 = registerHere ? registerHere.who(address) : null;
-    store.proposals = [...(store.proposals || []), {
+    const row = {
       nudge: n.id, hex: colour.hex, address,
       name: w0 && !w0.private ? w0.name : null,
       at: new Date().toISOString(), issued, signature,
-    }];
+    };
+    store.proposals = [...(store.proposals || []), row];
+    /* Both copies. The repo is the permanent record with the signature on it;
+       the store is what the board reads until the next deploy carries the file
+       out. The store write is not allowed to fail the request: the signature is
+       already committed, and a colour that appears at the next deploy is worse
+       than a colour that appears now but better than one that was refused after
+       being signed for. */
+    if (storeConfigured()) await nudgeStore(pipe).add(row).catch(() => {});
     await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
       `Nudge ${n.number}: ${(w0 && w0.name) || address.slice(0, 10)} proposes ${colour.hex}`, file.sha);
     return json({ ok: true, hex: colour.hex,
@@ -243,10 +255,12 @@ export async function POST(request) {
 
   const file = await readFile('data/nudge-weighings.json');
   const store = JSON.parse(file.text);
-  store.weighings = [...(store.weighings || []), {
+  const row = {
     nudge: n.id, address, side: candidates ? null : side, candidate, amount, name,
     at: new Date().toISOString(), issued, signature,
-  }];
+  };
+  store.weighings = [...(store.weighings || []), row];
+  if (storeConfigured()) await nudgeStore(pipe).add(row).catch(() => {});
   await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
     `Nudge ${n.number}: ${name || address.slice(0, 10)} weighs ${amount} on ${candidate || side}`, file.sha);
 

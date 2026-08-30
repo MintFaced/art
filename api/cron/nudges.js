@@ -1,5 +1,6 @@
 import { readFile, writeFile } from '../_lib/repo.js';
-import { tally, latest, palette, kindOf, CANDIDATES } from '../_lib/nudges.js';
+import { tally, latest, palette, kindOf, nudgeStore, withLive, CANDIDATES } from '../_lib/nudges.js';
+import { storeConfigured, pipe } from '../_lib/kv.js';
 
 /* Banking a nudge.
  *
@@ -25,7 +26,12 @@ export async function GET(request) {
   const at = async (p) => (await fetch(`${site}/${p}`, { headers: { accept: 'application/json' } })).json();
 
   const tao = await at('data/tao.json');
-  const said = await at('data/nudge-weighings.json');
+  /* The file as deployed, plus anything said since. This is the one place the
+     overlay absolutely has to be applied: banking freezes a record forever, and
+     a nudge banked without the weighings made since the last deploy would
+     freeze the wrong one. */
+  const said = withLive(await at('data/nudge-weighings.json'),
+    storeConfigured() ? await nudgeStore(pipe).live().catch(() => []) : []);
   const weighings = said.weighings || [];
   const proposals = said.proposals || [];
   const file = await readFile('data/nudges.json');

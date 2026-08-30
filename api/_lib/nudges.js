@@ -220,6 +220,61 @@ export function tally(weighings, taoOf) {
   };
 }
 
+/* ---------------------------------------------------------- the overlay
+ *
+ * A weighing is not a nightly thing.
+ *
+ * The permanent record of every proposal and every weighing, with the
+ * signature that made it, is `data/nudge-weighings.json` in the repo. That
+ * file is written the moment somebody signs ... and it is *served* from the
+ * last deploy, which is a different thing. This site does not deploy on push,
+ * so a collector could sign for a colour, be told it was on the board, and
+ * find the board empty. That happened, four minutes after nudge #1 opened.
+ *
+ * So the store carries what has been said since the last deploy, and every
+ * read lays it over the file. It is the same arrangement the names layer
+ * already makes for exactly the same reason: the record is a file rebuilt on a
+ * schedule, and the thing somebody just did is not.
+ *
+ * Deduplicated by signature, which is unique per act and already in both
+ * copies, so a row that has since made it into the file appears once.
+ */
+const LIVE = 'nudge:live';
+const LIVE_KEPT = 5000;
+
+export function nudgeStore(pipe) {
+  const parse = (x) => { try { return typeof x === 'string' ? JSON.parse(x) : x; } catch (e) { return null; } };
+  return {
+    async add(row) {
+      await pipe([['RPUSH', LIVE, JSON.stringify(row)], ['LTRIM', LIVE, String(-LIVE_KEPT), '-1']]);
+      return row;
+    },
+    async live() {
+      const [rows] = await pipe([['LRANGE', LIVE, '0', '-1']]);
+      return (rows || []).map(parse).filter(Boolean);
+    },
+  };
+}
+
+/** The file, with anything said since it was last deployed laid over it. */
+export function withLive(file, live) {
+  const seen = new Set();
+  const out = { weighings: [], proposals: [] };
+  const put = (row, into) => {
+    const key = row && row.signature ? String(row.signature) : null;
+    if (key) { if (seen.has(key)) return; seen.add(key); }
+    out[into].push(row);
+  };
+  for (const w of (file && file.weighings) || []) put(w, 'weighings');
+  for (const p of (file && file.proposals) || []) put(p, 'proposals');
+  for (const row of live || []) {
+    if (!row) continue;
+    if (row.hex && !row.candidate) put(row, 'proposals');
+    else put(row, 'weighings');
+  }
+  return out;
+}
+
 /** One weighing per wallet: the latest stands, so adjusting is just weighing
  *  again rather than an edit with a history to reconcile. */
 export function latest(all, nudgeId) {

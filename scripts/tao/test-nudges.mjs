@@ -8,7 +8,7 @@
  *   node scripts/tao/test-nudges.mjs
  */
 import { createRequire } from 'node:module';
-import { tally, latest, isOpen, provenanceLine, palette, checkHex, lockRule, kindOf, proposeMessage, weighMessage } from '../../api/_lib/nudges.js';
+import { tally, latest, isOpen, provenanceLine, palette, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive } from '../../api/_lib/nudges.js';
 const require2 = createRequire(import.meta.url);
 
 let pass = 0, fail = 0;
@@ -242,6 +242,39 @@ const holds = (x) => five[x] || 0;
   is('two bars, not one', (bars.match(/bar\('/g) || []).length, 2);
   is('drawn in the house meter', /class="meter"/.test(bars) && /class="track"/.test(bars), true);
   is('and each stops at its own line', /Math\.min\(1, at \/ of\)/.test(bars), true);
+}
+
+/* ================= what has been said since the last deploy ================= */
+{
+  /* The bug this exists for, four minutes after nudge #1 opened: a collector
+     signed for a colour, the route committed it to the repo and told them it
+     was on the board, and the board was empty. api/nudge.js reads the file as
+     the deployment serves it, and this site does not deploy on push. */
+  const file = {
+    weighings: [{ nudge: 'n', address: 'a', candidate: RED, amount: 1, signature: '0x1' }],
+    proposals: [{ nudge: 'n', hex: RED, address: 'a', signature: '0x0' }],
+  };
+  const live = [
+    { nudge: 'n', hex: RED, address: 'a', signature: '0x0' },
+    { nudge: 'n', hex: BLUE, address: 'b', signature: '0x2' },
+    { nudge: 'n', address: 'b', candidate: BLUE, amount: 5, signature: '0x3' },
+  ];
+  const m = withLive(file, live);
+  is('a colour proposed since the deploy is on the board', m.proposals.map((p) => p.hex), [RED, BLUE]);
+  is('and a weighing made since is in the tally', m.weighings.map((w) => w.signature), ['0x1', '0x3']);
+  is('a row that has since reached the file appears once',
+    m.proposals.filter((p) => p.signature === '0x0').length, 1);
+  is('a proposal is told from a weighing by what it carries',
+    [m.proposals.every((p) => p.hex), m.weighings.every((w) => w.candidate)], [true, true]);
+  is('with nothing live the file stands alone',
+    withLive(file, []).proposals.length + withLive(file, []).weighings.length, 2);
+  is('and with no file at all the overlay is the whole of it',
+    withLive(null, live).proposals.length, 2);
+
+  /* And it reaches the tally, which is the point: the board is what the
+     overlay makes it, not what the last deploy made it. */
+  const p = palette(latest(m.weighings, 'n'), m.proposals.filter((x) => x.nudge === 'n'), () => 1000, null);
+  is('the board is drawn from both', p.candidates.map((c) => c.hex).sort(), [BLUE, RED].sort());
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

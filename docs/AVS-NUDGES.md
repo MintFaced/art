@@ -81,3 +81,15 @@ The pilot needed a shape the binary nudge does not have: a question where the co
 
 **Two class collisions bit on the way in, both from the merge.** A ledger name wearing `.quiet` — the room's hover affordance — was drawn at opacity nought, so every private and unnamed collector was invisible. A colour chip wearing `.dot` inherited the availability mark, which is round, nudged up two pixels, and the one place this site uses colour to mean something. Both were obvious on screen and invisible to a route test. There are now checks that the ledger wears neither.
 
+### A weighing is not a nightly thing (2026-08-30)
+
+**Four minutes after nudge #1 opened, a collector proposed `#0E5890`, signed for it, was told it was on the board — and the board was empty.**
+
+`api/nudge.js` reads `data/nudge-weighings.json` as the *deployment* serves it. The route had already committed the proposal to the repo, with its signature, correctly. But this site does not deploy on push, so the file the site was serving was the one from the last deploy, and would stay that way until somebody ran a deploy by hand. Every weighing had the same property; it had simply never mattered, because no nudge had ever been open.
+
+So the store carries what has been said since the last deploy and every read lays it over the file — the same arrangement the names layer already makes, for the same reason: the record is a file rebuilt on a schedule, and the thing somebody just did is not. Both copies are written. The repo is the permanent record with the signature on it; the store is what the board reads in the meantime. Deduplicated by signature, which is unique per act and lives in both, so a row that has since reached the file appears once.
+
+**The banking cron reads through the overlay too**, and that is the version that mattered most: banking freezes a record forever, and a nudge banked from the last deploy's file would have frozen the wrong one — quietly, permanently, and in favour of whoever happened to have weighed before the deploy.
+
+The store write is never allowed to fail the request. By the time it runs the signature is already committed, and a colour that appears at the next deploy is worse than one that appears now, but far better than one refused after somebody signed for it.
+
