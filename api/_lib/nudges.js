@@ -13,6 +13,8 @@
  * Pure: weighings and a TAO register in, a tally out.
  */
 
+const lower = (a) => String(a || '').toLowerCase();
+
 export const SIDES = ['yes', 'no'];
 
 /* ---------------------------------------------------------- candidates
@@ -65,6 +67,110 @@ export function proposeMessage({ nudge, hex, address, issued }) {
   ].join('\n');
 }
 
+/* ------------------------------------------------------- allocations
+ *
+ * A collector spreads their TAO across as many colours as they like.
+ *
+ * The model before this one kept a single weighing per wallet, latest stands,
+ * which meant weighing a second colour silently took the weight off the first.
+ * 0xunix.eth did it twice on nudge #1 within an hour ... blue, then red, then
+ * blue again ... which is what somebody looks like when they are fighting the
+ * model rather than using it.
+ *
+ * So a wallet holds a map of colour to amount, and each signature sets one
+ * entry in it. Changing red cannot touch blue, because red and blue are
+ * different keys and the signature names one of them.
+ *
+ * A row is still an absolute amount rather than a delta. What a wallet signs
+ * is "fifty thousand on this colour", which is a thing a person can read in a
+ * prompt and check; "add ten thousand" is not, and a lost write would silently
+ * change the answer rather than repeat it.
+ */
+
+/** Whether a row was written under the allocation model or before it. */
+const isAlloc = (r) => Boolean(r && r.alloc);
+
+/**
+ * Every wallet's allocations, folded in order, and the history of the folding.
+ *
+ * The fold is what carries the old rows across untouched. Chronologically:
+ * a row from before allocations REPLACES a wallet's whole map, because that is
+ * precisely what it did at the time; a row since SETS one key. So a collector
+ * who had a hundred thousand on one colour still has exactly that, on that
+ * colour, and nothing they had already moved away from comes back to life.
+ *
+ * An amount of nought is how a colour is taken back, and it is a change like
+ * any other rather than a deletion.
+ */
+export function allocations(rows) {
+  const by = new Map();
+  const history = [];
+  const ordered = [...(rows || [])].sort((a, b) => String(a.at || '').localeCompare(String(b.at || '')));
+
+  for (const r of ordered) {
+    const address = lower(r.address);
+    if (!address || !r.candidate) continue;
+    const hex = String(r.candidate).toUpperCase();
+    const amount = Math.max(0, Math.floor(Number(r.amount) || 0));
+    if (!by.has(address)) by.set(address, new Map());
+    const mine = by.get(address);
+
+    const note = (colour, was, now) => {
+      if (was === now) return;
+      history.push({
+        address, name: r.name || null, candidate: colour,
+        delta: now - was, amount: now, at: r.at || null,
+        signature: r.signature || null,
+        /* Two entries can come from one signature, where a row from the old
+           model moved weight rather than adding it. They are the same act and
+           say so, so a card can draw them together and a reader can see that
+           nobody weighed twice. */
+        moved: colour !== hex,
+      });
+    };
+
+    if (!isAlloc(r)) {
+      /* The old model: this row was the wallet's whole position. Everything
+         else they held goes to nought, which is what happened. */
+      for (const [colour, was] of [...mine]) {
+        if (colour === hex) continue;
+        note(colour, was, 0);
+        mine.delete(colour);
+      }
+    }
+    const was = mine.get(hex) || 0;
+    note(hex, was, amount);
+    if (amount > 0) mine.set(hex, amount); else mine.delete(hex);
+  }
+
+  history.reverse();                       // newest first, as a record reads
+  return { by, history };
+}
+
+/**
+ * A wallet's allocations, brought inside what it actually holds.
+ *
+ * The clamp, generalised. A single weighing clamped to the wallet's TAO; a set
+ * of them scales to fit it, in proportion, so a collector who sells down keeps
+ * the shape of what they said while losing the size of it. Nothing is silently
+ * rewritten: the stored amounts stand, and this is applied every time the board
+ * is read, so the tally is never inflated and the wallet is told it is over.
+ *
+ * Floor, never round: the total after scaling is never more than what is held,
+ * and a few TAO lost to rounding is the right direction to lose them in.
+ */
+export function spread(alloc, held) {
+  const entries = [...(alloc || new Map())];
+  const asked = entries.reduce((a, [, v]) => a + v, 0);
+  const have = Math.max(0, Math.floor(Number(held) || 0));
+  if (asked <= have) return { weights: new Map(entries), asked, over: 0 };
+  const weights = new Map();
+  for (const [hex, amount] of entries) {
+    weights.set(hex, asked > 0 ? Math.floor((amount * have) / asked) : 0);
+  }
+  return { weights, asked, over: asked - have };
+}
+
 /**
  * The board: every colour proposed, with what is behind it.
  *
@@ -77,7 +183,7 @@ export function palette(weighings, proposals, taoOf, n = null) {
   const by = new Map();
   const put = (hex) => {
     const key = String(hex).toUpperCase();
-    if (!by.has(key)) by.set(key, { hex: key, total: 0, voters: 0, ledger: [], proposed_by: null, proposed_at: null, proposed_name: null });
+    if (!by.has(key)) by.set(key, { hex: key, total: 0, voters: 0, wallets: [], proposed_by: null, proposed_at: null, proposed_name: null });
     return by.get(key);
   };
 
@@ -91,24 +197,38 @@ export function palette(weighings, proposals, taoOf, n = null) {
     }
   }
 
-  for (const w of weighings || []) {
-    if (!w.candidate) continue;
-    const c = put(w.candidate);
-    const held = Math.max(0, Math.floor(taoOf(w.address) || 0));
-    const weight = Math.min(Math.floor(w.amount) || 0, held);
-    c.ledger.push({ ...w, weight, clamped: weight < w.amount });
-    if (weight <= 0) continue;
-    c.total += weight;
-    c.voters += 1;
+  /* Every wallet's map, folded from its signatures, then brought inside what
+     that wallet actually holds. The scaling is applied here rather than
+     written down, so the board is never inflated and the stored amounts stay
+     exactly what somebody signed for. */
+  const { by: alloc, history } = allocations(weighings);
+  const names = new Map();
+  for (const w of weighings || []) if (w.name) names.set(lower(w.address), w.name);
+
+  const over = [];
+  const collectors = new Set();
+  for (const [address, mine] of alloc) {
+    const held = Math.max(0, Math.floor(taoOf(address) || 0));
+    const fit = spread(mine, held);
+    if (fit.over > 0) over.push({ address, name: names.get(address) || null, asked: fit.asked, held, over: fit.over });
+    for (const [hex, weight] of fit.weights) {
+      const c = put(hex);
+      c.wallets.push({ address, name: names.get(address) || null, amount: mine.get(hex) || 0, weight,
+        clamped: weight < (mine.get(hex) || 0) });
+      if (weight <= 0) continue;
+      c.total += weight;
+      /* A wallet counts once on a colour, however it got there ... and once on
+         the nudge, however many colours it split across. */
+      c.voters += 1;
+      collectors.add(address);
+    }
   }
 
   const candidates = [...by.values()];
   const total = candidates.reduce((a, c) => a + c.total, 0);
-  const collectors = new Set();
-  for (const c of candidates) for (const r of c.ledger) if (r.weight > 0) collectors.add(String(r.address).toLowerCase());
   for (const c of candidates) {
     c.share = total ? c.total / total : 0;
-    c.ledger.sort((a, b) => (b.weight - a.weight) || String(b.at || '').localeCompare(String(a.at || '')));
+    c.wallets.sort((a, b) => (b.weight - a.weight) || String(a.address).localeCompare(String(b.address)));
   }
   /* Sorted by weight, so the palette reads as it stands. Ties fall back to
      whichever was proposed first, which is the only tiebreak that is not
@@ -117,35 +237,28 @@ export function palette(weighings, proposals, taoOf, n = null) {
     || (b.voters - a.voters)
     || String(a.proposed_at || '').localeCompare(String(b.proposed_at || '')));
 
-  /* The ledger: one row per collector, and the row is where they stand now.
-   *
-   * This is handed `latest()` output, so a collector who re-weighed or moved
-   * from one colour to another is already one row rather than a history ...
-   * which is what the card is for. The history is in the weighings file, which
-   * keeps every signature; the card is who stands where.
-   *
-   * Newest first, because the interesting question about a board that is still
-   * forming is what just moved. */
-  const ledger = [];
-  for (const c of candidates) for (const r of c.ledger) ledger.push({ ...r, candidate: c.hex });
-  ledger.sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
-
   const rule = lockRule(n);
   const leader = candidates[0] || null;
-  /* Enough people AND enough weight, on the leader, at close. Either alone is
-     a way to be decided by one wallet or by a crowd holding nothing. */
+  /* Enough weight on the leading colour AND enough distinct wallets carrying
+     some of it. Either alone is a way to be decided by one wallet or by a
+     crowd holding nothing. A wallet that split across three colours counts
+     towards this one only for the part it put here. */
   const holds = Boolean(leader && leader.voters >= rule.voters && leader.total >= rule.tao);
   return {
     kind: CANDIDATES,
     candidates,
-    ledger,
+    /* The record: every allocation change, newest first. */
+    ledger: history,
+    /* Who is currently promising more than they hold. Not rewritten, because
+       what they signed is what they signed ... scaled where it is read, and
+       said here so they can be asked to put it right. */
+    over,
     total,
     collectors: collectors.size,
     rule,
     /* How far the lock is, said as two fractions rather than as a verdict.
        The room can see exactly what is short, and by how much, while there is
-       still time to do something about it ... which is the whole reason a
-       threshold is published before it is met. */
+       still time to do something about it. */
     progress: {
       voters: { at: leader ? leader.voters : 0, of: rule.voters },
       tao: { at: leader ? leader.total : 0, of: rule.tao },
@@ -161,6 +274,21 @@ export function palette(weighings, proposals, taoOf, n = null) {
         : leader.voters < rule.voters
           ? `The leading colour has the TAO and needs ${rule.voters} collectors. It has ${leader.voters}.`
           : `The leading colour has the collectors and needs ${rule.tao.toLocaleString('en-NZ')} TAO. It has ${Math.round(leader.total).toLocaleString('en-NZ')}.`),
+  };
+}
+
+/** What one wallet has allocated, and what is left of its TAO to allocate. */
+export function standing(weighings, address, taoOf) {
+  const { by } = allocations(weighings);
+  const mine = by.get(lower(address)) || new Map();
+  const held = Math.max(0, Math.floor(taoOf(address) || 0));
+  const fit = spread(mine, held);
+  return {
+    allocations: [...mine].map(([hex, amount]) => ({ hex, amount, weight: fit.weights.get(hex) || 0 })),
+    asked: fit.asked,
+    held,
+    available: Math.max(0, held - fit.asked),
+    over: fit.over,
   };
 }
 

@@ -8,7 +8,7 @@
  *   node scripts/tao/test-nudges.mjs
  */
 import { createRequire } from 'node:module';
-import { tally, latest, isOpen, provenanceLine, palette, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive } from '../../api/_lib/nudges.js';
+import { tally, latest, isOpen, provenanceLine, palette, standing, allocations, spread, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive } from '../../api/_lib/nudges.js';
 const require2 = createRequire(import.meta.url);
 
 let pass = 0, fail = 0;
@@ -76,7 +76,10 @@ is('one collector reads singular', provenanceLine({ total: 10, collectors: 1, nu
    painting whatever locks ... so the threshold has to be real. */
 const RED = '#C0392B', BLUE = '#2C3E50', GREEN = '#2A6529';
 const prop = (hex, address, at) => ({ nudge: 'p1', hex, address, at });
-const put = (address, hex, amount, at) => ({ nudge: 'p1', address, candidate: hex, amount, at });
+/* A weighing under the allocation model: it sets one colour and leaves the
+   rest of that wallet's map alone. Rows without `alloc` are from before it and
+   are folded differently ... see the migration cases at the end. */
+const put = (address, hex, amount, at) => ({ nudge: 'p1', address, candidate: hex, amount, at, alloc: true, signature: `s-${address}-${hex}-${at}` });
 const five = { a: 300000, b: 120000, c: 90000, d: 40000, e: 30000, f: 5, g: 900000 };
 const holds = (x) => five[x] || 0;
 
@@ -123,7 +126,7 @@ const holds = (x) => five[x] || 0;
     [prop(RED, 'a', '1')], holds, null);
   is('five weighings on one colour', p.candidates[0].voters, 5);
   is('each clamped to what its wallet still holds', p.candidates[0].total, 200000 + 120000 + 90000 + 40000 + 30000);
-  is('and the ones that shrank say so', p.candidates[0].ledger.filter((r) => r.clamped).length, 4);
+  is('and the ones that shrank say so', p.candidates[0].wallets.filter((r) => r.clamped).length, 4);
   /* Which is the whole point of the clamp meeting the threshold: six hundred
      thousand was said, four hundred and eighty thousand is held, and the
      colour does not lock. What was promised is a colour the collectors still
@@ -172,33 +175,27 @@ const holds = (x) => five[x] || 0;
 
 /* ================= the public record ================= */
 {
-  /* One row per collector, and the row is where they stand now. Somebody who
-     moves from blue to red is not two rows and not a history: the card is
-     who-stands-where, and every signature that got them there is in the
-     weighings file. */
+  /* The record is every allocation change, newest first. */
   const held = { a: 300000, b: 120000, c: 90000 };
   const all = [
-    { nudge: 'p1', address: 'a', candidate: RED, amount: 300000, at: '2026-09-01T10:00:00Z' },
-    { nudge: 'p1', address: 'b', candidate: BLUE, amount: 120000, at: '2026-09-02T10:00:00Z' },
-    { nudge: 'p1', address: 'b', candidate: RED, amount: 120000, at: '2026-09-03T10:00:00Z' },
-    { nudge: 'p1', address: 'c', candidate: RED, amount: 90000, at: '2026-09-04T10:00:00Z' },
+    put('a', RED, 300000, '2026-09-01T10:00:00Z'),
+    put('b', BLUE, 120000, '2026-09-02T10:00:00Z'),
+    put('b', RED, 120000, '2026-09-03T10:00:00Z'),
+    put('c', RED, 90000, '2026-09-04T10:00:00Z'),
   ];
-  const p = palette(latest(all, 'p1'), [prop(RED, 'a', '1'), prop(BLUE, 'b', '2')], (x) => held[x] || 0, null);
-  is('four weighings from three collectors is three rows', p.ledger.length, 3);
-  is('newest first', p.ledger.map((r) => r.address), ['c', 'b', 'a']);
-  is('the one who switched appears once', p.ledger.filter((r) => r.address === 'b').length, 1);
-  is('on the colour they are on now', p.ledger.find((r) => r.address === 'b').candidate, RED);
-  is('and blue keeps nothing they took away', p.candidates.find((c) => c.hex === BLUE).total, 0);
-  is('every row says which colour it is behind', p.ledger.every((r) => r.candidate), true);
+  const p = palette(all, [prop(RED, 'a', '1'), prop(BLUE, 'b', '2')], (x) => held[x] || 0, null);
+  is('four changes is four entries', p.ledger.length, 4);
+  is('newest first', p.ledger.map((r) => r.address), ['c', 'b', 'b', 'a']);
+  is('each carries its colour and its delta',
+    p.ledger.map((r) => `${r.candidate}${r.delta > 0 ? '+' : ''}${r.delta}`),
+    [`${RED}+90000`, `${RED}+120000`, `${BLUE}+120000`, `${RED}+300000`]);
 
-  /* Somebody who sold everything still stands somewhere. The row says nought
-     rather than disappearing: a ledger that quietly dropped people would be a
-     ledger you could not check against the total. */
-  const sold = palette(latest(all, 'p1'), [prop(RED, 'a', '1')], (x) => (x === 'a' ? 0 : held[x] || 0), null);
-  is('a collector who sold down keeps their row', sold.ledger.length, 3);
-  is('at nothing', sold.ledger.find((r) => r.address === 'a').weight, 0);
-  is('marked as clamped', sold.ledger.find((r) => r.address === 'a').clamped, true);
-  is('and is not counted among the collectors', sold.collectors, 2);
+  /* And b is on BOTH now, which is the whole change: weighing red did not
+     take the weight off blue. */
+  is('a wallet may stand on two colours at once',
+    [p.candidates.find((c) => c.hex === RED).wallets.some((w) => w.address === 'b'),
+      p.candidates.find((c) => c.hex === BLUE).wallets.some((w) => w.address === 'b')], [true, true]);
+  is('and counts once as a collector however it split', p.collectors, 3);
 }
 {
   /* How far the lock is, as two fractions. Not one blended figure: a nudge
@@ -237,7 +234,25 @@ const holds = (x) => five[x] || 0;
   is('the ledger does not wear the room\'s hover class', /class="quiet"/.test(led), false);
   is('nor the availability dot', /class="dot"/.test(led), false);
   is('and the colour chip is its own class', /class="hexdot"/.test(led), true);
-  is('the figures are the live ones, marked where they shrank', /r\.clamped \? '<span class="cl"/.test(led), true);
+  /* Clamping moved off the ledger with the model. The record is what was
+     signed ... a change of a stored amount ... and what that amount is worth
+     today is a fact about now, said on the board and in the wallet's own
+     purse rather than written back into the history. */
+  is('the record shows a signed change, not a live figure', /r\.moved \? '<span class="cl"/.test(led), true);
+  is('and what a weighing is worth today is said on the board',
+    /clamped: weight </.test(fs2.readFileSync(new URL('../../api/_lib/nudges.js', import.meta.url), 'utf8')), true);
+  const sw = page.slice(page.indexOf('function swatches'), page.indexOf('function purse'));
+  is('a field per colour, not one box and a chosen colour',
+    /id="amt-\$\{e\(x\.id\)\}-\$\{e\(c\.hex\.slice\(1\)\)\}"/.test(sw), true);
+  is('pre-filled with what this wallet has on that colour', /value="\$\{on \|\| ''\}"/.test(sw), true);
+  is('and nothing that picks one colour to the exclusion of the others',
+    /data-pick/.test(page), false);
+  const purse = page.slice(page.indexOf('function purse'), page.indexOf('function proposer'));
+  is('what is left to spread is shown', /available/.test(purse), true);
+  is('and an over-weight wallet is told rather than corrected',
+    /m\.over > 0/.test(purse) && /in proportion/.test(purse), true);
+  is('the record is a change log', /class="w"><span class="\$\{d < 0/.test(led), true);
+
   const bars = page.slice(page.indexOf('function thresholdBars'), page.indexOf('function ledgerRows'));
   is('two bars, not one', (bars.match(/bar\('/g) || []).length, 2);
   is('drawn in the house meter', /class="meter"/.test(bars) && /class="track"/.test(bars), true);
@@ -275,6 +290,144 @@ const holds = (x) => five[x] || 0;
      overlay makes it, not what the last deploy made it. */
   const p = palette(latest(m.weighings, 'n'), m.proposals.filter((x) => x.nudge === 'n'), () => 1000, null);
   is('the board is drawn from both', p.candidates.map((c) => c.hex).sort(), [BLUE, RED].sort());
+}
+
+/* ================= splitting =================
+   Decision B: a wallet spreads its TAO across as many colours as it likes,
+   total allocated no more than what it holds, and the remainder may simply sit
+   there unallocated. */
+{
+  const held = { a: 300000 };
+  const t = (x) => held[x] || 0;
+  const props = [prop(RED, 'a', '1'), prop(BLUE, 'a', '2'), prop(GREEN, 'a', '3')];
+
+  const two = palette([put('a', RED, 200000, '1'), put('a', BLUE, 50000, '2')], props, t, null);
+  is('a wallet across two colours', two.candidates.filter((c) => c.total > 0).map((c) => [c.hex, c.total]),
+    [[RED, 200000], [BLUE, 50000]]);
+  is('and it is one collector, not two', two.collectors, 1);
+  is('with fifty thousand of its TAO left unallocated', standing([put('a', RED, 200000, '1'), put('a', BLUE, 50000, '2')], 'a', t).available, 50000);
+
+  /* The reported bug, made impossible by the model rather than by care:
+     changing one colour cannot touch another, because they are different keys
+     and the signature names one of them. */
+  const edited = palette(
+    [put('a', RED, 200000, '1'), put('a', BLUE, 50000, '2'), put('a', RED, 10000, '3')], props, t, null);
+  is('editing red leaves blue exactly where it was',
+    edited.candidates.find((c) => c.hex === BLUE).total, 50000);
+  is('and red is what it was changed to', edited.candidates.find((c) => c.hex === RED).total, 10000);
+
+  /* Nought is how a colour is taken back, and it is a change like any other. */
+  const dropped = palette(
+    [put('a', RED, 200000, '1'), put('a', BLUE, 50000, '2'), put('a', RED, 0, '3')], props, t, null);
+  is('setting a colour to nought takes it back', dropped.candidates.find((c) => c.hex === RED).total, 0);
+  is('and leaves the other one alone', dropped.candidates.find((c) => c.hex === BLUE).total, 50000);
+  is('and is an entry in the record like anything else',
+    dropped.ledger[0].delta, -200000);
+  is('while the wallet still stands on blue', dropped.collectors, 1);
+
+  is('a wallet with nothing allocated has all of it available',
+    standing([], 'a', t).available, 300000);
+  is('and one that allocated the lot has none', standing([put('a', RED, 300000, '1')], 'a', t).available, 0);
+}
+
+{
+  /* Selling down. Nothing is rewritten ... what they signed is what they
+     signed ... but the board is never inflated, so the set is scaled in
+     proportion wherever it is read, which includes at lock. */
+  const rows = [put('a', RED, 200000, '1'), put('a', BLUE, 100000, '2')];
+  const p = palette(rows, [prop(RED, 'a', '1'), prop(BLUE, 'a', '2')], () => 120000, null);
+  is('an over-weight wallet is scaled in proportion, keeping the shape',
+    p.candidates.map((c) => [c.hex, c.total]).filter((x) => x[1] > 0), [[RED, 80000], [BLUE, 40000]]);
+  is('the total is what they hold, never more', p.candidates.reduce((a, c) => a + c.total, 0), 120000);
+  is('and they are named as over-weight rather than quietly corrected',
+    [p.over.length, p.over[0].asked, p.over[0].held, p.over[0].over], [1, 300000, 120000, 180000]);
+  is('their own standing says the same thing',
+    standing(rows, 'a', () => 120000).over, 180000);
+  is('and every scaled row says it was clamped',
+    p.candidates.flatMap((c) => c.wallets).every((w) => w.clamped), true);
+  is('the stored amounts are untouched',
+    standing(rows, 'a', () => 120000).allocations.map((x) => x.amount), [200000, 100000]);
+
+  /* Sold everything: the whole set goes to nought and they stop being a
+     collector, without any of their signatures being lost. */
+  const none = palette(rows, [prop(RED, 'a', '1')], () => 0, null);
+  is('a wallet that sold up carries nothing', none.total, 0);
+  is('and is not counted', none.collectors, 0);
+  is('though the record still has every change they made', none.ledger.length, 2);
+}
+
+{
+  /* The lock, with splits. A wallet counts once on the nudge however many
+     colours it is across, and counts towards the leading colour only for the
+     part it actually put there. */
+  const held = { a: 200000, b: 200000, c: 200000, d: 200000, e: 200000 };
+  const t = (x) => held[x] || 0;
+  const props = [prop(RED, 'a', '1'), prop(BLUE, 'a', '2')];
+
+  /* Five wallets, all split half and half. Red has 500,000 and five wallets. */
+  const rows = ['a', 'b', 'c', 'd', 'e'].flatMap((x, i) => [
+    put(x, RED, 100000, `${i}a`), put(x, BLUE, 100000, `${i}b`)]);
+  const p = palette(rows, props, t, null);
+  is('the leader carries five distinct wallets', [p.leader.hex, p.leader.voters], [RED, 5]);
+  is('and half a million between them', p.leader.total, 500000);
+  is('so it locks', Boolean(p.locked), true);
+  is('while the nudge counts five collectors, not ten', p.collectors, 5);
+  is('and the total is everything allocated across both colours', p.total, 1000000);
+
+  /* Four wallets on red and one on blue: red has the TAO and not the wallets. */
+  const four = palette([
+    put('a', RED, 200000, '1'), put('b', RED, 200000, '2'),
+    put('c', RED, 200000, '3'), put('d', RED, 100000, '4'),
+    put('e', BLUE, 200000, '5')], props, t, null);
+  is('four wallets on the leader is not five', four.leader.voters, 4);
+  is('however much TAO they carry', four.leader.total, 700000);
+  is('so nothing locks', four.locked, null);
+  is('and it says which half is short', /5 collectors/.test(four.why), true);
+
+  /* A wallet that split so thinly it carries nothing on the leader does not
+     count towards it. */
+  const thin = palette([
+    put('a', RED, 200000, '1'), put('b', RED, 200000, '2'),
+    put('c', RED, 200000, '3'), put('d', RED, 200000, '4'),
+    put('e', RED, 0, '5'), put('e', BLUE, 200000, '6')], props, t, null);
+  is('a wallet with nothing on the leader is not one of its voters', thin.leader.voters, 4);
+  is('though it is still a collector on the nudge', thin.collectors, 5);
+}
+
+{
+  /* Migration. The rows written before allocations existed carry over as one
+     allocation each, untouched ... and nothing a collector had already moved
+     away from comes back to life.
+
+     This is 0xunix.eth's real history on nudge #1: blue, then red, then blue
+     again, which is what somebody looks like fighting a model that took the
+     first colour away when they weighed the second. */
+  const real = [
+    { nudge: 'p1', address: 'u', candidate: BLUE, amount: 100000, at: '2026-08-30T07:00:00Z', signature: 'r1' },
+    { nudge: 'p1', address: 'u', candidate: RED, amount: 100000, at: '2026-08-30T07:30:00Z', signature: 'r2' },
+    { nudge: 'p1', address: 'u', candidate: BLUE, amount: 100000, at: '2026-08-30T07:45:00Z', signature: 'r3' },
+  ];
+  const t = () => 100000;
+  const p = palette(real, [prop(BLUE, 'u', '1'), prop(RED, 'u', '2')], t, null);
+  is('the old rows fold to the one position the old model gave them',
+    p.candidates.filter((c) => c.total > 0).map((c) => [c.hex, c.total]), [[BLUE, 100000]]);
+  is('the colour they moved away from does not come back', p.candidates.find((c) => c.hex === RED).total, 0);
+  is('and they are one collector holding one hundred thousand', [p.collectors, p.total], [1, 100000]);
+
+  /* The history reads honestly: two moves, each one signature, each showing
+     what it took off as well as what it put on. */
+  is('five entries from three signatures', p.ledger.length, 5);
+  is('and the two that were moves say so', p.ledger.filter((r) => r.moved).length, 2);
+  is('newest first, ending where they started',
+    p.ledger.map((r) => `${r.candidate}${r.delta > 0 ? '+' : ''}${r.delta}`),
+    [`${BLUE}+100000`, `${RED}-100000`, `${RED}+100000`, `${BLUE}-100000`, `${BLUE}+100000`]);
+
+  /* And from here on they can split, without the old rows arguing with it. */
+  const after = palette([...real, put('u', RED, 40000, '2026-08-31T09:00:00Z')],
+    [prop(BLUE, 'u', '1'), prop(RED, 'u', '2')], () => 140000, null);
+  is('a split made after the migration simply adds',
+    after.candidates.map((c) => [c.hex, c.total]).filter((x) => x[1] > 0), [[BLUE, 100000], [RED, 40000]]);
+  is('and nothing is over-weight', after.over.length, 0);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

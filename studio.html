@@ -86,11 +86,23 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
   text-transform:uppercase;color:var(--faint)}
 .nudges .swatch .by a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
 .nudges .swatch .by a:hover{border-color:var(--ink);color:var(--muted)}
-.nudges .swatch .pick{margin-left:auto;background:none;border:1px solid var(--rule);cursor:pointer;
-  padding:7px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);flex:none}
-.nudges .swatch .pick:hover{border-color:var(--ink);color:var(--ink)}
-.nudges .swatch .pick[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+/* A field per colour: a wallet spreads its TAO across as many of them as it
+   likes, and each one is set on its own. */
+.nudges .swatch .put{margin-left:auto;display:flex;gap:7px;align-items:center;flex:none}
+.nudges .swatch .put .amt{width:118px;padding:8px 10px;font-size:13px}
+.nudges .swatch .put .weigh{padding:8px 14px;font-size:10px;letter-spacing:.14em}
+
+/* What this wallet has spread, and what is left of it to spread. */
+.nudges .purse{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin:14px 0 0;font-variant-numeric:tabular-nums}
+/* Promising more than they hold. Said plainly and never corrected behind their
+   back: the amounts they signed for stand, and the board counts what fits. */
+.nudges .purse.over{color:#8b3a2a;text-transform:none;letter-spacing:0;font-family:var(--font-sans);
+  font-size:13.5px;line-height:1.6;max-width:44em}
+/* A change in the record, up or down. */
+.nudges .ledger .up{color:var(--ink)}
+.nudges .ledger .down{color:var(--muted)}
+.nudges .ledger tr.moved td{opacity:.72}
 .nudges .swatch.mine .chip{box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--rule)}
 .nudges .swatch.chosen{margin-left:-14px;padding-left:12px;border-left:2px solid var(--ink)}
 .nudges .swatch.chosen .hex{text-transform:uppercase;letter-spacing:.14em}
@@ -1636,23 +1648,37 @@ function ledger(x) {
  * proposed. And the threshold is on the card the whole time, because a nudge
  * that can decline to decide has to say so before it does.
  */
+/* What this wallet has put on a colour, from its own standing. */
+const mineOn = (x, hex) => {
+  const a = x.mine && x.mine.allocations ? x.mine.allocations.find((v) => v.hex === hex) : null;
+  return a ? a.amount : 0;
+};
+
 function swatches(x) {
   const rule = x.rule || { voters: 5, tao: 500000 };
   const locked = x.locked || null;
+  /* A field per colour, because a wallet spreads its TAO across as many of
+     them as it likes and each one is set on its own. One box and a chosen
+     colour was the old model's shape, and the old model was the thing that
+     took the weight off the first colour when you weighed the second. */
+  const editable = x.open && mayWeigh();
   const list = (x.candidates || []).map((c) => {
     const chosen = locked && locked.hex === c.hex;
     const by = c.proposed_name || (c.proposed_by ? short(c.proposed_by) : null);
     const who = by && c.proposed_url ? `<a href="${e(c.proposed_url)}">${e(by)}</a>` : (by ? e(by) : null);
-    const mine = x.mine && x.mine.candidate === c.hex;
-    return `<div class="swatch${chosen ? ' chosen' : ''}${mine ? ' mine' : ''}">
+    const on = mineOn(x, c.hex);
+    return `<div class="swatch${chosen ? ' chosen' : ''}${on ? ' mine' : ''}">
       <span class="chip" style="background:${e(c.hex)}"></span>
       <span class="on">
         <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
         <span class="weight"><b>${num(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
         ${who ? `<span class="by">proposed by ${who}</span>` : ''}
       </span>
-      ${x.open && mayWeigh() ? `<button type="button" class="pick" data-pick="${e(x.id)}" data-hex="${e(c.hex)}"
-        aria-pressed="${NUDGE.picked[x.id] === c.hex}">${mine ? 'Adjust' : 'Weigh'}</button>` : ''}
+      ${editable ? `<span class="put">
+        <input class="amt" id="amt-${e(x.id)}-${e(c.hex.slice(1))}" type="text" inputmode="numeric"
+          value="${on || ''}" placeholder="0" aria-label="TAO on ${e(c.hex)}">
+        <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">${on ? 'Change' : 'Weigh'}</button>
+      </span>` : ''}
     </div>`;
   }).join('');
   /* The threshold is on the card the whole time an answer is still possible,
@@ -1661,8 +1687,27 @@ function swatches(x) {
      twice two lines apart would be the card talking over itself. */
   const thresh = !x.open
     ? (locked ? '' : `<p class="thresh">${e(x.why || 'No colour reached the threshold.')}</p>`)
-    : `<p class="thresh">A colour locks at ${rule.voters} collectors and ${num(rule.tao)} TAO on it, both, at close.</p>`;
-  return `<div class="board">${list || '<p class="none">No colour has been proposed yet.</p>'}</div>${thresh}`;
+    : `<p class="thresh">A colour locks at ${rule.voters} collectors and ${num(rule.tao)} TAO on it, both, at close.
+       You may spread your TAO across as many colours as you like.</p>`;
+  return `<div class="board">${list || '<p class="none">No colour has been proposed yet.</p>'}</div>${purse(x)}${thresh}`;
+}
+
+/* A wallet's own position, in one place: what is spread where, what is left,
+   and ... where they have promised more than they still hold ... what the
+   board is actually counting for them. Nothing is rewritten behind their back;
+   the numbers they signed for stand, and this says what those numbers are
+   worth today. */
+function purse(x) {
+  if (!x.open || !mayWeigh() || !x.mine) return '';
+  const m = x.mine;
+  if (m.over > 0) {
+    return `<p class="purse over">You have ${num(m.asked)} TAO spread across the board and hold ${num(m.held)}.
+      Until you bring it down, the board counts ${num(m.held)} of it, in proportion.
+      Lower one of your amounts to put it right.</p>`;
+  }
+  return `<p class="purse">${m.asked > 0
+    ? `You have ${num(m.asked)} TAO on the board`
+    : 'You have nothing on the board yet'} &middot; ${num(m.available)} available</p>`;
 }
 
 /* Proposing is its own act with its own signature, and it is not a weighing.
@@ -1710,31 +1755,33 @@ function thresholdBars(x) {
   </div>`;
 }
 
-/* The public record. Register culture: influence is public, a name is a door,
-   and the figures are the live ones ... a weighing is worth what its wallet
-   holds now, so a row can shrink between one reading and the next and says so
-   when it has.
-   One row per collector. Somebody who re-weighed or moved from one colour to
-   another has one row on their latest position: this is who stands where, and
-   the history of how they got there is in the weighings file with every
-   signature that made it. */
+/* The public record: every allocation change, newest first.
+ *
+ * Where the board says what stands, this says how it got there ... which is
+ * the useful half once a wallet can be on three colours at once and a single
+ * standings row would have to pick one of them.
+ *
+ * A single signature can leave two entries, where a row from before the
+ * allocation model moved weight rather than adding it. Those are marked, so
+ * nobody reads one act as two people changing their minds. */
 function ledgerRows(x) {
   const rows = x.ledger || [];
   const summary = `<p class="tally">${x.collectors} collector${x.collectors === 1 ? '' : 's'}
     &middot; ${num(x.total)} TAO weighed</p>`;
   if (!rows.length) return `${summary}<p class="none">Nobody has weighed in yet.</p>`;
   return `${summary}<div class="ledger"><table>
-    <thead><tr><th class="c"></th><th>Collector</th><th class="w">Weighed</th><th class="t">When</th></tr></thead>
+    <thead><tr><th class="c"></th><th>Collector</th><th class="w">Change</th><th class="t">When</th></tr></thead>
     <tbody>${rows.map((r) => {
       const label = e(r.name || short(r.address));
       /* A private collector is named as the register names them and goes
          nowhere, which is the same restraint the register table shows. */
       const who = r.url && !r.private ? `<a href="${e(r.url)}">${label}</a>` : `<span class="anon">${label}</span>`;
-      return `<tr>
+      const d = Number(r.delta || 0);
+      return `<tr${r.moved ? ' class="moved"' : ''}>
         <td class="c"><span class="hexdot" style="background:${e(r.candidate || '#fff')}"
           title="${e(r.candidate || '')}"></span></td>
         <td>${who}</td>
-        <td class="w">${num(r.weight)}${r.clamped ? '<span class="cl"> clamped</span>' : ''}</td>
+        <td class="w"><span class="${d < 0 ? 'down' : 'up'}">${d < 0 ? '&minus;' : '+'}${num(Math.abs(d))}</span>${r.moved ? '<span class="cl"> moved</span>' : ''}</td>
         <td class="t">${e(shortDate(r.at))}</td>
       </tr>`;
     }).join('')}</tbody>
@@ -1742,7 +1789,6 @@ function ledgerRows(x) {
 }
 
 function candidateCard(x) {
-  const mine = x.mine;
   return `<div class="nudge" id="nudge-${e(x.id)}">
     <p class="q">${e(x.question)}</p>
     <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}</div>
@@ -1751,15 +1797,8 @@ function candidateCard(x) {
     ${swatches(x)}
     ${thresholdBars(x)}
     ${ledgerRows(x)}
-    ${x.open ? `<div class="act">
-      ${mayWeigh()
-        ? `<input class="amt" id="amt-${e(x.id)}" type="text" inputmode="numeric" placeholder="TAO to weigh"
-             value="${mine ? mine.amount : ''}" aria-label="TAO to weigh">
-           <button class="weigh" data-weigh="${e(x.id)}">${mine ? 'Adjust' : 'Weigh'}</button>`
-        : ''}
-    </div>` : ''}
     ${!x.open ? '' : (mayWeigh()
-      ? `<p class="said">Your TAO ${num(NUDGE.tao)}${mine && mine.candidate ? ` &middot; you weighed ${num(mine.amount)} on ${e(mine.candidate)}` : ''}</p>`
+      ? ''
       : '<p class="said">Sign in to propose or weigh. The same signature that opens the room opens this.</p>')}
     ${proposer(x)}
     <p class="said" id="say-${e(x.id)}" hidden></p>
@@ -1827,15 +1866,6 @@ function drawNudges() {
 }
 
 document.addEventListener('click', (ev) => {
-  const pick = ev.target.closest('.pick[data-pick]');
-  if (pick) {
-    NUDGE.picked[pick.dataset.pick] = pick.dataset.hex;
-    document.querySelectorAll(`.pick[data-pick="${pick.dataset.pick}"]`)
-      .forEach((x) => x.setAttribute('aria-pressed', String(x === pick)));
-    const box = document.getElementById(`amt-${pick.dataset.pick}`);
-    if (box) box.focus();
-    return;
-  }
   const prop = ev.target.closest('[data-propose]');
   if (prop) { void propose(prop.dataset.propose); return; }
   const side = ev.target.closest('.side[data-nudge]');
@@ -1846,7 +1876,7 @@ document.addEventListener('click', (ev) => {
     return;
   }
   const go = ev.target.closest('[data-weigh]');
-  if (go) weigh(go.dataset.weigh);
+  if (go) weigh(go.dataset.weigh, go.dataset.hex || null);
 });
 
 /* A refusal is told, or it did not happen. */
@@ -1904,20 +1934,36 @@ async function propose(id) {
   nudgeSay(id, `${hex} is on the board. Weigh TAO behind it, or leave it to others.`);
 }
 
-async function weigh(id) {
+async function weigh(id, hex) {
   const s = MF.session.current();
   if (!s) { nudgeSay(id, 'Sign in first ... the button is in the room below.', true); return; }
   const x = openNudges().find((y) => y.id === id);
   if (!x) return;
   const colours = x.kind === 'candidates';
-  const candidate = colours ? (NUDGE.picked[id] || (x.mine && x.mine.candidate)) : null;
+  const candidate = colours ? hex : null;
   const side = colours ? null : (NUDGE.picked[id] || (x.mine && x.mine.side));
-  if (colours && !candidate) { nudgeSay(id, 'Pick a colour on the board first.', true); return; }
+  if (colours && !candidate) { nudgeSay(id, 'Which colour?', true); return; }
   if (!colours && !side) { nudgeSay(id, 'Pick a yes or a no first.', true); return; }
-  const box = document.getElementById(`amt-${id}`);
-  const amount = Math.floor(Number(String((box || {}).value || '').replace(/[^0-9]/g, '')));
-  if (!amount) { nudgeSay(id, 'How much of your TAO do you want behind it?', true); return; }
-  if (amount > NUDGE.tao) { nudgeSay(id, `That is more TAO than this wallet holds. Yours is ${num(NUDGE.tao)}.`, true); return; }
+  const box = document.getElementById(colours ? `amt-${id}-${candidate.slice(1)}` : `amt-${id}`);
+  const typed = String((box || {}).value || '').replace(/[^0-9]/g, '');
+  const amount = Math.floor(Number(typed || 0));
+  /* Nought is meaningful on a colour ... it is how one is taken back ... and
+     meaningless on a yes or a no. */
+  if (!colours && !amount) { nudgeSay(id, 'How much of your TAO do you want behind it?', true); return; }
+  if (colours && typed === '') { nudgeSay(id, 'Put a number in, or nought to take this colour back.', true); return; }
+  /* Checked here as a courtesy and again on the server, which is the one that
+     counts: what is left depends on everything else this wallet has spread. */
+  if (colours && x.mine) {
+    const elsewhere = (x.mine.allocations || []).filter((a) => a.hex !== candidate).reduce((t, a) => t + a.amount, 0);
+    if (elsewhere + amount > x.mine.held) {
+      nudgeSay(id, elsewhere > 0
+        ? `You have ${num(elsewhere)} TAO on other colours, so ${num(Math.max(0, x.mine.held - elsewhere))} is what is left to put here.`
+        : `That is more TAO than this wallet holds. Yours is ${num(x.mine.held)}.`, true);
+      return;
+    }
+  } else if (!colours && amount > NUDGE.tao) {
+    nudgeSay(id, `That is more TAO than this wallet holds. Yours is ${num(NUDGE.tao)}.`, true); return;
+  }
 
   const issued = new Date().toISOString();
   const message = [
@@ -1947,7 +1993,9 @@ async function weigh(id) {
   const j = await r.json().catch(() => ({}));
   if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true); return; }
   await loadNudges();
-  nudgeSay(id, 'Weighed. Your TAO has not moved.');
+  nudgeSay(id, amount > 0
+    ? `${num(amount)} TAO on ${candidate || side}. Your TAO has not moved.`
+    : `${candidate} taken back. Your TAO has not moved.`);
 }
 
 /* Open at the bottom. The room is a log kept forever, and a log kept forever

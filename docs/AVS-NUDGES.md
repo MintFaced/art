@@ -93,3 +93,23 @@ So the store carries what has been said since the last deploy and every read lay
 
 The store write is never allowed to fail the request. By the time it runs the signature is already committed, and a colour that appears at the next deploy is worse than one that appears now, but far better than one refused after somebody signed for it.
 
+### Weighing splits (2026-08-30)
+
+**A collector spreads their TAO across as many colours as they like.** Total allocated no more than what they hold; the remainder may simply sit there.
+
+**The reported bug is now impossible rather than fixed.** Under the model before this one a wallet had a single weighing, latest stands — so weighing a second colour silently took the weight off the first. `0xunix.eth` did it twice on nudge #1 inside an hour: blue, then red, then blue again. That is what somebody looks like fighting a model rather than using it. A wallet now holds a map of colour to amount and each signature sets one key, so changing red cannot touch blue: they are different keys and the sentence names one of them.
+
+**A row is still an absolute amount, not a delta.** What a wallet signs is *fifty thousand on this colour*, which is a thing a person can read in a prompt and check. *Add ten thousand* is not, and a lost write would silently change the answer rather than repeat it. Nought is how a colour is taken back, and it is a change like any other rather than a deletion.
+
+**Migration is a fold, and it carries the old rows across untouched.** Chronologically: a row from before allocations *replaces* a wallet's whole map, because that is precisely what it did at the time; a row since *sets one key*. So `0xunix.eth` still has exactly one hundred thousand on `#0E5890` — the position the old model gave them — and the red they had already moved away from does not come back to life. Their history reads honestly: five entries from three signatures, with the two that were moves marked as moves so nobody reads one act as two.
+
+**Selling down scales, in proportion, wherever the board is read.** The clamp generalised: a single weighing clamped to the wallet's TAO, and a set of them now scales to fit it — so a collector who sells keeps the shape of what they said while losing the size of it. Nothing is rewritten; the amounts they signed for stand, and the scaling is applied on every read, which includes at lock. The board is therefore never inflated, and the wallet is told plainly: *You have 300,000 TAO spread across the board and hold 120,000. Until you bring it down, the board counts 120,000 of it, in proportion.* Floor, never round, so the scaled total is never more than what is held.
+
+**Counting.** A wallet counts once on the nudge however many colours it split across, and counts towards a colour only for the part it actually put there. The lock is unchanged in shape and sharper in practice: the leading colour needs 500,000 TAO **and** five distinct wallets carrying some of it. A wallet that split so thinly it holds nothing on the leader is a collector on the nudge and not one of that colour's voters.
+
+**The card.** A field per colour, pre-filled with what this wallet has on it, `WEIGH` where there is nothing and `CHANGE` where there is; then one line saying what they have on the board and what is left — *You have 250,000 TAO on the board · 1,243,717 available*. Their whole position is visible and editable in one place, which is the board itself.
+
+**The ledger became a change log.** Where the board says what stands, the ledger says how it got there — wallet, colour, signed delta, when, newest first. That is the useful half once a wallet can be on three colours at once and a single standings row would have to pick one of them. Clamping left the ledger with it: the record is what was signed, and what a weighing is worth today is a fact about now, said on the board and in the wallet's own line rather than written back into history.
+
+**Checks.** `scripts/tao/test-nudges.mjs`, now 128: splitting across two colours, editing one and finding the other exactly where it was, taking a colour back with nought, over-allocation refused with what is actually left, a sold-down wallet scaled in proportion with its stored amounts untouched, distinct-voter counting with split wallets, the lock reached by five split wallets and missed by four undivided ones — and `0xunix.eth`'s real three rows folding to the one position the old model gave them.
+

@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
-import { tally, latest, isOpen, weighMessage, proposeMessage, palette, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
 import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 
@@ -70,6 +70,8 @@ export async function GET(request) {
     return {
       address: r.address,
       name: (w && w.known ? w.name : null) || r.name || (w ? w.name : null) || null,
+      delta: r.delta == null ? null : r.delta,
+      moved: Boolean(r.moved),
       /* A private collector reads as the register reads them everywhere: named
          'Private collector', with no page to go to. `urlOf` already answers
          null for them, and the flag is here so a card can draw the row in the
@@ -97,18 +99,26 @@ export async function GET(request) {
 
     if (kindOf(n) === CANDIDATES) {
       const props = (data.weighings.proposals || []).filter((x) => x.nudge === n.id);
+      /* Every row, not the latest one per wallet: a wallet holds a map now,
+         and the fold is what turns its signatures into that map. */
+      const forNudge = (data.weighings.weighings || []).filter((x) => x.nudge === n.id);
       // a banked nudge keeps what it closed with, whatever has happened since
-      const p = n.banked ? n.banked : palette(rows, props, readTao, n);
+      const p = n.banked ? n.banked : palette(forNudge, props, readTao, n);
       return {
         ...base,
         rule: p.rule || lockRule(n),
         total: p.total, collectors: p.collectors,
         leader: p.leader || null, locked: p.locked || null, why: p.why || null,
         progress: p.progress || null,
-        /* The public record, one row per collector and the row is where they
-           stand now. Newest first: on a board still forming, what just moved
-           is the interesting part. */
+        /* The public record: every allocation change, newest first. A single
+           signature can produce two entries where a row from before the
+           allocation model moved weight rather than adding it, and those say
+           so, so nobody reads one act as two. */
         ledger: (p.ledger || []).map(dress),
+        /* Who is currently promising more than they hold. Nothing is rewritten
+           ... their allocations are scaled where the board is read ... and this
+           is what lets a card ask them to put it right. */
+        over: (p.over || []).map(dress),
         candidates: (p.candidates || []).map((c) => ({
           hex: c.hex, total: c.total, voters: c.voters, share: c.share,
           proposed_by: c.proposed_by || null,
@@ -116,9 +126,11 @@ export async function GET(request) {
             ? ((register.who(c.proposed_by) || {}).name || c.proposed_name || null)
             : (c.proposed_name || null),
           proposed_url: c.proposed_by && register ? register.urlOf(c.proposed_by) : null,
-          ledger: (c.ledger || []).map(dress),
+          wallets: (c.wallets || []).map(dress),
         })),
-        mine: mine ? { candidate: mine.candidate || null, amount: mine.amount, at: mine.at } : null,
+        /* Everything the viewer needs to spread their own TAO: what they have
+           put where, what it is worth now, and what is left to allocate. */
+        mine: who ? standing(forNudge, who, readTao) : null,
         proposed: who ? Boolean(props.find((x) => lower(x.address) === lower(who))) : false,
       };
     }
@@ -237,8 +249,29 @@ export async function POST(request) {
   } else if (!SIDES.includes(side)) {
     return json({ error: 'a nudge is a yes or a no' }, 400);
   }
-  if (!Number.isFinite(amount) || amount <= 0) return json({ error: 'weigh some TAO, or none at all' }, 400);
-  if (amount > held) return json({ error: `that is more than this wallet holds. Its TAO is ${held.toLocaleString('en-NZ')}.` }, 400);
+  if (!Number.isFinite(amount) || amount < 0) return json({ error: 'weigh some TAO, or none at all' }, 400);
+  /* Nought is how a colour is taken back, so it is allowed where there are
+     colours to take back. On a yes or a no there is nothing to take back and
+     nought is somebody who meant to type a number. */
+  if (!candidates && amount <= 0) return json({ error: 'weigh some TAO, or none at all' }, 400);
+
+  if (candidates) {
+    /* What is left of this wallet's TAO once everything it has already put
+       somewhere else is counted. Setting one colour never touches another, so
+       the only question is whether the whole set still fits. */
+    const mine = allocations((data.weighings.weighings || []).filter((x) => x.nudge === n.id)).by.get(address)
+      || new Map();
+    let elsewhere = 0;
+    for (const [hex, v] of mine) if (hex !== candidate) elsewhere += v;
+    if (elsewhere + amount > held) {
+      const spare = Math.max(0, held - elsewhere);
+      return json({ error: elsewhere > 0
+        ? `That wallet has ${elsewhere.toLocaleString('en-NZ')} TAO on other colours, so ${spare.toLocaleString('en-NZ')} is what is left to put here.`
+        : `That is more than this wallet holds. Its TAO is ${held.toLocaleString('en-NZ')}.` }, 400);
+    }
+  } else if (amount > held) {
+    return json({ error: `that is more than this wallet holds. Its TAO is ${held.toLocaleString('en-NZ')}.` }, 400);
+  }
 
   const message = weighMessage({ nudge: n.question, side, candidate, amount, address, issued });
   let ok = false;
@@ -257,6 +290,10 @@ export async function POST(request) {
   const store = JSON.parse(file.text);
   const row = {
     nudge: n.id, address, side: candidates ? null : side, candidate, amount, name,
+    /* Written under the allocation model. Rows without this are from before it
+       and are folded as the whole of a wallet's position, which is what they
+       were ... see allocations() in _lib/nudges.js. */
+    ...(candidates ? { alloc: true } : {}),
     at: new Date().toISOString(), issued, signature,
   };
   store.weighings = [...(store.weighings || []), row];
@@ -265,7 +302,12 @@ export async function POST(request) {
     `Nudge ${n.number}: ${name || address.slice(0, 10)} weighs ${amount} on ${candidate || side}`, file.sha);
 
   const rows = latest(store.weighings, n.id);
-  return json({ ok: true, ...(candidates
-    ? { palette: palette(rows, (store.proposals || []).filter((x) => x.nudge === n.id), taoReader(data.tao), n) }
-    : { tally: tally(rows, taoReader(data.tao)) }) });
+  if (candidates) {
+    const forNudge = [...(data.weighings.weighings || []).filter((x) => x.nudge === n.id), row];
+    const props = (store.proposals || []).filter((x) => x.nudge === n.id);
+    return json({ ok: true,
+      palette: palette(forNudge, props, taoReader(data.tao), n),
+      mine: standing(forNudge, address, taoReader(data.tao)) });
+  }
+  return json({ ok: true, tally: tally(rows, taoReader(data.tao)) });
 }
