@@ -1,1 +1,10 @@
 archive/
+
+# Credentials and local config are not the website.
+#
+# This deploys the directory, so anything sitting here can be served. `vercel
+# link` writes .env.local with a live OIDC token in it, and some of these carry
+# more than that. Vercel excludes these by default; this says so rather than
+# relying on it.
+.env*
+.vercel
