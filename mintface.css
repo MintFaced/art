@@ -205,27 +205,22 @@ img{max-width:100%;display:block}
   min-width:0;flex:0 1 auto;display:inline-block}
 .nav [aria-current="page"]{color:var(--ink)}
 
-/* ---------- day and night ----------
-   Two words in the register the rest of the bar is already in, one lit and one
-   not, exactly the shape the currency control has. Words, because this bar
-   does not hide four links behind a hamburger and is not about to start
-   explaining itself in pictures.
+/* ---------- the other ground ----------
+   One mark beside the cherry, naming where it takes you. Everything else in
+   this bar is a label you are meant to read; this is the one thing here that
+   should cost nothing to look past, so it is a single character in the same
+   grey the labels rest at, going to ink when you reach for it.
 
-   It gives that up at 640, and only because the bar is full there. The lit
-   half stands down, and what is left is one mark for where it takes you: the
-   four links and the name already spend every pixel on a phone, and 90px of
-   DAY NIGHT was never going to fit beside them. */
-.nav .theme{display:inline-flex;align-items:center;gap:11px;flex:none}
-.nav .theme button{color:var(--faint)}
-.nav .theme button:hover{color:var(--ink)}
-.nav .theme button[aria-pressed="true"]{color:var(--ink)}
-.nav .theme .g{display:none}
-@media(max-width:640px){
-  .nav .theme{gap:0}
-  .nav .theme button[aria-pressed="true"]{display:none}
-  .nav .theme .w{display:none}
-  .nav .theme .g{display:inline;letter-spacing:0;font-size:1.15em}
+   It sits at the cherry's size rather than the labels', because it is read as
+   a mark and not as a word, and a 10px glyph beside a 16px one reads as a
+   mistake. Same size, same rhythm, half the volume. */
+.nav button.theme{
+  flex:none;line-height:1;letter-spacing:0;
+  font-size:14px;color:var(--faint);
 }
+.nav button.theme:hover{color:var(--ink)}
+@media(max-width:640px){.nav button.theme{font-size:12px}}
+@media(max-width:340px){.nav button.theme{font-size:11px}}
 
 /* The cherry. The room's notifier, and it lives here now rather than in the
    room's own header, so being named reaches you while you are reading a
@@ -274,7 +269,7 @@ body[data-nav="flow"] .nav{position:static}
 @media(max-width:380px){
   .nav{gap:10px;padding:0 14px}
   /* the labels set as tight as they do on the smallest bar of all, one
-     breakpoint early, which is what pays for the day/night mark */
+     breakpoint early, which is what pays for the mark beside the cherry */
   .nav a,.nav button{letter-spacing:.07em}
   .nav .right{gap:8px}
   .nav .you{max-width:5.5em}

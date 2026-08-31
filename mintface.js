@@ -1955,20 +1955,23 @@ MF.nav = {
       <span class="right">${this.brightness()}${this.cherry()}${right}</span>`;
   },
 
-  /* Day and night, in the register the rest of the bar is in: two words, one
-     lit, the same shape the currency control has.
-     Both forms of it are in the markup and CSS picks, so which one shows is a
-     media query rather than a resize listener. The word is the real one. The
-     mark is what fits once the bar is down to a phone, where the four links
-     and the name already spend every pixel and a fifth word does not exist.
-     A screen reader is told the word either way. */
+  /* One mark, beside the cherry, showing the ground you are going to rather
+     than the one you are in ... which is the only reading that makes a single
+     control unambiguous. A moon while it is day, a sun while it is night.
+     Not a lit-and-unlit pair. Two words in a bar this full were a fifth label
+     to read every time you looked at it, and the whole point of this control
+     is that most readers should never notice it. It is set as text rather
+     than emoji so it takes the ink of everything else here and stays quiet
+     next to the cherry, which is the one thing in this bar allowed colour.
+     The word is in the title and the accessible name, where it belongs. */
   brightness() {
-    const t = MF.theme.current();
-    const one = (v, label, glyph) => `<button type="button" data-nav="${v}"
-      aria-pressed="${t === v}" aria-label="${label}"
-      title="Read this in ${label.toLowerCase()}"><span class="w">${label}</span><span
-      class="g" aria-hidden="true">${glyph}</span></button>`;
-    return `<span class="theme">${one('day', 'Day', '\u2600\uFE0E')}${one('night', 'Night', '\u263E\uFE0E')}</span>`;
+    const night = MF.theme.current() === 'night';
+    const to = night ? 'day' : 'night';
+    /* U+FE0E holds these to their text shapes. Without it a platform is free
+       to hand back a full colour sun, which is the one thing this is not. */
+    const glyph = night ? '\u2600\uFE0E' : '\u263E\uFE0E';
+    return `<button type="button" class="theme" data-nav="${to}"
+      aria-label="Read this in ${to}" title="Read this in ${to}">${glyph}</button>`;
   },
 
   /* Dormant it is not a button at all: there is nowhere for it to take you,
@@ -1999,8 +2002,8 @@ MF.nav = {
         ev.preventDefault(); MF.theme.set(b.dataset.nav);
       }
     });
-    /* which word is lit follows the theme however it changed ... this bar, the
-       other tab, or the machine at sunset */
+    /* which mark is showing follows the theme however it changed ... this bar,
+       the other tab, or the machine at sunset */
     MF.theme.onChange(() => this.draw());
   },
 
