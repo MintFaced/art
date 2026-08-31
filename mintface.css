@@ -1,4 +1,5 @@
-/* mintface.art shared styles. Light, warm, art first. */
+/* mintface.art shared styles. Warm, art first, and in one of two grounds.
+   Both deploys draw this file, so a token changed here changes both. */
 
 /* Two voices. Geist says what a thing is, Geist Mono says what it measures.
    Both variable, both ours, no request leaves the site for type. */
@@ -24,17 +25,115 @@
   font-display:swap;
 }
 
+/* ---------- the two grounds ----------
+   Day is what it always was. Night is the same palette read from the other
+   end: a warm charcoal ground rather than pure black, because pure black is
+   a hole and this site has always been warm; a warm white ink; the greys and
+   the rules stepped back through the same scale; and the one green left
+   exactly where it is, because it reads on both and it is the only colour
+   the site owns.
+
+   THE ART IS EXEMPT. Nothing below filters, inverts, dims or tints an image.
+   A work renders in night exactly as it renders in day ... only what it hangs
+   on changes. If a rule here ever wants to touch an <img>, the rule is wrong.
+
+   Every value lives once. The day set is the live one on :root, the night set
+   sits beside it as --n-* and is switched in by the two blocks underneath, so
+   there is one place to change a colour and two places that say when. */
 :root{
   --paper:#faf9f6;
   --ink:#14120f;
+  /* the ink scale ... prose sits below the ink proper, and did so already in
+     five different hardcoded shades across the pages. These are those shades,
+     to the character, so day is unchanged by naming them. */
+  --ink-2:#221f1a;
+  --ink-3:#2c2924;
+  --ink-4:#3a362f;
+  --ink-5:#514c44;
   --muted:#6e6a62;
   --faint:#a9a49a;
-  --rule:#e6e2da;
   --mark:#b4b4b0;
+  --rule:#e6e2da;
+  /* the two grounds that are not the paper: a wash a page sits a panel or a
+     hover on, and the sunk well a work hangs in. The well is the one that
+     shows around a work that does not fill its frame, so it is the one that
+     has to stay neutral and quiet in both. */
+  --wash:#f4f1ec;
+  --sunk:#f2efe9;
+  /* something has gone wrong, said once */
+  --alert:#8b3a2a;
+  /* a caption laid over a work */
+  --scrim:rgba(20,18,15,.82);
+  --scrim-ink:#faf9f6;
+  /* the one colour. Unchanged between the two, because it does not need to
+     be: 4.7:1 on paper, 3.6:1 on charcoal, and a 6px dot either way. */
   --dot-available:#3f7d54;
+
+  --n-paper:#1a1814;
+  --n-ink:#efebe2;
+  --n-ink-2:#e3dfd5;
+  --n-ink-3:#d8d3c9;
+  --n-ink-4:#c8c3b8;
+  --n-ink-5:#aca69b;
+  --n-muted:#948e84;
+  --n-faint:#6b665d;
+  --n-mark:#7c7669;
+  --n-rule:#302c26;
+  --n-wash:#201d19;
+  --n-sunk:#23201b;
+  --n-alert:#d9775f;
+  --n-scrim:rgba(12,11,9,.78);
+  --n-scrim-ink:#f4f1ea;
+
   /* swapping foundry is these two lines */
   --font-sans:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;
   --font-mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+
+/* The default is whatever the machine already decided. No attribute, no
+   stored choice, no script needed: the media query alone gets night right on
+   the first paint, which is most of why there is no flash to fix. */
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="day"]){
+    --paper:var(--n-paper);
+    --ink:var(--n-ink);
+    --ink-2:var(--n-ink-2);
+    --ink-3:var(--n-ink-3);
+    --ink-4:var(--n-ink-4);
+    --ink-5:var(--n-ink-5);
+    --muted:var(--n-muted);
+    --faint:var(--n-faint);
+    --mark:var(--n-mark);
+    --rule:var(--n-rule);
+    --wash:var(--n-wash);
+    --sunk:var(--n-sunk);
+    --alert:var(--n-alert);
+    --scrim:var(--n-scrim);
+    --scrim-ink:var(--n-scrim-ink);
+    color-scheme:dark;
+  }
+}
+/* And a choice made in the nav outranks the machine, in both directions. The
+   attribute is written by the inline script in the head, before first paint,
+   from a cookie on .mintface.art that both deploys share. */
+:root[data-theme="night"]{
+  --paper:var(--n-paper);
+  --ink:var(--n-ink);
+  --ink-2:var(--n-ink-2);
+  --ink-3:var(--n-ink-3);
+  --ink-4:var(--n-ink-4);
+  --ink-5:var(--n-ink-5);
+  --muted:var(--n-muted);
+  --faint:var(--n-faint);
+  --mark:var(--n-mark);
+  --rule:var(--n-rule);
+  --wash:var(--n-wash);
+  --sunk:var(--n-sunk);
+  --alert:var(--n-alert);
+  --scrim:var(--n-scrim);
+  --scrim-ink:var(--n-scrim-ink);
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -55,6 +154,21 @@ img{max-width:100%;display:block}
 .wordmark{display:inline-block;line-height:0;text-decoration:none;align-self:center}
 .wordmark img{height:22px;width:auto;display:block}
 @media(max-width:640px){.wordmark img{height:19px}}
+/* The mark swaps asset rather than being filtered: black ink on paper, warm
+   white on charcoal, the same shape either way. Both are in the markup and CSS
+   chooses, so a masthead sitting in static HTML swaps on the first paint
+   without waiting for script the way the nav could.
+   The class is doubled so these outrank the rules that size a mark where it
+   hangs ... .wordmark img and .wordmark-big h1 img both carry display, and a
+   single class loses to an element selector two deep. Doubling costs nothing
+   and keeps !important out of a stylesheet that has none. */
+.mark-night.mark-night{display:none}
+[data-theme="night"] .mark-day.mark-day{display:none}
+[data-theme="night"] .mark-night.mark-night{display:block}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="day"]) .mark-day.mark-day{display:none}
+  :root:not([data-theme="day"]) .mark-night.mark-night{display:block}
+}
 .smallcaps{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none}
 .smallcaps:hover{color:var(--ink)}
 
@@ -90,6 +204,28 @@ img{max-width:100%;display:block}
 .nav .you{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:14em;
   min-width:0;flex:0 1 auto;display:inline-block}
 .nav [aria-current="page"]{color:var(--ink)}
+
+/* ---------- day and night ----------
+   Two words in the register the rest of the bar is already in, one lit and one
+   not, exactly the shape the currency control has. Words, because this bar
+   does not hide four links behind a hamburger and is not about to start
+   explaining itself in pictures.
+
+   It gives that up at 640, and only because the bar is full there. The lit
+   half stands down, and what is left is one mark for where it takes you: the
+   four links and the name already spend every pixel on a phone, and 90px of
+   DAY NIGHT was never going to fit beside them. */
+.nav .theme{display:inline-flex;align-items:center;gap:11px;flex:none}
+.nav .theme button{color:var(--faint)}
+.nav .theme button:hover{color:var(--ink)}
+.nav .theme button[aria-pressed="true"]{color:var(--ink)}
+.nav .theme .g{display:none}
+@media(max-width:640px){
+  .nav .theme{gap:0}
+  .nav .theme button[aria-pressed="true"]{display:none}
+  .nav .theme .w{display:none}
+  .nav .theme .g{display:inline;letter-spacing:0;font-size:1.15em}
+}
 
 /* The cherry. The room's notifier, and it lives here now rather than in the
    room's own header, so being named reaches you while you are reading a
@@ -136,8 +272,11 @@ body[data-nav="flow"] .nav{position:static}
   .cherry .fruit{font-size:14px}
 }
 @media(max-width:380px){
-  .nav{gap:11px;padding:0 14px}
-  .nav .right{gap:10px}
+  .nav{gap:10px;padding:0 14px}
+  /* the labels set as tight as they do on the smallest bar of all, one
+     breakpoint early, which is what pays for the day/night mark */
+  .nav a,.nav button{letter-spacing:.07em}
+  .nav .right{gap:8px}
   .nav .you{max-width:5.5em}
 }
 /* the oldest phone still in circulation. Four items, still no hamburger. */
@@ -193,8 +332,9 @@ body[data-nav="flow"] .nav{position:static}
 .cur button[aria-pressed="true"]{color:var(--ink)}
 
 /* ---------- zoom ----------
-   The site is light, so the lightbox is light. No scrim, no chrome, no
-   caption: the same paper the work hangs on, and the work. */
+   No scrim, no chrome, no caption: whichever ground the work is already
+   hanging on, and the work. It was light because the site was; now it is
+   whichever the site is, which was the rule all along. */
 .zoom{
   position:fixed;inset:0;z-index:90;background:var(--paper);
   display:none;align-items:center;justify-content:center;overflow:hidden;

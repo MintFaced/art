@@ -7,6 +7,29 @@
 <meta name="description" content="The Artist Virtual Studio. Collectors weigh their TAO behind a yes or a no, and talk art with each other in the room. TAO gets you in; all can read.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MintFace">
+<!-- The mark, at every size a browser asks for. The white cut serves on a
+     dark scheme, which is also the tab icon once night is on. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<!-- The reading choice, before the first pixel. The stylesheet defaults to
+     prefers-color-scheme on its own, so this is only the override: the cookie
+     both deploys share, or this browser's own note of it. Four lines, inline,
+     because anything else paints the wrong theme first and corrects it. -->
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
@@ -16,7 +39,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-spacing:-.02em;margin-top:16px}
 .sub{font-size:13px;color:var(--muted);margin-top:20px;max-width:44em;line-height:1.7}
 .frame{margin-top:34px}
-.frame p{font-size:16.5px;line-height:1.7;color:#3a362f;max-width:34em;margin:0 0 14px}
+.frame p{font-size:16.5px;line-height:1.7;color:var(--ink-4);max-width:34em;margin:0 0 14px}
 .rule{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   border-left:2px solid var(--ink);padding-left:16px;margin:26px 0 0;line-height:1.8}
 .room{max-width:720px;margin:0 auto;padding:24px 28px 40px}
@@ -40,7 +63,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
   letter-spacing:-.02em;margin:0;max-width:22em}
 .nudges .when{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--muted);margin-top:10px}
-.nudges .note{font-size:15px;line-height:1.65;color:#3a362f;margin:14px 0 0;max-width:34em}
+.nudges .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:14px 0 0;max-width:34em}
 .nudges .shot{margin:18px 0 0;max-width:520px}
 .nudges .shot img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
 /* two hairline meters, the way every other measure on this site reads. On a
@@ -65,7 +88,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .weigh[disabled]{opacity:.5;cursor:default}
 .nudges .said{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);margin:12px 0 0}
-.nudges .said.bad{color:#8b3a2a;text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
+.nudges .said.bad{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
 /* ---------- the board ----------
    A palette forming in public. The swatch is the colour itself at the size a
    colour needs to be judged at, and everything beside it is the register's own
@@ -97,7 +120,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
   color:var(--muted);margin:14px 0 0;font-variant-numeric:tabular-nums}
 /* Promising more than they hold. Said plainly and never corrected behind their
    back: the amounts they signed for stand, and the board counts what fits. */
-.nudges .purse.over{color:#8b3a2a;text-transform:none;letter-spacing:0;font-family:var(--font-sans);
+.nudges .purse.over{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);
   font-size:13.5px;line-height:1.6;max-width:44em}
 /* A change in the record, up or down. */
 .nudges .ledger .up{color:var(--ink)}
@@ -156,7 +179,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .ledger td a:hover{border-color:var(--ink)}
 .nudges .banked{font-family:var(--font-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink);margin:18px 0 0}
-.nudges .outcome{font-size:15px;line-height:1.65;color:#3a362f;margin:12px 0 0;max-width:34em}
+.nudges .outcome{font-size:15px;line-height:1.65;color:var(--ink-4);margin:12px 0 0;max-width:34em}
 .nudges .none{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);padding:2px 0 0}
 /* An open nudge needs no pointer to itself: it is drawn between the last
    message and the composer, which is exactly where this page opens. Something
@@ -180,7 +203,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
    The rule arrives under the pointer, which is the house link worn quietly. */
 .m .who a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
 .m .who a:hover{border-color:var(--ink)}
-.m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font-size:15px;line-height:1.68;color:#2c2924}
+.m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font-size:15px;line-height:1.68;color:var(--ink-3)}
 .m .gone{margin:8px 0 0;font-family:var(--font-mono);font-size:11.5px;color:var(--faint)}
 /* What a message is answering, said above it in the house dialect. One line,
    the arrow and a name, and it goes where the message it answers is. */
@@ -196,7 +219,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .m .re .jump:hover{color:var(--ink)}
 /* Arriving at a message somebody pointed you to. A ground that fades rather
    than a highlight that stays: it says here, and then it stops saying it. */
-.m.found{background:#f4f1eb;box-shadow:0 0 0 8px #f4f1eb}
+.m.found{background:var(--wash);box-shadow:0 0 0 8px var(--wash)}
 .m{transition:background-color 1.1s ease,box-shadow 1.1s ease}
 .m.mine{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
 .m .who .artist{color:var(--ink);letter-spacing:.18em}
@@ -222,14 +245,14 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
    somebody actually wants to look at it. The hairline is the frame every other
    image on this site gets. */
 .m .shot{display:block;margin:11px 0 0;max-width:100%;max-height:320px;width:auto;height:auto;
-  border:1px solid var(--rule);cursor:zoom-in;background:#f2efe9}
+  border:1px solid var(--rule);cursor:zoom-in;background:var(--sunk)}
 .m .shot:focus-visible{outline:none;border-color:var(--ink)}
 
 /* What is about to go up with a message. Shown at the size it will be sent,
    so nothing about what arrives is a surprise ... including the line saying
    the camera data has already gone. */
 .attached{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.attached img{width:56px;height:56px;object-fit:cover;border:1px solid var(--rule);flex:none;background:#f2efe9}
+.attached img{width:56px;height:56px;object-fit:cover;border:1px solid var(--rule);flex:none;background:var(--sunk)}
 .attached .what{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--faint);min-width:0;overflow:hidden;text-overflow:ellipsis}
 .attached button{background:none;border:0;padding:0 2px;cursor:pointer;color:var(--faint);
@@ -245,7 +268,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .card{display:flex;gap:12px;align-items:flex-start;max-width:34em;padding:11px 13px;
   border:1px solid var(--rule);text-decoration:none;transition:border-color .18s ease}
 .card:hover,.card:focus-visible{border-color:var(--ink)}
-.cthumb{width:44px;height:44px;flex:none;object-fit:cover;background:#f2efe9}
+.cthumb{width:44px;height:44px;flex:none;object-fit:cover;background:var(--sunk)}
 .cbody{display:flex;flex-direction:column;gap:3px;min-width:0}
 .cdom{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -289,7 +312,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 @media(hover:none){.quiet{opacity:.65}}
 .pal{display:inline-flex;gap:1px;border:1px solid var(--rule);padding:2px}
 .pal button{background:none;border:0;padding:3px 6px;font-size:15px;line-height:1;cursor:pointer;opacity:.7}
-.pal button:hover,.pal button:focus-visible{opacity:1;background:#f2efe9;outline:none}
+.pal button:hover,.pal button:focus-visible{opacity:1;background:var(--sunk);outline:none}
 
 /* Your name used to be said again under the masthead. The nav says it now, on
    this page and on every other, and the composer says it a third time with
@@ -305,7 +328,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
   background:none;border:0;border-bottom:1px solid var(--rule);padding:9px 12px;cursor:pointer;
   font-family:var(--font-sans);font-size:14px;color:var(--ink)}
 .at-list button:last-child{border-bottom:0}
-.at-list button[aria-selected="true"]{background:#f2efe9}
+.at-list button[aria-selected="true"]{background:var(--sunk)}
 .at-list .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .at-list .sub{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -329,13 +352,13 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .speak .row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px;
   font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .speak .count{font-variant-numeric:tabular-nums}
-.speak .count.over{color:#a33}
+.speak .count.over{color:var(--alert)}
 .speak .go{background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;padding:8px 15px;
   font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
 .speak .go:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
 .speak .go:disabled{opacity:.45;cursor:default}
 .say{font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--muted);margin-top:10px}
-.say.bad{color:#a33}
+.say.bad{color:var(--alert)}
 .quiet-log{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding:34px 0}
 
 @media(max-width:640px){

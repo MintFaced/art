@@ -8,3 +8,7 @@ archive/
 # relying on it.
 .env*
 .vercel
+
+# The favicon source archive. The cut files beside it are the website; the zip
+# they came out of is not, and this directory is served as it stands.
+assets/*.zip

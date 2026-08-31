@@ -7,6 +7,29 @@
 <meta name="description" content="Work by MintFace.">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="MintFace">
+<!-- The mark, at every size a browser asks for. The white cut serves on a
+     dark scheme, which is also the tab icon once night is on. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<!-- The reading choice, before the first pixel. The stylesheet defaults to
+     prefers-color-scheme on its own, so this is only the override: the cookie
+     both deploys share, or this browser's own note of it. Four lines, inline,
+     because anything else paints the wrong theme first and corrects it. -->
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
@@ -29,7 +52,7 @@
   padding:11px 22px;font-family:var(--font-sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
 }
 .ghost:hover{border-color:var(--ink);color:var(--ink)}
-.motion-frame iframe{width:min(900px,100%);height:min(70vh,640px);border:1px solid var(--rule);background:#fff}
+.motion-frame iframe{width:min(900px,100%);height:min(70vh,640px);border:1px solid var(--rule);background:var(--sunk)}
 .motion-frame video{max-height:70vh}
 .motion-label{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
 
@@ -58,7 +81,7 @@ h1{
 }
 .panel{padding:26px 0 0}
 .panel[hidden]{display:none}
-.statement{font-family:var(--font-sans);font-weight:400;font-size:17px;line-height:1.6;color:#2c2924;margin:0;white-space:pre-line}
+.statement{font-family:var(--font-sans);font-weight:400;font-size:17px;line-height:1.6;color:var(--ink-3);margin:0;white-space:pre-line}
 
 /* ---------- detail rows ---------- */
 .rows{width:100%;border-collapse:collapse}
@@ -90,7 +113,7 @@ details summary::after{content:'+';font-family:var(--font-mono);font-size:13px;c
 details[open] summary::after{content:'–'}
 details summary:hover{color:var(--ink)}
 .fold-body{padding:0 0 20px}
-.fold-body p{margin:0 0 10px;font-size:14px;color:#3a372f}
+.fold-body p{margin:0 0 10px;font-size:14px;color:var(--ink-4)}
 .chain-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
 .chain-links a{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
 .chain-links a:hover{color:var(--ink);border-color:var(--ink)}
@@ -109,7 +132,7 @@ details summary:hover{color:var(--ink)}
 .onchain.lead{margin-top:0;background:var(--ink);border-color:var(--ink)}
 .onchain.lead .w{color:var(--paper)}
 .onchain.lead .s{color:rgba(250,249,246,.72)}
-.onchain.lead:hover{background:#2c2924}
+.onchain.lead:hover{background:var(--ink-3)}
 .btn.quiet{margin-top:10px;background:transparent;color:var(--ink);border:1px solid var(--rule)}
 .btn.quiet:hover{background:transparent;border-color:var(--ink)}
 .onchain .w{font-family:var(--font-sans);font-weight:500;font-size:12.5px;letter-spacing:.02em;color:var(--ink)}
@@ -159,14 +182,14 @@ details summary:hover{color:var(--ink)}
   font-family:var(--font-sans);font-size:14px;color:var(--ink);margin-bottom:9px;border-radius:0;
 }
 .sheet input:focus{outline:none;border-color:var(--ink)}
-.sheet .err{font-size:12px;color:#8b3a2a;margin-top:12px}
-.sheet .ok{font-family:var(--font-mono);font-weight:400;font-size:17px;line-height:1.45;color:#2c2924;font-variant-numeric:tabular-nums}
+.sheet .err{font-size:12px;color:var(--alert);margin-top:12px}
+.sheet .ok{font-family:var(--font-mono);font-weight:400;font-size:17px;line-height:1.45;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .held{
   display:flex;justify-content:space-between;align-items:baseline;gap:12px;
   border-top:1px solid var(--rule);margin-top:18px;padding-top:12px;
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
 }
-.held.stale{color:#8b3a2a}
+.held.stale{color:var(--alert)}
 .held button{
   background:none;border:0;padding:0;cursor:pointer;font-family:var(--font-sans);font-weight:500;
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);
@@ -199,7 +222,7 @@ details summary:hover{color:var(--ink)}
   border:0;cursor:pointer;font-family:var(--font-sans);
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;
 }
-.btn:hover{background:#2c2924}
+.btn:hover{background:var(--ink-3)}
 /* who holds it, directly under the byline it belongs with */
 .collected{margin-top:12px;margin-bottom:26px}
 .collected .who{
@@ -220,7 +243,7 @@ details summary:hover{color:var(--ink)}
 .state{display:flex;align-items:baseline;gap:10px;padding:18px 0;border-top:1px solid var(--rule)}
 .state .word{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-variant-numeric:tabular-nums}
 .state .sub{font-family:var(--font-mono);font-weight:400;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.note{font-family:var(--font-sans);font-weight:400;font-size:16px;line-height:1.55;color:#2c2924;margin:12px 0 0}
+.note{font-family:var(--font-sans);font-weight:400;font-size:16px;line-height:1.55;color:var(--ink-3);margin:12px 0 0}
 .holders{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.9}
 /* one row per holder, so a name can be swapped for a linked one in place */
 .holders .hold{display:inline}
@@ -244,7 +267,7 @@ details summary:hover{color:var(--ink)}
 .nt-row td{font-family:var(--font-sans);font-size:13px}
 .nt{padding:0 0 2px}
 .nt + .nt{margin-top:16px;padding-top:16px;border-top:1px solid var(--rule)}
-.nt p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font-size:14px;line-height:1.65;color:#2c2924}
+.nt p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font-size:14px;line-height:1.65;color:var(--ink-3)}
 .nt-by{margin-top:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--faint);line-height:1.8}
 .nt.own{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
@@ -266,13 +289,13 @@ details summary:hover{color:var(--ink)}
   font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .nt-edit-foot label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;letter-spacing:inherit}
 .nt-edit-foot .nt-count{margin-left:auto;font-variant-numeric:tabular-nums}
-.nt-edit-foot .nt-count.over{color:#a33}
+.nt-edit-foot .nt-count.over{color:var(--alert)}
 .nt-go{background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;padding:6px 12px;
   font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
 .nt-go:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
 .nt-go:disabled{opacity:.45;cursor:default}
 .nt-say{margin-top:9px;font-family:var(--font-mono);font-size:10.5px;line-height:1.7;color:var(--muted)}
-.nt-say.bad{color:#a33}
+.nt-say.bad{color:var(--alert)}
 
 /* former collectors, in the provenance fold where their tenure already lives */
 .nt-prov{margin-top:20px;padding-top:16px;border-top:1px solid var(--rule)}

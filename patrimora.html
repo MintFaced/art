@@ -14,6 +14,29 @@
 <meta name="twitter:image" content="https://mintface.art/api/og?page=collections">
 <meta property="og:title" content="Patrimora ... MintFace">
 <meta property="og:description" content="A heritage postponed but inevitable. 469 folds of the geodetic, minting now.">
+<!-- The mark, at every size a browser asks for. The white cut serves on a
+     dark scheme, which is also the tab icon once night is on. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<!-- The reading choice, before the first pixel. The stylesheet defaults to
+     prefers-color-scheme on its own, so this is only the override: the cookie
+     both deploys share, or this browser's own note of it. Four lines, inline,
+     because anything else paints the wrong theme first and corrects it. -->
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/Geist-Italic-Variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -82,7 +105,7 @@
 }
 .grid{max-width:1500px;margin:0 auto;padding:26px 28px 40px;column-count:4;column-gap:34px}
 .tile{break-inside:avoid;margin:0 0 34px;display:block;text-decoration:none}
-.tile .shot{background:#f2efe9;overflow:hidden}
+.tile .shot{background:var(--sunk);overflow:hidden}
 .tile img,.tile video{width:100%;height:auto;transition:opacity .5s ease;opacity:0}
 .tile img.in,.tile video.in{opacity:1}
 .tile .cap{padding:11px 2px 0}
@@ -274,12 +297,19 @@ const EMBED = {
   script: false,
   css: 'https://mint.highlight.xyz/assets/embed.css',
   js: 'https://mint.highlight.xyz/assets/embed.js?v=1',
-  // the site's light system, handed to the embed rather than fought with in CSS
-  styles: {
-    bgColor: '#faf9f6',
-    textColor: '#14120f',
-    accentColor: '#14120f',
-    fontFamily: 'Geist',
+  /* the site's own system, handed to the embed rather than fought with in CSS.
+     Read off the page rather than copied, so the widget arrives in whichever
+     of the two grounds the page is actually in. It is styled once, at mount:
+     a third party's iframe is not ours to restyle mid-read, and switching
+     theme reloads nothing else either. */
+  styles() {
+    const v = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    return {
+      bgColor: v('--paper') || '#faf9f6',
+      textColor: v('--ink') || '#14120f',
+      accentColor: v('--ink') || '#14120f',
+      fontFamily: 'Geist',
+    };
   },
 };
 
@@ -294,7 +324,7 @@ function mountMint() {
     const card = document.createElement('div');
     card.setAttribute('data-widget', 'highlight-mint-card');
     card.setAttribute('data-mint-collection-id', HIGHLIGHT_ID);
-    card.setAttribute('data-styles', JSON.stringify(EMBED.styles));
+    card.setAttribute('data-styles', JSON.stringify(EMBED.styles()));
     // we present the new work ourselves, so their modal stays shut
     card.setAttribute('data-hide-success-modal', 'true');
     frame.appendChild(card);

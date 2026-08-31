@@ -12,6 +12,29 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://mintface.art/api/og?page=genesis">
+<!-- The mark, at every size a browser asks for. The white cut serves on a
+     dark scheme, which is also the tab icon once night is on. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<!-- The reading choice, before the first pixel. The stylesheet defaults to
+     prefers-color-scheme on its own, so this is only the override: the cookie
+     both deploys share, or this browser's own note of it. Four lines, inline,
+     because anything else paints the wrong theme first and corrects it. -->
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
@@ -21,7 +44,7 @@
 .kicker{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
 h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(44px,9.5vw,112px);line-height:.94;margin:0;letter-spacing:-.035em}
 .standfirst{
-  font-family:var(--font-sans);font-size:clamp(21px,2.6vw,29px);line-height:1.42;color:#3a362f;
+  font-family:var(--font-sans);font-size:clamp(21px,2.6vw,29px);line-height:1.42;color:var(--ink-4);
   max-width:680px;margin:30px auto 0;
 }
 .credit{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:26px}
@@ -29,7 +52,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(44px,9.5vw,112px
 
 /* ---------- prose ---------- */
 .prose{max-width:660px;margin:0 auto;padding:0 28px}
-.prose p{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,1.85vw,19px);line-height:1.7;color:#221f1a;margin:30px 0}
+.prose p{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,1.85vw,19px);line-height:1.7;color:var(--ink-2);margin:30px 0}
 .prose p.lead{font-size:clamp(21px,2.4vw,26px);line-height:1.48;color:var(--ink);margin:48px 0;letter-spacing:-.01em}
 .prose p.close{font-size:clamp(19px,2.2vw,23px);line-height:1.5;margin:60px 0 0;color:var(--ink);letter-spacing:-.005em}
 .prose h2.chapter{
@@ -42,7 +65,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(44px,9.5vw,112px
 
 /* ---------- works in the flow ---------- */
 .plate{margin:74px 0}
-.plate .shot{background:#f2efe9;text-align:center}
+.plate .shot{background:var(--sunk);text-align:center}
 .plate .shot img,.plate .shot video{width:100%;height:auto;opacity:0;transition:opacity .6s ease}
 .plate .shot img,.plate .shot video.in{opacity:1}
 .plate.single{max-width:1240px;margin-left:auto;margin-right:auto;padding:0 28px}
@@ -61,7 +84,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(44px,9.5vw,112px
 .strip a{display:block;text-decoration:none}
 .strip .shot{aspect-ratio:1/1;overflow:hidden}
 .strip img{width:100%;height:100%;object-fit:cover}
-.strip .t{font-family:var(--font-sans);font-weight:400;font-size:13px;line-height:1.3;margin-top:9px;color:#3a362f}
+.strip .t{font-family:var(--font-sans);font-weight:400;font-size:13px;line-height:1.3;margin-top:9px;color:var(--ink-4)}
 .strip a:hover .t{text-decoration:underline;text-underline-offset:3px}
 
 .buy{margin-top:76px;border-top:1px solid var(--ink);padding-top:20px}
@@ -73,7 +96,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(44px,9.5vw,112px
   border:0;cursor:pointer;font-family:var(--font-sans);text-decoration:none;
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;
 }
-.buy .btn:hover{background:#2c2924}
+.buy .btn:hover{background:var(--ink-3)}
 .buy .note{font-size:12px;color:var(--muted);line-height:1.7;margin:16px 0 0}
 
 .tail{max-width:660px;margin:0 auto;padding:80px 28px 110px;text-align:center}

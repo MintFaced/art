@@ -17,6 +17,10 @@ import { storeConfigured, pipe } from './_lib/kv.js';
 
 const ORIGIN = process.env.SITE_ORIGIN || 'https://mintface.art';
 const ASSETS = 'https://assets.mintface.art';
+/* Day, always, whatever the reader's machine or the site's own night switch
+   says. A shared link is the brand arriving somewhere it was not invited, and
+   it should look the same in everybody's timeline ... so these are the day
+   values written out rather than tokens read from anywhere. */
 const PAPER = '#faf9f6';
 const INK = '#14120f';
 const MUTED = '#6e6a62';

@@ -1780,6 +1780,107 @@ MF.picture = {
   },
 };
 
+/* ---------- day and night ----------
+ *
+ * One choice, two deploys, and it has to be settled before the first pixel.
+ *
+ * Most of that does not happen here. The stylesheet's own default is
+ * prefers-color-scheme, so a browser that has never been told anything gets
+ * night out of CSS alone, on the first paint, with no script anywhere in the
+ * path. What this adds is the override: a reader who wants day on a dark
+ * machine, or the other way about.
+ *
+ * The override is written twice. A cookie on .mintface.art, because that is
+ * the one thing mintface.art and collectors.mintface.art both read, and it is
+ * where the session already lives ... so the one choice follows you across.
+ * And localStorage, because a browser with cookies switched off should still
+ * keep its own preference on its own site.
+ *
+ * Reading it back before paint is four lines inline in every page's head,
+ * which is the only place it can sit and still beat the first pixel. It sets
+ * data-theme on <html> and stops. Everything below is what happens after.
+ */
+MF.theme = {
+  KEY: 'mf_theme',
+  DARK: '(prefers-color-scheme: dark)',
+  watchers: [],
+
+  /** The choice somebody made, or nothing, which means follow the machine. */
+  saved() {
+    const c = MF.session.cookie(this.KEY);
+    if (c === 'day' || c === 'night') return c;
+    try {
+      const v = localStorage.getItem(this.KEY);
+      if (v === 'day' || v === 'night') return v;
+    } catch (err) { /* storage switched off, and the cookie already said no */ }
+    return null;
+  },
+
+  system() {
+    try { return matchMedia(this.DARK).matches ? 'night' : 'day'; }
+    catch (err) { return 'day'; }
+  },
+
+  /** What is actually on the screen. */
+  current() { return this.saved() || this.system(); },
+
+  set(theme) {
+    const t = theme === 'night' ? 'night' : 'day';
+    /* A year, on the registrable domain when we are really on it. A preview
+       deploy or a localhost would have Domain=.mintface.art rejected outright,
+       so there it stays host-only and simply does not travel. */
+    const shared = /(^|\.)mintface\.art$/.test(location.hostname);
+    const bits = [`${this.KEY}=${t}`, 'Path=/', 'Max-Age=31536000', 'SameSite=Lax'];
+    if (shared) bits.push('Domain=.mintface.art');
+    if (location.protocol === 'https:') bits.push('Secure');
+    try { document.cookie = bits.join('; '); } catch (err) { /* nothing to do */ }
+    try { localStorage.setItem(this.KEY, t); } catch (err) { /* nothing to do */ }
+    this.apply();
+  },
+
+  /** Put what is stored onto the page. No attribute means follow the machine,
+      which is what the stylesheet does on its own. */
+  apply() {
+    const t = this.saved();
+    const root = document.documentElement;
+    if (t) root.setAttribute('data-theme', t);
+    else root.removeAttribute('data-theme');
+    /* the chrome around the page too, or a phone is left with one white band
+       at the top of a dark screen */
+    const ground = this.current() === 'night' ? '#1a1814' : '#faf9f6';
+    let m = document.querySelector('meta[name="theme-color"]:not([media])');
+    if (!m) {
+      m = document.createElement('meta');
+      m.setAttribute('name', 'theme-color');
+      document.head.appendChild(m);
+    }
+    m.setAttribute('content', ground);
+    for (const fn of this.watchers) {
+      try { fn(this.current()); } catch (err) { /* a watcher is not the theme's problem */ }
+    }
+  },
+
+  /** Told whenever what is on the screen changes, for whatever reason. */
+  onChange(fn) { this.watchers.push(fn); },
+
+  start() {
+    this.apply();
+    /* the machine changing its mind, while nobody has overruled it */
+    try {
+      const mq = matchMedia(this.DARK);
+      const react = () => { if (!this.saved()) this.apply(); };
+      if (mq.addEventListener) mq.addEventListener('change', react);
+      else if (mq.addListener) mq.addListener(react);
+    } catch (err) { /* no matchMedia, no machine preference to follow */ }
+    /* and another tab on this origin choosing. The other deploy finds out on
+       its next navigation, out of the cookie, which is as live as a cookie
+       gets and is the right liveness for a reading preference. */
+    try {
+      addEventListener('storage', (ev) => { if (ev.key === this.KEY) this.apply(); });
+    } catch (err) { /* nothing to do */ }
+  },
+};
+
 /* ---------- the nav ----------
  *
  * A rule with words on it. The mark, two places to go, and then who you are
@@ -1843,12 +1944,31 @@ MF.nav = {
     else right = `<span class="you">${e(name)}</span>`;
 
     this.el.innerHTML = `
-      <a class="wordmark" href="${MF.ART || '/'}" aria-label="MintFace"><img
-        src="${MF.ART}/assets/MintFace-Logo-Black.png" alt="MintFace" width="1450" height="380"></a>
+      <a class="wordmark" href="${MF.ART || '/'}" aria-label="MintFace"
+        ><img class="mark-day" src="${MF.ART}/assets/MintFace-Logo-Black.png"
+          alt="MintFace" width="1450" height="380"
+        ><img class="mark-night" src="${MF.ART}/assets/MintFace-Logo-White.png"
+          alt="" aria-hidden="true" width="1450" height="380"></a>
       <a href="${MF.ART}/collections"${on('/collections')}>Collections</a>
       <a href="${MF.PEOPLE || '/'}"${AT_PEOPLE && here === '' ? ' aria-current="page"' : ''}>Collectors</a>
       <a href="${MF.ART}/studio"${on('/studio')}>Studio</a>
-      <span class="right">${this.cherry()}${right}</span>`;
+      <span class="right">${this.brightness()}${this.cherry()}${right}</span>`;
+  },
+
+  /* Day and night, in the register the rest of the bar is in: two words, one
+     lit, the same shape the currency control has.
+     Both forms of it are in the markup and CSS picks, so which one shows is a
+     media query rather than a resize listener. The word is the real one. The
+     mark is what fits once the bar is down to a phone, where the four links
+     and the name already spend every pixel and a fifth word does not exist.
+     A screen reader is told the word either way. */
+  brightness() {
+    const t = MF.theme.current();
+    const one = (v, label, glyph) => `<button type="button" data-nav="${v}"
+      aria-pressed="${t === v}" aria-label="${label}"
+      title="Read this in ${label.toLowerCase()}"><span class="w">${label}</span><span
+      class="g" aria-hidden="true">${glyph}</span></button>`;
+    return `<span class="theme">${one('day', 'Day', '\u2600\uFE0E')}${one('night', 'Night', '\u263E\uFE0E')}</span>`;
   },
 
   /* Dormant it is not a button at all: there is nowhere for it to take you,
@@ -1875,7 +1995,13 @@ MF.nav = {
       if (!b || !this.el || !this.el.contains(b)) return;
       if (b.dataset.nav === 'connect') { ev.preventDefault(); this.connect(); }
       if (b.dataset.nav === 'cherry') { ev.preventDefault(); this.toMention(); }
+      if (b.dataset.nav === 'day' || b.dataset.nav === 'night') {
+        ev.preventDefault(); MF.theme.set(b.dataset.nav);
+      }
     });
+    /* which word is lit follows the theme however it changed ... this bar, the
+       other tab, or the machine at sunset */
+    MF.theme.onChange(() => this.draw());
   },
 
   /** What the room says about the wallet this browser is signed in as. */
@@ -1943,6 +2069,9 @@ MF.nav = {
 };
 
 if (typeof document !== 'undefined') {
+  /* The head script already set the attribute; this reconciles the rest of it
+     (the chrome colour, the listeners) and is harmless if it agrees. */
+  MF.theme.start();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => MF.nav.mount());
   else MF.nav.mount();
 }

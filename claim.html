@@ -13,6 +13,29 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://mintface.art/api/og?page=claim">
 <meta property="og:title" content="Receive your tokenized artwork">
+<!-- The mark, at every size a browser asks for. The white cut serves on a
+     dark scheme, which is also the tab icon once night is on. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<!-- The reading choice, before the first pixel. The stylesheet defaults to
+     prefers-color-scheme on its own, so this is only the override: the cookie
+     both deploys share, or this browser's own note of it. Four lines, inline,
+     because anything else paints the wrong theme first and corrects it. -->
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
@@ -29,7 +52,7 @@ h1{
 .lede{max-width:1400px;margin:0 auto;padding:38px 28px 0}
 .lede p{
   font-family:var(--font-sans);font-size:clamp(17px,1.9vw,20px);line-height:1.65;
-  color:#3a362f;max-width:34em;margin:0;
+  color:var(--ink-4);max-width:34em;margin:0;
 }
 
 .steps{max-width:1400px;margin:0 auto;padding:0 28px;list-style:none}
@@ -42,7 +65,7 @@ h1{
   font-family:var(--font-sans);font-weight:400;font-size:clamp(23px,2.6vw,29px);
   line-height:1.15;letter-spacing:-.02em;margin:0 0 16px;
 }
-.step p{font-size:16.5px;line-height:1.7;color:#3a362f;margin:0 0 16px;max-width:34em}
+.step p{font-size:16.5px;line-height:1.7;color:var(--ink-4);margin:0 0 16px;max-width:34em}
 .step p:last-child{margin-bottom:0}
 .step a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
 .step a:hover{border-color:var(--ink)}
@@ -61,14 +84,14 @@ h1{
 
 .addr-eg{
   font-family:var(--font-mono);font-size:clamp(15px,2.2vw,19px);letter-spacing:.02em;
-  color:var(--ink);padding:18px 20px;border:1px solid var(--rule);background:#f4f1ec;
+  color:var(--ink);padding:18px 20px;border:1px solid var(--rule);background:var(--wash);
   margin:4px 0 20px;display:block;width:max-content;max-width:100%;overflow-x:auto;
 }
 
 /* ---------- the form ---------- */
 form{margin-top:8px;max-width:34em}
 .field{margin-bottom:20px}
-.field label{display:block;font-size:15px;color:#3a362f;margin-bottom:8px}
+.field label{display:block;font-size:15px;color:var(--ink-4);margin-bottom:8px}
 .field .hint{display:block;font-size:13.5px;color:var(--muted);margin-top:-2px;margin-bottom:8px}
 input{
   width:100%;padding:15px 16px;border:1px solid var(--rule);background:transparent;
@@ -77,24 +100,24 @@ input{
 input:focus{outline:none;border-color:var(--ink)}
 input.mono{font-family:var(--font-mono);font-size:15px}
 input::placeholder{color:var(--faint)}
-.field.wrong input{border-color:#8b3a2a}
-.field .say{display:none;font-size:14px;line-height:1.5;color:#8b3a2a;margin-top:8px}
+.field.wrong input{border-color:var(--alert)}
+.field .say{display:none;font-size:14px;line-height:1.5;color:var(--alert);margin-top:8px}
 .field.wrong .say{display:block}
 .btn{
   display:block;width:100%;padding:19px 20px;background:var(--ink);color:var(--paper);
   border:0;cursor:pointer;font-family:var(--font-sans);
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;
 }
-.btn:hover{background:#2c2924}
+.btn:hover{background:var(--ink-3)}
 .btn[disabled]{opacity:.55;cursor:default}
-.trouble{font-size:14px;line-height:1.6;color:#8b3a2a;margin:16px 0 0}
+.trouble{font-size:14px;line-height:1.6;color:var(--alert);margin:16px 0 0}
 
 .done h2{font-family:var(--font-sans);font-weight:400;font-size:26px;letter-spacing:-.02em;margin:0 0 14px}
-.done p{font-size:16.5px;line-height:1.7;color:#3a362f;margin:0 0 14px;max-width:34em}
+.done p{font-size:16.5px;line-height:1.7;color:var(--ink-4);margin:0 0 14px;max-width:34em}
 
 .after{max-width:1400px;margin:0 auto;padding:74px 28px 120px}
 .after p{
-  font-size:16.5px;line-height:1.7;color:#3a362f;margin:0;
+  font-size:16.5px;line-height:1.7;color:var(--ink-4);margin:0;
   max-width:calc(34em + 92px);padding-left:92px;
 }
 .after a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
