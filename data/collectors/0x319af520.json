@@ -1,6 +1,7 @@
 {
  "address": "0x319af5203839970ccb04d2eda95c427941c498ae",
  "ens": null,
+ "fwd": null,
  "display_name": null,
  "slug": "0x319af520",
  "private": false,
@@ -13,7 +14,7 @@
  },
  "first_collected": "2022-04-21T13:35:30.000000Z",
  "last_collected": "2022-08-31T22:21:06.000Z",
- "tao": 154889,
+ "tao": 155281,
  "tao_rate": 98.4,
  "tao_rank": 77,
  "collections": [
@@ -23,8 +24,8 @@
    "works": 3
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
    "works": 1
   },
   {
@@ -33,13 +34,13 @@
    "works": 1
   },
   {
-   "slug": "geodetic-moments",
-   "title": "Geodetic Moments",
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 1
   },
   {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   }
  ],
@@ -54,7 +55,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-518-display.webp",
    "orientation": null,
-   "tao": 6119
+   "tao": 6136
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -66,7 +67,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12688
+   "tao": 12721
   },
   {
    "id": "seize-and-share-mint-face-367",
@@ -78,7 +79,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-367-image.png",
    "orientation": null,
-   "tao": 6432
+   "tao": 6449
   },
   {
    "id": "seize-and-share-seize-and-share-176",
@@ -90,7 +91,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-seize-and-share-176-image.png",
    "orientation": null,
-   "tao": 6455
+   "tao": 6471
   },
   {
    "id": "2022-10k-1",
@@ -102,7 +103,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6517
+   "tao": 6533
   },
   {
    "id": "geodetic-onchain-1",
@@ -114,7 +115,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6669
+   "tao": 6686
   },
   {
    "id": "geodetic-moments-72",
@@ -126,7 +127,7 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-72-display.webp",
    "orientation": null,
-   "tao": 109664
+   "tao": 109939
   }
  ]
 }
