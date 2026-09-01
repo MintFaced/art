@@ -1,6 +1,7 @@
 {
  "address": "0xd69e257ae6088b717ae6d2ddec9297703b4fb725",
  "ens": "mysterian.eth",
+ "fwd": null,
  "display_name": null,
  "slug": "mysterian.eth",
  "private": false,
@@ -13,7 +14,7 @@
  },
  "first_collected": "2022-06-13T05:41:13.000000Z",
  "last_collected": "2025-06-14T23:10:35.000Z",
- "tao": 549334,
+ "tao": 550939,
  "tao_rate": 402.6,
  "tao_rank": 7,
  "collections": [
@@ -43,6 +44,11 @@
    "works": 2
   },
   {
+   "slug": "geodetica",
+   "title": "Geodetica",
+   "works": 1
+  },
+  {
    "slug": "geodetic-memory",
    "title": "Geodetic Memory",
    "works": 1
@@ -50,11 +56,6 @@
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
-   "works": 1
-  },
-  {
-   "slug": "geodetica",
-   "title": "Geodetica",
    "works": 1
   }
  ],
@@ -69,7 +70,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 20802
+   "tao": 20869
   },
   {
    "id": "geodetic-onchain-3",
@@ -81,7 +82,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
    "orientation": null,
-   "tao": 8176
+   "tao": 8209
   },
   {
    "id": "we-are-the-line-8",
@@ -104,7 +105,7 @@
    "unique": false,
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
-   "tao": 2922
+   "tao": 2939
   },
   {
    "id": "xlife-46",
@@ -116,7 +117,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3670
+   "tao": 3687
   },
   {
    "id": "xlife-43",
@@ -128,7 +129,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4068
+   "tao": 4085
   },
   {
    "id": "xlife-31",
@@ -140,7 +141,7 @@
    "unique": false,
    "image": "xlife/xlife-31-image.gif",
    "orientation": null,
-   "tao": 4779
+   "tao": 4796
   },
   {
    "id": "roads-or-rivers-the-journey",
@@ -152,7 +153,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-journey-image.jpg",
    "orientation": null,
-   "tao": 4831
+   "tao": 4848
   },
   {
    "id": "we-are-the-line-7",
@@ -175,7 +176,7 @@
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 5224
+   "tao": 5240
   },
   {
    "id": "xlife-20",
@@ -187,7 +188,7 @@
    "unique": false,
    "image": "xlife/xlife-20-image.gif",
    "orientation": null,
-   "tao": 5278
+   "tao": 5295
   },
   {
    "id": "xlife-17",
@@ -199,7 +200,7 @@
    "unique": false,
    "image": "xlife/xlife-17-image.gif",
    "orientation": null,
-   "tao": 5340
+   "tao": 5356
   },
   {
    "id": "xlife-1",
@@ -211,7 +212,7 @@
    "unique": false,
    "image": "xlife/xlife-1-image.gif",
    "orientation": null,
-   "tao": 5592
+   "tao": 5609
   },
   {
    "id": "xlife-2",
@@ -223,7 +224,7 @@
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 5592
+   "tao": 5609
   },
   {
    "id": "xlife-4",
@@ -235,7 +236,7 @@
    "unique": false,
    "image": "xlife/xlife-4-image.gif",
    "orientation": null,
-   "tao": 5592
+   "tao": 5609
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -247,7 +248,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 39366
+   "tao": 39484
   },
   {
    "id": "roads-or-rivers-up-only",
@@ -259,7 +260,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-up-only-image.jpg",
    "orientation": null,
-   "tao": 5623
+   "tao": 5640
   },
   {
    "id": "seize-and-share-anxn-3250",
@@ -271,7 +272,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 5639
+   "tao": 5656
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -283,7 +284,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5656
+   "tao": 5673
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -295,7 +296,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5672
+   "tao": 5689
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -307,7 +308,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11357
+   "tao": 11391
   },
   {
    "id": "seize-and-share-griftercity-2682",
@@ -319,7 +320,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2682-display.webp",
    "orientation": null,
-   "tao": 5685
+   "tao": 5702
   },
   {
    "id": "seize-and-share-griftercity-2653",
@@ -331,7 +332,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2653-display.webp",
    "orientation": null,
-   "tao": 5686
+   "tao": 5702
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -343,7 +344,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5729
+   "tao": 5746
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -355,7 +356,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5737
+   "tao": 5754
   },
   {
    "id": "seize-and-share-grimalkin-2312",
@@ -367,7 +368,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null,
-   "tao": 51712
+   "tao": 51862
   },
   {
    "id": "seize-and-share-untitled-3144",
@@ -379,7 +380,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-untitled-3144-image.webp",
    "orientation": null,
-   "tao": 5804
+   "tao": 5820
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -391,7 +392,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 29021
+   "tao": 29105
   },
   {
    "id": "roads-and-rivers-13",
@@ -403,7 +404,7 @@
    "unique": true,
    "image": "roads-and-rivers/roads-and-rivers-13-display.webp",
    "orientation": "landscape",
-   "tao": 96945
+   "tao": 97220
   },
   {
    "id": "seize-and-share-we-like-the-line-1951",
@@ -415,7 +416,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-we-like-the-line-1951-display.webp",
    "orientation": null,
-   "tao": 5901
+   "tao": 5918
   },
   {
    "id": "we-are-the-line-1",
@@ -438,7 +439,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
    "orientation": null,
-   "tao": 5934
+   "tao": 5951
   },
   {
    "id": "roads-and-rivers-roads-and-rivers-traffic",
@@ -450,7 +451,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 23871
+   "tao": 23938
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -462,7 +463,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 5995
+   "tao": 6012
   },
   {
    "id": "seize-and-share-awakening-1547",
@@ -474,7 +475,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-awakening-1547-display.webp",
    "orientation": null,
-   "tao": 6112
+   "tao": 6128
   },
   {
    "id": "seize-and-share-10k-buidling-643",
@@ -486,7 +487,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null,
-   "tao": 6021
+   "tao": 6038
   },
   {
    "id": "geodetica-46",
@@ -498,7 +499,7 @@
    "unique": true,
    "image": "geodetica/geodetica-46-display.webp",
    "orientation": "square",
-   "tao": 101933
+   "tao": 102208
   },
   {
    "id": "2022-10k-4",
@@ -510,7 +511,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-4-display.webp",
    "orientation": null,
-   "tao": 6261
+   "tao": 6278
   },
   {
    "id": "seize-and-share-dalleglytch6529-387",
@@ -522,7 +523,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-dalleglytch6529-387-display.webp",
    "orientation": null,
-   "tao": 6284
+   "tao": 6301
   },
   {
    "id": "seize-and-share-mint-face-229",
@@ -534,7 +535,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
    "orientation": null,
-   "tao": 12821
+   "tao": 12855
   },
   {
    "id": "2022-10k-3",
@@ -546,7 +547,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-3-display.webp",
    "orientation": null,
-   "tao": 6454
+   "tao": 6470
   }
  ]
 }
