@@ -181,6 +181,46 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
   color:var(--ink);margin:18px 0 0}
 .nudges .outcome{font-size:15px;line-height:1.65;color:var(--ink-4);margin:12px 0 0;max-width:34em}
 .nudges .none{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);padding:2px 0 0}
+
+/* ---------- the nudge, folded ----------
+   The question shares a page with a conversation now, so at rest the card
+   carries four things and no more: what is being asked and when it closes,
+   the colours in front, where this wallet's own TAO sits, and how far the
+   lock is. Everything a reader is not answering this second ... the colours
+   nobody backed, the fields, the propose box, the record ... waits behind one
+   line. Weighing is expand, then weigh: two clicks, and never three.
+   The fold is remembered per browser, and it opens closed, including the
+   first time. Somebody arriving at this page arrived for the room. */
+.nudges .lead{margin:18px 0 0;display:flex;flex-direction:column;gap:11px;max-width:520px}
+.nudges .lead .row{display:flex;align-items:center;gap:10px}
+.nudges .lead .chip{width:20px;height:20px;flex:none;border:1px solid var(--rule);display:block}
+.nudges .lead .hex{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink)}
+.nudges .lead .w{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* the same hairline the meters use, at the weight a folded card can carry:
+   three totals read as three lengths against the leader */
+.nudges .lead .track{height:2px;background:var(--rule);position:relative;margin-top:6px}
+.nudges .lead .fill{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.nudges .yours,.nudges .lock{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;margin:14px 0 0;line-height:1.7}
+.nudges .yours{color:var(--muted)}
+.nudges .lock{color:var(--faint)}
+/* Promising more than they hold is said folded as well as open: a wallet the
+   board is counting down should not have to open anything to find that out. */
+.nudges .yours.over{color:var(--alert);text-transform:none;letter-spacing:0;
+  font-family:var(--font-sans);font-size:13.5px;line-height:1.6}
+/* One line in and one line out, in the measuring voice, with the site's own
+   chevron rather than the browser's triangle. */
+.nudges .more{margin:18px 0 0;border-top:1px solid var(--rule)}
+.nudges .more>summary{list-style:none;cursor:pointer;padding:13px 0 0;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.nudges .more>summary::-webkit-details-marker{display:none}
+.nudges .more>summary:hover{color:var(--ink)}
+.nudges .more>summary:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.nudges .more>summary .chev{display:inline-block;margin-left:7px;transition:transform .18s ease}
+.nudges .more[open]>summary .chev{transform:rotate(180deg)}
+/* The first thing inside the fold already carries its own top margin. */
+.nudges .more .inner>*:first-child{margin-top:14px}
 /* An open nudge needs no pointer to itself: it is drawn between the last
    message and the composer, which is exactly where this page opens. Something
    saying "a question is waiting" directly under the question would be the page
@@ -374,6 +414,44 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
      a nowrap sentence in a flex row is the one thing on this page that would
      push the measure out on a phone. */
   .replying .quote{display:none}
+}
+
+/* ---------- the room, and the question beside it (1024px and up) ----------
+   On a wide screen the open nudge leaves the column and docks at the right,
+   where it can stand still while the room scrolls past it. The room keeps the
+   measure it has always had: the panel takes the space beside the column
+   rather than out of it, because a conversation set three hundred pixels
+   wider is a conversation that reads worse.
+   The panel scrolls on its own and stops there ... a reader who reaches the
+   foot of the board should not find the room has moved underneath them.
+   Under 1024 nothing here applies and the nudge goes back where it was,
+   between the last message and the box you would answer it in.
+   The two columns are drawn only where there is something to put in the
+   second one: a page with no open nudge on it keeps the single column it has
+   always had, rather than a third of the screen held empty for a question
+   nobody has asked. The room says which, because the room knows. */
+@media(min-width:1024px){
+  #main.asking{display:grid;max-width:1180px;margin:0 auto;column-gap:34px;
+    grid-template-columns:minmax(0,1fr) 352px;
+    grid-template-areas:"mast side" "banked side" "log side" "speak side"}
+  #main.asking .mast{grid-area:mast}
+  #main.asking #banked{grid-area:banked}
+  #main.asking #log{grid-area:log}
+  #main.asking #speak{grid-area:speak}
+  #main.asking #open{grid-area:side;align-self:start;position:sticky;top:76px;margin:0;padding:0 28px 0 0;
+    max-height:calc(100vh - 104px);overflow-y:auto;overscroll-behavior:contain}
+  #main.asking #open .nudge{padding:20px 18px;margin-bottom:0}
+  /* The question is a panel heading here rather than a masthead line, so it
+     stops taking the viewport width for its size. */
+  #main.asking #open .q{font-size:19px}
+  /* A column this narrow sets its own furniture: the fields go full width and
+     the record scrolls sideways inside the panel rather than widening it. */
+  #main.asking #open .amt,#main.asking #open .propose input[type="color"]{width:100%}
+  #main.asking #open .swatch{flex-wrap:wrap}
+  #main.asking #open .swatch .put{width:100%;margin-left:0;margin-top:4px}
+  #main.asking #open .swatch .put .amt{flex:1 1 auto;width:auto}
+  #main.asking #open .ledger{overflow-x:auto}
+  #main.asking #open .ledger table{min-width:280px}
 }
 </style>
 </head>
@@ -1819,11 +1897,103 @@ function ledgerRows(x) {
   </table></div>`;
 }
 
+/* ---------- the fold ----------
+ *
+ * The nudge shares a page with a conversation, and a board carrying every
+ * colour, every field and the whole record takes the room's screen with it.
+ * So a card at rest says what is being asked, what is in front, where this
+ * wallet stands and how far the lock is, and folds the rest away behind one
+ * line. Weighing is expand, then weigh: two clicks, and never three.
+ *
+ * The fold is per nudge and per browser, and it starts closed ... including
+ * the first time somebody arrives, because they arrived for the room. It is
+ * read at draw rather than held in the DOM, so a card redrawn after a weighing
+ * comes back the way its reader left it.
+ */
+const FOLD = {
+  KEY: 'mf_studio_fold',
+  ids: null,
+  all() {
+    if (!this.ids) {
+      try { this.ids = new Set(JSON.parse(localStorage.getItem(this.KEY) || '[]')); }
+      catch (err) { this.ids = new Set(); }
+    }
+    return this.ids;
+  },
+  open(id) { return this.all().has(String(id)); },
+  set(id, on) {
+    const ids = this.all();
+    if (on) ids.add(String(id)); else ids.delete(String(id));
+    try { localStorage.setItem(this.KEY, JSON.stringify([...ids])); }
+    catch (err) { /* private window, this page only */ }
+  },
+};
+
+/* The colours in front, at the size a folded card can carry them: the chip,
+   the hex, what is on it, and a hairline against the leader so three totals
+   read as three lengths. Three of them, because the fourth is the board, and
+   the board is what the fold is for. */
+function leaders(x, n = 3) {
+  const cs = (x.candidates || []).slice()
+    .sort((a, b) => Number(b.total || 0) - Number(a.total || 0)).slice(0, n);
+  if (!cs.length) return '<p class="none">No colour has been proposed yet.</p>';
+  const top = Number(cs[0].total || 0);
+  return `<div class="lead">${cs.map((c) => {
+    const share = top > 0 ? Math.min(1, Number(c.total || 0) / top) : 0;
+    return `<div class="one">
+      <div class="row">
+        <span class="chip" style="background:${e(c.hex)}"></span>
+        <span class="hex">${e(c.hex)}</span>
+        <span class="w">${worn(c.total)} TAO</span>
+      </div>
+      <div class="track"><div class="fill" style="width:${(share * 100).toFixed(1)}%"></div></div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* Where this wallet stands, in one line, and only where there is a wallet:
+   a reader who has not signed in is told that once, inside, rather than told
+   they have nothing every time they open the page. */
+function yours(x) {
+  if (!x.open || !mayWeigh()) return '';
+  const m = x.mine;
+  if (x.kind !== 'candidates') {
+    return `<p class="yours">You: ${m ? `${worn(m.amount)} on ${e(m.side)}` : 'nothing weighed yet'}</p>`;
+  }
+  if (m && m.over > 0) {
+    return `<p class="yours over">You have ${num(m.asked)} TAO spread and hold ${num(m.held)}.
+      The board counts ${num(m.held)} of it, in proportion, until you bring it down.</p>`;
+  }
+  const on = ((m && m.allocations) || []).filter((a) => Number(a.amount) > 0)
+    .slice().sort((a, b) => Number(b.amount) - Number(a.amount));
+  if (!on.length) return '<p class="yours">You: nothing on the board yet</p>';
+  return `<p class="yours">You: ${worn(on[0].amount)} on ${e(on[0].hex)}${on.length > 1
+    ? ` &middot; and ${on.length - 1} more` : ''}</p>`;
+}
+
+/* How far the lock is, folded to one line. Both thresholds stay on it, because
+   a nudge that has met one of them has met neither, and a folded card that
+   showed the nearer half would be a card saying it is nearly decided. */
+function lockLine(x) {
+  const p = x.open && x.progress;
+  if (!p) return '';
+  return `<p class="lock">Lock &middot; ${p.voters.at} of ${p.voters.of} collectors
+    &middot; ${worn(p.tao.at)} of ${worn(p.tao.of)} TAO on the leader</p>`;
+}
+
+/* The line itself. A banked card is not folded: it is the record, it is up
+   the page rather than beside the room, and a record nobody can see is not
+   one. */
+function folded(x, label, inner) {
+  if (!x.open) return inner;
+  return `<details class="more" data-fold="${e(x.id)}"${FOLD.open(x.id) ? ' open' : ''}>
+    <summary>${label} <span class="chev" aria-hidden="true">&#709;</span></summary>
+    <div class="inner">${inner}</div>
+  </details>`;
+}
+
 function candidateCard(x) {
-  return `<div class="nudge" id="nudge-${e(x.id)}">
-    <p class="q">${e(x.question)}</p>
-    <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}</div>
-    ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
+  const inner = `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
     ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
     ${swatches(x)}
     ${thresholdBars(x)}
@@ -1836,7 +2006,12 @@ function candidateCard(x) {
     ${x.open ? '' : `<p class="banked">${x.locked
       ? `Locked &middot; ${e(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
       : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
-    ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
+    ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}`;
+  return `<div class="nudge" id="nudge-${e(x.id)}">
+    <p class="q">${e(x.question)}</p>
+    <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}</div>
+    ${x.open ? `${leaders(x)}${yours(x)}${lockLine(x)}` : ''}
+    ${folded(x, 'All colours &amp; history', inner)}
   </div>`;
 }
 
@@ -1844,12 +2019,8 @@ function openCard(x) {
   const mine = x.mine;
   const pick = NUDGE.picked[x.id] || (mine && mine.side) || null;
   const signed = Boolean(MF.session.current());
-  return `<div class="nudge" id="nudge-${e(x.id)}">
-    <p class="q">${e(x.question)}</p>
-    <div class="when">Nudge #${x.number} &middot; closes ${e(dateOf(x.closes))}</div>
-    ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
+  const inner = `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
     ${x.image ? `<div class="shot"><img src="${e(x.image)}" alt="" loading="lazy"></div>` : ''}
-    ${meters(x)}
     <div class="act">
       <button type="button" class="side" data-nudge="${e(x.id)}" data-side="yes" aria-pressed="${pick === 'yes'}">Yes</button>
       <button type="button" class="side" data-nudge="${e(x.id)}" data-side="no" aria-pressed="${pick === 'no'}">No</button>
@@ -1863,7 +2034,13 @@ function openCard(x) {
       ? `<p class="said">Your TAO ${num(NUDGE.tao)}${mine ? ` &middot; you weighed ${num(mine.amount)} on ${e(mine.side)}` : ''}</p>`
       : '<p class="said">Sign in to weigh. The same signature that opens the room opens this.</p>'}
     <p class="said" id="say-${e(x.id)}" hidden></p>
-    ${ledger(x)}
+    ${ledger(x)}`;
+  return `<div class="nudge" id="nudge-${e(x.id)}">
+    <p class="q">${e(x.question)}</p>
+    <div class="when">Nudge #${x.number} &middot; closes ${e(dateOf(x.closes))}</div>
+    ${meters(x)}
+    ${yours(x)}
+    ${folded(x, 'Weigh in &amp; history', inner)}
   </div>`;
 }
 
@@ -1888,6 +2065,11 @@ function drawNudges() {
   const open = all.filter((x) => x.open);
   const done = all.filter((x) => !x.open);
   document.getElementById('open').innerHTML = open.map((x) => cardFor(x, false)).join('');
+  /* Whether there is a second column to draw at all. On a wide screen the
+     panel docks beside the room; with nothing being asked there is nothing to
+     dock, and a third of the screen held empty for it would be worse than the
+     single column this page has always had. */
+  document.getElementById('main').classList.toggle('asking', open.length > 0);
   document.getElementById('banked').innerHTML = done.length
     ? `<h2 class="sec">Banked</h2>${done.map((x) => cardFor(x, true)).join('')}`
     : (NUDGE.state ? '<h2 class="sec">Nudges</h2><p class="none">The studio has not asked anything yet.</p>' : '');
@@ -1909,6 +2091,16 @@ document.addEventListener('click', (ev) => {
   const go = ev.target.closest('[data-weigh]');
   if (go) weigh(go.dataset.weigh, go.dataset.hex || null);
 });
+
+/* The fold, remembered. A toggle does not bubble, so this listens on the way
+   down; and it is written here rather than on the element because the cards
+   are rebuilt whenever the state comes back and a handler bound to one of them
+   would go with it. */
+document.addEventListener('toggle', (ev) => {
+  const d = ev.target;
+  if (!d || d.tagName !== 'DETAILS' || !d.dataset.fold) return;
+  FOLD.set(d.dataset.fold, d.open);
+}, true);
 
 /* A refusal is told, or it did not happen. */
 function nudgeSay(id, text, bad) {
