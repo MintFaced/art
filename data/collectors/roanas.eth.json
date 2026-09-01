@@ -1,6 +1,7 @@
 {
  "address": "0xcf4485735f981bff764023f04c58d2db649b3b8d",
  "ens": "roanas.eth",
+ "fwd": null,
  "display_name": null,
  "slug": "roanas.eth",
  "private": false,
@@ -13,7 +14,7 @@
  },
  "first_collected": "2022-02-21T04:10:08.000000Z",
  "last_collected": "2023-01-15T23:51:11.000000Z",
- "tao": 209862,
+ "tao": 210405,
  "tao_rate": 136.2,
  "tao_rank": 55,
  "collections": [
@@ -28,6 +29,11 @@
    "works": 3
   },
   {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
    "slug": "geodetic-illusions",
    "title": "Geodetic Illusions",
    "works": 1
@@ -40,11 +46,6 @@
   {
    "slug": "geodetic-onchain",
    "title": "Geodetic On-Chain",
-   "works": 1
-  },
-  {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -75,7 +76,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5643
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -87,7 +88,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5656
+   "tao": 5673
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -99,7 +100,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5729
+   "tao": 5746
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -111,7 +112,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5804
+   "tao": 5820
   },
   {
    "id": "seize-and-share-certificate-of-mint-1918",
@@ -123,7 +124,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
    "orientation": null,
-   "tao": 5937
+   "tao": 5954
   },
   {
    "id": "seize-and-share-eth-is-finite-1805",
@@ -135,7 +136,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null,
-   "tao": 11950
+   "tao": 11983
   },
   {
    "id": "seize-and-share-10k-buidling-643",
@@ -147,7 +148,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null,
-   "tao": 6021
+   "tao": 6038
   },
   {
    "id": "seize-and-share-gm-518",
@@ -159,7 +160,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-518-display.webp",
    "orientation": null,
-   "tao": 6119
+   "tao": 6136
   },
   {
    "id": "2022-10k-4",
@@ -171,7 +172,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-4-display.webp",
    "orientation": null,
-   "tao": 6261
+   "tao": 6278
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -183,7 +184,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6328
+   "tao": 6344
   },
   {
    "id": "2022-10k-1",
@@ -195,7 +196,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 19487
+   "tao": 19537
   },
   {
    "id": "2022-10k-2",
@@ -207,7 +208,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6599
+   "tao": 6616
   },
   {
    "id": "geodetic-illusions-65",
@@ -219,7 +220,7 @@
    "unique": true,
    "image": "geodetic-illusions/geodetic-illusions-65-image.jpg",
    "orientation": "square",
-   "tao": 111414
+   "tao": 111689
   },
   {
    "id": "geodetic-onchain-1",
@@ -231,7 +232,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6924
+   "tao": 6941
   }
  ]
 }
