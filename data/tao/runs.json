@@ -3,6 +3,46 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmtj6lsz2",
+   "at": "2026-09-01T21:30:50.222Z",
+   "ok": true,
+   "ms": 28618,
+   "blocks": {
+    "from": 25820496,
+    "to": 25885136,
+    "scanned": 64641
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 0,
+    "sales": 0,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 0,
+   "tao": {
+    "live": 72324540,
+    "was": 72259358,
+    "delta": 65182,
+    "lost_to_sales": 275319,
+    "wallets": 3437
+   },
+   "register": {
+    "collectors": 3680,
+    "with_page": 808,
+    "private": 0,
+    "named": 1152
+   },
+   "classified": 0,
+   "unclassified": 0,
+   "events": 13093,
+   "owners_cursor_age_hours": 24.5,
+   "files": 6,
+   "pages": 0,
+   "movements": [],
+   "movers": []
+  },
+  {
    "run_id": "rmthr5l59",
    "at": "2026-08-31T21:30:33.165Z",
    "ok": true,
