@@ -1,18 +1,18 @@
 {
  "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
- "generated": "2026-08-31T20:06:05.714Z",
+ "generated": "2026-09-01T20:03:59.770Z",
  "sources": [
   "foundation",
   "opensea"
  ],
  "counts": {
   "checked": 1394,
-  "owner_unresolved": 60,
+  "owner_unresolved": 62,
   "escrowed": 30,
   "priced": 76,
   "auction": 21,
   "opensea": 67,
-  "carried_forward": 1
+  "carried_forward": 2
  },
  "works": {
   "geodetic-world-2": {
@@ -47,12 +47,6 @@
    "auction_id": "356135",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/12"
   },
-  "geodetic-world-13": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "356147",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/13"
-  },
   "geodetic-world-14": {
    "venue": "foundation",
    "kind": "auction",
@@ -70,12 +64,6 @@
    "kind": "auction",
    "auction_id": "356139",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/20"
-  },
-  "geodetic-world-21": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "356140",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/21"
   },
   "geodetic-world-22": {
    "venue": "foundation",
@@ -118,6 +106,12 @@
    "kind": "auction",
    "auction_id": "358659",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/51"
+  },
+  "geodetic-world-58": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "358664",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/58"
   },
   "geodetic-world-80": {
    "venue": "foundation",
@@ -810,11 +804,18 @@
    "expires": "2027-02-19T06:29:25.000Z",
    "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
   },
-  "geodetic-world-58": {
+  "geodetic-world-13": {
    "venue": "foundation",
    "kind": "auction",
-   "auction_id": "358664",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/58",
+   "auction_id": "356147",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/13",
+   "carried_forward": true
+  },
+  "geodetic-world-21": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "356140",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/21",
    "carried_forward": true
   }
  }
