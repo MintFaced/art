@@ -1,26 +1,27 @@
 {
  "address": "0xe23e0bd6e320c87367b0e4b797b42dc9b4fe7ca0",
  "ens": "dijaraj.eth",
+ "fwd": null,
  "display_name": null,
  "slug": "dijaraj.eth",
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 8,
+  "works": 7,
   "one_of_ones": 0,
-  "editions": 8,
+  "editions": 7,
   "collections": 4
  },
  "first_collected": "2022-05-27T11:48:54.000000Z",
  "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 36072,
+ "tao": 36172,
  "tao_rate": 25.2,
  "tao_rank": 348,
  "collections": [
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
-   "works": 4
+   "works": 3
   },
   {
    "slug": "we-are-the-line",
@@ -28,13 +29,13 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   }
  ],
@@ -60,7 +61,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5643
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -72,7 +73,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5729
+   "tao": 5746
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -84,7 +85,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5737
+   "tao": 5754
   },
   {
    "id": "we-are-the-line-1",
@@ -98,18 +99,6 @@
    "orientation": null
   },
   {
-   "id": "seize-and-share-10k-buidling-643",
-   "title": "10k Buidling",
-   "collection": "seize-and-share",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2022-09-24T08:38:59.000Z",
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
-   "orientation": null,
-   "tao": 6020
-  },
-  {
    "id": "seize-and-share-mint-face-360",
    "title": "Mint Face",
    "collection": "seize-and-share",
@@ -119,7 +108,7 @@
    "unique": false,
    "image": "https://i2c.seadn.io/ethereum/0xe63f4e6ce4110a2fad3de9ed38e7ea5858eb953b/df274434a6beab6116e1f654fe415e01.png",
    "orientation": null,
-   "tao": 6432
+   "tao": 6449
   },
   {
    "id": "2022-10k-1",
@@ -131,7 +120,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6524
+   "tao": 6541
   }
  ]
 }
