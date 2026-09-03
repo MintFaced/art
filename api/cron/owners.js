@@ -284,6 +284,22 @@ const FULL_SWEEP_BY = Number(process.env.OWNERS_FULL_SWEEP_MS || 90000);
    earlier than it. */
 const EDITION_DEADLINE = Number(process.env.OWNERS_EDITION_MS || 210000);
 
+/* The collectors rebuild is the other unbounded tail, and it runs after the
+   sweep but before the cursor and the run log. An ENS subgraph pass and up to
+   four hundred page writes sit inside it, and on 1 September they carried the
+   run past the function's three hundred seconds: the night ended with a work
+   record changed, no cursor, no run record and no email ... exactly the way
+   24 August ended, and for the same reason. The catch at the top of this file
+   does not help, because a platform timeout is not an exception and never
+   reaches it. Only a deadline can, so the rebuild yields at one and the writes
+   that make a run provable always have the budget left to land. */
+const REBUILD_BY = Number(process.env.OWNERS_REBUILD_MS || 240000);
+const REBUILD_PAGES_BY = Number(process.env.OWNERS_REBUILD_PAGES_MS || 265000);
+
+// A daily schedule with a run missing. TAO has had this check since it was
+// written; the sweep did not, which is the reason 1 September went unseen.
+const MAX_GAP_HOURS = Number(process.env.OWNERS_MAX_GAP_HOURS || 36);
+
 async function handle(request, started, dry) {
   const secret = process.env.CRON_SECRET;
   const auth = request.headers.get('authorization');
@@ -737,7 +753,11 @@ async function handle(request, started, dry) {
      per-collector files are not: writing them all would be 400 commits a night,
      so only the people whose works actually moved are rewritten. */
   let collectorsWritten = 0;
-  if (!dry && (touched.size || ledgerCleared)) {
+  if (!dry && (touched.size || ledgerCleared) && Date.now() - started > REBUILD_BY) {
+    flagged.push({ id: 'collectors', slug: 'collectors',
+      why: `the rebuild was skipped: the sweep had already used ${Math.round((Date.now() - started) / 1000)}s of the run's budget`,
+      action: 'the collectors site is serving yesterday, and the cursor and run record still landed; the rebuild derives from the catalogue in full, so tomorrow restores it' });
+  } else if (!dry && (touched.size || ledgerCleared)) {
     try {
       const titleOf = new Map((index.collections || []).map((c) => [c.slug, c.title]));
       let priv = new Set();
@@ -774,6 +794,9 @@ async function handle(request, started, dry) {
        * fifty names to somebody else's outage. */
       let forward = null;
       try {
+        if (Date.now() - started > REBUILD_BY) {
+          throw new Error(`the pass was not started: ${Math.round((Date.now() - started) / 1000)}s of the budget was already gone`);
+        }
         const first = deriveCollectors(cols, titleOf, priv, tao, nudges);
         const skip = new Set(first.all.filter((p) => p.ens || p.display_name || p.private).map((p) => p.address));
         forward = await forwardPass(first.all.map((p) => p.address), { skip });
@@ -809,10 +832,17 @@ async function handle(request, started, dry) {
           `Register: ${d.register.rows.length} ranked`, cur.sha || undefined);
       }
       await put('data/collector-slugs.json', d.slugMap, 'Collectors: slug map');
+      let pagesSkipped = 0;
       for (const p of d.all) {
         if (!p.has_page || !p.works.some((w) => changedWorks.has(w.id))) continue;
+        if (Date.now() - started > REBUILD_PAGES_BY) { pagesSkipped++; continue; }
         await put(`data/collectors/${p.slug}.json`, d.page(p), `Collectors: ${p.slug}`);
         collectorsWritten++;
+      }
+      if (pagesSkipped) {
+        flagged.push({ id: 'collector-pages', slug: 'collectors',
+          why: `${pagesSkipped} collector page${pagesSkipped === 1 ? '' : 's'} were not rewritten before the run's deadline`,
+          action: 'the figure on each is laid over live from the TAO overlay, so only the list of works is a day stale' });
       }
     } catch (e) {
       flagged.push({ id: 'collectors', slug: 'collectors', why: `rebuild failed: ${String(e.message || e).slice(0, 120)}`, action: 'the collectors site is serving yesterday' });
@@ -846,12 +876,26 @@ async function handle(request, started, dry) {
   let runLog = { runs: [] };
   const rf = await readFile('data/owners-runs.json').catch(() => ({ sha: null, text: null }));
   if (rf.text) { try { runLog = JSON.parse(rf.text); } catch (e) { /* start again */ } }
+  /* A run that did not happen leaves nothing behind at all, so the only place
+     it can ever be noticed is the next run that does happen. Without this the
+     sweep of 1 September ... which was killed by the function timeout after it
+     had already changed a work record ... was three days old before anything
+     said so, and what said so in the end was the wrong number on another job's
+     report. The gap is measured against the record, not against a hope. */
+  const prevRun = (runLog.runs || []).find((r) => r && r.at);
+  const gapHours = prevRun ? (Date.now() - Date.parse(prevRun.at)) / 3600000 : null;
   const entry = {
     at: new Date().toISOString(), since, head: HEAD,
     applied: applied.length, flagged: flagged.length, born: born.length,
     editions: editionsChecked, editions_skipped: editionsSkipped,
     chain_events: chainEvents, ms: Date.now() - started, ok: true,
+    ...(gapHours != null && Number.isFinite(gapHours) ? { gap_hours: Math.round(gapHours * 10) / 10 } : {}),
   };
+  if (gapHours != null && Number.isFinite(gapHours) && gapHours > MAX_GAP_HOURS) {
+    flagged.push({ id: 'gap', slug: 'sweep',
+      why: `the previous sweep finished ${Math.round(gapHours)} hours ago on a daily schedule ... at least one run did not happen, and left no record that it had failed`,
+      action: `this run covered the whole gap, blocks ${since} to ${HEAD}, so nothing is lost; what is worth knowing is what killed the run that is missing` });
+  }
   const recent = [entry, ...(runLog.runs || [])].slice(0, 30);
   const quiet = [];
   for (const r of recent.slice(0, QUIET_DAYS)) {

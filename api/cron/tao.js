@@ -41,7 +41,10 @@ const QUIET_RUNS = Number(process.env.TAO_QUIET_RUNS || 3);
 const MAX_GAP_HOURS = Number(process.env.TAO_MAX_GAP_HOURS || 36);
 // the sweep runs half an hour before this one, so anything past a day and a
 // half means it has missed at least one night and said nothing
-const OWNERS_STALE_HOURS = Number(process.env.TAO_OWNERS_STALE_HOURS || 36);
+// 24, not 36: the sweep runs half an hour before this one, so a healthy cursor
+// is minutes old and a single missed sweep reads 24.5 here. At 36 that first
+// missed night said nothing and the second one said it, a day late.
+const OWNERS_STALE_HOURS = Number(process.env.TAO_OWNERS_STALE_HOURS || 24);
 // collector pages rewritten per run, for the wallets whose works moved. The
 // figures on every other page come from the overlay, live, so they need no
 // commit ... this budget only stops one extraordinary night writing hundreds.
@@ -539,16 +542,43 @@ async function run({ key, dry, started, prior, url }) {
 
      The general rule, worth keeping: the watchdog belongs in a different
      process from the thing it watches. */
+  /* Read the cursor from the repo, not from the site.
+   *
+   * This check spent three nights reporting the sweep stalled on block
+   * 25877863 while the sweep was running nightly and its cursor was twenty
+   * thousand blocks further on. `get` fetches from mintface.art, and the site
+   * is deployed by hand ... so every static file it serves is frozen at the
+   * last deploy, and this was reading a three-day-old copy of the very file
+   * whose freshness it exists to judge. A watchdog has to read the store the
+   * watched process writes to, and the sweep writes to the repo.
+   *
+   * Blocks behind the head are reported alongside the hours, because hours are
+   * what a stopped clock also gives you and a block number can be checked.
+   *
+   * This alarm is raised first and stays first: it is the one that describes
+   * another job, so it is the one that has nowhere else to surface. */
   const alarms = [];
-  let ownersAge = null;
+  let ownersAge = null, ownersBehind = null;
   try {
-    const cur = await get('data/owners-cursor.json');
+    const cur = JSON.parse((await readFile('data/owners-cursor.json')).text);
     ownersAge = (Date.now() - Date.parse(cur.updated)) / 3600000;
+    ownersBehind = Number.isFinite(HEAD - cur.last_block) ? HEAD - cur.last_block : null;
     if (Number.isFinite(ownersAge) && ownersAge > OWNERS_STALE_HOURS) {
       alarms.push(`the ownership sweep has not finished for ${Math.round(ownersAge)} hours `
-        + `... its cursor is still on block ${cur.last_block}, so who holds what is that old. `
-        + `TAO is unaffected: it reads its own event history, not the register.`);
+        + `... its cursor is on block ${cur.last_block}, ${(ownersBehind || 0).toLocaleString('en-NZ')} behind tonight's head of ${HEAD}, `
+        + `so who holds what is that old. TAO is unaffected: it reads its own event history, not the register.`);
     }
+    /* The deployed copy is read too, and only compared. A site serving
+       ownership days older than the register is a real fault of its own, and
+       until now nothing at all was looking for it. */
+    try {
+      const live = await get('data/owners-cursor.json');
+      if (live && live.last_block !== cur.last_block) {
+        alarms.push(`the site is serving an ownership cursor of block ${live.last_block} while the repo is on ${cur.last_block} `
+          + `... mintface.art does not deploy from GitHub, so its static data is frozen at the last hand-run deploy. `
+          + `\`vercel deploy --prod\` in ~/dev/art publishes what the crons have written since.`);
+      }
+    } catch (e) { /* the site not answering is not this check's to raise */ }
   } catch (e) { alarms.push('the ownership sweep has no cursor at all ... it has never finished'); }
 
   /* ---- the run record, and the thing that pages us ---- */
@@ -565,6 +595,7 @@ async function run({ key, dry, started, prior, url }) {
     register: registerCounts,
     classified, unclassified, events: tao.counts.events,
     owners_cursor_age_hours: ownersAge == null ? null : Math.round(ownersAge * 10) / 10,
+    owners_cursor_blocks_behind: ownersBehind,
     files: written.length, pages: pagesWritten,
     movements: movements.slice(0, 25),
     movers,
@@ -591,7 +622,14 @@ async function run({ key, dry, started, prior, url }) {
     await saveRuns(RUNS, prior, entry, { keep: 90, note: NOTE,
       message: `TAO run: ${entry.changed_hands.works} moved, ${entry.tao.wallets} wallets, ${Math.round(entry.ms / 1000)}s` });
     if (alarms.length) {
-      await alarm(`TAO: ${alarms.length} thing${alarms.length === 1 ? '' : 's'} to look at`,
+      /* The subject is where this is actually seen. "TAO: 1 thing to look at"
+         arrived on three consecutive mornings and read as routine, so a sweep
+         that had stopped was filed next to a quiet night. When another job is
+         behind, the subject says so and says by how much. */
+      const stale = Number.isFinite(ownersAge) && ownersAge > OWNERS_STALE_HOURS;
+      await alarm(stale
+        ? `Ownership: the sweep is ${Math.round(ownersAge)} hours behind`
+        : `TAO: ${alarms.length} thing${alarms.length === 1 ? '' : 's'} to look at`,
         `Tonight's TAO run finished, and raised ${alarms.length === 1 ? 'this' : 'these'}:\n\n`
         + alarms.map((a) => `  ... ${a}`).join('\n\n')
         + `\n\nThe run itself: ${entry.changed_hands.works} works changed hands, ${entry.wallets_affected} wallets affected, `

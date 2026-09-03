@@ -76,4 +76,42 @@ Both crons also pass the nudge weighings through the rebuild now. They did not, 
 
 Found while proving the above, and fixed in the same pass because the register depends on it. The sweep of 24 August 21:00 UTC wrote nothing at all: no cursor, no register, no run log. Its edition pass — new the previous morning — reads holder lists one token at a time from a paging indexer, and it runs before anything is written, so exceeding the three-hundred-second budget loses the entire night. A night that loses everything and a night when nothing moved leave behind exactly the same thing, which is why nobody was told.
 
-That pass now stops at a deadline and reports the editions it did not reach, so the rest of the run lands. And the sweep is wrapped: anything that throws or times out writes a failed run record and emails, rather than leaving the silence that made this hard to see.
+That pass now stops at a deadline and reports the editions it did not reach, so the rest of the run lands. And the sweep is wrapped: anything that *throws* writes a failed run record and emails, rather than leaving the silence that made this hard to see.
+
+### The same night, again ... 1 September
+
+The sentence above used to end "anything that throws or times out". The second half was never true, and believing it cost three days.
+
+A Vercel function killed at three hundred seconds is not an exception. Nothing unwinds, no `catch` runs, no record is written and no mail is sent. The wrapper only ever covered the first half.
+
+So on 1 September 21:00 UTC the sweep ran, changed `seize-and-share`, wrote the open-mint cursor, the ENS forward pass, the collectors index and the register ... and then stopped, at 21:05:29, without writing `data/owners-cursor.json` or `data/owners-runs.json`. Same shape as 24 August, one pass further down the file: the edition pass was bounded, the *collectors rebuild* after it was not, and it is the part whose cost rises exactly on the nights when something moved.
+
+Three things were wrong, and only the first is the one that was noticed:
+
+1. **The rebuild had no deadline.** It has two now, `OWNERS_REBUILD_MS` and `OWNERS_REBUILD_PAGES_MS`, on the same principle as the edition pass: yield, flag what was not reached, and leave the budget to write the cursor and the run record. Everything the rebuild produces is derived from the catalogue in full, so a skipped rebuild costs a day of freshness on the collectors site and nothing else.
+2. **A missing run was invisible to the sweep.** TAO had a gap check from the day it was written; the sweep had none, so a night that left no record left nothing to compare against. It has one now: the sweep measures the hours since the previous record and flags a gap over 36.
+3. **The watchdog was reading the wrong copy.** See below. This is the one that turned a single missed night into three days.
+
+### The watchdog that read the deployed copy
+
+TAO checks the ownership cursor because the sweep cannot report its own absence. The check was right; its source was not.
+
+`api/cron/tao.js` read `data/owners-cursor.json` over HTTP from mintface.art. **The site does not deploy from GitHub** ... it is published by hand ... so every static file it serves is frozen at the last `vercel deploy --prod`. The last one was 31 August 22:11 UTC. The crons went on committing to the repo, the site went on serving 31 August, and the watchdog went on reading the site.
+
+The result, on three consecutive nights:
+
+| TAO run | said | the repo actually held |
+|---|---|---|
+| 1 Sep 21:30 | cursor 25877863, 24.5h | 25877863 ... correct, and the sweep died 25 minutes later |
+| 2 Sep 21:31 | "has not finished for 49 hours", block 25877863 | 25892228, written 27 minutes earlier |
+| 3 Sep 21:30 | "has not finished for 72 hours", block 25877863 | 25899384, written 29 minutes earlier |
+
+Only the first was real, and it read as routine. The two that shouted were false, and they described a sweep that was running normally. A watchdog has to read the store the watched process writes to, so it reads the repo now, through `readFile`, the same path the sweep writes through.
+
+The deployed copy is still read ... and only compared. A site serving ownership days older than the register is its own fault, and nothing anywhere was looking for it.
+
+**And it is louder.** The threshold is 24 hours, not 36: the sweep runs half an hour before TAO, so a healthy cursor is minutes old and one missed night reads 24.5. At 36 the first missed night said nothing and the second said it, a day late. The alarm now leads the list, carries the blocks behind the head as well as the hours ... hours are what a stopped clock also gives you ... and takes over the subject line, because `TAO: 1 thing to look at` arrived three mornings running and filed a stopped sweep next to a quiet night.
+
+**What did not need fixing.** The rate-limit, no-records and result-window handling in `es()` is byte-identical in both crons; the TAO hardening was ported to the sweep when it was written. Neither job hit a rate limit or a block it could not parse. Both read `ETHERSCAN_API_KEY`, which is the only Etherscan key this project has; the Line fleet is a separate repo on its own `ETHERSCAN_KEY`.
+
+**What the standing rule did.** Exactly what it is for. The cursor did not move on the night the run died, so the next night swept 25877863 to 25892228 ... both days ... and caught up on its own. Nothing was lost, and nothing needed backfilling by hand.

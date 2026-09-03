@@ -22,6 +22,7 @@ process.env.CRON_SECRET = '';
 process.env.ETHERSCAN_API_KEY = 'test-key';
 process.env.SITE_ORIGIN = 'https://test.invalid';
 process.env.VERCEL_ENV = 'test';
+process.env.GITHUB_TOKEN = 'test-token';
 delete process.env.EMAIL_TO_ARTIST;
 
 import { readFile } from 'node:fs/promises';
@@ -57,8 +58,16 @@ const FIXTURES = {
       digital: { chain: 'ethereum', contract: CONTRACT, token_id: '1', standard: 'erc721' },
     }],
   },
-  /* Fresh, so the stall alarm stays quiet and ownersAge takes its non-null
-     branch ... which is the line that used to throw. */
+  /* The deployed copy of the cursor. It is only ever compared against the
+     repo's now, to catch a site frozen at an old hand-run deploy. */
+  'data/owners-cursor.json': { updated: new Date().toISOString(), last_block: HEAD_BLOCK - 10 },
+};
+
+/* What the repo holds, which is where the sweep writes and therefore the only
+   honest place to judge whether the sweep has run. Fresh, so the stall alarm
+   stays quiet and ownersAge takes its non-null branch ... which is the line
+   that used to throw. */
+const REPO_FIXTURES = {
   'data/owners-cursor.json': { updated: new Date().toISOString(), last_block: HEAD_BLOCK - 10 },
 };
 
@@ -76,9 +85,18 @@ globalThis.fetch = async (url, init = {}) => {
   if (u.includes('etherscan')) return json({ status: '0', message: 'No records found', result: [] });
   if (init.method === 'POST' && u.includes('rpc')) return json({ jsonrpc: '2.0', id: 1, result: `0x${HEAD_BLOCK.toString(16)}` });
 
-  /* The repo. Reads miss, which every caller treats as "first run"; nothing
-     writes, because this runs dry. */
-  if (u.includes('api.github.com')) return json({ message: 'Not Found' }, 404);
+  /* The repo. The ownership cursor is served from here, because that is where
+     the sweep writes it and where the watchdog now reads it. Every other read
+     misses, which each caller treats as "first run"; nothing writes, because
+     this runs dry. */
+  if (u.includes('api.github.com')) {
+    const m = /\/contents\/([^?]+)/.exec(u);
+    const rp = m ? decodeURIComponent(m[1]) : '';
+    if (rp in REPO_FIXTURES) {
+      return json({ sha: 'fixture', content: Buffer.from(JSON.stringify(REPO_FIXTURES[rp]), 'utf8').toString('base64') });
+    }
+    return json({ message: 'Not Found' }, 404);
+  }
 
   /* The site's own JSON. Anything not in the fixtures 404s, which is what a
      first run sees and what every optional read is written to survive. */
@@ -113,19 +131,41 @@ is('a fresh cursor raises no stall alarm',
 /* Proof it really went all the way through rather than short-circuiting. */
 is('it asked the chain for a head block', asked.some((u) => u.includes('rpc')), true);
 is('it read the catalogue', asked.some((u) => u.includes('data/index.json')), true);
-is('it read the owners cursor', asked.some((u) => u.includes('owners-cursor.json')), true);
+is('it read the owners cursor from the repo',
+  asked.some((u) => u.includes('api.github.com') && u.includes('owners-cursor.json')), true);
+is('and compared it against the deployed copy',
+  asked.some((u) => u.startsWith(process.env.SITE_ORIGIN) && u.includes('owners-cursor.json')), true);
+is('which agree, so no deploy-lag alarm',
+  body.alarms.some((a) => String(a).includes('site is serving')), false);
 is('it produced a summary', typeof body.summary, 'string');
 
 /* And the stale branch, which is the other half of the same statement. */
 {
-  FIXTURES['data/owners-cursor.json'] = {
+  REPO_FIXTURES['data/owners-cursor.json'] = {
     updated: new Date(Date.now() - 1000 * 3600 * 72).toISOString(), last_block: 1,
   };
+  FIXTURES['data/owners-cursor.json'] = REPO_FIXTURES['data/owners-cursor.json'];
   const r2 = await GET(new Request('https://test.invalid/api/cron/tao?dry=1'));
   const b2 = await r2.json();
   is('a stale cursor still completes', r2.status, 200);
   is('and raises the alarm', b2.alarms.some((a) => String(a).includes('ownership sweep has not finished')), true);
   is('and still records the age', typeof b2.run.owners_cursor_age_hours, 'number');
+  is('and says how far behind the head it is', b2.run.owners_cursor_blocks_behind, HEAD_BLOCK - 1);
+  is('and the staleness leads the alarms', String(b2.alarms[0]).includes('ownership sweep has not finished'), true);
+}
+
+/* A sweep running perfectly well, and a site frozen at an old hand-run deploy.
+   Three nights of "stalled on block 25877863" were this and nothing else, so
+   it gets its own case: the sweep must read healthy and the site must not. */
+{
+  REPO_FIXTURES['data/owners-cursor.json'] = { updated: new Date().toISOString(), last_block: HEAD_BLOCK - 10 };
+  FIXTURES['data/owners-cursor.json'] = { updated: new Date(Date.now() - 1000 * 3600 * 72).toISOString(), last_block: 25877863 };
+  const r3 = await GET(new Request('https://test.invalid/api/cron/tao?dry=1'));
+  const b3 = await r3.json();
+  is('a frozen site does not accuse the sweep',
+    b3.alarms.some((a) => String(a).includes('ownership sweep has not finished')), false);
+  is('it names the deploy instead',
+    b3.alarms.some((a) => String(a).includes('site is serving an ownership cursor')), true);
 }
 
 if (missing.length) {
