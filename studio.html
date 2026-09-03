@@ -183,24 +183,70 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .none{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);padding:2px 0 0}
 
 /* ---------- the nudge, folded ----------
-   The question shares a page with a conversation now, so at rest the card
-   carries four things and no more: what is being asked and when it closes,
-   the colours in front, where this wallet's own TAO sits, and how far the
-   lock is. Everything a reader is not answering this second ... the colours
-   nobody backed, the fields, the propose box, the record ... waits behind one
-   line. Weighing is expand, then weigh: two clicks, and never three.
-   The fold is remembered per browser, and it opens closed, including the
-   first time. Somebody arriving at this page arrived for the room. */
-.nudges .lead{margin:18px 0 0;display:flex;flex-direction:column;gap:11px;max-width:520px}
-.nudges .lead .row{display:flex;align-items:center;gap:10px}
-.nudges .lead .chip{width:20px;height:20px;flex:none;border:1px solid var(--rule);display:block}
-.nudges .lead .hex{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink)}
-.nudges .lead .w{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
+   At rest the card carries three things and no more: what is being asked and
+   when it closes on one line, a row for every colour on the board, and the
+   line that opens the rest. Everything else ... the record, the propose box,
+   the thresholds, what this wallet has spread and where ... waits behind
+   Details.
+
+   The rows are the card. A colour row carries what somebody needs to weigh on
+   it without opening anything: the colour, its hex, who put it up, what is on
+   it, and the way to add to it. Weighing from a row opens the field on that
+   row alone ... not the card ... because expanding the whole board to type one
+   number was the thing that made a two-click act feel like leaving the page.
+
+   The fold is remembered per browser, and it opens closed, including the first
+   time. Somebody arriving at this page arrived for the room. */
+
+/* Title and date on one line. The date is the quiet half and gives way first:
+   under the sidebar's measure it drops beneath rather than pushing the
+   question out. */
+.nudges .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0}
+.nudges .head .q{margin:0;flex:1 1 14em;min-width:0}
+.nudges .head .when{margin:0;flex:0 0 auto}
+
+.nudges .crows{margin:20px 0 0;max-width:560px}
+/* Four columns and two rows: the chip stands beside both, the hex and the
+   total hold the first line, and who proposed it sits under the hex where it
+   can truncate without moving anything above it. The field, when it is asked
+   for, becomes a third row across the whole width. */
+.nudges .crow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;
+  column-gap:11px;row-gap:2px;align-items:center;padding:11px 0;
+  border-bottom:1px solid var(--rule)}
+.nudges .crows .crow:last-child{border-bottom:0}
+.nudges .crow .chip{grid-area:1/1/3/2;width:24px;height:24px;border:1px solid var(--rule);display:block}
+.nudges .crow .hex{grid-area:1/2/2/3;font-family:var(--font-mono);font-size:11.5px;
+  letter-spacing:.12em;color:var(--ink);white-space:nowrap}
+.nudges .crow .w{grid-area:1/3/2/4;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
   text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-/* the same hairline the meters use, at the weight a folded card can carry:
-   three totals read as three lengths against the leader */
-.nudges .lead .track{height:2px;background:var(--rule);position:relative;margin-top:6px}
-.nudges .lead .fill{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.nudges .crow .by{grid-area:2/2/3/5;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nudges .crow .by a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.nudges .crow .by a:hover{border-color:var(--ink);color:var(--muted)}
+/* The affordance, at the weight of a row rather than of a card. */
+.nudges .crow .go{grid-area:1/4/2/5;padding:6px 11px;background:none;color:var(--muted);
+  border:1px solid var(--rule);cursor:pointer;font-family:var(--font-mono);font-size:9.5px;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.nudges .crow .go:hover{border-color:var(--ink);color:var(--ink)}
+.nudges .crow .go:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+/* A colour this wallet is already on is marked the way the board marks it. */
+.nudges .crow.mine .chip{box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--rule)}
+.nudges .crow.chosen .hex{text-transform:uppercase;letter-spacing:.14em}
+/* The field, on the row, and only once it is asked for. */
+.nudges .crow .put{grid-area:3/1/4/5;display:none;gap:7px;align-items:center;padding:9px 0 2px}
+.nudges .crow.putting .put{display:flex}
+.nudges .crow.putting .go{border-color:var(--ink);color:var(--ink)}
+.nudges .crow .put .amt{flex:1 1 auto;min-width:0;width:auto;padding:8px 10px;font-size:13px}
+.nudges .crow .put .weigh{flex:none;padding:8px 14px;font-size:10px;letter-spacing:.14em}
+/* The colours past the fifth. The same chevron line as Details, one step in. */
+.nudges .rest{border-top:1px solid var(--rule)}
+.nudges .rest>summary{list-style:none;cursor:pointer;padding:11px 0 0;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.nudges .rest>summary::-webkit-details-marker{display:none}
+.nudges .rest>summary:hover{color:var(--ink)}
+.nudges .rest>summary:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.nudges .rest>summary .chev{display:inline-block;margin-left:6px;transition:transform .18s ease}
+.nudges .rest[open]>summary .chev{transform:rotate(180deg)}
 .nudges .yours,.nudges .lock{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;
   text-transform:uppercase;margin:14px 0 0;line-height:1.7}
 .nudges .yours{color:var(--muted)}
@@ -1690,7 +1736,11 @@ const sent = (location.hash.match(/^#m-(\d+)$/) || [])[1];
    other's to redraw. What the two do share is the wallet, which is the whole
    reason they are one page now.
    ═══════════════════════════════════════════════════════════════ */
-const NUDGE = { state: null, tao: 0, picked: {} };
+/* `putting` holds the rows whose amount field is open, keyed nudge|hex. It is
+   state rather than DOM because a weighing redraws the card, and a field that
+   closed itself under the person who had just used it would read as the act
+   having been refused. */
+const NUDGE = { state: null, tao: 0, picked: {}, putting: new Set() };
 const num = (x) => Number(x || 0).toLocaleString('en-NZ');
 const dateOf = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
 /* A ledger row is one of many and a nudge runs for a fortnight, so the day and
@@ -1929,26 +1979,73 @@ const FOLD = {
   },
 };
 
-/* The colours in front, at the size a folded card can carry them: the chip,
-   the hex, what is on it, and a hairline against the leader so three totals
-   read as three lengths. Three of them, because the fourth is the board, and
-   the board is what the fold is for. */
-function leaders(x, n = 3) {
+/* The board, folded ... which is to say the board, with one row per colour and
+   nothing between the reader and putting TAO on one.
+ *
+ * A row carries everything needed to weigh on it: the colour, its hex, who put
+ * it up, and what is on it. It used to carry a hairline showing its share of
+ * the leader instead of who proposed it, on the reasoning that three totals
+ * read faster as three lengths. They do, but the length answers a question
+ * nobody was asking at rest, and the name it displaced is the one thing on a
+ * row that a collector recognises. The lengths are still in the fold, on the
+ * meters, where a reader who wants to compare has gone looking.
+ *
+ * Every colour is here, not the top three: the board grows by proposal, and a
+ * card that hid the newest one behind a fold would hide the thing that just
+ * happened. Past five it grows a line of its own rather than the card.
+ *
+ * The total is exact here, where everywhere else on the card wears it down to
+ * 100K. Worn figures were readable while a hairline underneath showed each
+ * colour's share, and that hairline is gone. Without it the number is the only
+ * thing telling two colours apart, and the two on the board tonight are
+ * 100,001 and 100,000 ... which both wear down to 100K, so a collector would
+ * read a tie where there is a leader.
+ */
+const CROW_SHOWN = 5;
+
+function colourRow(x, c, editable) {
+  const locked = x.locked || null;
+  const chosen = locked && locked.hex === c.hex;
+  const on = mineOn(x, c.hex);
+  const by = c.proposed_name || (c.proposed_by ? short(c.proposed_by) : null);
+  const who = by && c.proposed_url ? `<a href="${e(c.proposed_url)}">${e(by)}</a>` : (by ? e(by) : null);
+  const key = `${x.id}|${c.hex}`;
+  /* Rebuilt cards forget what the DOM knew, so the row that was open for
+     typing is remembered the same way the fold is ... in the state, read at
+     draw. A weighing redraws this card, and it should come back where it was
+     rather than closing under the person who just used it. */
+  const putting = editable && NUDGE.putting.has(key);
+  return `<div class="crow${chosen ? ' chosen' : ''}${on ? ' mine' : ''}${putting ? ' putting' : ''}">
+    <span class="chip" style="background:${e(c.hex)}"></span>
+    <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
+    <span class="w">${num(c.total)} TAO</span>
+    ${editable
+      ? `<button type="button" class="go" data-put="${e(key)}"
+           aria-expanded="${putting}">${on ? 'Change' : 'Weigh'}</button>`
+      : ''}
+    ${who ? `<span class="by">proposed by ${who}</span>` : '<span class="by"></span>'}
+    ${editable ? `<span class="put">
+      <input class="amt" id="ramt-${e(x.id)}-${e(c.hex.slice(1))}" type="text" inputmode="numeric"
+        value="${on || ''}" placeholder="0" aria-label="TAO on ${e(c.hex)}">
+      <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">Put it on</button>
+    </span>` : ''}
+  </div>`;
+}
+
+function colourRows(x) {
   const cs = (x.candidates || []).slice()
-    .sort((a, b) => Number(b.total || 0) - Number(a.total || 0)).slice(0, n);
+    .sort((a, b) => Number(b.total || 0) - Number(a.total || 0));
   if (!cs.length) return '<p class="none">No colour has been proposed yet.</p>';
-  const top = Number(cs[0].total || 0);
-  return `<div class="lead">${cs.map((c) => {
-    const share = top > 0 ? Math.min(1, Number(c.total || 0) / top) : 0;
-    return `<div class="one">
-      <div class="row">
-        <span class="chip" style="background:${e(c.hex)}"></span>
-        <span class="hex">${e(c.hex)}</span>
-        <span class="w">${worn(c.total)} TAO</span>
-      </div>
-      <div class="track"><div class="fill" style="width:${(share * 100).toFixed(1)}%"></div></div>
-    </div>`;
-  }).join('')}</div>`;
+  const editable = Boolean(x.open && mayWeigh());
+  const shown = cs.slice(0, CROW_SHOWN);
+  const rest = cs.slice(CROW_SHOWN);
+  const draw = (list) => list.map((c) => colourRow(x, c, editable)).join('');
+  return `<div class="crows">${draw(shown)}</div>${rest.length
+    ? `<details class="rest" data-fold="rest-${e(x.id)}"${FOLD.open(`rest-${x.id}`) ? ' open' : ''}>
+        <summary>${rest.length} more <span class="chev" aria-hidden="true">&#709;</span></summary>
+        <div class="crows">${draw(rest)}</div>
+      </details>`
+    : ''}`;
 }
 
 /* Where this wallet stands, in one line, and only where there is a wallet:
@@ -1993,8 +2090,12 @@ function folded(x, label, inner) {
 }
 
 function candidateCard(x) {
+  /* Everything that is not a colour row. What this wallet has spread and where,
+     and how far the lock is, moved in here: both are the reader's own second
+     question, asked after they have seen what is in front. */
   const inner = `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
     ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
+    ${x.open ? `${yours(x)}${lockLine(x)}` : ''}
     ${swatches(x)}
     ${thresholdBars(x)}
     ${ledgerRows(x)}
@@ -2002,16 +2103,20 @@ function candidateCard(x) {
       ? ''
       : '<p class="said">Sign in to propose or weigh. The same signature that opens the room opens this.</p>')}
     ${proposer(x)}
-    <p class="said" id="say-${e(x.id)}" hidden></p>
     ${x.open ? '' : `<p class="banked">${x.locked
       ? `Locked &middot; ${e(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
       : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
     ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}`;
+  /* The refusal line stays outside the fold. Weighing can now be done from a
+     collapsed card, so anything it has to say back has to be sayable there. */
   return `<div class="nudge" id="nudge-${e(x.id)}">
-    <p class="q">${e(x.question)}</p>
-    <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}</div>
-    ${x.open ? `${leaders(x)}${yours(x)}${lockLine(x)}` : ''}
-    ${folded(x, 'All colours &amp; history', inner)}
+    <div class="head">
+      <p class="q">${e(x.question)}</p>
+      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}</div>
+    </div>
+    ${x.open ? colourRows(x) : ''}
+    <p class="said" id="say-${e(x.id)}" hidden></p>
+    ${folded(x, 'Details', inner)}
   </div>`;
 }
 
@@ -2088,8 +2193,36 @@ document.addEventListener('click', (ev) => {
       .forEach((x) => x.setAttribute('aria-pressed', String(x === side)));
     return;
   }
+    /* Weighing from a row opens the field on that row and nothing else. The
+     card is not expanded, because what is being asked for is a number and the
+     rest of the board is not part of the question. */
+  const put = ev.target.closest('[data-put]');
+  if (put) {
+    const key = put.dataset.put;
+    const row = put.closest('.crow');
+    const on = !NUDGE.putting.has(key);
+    if (on) NUDGE.putting.add(key); else NUDGE.putting.delete(key);
+    if (row) {
+      row.classList.toggle('putting', on);
+      put.setAttribute('aria-expanded', String(on));
+      const box = row.querySelector('.put .amt');
+      if (on && box) { box.focus(); box.select(); }
+    }
+    return;
+  }
   const go = ev.target.closest('[data-weigh]');
-  if (go) weigh(go.dataset.weigh, go.dataset.hex || null);
+  if (go) weigh(go.dataset.weigh, go.dataset.hex || null, go);
+});
+
+/* Enter in a row's field weighs it, because a field opened by one button and
+   closed by another is a form, and this is one number on one row. */
+document.addEventListener('keydown', (ev) => {
+  if (ev.key !== 'Enter') return;
+  const box = ev.target.closest('.crow .put .amt');
+  if (!box) return;
+  ev.preventDefault();
+  const btn = box.closest('.put').querySelector('[data-weigh]');
+  if (btn) weigh(btn.dataset.weigh, btn.dataset.hex || null, btn);
 });
 
 /* The fold, remembered. A toggle does not bubble, so this listens on the way
@@ -2156,7 +2289,7 @@ async function propose(id) {
   nudgeSay(id, `${hex} is on the board. Weigh TAO behind it, or leave it to others.`);
 }
 
-async function weigh(id, hex) {
+async function weigh(id, hex, from) {
   const s = MF.session.current();
   if (!s) { nudgeSay(id, 'Sign in first ... the button is in the room below.', true); return; }
   const x = openNudges().find((y) => y.id === id);
@@ -2166,7 +2299,14 @@ async function weigh(id, hex) {
   const side = colours ? null : (NUDGE.picked[id] || (x.mine && x.mine.side));
   if (colours && !candidate) { nudgeSay(id, 'Which colour?', true); return; }
   if (!colours && !side) { nudgeSay(id, 'Pick a yes or a no first.', true); return; }
-  const box = document.getElementById(colours ? `amt-${id}-${candidate.slice(1)}` : `amt-${id}`);
+  /* The field beside the button that was pressed, not the first one on the page
+     with the right id. The same colour now has a field in two places ... on its
+     row, and on the full board inside the fold ... and reading them by id would
+     always have read the row, including when the board was the one being
+     typed into. */
+  const near = from && from.closest ? from.closest('.crow, .swatch') : null;
+  const box = (near && near.querySelector('.amt'))
+    || document.getElementById(colours ? `amt-${id}-${candidate.slice(1)}` : `amt-${id}`);
   const typed = String((box || {}).value || '').replace(/[^0-9]/g, '');
   const amount = Math.floor(Number(typed || 0));
   /* Nought is meaningful on a colour ... it is how one is taken back ... and
