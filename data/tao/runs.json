@@ -3,6 +3,49 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmtm1hifj",
+   "at": "2026-09-03T21:30:50.383Z",
+   "ok": true,
+   "ms": 31425,
+   "blocks": {
+    "from": 25820496,
+    "to": 25899484,
+    "scanned": 78989
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 0,
+    "sales": 0,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 0,
+   "tao": {
+    "live": 72454882,
+    "was": 72259358,
+    "delta": 195524,
+    "lost_to_sales": 275319,
+    "wallets": 3437
+   },
+   "register": {
+    "collectors": 3680,
+    "with_page": 808,
+    "private": 0,
+    "named": 1152
+   },
+   "classified": 0,
+   "unclassified": 0,
+   "events": 13093,
+   "owners_cursor_age_hours": 72.5,
+   "files": 5,
+   "pages": 0,
+   "movements": [],
+   "movers": [],
+   "alarms": [
+    "the ownership sweep has not finished for 72 hours ... its cursor is still on block 25877863, so who holds what is that old. TAO is unaffected: it reads its own event history, not the register."
+   ]
+  },
+  {
    "run_id": "rmtkm2s3c",
    "at": "2026-09-02T21:31:42.648Z",
    "ok": true,
