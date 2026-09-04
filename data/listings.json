@@ -1,6 +1,6 @@
 {
  "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
- "generated": "2026-09-03T20:04:07.489Z",
+ "generated": "2026-09-04T20:06:42.557Z",
  "sources": [
   "foundation",
   "opensea"
@@ -12,7 +12,7 @@
   "priced": 76,
   "auction": 21,
   "opensea": 67,
-  "carried_forward": 3
+  "carried_forward": 2
  },
  "works": {
   "geodetic-world-2": {
@@ -47,6 +47,12 @@
    "auction_id": "356135",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/12"
   },
+  "geodetic-world-13": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "356147",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/13"
+  },
   "geodetic-world-14": {
    "venue": "foundation",
    "kind": "auction",
@@ -70,6 +76,12 @@
    "kind": "auction",
    "auction_id": "356140",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/21"
+  },
+  "geodetic-world-22": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "356141",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/22"
   },
   "geodetic-world-26": {
    "venue": "foundation",
@@ -106,6 +118,12 @@
    "kind": "auction",
    "auction_id": "358659",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/51"
+  },
+  "geodetic-world-58": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "358664",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/58"
   },
   "geodetic-world-80": {
    "venue": "foundation",
@@ -172,20 +190,6 @@
    "price_wei": "500000000000000000",
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/365"
-  },
-  "seize-and-share-aicopy-409": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "232896",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/409"
-  },
-  "seize-and-share-gm-518": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/518"
   },
   "seize-and-share-accessdenied-mp4-2882": {
    "venue": "foundation",
@@ -798,25 +802,20 @@
    "expires": "2027-02-19T06:29:25.000Z",
    "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
   },
-  "geodetic-world-13": {
+  "seize-and-share-aicopy-409": {
    "venue": "foundation",
    "kind": "auction",
-   "auction_id": "356147",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/13",
+   "auction_id": "232896",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/409",
    "carried_forward": true
   },
-  "geodetic-world-22": {
+  "seize-and-share-gm-518": {
    "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "356141",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/22",
-   "carried_forward": true
-  },
-  "geodetic-world-58": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "358664",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/58",
+   "kind": "buy-now",
+   "price_eth": 0.1,
+   "price_wei": "100000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/518",
    "carried_forward": true
   }
  }
