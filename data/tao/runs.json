@@ -3,6 +3,13 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmtngxvpy",
+   "at": "2026-09-04T21:31:14.518Z",
+   "ok": false,
+   "ms": 44484,
+   "error": "the register rebuild failed: github write 422: {\"message\":\"Invalid request.\\n\\n\\\"sha\\\" wasn't supplied.\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#create-or-update-fi"
+  },
+  {
    "run_id": "rmtm1hifj",
    "at": "2026-09-03T21:30:50.383Z",
    "ok": true,
