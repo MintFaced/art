@@ -1,6 +1,6 @@
 {
  "_note": "Every exit, with the verdict that decided whether its TAO was taken back.",
- "generated": "2026-08-29T21:31:43.000Z",
+ "generated": "2026-09-06T21:30:47.000Z",
  "exits": [
   {
    "address": "0xcf79b7ba24c70341e3fd5409381e1f00aab275d9",
@@ -22903,6 +22903,17 @@
    "verdict": "sale",
    "tao": 6,
    "work": "id-please-362"
+  },
+  {
+   "address": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
+   "contract": "0xe63f4e6ce4110a2fad3de9ed38e7ea5858eb953b",
+   "token": "1842",
+   "qty": 1,
+   "at": 1788645215,
+   "tx": "0xc66e9289adbaf007bb2c1d4a68a3be2b33b0f8224918ba9380c29d91bc38ed38",
+   "verdict": "sale",
+   "tao": 1497,
+   "work": "seize-and-share-certificate-of-mint-1918"
   }
  ]
 }
