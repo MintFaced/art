@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-09-05T21:30:45.621Z",
+ "generated": "2026-09-06T21:01:13.448Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -14,8 +14,8 @@
   "wallets": 3437
  },
  "counts": {
-  "collectors": 3677,
-  "with_page": 807,
+  "collectors": 3678,
+  "with_page": 806,
   "private": 0,
   "named": 1152
  },
@@ -38,7 +38,8 @@
    "last_collected": "2026-08-21T05:06:23.000000Z",
    "tao": 1507664,
    "tao_rate": 1162.2,
-   "tao_rank": 1
+   "tao_rank": 1,
+   "nudges": 1
   },
   {
    "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
@@ -6301,7 +6302,8 @@
    "last_collected": "2026-08-21T05:48:11.000000Z",
    "tao": 39514,
    "tao_rate": 73.2,
-   "tao_rank": 337
+   "tao_rank": 337,
+   "nudges": 1
   },
   {
    "address": "0x1712bf0c459dc5c85b78eee46642d169be0ae1bd",
@@ -7481,7 +7483,8 @@
    "last_collected": "2026-08-21T23:50:23.000000Z",
    "tao": 20518,
    "tao_rate": 16.8,
-   "tao_rank": 482
+   "tao_rank": 482,
+   "nudges": 1
   },
   {
    "address": "0x4f41ee8d83473da6a735b02701a2a2b1bee3b51a",
@@ -9862,26 +9865,6 @@
    "tao": 1232,
    "tao_rate": 21,
    "tao_rank": 3147
-  },
-  {
-   "address": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
-   "ens": null,
-   "fwd": null,
-   "display_name": null,
-   "slug": "0xe1ddc7f1",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 1
-   },
-   "first_collected": "2025-09-14T10:40:47.000Z",
-   "last_collected": "2025-09-14T10:49:11.000Z",
-   "tao": 5988,
-   "tao_rate": 16.8,
-   "tao_rank": 2330
   },
   {
    "address": "0xe4335022d67b72e9a5505418652da64dacc278db",
