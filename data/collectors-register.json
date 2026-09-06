@@ -1,6 +1,6 @@
 {
  "_note": "Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.",
- "generated": "2026-09-05T21:30:45.609Z",
+ "generated": "2026-09-06T21:01:13.445Z",
  "fields": ["address","name","ens","slug","private","works","unique","tao","rate","last","rank","fwd"],
  "rows": [
   ["0x8be5a2df6488b0937299d27f092716f4a9ab2fd8","visco.eth","visco.eth","visco.eth",0,83,11,1507664,1162.2,"2026-08-21",1,""],
@@ -2332,7 +2332,7 @@
   ["0x2d1543711bd262108fd8a1afb43d8871f76c134c","","","",0,1,0,6016,4.2,"2022-10-04",2327,"vault.fertilejim.eth"],
   ["0x20357eb5dc98da197c332d9fdd2a38ef58c91fb3","netspawn.eth","netspawn.eth","",0,1,0,6013,4.2,"2022-10-05",2328,""],
   ["0x3ae5249875f8c058f4735c7a3f91de92aac807fc","","","",0,1,0,5998,4.2,"2022-10-08",2329,""],
-  ["0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5","","","0xe1ddc7f1",0,3,0,5988,16.8,"2025-09-14",2330,""],
+  ["0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5","","","",0,2,0,5988,16.8,"2025-09-14",2330,""],
   ["0xe1268b49d3e4e559f466239df4bee1d5cae04356","aceranger.eth","aceranger.eth","",0,1,0,5966,4.2,"2022-12-24",2331,""],
   ["0x98f1bda2d45ffaca73fcf2154e9e007871e14934","thebenmeadows.eth","thebenmeadows.eth","thebenmeadows.eth",0,3,1,5956,73.2,"2026-08-21",2332,""],
   ["0x5a7749f83b81b301cab5f48eb8516b986daef23d","","","",0,1,0,5946,4.2,"2022-10-21",2333,""],
@@ -3347,6 +3347,7 @@
   ["0xe5358cab95014e2306815743793f16c93a8a5c70","nnsregistry.eth","nnsregistry.eth","nnsregistry.eth",0,2,2,0,0,null,3227,""],
   ["0xdfff2d6d699ac30714cc981f3be1db5250931013","","","0xdfff2d6d",0,2,2,0,0,null,3227,""],
   ["0x0a148ab4952486f99619b05f221548a8c9b0de9f","","","0x0a148ab4",0,2,2,0,0,"2022-11-29",3227,""],
+  ["0xa3e2aea3627920b387d3db5249538c16e6b8f9cb","","","",0,1,0,0,0,"2026-09-05",3227,""],
   ["0x0623a3b40d4a7a95e410d203fae7d8f9c92ed480","","","",0,1,0,0,0,"2024-10-05",3227,"lilyillo.eth"],
   ["0x6191c173e855202083455859e670ac16a669788d","dipanjanp.eth","dipanjanp.eth","",0,1,0,0,0,"2024-10-05",3227,""],
   ["0x343e73d33639d9c354fa215ca23ffcd0f5604ac1","","","",0,1,0,0,0,"2024-10-05",3227,""],
