@@ -11,13 +11,14 @@
  *
  * The files are already web sized, so nothing is resized or re-encoded: what is
  * on disk goes up, keyed by its filename, and the manifest goes up beside them
- * as the record of where each one came from.
+ * as the record of where each one came from. A file that changes on disk keeps
+ * its name, so the run compares lengths rather than trusting that a key exists.
  *
  *   vercel env pull .env.r2.local --environment=production
  *   node --env-file=.env.r2.local scripts/import-strip-paintings.mjs --dry
  *   node --env-file=.env.r2.local scripts/import-strip-paintings.mjs
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
 const ROOT = new URL('../', import.meta.url).pathname;
@@ -26,7 +27,7 @@ const SOURCE = 'data/source/strip-paintings.json';
 const PUBLIC = process.env.ASSETS_PUBLIC_BASE || 'https://assets.mintface.art';
 const dry = process.argv.includes('--dry');
 
-const { putObject, alreadyThere, r2Configured } = await import(`${ROOT}api/_lib/r2.js`);
+const { putObject, r2Configured } = await import(`${ROOT}api/_lib/r2.js`);
 
 const TYPES = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', json: 'application/json' };
 
@@ -36,17 +37,33 @@ const src = JSON.parse(readFileSync(ROOT + SOURCE, 'utf8'));
 // the manifest is the list of what belongs in the bucket, plus itself
 const files = [...manifest.map((m) => m.file), 'manifest.json'];
 
-/* What is missing, asked of the public domain first. A bucket that already
-   holds everything needs no credential at all, and a re-run after the files
-   have landed should be able to finish the records rather than stopping to ask
-   for a key it has nothing to spend. */
+/* What is missing or stale, asked of the public domain first. A bucket that is
+   already correct needs no credential at all, and a re-run after the files have
+   landed should be able to finish the records rather than stopping to ask for a
+   key it has nothing to spend.
+   Presence is not enough: a file rotated or re-cut on disk keeps its name, so
+   the object that answers to that name has to be compared as well as found.
+   Length is what R2 will tell us without a signature ... asked uncompressed,
+   because the CDN will brotli anything text shaped and drop content-length. */
 const keyOf = (file) => `strip-paintings/${file}`;
+const remoteBytes = async (key) => {
+  try {
+    const r = await fetch(`${PUBLIC}/${key}`, { method: 'HEAD', headers: { 'accept-encoding': 'identity' } });
+    if (!r.ok) return null;
+    const n = Number(r.headers.get('content-length') || 0);
+    return n > 0 ? n : null;
+  } catch { return null; }
+};
+
 const missing = [];
 for (const file of files) {
   const key = keyOf(file);
-  if (await alreadyThere(PUBLIC, key)) { console.log(`  = ${key}`); continue; }
+  const local = statSync(`${ROOT}${DIR}/${file}`).size;
+  const remote = await remoteBytes(key);
+  if (remote === local) { console.log(`  = ${key}`); continue; }
   missing.push(file);
-  console.log(`  ${dry ? 'would put' : 'to put'} ${key}`);
+  const why = remote == null ? 'not there' : `${remote}b there, ${local}b here`;
+  console.log(`  ${dry ? 'would put' : 'to put'} ${key}  (${why})`);
 }
 
 /* `vercel env pull` hands back the literal [SENSITIVE] for anything marked

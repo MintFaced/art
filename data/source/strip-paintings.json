@@ -22,7 +22,7 @@
       "title": "Site 1",
       "group": "site-design",
       "site": 1,
-      "caption": "SITE 1 · RED LINE AT 16 FROM BASE",
+      "caption": "SITE 1",
       "year": "2026",
       "medium": "Acrylic and resin on panel",
       "statement": "The colourway for site 1, sampled from the neighbouring streetscape. The red line sits sixteen strips from the base, as it does on every one.",
@@ -43,7 +43,7 @@
       "title": "Site 2",
       "group": "site-design",
       "site": 2,
-      "caption": "SITE 2 · RED LINE AT 16 FROM BASE",
+      "caption": "SITE 2",
       "year": "2026",
       "medium": "Acrylic and resin on panel",
       "statement": "The colourway for site 2, sampled from the neighbouring streetscape. The red line sits sixteen strips from the base, as it does on every one.",
@@ -64,7 +64,7 @@
       "title": "Site 3",
       "group": "site-design",
       "site": 3,
-      "caption": "SITE 3 · RED LINE AT 16 FROM BASE",
+      "caption": "SITE 3",
       "year": "2026",
       "medium": "Acrylic and resin on panel",
       "statement": "The colourway for site 3, sampled from the neighbouring streetscape. The red line sits sixteen strips from the base, as it does on every one.",
@@ -85,7 +85,7 @@
       "title": "Site 4",
       "group": "site-design",
       "site": 4,
-      "caption": "SITE 4 · 240CM PANEL · RED LINE AT 16 FROM BASE",
+      "caption": "SITE 4 · 240CM PANEL",
       "year": "2026",
       "medium": "Acrylic and resin on panel",
       "statement": "The colourway for site 4, on the 240cm panel. The red line sits sixteen strips from the base, as it does on every one.",
@@ -184,23 +184,21 @@
     },
     {
       "id": "strip-paintings-panel-hung",
-      "title": "Panel, hung",
+      "title": "Panel, standing",
       "group": "install",
-      "caption": "PANEL · HUNG",
+      "caption": "PANEL · STANDING",
       "year": "2026",
       "medium": "Acrylic and resin on panel",
-      "statement": "A panel on the wall, red and blue over the sampled neutrals.",
-      "aspect": 1.3333,
-      "orientation": "landscape",
+      "statement": "A panel standing against the wall, red and blue over the sampled neutrals.",
+      "aspect": 0.75,
+      "orientation": "portrait",
       "physical": {
         "exists": true
       },
       "gallery": true,
       "tokenized": false,
       "status": "not_tokenized",
-      "assets": {
-        "image": "strip-paintings/strip-paintings-2.jpg"
-      }
+      "image": "/assets/strip-paintings/strip-paintings-2.jpg"
     }
   ]
 }
