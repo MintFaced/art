@@ -131,6 +131,42 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   display:flex;justify-content:space-between;align-items:baseline;
 }
 .wrap-head h2 .n{font-family:var(--font-mono);font-weight:400;color:var(--faint);font-variant-numeric:tabular-nums}
+
+/* ---------- gallery mode ----------
+   On record rather than on offer. There are no prices here and nothing to buy,
+   so the only thing added to the head is the one line that leads to the tool a
+   commission starts in. */
+.maker{margin-top:22px}
+.maker a{border-bottom:1px solid var(--rule);padding-bottom:4px}
+.maker a:hover{border-color:var(--ink)}
+/* a spec runs longer than a title, so it wraps rather than being cut */
+.recent-set .rows .jcap{white-space:normal;overflow:visible;text-overflow:clip}
+
+/* ---------- the nudge, read only ----------
+   The board lives at /studio and this is not it. This is the reason the
+   question was asked, sitting beside the work it decides: what is being
+   chosen, what stands, how far the lock is, and the way through to weigh. */
+.nudge-embed{max-width:1500px;margin:0 auto;padding:14px 0 70px}
+.nudge-body{max-width:1500px;margin:0 auto;padding:0 28px}
+.nudge-body .q{font-family:var(--font-sans);font-weight:400;font-size:clamp(19px,2.2vw,24px);line-height:1.28;letter-spacing:-.02em;margin:0;max-width:34em}
+.nudge-body .when{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:10px;font-variant-numeric:tabular-nums}
+.nudge-body .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:16px 0 0;max-width:34em}
+.nudge-body .promise{font-size:15px;line-height:1.65;color:var(--ink);margin:12px 0 0;max-width:34em}
+.nudge-body .board{margin:22px 0 0;max-width:560px;display:flex;flex-direction:column;gap:1px}
+.nudge-body .swatch{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.nudge-body .swatch:last-child{border-bottom:0}
+.nudge-body .swatch .chip{width:46px;height:46px;flex:none;border:1px solid var(--rule);display:block}
+.nudge-body .swatch .on{display:flex;flex-direction:column;gap:3px;min-width:0}
+.nudge-body .swatch .hex{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--ink)}
+.nudge-body .swatch .weight{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+.nudge-body .swatch .weight b{font-weight:400;color:var(--ink)}
+/* the chosen one is marked by the ink rule, never by a second colour */
+.nudge-body .swatch.chosen{margin-left:-14px;padding-left:12px;border-left:2px solid var(--ink)}
+.nudge-body .swatch.chosen .hex{text-transform:uppercase;letter-spacing:.14em}
+.nudge-body .lock,.nudge-body .none{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:18px 0 0;font-variant-numeric:tabular-nums}
+.nudge-body .smallcaps{display:inline-block;margin-top:20px;border-bottom:1px solid var(--rule);padding-bottom:4px}
+.nudge-body .smallcaps:hover{border-color:var(--ink)}
+@media(max-width:520px){.nudge-body{padding:0 20px}}
 </style>
 </head>
 <body>
@@ -422,34 +458,164 @@ function paintRecent(collection) {
   }
 }
 
+/* ---------- gallery mode ----------
+ *
+ * A collection that is on record rather than on offer. Nothing here is
+ * tokenized, so nothing here has a price, an acquire path or an availability
+ * dot ... the honest pre-chain state, said once by the collection and read by
+ * every part of the page rather than inferred from a missing figure.
+ *
+ * The site designs are bands: full measure, stacked, captioned with their spec.
+ * The photographs are justified rows, because a room is a picture and a strip
+ * painting at four to one is not.
+ */
+const GALLERY_GROUPS = [
+  { id: 'site-design', title: 'The site designs', bands: true },
+  { id: 'install', title: 'Installed' },
+];
+
+const byGroup = (collection, fallback) => {
+  const by = {};
+  for (const w of collection.works || []) (by[w.group || fallback] ||= []).push(w);
+  return by;
+};
+
+function galleryGroups(collection) {
+  const by = byGroup(collection, 'install');
+  const known = GALLERY_GROUPS.filter((g) => (by[g.id] || []).length);
+  const other = Object.keys(by).filter((k) => !GALLERY_GROUPS.some((g) => g.id === k));
+  return [...known, ...other.map((k) => ({ id: k, title: k }))]
+    .map((g) => `<section class="recent-set">
+      <div class="wrap-head"><h2>${e(g.title)}<span class="n">${(by[g.id] || []).length}</span></h2></div>
+      ${g.bands
+        ? `<div class="bands" data-bands="${e(g.id)}"></div>`
+        : `<div class="rows" data-group="${e(g.id)}"></div>`}
+    </section>`).join('');
+}
+
+function paintGallery(collection) {
+  const by = byGroup(collection, 'install');
+  for (const el of document.querySelectorAll('.bands[data-bands]')) {
+    MF.stripBands(el, by[el.dataset.bands] || []);
+  }
+  for (const el of document.querySelectorAll('.rows[data-group]')) {
+    // the caption is the work's own spec where it has one, in the same mono
+    const works = (by[el.dataset.group] || []).map((w) => ({ ...w, title: w.caption || w.title }));
+    MF.paintRows(el, works, { target: 380, targetSmall: 220, gutter: 10 });
+  }
+}
+
+/* The nudge this collection is the context for, read only.
+ *
+ * The board is where the weighing happens and this is not the board ... it is
+ * the reason the question was asked, sitting beside the work it decides. So it
+ * says what is being chosen, what stands, and how far the lock is, and then it
+ * leads to the room where a wallet can put TAO behind a colour. */
+const worn = (n) => {
+  const v = Math.floor(Number(n) || 0);
+  if (v >= 1000000) return `${(v / 1000000).toFixed(2).replace(/\.?0+$/, '')}M`;
+  if (v >= 1000) return `${(v / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  return String(v);
+};
+const nudgeDate = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+
+function nudgeMarkup(x) {
+  const cands = (x.candidates || []).filter((c) => c.hex);
+  const board = cands.length
+    ? `<div class="board">${cands.map((c) => `<div class="swatch${x.locked && x.locked.hex === c.hex ? ' chosen' : ''}">
+        <span class="chip" style="background:${e(c.hex)}"></span>
+        <span class="on">
+          <span class="hex">${e(c.hex)}</span>
+          <span class="weight"><b>${worn(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
+        </span>
+      </div>`).join('')}</div>`
+    : '<p class="none">No colour on the board yet.</p>';
+  const p = x.open && x.progress;
+  const lock = p
+    ? `<p class="lock">Lock &middot; ${p.voters.at} of ${p.voters.of} collectors
+       &middot; ${worn(p.tao.at)} of ${worn(p.tao.of)} TAO on the leader</p>`
+    : '';
+  const banked = x.open ? '' : `<p class="lock">${x.locked
+    ? `Locked &middot; ${e(x.locked.hex)} &middot; ${worn(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
+    : `No colour locked &middot; ${worn(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`;
+  return `<div class="wrap-head"><h2>The colour vote</h2></div>
+    <div class="nudge-body">
+      <p class="q">${e(x.question)}</p>
+      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(nudgeDate(x.closes))}</div>
+      ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
+      ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
+      ${board}
+      ${lock}${banked}
+      <a class="smallcaps" href="/studio#nudge-${e(x.id)}">${x.open ? 'Weigh TAO on the board' : 'The board'}</a>
+    </div>`;
+}
+
+async function paintNudge(collection) {
+  const el = document.getElementById('nudge');
+  if (!el || !collection.nudge) return;
+  try {
+    const state = await fetch('/api/nudge').then((r) => (r.ok ? r.json() : null));
+    const list = (state && state.nudges) || (Array.isArray(state) ? state : null);
+    const x = (list || []).find((n) => n.id === collection.nudge);
+    if (!x) { el.remove(); return; }
+    el.innerHTML = nudgeMarkup(x);
+  } catch {
+    // the board is context, not a requirement: without it the link still stands
+    el.innerHTML = `<div class="wrap-head"><h2>The colour vote</h2></div>
+      <div class="nudge-body"><a class="smallcaps" href="/studio">The board</a></div>`;
+  }
+}
+
 function render(collection) {
   COLLECTION = collection;
   document.title = `${collection.title} ... MintFace`;
   if (collection.statement) {
     document.querySelector('meta[name="description"]').setAttribute('content', collection.statement);
   }
+  const gallery = collection.gallery === true;
   const bits = [collection.year, collection.medium, `${collection.works.length} ${collection.works.length === 1 ? 'work' : 'works'}`].filter(Boolean);
   const counts = {};
   for (const w of collection.works) counts[w.status] = (counts[w.status] || 0) + 1;
   const avail = MF.availability({ counts, sold_out: collection.sold_out });
+  // The pre-chain state, said where availability would otherwise be. Same words
+  // a work carries in its own details table, so the two never disagree.
+  const state = gallery
+    ? '<span class="badge">Not yet tokenized</span>'
+    : `${avail.badge ? `<span class="badge">${e(avail.badge)}</span>` : ''}
+       ${avail.available ? `<span><span class="dot available"></span> ${avail.available} available</span>` : ''}`;
+  // the commissioning door, one line, where a reader has just seen four of them
+  const maker = gallery && collection.links && collection.links.maker
+    ? `<div class="maker"><a class="smallcaps" href="${e(collection.links.maker)}">Design a strip painting</a></div>`
+    : '';
 
   document.getElementById('main').innerHTML = `
     <div class="head">
       <h1>${e(collection.title)}</h1>
       <div class="meta">
         ${bits.map((b) => `<span>${e(b)}</span>`).join('')}
-        ${avail.badge ? `<span class="badge">${e(avail.badge)}</span>` : ''}
-        ${avail.available ? `<span><span class="dot available"></span> ${avail.available} available</span>` : ''}
+        ${state}
       </div>
       ${collection.statement ? `<p class="statement">${e(collection.statement)}</p>` : ''}
-      ${collection.tokenize_on_purchase && collection.notes ? `<p class="minting">${e(collection.notes)}</p>` : ''}
+      ${(collection.tokenize_on_purchase || gallery) && collection.notes ? `<p class="minting">${e(collection.notes)}</p>` : ''}
+      ${maker}
       <div id="setStrip"></div>
     </div>
-    ${collection.slug === 'recent-work' ? '' : stateControl(collection.works)}
-    ${collection.slug === 'recent-work' ? '' : filterBar(collection)}
-    ${collection.slug === 'recent-work' ? recentGroups(collection) : '<div class="grid" id="grid"></div>'}
+    ${collection.slug === 'recent-work' || gallery ? '' : stateControl(collection.works)}
+    ${collection.slug === 'recent-work' || gallery ? '' : filterBar(collection)}
+    ${gallery ? galleryGroups(collection)
+      : collection.slug === 'recent-work' ? recentGroups(collection)
+      : '<div class="grid" id="grid"></div>'}
     ${collection.works.length ? '' : '<div class="loading">Nothing here yet</div>'}
+    ${gallery && collection.nudge ? '<section class="nudge-embed" id="nudge"></section>' : ''}
     <div class="sentinel" id="sentinel"></div>`;
+
+  // A gallery has no grid, no filters, no prices and nothing to buy, so none of
+  // the furniture below applies to it either
+  if (gallery) {
+    paintGallery(collection);
+    paintNudge(collection);
+    return;
+  }
 
   // Recent Work has rows rather than a grid, so none of the grid furniture
   // below applies to it

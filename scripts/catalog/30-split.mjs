@@ -199,6 +199,9 @@ for (const col of cat.collections) {
     notes: col.notes || null,
     has_children: !!col.children,
     tokenize_on_purchase: !!col.tokenize_on_purchase,
+    // a gallery is on record rather than on offer, and the index says so rather
+    // than leaving a card to infer it from a count of nought available
+    ...(col.gallery ? { gallery: true, tokenized: false } : {}),
   });
 
   for (const w of works) index.work_index[w.id] = col.slug;

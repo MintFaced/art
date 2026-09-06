@@ -137,6 +137,40 @@
    "tokenize_on_purchase": false
   },
   {
+   "slug": "strip-paintings",
+   "title": "Strip Paintings",
+   "group": "core",
+   "year": "2026",
+   "medium": "Acrylic and resin on panel",
+   "genre": "Painting",
+   "card_statement": null,
+   "physical": true,
+   "statement": "Strip paintings over vacant fascia signage in Hastings CBD... colours sampled from the neighbouring streetscape. A red line runs through every one, sixteen strips from the base.",
+   "sold_out": false,
+   "counts": {
+    "works": 9,
+    "not_tokenized": 9,
+    "unique_works": 9
+   },
+   "cover": {
+    "id": "strip-painting-site-1",
+    "image": null,
+    "assets": {
+     "image": "strip-paintings/strip-painting-1-illustrated.jpg"
+    },
+    "orientation": "landscape"
+   },
+   "contracts": null,
+   "links": {
+    "maker": "/strip-painting-maker"
+   },
+   "notes": "Not yet tokenized. These are on record here as a gallery ... no prices, nothing on offer. Each will be written to chain when it is, and the record graduates in place.",
+   "has_children": false,
+   "tokenize_on_purchase": false,
+   "gallery": true,
+   "tokenized": false
+  },
+  {
    "slug": "artificial-flowers",
    "title": "Artificial Flowers",
    "group": "core",
@@ -2882,9 +2916,23 @@
   "xnouns-3": "xnouns",
   "xnouns-2": "xnouns",
   "xnouns-1": "xnouns",
-  "xnouns-0": "xnouns"
+  "xnouns-0": "xnouns",
+  "strip-painting-site-1": "strip-paintings",
+  "strip-painting-site-2": "strip-paintings",
+  "strip-painting-site-3": "strip-paintings",
+  "strip-painting-site-4": "strip-paintings",
+  "strip-paintings-the-line-frontage": "strip-paintings",
+  "strip-paintings-the-line-hang": "strip-paintings",
+  "strip-paintings-diptych": "strip-paintings",
+  "strip-paintings-panel-resin": "strip-paintings",
+  "strip-paintings-panel-hung": "strip-paintings"
  },
  "exhibition_history": [
+  {
+   "year": "2026",
+   "title": "Strip Paintings ... The Line",
+   "venue": "The Line Gallery, New Zealand"
+  },
   {
    "year": "2026",
    "title": "PixelArcade ... The Line",

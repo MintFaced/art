@@ -471,6 +471,27 @@ const MF = {
     window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
   },
 
+  /* The site designs, painted as the horizontal bands they are.
+     A strip painting is a wall's width of colour and nothing else, so it takes
+     the full measure and stacks, rather than being packed into a row beside
+     photographs of rooms. The caption under each one is its spec, in mono. */
+  stripBands(el, works, opts) {
+    if (!el) return;
+    const o = opts || {};
+    el.innerHTML = (works || []).map((w) => {
+      const ratio = w.aspect > 0 ? w.aspect : 4;
+      const href = w.id && o.link !== false ? `/w/${encodeURIComponent(w.id)}` : null;
+      const cap = this.escape(w.caption || w.title || '');
+      const inner = `<div class="bshot" style="aspect-ratio:${ratio}">`
+        + this.img(w, o.width || 2000, { alt: w.title })
+        + `</div>${cap ? `<div class="bcap">${cap}</div>` : ''}`;
+      return href
+        ? `<a class="band" href="${href}">${inner}</a>`
+        : `<div class="band">${inner}</div>`;
+    }).join('');
+    this.progress.watch(el);
+  },
+
   // one tile of a vaulted work, which is a record rather than an offer
   vaultTile(w) {
     const title = (w.display_title || w.title || 'Untitled').trim();
@@ -903,6 +924,9 @@ const MF = {
     vaulted: { label: 'Vaulted', dot: 'vaulted' },
     sold_out: { label: 'Sold out', dot: 'acquired' },
     uninscribed: { label: 'Not yet inscribed', dot: 'uninscribed' },
+    // On record, not on offer. No dot: the dots are the site's one green
+    // and they say what a work costs to want. This one costs nothing yet.
+    not_tokenized: { label: 'Not yet tokenized', dot: '' },
     burned: { label: 'Burned', dot: 'burned' },
   },
 
@@ -955,7 +979,7 @@ const MF = {
 
   // groups, in the order the catalog gives them, with the locked geodetic run
   groupOrder: {
-    core: ['pixelarcade', 'artificial-flowers', 'patrimora', 'frogdna', 'two-burdens', 'recursive-mind', 'hidden-landscapes', 'roads-and-rivers'],
+    core: ['pixelarcade', 'strip-paintings', 'artificial-flowers', 'patrimora', 'frogdna', 'two-burdens', 'recursive-mind', 'hidden-landscapes', 'roads-and-rivers'],
     archive: ['seize-and-share', 'id-please'],
     geodetic: ['geodetic-onchain', 'geodetic-world', 'geodetica', 'geodetic-moments', 'geodetic-home', 'geodetic-memory'],
     studies: ['visual-language', 'panoptic', 'wallet', 'geodetic-illusions'],

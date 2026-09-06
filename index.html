@@ -115,7 +115,8 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 }
 .jitem:hover .jcap{color:var(--ink)}
 .rows-more{max-width:1500px;margin:0 auto;padding:18px 28px 0}
-.recent-rows{margin:0 0 62px}
+.recent-rows,.strip-rows{margin:0 0 62px}
+.strip-rows .bands{margin-bottom:0}
 .recent-rows .wrap-head + .rows{margin-bottom:34px}
 .recent-rows .rows + .wrap-head{margin-top:10px}
 /* the hero and its three, stacked, each solved on its own */
@@ -360,6 +361,23 @@ async function fillRecent() {
   MF.paintComposed(pixelEl, hero, rest, { gutter: 10, stackBelow: 760 });
 }
 
+/* The site designs, in order, as the bands they are.
+ *
+ * One per site, full measure, stacked ... which is how they stand on a street
+ * and the only shape that reads at four to one. Ordered by site number, so a
+ * design that has not been rendered yet is simply not here and the ones that
+ * follow it keep their place. */
+async function fillStrips() {
+  const section = document.getElementById('stripSection');
+  let col = null;
+  try { col = await MF.collection('strip-paintings'); } catch { /* nothing published yet */ }
+  const bands = ((col && col.works) || [])
+    .filter((w) => w.group === 'site-design')
+    .sort((a, b) => (a.site || 0) - (b.site || 0));
+  if (!bands.length) { if (section) section.remove(); return; }
+  MF.stripBands(document.getElementById('stripBands'), bands);
+}
+
 async function fillVault() {
   const el = document.getElementById('vaultCards');
   if (!el) return;
@@ -446,6 +464,12 @@ async function hero(home, idx) {
     const rest = groups.filter((g) => !['core', 'geodetic'].includes(g.id));
 
     document.getElementById('main').insertAdjacentHTML('beforeend', `
+      <section class="group strip-rows" id="stripSection">
+        <div class="wrap-head"><h2>Strip Paintings</h2></div>
+        <div class="bands" id="stripBands"></div>
+        <div class="rows-more"><a class="smallcaps" href="/c/strip-paintings">The strip paintings</a></div>
+      </section>
+
       <section class="group recent-rows" id="recentSection">
         <div class="wrap-head"><h2>Recent Paintings</h2></div>
         <div class="rows" id="recentRows"></div>
@@ -486,6 +510,7 @@ async function hero(home, idx) {
     }));
 
     await hero(home, idx);
+    await fillStrips();
     await fillRecent();
     await fillVault();
     MF.progress.watch(document.getElementById('main'));

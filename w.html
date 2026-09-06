@@ -361,7 +361,10 @@ function detailRows(work, collection) {
   const rows = [];
   const st = MF.STATUS[work.status] || { label: work.status, dot: '' };
 
-  rows.push(['Availability', `<span class="dot ${st.dot}"></span> ${e(st.label)}`]);
+  /* The pre-chain state, said where availability would be. Same copy family as
+     an uninscribed work's ... what is true now, not what is missing. */
+  if (isGallery(work)) rows.push(['Status', '<span class="pending">Not yet tokenized</span>']);
+  else rows.push(['Availability', `<span class="dot ${st.dot}"></span> ${e(st.label)}`]);
 
   const year = MF.year(work, collection);
   if (year) rows.push(['Year', e(year)]);
@@ -380,14 +383,17 @@ function detailRows(work, collection) {
   }
 
   const dims = [p.width_cm, p.height_cm].filter(Boolean);
-  if (dims.length) {
+  if (dims.length === 2) {
     const depth = p.depth_cm ? ` \u00d7 ${p.depth_cm}` : '';
     rows.push(['Dimensions', `${dims.join(' \u00d7 ')}${depth} cm`]);
+  } else if (dims.length === 1) {
+    // half a measurement written as a pair reads as a square it is not
+    rows.push(['Dimensions', `${p.width_cm ? `${p.width_cm} cm wide` : `${p.height_cm} cm high`}`]);
   } else if (collection.physical && p.exists !== false) {
     rows.push(['Dimensions', '<span class="pending">Listed on request</span>']);
   }
   // one row for the painting: where it is, and how it comes
-  if (collection.physical) {
+  if (collection.physical && !isGallery(work)) {
     if (p.exists === false) {
       rows.push(['Painting', '<span class="pending">Digital only, no physical work</span>']);
     } else {
@@ -445,6 +451,16 @@ function traitRows(traits) {
 
 function provenanceFold(work) {
   const d = work.digital || {};
+  /* Nothing on chain, and not sold into being on chain either. Said plainly,
+     rather than as an empty table of chain rows with nothing in them. */
+  if (isGallery(work)) {
+    return `<details>
+      <summary>Provenance</summary>
+      <div class="fold-body">
+        <p>Not yet tokenized. This work is on record here and nowhere else ... no contract, no token, nothing written to chain. When it is written, the record graduates in place and keeps this page and this address.</p>
+      </div>
+    </details>`;
+  }
   if (d.minted === false) {
     return `<details>
       <summary>Provenance</summary>
@@ -517,10 +533,15 @@ function marketRow(work) {
 const isCollected = (work) => work.status === 'acquired';
 // a vaulted work is held for at least a decade. Quoting it, even as "on
 // application", invites an offer that is not going to be taken.
-const isPriceless = (work) => isCollected(work) || work.status === 'vaulted';
+/* A gallery work is on record rather than on offer. Nothing is tokenized, so
+   there is nothing to quote, nothing to send, and no acquire path ... quoting
+   one even as "on application" would be offering something that does not
+   exist yet. */
+const isGallery = (work) => work.gallery === true || work.status === 'not_tokenized';
+const isPriceless = (work) => isCollected(work) || work.status === 'vaulted' || isGallery(work);
 
 function shippingFold(collection, meta, work) {
-  if (isCollected(work)) return '';
+  if (isCollected(work) || isGallery(work)) return '';
   if (!collection.physical) return '';
   return `
     <details>

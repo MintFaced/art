@@ -645,6 +645,41 @@ dedicated({ slug: 'wallet', title: 'WALLΞT', group: 'ai-studies', year: '2022',
   });
 }
 
+// ---- STRIP PAINTINGS (nothing on chain, and nothing on offer) ----
+// A gallery rather than a shopfront. The site designs and the install photographs
+// are on record; none of them is tokenized, so none of them carries a price, an
+// offer or an availability dot. Tokenizing one is a status flip on its record
+// plus the digital block it gains ... not a rebuild of this block.
+{
+  const path = ROOT + 'data/source/strip-paintings.json';
+  const src = fs.existsSync(path) ? R(path) : { collection: {}, works: [] };
+  const c = src.collection || {};
+  const works = (src.works || []).map((w) => ({
+    ...w,
+    collection: 'strip-paintings',
+    edition: w.edition || { type: '1/1' },
+    physical: { exists: true, ...(w.physical || {}) },
+    // said once, here, so no page has to infer it from a missing price
+    gallery: w.gallery !== false,
+    tokenized: w.tokenized === true,
+    status: w.status || 'not_tokenized',
+    collector: w.collector || null,
+  }));
+  const t = tally(works); stats['strip-paintings'] = t;
+  push({
+    slug: 'strip-paintings', title: c.title || 'Strip Paintings', group: c.group || 'core',
+    year: c.year || null, medium: c.medium || null, physical: c.physical !== false,
+    statement: c.statement || null,
+    notes: c.notes || null,
+    gallery: true,
+    tokenized: false,
+    links: c.links || null,
+    nudge: c.nudge || null,
+    counts: { works: works.length, ...t },
+    works,
+  });
+}
+
 // ---- OTHER WORKS found on artist contracts but not in the seed ----
 const other_works = [];
 {
