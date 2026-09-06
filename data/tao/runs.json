@@ -3,6 +3,83 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmtqbscu1",
+   "at": "2026-09-06T21:30:17.209Z",
+   "ok": true,
+   "ms": 41729,
+   "blocks": {
+    "from": 25820496,
+    "to": 25921007,
+    "scanned": 100512
+   },
+   "chain_events": 1,
+   "changed_hands": {
+    "works": 1,
+    "sales": 1,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 2,
+   "tao": {
+    "live": 72648874,
+    "was": 72585198,
+    "delta": 63676,
+    "lost_to_sales": 276816,
+    "wallets": 3438
+   },
+   "register": {
+    "collectors": 3677,
+    "with_page": 807,
+    "private": 0,
+    "named": 1152
+   },
+   "classified": 1,
+   "unclassified": 0,
+   "events": 13094,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 101,
+   "files": 10,
+   "pages": 1,
+   "movements": [
+    {
+     "work": "seize-and-share-certificate-of-mint-1918",
+     "title": "Certificate of Mint",
+     "token": "1842",
+     "contract": "0xe63f4e6ce4110a2fad3de9ed38e7ea5858eb953b",
+     "qty": 1,
+     "at": "2026-09-05T21:53:35.000Z",
+     "block": 25913946,
+     "tx": "0xc66e9289adbaf007bb2c1d4a68a3be2b33b0f8224918ba9380c29d91bc38ed38",
+     "from": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
+     "to": "0xa3e2aea3627920b387d3db5249538c16e6b8f9cb",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
+     "before": 5988,
+     "after": 4503,
+     "delta": -1485,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0xa3e2aea3627920b387d3db5249538c16e6b8f9cb",
+     "before": 0,
+     "after": 4,
+     "delta": 4,
+     "gained": 1
+    }
+   ],
+   "alarms": [
+    "the site is serving an ownership cursor of block 25913729 while the repo is on 25920906 ... mintface.art does not deploy from GitHub, so its static data is frozen at the last hand-run deploy. `vercel deploy --prod` in ~/dev/art publishes what the crons have written since."
+   ]
+  },
+  {
    "run_id": "rmtowci5t",
    "at": "2026-09-05T21:30:17.201Z",
    "ok": true,
