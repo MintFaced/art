@@ -8,7 +8,7 @@
  *   node scripts/tao/test-nudges.mjs
  */
 import { createRequire } from 'node:module';
-import { tally, latest, isOpen, provenanceLine, palette, standing, allocations, spread, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive } from '../../api/_lib/nudges.js';
+import { tally, latest, isOpen, provenanceLine, palette, standing, allocations, spread, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive, bankCandidates, bankTally, bankingRows } from '../../api/_lib/nudges.js';
 const require2 = createRequire(import.meta.url);
 
 let pass = 0, fail = 0;
@@ -517,6 +517,60 @@ const holds = (x) => five[x] || 0;
   const weighFn = page.slice(page.indexOf('async function weigh('), page.indexOf('console.log') > 0 ? page.length : page.length);
   is('the page no longer signs a weighing', /MF\.sign\(message/.test(weighFn), false);
   is('and asks once more where a session predates the sentence', /j\.rescope/.test(page), true);
+}
+
+/* ------------------------------------------------------------- banking
+ *
+ * A nudge banks once, forever. There is no second run to catch it with, so the
+ * projection is checked here rather than trusted ... and both of these are
+ * bugs that were live and would have frozen the wrong record on nudge #1.
+ */
+{
+  const N = { id: 'n1', number: 1, kind: 'candidates', lock: { voters: 2, tao: 100 } };
+  const BLUE = '#0E5890', RED2 = '#C0392B';
+  const alloc = (address, candidate, amount, at) =>
+    ({ nudge: 'n1', address, side: null, candidate, amount, alloc: true, at });
+  /* One wallet on two colours, and four others on the blue: the shape nudge #1
+     actually had, in miniature. The blue needs the split wallet to be its
+     second voter. */
+  const rows = [
+    alloc(A, BLUE, 100, '2026-01-01'), alloc(A, RED2, 100, '2026-01-02'),
+    alloc(B, BLUE, 100, '2026-01-03'),
+  ];
+  const held = () => 1000;
+
+  const wrong = palette(latest(rows, 'n1'), [{ nudge: 'n1', hex: BLUE }, { nudge: 'n1', hex: RED2 }], held, N);
+  is('taking the latest row per wallet loses the colours it moved off',
+    wrong.candidates.find((c) => c.hex === BLUE).voters, 1);
+  is('and the leader falls under the threshold because of it', Boolean(wrong.locked), false);
+
+  const right = palette(bankingRows(rows, N), [{ nudge: 'n1', hex: BLUE }, { nudge: 'n1', hex: RED2 }], held, N);
+  is('banking folds every row a wallet signed',
+    right.candidates.find((c) => c.hex === BLUE).voters, 2);
+  is('and the colour the collectors actually stood behind locks', right.locked.hex, BLUE);
+
+  /* A yes or a no is the other way round, and always was. */
+  const sides = [w(A, 'yes', 10, '1'), w(A, 'no', 90, '2')];
+  is('a yes or a no still keeps one weighing per wallet',
+    bankingRows(sides, { id: 'n1', number: 1 }).length, 1);
+
+  const rec = bankCandidates(right, N);
+  is('a banked candidate carries its wallets', Array.isArray(rec.candidates[0].wallets), true);
+  is('and every one of them has a weight',
+    rec.candidates[0].wallets.every((x) => typeof x.weight === 'number'), true);
+  is('the banked record keeps the lock', rec.locked.hex, BLUE);
+  is('and the whole board, including what did not win', rec.candidates.length, 2);
+  is('a banked yes-or-no keeps its sides',
+    bankTally(tally(latest(sides, 'n1'), held), { number: 1 }).result, 'no');
+
+  /* The frozen record is what /api/nudge reads back, so the shape it hands out
+     has to be the shape the page was written against. */
+  const fs4 = require2('node:fs');
+  const route = fs4.readFileSync(new URL('../../api/nudge.js', import.meta.url), 'utf8');
+  is('and the route reads wallets off a banked candidate', /wallets: \(c\.wallets \|\| \[\]\)/.test(route), true);
+  const cron = fs4.readFileSync(new URL('../../api/cron/nudges.js', import.meta.url), 'utf8');
+  is('the cron banks through the tested projection', /bankCandidates\(p, n\)/.test(cron), true);
+  is('and never takes the latest row on a board of colours', /latest\(weighings/.test(cron), false);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

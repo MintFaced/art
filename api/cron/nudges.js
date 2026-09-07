@@ -1,5 +1,5 @@
 import { readFile, writeFile } from '../_lib/repo.js';
-import { tally, latest, palette, kindOf, nudgeStore, withLive, CANDIDATES } from '../_lib/nudges.js';
+import { tally, palette, kindOf, nudgeStore, withLive, bankCandidates, bankTally, bankingRows, CANDIDATES } from '../_lib/nudges.js';
 import { storeConfigured, pipe } from '../_lib/kv.js';
 
 /* Banking a nudge.
@@ -46,7 +46,11 @@ export async function GET(request) {
   for (const n of store.nudges || []) {
     if (n.banked || n.published === false) continue;
     if (new Date(n.closes).getTime() > now) continue;
-    const rows = latest(weighings, n.id);
+    /* A yes or a no keeps one weighing per wallet; a board of colours folds
+       every row a wallet ever signed. Taking the latest on a board throws away
+       every colour but the last one touched, which on nudge #1 was the whole
+       difference between a colour locking and nothing locking at all. */
+    const rows = bankingRows(weighings, n);
 
     /* A nudge with candidates banks a colour, or banks the fact that no colour
        reached the threshold. Both are records and the second is not a failure:
@@ -55,34 +59,14 @@ export async function GET(request) {
        that was promised. */
     if (kindOf(n) === CANDIDATES) {
       const p = palette(rows, proposals.filter((x) => x.nudge === n.id), readTao, n);
-      n.banked = {
-        number: n.number, kind: CANDIDATES, rule: p.rule,
-        total: p.total, collectors: p.collectors,
-        leader: p.leader, locked: p.locked, why: p.why, progress: p.progress,
-        /* Frozen with everything else. The card keeps showing who stood where
-           at close, whatever anybody does with their TAO afterwards. */
-        ledger: p.ledger.map((r) => ({ address: r.address, name: r.name || null,
-          candidate: r.candidate, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
-        candidates: p.candidates.map((c) => ({
-          hex: c.hex, total: c.total, voters: c.voters, share: c.share,
-          proposed_by: c.proposed_by || null, proposed_name: c.proposed_name || null,
-          ledger: c.ledger.map((r) => ({ address: r.address, name: r.name || null,
-            candidate: r.candidate, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
-        })),
-        banked_at: new Date().toISOString(),
-      };
+      n.banked = bankCandidates(p, n);
       banked.push(`#${n.number} ${p.locked ? `locked ${p.locked.hex}` : 'no colour locked'}`
         + ` ... ${Math.round(p.total)} TAO across ${p.collectors}`);
       continue;
     }
 
     const t = tally(rows, readTao);
-    n.banked = {
-      number: n.number, totals: t.totals, counts: t.counts, total: t.total,
-      collectors: t.collectors, share: t.share, result: t.result,
-      ledger: t.ledger.map((r) => ({ address: r.address, name: r.name || null, side: r.side, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
-      banked_at: new Date().toISOString(),
-    };
+    n.banked = bankTally(t, n);
     banked.push(`#${n.number} ${t.result} ... ${Math.round(t.total)} TAO across ${t.collectors}`);
   }
 

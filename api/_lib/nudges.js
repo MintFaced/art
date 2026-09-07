@@ -450,6 +450,73 @@ export function latest(all, nudgeId) {
 export const isOpen = (n, now = new Date()) =>
   n.published !== false && !n.banked && new Date(n.closes).getTime() > now.getTime();
 
+/* ------------------------------------------------------------- banking
+ *
+ * The frozen record. At the close date the tally stops being a live reading
+ * and becomes a thing that never moves again, so this is a projection rather
+ * than a reference: what banks is a copy, taken once, of what the board said
+ * at close.
+ *
+ * It lives here rather than in the cron because the cron is the one caller
+ * that can never be run twice to check. A nudge banks once, forever, and a
+ * record frozen wrong is not a bug you fix ... it is a decision somebody has
+ * to be told was taken on the wrong numbers.
+ */
+
+/** What a candidate nudge banks: the board, the lock or the reason there is
+ *  none, and who stood where when it closed. */
+export function bankCandidates(p, n) {
+  return {
+    number: n.number, kind: CANDIDATES, rule: p.rule,
+    total: p.total, collectors: p.collectors,
+    leader: p.leader, locked: p.locked, why: p.why, progress: p.progress,
+    /* Frozen with everything else. The card keeps showing who stood where at
+       close, whatever anybody does with their TAO afterwards. */
+    ledger: (p.ledger || []).map((r) => ({ address: r.address, name: r.name || null,
+      candidate: r.candidate, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
+    candidates: (p.candidates || []).map((c) => ({
+      hex: c.hex, total: c.total, voters: c.voters, share: c.share,
+      proposed_by: c.proposed_by || null, proposed_name: c.proposed_name || null,
+      /* WALLETS, not ledger. A candidate carried a `ledger` before weighing
+         split across colours; the fold renamed it, and this projection was not
+         renamed with it. Nothing noticed, because no candidate nudge had ever
+         closed ... which is exactly the kind of code path that is only ever
+         run when it matters. */
+      wallets: (c.wallets || []).map((r) => ({ address: r.address, name: r.name || null,
+        amount: r.amount, weight: r.weight, clamped: Boolean(r.clamped) })),
+    })),
+    banked_at: new Date().toISOString(),
+  };
+}
+
+/** What a yes-or-no nudge banks. */
+export function bankTally(t, n) {
+  return {
+    number: n.number, totals: t.totals, counts: t.counts, total: t.total,
+    collectors: t.collectors, share: t.share, result: t.result,
+    ledger: (t.ledger || []).map((r) => ({ address: r.address, name: r.name || null,
+      side: r.side, weight: r.weight, at: r.at, clamped: Boolean(r.clamped) })),
+    banked_at: new Date().toISOString(),
+  };
+}
+
+/**
+ * The weighings a nudge is banked from.
+ *
+ * THE TWO KINDS COUNT DIFFERENTLY AND THIS IS WHERE THAT IS SAID. A yes or a
+ * no keeps one weighing per wallet and the latest stands. A board of colours
+ * does not: a wallet holds a map, built by folding every row it ever signed,
+ * and taking only the latest one throws away every colour but the last it
+ * touched. On nudge #1 that was the difference between a colour locking and
+ * nothing locking at all ... 0xunix.eth had a hundred thousand on the blue and
+ * a hundred thousand on the red, and the blue needed them to be its fifth
+ * collector.
+ */
+export const bankingRows = (all, n) =>
+  (kindOf(n) === CANDIDATES
+    ? (all || []).filter((x) => x.nudge === n.id)
+    : latest(all || [], n.id));
+
 /** The line a work carries once a nudge shaped it. Permanent, and phrased the
  *  way the register phrases everything else. */
 export const provenanceLine = (banked) =>
