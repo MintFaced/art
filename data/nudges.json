@@ -18,7 +18,210 @@
    "closes": "2026-09-07T08:31:21.000Z",
    "published": true,
    "series": "strip-palette",
-   "slot": 1
+   "slot": 1,
+   "banked": {
+    "number": 1,
+    "kind": "candidates",
+    "rule": {
+     "voters": 5,
+     "tao": 500000
+    },
+    "total": 839935,
+    "collectors": 7,
+    "leader": {
+     "hex": "#0E5890",
+     "total": 639514,
+     "voters": 5
+    },
+    "locked": {
+     "hex": "#0E5890",
+     "total": 639514,
+     "voters": 5
+    },
+    "why": null,
+    "progress": {
+     "voters": {
+      "at": 5,
+      "of": 5
+     },
+     "tao": {
+      "at": 639514,
+      "of": 500000
+     }
+    },
+    "ledger": [
+     {
+      "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+      "name": "carlos28355.eth",
+      "candidate": "#0E5890",
+      "at": "2026-09-07T03:54:34.430Z",
+      "clamped": false
+     },
+     {
+      "address": "0xc2aaec38c14b81332f6741f9fdc211c6bb6f894c",
+      "name": "murriohas.eth",
+      "candidate": "#C0392B",
+      "at": "2026-09-06T12:34:25.852Z",
+      "clamped": false
+     },
+     {
+      "address": "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8",
+      "name": "visco.eth",
+      "candidate": "#0E5890",
+      "at": "2026-09-06T12:09:45.498Z",
+      "clamped": false
+     },
+     {
+      "address": "0xa88fe6fa01fcc112bb2164c6e37d63395b923e5f",
+      "name": "eitzi.eth",
+      "candidate": "#0E5890",
+      "at": "2026-09-06T09:39:09.588Z",
+      "clamped": false
+     },
+     {
+      "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
+      "name": "iagof.eth",
+      "candidate": "#C0392B",
+      "at": "2026-08-31T17:23:05.520Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "name": "piercedcat.eth",
+      "candidate": "#0E5890",
+      "at": "2026-08-30T21:40:16.172Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "name": "piercedcat.eth",
+      "candidate": "#0E5890",
+      "at": "2026-08-30T21:40:09.109Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#C0392B",
+      "at": "2026-08-30T12:55:04.740Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#0E5890",
+      "at": "2026-08-30T07:45:13.175Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#C0392B",
+      "at": "2026-08-30T07:45:13.175Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#C0392B",
+      "at": "2026-08-30T07:44:11.026Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#0E5890",
+      "at": "2026-08-30T07:44:11.026Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#0E5890",
+      "at": "2026-08-30T07:43:03.227Z",
+      "clamped": false
+     }
+    ],
+    "candidates": [
+     {
+      "hex": "#0E5890",
+      "total": 639514,
+      "voters": 5,
+      "share": 0.7613851071809128,
+      "proposed_by": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "proposed_name": "0xunix.eth",
+      "wallets": [
+       {
+        "address": "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8",
+        "name": "visco.eth",
+        "amount": 300000,
+        "weight": 300000,
+        "clamped": false
+       },
+       {
+        "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+        "name": "carlos28355.eth",
+        "amount": 100000,
+        "weight": 100000,
+        "clamped": false
+       },
+       {
+        "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+        "name": "0xunix.eth",
+        "amount": 100000,
+        "weight": 100000,
+        "clamped": false
+       },
+       {
+        "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+        "name": "piercedcat.eth",
+        "amount": 100000,
+        "weight": 100000,
+        "clamped": false
+       },
+       {
+        "address": "0xa88fe6fa01fcc112bb2164c6e37d63395b923e5f",
+        "name": "eitzi.eth",
+        "amount": 39514,
+        "weight": 39514,
+        "clamped": false
+       }
+      ]
+     },
+     {
+      "hex": "#C0392B",
+      "total": 200421,
+      "voters": 3,
+      "share": 0.23861489281908718,
+      "proposed_by": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
+      "proposed_name": "iagof.eth",
+      "wallets": [
+       {
+        "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
+        "name": "iagof.eth",
+        "amount": 100001,
+        "weight": 100001,
+        "clamped": false
+       },
+       {
+        "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+        "name": "0xunix.eth",
+        "amount": 100000,
+        "weight": 100000,
+        "clamped": false
+       },
+       {
+        "address": "0xc2aaec38c14b81332f6741f9fdc211c6bb6f894c",
+        "name": "murriohas.eth",
+        "amount": 420,
+        "weight": 420,
+        "clamped": false
+       }
+      ]
+     }
+    ],
+    "banked_at": "2026-09-07T08:34:48.729Z"
+   }
   },
   {
    "id": "nudge-2",
