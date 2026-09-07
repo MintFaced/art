@@ -183,9 +183,37 @@ const fill = (pick, fixedFloor = null) => {
     checkCandidate('#E16448', { against: [], floor: 0.30, space: SPACE }).hex, '#E16448');
 }
 
-/* ------------------------------------------------------------- the arc */
-const store = JSON.parse(fs.readFileSync(new URL('../../data/nudges.json', import.meta.url), 'utf8'));
+/* ------------------------------------------------------------- the arc
+ *
+ * On a FIXTURE, not on data/nudges.json.
+ *
+ * The first version of these read the live file and pinned what it said: nudge
+ * one open, nothing locked, slot two waiting. All true when they were written,
+ * and all false forty minutes later when #1 banked and #2 opened ... which is
+ * a test that fails for the arc working rather than for it breaking, and would
+ * have gone on failing every time a colour locked. The shipped config is still
+ * checked, below, for the things about it that are not supposed to move.
+ */
+const SERIES = JSON.parse(fs.readFileSync(new URL('../../data/nudges.json', import.meta.url), 'utf8')).series;
+const nudge = (over) => ({ id: `nudge-${over.number}`, kind: 'candidates', series: 'strip-palette',
+  lock: { voters: 5, tao: 500000 }, question: 'Choose a colour.', published: true,
+  closes: '2026-12-01T00:00:00.000Z', ...over });
+const fixture = () => ({
+  series: SERIES,
+  nudges: [nudge({ number: 1, slot: 1 }), nudge({ number: 2, slot: 2, published: false })],
+});
+
 {
+  /* The config the site actually ships. Its shape is a promise the pages are
+     written against; its contents move every time a nudge closes. */
+  is('the shipped series is twelve slots', SERIES.slots, 12);
+  is('with the red line beside them at sixteen', [SERIES.fixed.hex, SERIES.fixed.at], ['#D32011', 16]);
+  is('a ladder that ends somewhere real', SERIES.ladder[SERIES.ladder.length - 1] >= 0.05, true);
+  is('and it never asks for more than a quarter of the field', SERIES.field_share <= 0.5, true);
+}
+
+{
+  const store = fixture();
   const s = seriesState(store, { now: new Date('2026-09-07T00:00:00Z') });
   is('the series is twelve slots', s.slots, 12);
   is('and the board draws all twelve', s.board.length, 12);
@@ -208,14 +236,14 @@ const store = JSON.parse(fs.readFileSync(new URL('../../data/nudges.json', impor
   /* Nudge one banks a colour. Everything downstream is a reading of that ...
      the slot, the constraint on slot two, the maker's palette, the line a
      painting carries. */
-  const after = JSON.parse(JSON.stringify(store));
+  const after = fixture();
   after.nudges[0].banked = { number: 1, locked: { hex: C1 }, total: 512340, collectors: 7,
     banked_at: '2026-09-13T00:10:00.000Z' };
   const s = seriesState(after, { now: new Date('2026-09-14T00:00:00Z') });
   is('slot one is filled by the colour it locked', s.board[0].hex, C1);
   is('and says which nudge locked it', s.board[0].number, 1);
   is('one of twelve', [s.locked.length, s.slots], [1, 12]);
-  is('slot two is still empty until its nudge is published', s.board[1].state, 'empty');
+  is('slot two is still empty while its nudge is unpublished', s.board[1].state, 'empty');
 
   const c = constraintFor(after, after.nudges[1], s);
   is('slot two now stands clear of the locked colour and the red',
@@ -232,7 +260,7 @@ const store = JSON.parse(fs.readFileSync(new URL('../../data/nudges.json', impor
   /* A nudge that banks without locking leaves its slot empty ... and the slot
      can be asked again, which is the difference between a palette that failed
      once and a palette that is short forever. */
-  const missed = JSON.parse(JSON.stringify(store));
+  const missed = fixture();
   missed.nudges[0].banked = { number: 1, locked: null, total: 200001, collectors: 3,
     banked_at: '2026-09-13T00:10:00.000Z' };
   const s = seriesState(missed, { now: new Date('2026-09-14T00:00:00Z') });
