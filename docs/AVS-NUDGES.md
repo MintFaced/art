@@ -179,3 +179,29 @@ Nudge #1's card gains a line placing it: **Colour 1 of 12.**
 ### Checks
 
 `scripts/tao/test-palette.mjs`, 86: black to white is 1; the RGB failure OKLab does not make; the red line outside the space and No. 1 inside it; the floor as the highest rung leaving a quarter, with the rung above it proved not to; twelve filling under both a well-choosing and a crowding board; a fixed 0.30 failing at the sixth; a colour exactly on the floor allowed and a hair under it refused; a slot that banked without locking left empty and then filled by a second nudge; and the OKLab matrices checked character for character against the browser's copy, because two copies of a rule is two chances to drift and a picker that says yes where the route says no is worse than no picker at all.
+
+---
+
+## The first bank, six days early (2026-09-07)
+
+**Nudge #1 closed on the seventh rather than the thirteenth, at Ryan's call, and `#0E5890` locked: 639,514 TAO across five collectors, on a board carrying 839,935 across seven.** Colour one of twelve. The maker's palette has its first swatch nobody at the screen chose.
+
+Closing early takes a record off the terms it was published under — the card had said *closes 13 September* since it opened, and anyone who meant to weigh next week lost their say. Worth writing down, because the mechanism's whole integrity story is *weigh what you hold, hold what you weighed*, and the studio moving a close date is the one move that story cannot itself constrain.
+
+### The run had never been run
+
+Being told to close, the banking cron answered 500. **Two bugs, both live, both in the one path that cannot be run twice to check.**
+
+The crash was the smaller one. A candidate carried a `ledger` before weighing split across colours; the fold renamed it `wallets` and this projection was never renamed with it, so freezing a board threw on the first colour. Nothing had noticed, because no candidate nudge had ever closed.
+
+**The second would not have thrown.** The run folded a board with `latest()` — one weighing per wallet, which is right for a yes or a no and wrong for a board, because a wallet holds a map and taking only its newest row throws away every colour but the last it touched. That is `0xunix.eth`, who has a hundred thousand on the blue and a hundred thousand on the red. Drop the blue and it goes from 639,514 across five to **539,514 across four** — under the voter threshold. The run would have frozen `NO COLOUR LOCKED`, permanently, on a board that had cleared both thresholds, and the studio would have been told the collectors failed to decide a thing they had decided.
+
+So the projection moved into `_lib/nudges.js` where it can be tested, and which rows a nudge banks from is a named thing that says out loud that the two kinds count differently. Thirteen checks pin it, including nudge #1's exact shape: a split wallet carrying the leader's fifth collector, the wrong fold losing it, the right one keeping the lock.
+
+**Six of the arc's own checks then failed for the arc working.** They read `data/nudges.json` and pinned what it said when they were written — nudge one open, nothing locked. A check that goes red on every lock is a check nobody believes by the twelfth, so the state moved onto a fixture and the shipped config keeps only what is not supposed to move.
+
+### Nudge #2 is open
+
+A fortnight, to 21 September. Same thresholds, same clamp, same promise. It is the first nudge that cannot be answered with anything: a colour has to stand **0.30 clear of `#0E5890` and of the red line**, which leaves 26% of the streetscape range — the floor's quarter, only just, because the blue and the red between them cover a lot of it.
+
+Four of Strip Painting No. 1's own twelve colours survive it: the green `#5FB25B`, the sand `#D5C089`, the grey-green `#B4BBAE` and the pale pink `#EDBFB7`. Its blue `#82B2CE` misses by four thousandths. **The warm end is gone, because the red line was already sitting in it.**
