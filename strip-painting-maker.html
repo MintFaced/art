@@ -109,6 +109,14 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .sw-tao{border-left:2px solid var(--ink)}
 .sw-tao .n{color:var(--muted)}
 .swatch-note{font-family:var(--font-sans);font-size:12.5px;color:var(--muted);margin-top:26px;line-height:1.6}
+/* The arc, under the working palette. Twelve slots in nudge order and the red
+   after them, drawn by MF.palette so this cannot drift from the studio's copy
+   or the collection page's ... the red is the constant at strip position 16,
+   and it had been reading as though it were the second colour chosen. */
+.community{margin-top:32px;padding-top:22px;border-top:1px solid var(--rule)}
+.community .chead{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:400;margin:0;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.community .chead span{color:var(--faint);font-variant-numeric:tabular-nums}
 
 /* ---------- preview ---------- */
 .preview{border:1px solid var(--rule);padding:9px;background:var(--paper)}
@@ -213,6 +221,14 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
     <h2>Palette</h2>
     <div class="swatches" id="swatches"></div>
     <p class="swatch-note">Tap a swatch to drop it, minimum four. The red line sits outside the palette and never changes. <span id="taoNote"></span></p>
+    <!-- The collectors' twelve, in the order the nudges filled them. The row
+         above is a working palette ... it sorts by what it is for, and colours
+         come and go from it ... and this is the arc, which has one order and
+         one drawing of it, shared with the studio and the collection page. -->
+    <div class="community" id="community" hidden>
+      <h3 class="chead">The collectors' palette <span id="communityCount"></span></h3>
+      <div id="communityStrip"></div>
+    </div>
   </section>
 
   <div class="rule"></div>
@@ -429,6 +445,12 @@ const S = {
   palette: DEFAULT_PALETTE.slice(), seed: 1, vib: 0.7, strips: [],
 };
 const $ = (id) => document.getElementById(id);
+/* A colour with the nearest Pantone or standard name after it. A spec sheet of
+   bare hexes is a sheet nobody can talk through on a scaffold. */
+const said = (hex) => {
+  const n = MF.colour.name(String(hex).toUpperCase());
+  return n ? `${String(hex).toUpperCase()} ${n.label}` : String(hex).toUpperCase();
+};
 const e = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 function draw() {
@@ -444,9 +466,10 @@ function draw() {
 
   $('swatches').innerHTML = S.palette.map((c) => (c.tao
     ? `<button class="sw sw-tao" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}"
-        title="${e(c.hex)} ... chosen by the collectors on nudge #${c.tao.number} ... tap to drop"><span class="n">nudge #${c.tao.number}</span></button>`
-    : `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(c.hex)} ... tap to drop"></button>`)).join('')
-    + `<button class="sw sw-red" type="button" disabled style="background:${RED_LINE}" title="Red line, always the 16th strip from the bottom"><span class="n">red line</span></button>`;
+        title="${e(said(c.hex))} ... chosen by the collectors on nudge #${c.tao.number} ... tap to drop"><span class="n">nudge #${c.tao.number}</span></button>`
+    : `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(said(c.hex))} ... tap to drop"></button>`)).join('')
+    + `<button class="sw sw-red" type="button" disabled style="background:${RED_LINE}"
+        title="${e(said(RED_LINE))} ... the constant at strip ${RED_LINE_NOMINAL} from the base, on every one of these paintings"><span class="n">red line</span></button>`;
 
   const factor = S.heightMM / 550;
   const price = conf.rate * S.widthM * factor;
@@ -476,13 +499,13 @@ function specText() {
     `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
     ...(S.palette.some((c) => c.tao)
       ? [`collectors' colours: ${S.palette.filter((c) => c.tao)
-        .map((c) => `${c.hex} (nudge #${c.tao.number})`).join(', ')}`]
+        .map((c) => `${said(c.hex)} (nudge #${c.tao.number})`).join(', ')}`]
       : []),
-    `RED LINE: STRIP ${redAt} OF ${S.strips.length} FROM BASE`,
+    `RED LINE: ${said(RED_LINE)} ... STRIP ${redAt} OF ${S.strips.length} FROM BASE`,
     '',
     'strips, bottom up:',
     ...S.strips.map((s, i) =>
-      `${String(i + 1).padStart(2)}  ${s.hex}  ${String(s.h).padStart(2)}mm${s.red ? `  RED LINE (strip ${redAt} of ${S.strips.length} from base)` : ''}`),
+      `${String(i + 1).padStart(2)}  ${said(s.hex).padEnd(28)}  ${String(s.h).padStart(2)}mm${s.red ? `  RED LINE (strip ${redAt} of ${S.strips.length} from base)` : ''}`),
   ].join('\n');
 }
 
@@ -606,7 +629,16 @@ async function readSeries() {
 }
 
 readSeries().then((s) => {
-  if (!s || !(s.locked || []).length) return;
+  if (!s) return;
+  /* The arc is drawn whether or not anything is locked yet: twelve slots with
+     one filled says what this is, and one swatch does not. */
+  const strip = $('communityStrip');
+  if (strip) {
+    strip.innerHTML = MF.palette.strip(s, { base: '/studio' });
+    $('communityCount').textContent = `${(s.locked || []).length} of ${s.slots} locked`;
+    $('community').hidden = false;
+  }
+  if (!(s.locked || []).length) return;
   const note = $('taoNote');
   const added = [];
   for (const slot of s.locked) {

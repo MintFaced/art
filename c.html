@@ -173,41 +173,23 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 
 /* ---------- the palette, twelve slots and the red ----------
    The arc these paintings are being coloured by, on the page the paintings are
-   on. Filled slots are the colours the collectors locked, the live one leads to
-   the question being asked now, and the empty ones are drawn rather than left
-   out ... four swatches would read as a palette of four. */
+   on. The strip itself is MF.palette, in mintface.css, the same component the
+   studio and the maker draw ... one order, so the red cannot sit thirteenth
+   here and second somewhere else. What is here is the room around it. */
 .palette-embed{max-width:1500px;margin:0 auto;padding:14px 0 0}
 .palette-body{max-width:1500px;margin:0 auto;padding:0 28px}
 .palette-body .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:14px 0 0;max-width:34em}
 .palette-body .count{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--faint);margin-top:10px;font-variant-numeric:tabular-nums}
-.palette-body .strip{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;align-items:flex-start;max-width:820px}
-.palette-body .slot{flex:1 1 52px;min-width:52px;max-width:84px;display:flex;flex-direction:column;gap:5px;
-  text-decoration:none;color:inherit}
-.palette-body .band{display:block;height:60px;border:1px solid var(--rule)}
-.palette-body .lab{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.palette-body .hexn{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.06em;color:var(--faint);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* A slot that is settled reads in ink; one still waiting does not. The
-   colour itself is the loud part and the label under it is not. */
-.palette-body .slot.filled .lab{color:var(--ink)}
-.palette-body .slot.empty .band{background:none;border-style:dashed}
-.palette-body .slot.empty .lab{color:var(--faint)}
-.palette-body .slot.live .band{background:none;border:1px solid var(--ink);border-left-width:2px}
-.palette-body .slot.live .lab{color:var(--ink)}
-.palette-body a.slot:hover .band{border-color:var(--ink)}
-.palette-body .slot.fixed{margin-left:10px;border-left:1px solid var(--rule);padding-left:14px;flex:0 0 auto;max-width:104px}
+.palette-body .pal-strip{margin:20px 0 0;max-width:900px}
 .palette-body .done{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink);margin:20px 0 0;padding-left:12px;border-left:2px solid var(--ink);font-variant-numeric:tabular-nums}
+/* The nearest name, beside the hex it stands in for, and quieter than it. */
+.nudge-body .swatch .hex .cname{color:var(--faint);letter-spacing:.08em;font-size:10px;
+  text-transform:uppercase;margin-left:5px;white-space:nowrap}
 @media(max-width:520px){
   .nudge-body{padding:0 20px}
   .palette-body{padding:0 20px}
-  .palette-body .slot{flex:1 1 42px;min-width:42px}
-  .palette-body .band{height:46px}
-  .palette-body .slot.fixed{margin-left:0;padding-left:0;border-left:0;flex:1 1 100%;max-width:none;
-    margin-top:6px;padding-top:12px;border-top:1px solid var(--rule);flex-direction:row;align-items:center;gap:10px}
-  .palette-body .slot.fixed .band{width:46px;height:22px;flex:none}
 }
 </style>
 </head>
@@ -563,11 +545,17 @@ const nudgeDate = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'nu
 
 /* The locked colours beside a candidate, as slivers. A collector weighing on
    this board is being asked about a relation, and a swatch on its own is the
-   one thing that cannot show one. */
-const pairChips = (x, hex) => {
-  const lk = ((x.constraint && x.constraint.against) || []).map((a) =>
-    `<span class="lk" style="background:${e(a.hex)}" title="${e(a.label)} &middot; ${e(a.hex)}"></span>`).join('');
-  return `<span class="pair">${lk}<span class="chip" style="background:${e(hex)}"></span></span>`;
+   one thing that cannot show one. Drawn by the strip's own component, so the
+   order is the strip's: the locked slots lowest first, the red last and set
+   apart, because it is a constant rather than the next slot. */
+const pairChips = (x, hex) =>
+  `<span class="pair">${MF.palette.slivers(x.constraint)}<span class="chip" style="background:${e(hex)}"></span></span>`;
+
+/* A colour, said so it can be spoken about ... the nearest Pantone or standard
+   name to it. A row of hexes is a row nobody can discuss out loud. */
+const nameOf = (hex) => {
+  const n = MF.colour.name(hex);
+  return n ? ` <span class="cname">${e(n.label)}</span>` : '';
 };
 
 function nudgeMarkup(x) {
@@ -576,7 +564,7 @@ function nudgeMarkup(x) {
     ? `<div class="board">${cands.map((c) => `<div class="swatch${x.locked && x.locked.hex === c.hex ? ' chosen' : ''}">
         ${pairChips(x, c.hex)}
         <span class="on">
-          <span class="hex">${e(c.hex)}</span>
+          <span class="hex">${e(c.hex)}${nameOf(c.hex)}</span>
           <span class="weight"><b>${worn(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
         </span>
       </div>`).join('')}</div>`
@@ -587,7 +575,7 @@ function nudgeMarkup(x) {
        &middot; ${worn(p.tao.at)} of ${worn(p.tao.of)} TAO on the leader</p>`
     : '';
   const banked = x.open ? '' : `<p class="lock">${x.locked
-    ? `Locked &middot; ${e(x.locked.hex)} &middot; ${worn(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
+    ? `Locked &middot; ${e(x.locked.hex)}${nameOf(x.locked.hex)} &middot; ${worn(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
     : `No colour locked &middot; ${worn(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`;
   return `<div class="wrap-head"><h2>The colour vote</h2></div>
     <div class="nudge-body">
@@ -596,7 +584,8 @@ function nudgeMarkup(x) {
         x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
       ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
       ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
-      ${x.constraint ? `<p class="lock">Standing clear of ${x.constraint.against.map((a) => a.hex).join(' &middot; ')}
+      ${x.constraint ? `<p class="lock">Standing clear of ${MF.palette.against(x.constraint)
+        .map((a) => `${e(a.hex)}${a.fixed ? ' (constant)' : ''}`).join(' &middot; ')}
         &middot; floor ${x.constraint.floor.toFixed(2)}</p>` : ''}
       ${board}
       ${lock}${banked}
@@ -604,33 +593,17 @@ function nudgeMarkup(x) {
     </div>`;
 }
 
-/* The arc, on the page the paintings are on. Twelve slots and the red beside
-   them ... which is what a Strip Painting is, and what these colours are being
-   chosen for. Filled slots lead to the nudge that locked them. */
+/* The arc, on the page the paintings are on. Twelve slots in nudge order and
+   the red after them ... which is what a Strip Painting is, and what these
+   colours are being chosen for. Filled slots lead to the nudge that locked
+   them, on the studio, which is why the strip is told where the board lives.
+   The drawing is MF.palette's: this page owns the heading and nothing else. */
 function paletteMarkup(s) {
-  const cell = (v) => {
-    if (v.state === 'locked') {
-      return `<a class="slot filled" href="/studio#nudge-${e(v.nudge)}">
-        <span class="band" style="background:${e(v.hex)}"></span>
-        <span class="lab">Nudge #${v.number}</span><span class="hexn">${e(v.hex)}</span></a>`;
-    }
-    if (v.state === 'open') {
-      return `<a class="slot live" href="/studio#nudge-${e(v.nudge)}">
-        <span class="band"></span>
-        <span class="lab">Nudge #${v.number}</span><span class="hexn">Open</span></a>`;
-    }
-    return `<span class="slot empty"><span class="band"></span>
-      <span class="lab">${String(v.slot).padStart(2, '0')}</span><span class="hexn">&mdash;</span></span>`;
-  };
-  const red = s.fixed && s.fixed.hex ? `<span class="slot fixed">
-    <span class="band" style="background:${e(s.fixed.hex)}"></span>
-    <span class="lab">${e(s.fixed.label || 'Red line')}</span>
-    <span class="hexn">${s.fixed.at ? `${s.fixed.at} &middot; fixed` : 'Fixed'}</span></span>` : '';
   return `<div class="wrap-head"><h2>${e(s.title || 'The palette')}</h2></div>
     <div class="palette-body">
       ${s.note ? `<p class="note">${e(s.note)}</p>` : ''}
       <p class="count">${s.locked.length} of ${s.slots} locked</p>
-      <div class="strip">${s.board.map(cell).join('')}${red}</div>
+      ${MF.palette.strip(s, { base: '/studio' })}
       ${s.complete && s.provenance ? `<p class="done">${e(s.provenance)}</p>` : ''}
     </div>`;
 }

@@ -1608,6 +1608,290 @@ const MF = {
 
 window.MF = MF;
 
+/* ---------- a colour, named ----------
+ *
+ * A hex is exact and unsayable. Twelve of them in a row is a palette nobody
+ * can talk about, and these colours go on a wall by people who have to refer
+ * to them out loud ... so every swatch carries the nearest name in a system a
+ * painter or a printer already holds: Pantone solid coated first, the CSS
+ * names after it for the ground the Pantone set does not reach.
+ *
+ * Nearest is measured the way everything else here is, in OKLab, because the
+ * nearest name in RGB is regularly not the one the eye would pick.
+ *
+ * The Pantone values are the published sRGB renderings, which are themselves
+ * an approximation of an ink under a light. So the name is offered as the
+ * closest one and marked with a ≈ unless the hex is that colour exactly. A
+ * reference said as though it were exact is worse than no reference.
+ */
+MF.colour.NAMES = [
+  ['#DA291C', 'Pantone 485 C'], ['#E03C31', 'Pantone 179 C'], ['#C8102E', 'Pantone 186 C'],
+  ['#A6192E', 'Pantone 187 C'], ['#9D2235', 'Pantone 201 C'], ['#862633', 'Pantone 202 C'],
+  ['#EF3340', 'Pantone Red 032 C'], ['#F9423A', 'Pantone Warm Red C'], ['#D22630', 'Pantone 1795 C'],
+  ['#CB333B', 'Pantone 1797 C'], ['#7C2529', 'Pantone 188 C'], ['#6C1D45', 'Pantone 229 C'],
+  ['#FE5000', 'Pantone Orange 021 C'], ['#FF6A13', 'Pantone 165 C'], ['#E35205', 'Pantone 166 C'],
+  ['#FA4616', 'Pantone 172 C'], ['#CF4520', 'Pantone 173 C'], ['#963821', 'Pantone 174 C'],
+  ['#E87722', 'Pantone 158 C'], ['#FF8200', 'Pantone 151 C'], ['#ED8B00', 'Pantone 144 C'],
+  ['#FFA300', 'Pantone 137 C'], ['#F2A900', 'Pantone 130 C'], ['#FFC72C', 'Pantone 123 C'],
+  ['#FFCD00', 'Pantone 116 C'], ['#FFD100', 'Pantone 109 C'], ['#FEDD00', 'Pantone Yellow C'],
+  ['#F3E500', 'Pantone 3945 C'], ['#D0DF00', 'Pantone 388 C'], ['#97D700', 'Pantone 375 C'],
+  ['#78BE20', 'Pantone 368 C'], ['#43B02A', 'Pantone 361 C'], ['#009639', 'Pantone 355 C'],
+  ['#00843D', 'Pantone 348 C'], ['#046A38', 'Pantone 349 C'], ['#007A53', 'Pantone 341 C'],
+  ['#00594C', 'Pantone 335 C'], ['#154734', 'Pantone 3435 C'], ['#658D1B', 'Pantone 370 C'],
+  ['#7A9A01', 'Pantone 377 C'], ['#A8AD00', 'Pantone 383 C'], ['#C4D600', 'Pantone 397 C'],
+  ['#00B08B', 'Pantone 339 C'], ['#00A499', 'Pantone 326 C'], ['#007672', 'Pantone 322 C'],
+  ['#007377', 'Pantone 315 C'], ['#00677F', 'Pantone 308 C'], ['#00838F', 'Pantone 3145 C'],
+  ['#006269', 'Pantone 3165 C'], ['#008C95', 'Pantone 314 C'], ['#00A3E0', 'Pantone 299 C'],
+  ['#41B6E6', 'Pantone 298 C'], ['#71C5E8', 'Pantone 297 C'], ['#0072CE', 'Pantone 285 C'],
+  ['#0033A0', 'Pantone 286 C'], ['#003087', 'Pantone 287 C'], ['#002D72', 'Pantone 288 C'],
+  ['#002B5C', 'Pantone 289 C'], ['#003057', 'Pantone 2955 C'], ['#003865', 'Pantone 540 C'],
+  ['#003DA5', 'Pantone 541 C'], ['#005EB8', 'Pantone 300 C'], ['#004B87', 'Pantone 301 C'],
+  ['#1D4F91', 'Pantone 7687 C'], ['#001489', 'Pantone Reflex Blue C'], ['#10069F', 'Pantone Blue 072 C'],
+  ['#500778', 'Pantone 2735 C'], ['#440099', 'Pantone Violet C'], ['#5F259F', 'Pantone 267 C'],
+  ['#582C83', 'Pantone 268 C'], ['#512D6D', 'Pantone 269 C'], ['#702F8A', 'Pantone 526 C'],
+  ['#9B26B6', 'Pantone 254 C'], ['#CE0058', 'Pantone Rubine Red C'], ['#D0006F', 'Pantone 226 C'],
+  ['#E10098', 'Pantone Rhodamine Red C'], ['#DA1884', 'Pantone 219 C'], ['#F04E98', 'Pantone 212 C'],
+  ['#E31C79', 'Pantone 1915 C'], ['#F1B2DC', 'Pantone 516 C'],
+  ['#4E3629', 'Pantone 476 C'], ['#623B2A', 'Pantone 477 C'], ['#72351C', 'Pantone 478 C'],
+  ['#693F23', 'Pantone 469 C'], ['#5C4830', 'Pantone 462 C'], ['#6E4C1E', 'Pantone 463 C'],
+  ['#653024', 'Pantone 483 C'], ['#9A3324', 'Pantone 484 C'], ['#56342B', 'Pantone 4695 C'],
+  ['#7A5647', 'Pantone 4705 C'], ['#653819', 'Pantone 168 C'], ['#603D20', 'Pantone 161 C'],
+  ['#E56A54', 'Pantone 7416 C'], ['#E04E39', 'Pantone 7417 C'], ['#E8927C', 'Pantone 486 C'],
+  ['#FF8D6D', 'Pantone 163 C'], ['#A45248', 'Pantone 7522 C'], ['#C08A3E', 'Pantone 7510 C'],
+  ['#B9975B', 'Pantone 465 C'], ['#C6AA76', 'Pantone 466 C'], ['#D3BC8D', 'Pantone 467 C'],
+  ['#DDCBA4', 'Pantone 468 C'], ['#D3BF96', 'Pantone 7502 C'], ['#A79D96', 'Pantone 7503 C'],
+  ['#D6D2C4', 'Pantone 7527 C'], ['#B7B09C', 'Pantone 7530 C'], ['#63513D', 'Pantone 7532 C'],
+  ['#473729', 'Pantone 7533 C'], ['#B7A99A', 'Pantone 7535 C'], ['#A69F88', 'Pantone 7536 C'],
+  ['#D9D9D6', 'Pantone Cool Gray 1 C'], ['#D0D0CE', 'Pantone Cool Gray 2 C'],
+  ['#C8C9C7', 'Pantone Cool Gray 3 C'], ['#BBBCBC', 'Pantone Cool Gray 4 C'],
+  ['#B1B3B3', 'Pantone Cool Gray 5 C'], ['#A7A8AA', 'Pantone Cool Gray 6 C'],
+  ['#97999B', 'Pantone Cool Gray 7 C'], ['#888B8D', 'Pantone Cool Gray 8 C'],
+  ['#75787B', 'Pantone Cool Gray 9 C'], ['#63666A', 'Pantone Cool Gray 10 C'],
+  ['#53565A', 'Pantone Cool Gray 11 C'], ['#D7D2CB', 'Pantone Warm Gray 1 C'],
+  ['#BFB8AF', 'Pantone Warm Gray 3 C'], ['#ACA39A', 'Pantone Warm Gray 5 C'],
+  ['#968C83', 'Pantone Warm Gray 7 C'], ['#8C8279', 'Pantone Warm Gray 8 C'],
+  ['#83786F', 'Pantone Warm Gray 9 C'], ['#796E65', 'Pantone Warm Gray 10 C'],
+  ['#6E6259', 'Pantone Warm Gray 11 C'], ['#2D2926', 'Pantone Black C'],
+  ['#212322', 'Pantone Black 3 C'], ['#31261D', 'Pantone Black 4 C'], ['#101820', 'Pantone Black 6 C'],
+  ['#231F20', 'Pantone Process Black C'], ['#333F48', 'Pantone 432 C'], ['#1D252D', 'Pantone 433 C'],
+  ['#425563', 'Pantone 7545 C'], ['#98A4AE', 'Pantone 7543 C'], ['#8DB9CA', 'Pantone 549 C'],
+  ['#7BAFD4', 'Pantone 542 C'], ['#9BB8D3', 'Pantone 645 C'], ['#C6DAE7', 'Pantone 290 C'],
+  ['#A4BCC2', 'Pantone 5445 C'], ['#7C9BA6', 'Pantone 5435 C'], ['#4F758B', 'Pantone 5405 C'],
+  ['#5B7F95', 'Pantone 5415 C'], ['#2C5234', 'Pantone 5535 C'], ['#93B1A7', 'Pantone 5575 C'],
+  ['#B5C9C3', 'Pantone 5595 C'], ['#A2AAAD', 'Pantone 429 C'],
+  ['#F0F8FF', 'Alice Blue'], ['#FAEBD7', 'Antique White'], ['#00FFFF', 'Aqua'], ['#7FFFD4', 'Aquamarine'],
+  ['#F0FFFF', 'Azure'], ['#F5F5DC', 'Beige'], ['#FFE4C4', 'Bisque'], ['#000000', 'Black'],
+  ['#FFEBCD', 'Blanched Almond'], ['#0000FF', 'Blue'], ['#8A2BE2', 'Blue Violet'], ['#A52A2A', 'Brown'],
+  ['#DEB887', 'Burlywood'], ['#5F9EA0', 'Cadet Blue'], ['#7FFF00', 'Chartreuse'], ['#D2691E', 'Chocolate'],
+  ['#FF7F50', 'Coral'], ['#6495ED', 'Cornflower Blue'], ['#FFF8DC', 'Cornsilk'], ['#DC143C', 'Crimson'],
+  ['#00008B', 'Dark Blue'], ['#008B8B', 'Dark Cyan'], ['#B8860B', 'Dark Goldenrod'], ['#A9A9A9', 'Dark Gray'],
+  ['#006400', 'Dark Green'], ['#BDB76B', 'Dark Khaki'], ['#8B008B', 'Dark Magenta'],
+  ['#556B2F', 'Dark Olive Green'], ['#FF8C00', 'Dark Orange'], ['#9932CC', 'Dark Orchid'],
+  ['#8B0000', 'Dark Red'], ['#E9967A', 'Dark Salmon'], ['#8FBC8F', 'Dark Sea Green'],
+  ['#483D8B', 'Dark Slate Blue'], ['#2F4F4F', 'Dark Slate Gray'], ['#00CED1', 'Dark Turquoise'],
+  ['#9400D3', 'Dark Violet'], ['#FF1493', 'Deep Pink'], ['#00BFFF', 'Deep Sky Blue'], ['#696969', 'Dim Gray'],
+  ['#1E90FF', 'Dodger Blue'], ['#B22222', 'Firebrick'], ['#FFFAF0', 'Floral White'],
+  ['#228B22', 'Forest Green'], ['#DCDCDC', 'Gainsboro'], ['#FFD700', 'Gold'], ['#DAA520', 'Goldenrod'],
+  ['#808080', 'Gray'], ['#008000', 'Green'], ['#ADFF2F', 'Green Yellow'], ['#F0FFF0', 'Honeydew'],
+  ['#FF69B4', 'Hot Pink'], ['#CD5C5C', 'Indian Red'], ['#4B0082', 'Indigo'], ['#FFFFF0', 'Ivory'],
+  ['#F0E68C', 'Khaki'], ['#E6E6FA', 'Lavender'], ['#FFF0F5', 'Lavender Blush'], ['#7CFC00', 'Lawn Green'],
+  ['#FFFACD', 'Lemon Chiffon'], ['#ADD8E6', 'Light Blue'], ['#F08080', 'Light Coral'],
+  ['#E0FFFF', 'Light Cyan'], ['#FAFAD2', 'Light Goldenrod Yellow'], ['#D3D3D3', 'Light Gray'],
+  ['#90EE90', 'Light Green'], ['#FFB6C1', 'Light Pink'], ['#FFA07A', 'Light Salmon'],
+  ['#20B2AA', 'Light Sea Green'], ['#87CEFA', 'Light Sky Blue'], ['#778899', 'Light Slate Gray'],
+  ['#B0C4DE', 'Light Steel Blue'], ['#FFFFE0', 'Light Yellow'], ['#00FF00', 'Lime'],
+  ['#32CD32', 'Lime Green'], ['#FAF0E6', 'Linen'], ['#FF00FF', 'Magenta'], ['#800000', 'Maroon'],
+  ['#66CDAA', 'Medium Aquamarine'], ['#0000CD', 'Medium Blue'], ['#BA55D3', 'Medium Orchid'],
+  ['#9370DB', 'Medium Purple'], ['#3CB371', 'Medium Sea Green'], ['#7B68EE', 'Medium Slate Blue'],
+  ['#00FA9A', 'Medium Spring Green'], ['#48D1CC', 'Medium Turquoise'], ['#C71585', 'Medium Violet Red'],
+  ['#191970', 'Midnight Blue'], ['#F5FFFA', 'Mint Cream'], ['#FFE4E1', 'Misty Rose'], ['#FFE4B5', 'Moccasin'],
+  ['#FFDEAD', 'Navajo White'], ['#000080', 'Navy'], ['#FDF5E6', 'Old Lace'], ['#808000', 'Olive'],
+  ['#6B8E23', 'Olive Drab'], ['#FFA500', 'Orange'], ['#FF4500', 'Orange Red'], ['#DA70D6', 'Orchid'],
+  ['#EEE8AA', 'Pale Goldenrod'], ['#98FB98', 'Pale Green'], ['#AFEEEE', 'Pale Turquoise'],
+  ['#DB7093', 'Pale Violet Red'], ['#FFEFD5', 'Papaya Whip'], ['#FFDAB9', 'Peach Puff'], ['#CD853F', 'Peru'],
+  ['#FFC0CB', 'Pink'], ['#DDA0DD', 'Plum'], ['#B0E0E6', 'Powder Blue'], ['#800080', 'Purple'],
+  ['#663399', 'Rebecca Purple'], ['#FF0000', 'Red'], ['#BC8F8F', 'Rosy Brown'], ['#4169E1', 'Royal Blue'],
+  ['#8B4513', 'Saddle Brown'], ['#FA8072', 'Salmon'], ['#F4A460', 'Sandy Brown'], ['#2E8B57', 'Sea Green'],
+  ['#FFF5EE', 'Seashell'], ['#A0522D', 'Sienna'], ['#C0C0C0', 'Silver'], ['#87CEEB', 'Sky Blue'],
+  ['#6A5ACD', 'Slate Blue'], ['#708090', 'Slate Gray'], ['#FFFAFA', 'Snow'], ['#00FF7F', 'Spring Green'],
+  ['#4682B4', 'Steel Blue'], ['#D2B48C', 'Tan'], ['#008080', 'Teal'], ['#D8BFD8', 'Thistle'],
+  ['#FF6347', 'Tomato'], ['#40E0D0', 'Turquoise'], ['#EE82EE', 'Violet'], ['#F5DEB3', 'Wheat'],
+  ['#FFFFFF', 'White'], ['#F5F5F5', 'White Smoke'], ['#FFFF00', 'Yellow'], ['#9ACD32', 'Yellow Green'],
+];
+
+MF.colour._named = new Map();
+
+/**
+ * The nearest name to a colour, and how near it is.
+ *
+ * `label` is the thing to print: the name on its own where the hex is that
+ * colour exactly, and "≈ Pantone 485 C" everywhere else, because everywhere
+ * else it is the closest one rather than the one.
+ */
+MF.colour.name = function name(hex) {
+  const h = String(hex || '').trim().toUpperCase();
+  if (!/^#[0-9A-F]{6}$/.test(h)) return null;
+  if (this._named.has(h)) return this._named.get(h);
+  let best = null;
+  for (const [ref, nm] of this.NAMES) {
+    const d = this.deltaE(h, ref);
+    if (!best || d < best.distance) best = { name: nm, hex: ref, distance: d };
+  }
+  const label = best.hex === h ? best.name : `≈ ${best.name}`;
+  const out = best && {
+    ...best,
+    exact: best.hex === h,
+    label,
+    /* The same thing in the width a swatch caption has. PMS is what a printer
+       and a signwriter both call it out loud anyway, and a caption that wraps
+       a lone "C" onto its own line is a caption nobody reads twice. */
+    short: label.replace('Pantone ', 'PMS '),
+  };
+  this._named.set(h, out);
+  return out;
+};
+
+/* ---------- the collectors' palette, drawn ----------
+ *
+ * One component, one order, every surface that draws the strip: /studio, the
+ * Strip Paintings collection page and the maker. It is here rather than in
+ * three pages because the order is the meaning, and three copies of a meaning
+ * is a meaning that drifts ... which it had. The red was landing inline among
+ * the slots and reading as slot 2, and the red is not a slot at all.
+ *
+ * The order is the arc's own: slot 1 is the colour Nudge #1 locked, slots 2
+ * to 12 fill as the series runs, empty ones drawn rather than hidden because
+ * three swatches would read as a palette of three. The red comes after the
+ * twelve, thirteenth, behind a rule ... it is the constant that runs through
+ * every Strip Painting at position 16 from the base, chosen by nobody and
+ * moved by no nudge, and its caption says exactly that.
+ */
+MF.palette = {
+  /* The twelve, in slot order, whatever order they arrived in. Sorted here
+     rather than trusted, because a lineup that depends on a route staying
+     polite about ordering is a lineup that will quietly stop being one. */
+  slots(series) {
+    const s = series || {};
+    const count = Math.max(0, Math.floor(Number(s.slots) || 12));
+    const by = new Map();
+    for (const v of s.board || []) {
+      const n = Math.floor(Number(v.slot) || 0);
+      if (n >= 1 && n <= count) by.set(n, v);
+    }
+    /* A caller holding the locked colours but not a board ... the maker asks
+       for the series, not for a drawing of it ... still gets the twelve in
+       this order rather than a row of whatever it happens to hold. */
+    for (const v of s.locked || []) {
+      const n = Math.floor(Number(v.slot) || 0);
+      if (n >= 1 && n <= count && !by.has(n)) by.set(n, { ...v, state: 'locked' });
+    }
+    const out = [];
+    for (let i = 1; i <= count; i += 1) out.push(by.get(i) || { slot: i, state: 'empty' });
+    return out;
+  },
+
+  /* The red, said in full. It carries no slot number because it has none; the
+     only number it has is where it sits on the wall. */
+  constant(series) {
+    const f = (series || {}).fixed;
+    if (!f || !f.hex) return null;
+    const hex = String(f.hex).toUpperCase();
+    const at = Number(f.at) || null;
+    const label = f.label || 'Red line';
+    return {
+      hex,
+      at,
+      label,
+      fixed: true,
+      caption: [label, at ? `Position ${at}` : null, 'Constant'].filter(Boolean).join(' · '),
+      name: MF.colour.name(hex),
+    };
+  },
+
+  /* Where a slot points. The strip is drawn on three pages and the nudge it
+     leads to lives on one of them. */
+  href(v, opts) {
+    const o = opts || {};
+    if (o.link === false || !v.nudge) return null;
+    return `${o.base || ''}#nudge-${encodeURIComponent(v.nudge)}`;
+  },
+
+  cell(v, opts) {
+    const e = MF.escape;
+    const n = String(v.slot).padStart(2, '0');
+    const hex = v.hex ? String(v.hex).toUpperCase() : null;
+    const nm = hex ? MF.colour.name(hex) : null;
+    /* A slot says its number first and the nudge that answered it second. The
+       number is the part that was going missing: it is what makes the twelve
+       a sequence rather than a row, and the reason the red could pass for the
+       second of them. */
+    const inner = v.state === 'empty'
+      ? `<span class="pal-band"></span>
+        <span class="pal-lab">${n}</span>
+        <span class="pal-hex">&mdash;</span>`
+      : `<span class="pal-band"${hex ? ` style="background:${e(hex)}"` : ''}></span>
+        <span class="pal-lab">${n} &middot; Nudge #${e(v.number)}</span>
+        <span class="pal-hex">${hex ? e(hex) : 'Open'}</span>
+        ${nm ? `<span class="pal-name">${e(nm.short)}</span>` : ''}`;
+    /* Settled, being asked, or waiting. */
+    const cls = `pal-slot ${{ locked: 'filled', open: 'live' }[v.state] || 'empty'}`;
+    const href = this.href(v, opts);
+    const title = hex ? ` title="Slot ${n} &middot; ${e(hex)}${nm ? ` &middot; ${e(nm.label)}` : ''}"` : '';
+    return href
+      ? `<a class="${cls}" href="${e(href)}"${title}>${inner}</a>`
+      : `<span class="${cls}"${title}>${inner}</span>`;
+  },
+
+  /* The whole strip: twelve, then the rule, then the constant. */
+  strip(series, opts) {
+    const e = MF.escape;
+    const s = series || {};
+    const cells = this.slots(s).map((v) => this.cell(v, opts)).join('');
+    const red = this.constant(s);
+    const fixed = red ? `<span class="pal-slot fixed" title="${e(red.hex)} &middot; ${e(red.caption)}">
+      <span class="pal-band" style="background:${e(red.hex)}"></span>
+      <span class="pal-lab">${e(red.caption)}</span>
+      <span class="pal-hex">${e(red.hex)}</span>
+      ${red.name ? `<span class="pal-name">${e(red.name.short)}</span>` : ''}</span>` : '';
+    return `<div class="pal-strip">${cells}${fixed}</div>`;
+  },
+
+  /* What a colour has to stand clear of, in the strip's order: the slots
+     locked before it, lowest first, and the constant last and apart. The
+     server sends it this way already; it is put in order again here so that
+     one component owns the order rather than two of them agreeing. */
+  against(constraint) {
+    const c = constraint || {};
+    const red = this.constant(c);
+    const list = (c.against || []).map((a) => {
+      const hex = String(a.hex).toUpperCase();
+      const slot = Math.floor(Number(a.slot) || 0);
+      return {
+        ...a,
+        hex,
+        slot: slot || null,
+        name: MF.colour.name(hex),
+        caption: a.fixed
+          ? (red ? red.caption : `${a.label || 'Red line'} · Constant`)
+          : `${slot ? `${String(slot).padStart(2, '0')} · ` : ''}${a.label || 'Locked'}`,
+      };
+    });
+    return [
+      ...list.filter((a) => !a.fixed).sort((a, b) => (a.slot || 0) - (b.slot || 0)),
+      ...list.filter((a) => a.fixed),
+    ];
+  },
+
+  /* The same lineup as slivers, beside a candidate, so the pair is read as a
+     pair. Same order, and the constant carries the gap here too. */
+  slivers(constraint) {
+    const e = MF.escape;
+    return this.against(constraint).map((a) =>
+      `<span class="lk${a.fixed ? ' fixed' : ''}" style="background:${e(a.hex)}"
+        title="${e(a.caption)} &middot; ${e(a.hex)}${a.name ? ` &middot; ${e(a.name.label)}` : ''}"></span>`).join('');
+  },
+};
+
 /* ═════════════════════════════════════════════════════════════
    THE SESSION, AND THE NAV
    One component, two deploys. mintface.art and collectors.mintface.art load

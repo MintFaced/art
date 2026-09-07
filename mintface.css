@@ -407,3 +407,63 @@ body[data-nav="flow"] .nav{position:static}
   .band img{width:auto;min-width:100%;max-width:none}
 }
 @media(max-width:560px){.bands{padding:0 20px}}
+
+/* ---------- the collectors' palette ----------
+ *
+ * Twelve slots in nudge order and the red after them. Drawn by MF.palette on
+ * /studio, on the collection page and in the maker, so the three cannot drift
+ * apart ... which they had. The red was landing inline among the slots and
+ * reading as slot 2, and the red is not a slot: it is the constant at strip
+ * position 16, chosen by nobody. So it sits thirteenth, behind a rule, and
+ * says so in its caption.
+ *
+ * Flex rather than a thirteen-column grid: thirteen cells across a phone is
+ * twenty-three pixels each, and a palette nobody can see the colours in is
+ * not a palette. It wraps and stays legible instead.
+ */
+.pal-strip{display:flex;flex-wrap:wrap;gap:8px 8px;align-items:flex-start;margin:18px 0 0}
+.pal-slot{flex:1 1 84px;min-width:84px;max-width:108px;display:flex;flex-direction:column;gap:4px;
+  text-decoration:none;color:inherit}
+.pal-band{display:block;height:58px;border:1px solid var(--rule)}
+.pal-lab{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);line-height:1.5}
+.pal-hex,.pal-name{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.06em;color:var(--faint);
+  line-height:1.5}
+/* The name is a reference, not a label: it reads quieter than the hex it is
+   standing in for, and the ≈ in front of it is doing real work. */
+.pal-name{text-transform:uppercase;font-size:8px;letter-spacing:.04em}
+/* A slot that is settled reads in ink; one still waiting does not. The colour
+   itself is the loud part and the caption under it is not. */
+.pal-slot.filled .pal-lab{color:var(--ink)}
+/* An empty slot is a hairline and nothing else: it is waiting, and a grey
+   fill would read as a colour somebody chose. */
+.pal-slot.empty .pal-band{background:none;border-style:dashed;border-color:var(--rule)}
+.pal-slot.empty .pal-lab{color:var(--faint)}
+/* The one being asked, marked the way this site marks everything: the ink
+   rule down its left. */
+.pal-slot.live .pal-band{background:none;border:1px solid var(--ink);border-left-width:2px}
+.pal-slot.live .pal-lab{color:var(--ink)}
+a.pal-slot:hover .pal-band{border-color:var(--ink)}
+a.pal-slot:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+/* The red sits apart, because it is not one of the twelve and never was. */
+.pal-slot.fixed{margin-left:10px;border-left:1px solid var(--rule);padding-left:15px;flex:0 0 auto;
+  max-width:122px}
+.pal-slot.fixed .pal-lab{color:var(--ink)}
+@media(max-width:560px){
+  .pal-strip{gap:8px 6px}
+  .pal-slot{flex:1 1 72px;min-width:72px}
+  .pal-band{height:46px}
+  /* On a phone the rule becomes the page's own full-width one: thirteen cells
+     wrapped three deep put the constant wherever the row happened to end, and
+     a separator that lands mid-row separates nothing. */
+  .pal-slot.fixed{margin-left:0;padding-left:0;border-left:0;flex:1 1 100%;max-width:none;
+    margin-top:8px;padding-top:12px;border-top:1px solid var(--rule);
+    flex-direction:row;align-items:center;flex-wrap:wrap;gap:4px 10px}
+  .pal-slot.fixed .pal-band{width:46px;height:22px;flex:none}
+}
+
+/* The constant in a lineup ... the "standing clear of" row, and the slivers
+   beside a candidate. Set apart wherever it appears, for the same reason it
+   is set apart in the strip: it is never the next slot. */
+.ac.fixed{margin-left:6px;padding-left:17px;border-left:1px solid var(--rule)}
+.pair .lk.fixed{margin-left:5px}
