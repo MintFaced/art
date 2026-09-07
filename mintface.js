@@ -1528,6 +1528,82 @@ const MF = {
   escape(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   },
+
+  /* ---------- colour, as the eye reads it ----------
+   *
+   * The collectors' palette is chosen twelve times over, and each colour has
+   * to stand clear of the ones already locked. "Clear" is a perceptual
+   * distance, in OKLab, on a scale where black to white is exactly 1 ... naive
+   * RGB would refuse a plainly different colour and pass a barely different
+   * one, which is not a thing to get approximately right on a rule that turns
+   * somebody's proposal away.
+   *
+   * The same arithmetic runs on the server, in api/_lib/palette.js, and that
+   * is the copy that decides. This one is here so the picker can say no before
+   * anybody signs, which is the difference between a constraint and a refusal.
+   */
+  colour: {
+    _lin(c) { return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); },
+    oklab(hex) {
+      const h = String(hex).replace('#', '');
+      const [r, g, b] = [0, 2, 4].map((i) => this._lin(parseInt(h.slice(i, i + 2), 16) / 255));
+      const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+      const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+      const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+      return [
+        0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+        1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+        0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s,
+      ];
+    },
+    oklch(hex) {
+      const [L, a, b] = this.oklab(hex);
+      return { l: L, c: Math.hypot(a, b), h: ((Math.atan2(b, a) * 180) / Math.PI + 360) % 360 };
+    },
+    deltaE(a, b) {
+      const x = this.oklab(a);
+      const y = this.oklab(b);
+      return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]);
+    },
+    /* The distance that counts: to the nearest one. A colour is only as
+       distinct as its closest neighbour on the wall. */
+    nearest(hex, against) {
+      let best = null;
+      for (const other of against || []) {
+        const d = this.deltaE(hex, other);
+        if (!best || d < best.distance) best = { hex: String(other).toUpperCase(), distance: d };
+      }
+      return best;
+    },
+    inSpace(hex, space) {
+      const s = space || { l: [0.2, 0.9], chroma: 0.18 };
+      const { l, c } = this.oklch(hex);
+      if (l < s.l[0]) return { ok: false, why: 'darker than anything on these walls' };
+      if (l > s.l[1]) return { ok: false, why: 'lighter than anything on these walls' };
+      if (c > s.chroma) return { ok: false, why: 'more saturated than a streetscape colour' };
+      return { ok: true };
+    },
+    /* Whether a colour may go on a constrained board, and what to say if not.
+       The wording matches the server's, so a picker that says yes and a route
+       that says no cannot disagree about why. */
+    check(hex, bound) {
+      const h = String(hex).toUpperCase();
+      if (!bound) return { ok: true, hex: h };
+      const against = (bound.against || []).map((a) => (typeof a === 'string' ? a : a.hex));
+      const place = this.inSpace(h, bound.space);
+      if (!place.ok) {
+        return { ok: false, hex: h, why: `${h} is ${place.why}. The palette is sampled from the street, so it stays in that range.` };
+      }
+      const near = this.nearest(h, against);
+      const floor = Number(bound.floor) || 0;
+      if (near && near.distance < floor) {
+        return { ok: false, hex: h, nearest: near.hex, distance: near.distance,
+          why: `${h} is ${near.distance.toFixed(2)} from ${near.hex}, and a colour here has to stand `
+            + `${floor.toFixed(2)} clear of everything already locked.` };
+      }
+      return { ok: true, hex: h, nearest: near ? near.hex : null, distance: near ? near.distance : null };
+    },
+  },
 };
 
 window.MF = MF;

@@ -89,7 +89,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .shot .hint{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:7px}
 
 /* ---------- palette ---------- */
-.swatches{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+/* Row gap enough for the label that hangs under a swatch. It used to be 8,
+   because only the red carried one; the collectors' colours all do now, and on
+   a wrapped row a 17px label under an 8px gap lands on the swatch below. */
+.swatches{display:flex;flex-wrap:wrap;gap:24px 8px;align-items:center}
 .sw{
   width:44px;height:44px;border:1px solid var(--rule);cursor:pointer;position:relative;
   padding:0;background:none;
@@ -101,6 +104,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 }
 .sw-red{cursor:default;border-color:var(--ink)}
 .sw-red:hover{border-color:var(--ink)}
+/* A colour the collectors locked. Marked by the ink rule down its left, the
+   way this site marks everything it means, rather than by a second colour. */
+.sw-tao{border-left:2px solid var(--ink)}
+.sw-tao .n{color:var(--muted)}
 .swatch-note{font-family:var(--font-sans);font-size:12.5px;color:var(--muted);margin-top:26px;line-height:1.6}
 
 /* ---------- preview ---------- */
@@ -435,8 +442,10 @@ function draw() {
     `<div class="strip${s.red ? ' red' : ''}"${s.red ? ` data-n="${redAt}"` : ''} style="background:${e(s.hex)};flex:0 0 ${(s.h / total * 100).toFixed(4)}%"></div>`).join('');
   $('previewNote').textContent = `${S.strips.length} strips ... red line at ${redAt} from base ... preview not to scale`;
 
-  $('swatches').innerHTML = S.palette.map((c) =>
-    `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(c.hex)} ... tap to drop"></button>`).join('')
+  $('swatches').innerHTML = S.palette.map((c) => (c.tao
+    ? `<button class="sw sw-tao" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}"
+        title="${e(c.hex)} ... chosen by the collectors on nudge #${c.tao.number} ... tap to drop"><span class="n">nudge #${c.tao.number}</span></button>`
+    : `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(c.hex)} ... tap to drop"></button>`)).join('')
     + `<button class="sw sw-red" type="button" disabled style="background:${RED_LINE}" title="Red line, always the 16th strip from the bottom"><span class="n">red line</span></button>`;
 
   const factor = S.heightMM / 550;
@@ -465,6 +474,10 @@ function specText() {
     `${S.widthM}m x ${S.heightMM}mm | intensity ${conf.label} (${conf.note}) | sequence ${Math.round(S.vib * 100)}/100 calm-to-vibrant | ${S.strips.length} strips`,
     `price ${fmt(price)} NZD (${fmt(conf.rate)}/m at 550mm, height factor ${factor.toFixed(2)}) | est ${days.toFixed(1)} days on site`,
     `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
+    ...(S.palette.some((c) => c.tao)
+      ? [`collectors' colours: ${S.palette.filter((c) => c.tao)
+        .map((c) => `${c.hex} (nudge #${c.tao.number})`).join(', ')}`]
+      : []),
     `RED LINE: STRIP ${redAt} OF ${S.strips.length} FROM BASE`,
     '',
     'strips, bottom up:',
@@ -568,22 +581,53 @@ function say(msg) {
 
 draw();
 
-/* And the colour the collectors chose, once it is known. Asked for after the
-   maker is already on screen: a palette that waited on a fetch to draw itself
-   would be a slower page for the sake of one swatch. */
-readCommunityColour().then((c) => {
-  if (!c) return;
-  COMMUNITY = c;
-  /* It joins the palette rather than replacing anything. If it is already in
-     there it is simply marked, which is the case worth getting right: the
-     collectors may well choose a colour Strip Painting No. 1 already used. */
-  if (!S.palette.some((p) => p.hex.toLowerCase() === c.hex)) {
-    S.palette = [...S.palette, { hex: c.hex, w: 60 }];
+/* ---------- the collectors' colours ----------
+ *
+ * The maker's palette and the nudge series are one config, which is the whole
+ * point of the arc: when the twelfth slot locks, this palette is complete and
+ * there is nothing to move across. Until then the locked colours join what is
+ * already here and are marked, rather than replacing it ... a maker with two
+ * colours in it would be a worse tool than a maker with fourteen.
+ *
+ * Asked for after the page is drawn. A palette that waited on a fetch to draw
+ * itself would be a slower page for the sake of some swatches, and this is a
+ * tool people open to move sliders.
+ */
+async function readSeries() {
+  try {
+    const r = await fetch('/api/nudge');
+    if (!r.ok) return null;
+    const j = await r.json();
+    return (j && j.series) || null;
+  } catch (err) {
+    /* The maker works without the studio. It always did. */
+    return null;
   }
+}
+
+readSeries().then((s) => {
+  if (!s || !(s.locked || []).length) return;
   const note = $('taoNote');
+  const added = [];
+  for (const slot of s.locked) {
+    const hex = String(slot.hex).toUpperCase();
+    const at = S.palette.findIndex((p) => p.hex.toUpperCase() === hex);
+    /* A colour the collectors chose that No. 1 already used is marked where it
+       sits rather than added twice ... which is the case worth getting right,
+       because a streetscape is where both palettes came from. */
+    if (at >= 0) S.palette[at] = { ...S.palette[at], tao: slot };
+    else { S.palette = [...S.palette, { hex, w: 60, tao: slot }]; added.push(hex); }
+  }
   if (note) {
-    note.textContent = `The marked swatch is ${c.hex.toUpperCase()}, chosen by ${c.collectors} collector`
-      + `${c.collectors === 1 ? '' : 's'} weighing ${c.tao.toLocaleString('en-NZ')} TAO on nudge #${c.number}.`;
+    const n = s.locked.length;
+    const tao = s.locked.reduce((a, x) => a + (Number(x.tao) || 0), 0);
+    note.textContent = s.complete
+      ? `The marked swatches are the whole palette: ${s.provenance}.`
+      : `The ${n === 1 ? 'marked swatch is' : `${n} marked swatches are`} the collectors' `
+        + `... ${s.locked.map((x) => x.hex).join(', ')}, locked on `
+        + `${n === 1 ? `nudge #${s.locked[0].number}` : `nudges ${s.locked.map((x) => `#${x.number}`).join(', ')}`} `
+        + `with ${tao.toLocaleString('en-NZ')} TAO behind them. `
+        + `${s.slots - n} of ${s.slots} still to choose.`;
   }
   draw();
 });

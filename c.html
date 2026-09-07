@@ -166,7 +166,49 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .nudge-body .lock,.nudge-body .none{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:18px 0 0;font-variant-numeric:tabular-nums}
 .nudge-body .smallcaps{display:inline-block;margin-top:20px;border-bottom:1px solid var(--rule);padding-bottom:4px}
 .nudge-body .smallcaps:hover{border-color:var(--ink)}
-@media(max-width:520px){.nudge-body{padding:0 20px}}
+/* what a candidate is being weighed against, beside it, so the pair is read
+   as a pair rather than as two swatches in different parts of the page */
+.nudge-body .pair{display:flex;align-items:stretch;gap:3px}
+.nudge-body .pair .lk{width:14px;flex:none;border:1px solid var(--rule);display:block}
+
+/* ---------- the palette, twelve slots and the red ----------
+   The arc these paintings are being coloured by, on the page the paintings are
+   on. Filled slots are the colours the collectors locked, the live one leads to
+   the question being asked now, and the empty ones are drawn rather than left
+   out ... four swatches would read as a palette of four. */
+.palette-embed{max-width:1500px;margin:0 auto;padding:14px 0 0}
+.palette-body{max-width:1500px;margin:0 auto;padding:0 28px}
+.palette-body .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:14px 0 0;max-width:34em}
+.palette-body .count{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin-top:10px;font-variant-numeric:tabular-nums}
+.palette-body .strip{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;align-items:flex-start;max-width:820px}
+.palette-body .slot{flex:1 1 52px;min-width:52px;max-width:84px;display:flex;flex-direction:column;gap:5px;
+  text-decoration:none;color:inherit}
+.palette-body .band{display:block;height:60px;border:1px solid var(--rule)}
+.palette-body .lab{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.palette-body .hexn{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.06em;color:var(--faint);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* A slot that is settled reads in ink; one still waiting does not. The
+   colour itself is the loud part and the label under it is not. */
+.palette-body .slot.filled .lab{color:var(--ink)}
+.palette-body .slot.empty .band{background:none;border-style:dashed}
+.palette-body .slot.empty .lab{color:var(--faint)}
+.palette-body .slot.live .band{background:none;border:1px solid var(--ink);border-left-width:2px}
+.palette-body .slot.live .lab{color:var(--ink)}
+.palette-body a.slot:hover .band{border-color:var(--ink)}
+.palette-body .slot.fixed{margin-left:10px;border-left:1px solid var(--rule);padding-left:14px;flex:0 0 auto;max-width:104px}
+.palette-body .done{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);margin:20px 0 0;padding-left:12px;border-left:2px solid var(--ink);font-variant-numeric:tabular-nums}
+@media(max-width:520px){
+  .nudge-body{padding:0 20px}
+  .palette-body{padding:0 20px}
+  .palette-body .slot{flex:1 1 42px;min-width:42px}
+  .palette-body .band{height:46px}
+  .palette-body .slot.fixed{margin-left:0;padding-left:0;border-left:0;flex:1 1 100%;max-width:none;
+    margin-top:6px;padding-top:12px;border-top:1px solid var(--rule);flex-direction:row;align-items:center;gap:10px}
+  .palette-body .slot.fixed .band{width:46px;height:22px;flex:none}
+}
 </style>
 </head>
 <body>
@@ -519,11 +561,20 @@ const worn = (n) => {
 };
 const nudgeDate = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
 
+/* The locked colours beside a candidate, as slivers. A collector weighing on
+   this board is being asked about a relation, and a swatch on its own is the
+   one thing that cannot show one. */
+const pairChips = (x, hex) => {
+  const lk = ((x.constraint && x.constraint.against) || []).map((a) =>
+    `<span class="lk" style="background:${e(a.hex)}" title="${e(a.label)} &middot; ${e(a.hex)}"></span>`).join('');
+  return `<span class="pair">${lk}<span class="chip" style="background:${e(hex)}"></span></span>`;
+};
+
 function nudgeMarkup(x) {
   const cands = (x.candidates || []).filter((c) => c.hex);
   const board = cands.length
     ? `<div class="board">${cands.map((c) => `<div class="swatch${x.locked && x.locked.hex === c.hex ? ' chosen' : ''}">
-        <span class="chip" style="background:${e(c.hex)}"></span>
+        ${pairChips(x, c.hex)}
         <span class="on">
           <span class="hex">${e(c.hex)}</span>
           <span class="weight"><b>${worn(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
@@ -541,28 +592,82 @@ function nudgeMarkup(x) {
   return `<div class="wrap-head"><h2>The colour vote</h2></div>
     <div class="nudge-body">
       <p class="q">${e(x.question)}</p>
-      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(nudgeDate(x.closes))}</div>
+      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(nudgeDate(x.closes))}${
+        x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
       ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
       ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
+      ${x.constraint ? `<p class="lock">Standing clear of ${x.constraint.against.map((a) => a.hex).join(' &middot; ')}
+        &middot; floor ${x.constraint.floor.toFixed(2)}</p>` : ''}
       ${board}
       ${lock}${banked}
       <a class="smallcaps" href="/studio#nudge-${e(x.id)}">${x.open ? 'Weigh TAO on the board' : 'The board'}</a>
     </div>`;
 }
 
+/* The arc, on the page the paintings are on. Twelve slots and the red beside
+   them ... which is what a Strip Painting is, and what these colours are being
+   chosen for. Filled slots lead to the nudge that locked them. */
+function paletteMarkup(s) {
+  const cell = (v) => {
+    if (v.state === 'locked') {
+      return `<a class="slot filled" href="/studio#nudge-${e(v.nudge)}">
+        <span class="band" style="background:${e(v.hex)}"></span>
+        <span class="lab">Nudge #${v.number}</span><span class="hexn">${e(v.hex)}</span></a>`;
+    }
+    if (v.state === 'open') {
+      return `<a class="slot live" href="/studio#nudge-${e(v.nudge)}">
+        <span class="band"></span>
+        <span class="lab">Nudge #${v.number}</span><span class="hexn">Open</span></a>`;
+    }
+    return `<span class="slot empty"><span class="band"></span>
+      <span class="lab">${String(v.slot).padStart(2, '0')}</span><span class="hexn">&mdash;</span></span>`;
+  };
+  const red = s.fixed && s.fixed.hex ? `<span class="slot fixed">
+    <span class="band" style="background:${e(s.fixed.hex)}"></span>
+    <span class="lab">${e(s.fixed.label || 'Red line')}</span>
+    <span class="hexn">${s.fixed.at ? `${s.fixed.at} &middot; fixed` : 'Fixed'}</span></span>` : '';
+  return `<div class="wrap-head"><h2>${e(s.title || 'The palette')}</h2></div>
+    <div class="palette-body">
+      ${s.note ? `<p class="note">${e(s.note)}</p>` : ''}
+      <p class="count">${s.locked.length} of ${s.slots} locked</p>
+      <div class="strip">${s.board.map(cell).join('')}${red}</div>
+      ${s.complete && s.provenance ? `<p class="done">${e(s.provenance)}</p>` : ''}
+    </div>`;
+}
+
+/* One request, both halves. The strip is the arc and the card below it is
+   whichever question is being asked inside it right now ... which is why the
+   collection names a series rather than a nudge: a page pinned to nudge one
+   would still be showing nudge one when the eleventh was open. */
 async function paintNudge(collection) {
   const el = document.getElementById('nudge');
-  if (!el || !collection.nudge) return;
+  const strip = document.getElementById('palette');
+  if (!el && !strip) return;
   try {
     const state = await fetch('/api/nudge').then((r) => (r.ok ? r.json() : null));
-    const list = (state && state.nudges) || (Array.isArray(state) ? state : null);
-    const x = (list || []).find((n) => n.id === collection.nudge);
+    const list = (state && state.nudges) || (Array.isArray(state) ? state : null) || [];
+    const series = state && state.series;
+    if (strip) {
+      if (series && collection.series && series.id === collection.series) strip.innerHTML = paletteMarkup(series);
+      else strip.remove();
+    }
+    if (!el) return;
+    /* The open one in this series, or ... with nothing being asked ... the last
+       one it banked, so the page shows the record rather than nothing. */
+    const mine = collection.series ? list.filter((n) => n.series === collection.series) : [];
+    const x = mine.find((n) => n.open)
+      || list.find((n) => n.id === collection.nudge)
+      || [...mine].reverse().find((n) => n.banked)
+      || null;
     if (!x) { el.remove(); return; }
     el.innerHTML = nudgeMarkup(x);
   } catch {
     // the board is context, not a requirement: without it the link still stands
-    el.innerHTML = `<div class="wrap-head"><h2>The colour vote</h2></div>
-      <div class="nudge-body"><a class="smallcaps" href="/studio">The board</a></div>`;
+    if (strip) strip.remove();
+    if (el) {
+      el.innerHTML = `<div class="wrap-head"><h2>The colour vote</h2></div>
+        <div class="nudge-body"><a class="smallcaps" href="/studio">The board</a></div>`;
+    }
   }
 }
 
@@ -606,7 +711,8 @@ function render(collection) {
       : collection.slug === 'recent-work' ? recentGroups(collection)
       : '<div class="grid" id="grid"></div>'}
     ${collection.works.length ? '' : '<div class="loading">Nothing here yet</div>'}
-    ${gallery && collection.nudge ? '<section class="nudge-embed" id="nudge"></section>' : ''}
+    ${gallery && collection.series ? '<section class="palette-embed" id="palette"></section>' : ''}
+    ${gallery && (collection.nudge || collection.series) ? '<section class="nudge-embed" id="nudge"></section>' : ''}
     <div class="sentinel" id="sentinel"></div>`;
 
   // A gallery has no grid, no filters, no prices and nothing to buy, so none of

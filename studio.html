@@ -272,6 +272,96 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
    saying "a question is waiting" directly under the question would be the page
    talking about what it is already showing. */
 
+/* ---------- the palette strip ----------
+ *
+ * The arc, drawn once, at the top of the page. Twelve slots and the red line
+ * beside them ... which is what a Strip Painting is: bands of colour with the
+ * red sixteen up from the base, and the red is not a slot because nobody
+ * chose it.
+ *
+ * A filled slot is the colour itself and says which nudge locked it. The live
+ * one is the question being asked and leads to it. An empty one waits, and is
+ * drawn rather than hidden, because twelve slots with three filled says what
+ * this is in a way that three swatches never would.
+ *
+ * Flex rather than a twelve-column grid: on a phone thirteen cells across is
+ * twenty-three pixels each, and a palette nobody can see the colours in is not
+ * a palette. It wraps and stays legible instead.
+ */
+.palette{max-width:720px;margin:0 auto;padding:46px 28px 0}
+.palette .sec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;
+  margin:0;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.palette .sec .count{color:var(--faint);font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.palette .note{font-size:14.5px;line-height:1.6;color:var(--ink-4);margin:12px 0 0;max-width:34em}
+.palette .strip{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;align-items:flex-start}
+.palette .slot{flex:1 1 48px;min-width:48px;max-width:80px;display:flex;flex-direction:column;gap:5px;
+  text-decoration:none;color:inherit}
+.palette .band{display:block;height:56px;border:1px solid var(--rule)}
+.palette .lab{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.palette .hexn{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.06em;color:var(--faint);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* An empty slot is a hairline and nothing else: it is waiting, and a grey fill
+   would read as a colour somebody chose. */
+/* A slot that is settled reads in ink; one still waiting does not. The
+   colour itself is the loud part and the label under it is not. */
+.palette .slot.filled .lab{color:var(--ink)}
+.palette .slot.empty .band{background:none;border-style:dashed;border-color:var(--rule)}
+.palette .slot.empty .lab{color:var(--faint)}
+/* The one being asked. Marked the way this site marks everything ... the ink
+   rule down its left ... and it is the only slot that is a link while a nudge
+   is open. */
+.palette .slot.live .band{background:none;border:1px solid var(--ink);border-left-width:2px}
+.palette .slot.live .lab{color:var(--ink)}
+.palette a.slot:hover .band{border-color:var(--ink)}
+.palette a.slot:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+/* The red sits apart, because it is not one of the twelve and never was. */
+.palette .slot.fixed{margin-left:10px;border-left:1px solid var(--rule);padding-left:14px;flex:0 0 auto;
+  max-width:96px}
+.palette .done{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);margin:18px 0 0;padding-left:12px;border-left:2px solid var(--ink);
+  font-variant-numeric:tabular-nums}
+@media(max-width:560px){
+  .palette{padding:34px 20px 0}
+  .palette .slot{flex:1 1 40px;min-width:40px}
+  .palette .band{height:44px}
+  .palette .slot.fixed{margin-left:0;padding-left:0;border-left:0;flex:1 1 100%;max-width:none;
+    margin-top:6px;padding-top:12px;border-top:1px solid var(--rule);flex-direction:row;align-items:center;gap:10px}
+  .palette .slot.fixed .band{width:44px;height:22px;flex:none}
+}
+
+/* ---------- a constrained board ----------
+ *
+ * What this colour has to stand clear of, drawn at the top of the card and
+ * again beside every candidate. Both, deliberately: the header says what the
+ * rule is, and the sliver on each row is so a voter weighs the PAIR rather
+ * than a colour on its own ... which is the only way to judge contrast, and
+ * the thing a board of loose swatches quietly stops you doing.
+ */
+.nudges .against{margin:18px 0 0;padding:14px 0 0;border-top:1px solid var(--rule)}
+.nudges .against .alab{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);display:block}
+.nudges .against .row{display:flex;flex-wrap:wrap;gap:18px;margin:11px 0 0}
+.nudges .against .ac{display:flex;gap:9px;align-items:center}
+.nudges .against .ac .chip{width:34px;height:34px;flex:none;border:1px solid var(--rule);display:block}
+.nudges .against .ac .al{display:flex;flex-direction:column;gap:2px}
+.nudges .against .ac .al b{font-weight:400;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink)}
+.nudges .against .ac .al span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;color:var(--faint)}
+.nudges .against .anote{font-size:13.5px;line-height:1.62;color:var(--muted);margin:13px 0 0;max-width:36em}
+/* The pair, on a row and on a full swatch. The locked colours are slivers
+   rather than squares: they are the thing being compared against, not another
+   candidate, and drawing them the same size would put twelve equals on a row
+   that has one. */
+.nudges .pair{display:flex;align-items:stretch;gap:3px}
+.nudges .crow .pair{grid-area:1/1/3/2}
+.nudges .pair .lk{width:9px;flex:none;border:1px solid var(--rule);display:block}
+.nudges .swatch .pair .lk{width:14px}
+.nudges .verdict{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-variant-numeric:tabular-nums;flex:1 1 14em;min-width:0}
+.nudges .verdict.no{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);
+  font-size:13.5px;line-height:1.55}
+
 .earlier{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);background:none;border:0;padding:14px 0;cursor:pointer;display:block;width:100%;text-align:left;
   border-bottom:1px solid var(--rule)}
@@ -517,6 +607,12 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
       <p class="rule">A nudge steers. It never commands.<br>The studio may act with, against, or without the result.</p>
     </div>
   </section>
+
+  <!-- The arc. Twelve colours, one nudge each, and where it has got to. It is
+       above the banked cards because it is the shape they are part of: a
+       reader who sees three banked nudges and no strip has no way of knowing
+       there are nine more coming. -->
+  <section class="palette" id="palette"></section>
 
   <!-- What the studio has already asked and banked. Above the room, because it
        is the record rather than the question, and a record is a thing you go
@@ -1373,7 +1469,24 @@ async function send(payload) {
 }
 
 let tagTimer = null;
+/* The picker, answering while it is being dragged. `input` rather than
+   `change`, because a colour dialog fires change when it closes and by then
+   the answer has arrived too late to have been useful. */
 document.addEventListener('input', (ev) => {
+  const pick = ev.target.closest && ev.target.closest('[data-colourfield]');
+  if (pick) {
+    const id = pick.dataset.colourfield;
+    const x = openNudges().find((y) => y.id === id);
+    const out = document.getElementById(`verdict-${id}`);
+    if (x && x.constraint && out) {
+      const v = MF.colour.check(String(pick.value || '').toUpperCase(), x.constraint);
+      out.textContent = verdictText(v);
+      out.className = v.ok ? 'verdict' : 'verdict no';
+      const go = pick.parentElement && pick.parentElement.querySelector('[data-propose]');
+      if (go) go.disabled = !v.ok;
+    }
+    return;
+  }
   if (!ev.target.matches('#text')) return;
   ROOM.draft = ev.target.value;
   ROOM.caret = ev.target.selectionStart;
@@ -1799,6 +1912,43 @@ function ledger(x) {
  * proposed. And the threshold is on the card the whole time, because a nudge
  * that can decline to decide has to say so before it does.
  */
+/* ---------- the constraint, drawn ----------
+ *
+ * A colour after the first has to stand clear of everything already locked.
+ * The card says that twice, on purpose: once at the top, as the rule, and
+ * again as a sliver beside every candidate, so a voter is always looking at
+ * the pair rather than at a swatch on its own. Contrast is a relation, and a
+ * board that shows only one side of it is asking people to hold the other
+ * side in their heads.
+ */
+const againstList = (x) => ((x.constraint && x.constraint.against) || []);
+
+/* The locked colours beside a candidate. Slivers, not squares: they are what
+   is being compared against rather than another thing to choose. */
+function pair(x, hex) {
+  const lk = againstList(x).map((a) =>
+    `<span class="lk" style="background:${e(a.hex)}" title="${e(a.label)} &middot; ${e(a.hex)}"></span>`).join('');
+  return `<span class="pair">${lk}<span class="chip" style="background:${e(hex)}"></span></span>`;
+}
+
+function againstBlock(x) {
+  const list = againstList(x);
+  if (!list.length) return '';
+  const c = x.constraint;
+  return `<div class="against">
+    <span class="alab">Standing clear of</span>
+    <div class="row">${list.map((a) => `<span class="ac">
+      <span class="chip" style="background:${e(a.hex)}"></span>
+      <span class="al"><b>${a.fixed ? 'Fixed' : 'Locked'} &middot; ${e(a.label)}</b><span>${e(a.hex)}</span></span>
+    </span>`).join('')}</div>
+    <p class="anote">Colour ${c.slot} of ${c.slots} has to sit at least ${c.floor.toFixed(2)} from each of these,
+      measured the way the eye reads it rather than in RGB, on a scale where black to white is 1.
+      That leaves ${Math.round(c.field * 100)}% of the streetscape range open, and the floor comes down as the
+      board fills so the last colours are not asked for something that does not exist.
+      The picker will not take a colour that clashes.</p>
+  </div>`;
+}
+
 /* What this wallet has put on a colour, from its own standing. */
 const mineOn = (x, hex) => {
   const a = x.mine && x.mine.allocations ? x.mine.allocations.find((v) => v.hex === hex) : null;
@@ -1819,7 +1969,7 @@ function swatches(x) {
     const who = by && c.proposed_url ? `<a href="${e(c.proposed_url)}">${e(by)}</a>` : (by ? e(by) : null);
     const on = mineOn(x, c.hex);
     return `<div class="swatch${chosen ? ' chosen' : ''}${on ? ' mine' : ''}">
-      <span class="chip" style="background:${e(c.hex)}"></span>
+      ${pair(x, c.hex)}
       <span class="on">
         <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
         <span class="weight"><b>${num(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
@@ -1867,12 +2017,48 @@ function purse(x) {
 function proposer(x) {
   if (!x.open || !mayWeigh()) return '';
   if (x.proposed) return '<p class="said">You have put a colour on the board. Weigh TAO behind any of them.</p>';
+  /* Somewhere in the field to start from, rather than a colour that is going
+     to be refused the moment the picker opens. Not the leader, which is on the
+     board already and would be refused for that instead. */
+  const start = x.constraint ? openingColour(x) : '#C0392B';
   return `<div class="propose">
-    <input type="color" id="hex-${e(x.id)}" value="#C0392B" aria-label="A colour to propose">
+    <input type="color" id="hex-${e(x.id)}" value="${e(start)}" data-colourfield="${e(x.id)}"
+      aria-label="A colour to propose">
     <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Propose this colour</button>
-    <span class="said">One colour per wallet, and it stays on the board.</span>
+    <span class="${x.constraint ? 'verdict' : 'said'}" id="verdict-${e(x.id)}">${x.constraint
+      ? e(verdictLine(x, start))
+      : 'One colour per wallet, and it stays on the board.'}</span>
   </div>`;
 }
+
+/* A colour the constraint will take, found rather than guessed: the picker
+   opening on something already refused is a picker that reads as broken. */
+function openingColour(x) {
+  if (!x.constraint) return '#C0392B';
+  const grid = [];
+  for (let r = 32; r < 256; r += 48) for (let g = 32; g < 256; g += 48) for (let b = 32; b < 256; b += 48) {
+    grid.push('#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('').toUpperCase());
+  }
+  let best = null;
+  for (const hex of grid) {
+    const v = MF.colour.check(hex, x.constraint);
+    if (v.ok && (!best || v.distance > best.distance)) best = v;
+  }
+  return best ? best.hex : '#C0392B';
+}
+
+/* What the picker says back, live, as somebody drags it about. The same
+   arithmetic the route runs, so it never says yes to a colour the route is
+   about to refuse ... and it says the distance either way, because the useful
+   thing to know while choosing is how much room is left, not merely whether
+   this one colour got through. */
+function verdictText(v) {
+  if (!v.ok) return v.why;
+  return v.nearest
+    ? `${v.hex} \u00b7 ${v.distance.toFixed(2)} clear of ${v.nearest} \u00b7 allowed`
+    : `${v.hex} \u00b7 allowed`;
+}
+const verdictLine = (x, hex) => verdictText(MF.colour.check(hex, x.constraint));
 
 const mayWeigh = () => Boolean(MF.session.current());
 
@@ -2016,7 +2202,7 @@ function colourRow(x, c, editable) {
      rather than closing under the person who just used it. */
   const putting = editable && NUDGE.putting.has(key);
   return `<div class="crow${chosen ? ' chosen' : ''}${on ? ' mine' : ''}${putting ? ' putting' : ''}">
-    <span class="chip" style="background:${e(c.hex)}"></span>
+    ${pair(x, c.hex)}
     <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
     <span class="w">${num(c.total)} TAO</span>
     ${editable
@@ -2112,8 +2298,12 @@ function candidateCard(x) {
   return `<div class="nudge" id="nudge-${e(x.id)}">
     <div class="head">
       <p class="q">${e(x.question)}</p>
-      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}</div>
+      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}${
+        /* Where this colour sits in the arc. A banked card that says only what
+           it chose reads as a one-off, and this one never was. */
+        x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
     </div>
+    ${x.open ? againstBlock(x) : ''}
     ${x.open ? colourRows(x) : ''}
     <p class="said" id="say-${e(x.id)}" hidden></p>
     ${folded(x, 'Details', inner)}
@@ -2165,10 +2355,63 @@ const openNudges = () => ((NUDGE.state && NUDGE.state.nudges) || []).filter((x) 
 
 const cardFor = (x, closed) => (x.kind === 'candidates' ? candidateCard(x) : (closed ? bankedCard(x) : openCard(x)));
 
+/* ---------- the arc ----------
+ *
+ * Twelve slots and the red beside them, at the top of the page. It is drawn
+ * from the same reading the cards are, so a slot cannot say one thing while
+ * the card that filled it says another.
+ *
+ * Empty slots are drawn rather than left out. Three swatches would look like a
+ * palette of three; three swatches and nine hairlines is a palette of twelve
+ * that is a quarter done, which is the true thing and also the interesting one.
+ */
+function drawPalette() {
+  const el = document.getElementById('palette');
+  if (!el) return;
+  const s = NUDGE.state && NUDGE.state.series;
+  if (!s || !s.board) { el.innerHTML = ''; return; }
+  const slot = (v) => {
+    const n = String(v.slot).padStart(2, '0');
+    if (v.state === 'locked') {
+      return `<a class="slot filled" href="#nudge-${e(v.nudge)}">
+        <span class="band" style="background:${e(v.hex)}"></span>
+        <span class="lab">Nudge #${v.number}</span>
+        <span class="hexn">${e(v.hex)}</span>
+      </a>`;
+    }
+    if (v.state === 'open') {
+      return `<a class="slot live" href="#nudge-${e(v.nudge)}">
+        <span class="band"></span>
+        <span class="lab">Nudge #${v.number}</span>
+        <span class="hexn">Open</span>
+      </a>`;
+    }
+    return `<span class="slot empty">
+      <span class="band"></span>
+      <span class="lab">${n}</span>
+      <span class="hexn">&mdash;</span>
+    </span>`;
+  };
+  const red = s.fixed && s.fixed.hex ? `<span class="slot fixed">
+    <span class="band" style="background:${e(s.fixed.hex)}"></span>
+    <span class="lab">${e(s.fixed.label || 'Red line')}</span>
+    <span class="hexn">${s.fixed.at ? `${s.fixed.at} &middot; fixed` : 'Fixed'}</span>
+  </span>` : '';
+  const done = s.locked.length;
+  el.innerHTML = `<h2 class="sec">Palette
+      <span class="count">${done} of ${s.slots} locked</span></h2>
+    ${s.note ? `<p class="note">${e(s.note)}</p>` : ''}
+    <div class="strip">${s.board.map(slot).join('')}${red}</div>
+    ${s.complete && s.provenance
+      ? `<p class="done">${e(s.provenance)}</p>`
+      : ''}`;
+}
+
 function drawNudges() {
   const all = (NUDGE.state && NUDGE.state.nudges) || [];
   const open = all.filter((x) => x.open);
   const done = all.filter((x) => !x.open);
+  drawPalette();
   document.getElementById('open').innerHTML = open.map((x) => cardFor(x, false)).join('');
   /* Whether there is a second column to draw at all. On a wide screen the
      panel docks beside the room; with nothing being asked there is nothing to

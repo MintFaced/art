@@ -127,3 +127,55 @@ The store write is never allowed to fail the request. By the time it runs the si
 
 **Something had to replace the wallet prompt as a rate limit.** That prompt was a limiter somebody's hand enforced, and every weighing is a commit to the repository: a loop would have been a commit storm against GitHub before it was anything else. Four seconds between acts, forty in ten minutes — generous for somebody spreading TAO across a board, mean for a script.
 
+
+---
+
+## Twelve nudges, one palette (2026-09-07)
+
+Nudge #1 asked for a colour. This is the arc that question was always the first of: **twelve slots beside the red line, one nudge each, on the same two thresholds.** When the twelfth locks, the Strip Painting Maker's community palette is complete — not migrated, not copied across, complete, because the series block in `data/nudges.json` *is* the maker's palette and always was.
+
+### Nudge #2 asks for something #1 could not
+
+Same mechanics, same thresholds — five collectors and five hundred thousand TAO on the leader, at close, both. Same clamp. The one difference is that a colour now has to stand clear of what is already locked, and the card is built so a voter can see what that means: colour one sits above the board as a fixed swatch marked LOCKED, and it sits again as a sliver beside every candidate. **Contrast is a relation, and a board of loose swatches quietly stops you judging one.** Proposing stays open to any wallet; what changed is that the picker will not take a clasher, and neither will the route.
+
+### The constraint, and why it is measured this way
+
+**Distance is perceptual, in OKLab.** Naive RGB refuses colours that plainly differ and passes colours that barely do — full blue and full green are exactly the same distance from black in RGB, and nobody has ever thought they look it. On a rule that turns somebody's proposal away, that is not a thing to get approximately right. The scale has an anchor worth stating on the card: **black to white is exactly 1.** No. 1's blue and its green are 0.17 apart; its orange and its tan are 0.08; nudge #1's two candidates are 0.29.
+
+**Two things bound the field.** The *space* is the region the maker's own palette occupies — lightness 0.20 to 0.90, chroma no more than 0.18 — which is Strip Painting No. 1's actual range rounded out. A colour outside it is refused for not belonging on a Hastings fascia rather than for clashing, and neon is refused before any distance is measured. The red line, at chroma 0.21, sits outside it: *the red line sits outside the palette* has been printed under the maker's swatches since the start, and it is now true in the arithmetic as well.
+
+The *floor* is the distance a candidate must keep from the nearest locked colour. Max-min, from the candidate's side: **a colour is only as distinct as its closest neighbour.**
+
+### The floor comes down, and that is the whole design
+
+A fixed floor is a trap, and the geometry says so rather than a preference. Hold every slot to 0.30 — a third of the way from black to white, more than No. 1's blue to its green — and simulate the collectors doing exactly what the nudge asks, choosing the colour furthest from everything locked: **the sixth colour is impossible.** Not because anybody did anything wrong. Twelve colours that far apart do not fit in a streetscape. A rule that asks for a colour which does not exist is a rule that hands the decision back to the artist, which is the one outcome this whole thing exists to avoid.
+
+So the floor is derived rather than declared: **the highest rung of a fixed ladder that still leaves a quarter of the field open.** 0.30 down to 0.10 in eleven rungs, so it stays a round, sayable number and a card can state the rule instead of a computation. Early slots are held to 0.30 with 36% of the space still open; by the twelfth it is around 0.12 with more than that. Twelve fill when the collectors choose the furthest colour each time, and twelve fill when every choice crowds the board as hard as the rule allows. Both are checked.
+
+The red line is in the against-set for every slot after the first. It is not a slot and nobody chose it, but it is a colour on the wall, and a nudge that let the collectors lock something 0.04 from it would have produced a painting with two colours that read as one.
+
+**Slot one carries no constraint at all.** There was nothing to be different from, and a rule invented so that every nudge has one would be a rule for its own sake. That also happens to be the honest thing: nudge #1 is open as this is written, unconstrained, with two colours on its board — applying this retroactively would have refused proposals people have already signed for.
+
+### A slot that does not lock
+
+Not locking is still a real outcome, and now it has a consequence worth naming: **the slot stays empty and can be asked again.** A slot is filled by whichever of its nudges locked a colour, so a second nudge may be pointed at the same number. A palette that failed once is not a palette that is short forever, and the alternative — eleven colours because one fortnight went quiet — would have made the threshold something the studio quietly wanted to fail.
+
+### The strip
+
+`PALETTE` renders as twelve slots and the red at 16 beside them, on `/studio` above the banked cards and on the Strip Paintings collection page. A filled slot is the colour itself and leads to the nudge that locked it; the live one leads to the question being asked; **empty slots are drawn rather than left out**, because three swatches read as a palette of three and three swatches with nine hairlines reads as a palette of twelve that is a quarter done — which is the true thing and also the interesting one.
+
+The collection page now names the *series* rather than a nudge. Pinned to `nudge-1` it would still have been showing nudge one when the eleventh was open.
+
+### The maker, and a swatch that was never there
+
+`readCommunityColour()` was called at the foot of `strip-painting-maker.html` and had never been written. The page threw a ReferenceError on every load and the marked swatch nudge #1 was supposed to produce could not have appeared, however that nudge closed. It reads the series now: every locked colour joins the palette marked with the nudge that chose it, a colour No. 1 already used is marked where it sits rather than added twice, and the copied spec names whose colours they were.
+
+### The compound provenance
+
+One nudge chose one colour and says so. Twelve chose the palette, and a line naming one of them would be naming a twelfth of the truth. A work painted from the finished palette carries **`Palette by 12 nudges · N collectors · N TAO`**, with a swatch per slot under it, each leading to the ledger of the nudge that locked it — which is what makes it provenance rather than a boast. `scripts/stamp-nudge.mjs --series strip-palette <work-id>` writes it, and refuses while the palette is incomplete: the line is permanent, and one frozen at seven of twelve would be wrong by the eighth.
+
+Nudge #1's card gains a line placing it: **Colour 1 of 12.**
+
+### Checks
+
+`scripts/tao/test-palette.mjs`, 86: black to white is 1; the RGB failure OKLab does not make; the red line outside the space and No. 1 inside it; the floor as the highest rung leaving a quarter, with the rung above it proved not to; twelve filling under both a well-choosing and a crowding board; a fixed 0.30 failing at the sixth; a colour exactly on the floor allowed and a hair under it refused; a slot that banked without locking left empty and then filled by a second nudge; and the OKLab matrices checked character for character against the browser's copy, because two copies of a rule is two chances to drift and a picker that says yes where the route says no is worse than no picker at all.

@@ -41,6 +41,10 @@ const col = {
   statement: c.statement || null, notes: c.notes || null,
   gallery: true, tokenized: false,
   links: c.links || null, nudge: c.nudge || null,
+  /* The nudge series this collection is coloured by. The page draws the twelve
+     slots from it and shows whichever nudge inside it is open, so a collection
+     pinned to a single nudge does not go on showing the first one forever. */
+  series: c.series || null,
   counts: { works: works.length, ...tally },
   works,
 };

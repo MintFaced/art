@@ -81,8 +81,31 @@ export async function POST(request) {
       ? { voters: Math.max(1, Math.floor(Number(body.lock_voters) || 5)),
         tao: Math.max(0, Math.floor(Number(body.lock_tao) || 500000)) }
       : null;
+    /* Which arc this belongs to and which colour it fills.
+       A slot is the whole of the constraint: everything a nudge must stand
+       clear of is read from the slots below it at the moment it is asked, so
+       an author names a number rather than a list of colours that would be
+       wrong the day another one locked. A slot already filled is refused ...
+       except where its nudge banked without locking, which is the case that
+       has to stay open, because otherwise a palette that failed once is a
+       palette that is short forever. */
+    const series = String(body.series || '').trim() || null;
+    const slot = body.slot != null ? Math.floor(Number(body.slot)) : null;
+    if (series) {
+      const arc = store.series;
+      if (!arc || arc.id !== series) return json({ error: `no such series: ${series}` }, 400);
+      if (!(slot >= 1 && slot <= Number(arc.slots))) {
+        return json({ error: `a slot from 1 to ${arc.slots}` }, 400);
+      }
+      const taken = (store.nudges || []).find((x) => x.series === series && Number(x.slot) === slot
+        && (!x.banked || (x.banked && x.banked.locked)));
+      if (taken) {
+        return json({ error: `slot ${slot} is ${taken.banked ? 'locked by' : 'already being asked by'} nudge #${taken.number}` }, 409);
+      }
+    }
     store.nudges.push({
       id, number, question, kind,
+      ...(series ? { series, slot } : {}),
       ...(lock ? { lock } : {}),
       promise: String(body.promise || '').trim() || null,
       note: String(body.note || '').trim() || null,

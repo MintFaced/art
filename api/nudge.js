@@ -2,6 +2,7 @@ import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { seriesState, constraintFor, checkCandidate, slotLine, seriesProvenanceLine } from './_lib/palette.js';
 import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 import { chatStore, SCOPE_WEIGH } from './_lib/chat.js';
@@ -85,6 +86,10 @@ export async function GET(request) {
     };
   };
 
+  /* The arc, read once. Every card in this response places itself in it, and
+     the strip that draws the twelve slots is the same reading. */
+  const arc = seriesState(data.nudges);
+
   const out = (data.nudges.nudges || []).filter((n) => n.published !== false).map((n) => {
     const rows = latest(data.weighings.weighings || [], n.id);
     const mine = who ? rows.find((r) => lower(r.address) === lower(who)) : null;
@@ -97,6 +102,12 @@ export async function GET(request) {
          lives on the nudge rather than in the page, because it is a thing the
          studio undertook rather than a thing the page says. */
       promise: n.promise || null,
+      /* Where this sits in the arc. A nudge is one question and also the Nth
+         of twelve, and a card that says only the first of those leaves a
+         reader thinking a colour was chosen on its own. */
+      series: n.series || null,
+      slot: n.slot != null ? Number(n.slot) : null,
+      slot_line: arc ? slotLine(n, arc.slots) : null,
     };
 
     if (kindOf(n) === CANDIDATES) {
@@ -108,6 +119,11 @@ export async function GET(request) {
       const p = n.banked ? n.banked : palette(forNudge, props, readTao, n);
       return {
         ...base,
+        /* What a colour on this nudge has to stand clear of, and by how much.
+           Null on the nudge that opened the palette: there was nothing to be
+           different from, and a constraint drawn against nothing would be a
+           rule invented to have one. */
+        constraint: n.banked ? null : constraintFor(data.nudges, n, arc),
         rule: p.rule || lockRule(n),
         total: p.total, collectors: p.collectors,
         leader: p.leader || null, locked: p.locked || null, why: p.why || null,
@@ -149,6 +165,12 @@ export async function GET(request) {
 
   return json({
     nudges: out,
+    /* The whole series in one reading: twelve slots, the red beside them, what
+       is locked, what is being asked, and the constraint on the next colour.
+       The strip on /studio, on the collection page and in the maker are all
+       this ... one config, so the maker's palette is complete the moment the
+       last slot locks rather than being copied across at the end. */
+    series: arc ? { ...arc, provenance: seriesProvenanceLine(arc) } : null,
     tao: who ? readTao(who) : null,
     rule: 'A nudge steers. It never commands. The studio may act with, against, or without the result.',
   });
@@ -227,7 +249,15 @@ export async function POST(request) {
    * colour onto another without asking them. */
   if (action === 'propose') {
     if (!candidates) return json({ error: 'this nudge is a yes or a no' }, 400);
-    const colour = checkHex(body.hex);
+    /* The picker enforces this too, so a collector never signs for a colour
+       that is going to be refused ... but the picker is a courtesy and this is
+       the check that counts. A colour has to belong to the streetscape space
+       and stand clear of everything already locked, which is what keeps a
+       twelve-colour palette from drifting into twelve warm mid-tones. */
+    const bound = constraintFor(data.nudges, n);
+    const colour = bound
+      ? checkCandidate(body.hex, { against: bound.against.map((a) => a.hex), floor: bound.floor, space: bound.space })
+      : checkHex(body.hex);
     if (colour.error) return json({ error: colour.error }, 400);
 
     if (!session) {
