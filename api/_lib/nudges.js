@@ -137,6 +137,18 @@ export function allocations(rows) {
         note(colour, was, 0);
         mine.delete(colour);
       }
+    } else if (r.from) {
+      /* A move: the one act names both keys. The colour it came off is set
+         first, so a wallet that put everything it holds on another colour is
+         never momentarily on both ... which is the state the sum was checked
+         against, and the reason a legal move was refused. */
+      const src = String(r.from).toUpperCase();
+      if (src !== hex) {
+        const before = mine.get(src) || 0;
+        const after = Math.max(0, Math.floor(Number(r.from_amount) || 0));
+        note(src, before, after);
+        if (after > 0) mine.set(src, after); else mine.delete(src);
+      }
     }
     const was = mine.get(hex) || 0;
     note(hex, was, amount);
@@ -292,9 +304,80 @@ export function standing(weighings, address, taoOf) {
   };
 }
 
+/* ------------------------------------------------------------- changing
+ *
+ * CHANGING YOUR MIND IS A FIRST-CLASS ACT, and it is one act.
+ *
+ * A collector with everything they hold on one colour could not put it on
+ * another. Each signature set one key, so asking for the second colour was
+ * asking for a position that added up to twice their TAO for as long as it
+ * took to check ... and it was refused for holding more TAO than the wallet
+ * has, which was true of the sum and never true of the collector. Moving
+ * 13,749 from one colour to another is always legal: it is the same TAO.
+ *
+ * So a change names both keys, both absolute, and is checked against the state
+ * it LEAVES BEHIND rather than the sum of the old one and the new. Taking a
+ * colour back and putting it on another are the same act, so a lost write
+ * cannot leave a wallet with its TAO on neither.
+ */
+
+/** One wallet's map, with a change applied. Both keys absolute; the colour it
+ *  came off is set first, so a move is never momentarily on both. */
+export function changed(mine, { candidate, amount, from, fromAmount } = {}) {
+  const next = new Map(mine || []);
+  const set = (hex, v) => {
+    const key = String(hex).toUpperCase();
+    const n = Math.max(0, Math.floor(Number(v) || 0));
+    if (n > 0) next.set(key, n); else next.delete(key);
+  };
+  if (from && String(from).toUpperCase() !== String(candidate).toUpperCase()) set(from, fromAmount);
+  if (candidate) set(candidate, amount);
+  return next;
+}
+
+/**
+ * Whether a change is one this wallet may make, judged on where it lands.
+ *
+ * The only question a weighing has ever asked is whether the whole position
+ * fits inside what the wallet holds. This asks it of the position the change
+ * produces, which is the one the collector is actually taking.
+ */
+export function checkChange(mine, held, { candidate, amount, from, fromAmount } = {}) {
+  const have = Math.max(0, Math.floor(Number(held) || 0));
+  const want = Math.floor(Number(amount));
+  if (!candidate) return { error: 'weigh behind one of the colours on the board' };
+  if (!Number.isFinite(want) || want < 0) return { error: 'weigh some TAO, or none at all' };
+
+  const target = String(candidate).toUpperCase();
+  const src = from ? String(from).toUpperCase() : null;
+  if (src) {
+    if (src === target) return { error: 'a move goes from one colour to another' };
+    const on = (mine && mine.get(src)) || 0;
+    if (on <= 0) return { error: `there is nothing on ${src} to move.` };
+    const keeps = Math.floor(Number(fromAmount));
+    /* A move only ever takes TAO off the colour it names. Letting it add there
+       would be a second weighing riding on the first, unsaid in the sentence
+       the wallet signed. */
+    if (!Number.isFinite(keeps) || keeps < 0 || keeps > on) {
+      return { error: `a move takes TAO off ${src}, it cannot add to it.` };
+    }
+  }
+
+  const next = changed(mine, { candidate: target, amount: want, from: src, fromAmount });
+  const total = [...next.values()].reduce((a, v) => a + v, 0);
+  if (total > have) {
+    const elsewhere = total - want;
+    return { error: elsewhere > 0
+      ? `That would put ${total.toLocaleString('en-NZ')} TAO on the board and this wallet holds ${have.toLocaleString('en-NZ')}. `
+        + `${elsewhere.toLocaleString('en-NZ')} is on other colours ... move some of it here instead.`
+      : `That is more than this wallet holds. Its TAO is ${have.toLocaleString('en-NZ')}.` };
+  }
+  return { ok: true, next, total };
+}
+
 /** What a signer is asked to sign. Readable, and specific enough that a
  *  signature for one nudge cannot be replayed on another. */
-export function weighMessage({ nudge, side, candidate, amount, address, issued }) {
+export function weighMessage({ nudge, side, candidate, amount, from, fromAmount, address, issued }) {
   return [
     'MintFace Artist Virtual Studio',
     '',
@@ -304,6 +387,10 @@ export function weighMessage({ nudge, side, candidate, amount, address, issued }
        signature for one colour cannot be spent on another. */
     ...(candidate ? [`Colour: ${String(candidate).toUpperCase()}`] : [`Side: ${String(side).toUpperCase()}`]),
     `Weight: ${amount} TAO`,
+    /* A move says where it came from and what that colour keeps, both
+       absolute, because "moved ten thousand" is not a thing a person can check
+       in a prompt and "#0E5890 keeps nought" is. */
+    ...(from ? [`Moved from: ${String(from).toUpperCase()}`, `Which keeps: ${Math.max(0, Math.floor(Number(fromAmount) || 0))} TAO`] : []),
     `Wallet: ${address}`,
     `Issued: ${issued}`,
     '',

@@ -156,9 +156,15 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .nudge-body .swatch{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule)}
 .nudge-body .swatch:last-child{border-bottom:0}
 .nudge-body .swatch .chip{width:46px;height:46px;flex:none;border:1px solid var(--rule);display:block}
-.nudge-body .swatch .on{display:flex;flex-direction:column;gap:3px;min-width:0}
-.nudge-body .swatch .hex{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--ink)}
-.nudge-body .swatch .weight{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+.nudge-body .swatch .on{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1 1 auto}
+/* The hex holds its width and the name beside it is the thing that gives way.
+   They were one nowrap box in a column allowed to shrink, which on a phone put
+   the name out past the edge of its own cell ... the same fault the studio's
+   board row had, in the other page that draws this template. */
+.nudge-body .swatch .hex{display:flex;align-items:baseline;gap:5px;min-width:0;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--ink)}
+.nudge-body .swatch .hex .hx{flex:0 0 auto;white-space:nowrap}
+.nudge-body .swatch .weight{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .nudge-body .swatch .weight b{font-weight:400;color:var(--ink)}
 /* the chosen one is marked by the ink rule, never by a second colour */
 .nudge-body .swatch.chosen{margin-left:-14px;padding-left:12px;border-left:2px solid var(--ink)}
@@ -185,8 +191,9 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .palette-body .done{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink);margin:20px 0 0;padding-left:12px;border-left:2px solid var(--ink);font-variant-numeric:tabular-nums}
 /* The nearest name, beside the hex it stands in for, and quieter than it. */
-.nudge-body .swatch .hex .cname{color:var(--faint);letter-spacing:.08em;font-size:10px;
-  text-transform:uppercase;margin-left:5px;white-space:nowrap}
+.nudge-body .swatch .hex .cname{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  color:var(--faint);letter-spacing:.08em;font-size:10px;
+  text-transform:uppercase;white-space:nowrap}
 @media(max-width:520px){
   .nudge-body{padding:0 20px}
   .palette-body{padding:0 20px}
@@ -563,7 +570,7 @@ function nudgeMarkup(x) {
     ? `<div class="board">${cands.map((c) => `<div class="swatch${x.locked && x.locked.hex === c.hex ? ' chosen' : ''}">
         ${pairChips(x, c.hex)}
         <span class="on">
-          <span class="hex">${e(c.hex)}${nameOf(c.hex)}</span>
+          <span class="hex"><span class="hx">${e(c.hex)}</span>${nameOf(c.hex)}</span>
           <span class="weight"><b>${worn(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
         </span>
       </div>`).join('')}</div>`

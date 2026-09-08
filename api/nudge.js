@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
-import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
 import { seriesState, constraintFor, checkCandidate, slotLine, seriesProvenanceLine } from './_lib/palette.js';
 import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
@@ -314,13 +314,26 @@ export async function POST(request) {
 
   /* ---- weighing ---- */
   let candidate = null;
+  /* Where this is being moved from, where it is a move. Changing your mind is
+     one act naming two colours, so that the position it lands on is the thing
+     checked rather than the sum of the one being left and the one being
+     taken ... which is never a position anybody asked for. */
+  let from = null;
+  let fromAmount = 0;
   if (candidates) {
     const colour = checkHex(body.candidate);
     if (colour.error) return json({ error: 'weigh behind one of the colours on the board' }, 400);
     candidate = colour.hex;
-    const onBoard = (data.weighings.proposals || [])
-      .some((x) => x.nudge === n.id && String(x.hex).toUpperCase() === candidate);
-    if (!onBoard) return json({ error: 'that colour is not on the board. Propose it first.' }, 404);
+    const onBoard = (hex) => (data.weighings.proposals || [])
+      .some((x) => x.nudge === n.id && String(x.hex).toUpperCase() === hex);
+    if (!onBoard(candidate)) return json({ error: 'that colour is not on the board. Propose it first.' }, 404);
+    if (body.from != null && String(body.from) !== '') {
+      const src = checkHex(body.from);
+      if (src.error) return json({ error: 'move it from one of the colours on the board' }, 400);
+      from = src.hex;
+      if (!onBoard(from)) return json({ error: 'that colour is not on the board.' }, 404);
+      fromAmount = Math.floor(Number(body.from_amount) || 0);
+    }
   } else if (!SIDES.includes(side)) {
     return json({ error: 'a nudge is a yes or a no' }, 400);
   }
@@ -331,25 +344,21 @@ export async function POST(request) {
   if (!candidates && amount <= 0) return json({ error: 'weigh some TAO, or none at all' }, 400);
 
   if (candidates) {
-    /* What is left of this wallet's TAO once everything it has already put
-       somewhere else is counted. Setting one colour never touches another, so
-       the only question is whether the whole set still fits. */
+    /* The position this leaves the wallet in, judged against what it holds.
+       Not the sum of what it had and what it is asking for: a collector moving
+       everything from one colour to another never holds both, and refusing
+       them for a total they were never going to be at is the bug this
+       replaces. */
     const mine = allocations((data.weighings.weighings || []).filter((x) => x.nudge === n.id)).by.get(address)
       || new Map();
-    let elsewhere = 0;
-    for (const [hex, v] of mine) if (hex !== candidate) elsewhere += v;
-    if (elsewhere + amount > held) {
-      const spare = Math.max(0, held - elsewhere);
-      return json({ error: elsewhere > 0
-        ? `That wallet has ${elsewhere.toLocaleString('en-NZ')} TAO on other colours, so ${spare.toLocaleString('en-NZ')} is what is left to put here.`
-        : `That is more than this wallet holds. Its TAO is ${held.toLocaleString('en-NZ')}.` }, 400);
-    }
+    const verdict = checkChange(mine, held, { candidate, amount, from, fromAmount });
+    if (verdict.error) return json({ error: verdict.error }, 400);
   } else if (amount > held) {
     return json({ error: `that is more than this wallet holds. Its TAO is ${held.toLocaleString('en-NZ')}.` }, 400);
   }
 
   if (!session) {
-    const message = weighMessage({ nudge: n.question, side, candidate, amount, address, issued });
+    const message = weighMessage({ nudge: n.question, side, candidate, amount, from, fromAmount, address, issued });
     let ok = false;
     try { ok = await verifyMessage({ address, message, signature }); } catch (e) { ok = false; }
     if (!ok) return json({ error: 'that signature does not match the wallet' }, 401);
@@ -367,6 +376,11 @@ export async function POST(request) {
   const store = JSON.parse(file.text);
   const row = {
     nudge: n.id, address, side: candidates ? null : side, candidate, amount, name,
+    /* A move carries the colour it came off and what that colour keeps, both
+       absolute. One row, because it is one act: the fold applies the source
+       before the target, so no reading of this record ever shows the wallet on
+       both at once. */
+    ...(from ? { from, from_amount: fromAmount } : {}),
     /* Written under the allocation model. Rows without this are from before it
        and are folded as the whole of a wallet's position, which is what they
        were ... see allocations() in _lib/nudges.js. */
@@ -377,7 +391,9 @@ export async function POST(request) {
   store.weighings = [...(store.weighings || []), row];
   if (storeConfigured()) await nudgeStore(pipe).add(row).catch(() => {});
   await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
-    `Nudge ${n.number}: ${name || address.slice(0, 10)} weighs ${amount} on ${candidate || side}`, file.sha);
+    from
+      ? `Nudge ${n.number}: ${name || address.slice(0, 10)} moves ${amount} to ${candidate} from ${from}`
+      : `Nudge ${n.number}: ${name || address.slice(0, 10)} weighs ${amount} on ${candidate || side}`, file.sha);
 
   const rows = latest(store.weighings, n.id);
   if (candidates) {

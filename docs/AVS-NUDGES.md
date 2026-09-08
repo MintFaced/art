@@ -205,3 +205,37 @@ So the projection moved into `_lib/nudges.js` where it can be tested, and which 
 A fortnight, to 21 September. Same thresholds, same clamp, same promise. It is the first nudge that cannot be answered with anything: a colour has to stand **0.30 clear of `#0E5890` and of the red line**, which leaves 26% of the streetscape range — the floor's quarter, only just, because the blue and the red between them cover a lot of it.
 
 Four of Strip Painting No. 1's own twelve colours survive it: the green `#5FB25B`, the sand `#D5C089`, the grey-green `#B4BBAE` and the pale pink `#EDBFB7`. Its blue `#82B2CE` misses by four thousandths. **The warm end is gone, because the red line was already sitting in it.**
+
+---
+
+## Changing your mind (2026-09-08)
+
+**A collector standing on one colour with everything they hold could not put it on another.** KeyRun had 13,749 TAO on `#E0E050`, tried to move it, and was told it was more TAO than the wallet holds. It was more than they hold *added to the position they were leaving* — a position nobody is ever in. Moving 13,749 from one colour to another is the same 13,749, and it is always legal.
+
+**The bug is the model showing through.** Each signature set one key, so asking for the second colour asked for a map that added up to twice their TAO until they took the first one back — two acts, in an order that leaves a collector's TAO on nothing in between if the second one fails. The validation was right about the arithmetic it was given and wrong about the question: it summed what they had and what they asked for, rather than reading the position the change lands in. **A change is now checked against the state it leaves behind**, in `checkChange()`, which the route and the card both call.
+
+**So a change is one act naming two colours, both absolute.** `from` and `from_amount` ride on the weighing: the sentence reads *#80E080 · 13,749 TAO · moved from #E0E050 · which keeps 0*, which is a thing a person can check in a prompt, where *move ten thousand* is not. The fold applies the colour it came off **before** the one it goes on, so no reading of the record ever shows the wallet on both. One row, one signature, two entries in the change log with the giving-up half marked `moved` — the same shape the migration from the single-position model already produced.
+
+Splitting is untouched. A wallet may still spread across as many colours as it likes; what changed is that getting from one arrangement to another is a move rather than a take-back and a re-weigh.
+
+**Where you stand is on the card, not in the fold.** `YOUR WEIGH-IN` sits under the board with a row per colour — *13,749 TAO on #E0E050* — and `CHANGE` beside each. Change opens the amount and the colour **together**, because that is one decision: this much, here. Move all of it or part of it to any colour on the board, adjust the number, save; what is left behind stays where it was and the panel says so in a line before it is signed for — *#80E080 → 13,749 · #E0E050 → 0 · 0 spare*. It was a folded line reading *You: 13.7K on #E0E050*, which answered where they stood a click late and how to change it not at all.
+
+**WEIGH, CHANGE, MOVE HERE.** A collector already standing somewhere read `WEIGH` on another colour as *propose another one* — a different act, with its own button, which is still where it was and still says `Propose this colour`. The button now says which of the three it is, and where the TAO comes off is named on the row taking it, with what is spare offered first.
+
+**The ledger answers both questions.** Where collectors stand is one row per collector — a wallet on two colours is one row with a chip for each, because somebody who moved their TAO twice is not two collectors — and *Every change* folds underneath it, which is where the log of how it got there belongs.
+
+**A render bug in the same row.** The hex and the colour name were one nowrap box in a column allowed to shrink, so in the sidebar and on a phone the name ran out under the total and the button and the three drew on top of each other. The hex holds its ground and the name ellipses; under 430px, and in the 352px sidebar, the total steps under the hex and the proposer under both.
+
+**Four checks had been quietly red since the fold.** They read `swatches` and `purse` by name, both folded into the row and the banner two refactors ago, so `indexOf` answered −1 and the slice was the page backwards. Repointed at `colourRow` and `position`. `scripts/tao/test-nudges.mjs` is now 196: moving everything legal where the sum was not, moving part leaving the rest behind, a move that tries to add to the colour it comes from refused, the fold never showing both at once, and the acceptance run end to end — weigh a colour, move it all to another, bring the number down, one row on the board at the final state.
+
+### The row, as columns (2026-09-08)
+
+**The overlap was two things placed in one cell.** The hex and its Pantone approximation were one box — two nowrap strings in the column that was allowed to shrink — so what ran out of the end of it was drawn over the TAO figure and the button. The first pass made that box truncate, which stops the collision and still asks the wrong question. **The row is five columns now, one thing in each**: the swatch pair, the hex, the name, the figure, the way in. Nothing shares a cell with anything else.
+
+**Who yields is the design.** The name is decoration and gives way first, truncating with an ellipsis; the figure is the data and never truncates, right-aligned on tabular figures so a column of them compares down the page; the hex is the identity and is not abbreviated either. **Where the panel is too narrow for four things on a line the name drops beneath the hex** and the figure keeps its place — asked of the panel with a container query rather than of the window, because the same card is a 352px sidebar on a desktop and the full width on a phone, and it is the panel that decides. Where a browser cannot ask that, the five columns stand and the name truncates, which is the behaviour this row wants anyway.
+
+**Checked as geometry, not by eye.** `test-nudges.mjs` parses every `grid-area` in the row out of the stylesheet, at both widths, and fails if any two overlap — the exact fault that shipped — plus that the figure carries `nowrap`, `text-align:right` and tabular figures and no ellipsis, and that the name carries one.
+
+**The template was suspect everywhere it renders, and it was.** The chip carried a `grid-area` from before the slivers existed, claiming a cell the pair already had. The collector page draws the same swatch with the same hex-and-name-in-one-box and now keeps them apart. The `STANDING CLEAR OF` captions had it too — `#0E5890 · ≈ PANTONE 2154 C` as a single string in a shrinking flex item — and are now a hex that holds and a name that gives way. In the ledger and the standings the collector's name is the cell that truncates and the figure is not, two colour marks in one standings cell sit beside each other rather than stacking, and in the palette strip a long name ellipses rather than wrapping and making one slot taller than the eleven beside it. Three dead sidebar rules for a `.swatch` this page stopped drawing two refactors ago went with it.
+
+**The Pantone approximations stay.** They were not in the spec and they are the reason a board of hexes is a board people can talk about out loud. They are simply the first thing to give up space.

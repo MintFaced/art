@@ -8,7 +8,7 @@
  *   node scripts/tao/test-nudges.mjs
  */
 import { createRequire } from 'node:module';
-import { tally, latest, isOpen, provenanceLine, palette, standing, allocations, spread, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive, bankCandidates, bankTally, bankingRows } from '../../api/_lib/nudges.js';
+import { tally, latest, isOpen, provenanceLine, palette, standing, allocations, changed, checkChange, spread, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive, bankCandidates, bankTally, bankingRows } from '../../api/_lib/nudges.js';
 const require2 = createRequire(import.meta.url);
 
 let pass = 0, fail = 0;
@@ -241,13 +241,19 @@ const holds = (x) => five[x] || 0;
   is('the record shows a signed change, not a live figure', /r\.moved \? '<span class="cl"/.test(led), true);
   is('and what a weighing is worth today is said on the board',
     /clamped: weight </.test(fs2.readFileSync(new URL('../../api/_lib/nudges.js', import.meta.url), 'utf8')), true);
-  const sw = page.slice(page.indexOf('function swatches'), page.indexOf('function purse'));
+  /* These read the board and the wallet's own position. They used to read
+     `swatches` and `purse`, which were folded into the row and the banner two
+     refactors ago ... so indexOf answered -1, the slice was the whole page
+     backwards, and four checks went quietly red without anybody having broken
+     anything. A check that reads a function by name has to be moved when the
+     function is. */
+  const sw = page.slice(page.indexOf('function colourRow'), page.indexOf('function colourRows'));
   is('a field per colour, not one box and a chosen colour',
-    /id="amt-\$\{e\(x\.id\)\}-\$\{e\(c\.hex\.slice\(1\)\)\}"/.test(sw), true);
+    /id="ramt-\$\{e\(x\.id\)\}-\$\{e\(c\.hex\.slice\(1\)\)\}"/.test(sw), true);
   is('pre-filled with what this wallet has on that colour', /value="\$\{on \|\| ''\}"/.test(sw), true);
   is('and nothing that picks one colour to the exclusion of the others',
     /data-pick/.test(page), false);
-  const purse = page.slice(page.indexOf('function purse'), page.indexOf('function proposer'));
+  const purse = page.slice(page.indexOf('function position(x)'), page.indexOf('function yours'));
   is('what is left to spread is shown', /available/.test(purse), true);
   is('and an over-weight wallet is told rather than corrected',
     /m\.over > 0/.test(purse) && /in proportion/.test(purse), true);
@@ -571,6 +577,228 @@ const holds = (x) => five[x] || 0;
   const cron = fs4.readFileSync(new URL('../../api/cron/nudges.js', import.meta.url), 'utf8');
   is('the cron banks through the tested projection', /bankCandidates\(p, n\)/.test(cron), true);
   is('and never takes the latest row on a board of colours', /latest\(weighings/.test(cron), false);
+}
+
+/* ================= changing your mind =================
+ *
+ * KeyRun stood on one colour with everything they hold and tried to move it to
+ * another. They were refused for holding more TAO than the wallet has ... true
+ * of the old position plus the new one, and never true of them. Moving 13,749
+ * from one colour to another is the same 13,749.
+ */
+{
+  const HELD = 13749;
+  const YEL = '#E0E050', GRN = '#80E080', TEAL = '#BCE1DD';
+  const mineOnly = (rows, who = 'k') => allocations(rows).by.get(who) || new Map();
+
+  /* The old arithmetic, written out, so the case cannot come back: what they
+     had plus what they asked for, against what they hold. */
+  const onYellow = mineOnly([put('k', YEL, HELD, '1')]);
+  is('the sum of the two positions is more than the wallet holds',
+    (onYellow.get(YEL) || 0) + HELD > HELD, true);
+  is('and the position it would land in is not',
+    checkChange(onYellow, HELD, { candidate: GRN, amount: HELD, from: YEL, fromAmount: 0 }).total, HELD);
+  is('so moving all of it is allowed',
+    Boolean(checkChange(onYellow, HELD, { candidate: GRN, amount: HELD, from: YEL, fromAmount: 0 }).ok), true);
+  is('and the same weighing without the move is not',
+    Boolean(checkChange(onYellow, HELD, { candidate: GRN, amount: HELD }).error), true);
+
+  /* Part of it moves too, and the rest stays where it was. */
+  const part = checkChange(onYellow, HELD, { candidate: GRN, amount: 5000, from: YEL, fromAmount: HELD - 5000 });
+  is('moving part leaves the rest on the colour it came off',
+    [part.next.get(YEL), part.next.get(GRN)], [8749, 5000]);
+  is('and the whole position still fits inside what is held', part.total, HELD);
+
+  /* A move only ever takes TAO off the colour it names. */
+  is('a move cannot add to the colour it comes from',
+    Boolean(checkChange(onYellow, HELD, { candidate: GRN, amount: 1, from: YEL, fromAmount: HELD + 1 }).error), true);
+  is('nor come off a colour with nothing on it',
+    Boolean(checkChange(onYellow, HELD, { candidate: GRN, amount: 1, from: TEAL, fromAmount: 0 }).error), true);
+  is('nor go from a colour to itself',
+    Boolean(checkChange(onYellow, HELD, { candidate: YEL, amount: 1, from: YEL, fromAmount: 0 }).error), true);
+  /* Over-committing is still refused, and now says what the position would be
+     rather than what the wallet holds. */
+  const over = checkChange(onYellow, HELD, { candidate: GRN, amount: HELD, from: YEL, fromAmount: 1 });
+  is('a move that keeps some behind and asks for the lot is refused',
+    Boolean(over.error), true);
+  is('and the refusal names the position, not the wallet',
+    /on the board and this wallet holds/.test(over.error), true);
+
+  /* One act, one row, and the fold applies the colour it came off first. */
+  const move = { nudge: 'p1', address: 'k', candidate: GRN, amount: HELD, from: YEL, from_amount: 0,
+    alloc: true, at: '2', signature: 's-move' };
+  const rows = [put('k', YEL, HELD, '1'), move];
+  const after = mineOnly(rows);
+  is('after the move the wallet is on one colour', [...after.keys()], [GRN]);
+  is('and it carries the whole of what they hold', after.get(GRN), HELD);
+  is('the wallet is never on both at once',
+    [...after.values()].reduce((a, v) => a + v, 0), HELD);
+
+  const hist = allocations(rows).history;
+  is('one act leaves two entries in the record', hist.filter((h) => h.signature === 's-move').length, 2);
+  is('and the one that gave the TAO up says it was a move',
+    hist.filter((h) => h.signature === 's-move').map((h) => [h.candidate, h.delta, h.moved]),
+    [[GRN, HELD, false], [YEL, -HELD, true]]);
+
+  /* The acceptance case, end to end: weigh a colour, move everything to
+     another, bring the number down, and read the board back. */
+  const down = { nudge: 'p1', address: 'k', candidate: GRN, amount: 10000, alloc: true, at: '3', signature: 's-down' };
+  const all = [...rows, down];
+  const held = (a) => (a === 'k' ? HELD : 0);
+  const stand = standing(all, 'k', held);
+  is('the wallet stands on one colour, at the number it settled on',
+    stand.allocations, [{ hex: GRN, amount: 10000, weight: 10000 }]);
+  is('with the rest of its TAO free again', stand.available, HELD - 10000);
+  is('and nothing over-committed anywhere along the way', stand.over, 0);
+  const board = palette(all, [prop(GRN, 'k', '0'), prop(YEL, 'k', '0')], held, null);
+  is('the board carries it once', board.total, 10000);
+  is('on the colour it was moved to', board.candidates[0].hex, GRN);
+  is('the colour it came off is on the board with nothing behind it',
+    board.candidates.find((c) => c.hex === YEL).total, 0);
+  is('and the collector is counted once', board.collectors, 1);
+
+  /* What the wallet signs when it moves says so, in absolute numbers. */
+  const msg = weighMessage({ nudge: 'q', candidate: GRN, amount: HELD, from: YEL, fromAmount: 0,
+    address: '0xk', issued: 'z' });
+  is('the sentence names the colour it came off', /^Moved from: #E0E050$/m.test(msg), true);
+  is('and what that colour keeps', /^Which keeps: 0 TAO$/m.test(msg), true);
+  is('a weighing that is not a move says neither',
+    /Moved from/.test(weighMessage({ nudge: 'q', candidate: GRN, amount: 1, address: '0xk', issued: 'z' })), false);
+
+  is('a change applies the colour it came off before the one it goes on',
+    [...changed(new Map([[YEL, HELD]]), { candidate: GRN, amount: HELD, from: YEL, fromAmount: 0 })],
+    [[GRN, HELD]]);
+
+  /* The route asks the same question the page does, and writes the act down
+     as one row. */
+  const fs5 = require2('node:fs');
+  const route2 = fs5.readFileSync(new URL('../../api/nudge.js', import.meta.url), 'utf8');
+  is('the route judges the position, not the sum', /checkChange\(mine, held/.test(route2), true);
+  is('and never adds what is elsewhere to what is asked for',
+    /elsewhere \+ amount > held/.test(route2), false);
+  is('a move is written down as one row naming both colours',
+    /\{ from, from_amount: fromAmount \}/.test(route2), true);
+
+  /* And the card says where the collector stands, on the card. */
+  const page2 = fs5.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
+  const card = page2.slice(page2.indexOf('function candidateCard'), page2.indexOf('function openCard'));
+  is('the position is drawn outside the fold', /\$\{position\(x\)\}/.test(card), true);
+  is('and the fold no longer carries it', /yours\(x\)/.test(card), false);
+  const stand2 = page2.slice(page2.indexOf('function positionPanel'), page2.indexOf('function yours'));
+  is('a position is editable where it is shown', /data-change=/.test(stand2), true);
+  is('and the amount and the colour are asked for together',
+    /class="amt"/.test(stand2) && /select class="to"/.test(stand2), true);
+  const row2 = page2.slice(page2.indexOf('function colourRow'), page2.indexOf('function colourRows'));
+  is('a collector already standing somewhere is offered a move, not a weigh',
+    /'Move here'/.test(row2), true);
+}
+
+/* ================= the candidate row, as columns =================
+ *
+ * The row shipped with two things placed in one cell, and what came out of it
+ * was the Pantone approximation drawn over the TAO figure. So the template is
+ * checked as geometry rather than by eye: every part of the row is placed, no
+ * two parts are placed on top of each other, and the parts that may be cut
+ * when it is tight are the ones that are decoration.
+ *
+ * Both layouts, because there are two ... the five columns a wide panel gets
+ * and the four a narrow one does ... and a row is only as good as its worst
+ * width.
+ */
+{
+  const fs6 = require2('node:fs');
+  const page = fs6.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
+  const css = page.slice(page.indexOf('<style>'), page.indexOf('</style>'));
+  /* The narrow block, taken by counting braces rather than to the end of the
+     stylesheet: a rule written after it is not an override of it. */
+  const at = css.indexOf('@container (max-width:460px)');
+  let depth = 0, end = at;
+  for (let i = css.indexOf('{', at); i < css.length; i += 1) {
+    if (css[i] === '{') depth += 1;
+    if (css[i] === '}') { depth -= 1; if (!depth) { end = i + 1; break; } }
+  }
+  const cq = css.slice(at, end);
+  const base = css.slice(0, at) + css.slice(end);
+
+  /* Every `.crow .thing{grid-area:a/b/c/d}` in a block, as rectangles. */
+  const placed = (text) => {
+    const out = new Map();
+    const re = /\.nudges \.crow \.([a-z]+)\s*\{([^}]*)\}/g;
+    let m;
+    while ((m = re.exec(text))) {
+      const g = /grid-area:\s*(\d+)\/(\d+)\/(\d+)\/(\d+)/.exec(m[2]);
+      if (g) out.set(m[1], g.slice(1, 5).map(Number));
+    }
+    return out;
+  };
+  /* Two rectangles sharing any cell at all. */
+  const clash = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
+  const collisions = (map) => {
+    const rows = [...map];
+    const bad = [];
+    for (let i = 0; i < rows.length; i += 1) {
+      for (let j = i + 1; j < rows.length; j += 1) {
+        if (clash(rows[i][1], rows[j][1])) bad.push(`${rows[i][0]}/${rows[j][0]}`);
+      }
+    }
+    return bad;
+  };
+
+  const wide = placed(base);
+  const narrow = new Map([...wide, ...placed(cq)]);
+  const parts = ['pair', 'hex', 'cname', 'w', 'by', 'go', 'put'];
+  is('every part of the row is placed', parts.filter((k) => !wide.has(k)), []);
+  is('and nothing shares a cell with anything else', collisions(wide), []);
+  is('nor at the narrow width, where the name drops beneath the hex', collisions(narrow), []);
+  is('the name is the part that moves, and it moves under the hex',
+    [narrow.get('cname')[0] > narrow.get('hex')[0], narrow.get('w')[0] === narrow.get('hex')[0]],
+    [true, true]);
+  is('the figure keeps its column at both widths',
+    [wide.get('w')[0], narrow.get('w')[0]], [1, 1]);
+
+  const rule = (name, text) => (new RegExp(`\\.nudges \\.crow \\.${name}\\s*\\{([^}]*)\\}`).exec(text) || [, ''])[1];
+  is('the figure never truncates and is right-aligned on tabular figures',
+    /white-space:nowrap/.test(rule('w', base)) && /text-align:right/.test(rule('w', base))
+      && /font-variant-numeric:tabular-nums/.test(rule('w', base)), true);
+  is('and the figure is never given an ellipsis to hide behind',
+    /text-overflow/.test(rule('w', base)), false);
+  is('the name truncates instead', /text-overflow:ellipsis/.test(rule('cname', base)), true);
+  is('and the hex is not inside the name\'s box',
+    /<span class="hex">\$\{e\(c\.hex\)\}/.test(page)
+      && /<\/span>\s*\n\s*\$\{nameOf\(c\.hex\)\}/.test(page), true);
+  is('the chip no longer claims a cell the pair already has',
+    /\.nudges \.crow \.chip\{grid-area/.test(base), false);
+  is('the row asks the panel how wide it is, not the window',
+    /container-type:inline-size/.test(base), true);
+
+  /* The same template, on the page that draws a banked board. */
+  const cpage = fs6.readFileSync(new URL('../../c.html', import.meta.url), 'utf8');
+  is('the collector page keeps the hex out of the name\'s box',
+    /<span class="hex"><span class="hx">/.test(cpage), true);
+  is('and lets the name give way there too',
+    /\.nudge-body \.swatch \.hex \.cname\{[^}]*text-overflow:ellipsis/.test(cpage), true);
+  is('with the figure beside it holding its width',
+    /\.nudge-body \.swatch \.weight\{[^}]*white-space:nowrap/.test(cpage), true);
+
+  /* And the record, which is the same contract in a table. */
+  is('a ledger name is cut before a ledger figure is',
+    /\.nudges \.ledger \.n\{[^}]*text-overflow:ellipsis/.test(base), true);
+  is('the ledger figure stays on one line, right, tabular',
+    /\.nudges \.ledger \.w\{[^}]*text-align:right;white-space:nowrap/.test(base)
+      && /\.nudges \.ledger table\{[^}]*tabular-nums/.test(base), true);
+  is('and every record on the page names that column so it can be',
+    (page.match(/<td class="n">/g) || []).length, 3);
+  /* Where a collector split their TAO the standings row draws two chips, so
+     they sit in a line rather than stacking one on the other. */
+  is('two colour marks in one cell sit beside each other',
+    /\.nudges \.ledger \.hexdot \+ \.hexdot\{margin-left/.test(base), true);
+
+  /* The position banner is the same sentence in a wrapping line. */
+  const stand3 = page.slice(page.indexOf('function positionRow'), page.indexOf('function position(x)'));
+  is('a position says its figure without truncating it',
+    /class="pw"/.test(stand3) && /\.nudges \.pos \.pw\{[^}]*white-space:nowrap/.test(base), true);
+  is('and the Pantone beside it is the part that gives way',
+    /\.nudges \.pos \.cname\{[^}]*text-overflow:ellipsis/.test(base), true);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

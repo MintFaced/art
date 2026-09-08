@@ -110,11 +110,15 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 /* A colour in a ledger row. Small enough to be a mark rather than a swatch:
    the board above is where a colour is judged, and here it is only saying
    which one. */
-.nudges .ledger .c{width:18px;padding-left:0}
+.nudges .ledger .c{width:18px;padding-left:0;white-space:nowrap}
 /* Not .dot: that is the availability mark, the one place this site uses
    colour to mean something, and it is round and translated up two pixels for
    sitting in a line of type. This is a square of paint. */
-.nudges .ledger .hexdot{display:block;width:12px;height:12px;border:1px solid var(--rule);border-radius:0}
+/* A standings row can carry two of them, where a wallet split its TAO across
+   two colours, so they sit in a line rather than stacking. */
+.nudges .ledger .hexdot{display:inline-block;vertical-align:middle;width:12px;height:12px;
+  border:1px solid var(--rule);border-radius:0}
+.nudges .ledger .hexdot + .hexdot{margin-left:3px}
 .nudges .ledger .t{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--faint);white-space:nowrap;text-align:right}
 /* A weighing that shrank because its wallet did. Said quietly beside the
@@ -134,6 +138,12 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .ledger td{padding:10px 0;border-bottom:1px solid var(--rule);font-size:13.5px}
 .nudges .ledger th + th,.nudges .ledger td + td{padding-left:22px}
 .nudges .ledger .w{font-family:var(--font-mono);font-size:12.5px;text-align:right;white-space:nowrap}
+/* The collector's name takes what is left and is cut when there is not enough
+   of it. `max-width:0` with `width:100%` is how a table cell is told to do
+   that: without it a long .eth name widens the table until the figure beside
+   it is off the edge of a 352px panel, which is the same bug the board row
+   had, wearing a table for a hat. */
+.nudges .ledger .n{max-width:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nudges .ledger .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .nudges .ledger tr:last-child td{border-bottom:0}
 .nudges .ledger td a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
@@ -167,29 +177,48 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .head .when{margin:0;flex:0 0 auto}
 
 .nudges .crows{margin:20px 0 0;max-width:560px}
-/* Four columns and two rows: the chip stands beside both, the hex and the
-   total hold the first line, and who proposed it sits under the hex where it
-   can truncate without moving anything above it. The field, when it is asked
-   for, becomes a third row across the whole width. */
-.nudges .crow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;
+/* ---------- the candidate row ----------
+ *
+ * FIVE COLUMNS, ONE THING IN EACH. The swatch pair, the hex, the name it goes
+ * by, what is on it, and the way in. Nothing shares a cell with anything else,
+ * which is the whole of the fix: the hex and its name were one box with two
+ * nowrap strings in it, that box was the column allowed to shrink, and what
+ * came out the end of it was drawn straight over the total and the button.
+ *
+ * WHO YIELDS IS THE DESIGN. The name is the decoration and gives up its space
+ * first, truncating; the figure is the data and never truncates, right-aligned
+ * on tabular figures so a column of them can be compared down the page; the
+ * hex is the identity and is never abbreviated either. Who proposed it sits
+ * under the hex where it can be cut without moving anything above it, and the
+ * field, when it is asked for, is a row of its own across the whole width. */
+.nudges .crow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto;
   column-gap:11px;row-gap:2px;align-items:center;padding:11px 0;
   border-bottom:1px solid var(--rule)}
 .nudges .crows .crow:last-child{border-bottom:0}
-.nudges .crow .chip{grid-area:1/1/3/2;width:24px;height:24px;border:1px solid var(--rule);display:block}
+/* No placement: the chip is drawn inside the pair, which is the grid item.
+   It carried a `grid-area` of its own from before the slivers existed, which
+   is a second element claiming a cell that something else already has ... the
+   shape of exactly the bug this row had. */
+.nudges .crow .chip{width:24px;height:24px;border:1px solid var(--rule);display:block}
+/* The swatch and its slivers, which are one item standing beside both rows. */
+.nudges .crow .pair{grid-area:1/1/3/2;align-self:stretch}
 .nudges .crow .hex{grid-area:1/2/2/3;font-family:var(--font-mono);font-size:11.5px;
-  letter-spacing:.12em;color:var(--ink);white-space:nowrap}
-/* The nearest name, beside the hex it stands in for. Quieter than the hex,
-   because it is a way to say the colour rather than the colour itself. */
-.nudges .crow .hex .cname{color:var(--faint);letter-spacing:.08em;font-size:9.5px;
-  text-transform:uppercase;margin-left:6px}
-.nudges .crow .w{grid-area:1/3/2/4;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.nudges .crow .by{grid-area:2/2/3/5;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
+  letter-spacing:.12em;color:var(--ink);white-space:nowrap;min-width:0;
+  overflow:hidden;text-overflow:ellipsis}
+/* The nearest Pantone, beside the hex it stands in for. A column of its own,
+   so that giving way is truncation rather than trespass. */
+.nudges .crow .cname{grid-area:1/3/2/4;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-family:var(--font-mono);color:var(--faint);
+  letter-spacing:.08em;font-size:9.5px;text-transform:uppercase}
+.nudges .crow .w{grid-area:1/4/2/5;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;
+  white-space:nowrap;text-align:right}
+.nudges .crow .by{grid-area:2/2/3/6;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
   text-transform:uppercase;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nudges .crow .by a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
 .nudges .crow .by a:hover{border-color:var(--ink);color:var(--muted)}
 /* The affordance, at the weight of a row rather than of a card. */
-.nudges .crow .go{grid-area:1/4/2/5;padding:6px 11px;background:none;color:var(--muted);
+.nudges .crow .go{grid-area:1/5/2/6;padding:6px 11px;background:none;color:var(--muted);
   border:1px solid var(--rule);cursor:pointer;font-family:var(--font-mono);font-size:9.5px;
   letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .nudges .crow .go:hover{border-color:var(--ink);color:var(--ink)}
@@ -197,12 +226,88 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 /* A colour this wallet is already on is marked the way the board marks it. */
 .nudges .crow.mine .chip{box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--rule)}
 .nudges .crow.chosen .hex{text-transform:uppercase;letter-spacing:.14em}
-/* The field, on the row, and only once it is asked for. */
-.nudges .crow .put{grid-area:3/1/4/5;display:none;gap:7px;align-items:center;padding:9px 0 2px}
+/* The field, on the row, and only once it is asked for. It wraps: on a phone
+   the amount, the colour it comes off and the button do not fit on one line,
+   and a row that overflows is the bug this card already had once. */
+.nudges .crow .put{grid-area:3/1/4/6;display:none;flex-wrap:wrap;gap:7px;align-items:center;padding:9px 0 2px}
 .nudges .crow.putting .put{display:flex}
 .nudges .crow.putting .go{border-color:var(--ink);color:var(--ink)}
-.nudges .crow .put .amt{flex:1 1 auto;min-width:0;width:auto;padding:8px 10px;font-size:13px}
+.nudges .crow .put .amt{flex:1 1 90px;min-width:0;width:auto;padding:8px 10px;font-size:13px}
 .nudges .crow .put .weigh{flex:none;padding:8px 14px;font-size:10px;letter-spacing:.14em}
+/* Where the TAO comes off, when the wallet has none spare. Named on the row
+   that is taking it, because "move it here" is a sentence with two ends. */
+.nudges .src{flex:1 1 128px;min-width:0;max-width:100%;padding:7px 8px;background:var(--paper);
+  color:var(--ink);border:1px solid var(--rule);font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.nudges .from{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint)}
+
+/* ---------- your weigh-in ----------
+ *
+ * A collector's own position, on the card rather than inside the fold. It was
+ * one line of a folded panel, which meant the answer to "where do I stand" was
+ * behind a click and the answer to "how do I change it" was not on the page at
+ * all. Changing your mind is the act this surface is for.
+ */
+.nudges .stand{margin:18px 0 0;padding:12px 0 0;border-top:1px solid var(--rule);max-width:560px}
+.nudges .stand .slab{margin:0 0 7px;font-family:var(--font-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+/* The same discipline as the board row, in a line that wraps rather than a
+   grid: the figure and the hex are what this sentence is, and they hold their
+   own width; the Pantone is the one thing allowed to be cut. */
+.nudges .pos{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:2px 0}
+.nudges .pos .chip{width:16px;height:16px;flex:none;border:1px solid var(--rule);display:block}
+.nudges .pos .pw{flex:0 0 auto;font-family:var(--font-mono);font-size:11px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.nudges .pos .cname{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint)}
+.nudges .pos .cl{flex:none;font-size:9.5px;letter-spacing:.1em;color:var(--faint)}
+.nudges .pos .go{flex:none;margin-left:auto;padding:6px 11px;background:none;color:var(--muted);
+  border:1px solid var(--rule);cursor:pointer;font-family:var(--font-mono);font-size:9.5px;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.nudges .pos .go:hover{border-color:var(--ink);color:var(--ink)}
+.nudges .pos .go:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.nudges .pos.changing .go{border-color:var(--ink);color:var(--ink)}
+.nudges .stand .spare{margin:8px 0 0;font-family:var(--font-mono);font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+/* Amount and colour together, because they are one decision: this much, here.
+   Asking for them apart is what made moving read as proposing all over again. */
+.nudges .chg{display:none;flex-wrap:wrap;gap:7px;align-items:center;width:100%;padding:9px 0 4px}
+.nudges .pos.changing .chg{display:flex}
+.nudges .chg .amt{flex:1 1 90px;min-width:0;width:auto;padding:8px 10px;font-size:13px}
+.nudges .chg .lab{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint)}
+.nudges .chg .to{flex:1 1 150px;min-width:0;padding:7px 8px;background:var(--paper);color:var(--ink);
+  border:1px solid var(--rule);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em}
+.nudges .chg .weigh{flex:none;padding:8px 14px;font-size:10px;letter-spacing:.14em}
+.nudges .res{flex:1 0 100%;margin:2px 0 0;font-family:var(--font-mono);font-size:9.5px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.nudges .res.bad{color:var(--ink)}
+
+/* The board where the panel is narrow ... the studio sidebar at 352px, a
+   phone, anywhere the five columns stop breathing. THE NAME DROPS BENEATH THE
+   HEX; the figure keeps its place on the first line. It is the decoration and
+   the other is the data, and a row that has to give something up gives up the
+   decoration.
+ *
+ * Asked of the panel rather than of the window, because the same card is a
+   sidebar on a desktop and the whole width on a phone, and it is the panel it
+   sits in that decides whether four things fit. Where a browser cannot ask
+   that question the five columns stand and the name truncates, which is the
+   thing this row is for. */
+.nudges .nudge{container-type:inline-size}
+@container (max-width:460px){
+  .nudges .crow{grid-template-columns:auto minmax(0,1fr) auto auto}
+  .nudges .crow .pair{grid-area:1/1/4/2}
+  .nudges .crow .hex{grid-area:1/2/2/3}
+  .nudges .crow .w{grid-area:1/3/2/4}
+  .nudges .crow .go{grid-area:1/4/2/5}
+  .nudges .crow .cname{grid-area:2/2/3/5}
+  .nudges .crow .by{grid-area:3/2/4/5}
+  .nudges .crow .put{grid-area:4/1/5/5}
+}
 /* The colours past the fifth. The same chevron line as Details, one step in. */
 .nudges .rest{border-top:1px solid var(--rule)}
 .nudges .rest>summary{list-style:none;cursor:pointer;padding:11px 0 0;
@@ -273,19 +378,26 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .against .alab{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--faint);display:block}
 .nudges .against .row{display:flex;flex-wrap:wrap;gap:18px;margin:11px 0 0}
-.nudges .against .ac{display:flex;gap:9px;align-items:center}
+.nudges .against .ac{display:flex;gap:9px;align-items:center;min-width:0}
 .nudges .against .ac .chip{width:34px;height:34px;flex:none;border:1px solid var(--rule);display:block}
-.nudges .against .ac .al{display:flex;flex-direction:column;gap:2px}
+.nudges .against .ac .al{display:flex;flex-direction:column;gap:2px;min-width:0}
 .nudges .against .ac .al b{font-weight:400;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink)}
 .nudges .against .ac .al span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;color:var(--faint)}
+/* The hex and the name it goes by, on one line and in that order of
+   importance ... the same contract the board row keeps. They were one string
+   in one span, which is the shape the collision came in: the identity and the
+   decoration sharing a box, and the box being the part that has to give. */
+.nudges .against .ac .l2{display:flex;align-items:baseline;gap:5px;min-width:0}
+.nudges .against .ac .ahex{flex:0 0 auto;white-space:nowrap;color:var(--muted)}
+.nudges .against .ac .cname{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
 .nudges .against .anote{font-size:13.5px;line-height:1.62;color:var(--muted);margin:13px 0 0;max-width:36em}
 /* The pair, on a row and on a full swatch. The locked colours are slivers
    rather than squares: they are the thing being compared against, not another
    candidate, and drawing them the same size would put twelve equals on a row
    that has one. */
 .nudges .pair{display:flex;align-items:stretch;gap:3px}
-.nudges .crow .pair{grid-area:1/1/3/2}
 .nudges .pair .lk{width:9px;flex:none;border:1px solid var(--rule);display:block}
 .nudges .verdict{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);font-variant-numeric:tabular-nums;flex:1 1 14em;min-width:0}
@@ -513,9 +625,10 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
   /* A column this narrow sets its own furniture: the fields go full width and
      the record scrolls sideways inside the panel rather than widening it. */
   #main.asking #open .amt,#main.asking #open .propose input[type="color"]{width:100%}
-  #main.asking #open .swatch{flex-wrap:wrap}
-  #main.asking #open .swatch .put{width:100%;margin-left:0;margin-top:4px}
-  #main.asking #open .swatch .put .amt{flex:1 1 auto;width:auto}
+  /* The row itself is not written here: it asks the panel how wide it is, and
+     this panel is 352px, so it gets the narrow layout without being told. */
+  #main.asking #open .chg .amt,#main.asking #open .put .amt{flex:1 1 100%}
+  #main.asking #open .chg .to,#main.asking #open .src{flex:1 1 100%}
   #main.asking #open .ledger{overflow-x:auto}
   #main.asking #open .ledger table{min-width:280px}
 }
@@ -1783,7 +1896,11 @@ const sent = (location.hash.match(/^#m-(\d+)$/) || [])[1];
    state rather than DOM because a weighing redraws the card, and a field that
    closed itself under the person who had just used it would read as the act
    having been refused. */
-const NUDGE = { state: null, tao: 0, picked: {}, putting: new Set() };
+/* `putting` is a row open for a number; `moving` is a position open for a
+   change. Both are held here rather than in the DOM, because a card is rebuilt
+   whenever the board comes back and a panel somebody is typing into should not
+   close under them. */
+const NUDGE = { state: null, tao: 0, picked: {}, putting: new Set(), moving: new Set() };
 const num = (x) => Number(x || 0).toLocaleString('en-NZ');
 const dateOf = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
 /* A ledger row is one of many and a nudge runs for a fortnight, so the day and
@@ -1819,7 +1936,7 @@ function ledger(x) {
     <tbody>${x.ledger.map((r) => {
       const label = e(r.name || short(r.address));
       return `<tr>
-        <td>${r.url ? `<a href="${e(r.url)}">${label}</a>` : label}</td>
+        <td class="n">${r.url ? `<a href="${e(r.url)}">${label}</a>` : label}</td>
         <td class="s">${e(r.side)}${r.clamped ? ' &middot; clamped' : ''}</td>
         <td class="w">${num(r.weight)}</td>
       </tr>`;
@@ -1868,8 +1985,9 @@ function againstBlock(x) {
     <span class="alab">Standing clear of</span>
     <div class="row">${list.map((a) => `<span class="ac">
       <span class="chip" style="background:${e(a.hex)}"></span>
-      <span class="al"><b>Locked &middot; ${e(a.caption)}</b><span>${e(a.hex)}${
-        a.name ? ` &middot; ${e(a.name.label)}` : ''}</span></span>
+      <span class="al"><b>Locked &middot; ${e(a.caption)}</b>
+        <span class="l2"><span class="ahex">${e(a.hex)}</span>${
+          a.name ? `<span class="cname">${e(a.name.label)}</span>` : ''}</span></span>
     </span>`).join('')}</div>
     <p class="anote">At least ${c.floor.toFixed(2)} clear of each,
       ${Math.round(c.field * 100)}% of the range still open. The picker refuses the rest.</p>
@@ -1888,6 +2006,58 @@ const mineOn = (x, hex) => {
   const a = x.mine && x.mine.allocations ? x.mine.allocations.find((v) => v.hex === hex) : null;
   return a ? a.amount : 0;
 };
+
+/* Every colour this wallet stands on, heaviest first, and what is left over. */
+const myPositions = (x) => ((x.mine && x.mine.allocations) || [])
+  .filter((a) => Number(a.amount) > 0)
+  .slice().sort((a, b) => Number(b.amount) - Number(a.amount));
+const mySpare = (x) => Math.max(0, (x.mine && x.mine.available) || 0);
+
+/* What a change asks for, and where it has to come from.
+ *
+ * The number typed is always the amount that will SIT ON the colour it is
+ * typed against ... absolute, the way every weighing has been, and the way the
+ * sentence a wallet signs reads. This works out how much of it has to come off
+ * another colour to get there: nothing, where the wallet has TAO spare, and
+ * the rest of it off the colour named as the source.
+ *
+ * The old check asked whether what they already had plus what they were asking
+ * for fitted, which is a position nobody is ever in. Moving 13,749 from one
+ * colour to another is the same 13,749.
+ */
+function changeCalc(x, { candidate, amount, source }) {
+  const onTarget = mineOn(x, candidate);
+  const src = source && source !== candidate ? source : null;
+  const onSource = src ? mineOn(x, src) : 0;
+  /* What this colour needs beyond what it already carries, taken off the
+     colour named first and out of what is spare after that. Named first,
+     because somebody who says "move my weigh-in here" means the weigh-in
+     rather than whatever they happen to have lying spare. */
+  const need = Math.max(0, amount - onTarget);
+  const took = Math.min(need, onSource);
+  const short = need - took - mySpare(x);
+  if (short > 0) {
+    const most = onTarget + mySpare(x) + onSource;
+    return { error: src
+      ? `${src} has ${num(onSource)} TAO on it and you have ${num(mySpare(x))} spare, so ${num(most)} is the most that can sit on ${candidate}.`
+      : `You have ${num(mySpare(x))} TAO spare, so ${num(most)} is the most that can sit on ${candidate}. Move some off a colour you are already on.` };
+  }
+  if (!took) return { ok: true, from: null, fromAmount: 0, took: 0 };
+  return { ok: true, from: src, fromAmount: onSource - took, took };
+}
+
+/* What the change will leave behind, said before it is signed for. Two colours
+   move in one act, so the card says where both of them land. */
+function changeLine(x, { candidate, amount, source }) {
+  const c = changeCalc(x, { candidate, amount, source });
+  if (c.error) return { bad: true, text: c.error };
+  const parts = [`${candidate} \u2192 ${num(amount)}`];
+  if (c.from) parts.push(`${c.from} \u2192 ${num(c.fromAmount)}`);
+  /* What is left over afterwards: what was spare, plus whatever this colour
+     gives back, plus whatever came off the one it was moved from. */
+  const spare = mySpare(x) + mineOn(x, candidate) - amount + c.took;
+  return { bad: false, text: `${parts.join(' \u00b7 ')} \u00b7 ${num(Math.max(0, spare))} spare` };
+}
 
 /* Proposing is its own act with its own signature, and it is not a weighing.
    One colour per wallet, and final: other people weigh on it, and a proposal
@@ -1987,12 +2157,57 @@ function thresholdBars(x) {
  * A single signature can leave two entries, where a row from before the
  * allocation model moved weight rather than adding it. Those are marked, so
  * nobody reads one act as two people changing their minds. */
+/* Where every collector stands now: one row each, whatever it took to get
+   there. A wallet on two colours is still one row, with a chip for each ...
+   the question this table answers is who is behind what, and a collector who
+   moved their TAO twice is not two collectors.
+ *
+ * The figures are what each position counts for today, clamped and scaled the
+ * way the board counts them, so a row can shrink between readings and says
+ * `clamped` when it has. */
+function standingsRows(x) {
+  const by = new Map();
+  for (const c of x.candidates || []) {
+    for (const w of c.wallets || []) {
+      if (!(Number(w.weight) > 0)) continue;
+      const key = String(w.address).toLowerCase();
+      if (!by.has(key)) by.set(key, { ...w, total: 0, on: [], clamped: false });
+      const r = by.get(key);
+      r.on.push({ hex: c.hex, weight: Number(w.weight) || 0 });
+      r.total += Number(w.weight) || 0;
+      r.clamped = r.clamped || Boolean(w.clamped);
+    }
+  }
+  const rows = [...by.values()].sort((a, b) => b.total - a.total);
+  if (!rows.length) return '';
+  return `<div class="ledger"><table>
+    <thead><tr><th class="c"></th><th>Collector</th><th class="w">Stands at</th><th class="t"></th></tr></thead>
+    <tbody>${rows.map((r) => {
+      const label = e(r.name || short(r.address));
+      const who = r.url && !r.private ? `<a href="${e(r.url)}">${label}</a>` : `<span class="anon">${label}</span>`;
+      return `<tr>
+        <td class="c">${r.on.map((o) => `<span class="hexdot" style="background:${e(o.hex)}"
+          title="${e(o.hex)}"></span>`).join('')}</td>
+        <td class="n">${who}</td>
+        <td class="w">${num(r.total)} TAO${r.on.length > 1
+          ? `<span class="cl"> across ${r.on.length}</span>` : ''}</td>
+        <td class="t">${r.clamped ? '<span class="cl">clamped</span>' : ''}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
 function ledgerRows(x) {
   const rows = x.ledger || [];
   const summary = `<p class="tally">${x.collectors} collector${x.collectors === 1 ? '' : 's'}
     &middot; ${num(x.total)} TAO weighed</p>`;
   if (!rows.length) return `${summary}<p class="none">Nobody has weighed in yet.</p>`;
-  return `${summary}<div class="ledger"><table>
+  /* Standings first, because what stands is the question; the log of every
+     change is underneath it, folded, for the question of how it got there. */
+  return `${summary}${standingsRows(x)}
+  <details class="rest" data-fold="log-${e(x.id)}"${FOLD.open(`log-${x.id}`) ? ' open' : ''}>
+    <summary>Every change <span class="chev" aria-hidden="true">&#709;</span></summary>
+  <div class="ledger"><table>
     <thead><tr><th class="c"></th><th>Collector</th><th class="w">Change</th><th class="t">When</th></tr></thead>
     <tbody>${rows.map((r) => {
       const label = e(r.name || short(r.address));
@@ -2003,12 +2218,12 @@ function ledgerRows(x) {
       return `<tr${r.moved ? ' class="moved"' : ''}>
         <td class="c"><span class="hexdot" style="background:${e(r.candidate || '#fff')}"
           title="${e(r.candidate || '')}"></span></td>
-        <td>${who}</td>
+        <td class="n">${who}</td>
         <td class="w"><span class="${d < 0 ? 'down' : 'up'}">${d < 0 ? '&minus;' : '+'}${num(Math.abs(d))}</span>${r.moved ? '<span class="cl"> moved</span>' : ''}</td>
         <td class="t">${e(shortDate(r.at))}</td>
       </tr>`;
     }).join('')}</tbody>
-  </table></div>`;
+  </table></div></details>`;
 }
 
 /* ---------- the fold ----------
@@ -2079,19 +2294,37 @@ function colourRow(x, c, editable) {
      draw. A weighing redraws this card, and it should come back where it was
      rather than closing under the person who just used it. */
   const putting = editable && NUDGE.putting.has(key);
+  /* WEIGH, CHANGE, MOVE HERE. A collector already standing somewhere reads
+     WEIGH on another colour as "propose another one" ... which is a different
+     act with a different button ... and then finds their TAO refused for being
+     in two places. The button says which of the three this is, and the banner
+     above says where they are standing while they read it. */
+  const elsewhere = editable ? myPositions(x).filter((a) => a.hex !== c.hex) : [];
+  const label = on ? 'Change' : (elsewhere.length && !mySpare(x) ? 'Move here' : 'Weigh');
+  /* Where it comes off, named on the row taking it, and only where the wallet
+     has nothing spare to weigh with. */
+  const needsSource = editable && elsewhere.length > 0;
+  const src = needsSource ? `<span class="from">from</span>
+      <select class="src" aria-label="Where the TAO comes from">
+        ${mySpare(x) > 0 ? `<option value="">Spare &middot; ${num(mySpare(x))} TAO</option>` : ''}
+        ${elsewhere.map((a) => `<option value="${e(a.hex)}">${e(a.hex)} &middot; ${num(a.amount)} TAO</option>`).join('')}
+      </select>` : '';
   return `<div class="crow${chosen ? ' chosen' : ''}${on ? ' mine' : ''}${putting ? ' putting' : ''}">
     ${pair(x, c.hex)}
-    <span class="hex">${e(c.hex)}${nameOf(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
+    <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
+    ${nameOf(c.hex)}
     <span class="w">${num(c.total)} TAO</span>
     ${editable
       ? `<button type="button" class="go" data-put="${e(key)}"
-           aria-expanded="${putting}">${on ? 'Change' : 'Weigh'}</button>`
+           aria-expanded="${putting}">${label}</button>`
       : ''}
     ${who ? `<span class="by">proposed by ${who}</span>` : '<span class="by"></span>'}
     ${editable ? `<span class="put">
       <input class="amt" id="ramt-${e(x.id)}-${e(c.hex.slice(1))}" type="text" inputmode="numeric"
         value="${on || ''}" placeholder="0" aria-label="TAO on ${e(c.hex)}">
-      <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">Put it on</button>
+      ${src}
+      <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">${on ? 'Save' : (needsSource ? 'Move it here' : 'Put it on')}</button>
+      <p class="res" aria-live="polite"></p>
     </span>` : ''}
   </div>`;
 }
@@ -2112,28 +2345,81 @@ function colourRows(x) {
     : ''}`;
 }
 
+/* ---------- your weigh-in ----------
+ *
+ * A collector's own position, plainly, on the card rather than folded away:
+ * what they have on which colour, and CHANGE beside it. It was a line inside
+ * Details, which made the two questions a collector actually has ... where do
+ * I stand, and how do I change it ... a click away and unanswered
+ * respectively.
+ *
+ * CHANGE opens the amount and the colour together, because they are one
+ * decision: this much, here. Move all of it or part of it to any colour on the
+ * board, adjust the number, save. Proposing is a different act and keeps its
+ * own button, further down, where it always was.
+ */
+function positionPanel(x, a) {
+  const cs = (x.candidates || []).slice().sort((p, q) => Number(q.total || 0) - Number(p.total || 0));
+  const line = changeLine(x, { candidate: a.hex, amount: a.amount, source: a.hex });
+  return `<div class="chg" data-src="${e(a.hex)}">
+    <input class="amt" type="text" inputmode="numeric" value="${a.amount}"
+      aria-label="TAO to weigh">
+    <span class="lab">TAO on</span>
+    <select class="to" aria-label="Which colour">
+      ${cs.map((c) => `<option value="${e(c.hex)}"${c.hex === a.hex ? ' selected' : ''}>${e(c.hex)}${
+        MF.colour.name(c.hex) ? ` \u00b7 ${e(MF.colour.name(c.hex).label)}` : ''}</option>`).join('')}
+    </select>
+    <button class="weigh" data-weigh="${e(x.id)}" data-src="${e(a.hex)}">Save</button>
+    <p class="res${line.bad ? ' bad' : ''}" aria-live="polite">${e(line.text)}</p>
+  </div>`;
+}
+
+function positionRow(x, a) {
+  const key = `${x.id}|${a.hex}`;
+  const open = NUDGE.moving.has(key);
+  const clamped = Number(a.weight) < Number(a.amount)
+    ? `<span class="cl">counts ${worn(a.weight)}</span>` : '';
+  return `<div class="pos${open ? ' changing' : ''}">
+    <span class="chip" style="background:${e(a.hex)}"></span>
+    <span class="pw">${num(a.amount)} TAO on ${e(a.hex)}</span>
+    ${nameOf(a.hex)}
+    ${clamped}
+    <button type="button" class="go" data-change="${e(key)}" aria-expanded="${open}">Change</button>
+    ${positionPanel(x, a)}
+  </div>`;
+}
+
+function position(x) {
+  if (!x.open || x.kind !== 'candidates' || !mayWeigh()) return '';
+  const m = x.mine;
+  const held = m ? m.held : NUDGE.tao;
+  const on = myPositions(x);
+  if (!on.length) {
+    return `<div class="stand"><p class="slab">Your weigh-in</p>
+      <p class="spare">Nothing on the board yet &middot; ${num(held)} TAO to weigh</p></div>`;
+  }
+  /* Over-allocated, which selling down does without anybody weighing. Said
+     here, where the position it is about is, rather than in the fold. */
+  const over = m && m.over > 0
+    ? `<p class="spare">You have ${num(m.asked)} TAO spread and hold ${num(m.held)}.
+       The board counts ${num(m.held)} of it, in proportion, until you bring it down.</p>`
+    : `<p class="spare">${num(mySpare(x))} available &middot; your TAO ${num(held)}</p>`;
+  return `<div class="stand">
+    <p class="slab">Your weigh-in</p>
+    ${on.map((a) => positionRow(x, a)).join('')}
+    ${over}
+  </div>`;
+}
+
 /* Where this wallet stands, in one line, and only where there is a wallet:
    a reader who has not signed in is told that once, inside, rather than told
    they have nothing every time they open the page. */
 function yours(x) {
   if (!x.open || !mayWeigh()) return '';
   const m = x.mine;
-  if (x.kind !== 'candidates') {
-    return `<p class="yours">You: ${m ? `${worn(m.amount)} on ${e(m.side)}` : 'nothing weighed yet'}</p>`;
-  }
-  if (m && m.over > 0) {
-    return `<p class="yours over">You have ${num(m.asked)} TAO spread and hold ${num(m.held)}.
-      The board counts ${num(m.held)} of it, in proportion, until you bring it down.</p>`;
-  }
-  const on = ((m && m.allocations) || []).filter((a) => Number(a.amount) > 0)
-    .slice().sort((a, b) => Number(b.amount) - Number(a.amount));
-  /* What is left to spread rides on the same line. It was on its own paragraph
-     under a second copy of the board; the board is drawn once now, and a
-     wallet's whole position fits in one sentence. */
-  const left = m ? ` &middot; ${worn(m.available)} available` : '';
-  if (!on.length) return `<p class="yours">You: nothing on the board yet${left}</p>`;
-  return `<p class="yours">You: ${worn(on[0].amount)} on ${e(on[0].hex)}${on.length > 1
-    ? ` &middot; and ${on.length - 1} more` : ''}${left}</p>`;
+  /* A yes or a no only. A board of colours says this in `position()`, on the
+     card and outside the fold, where it can also be changed. */
+  return `<p class="yours">You: ${m ? `${worn(m.amount)} on ${e(m.side)}` : 'nothing weighed yet'}</p>`;
 }
 
 /* How far the lock is, folded to one line. Both thresholds stay on it, because
@@ -2163,7 +2449,7 @@ function candidateCard(x) {
      question, asked after they have seen what is in front. */
   const inner = `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
     ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
-    ${x.open ? `${yours(x)}${lockLine(x)}` : ''}
+    ${x.open ? lockLine(x) : ''}
     ${thresholdBars(x)}
     ${ledgerRows(x)}
     ${!x.open ? '' : (mayWeigh()
@@ -2187,6 +2473,7 @@ function candidateCard(x) {
     </div>
     ${x.open ? againstBlock(x) : ''}
     ${x.open ? colourRows(x) : ''}
+    ${position(x)}
     <p class="said" id="say-${e(x.id)}" hidden></p>
     ${folded(x, 'Details', inner)}
   </div>`;
@@ -2310,18 +2597,65 @@ document.addEventListener('click', (ev) => {
     }
     return;
   }
+  /* A position, opened for changing. The amount and the colour come up
+     together, because moving is one decision rather than a take-back followed
+     by a weighing. */
+  const chg = ev.target.closest('[data-change]');
+  if (chg) {
+    const key = chg.dataset.change;
+    const row = chg.closest('.pos');
+    const on = !NUDGE.moving.has(key);
+    if (on) NUDGE.moving.add(key); else NUDGE.moving.delete(key);
+    if (row) {
+      row.classList.toggle('changing', on);
+      chg.setAttribute('aria-expanded', String(on));
+      const box = row.querySelector('.chg .amt');
+      if (on && box) { box.focus(); box.select(); }
+    }
+    return;
+  }
   const go = ev.target.closest('[data-weigh]');
   if (go) weigh(go.dataset.weigh, go.dataset.hex || null, go);
+});
+
+/* What a change will leave behind, said while it is being typed rather than
+   after it is refused. Two colours move in one act and the line names both. */
+function showChange(panel) {
+  const res = panel.querySelector('.res');
+  if (!res) return;
+  const btn = panel.querySelector('[data-weigh]');
+  const x = btn ? openNudges().find((y) => y.id === btn.dataset.weigh) : null;
+  if (!x || x.kind !== 'candidates') return;
+  const box = panel.querySelector('.amt');
+  const typed = String((box || {}).value || '').replace(/[^0-9]/g, '');
+  if (typed === '') { res.textContent = ''; res.classList.remove('bad'); return; }
+  const sel = panel.querySelector('select.to');
+  const candidate = (sel && sel.value) || btn.dataset.hex;
+  const srcSel = panel.querySelector('select.src');
+  const source = srcSel ? srcSel.value : (panel.dataset.src || onlyOther(x, candidate));
+  const line = changeLine(x, { candidate, amount: Math.floor(Number(typed)), source });
+  res.textContent = line.text;
+  res.classList.toggle('bad', line.bad);
+}
+
+document.addEventListener('input', (ev) => {
+  const panel = ev.target.closest ? ev.target.closest('.chg, .crow .put') : null;
+  if (panel) showChange(panel);
+});
+document.addEventListener('change', (ev) => {
+  const panel = ev.target.closest ? ev.target.closest('.chg, .crow .put') : null;
+  if (panel) showChange(panel);
 });
 
 /* Enter in a row's field weighs it, because a field opened by one button and
    closed by another is a form, and this is one number on one row. */
 document.addEventListener('keydown', (ev) => {
   if (ev.key !== 'Enter') return;
-  const box = ev.target.closest('.crow .put .amt');
+  const box = ev.target.closest('.crow .put .amt, .pos .chg .amt');
   if (!box) return;
   ev.preventDefault();
-  const btn = box.closest('.put').querySelector('[data-weigh]');
+  const panel = box.closest('.put, .chg');
+  const btn = panel ? panel.querySelector('[data-weigh]') : null;
   if (btn) weigh(btn.dataset.weigh, btn.dataset.hex || null, btn);
 });
 
@@ -2389,13 +2723,25 @@ async function propose(id) {
   nudgeSay(id, `${hex} is on the board. Weigh TAO behind it, or leave it to others.`);
 }
 
+/* Where a move comes from when nothing was asked: the colour they are on, if
+   it is the only one. A collector standing in one place moving to another is
+   the whole of this report, and it should not need a dropdown. */
+function onlyOther(x, candidate) {
+  const rest = myPositions(x).filter((a) => a.hex !== candidate);
+  return rest.length === 1 ? rest[0].hex : '';
+}
+
 async function weigh(id, hex, from) {
   const s = MF.session.current();
   if (!s) { nudgeSay(id, 'Sign in first ... the button is in the room below.', true); return; }
   const x = openNudges().find((y) => y.id === id);
   if (!x) return;
   const colours = x.kind === 'candidates';
-  const candidate = colours ? hex : null;
+  /* The colour is the row's, or ... where the panel asks for the amount and the
+     colour together ... whichever one the collector chose. */
+  const panel = from && from.closest ? from.closest('.chg, .put') : null;
+  const chosen = panel ? panel.querySelector('select.to') : null;
+  const candidate = colours ? ((chosen && chosen.value) || hex) : null;
   const side = colours ? null : (NUDGE.picked[id] || (x.mine && x.mine.side));
   if (colours && !candidate) { nudgeSay(id, 'Which colour?', true); return; }
   if (!colours && !side) { nudgeSay(id, 'Pick a yes or a no first.', true); return; }
@@ -2404,8 +2750,8 @@ async function weigh(id, hex, from) {
      row, and on the full board inside the fold ... and reading them by id would
      always have read the row, including when the board was the one being
      typed into. */
-  const near = from && from.closest ? from.closest('.crow, .swatch') : null;
-  const box = (near && near.querySelector('.amt'))
+  const near = from && from.closest ? from.closest('.crow, .pos') : null;
+  const box = (panel && panel.querySelector('.amt')) || (near && near.querySelector('.amt'))
     || document.getElementById(colours ? `amt-${id}-${candidate.slice(1)}` : `amt-${id}`);
   const typed = String((box || {}).value || '').replace(/[^0-9]/g, '');
   const amount = Math.floor(Number(typed || 0));
@@ -2413,22 +2759,30 @@ async function weigh(id, hex, from) {
      meaningless on a yes or a no. */
   if (!colours && !amount) { nudgeSay(id, 'How much of your TAO do you want behind it?', true); return; }
   if (colours && typed === '') { nudgeSay(id, 'Put a number in, or nought to take this colour back.', true); return; }
+  /* Where it comes off, where it has to come off anything: the panel's own
+     source, or the colour whose position is being changed. */
+  const srcSel = panel ? panel.querySelector('select.src') : null;
+  const source = srcSel ? srcSel.value
+    : ((panel && panel.dataset.src)
+      || (from && from.dataset && from.dataset.src)
+      || onlyOther(x, candidate));
   /* Checked here as a courtesy and again on the server, which is the one that
-     counts: what is left depends on everything else this wallet has spread. */
+     counts. Both ask the same question, and it is about the position this
+     leaves the wallet in ... not the sum of the one it is leaving and the one
+     it is taking, which is a position nobody is ever in. */
+  let move = { from: null, fromAmount: 0 };
   if (colours && x.mine) {
-    const elsewhere = (x.mine.allocations || []).filter((a) => a.hex !== candidate).reduce((t, a) => t + a.amount, 0);
-    if (elsewhere + amount > x.mine.held) {
-      nudgeSay(id, elsewhere > 0
-        ? `You have ${num(elsewhere)} TAO on other colours, so ${num(Math.max(0, x.mine.held - elsewhere))} is what is left to put here.`
-        : `That is more TAO than this wallet holds. Yours is ${num(x.mine.held)}.`, true);
-      return;
-    }
+    const c = changeCalc(x, { candidate, amount, source });
+    if (c.error) { nudgeSay(id, c.error, true); return; }
+    move = c;
   } else if (!colours && amount > NUDGE.tao) {
     nudgeSay(id, `That is more TAO than this wallet holds. Yours is ${num(NUDGE.tao)}.`, true); return;
   }
 
-  nudgeSay(id, 'Recording ...');
-  let r = await sendNudge({ nudge: id, address: s.address, side, candidate, amount });
+  const body = { nudge: id, address: s.address, side, candidate, amount,
+    ...(move.from ? { from: move.from, from_amount: move.fromAmount } : {}) };
+  nudgeSay(id, move.from ? `Moving ${num(move.took)} from ${move.from} ...` : 'Recording ...');
+  let r = await sendNudge(body);
   let j = await r.json().catch(() => ({}));
   /* A session from before weighing joined the sentence. One signature puts it
      right, and then it does not ask again ... which is the whole arrangement,
@@ -2439,13 +2793,19 @@ async function weigh(id, hex, from) {
       if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
       if (state === 'failed') nudgeSay(id, why, true);
     }); } catch (err) { return; }
-    r = await sendNudge({ nudge: id, address: s.address, side, candidate, amount });
+    r = await sendNudge(body);
     j = await r.json().catch(() => ({}));
   }
   if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true); return; }
+  /* The panel that did it closes, because the position it was changing is now
+     somewhere else and the banner underneath says where. */
+  if (move.from) NUDGE.moving.delete(`${id}|${move.from}`);
+  NUDGE.moving.delete(`${id}|${candidate}`);
   await loadNudges();
   nudgeSay(id, amount > 0
-    ? `${num(amount)} TAO on ${candidate || side}. Your TAO has not moved.`
+    ? (move.from
+      ? `${num(move.took)} TAO moved from ${move.from} to ${candidate}. ${candidate} now carries ${num(amount)} of yours, and your TAO has not moved.`
+      : `${num(amount)} TAO on ${candidate || side}. Your TAO has not moved.`)
     : `${candidate} taken back. Your TAO has not moved.`);
 }
 

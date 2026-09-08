@@ -433,7 +433,11 @@ body[data-nav="flow"] .nav{position:static}
   line-height:1.5}
 /* The name is a reference, not a label: it reads quieter than the hex it is
    standing in for, and the ≈ in front of it is doing real work. */
-.pal-name{text-transform:uppercase;font-size:8px;letter-spacing:.04em}
+.pal-name{text-transform:uppercase;font-size:8px;letter-spacing:.04em;
+  /* It gives way before anything else does: a name long enough to wrap would
+     make one slot taller than the eleven beside it, and it is the one line
+     here that is a reference rather than the thing itself. */
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* A slot that is settled reads in ink; one still waiting does not. The colour
    itself is the loud part and the caption under it is not. */
 .pal-slot.filled .pal-lab{color:var(--ink)}
