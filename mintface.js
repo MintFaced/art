@@ -1589,19 +1589,32 @@ const MF = {
     check(hex, bound) {
       const h = String(hex).toUpperCase();
       if (!bound) return { ok: true, hex: h };
-      const against = (bound.against || []).map((a) => (typeof a === 'string' ? a : a.hex));
+      const hexOf = (a) => String(typeof a === 'string' ? a : a.hex).toUpperCase();
+      /* Named is what may be said back: the community's colours. Clearance is
+         what the floor is actually measured from, which also holds the red
+         line. The two differ so the picker can refuse exactly what the route
+         refuses without ever naming the studio's constant ... a picker that
+         said yes where the route says no is the one thing this must not be. */
+      const named = (bound.against || []).map(hexOf);
+      const against = (bound.clearance || []).map(hexOf);
+      const all = against.length ? against : named;
       const place = this.inSpace(h, bound.space);
       if (!place.ok) {
         return { ok: false, hex: h, why: `${h} is ${place.why}. The palette is sampled from the street, so it stays in that range.` };
       }
-      const near = this.nearest(h, against);
+      const near = this.nearest(h, all);
       const floor = Number(bound.floor) || 0;
+      const sayable = named.includes(near && near.hex);
       if (near && near.distance < floor) {
-        return { ok: false, hex: h, nearest: near.hex, distance: near.distance,
-          why: `${h} is ${near.distance.toFixed(2)} from ${near.hex}, and a colour here has to stand `
-            + `${floor.toFixed(2)} clear of everything already locked.` };
+        return { ok: false, hex: h, nearest: sayable ? near.hex : null, distance: near.distance,
+          why: sayable
+            ? `${h} is ${near.distance.toFixed(2)} from ${near.hex}, and a colour here has to stand `
+              + `${floor.toFixed(2)} clear of everything already locked.`
+            : `${h} is too close to a colour these paintings already carry. A colour here has to stand `
+              + `${floor.toFixed(2)} clear.` };
       }
-      return { ok: true, hex: h, nearest: near ? near.hex : null, distance: near ? near.distance : null };
+      const say = this.nearest(h, named);
+      return { ok: true, hex: h, nearest: say ? say.hex : null, distance: say ? say.distance : null };
     },
   },
 };
@@ -1756,15 +1769,18 @@ MF.colour.name = function name(hex) {
  * One component, one order, every surface that draws the strip: /studio, the
  * Strip Paintings collection page and the maker. It is here rather than in
  * three pages because the order is the meaning, and three copies of a meaning
- * is a meaning that drifts ... which it had. The red was landing inline among
- * the slots and reading as slot 2, and the red is not a slot at all.
+ * is a meaning that drifts.
  *
  * The order is the arc's own: slot 1 is the colour Nudge #1 locked, slots 2
  * to 12 fill as the series runs, empty ones drawn rather than hidden because
- * three swatches would read as a palette of three. The red comes after the
- * twelve, thirteenth, behind a rule ... it is the constant that runs through
- * every Strip Painting at position 16 from the base, chosen by nobody and
- * moved by no nudge, and its caption says exactly that.
+ * three swatches would read as a palette of three.
+ *
+ * Twelve, and nothing else. The red line was drawn here once, set apart at
+ * the end, and even set apart it read as a thirteenth thing the collectors
+ * had a say in. They do not: it is the artist's constant, sixteen strips up
+ * on every one of these paintings, and its home is the Strip Painting Maker
+ * and the paintings. It still holds the clash floor, silently, where the
+ * arithmetic is ... it is simply not part of this conversation.
  */
 MF.palette = {
   /* The twelve, in slot order, whatever order they arrived in. Sorted here
@@ -1788,24 +1804,6 @@ MF.palette = {
     const out = [];
     for (let i = 1; i <= count; i += 1) out.push(by.get(i) || { slot: i, state: 'empty' });
     return out;
-  },
-
-  /* The red, said in full. It carries no slot number because it has none; the
-     only number it has is where it sits on the wall. */
-  constant(series) {
-    const f = (series || {}).fixed;
-    if (!f || !f.hex) return null;
-    const hex = String(f.hex).toUpperCase();
-    const at = Number(f.at) || null;
-    const label = f.label || 'Red line';
-    return {
-      hex,
-      at,
-      label,
-      fixed: true,
-      caption: [label, at ? `Position ${at}` : null, 'Constant'].filter(Boolean).join(' · '),
-      name: MF.colour.name(hex),
-    };
   },
 
   /* Where a slot points. The strip is drawn on three pages and the nudge it
@@ -1842,28 +1840,17 @@ MF.palette = {
       : `<span class="${cls}"${title}>${inner}</span>`;
   },
 
-  /* The whole strip: twelve, then the rule, then the constant. */
+  /* The whole strip: the twelve, and only the twelve. */
   strip(series, opts) {
-    const e = MF.escape;
-    const s = series || {};
-    const cells = this.slots(s).map((v) => this.cell(v, opts)).join('');
-    const red = this.constant(s);
-    const fixed = red ? `<span class="pal-slot fixed" title="${e(red.hex)} &middot; ${e(red.caption)}">
-      <span class="pal-band" style="background:${e(red.hex)}"></span>
-      <span class="pal-lab">${e(red.caption)}</span>
-      <span class="pal-hex">${e(red.hex)}</span>
-      ${red.name ? `<span class="pal-name">${e(red.name.short)}</span>` : ''}</span>` : '';
-    return `<div class="pal-strip">${cells}${fixed}</div>`;
+    return `<div class="pal-strip">${this.slots(series || {}).map((v) => this.cell(v, opts)).join('')}</div>`;
   },
 
-  /* What a colour has to stand clear of, in the strip's order: the slots
-     locked before it, lowest first, and the constant last and apart. The
-     server sends it this way already; it is put in order again here so that
-     one component owns the order rather than two of them agreeing. */
+  /* What a colour is drawn against, in the strip's order: the community's
+     slots locked before it, lowest first. The route sends only those; they
+     are put in order again here so one component owns the order rather than
+     two of them agreeing about it. */
   against(constraint) {
-    const c = constraint || {};
-    const red = this.constant(c);
-    const list = (c.against || []).map((a) => {
+    return ((constraint || {}).against || []).map((a) => {
       const hex = String(a.hex).toUpperCase();
       const slot = Math.floor(Number(a.slot) || 0);
       return {
@@ -1871,23 +1858,17 @@ MF.palette = {
         hex,
         slot: slot || null,
         name: MF.colour.name(hex),
-        caption: a.fixed
-          ? (red ? red.caption : `${a.label || 'Red line'} · Constant`)
-          : `${slot ? `${String(slot).padStart(2, '0')} · ` : ''}${a.label || 'Locked'}`,
+        caption: `${slot ? `${String(slot).padStart(2, '0')} · ` : ''}${a.label || 'Locked'}`,
       };
-    });
-    return [
-      ...list.filter((a) => !a.fixed).sort((a, b) => (a.slot || 0) - (b.slot || 0)),
-      ...list.filter((a) => a.fixed),
-    ];
+    }).sort((a, b) => (a.slot || 0) - (b.slot || 0));
   },
 
   /* The same lineup as slivers, beside a candidate, so the pair is read as a
-     pair. Same order, and the constant carries the gap here too. */
+     pair rather than as two swatches in different parts of the page. */
   slivers(constraint) {
     const e = MF.escape;
     return this.against(constraint).map((a) =>
-      `<span class="lk${a.fixed ? ' fixed' : ''}" style="background:${e(a.hex)}"
+      `<span class="lk" style="background:${e(a.hex)}"
         title="${e(a.caption)} &middot; ${e(a.hex)}${a.name ? ` &middot; ${e(a.name.label)}` : ''}"></span>`).join('');
   },
 };

@@ -410,15 +410,17 @@ body[data-nav="flow"] .nav{position:static}
 
 /* ---------- the collectors' palette ----------
  *
- * Twelve slots in nudge order and the red after them. Drawn by MF.palette on
+ * Twelve slots in nudge order, and nothing else. Drawn by MF.palette on
  * /studio, on the collection page and in the maker, so the three cannot drift
- * apart ... which they had. The red was landing inline among the slots and
- * reading as slot 2, and the red is not a slot: it is the constant at strip
- * position 16, chosen by nobody. So it sits thirteenth, behind a rule, and
- * says so in its caption.
+ * apart.
  *
- * Flex rather than a thirteen-column grid: thirteen cells across a phone is
- * twenty-three pixels each, and a palette nobody can see the colours in is
+ * The red line is not here. It was, set apart at the end, and set apart it
+ * still read as a thirteenth thing the collectors had a say in ... they do
+ * not. It is the artist's constant, sixteen strips up on every one of these
+ * paintings, and it lives in the maker and on the paintings.
+ *
+ * Flex rather than a twelve-column grid: twelve cells across a phone is
+ * twenty-five pixels each, and a palette nobody can see the colours in is
  * not a palette. It wraps and stays legible instead.
  */
 .pal-strip{display:flex;flex-wrap:wrap;gap:8px 8px;align-items:flex-start;margin:18px 0 0}
@@ -445,25 +447,9 @@ body[data-nav="flow"] .nav{position:static}
 .pal-slot.live .pal-lab{color:var(--ink)}
 a.pal-slot:hover .pal-band{border-color:var(--ink)}
 a.pal-slot:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
-/* The red sits apart, because it is not one of the twelve and never was. */
-.pal-slot.fixed{margin-left:10px;border-left:1px solid var(--rule);padding-left:15px;flex:0 0 auto;
-  max-width:122px}
-.pal-slot.fixed .pal-lab{color:var(--ink)}
 @media(max-width:560px){
   .pal-strip{gap:8px 6px}
   .pal-slot{flex:1 1 72px;min-width:72px}
   .pal-band{height:46px}
-  /* On a phone the rule becomes the page's own full-width one: thirteen cells
-     wrapped three deep put the constant wherever the row happened to end, and
-     a separator that lands mid-row separates nothing. */
-  .pal-slot.fixed{margin-left:0;padding-left:0;border-left:0;flex:1 1 100%;max-width:none;
-    margin-top:8px;padding-top:12px;border-top:1px solid var(--rule);
-    flex-direction:row;align-items:center;flex-wrap:wrap;gap:4px 10px}
-  .pal-slot.fixed .pal-band{width:46px;height:22px;flex:none}
 }
 
-/* The constant in a lineup ... the "standing clear of" row, and the slivers
-   beside a candidate. Set apart wherever it appears, for the same reason it
-   is set apart in the strip: it is never the next slot. */
-.ac.fixed{margin-left:6px;padding-left:17px;border-left:1px solid var(--rule)}
-.pair .lk.fixed{margin-left:5px}

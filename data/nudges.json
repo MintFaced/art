@@ -234,7 +234,7 @@
     "tao": 500000
    },
    "question": "Choose the second colour.",
-   "note": "Colour one is locked and sits beside every candidate here. This one has to stand clear of it, and of the red line ... the picker will not take a colour that does not. Propose one, or put your TAO behind one already on the board. Weighed TAO is never spent and never moves.",
+   "note": "Colour one is locked and sits beside every candidate here. This one has to stand clear of it ... the picker will not take a colour that does not. Propose one, or put your TAO behind one already on the board. Weighed TAO is never spent and never moves.",
    "promise": "MintFace will paint the colour this locks. A nudge steers; this one decides.",
    "image": null,
    "opens": "2026-09-07T08:35:27.000Z",
@@ -245,7 +245,7 @@
  "series": {
   "id": "strip-palette",
   "title": "The collectors' palette",
-  "note": "Twelve colours for the Strip Paintings, one nudge each, beside the red line that runs through every one. Each nudge after the first offers only colours standing clear of everything already locked, so the palette balances itself as it fills.",
+  "note": "Twelve colours for the Strip Paintings, one nudge each. Each nudge after the first offers only colours standing clear of everything already locked, so the palette balances itself as it fills.",
   "slots": 12,
   "collection": "strip-paintings",
   "maker": "/strip-painting-maker",

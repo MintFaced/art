@@ -174,8 +174,8 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 /* ---------- the palette, twelve slots and the red ----------
    The arc these paintings are being coloured by, on the page the paintings are
    on. The strip itself is MF.palette, in mintface.css, the same component the
-   studio and the maker draw ... one order, so the red cannot sit thirteenth
-   here and second somewhere else. What is here is the room around it. */
+   studio and the maker draw: the collectors' twelve, and nothing else. What is
+   here is the room around it. */
 .palette-embed{max-width:1500px;margin:0 auto;padding:14px 0 0}
 .palette-body{max-width:1500px;margin:0 auto;padding:0 28px}
 .palette-body .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:14px 0 0;max-width:34em}
@@ -546,8 +546,7 @@ const nudgeDate = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'nu
 /* The locked colours beside a candidate, as slivers. A collector weighing on
    this board is being asked about a relation, and a swatch on its own is the
    one thing that cannot show one. Drawn by the strip's own component, so the
-   order is the strip's: the locked slots lowest first, the red last and set
-   apart, because it is a constant rather than the next slot. */
+   order is the strip's: the community's slots, lowest first. */
 const pairChips = (x, hex) =>
   `<span class="pair">${MF.palette.slivers(x.constraint)}<span class="chip" style="background:${e(hex)}"></span></span>`;
 
@@ -584,8 +583,8 @@ function nudgeMarkup(x) {
         x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
       ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
       ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
-      ${x.constraint ? `<p class="lock">Standing clear of ${MF.palette.against(x.constraint)
-        .map((a) => `${e(a.hex)}${a.fixed ? ' (constant)' : ''}`).join(' &middot; ')}
+      ${x.constraint && x.constraint.against.length ? `<p class="lock">Standing clear of ${
+        MF.palette.against(x.constraint).map((a) => e(a.hex)).join(' &middot; ')}
         &middot; floor ${x.constraint.floor.toFixed(2)}</p>` : ''}
       ${board}
       ${lock}${banked}
@@ -593,11 +592,12 @@ function nudgeMarkup(x) {
     </div>`;
 }
 
-/* The arc, on the page the paintings are on. Twelve slots in nudge order and
-   the red after them ... which is what a Strip Painting is, and what these
-   colours are being chosen for. Filled slots lead to the nudge that locked
-   them, on the studio, which is why the strip is told where the board lives.
-   The drawing is MF.palette's: this page owns the heading and nothing else. */
+/* The arc, on the page the paintings are on: the collectors' twelve, in nudge
+   order. The red line runs through every painting here and is not in this
+   strip ... it is the artist's constant, and the paintings above say so
+   themselves. Filled slots lead to the nudge that locked them, on the studio,
+   which is why the strip is told where the board lives. The drawing is
+   MF.palette's: this page owns the heading and nothing else. */
 function paletteMarkup(s) {
   return `<div class="wrap-head"><h2>${e(s.title || 'The palette')}</h2></div>
     <div class="palette-body">

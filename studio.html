@@ -89,53 +89,10 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .said{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);margin:12px 0 0}
 .nudges .said.bad{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
-/* ---------- the board ----------
-   A palette forming in public. The swatch is the colour itself at the size a
-   colour needs to be judged at, and everything beside it is the register's own
-   voice: what is behind it, in mono, and who put it there.
-   The chosen one is marked by the ink rule the whole site marks things with,
-   never by a second colour ... the swatches are the only colour on this page
-   and adding another would be arguing with them. */
-.nudges .board{margin:22px 0 0;max-width:560px;display:flex;flex-direction:column;gap:1px}
-.nudges .swatch{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule)}
-.nudges .swatch:last-child{border-bottom:0}
-.nudges .swatch .chip{width:46px;height:46px;flex:none;border:1px solid var(--rule);display:block}
-.nudges .swatch .on{display:flex;flex-direction:column;gap:3px;min-width:0}
-.nudges .swatch .hex{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--ink)}
-/* The nearest name, beside the hex it stands in for. Quieter than the hex,
-   because it is a way to say the colour rather than the colour itself. */
-.nudges .swatch .hex .cname{color:var(--faint);letter-spacing:.08em;font-size:10.5px;
-  text-transform:uppercase;margin-left:5px;white-space:nowrap}
-.nudges .swatch .weight{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
-.nudges .swatch .weight b{font-weight:400;color:var(--ink)}
-.nudges .swatch .by{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--faint)}
-.nudges .swatch .by a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
-.nudges .swatch .by a:hover{border-color:var(--ink);color:var(--muted)}
-/* A field per colour: a wallet spreads its TAO across as many of them as it
-   likes, and each one is set on its own. */
-.nudges .swatch .put{margin-left:auto;display:flex;gap:7px;align-items:center;flex:none}
-.nudges .swatch .put .amt{width:118px;padding:8px 10px;font-size:13px}
-.nudges .swatch .put .weigh{padding:8px 14px;font-size:10px;letter-spacing:.14em}
-
-/* What this wallet has spread, and what is left of it to spread. */
-.nudges .purse{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--muted);margin:14px 0 0;font-variant-numeric:tabular-nums}
-/* Promising more than they hold. Said plainly and never corrected behind their
-   back: the amounts they signed for stand, and the board counts what fits. */
-.nudges .purse.over{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);
-  font-size:13.5px;line-height:1.6;max-width:44em}
 /* A change in the record, up or down. */
 .nudges .ledger .up{color:var(--ink)}
 .nudges .ledger .down{color:var(--muted)}
 .nudges .ledger tr.moved td{opacity:.72}
-.nudges .swatch.mine .chip{box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--rule)}
-.nudges .swatch.chosen{margin-left:-14px;padding-left:12px;border-left:2px solid var(--ink)}
-.nudges .swatch.chosen .hex{text-transform:uppercase;letter-spacing:.14em}
-/* the threshold, said before it is met as well as after */
-.nudges .thresh{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
-  color:var(--muted);margin:16px 0 0;max-width:44em;line-height:1.7}
 /* what the studio undertook, which is what makes this one more than a steer */
 .nudges .promise{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink);border-left:2px solid var(--ink);padding-left:14px;margin:16px 0 0;line-height:1.8}
@@ -221,6 +178,10 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .crow .chip{grid-area:1/1/3/2;width:24px;height:24px;border:1px solid var(--rule);display:block}
 .nudges .crow .hex{grid-area:1/2/2/3;font-family:var(--font-mono);font-size:11.5px;
   letter-spacing:.12em;color:var(--ink);white-space:nowrap}
+/* The nearest name, beside the hex it stands in for. Quieter than the hex,
+   because it is a way to say the colour rather than the colour itself. */
+.nudges .crow .hex .cname{color:var(--faint);letter-spacing:.08em;font-size:9.5px;
+  text-transform:uppercase;margin-left:6px}
 .nudges .crow .w{grid-area:1/3/2/4;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
   text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .nudges .crow .by{grid-area:2/2/3/5;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
@@ -326,7 +287,6 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .pair{display:flex;align-items:stretch;gap:3px}
 .nudges .crow .pair{grid-area:1/1/3/2}
 .nudges .pair .lk{width:9px;flex:none;border:1px solid var(--rule);display:block}
-.nudges .swatch .pair .lk{width:14px}
 .nudges .verdict{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);font-variant-numeric:tabular-nums;flex:1 1 14em;min-width:0}
 .nudges .verdict.no{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);
@@ -1892,11 +1852,10 @@ function ledger(x) {
  * side in their heads.
  */
 /* The locked colours beside a candidate. Slivers, not squares: they are what
-   is being compared against rather than another thing to choose. In the
-   strip's order, from the strip's own component, with the red last and apart
-   ... it is on every one of these paintings whether the collectors chose it
-   or not, and a sliver of it sitting between two locked slots reads as the
-   next one of them. */
+   is being compared against rather than another thing to choose. The
+   community's colours only ... the red line holds the floor in the arithmetic
+   and is never drawn here, because a sliver of it beside a candidate reads as
+   one more thing the collectors picked. */
 function pair(x, hex) {
   return `<span class="pair">${MF.palette.slivers(x.constraint)}<span class="chip" style="background:${e(hex)}"></span></span>`;
 }
@@ -1907,16 +1866,13 @@ function againstBlock(x) {
   const c = x.constraint;
   return `<div class="against">
     <span class="alab">Standing clear of</span>
-    <div class="row">${list.map((a) => `<span class="ac${a.fixed ? ' fixed' : ''}">
+    <div class="row">${list.map((a) => `<span class="ac">
       <span class="chip" style="background:${e(a.hex)}"></span>
-      <span class="al"><b>${a.fixed ? '' : 'Locked &middot; '}${e(a.caption)}</b><span>${e(a.hex)}${
+      <span class="al"><b>Locked &middot; ${e(a.caption)}</b><span>${e(a.hex)}${
         a.name ? ` &middot; ${e(a.name.label)}` : ''}</span></span>
     </span>`).join('')}</div>
-    <p class="anote">Colour ${c.slot} of ${c.slots} has to sit at least ${c.floor.toFixed(2)} from each of these,
-      measured the way the eye reads it rather than in RGB, on a scale where black to white is 1.
-      That leaves ${Math.round(c.field * 100)}% of the streetscape range open, and the floor comes down as the
-      board fills so the last colours are not asked for something that does not exist.
-      The picker will not take a colour that clashes.</p>
+    <p class="anote">At least ${c.floor.toFixed(2)} clear of each,
+      ${Math.round(c.field * 100)}% of the range still open. The picker refuses the rest.</p>
   </div>`;
 }
 
@@ -1933,68 +1889,12 @@ const mineOn = (x, hex) => {
   return a ? a.amount : 0;
 };
 
-function swatches(x) {
-  const rule = x.rule || { voters: 5, tao: 500000 };
-  const locked = x.locked || null;
-  /* A field per colour, because a wallet spreads its TAO across as many of
-     them as it likes and each one is set on its own. One box and a chosen
-     colour was the old model's shape, and the old model was the thing that
-     took the weight off the first colour when you weighed the second. */
-  const editable = x.open && mayWeigh();
-  const list = (x.candidates || []).map((c) => {
-    const chosen = locked && locked.hex === c.hex;
-    const by = c.proposed_name || (c.proposed_by ? short(c.proposed_by) : null);
-    const who = by && c.proposed_url ? `<a href="${e(c.proposed_url)}">${e(by)}</a>` : (by ? e(by) : null);
-    const on = mineOn(x, c.hex);
-    return `<div class="swatch${chosen ? ' chosen' : ''}${on ? ' mine' : ''}">
-      ${pair(x, c.hex)}
-      <span class="on">
-        <span class="hex">${e(c.hex)}${nameOf(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
-        <span class="weight"><b>${num(c.total)}</b> TAO &middot; ${c.voters} collector${c.voters === 1 ? '' : 's'}</span>
-        ${who ? `<span class="by">proposed by ${who}</span>` : ''}
-      </span>
-      ${editable ? `<span class="put">
-        <input class="amt" id="amt-${e(x.id)}-${e(c.hex.slice(1))}" type="text" inputmode="numeric"
-          value="${on || ''}" placeholder="0" aria-label="TAO on ${e(c.hex)}">
-        <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">${on ? 'Change' : 'Weigh'}</button>
-      </span>` : ''}
-    </div>`;
-  }).join('');
-  /* The threshold is on the card the whole time an answer is still possible,
-     because a nudge that can decline to decide has to say so before it does.
-     Once it is closed the banked line below says what happened, and saying it
-     twice two lines apart would be the card talking over itself. */
-  const thresh = !x.open
-    ? (locked ? '' : `<p class="thresh">${e(x.why || 'No colour reached the threshold.')}</p>`)
-    : `<p class="thresh">A colour locks at ${rule.voters} collectors and ${num(rule.tao)} TAO on it, both, at close.
-       You may spread your TAO across as many colours as you like.</p>`;
-  return `<div class="board">${list || '<p class="none">No colour has been proposed yet.</p>'}</div>${purse(x)}${thresh}`;
-}
-
-/* A wallet's own position, in one place: what is spread where, what is left,
-   and ... where they have promised more than they still hold ... what the
-   board is actually counting for them. Nothing is rewritten behind their back;
-   the numbers they signed for stand, and this says what those numbers are
-   worth today. */
-function purse(x) {
-  if (!x.open || !mayWeigh() || !x.mine) return '';
-  const m = x.mine;
-  if (m.over > 0) {
-    return `<p class="purse over">You have ${num(m.asked)} TAO spread across the board and hold ${num(m.held)}.
-      Until you bring it down, the board counts ${num(m.held)} of it, in proportion.
-      Lower one of your amounts to put it right.</p>`;
-  }
-  return `<p class="purse">${m.asked > 0
-    ? `You have ${num(m.asked)} TAO on the board`
-    : 'You have nothing on the board yet'} &middot; ${num(m.available)} available</p>`;
-}
-
 /* Proposing is its own act with its own signature, and it is not a weighing.
    One colour per wallet, and final: other people weigh on it, and a proposal
    that could be changed would move their TAO onto a colour they never saw. */
 function proposer(x) {
   if (!x.open || !mayWeigh()) return '';
-  if (x.proposed) return '<p class="said">You have put a colour on the board. Weigh TAO behind any of them.</p>';
+  if (x.proposed) return '<p class="said">Colour proposed. Weigh TAO behind any on the board.</p>';
   /* Somewhere in the field to start from, rather than a colour that is going
      to be refused the moment the picker opens. Not the leader, which is on the
      board already and would be refused for that instead. */
@@ -2005,7 +1905,7 @@ function proposer(x) {
     <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Propose this colour</button>
     <span class="${x.constraint ? 'verdict' : 'said'}" id="verdict-${e(x.id)}">${x.constraint
       ? e(verdictLine(x, start))
-      : 'One colour per wallet, and it stays on the board.'}</span>
+      : 'One colour per wallet, and final.'}</span>
   </div>`;
 }
 
@@ -2181,7 +2081,7 @@ function colourRow(x, c, editable) {
   const putting = editable && NUDGE.putting.has(key);
   return `<div class="crow${chosen ? ' chosen' : ''}${on ? ' mine' : ''}${putting ? ' putting' : ''}">
     ${pair(x, c.hex)}
-    <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
+    <span class="hex">${e(c.hex)}${nameOf(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
     <span class="w">${num(c.total)} TAO</span>
     ${editable
       ? `<button type="button" class="go" data-put="${e(key)}"
@@ -2227,9 +2127,13 @@ function yours(x) {
   }
   const on = ((m && m.allocations) || []).filter((a) => Number(a.amount) > 0)
     .slice().sort((a, b) => Number(b.amount) - Number(a.amount));
-  if (!on.length) return '<p class="yours">You: nothing on the board yet</p>';
+  /* What is left to spread rides on the same line. It was on its own paragraph
+     under a second copy of the board; the board is drawn once now, and a
+     wallet's whole position fits in one sentence. */
+  const left = m ? ` &middot; ${worn(m.available)} available` : '';
+  if (!on.length) return `<p class="yours">You: nothing on the board yet${left}</p>`;
   return `<p class="yours">You: ${worn(on[0].amount)} on ${e(on[0].hex)}${on.length > 1
-    ? ` &middot; and ${on.length - 1} more` : ''}</p>`;
+    ? ` &middot; and ${on.length - 1} more` : ''}${left}</p>`;
 }
 
 /* How far the lock is, folded to one line. Both thresholds stay on it, because
@@ -2260,16 +2164,16 @@ function candidateCard(x) {
   const inner = `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
     ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
     ${x.open ? `${yours(x)}${lockLine(x)}` : ''}
-    ${swatches(x)}
     ${thresholdBars(x)}
     ${ledgerRows(x)}
     ${!x.open ? '' : (mayWeigh()
       ? ''
-      : '<p class="said">Sign in to propose or weigh. The same signature that opens the room opens this.</p>')}
+      : '<p class="said">Sign in to propose or weigh.</p>')}
     ${proposer(x)}
     ${x.open ? '' : `<p class="banked">${x.locked
-      ? `Locked &middot; ${e(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
+      ? `Locked &middot; ${e(x.locked.hex)}${nameOf(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
       : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
+    ${x.open || x.locked || !x.why ? '' : `<p class="said">${e(x.why)}</p>`}
     ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}`;
   /* The refusal line stays outside the fold. Weighing can now be done from a
      collapsed card, so anything it has to say back has to be sayable there. */
@@ -2305,7 +2209,7 @@ function openCard(x) {
     </div>
     ${signed
       ? `<p class="said">Your TAO ${num(NUDGE.tao)}${mine ? ` &middot; you weighed ${num(mine.amount)} on ${e(mine.side)}` : ''}</p>`
-      : '<p class="said">Sign in to weigh. The same signature that opens the room opens this.</p>'}
+      : '<p class="said">Sign in to weigh.</p>'}
     <p class="said" id="say-${e(x.id)}" hidden></p>
     ${ledger(x)}`;
   return `<div class="nudge" id="nudge-${e(x.id)}">

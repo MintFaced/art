@@ -193,7 +193,7 @@ export function floorFor(against, { space, ladder = LADDER, minShare = FIELD_SHA
  * rule, because "too close to the colour locked on nudge #1" is a thing a
  * collector can do something about and "below the floor" is not.
  */
-export function checkCandidate(raw, { against = [], floor = 0, space = SPACE } = {}) {
+export function checkCandidate(raw, { against = [], floor = 0, space = SPACE, named = null } = {}) {
   const colour = checkHex(raw);
   if (colour.error) return colour;
   const hex = colour.hex;
@@ -201,15 +201,30 @@ export function checkCandidate(raw, { against = [], floor = 0, space = SPACE } =
   if (!place.ok) {
     return { error: `${hex} is ${place.why}. The palette is sampled from the street, so it stays in that range.`, hex };
   }
+  /* Which of these may be said out loud. Everything, unless the caller has
+     something in the set that the studio does not talk about ... the red
+     line, which every one of these paintings carries and none of these
+     collectors chose. */
+  const sayable = named ? new Set(named.map((h) => String(h).toUpperCase())) : null;
   const near = nearest(hex, against);
   if (near && near.distance < floor) {
     return {
-      error: `${hex} is ${near.distance.toFixed(2)} from ${near.hex}, and a colour here has to stand `
-        + `${floor.toFixed(2)} clear of everything already locked. Pick something further from ${near.hex}.`,
-      hex, nearest: near.hex, distance: near.distance, floor,
+      error: (!sayable || sayable.has(near.hex))
+        ? `${hex} is ${near.distance.toFixed(2)} from ${near.hex}, and a colour here has to stand `
+          + `${floor.toFixed(2)} clear of everything already locked. Pick something further from ${near.hex}.`
+        /* Refused, and the neighbour is not named. A collector can still do the
+           only thing there is to do about it, which is pick a different
+           colour. */
+        : `${hex} is too close to a colour these paintings already carry. A colour here has to stand `
+          + `${floor.toFixed(2)} clear. Try something further from this one.`,
+      hex, nearest: (!sayable || sayable.has(near.hex)) ? near.hex : null, distance: near.distance, floor,
     };
   }
-  return { hex, nearest: near ? near.hex : null, distance: near ? near.distance : null, floor };
+  /* Allowed, and the clearance it is allowed by is reported from the sayable
+     colours only ... "0.34 clear of #0E5890" is a useful thing to know, and
+     "0.34 clear of a colour we will not tell you about" is not. */
+  const say = sayable ? nearest(hex, against.filter((h) => sayable.has(String(h).toUpperCase()))) : near;
+  return { hex, nearest: say ? say.hex : null, distance: say ? say.distance : null, floor };
 }
 
 /* ---------------------------------------------------------- the series
@@ -284,9 +299,17 @@ export function seriesState(store, { now = new Date(), openIds = null } = {}) {
   const fixed = s.fixed || null;
   /* Everything a new colour has to stand clear of: the colours locked so far
      and the red line, which is on every one of these paintings whether the
-     collectors chose it or not. */
-  const against = [...filled.map((f) => f.hex), ...(fixed && fixed.hex ? [fixed.hex] : [])];
-  const rule = floorFor(against, {
+     collectors chose it or not.
+     
+     The red is in the maths and nowhere else. It is the artist's constant
+     rather than anything the collectors chose, so the studio never draws it
+     beside their twelve and never names it in a refusal ... but a community
+     colour that vanished against the one line every painting carries would be
+     a real defect, so it still holds the floor. `fixed.counts: false` in the
+     series config takes it out of the maths too. */
+  const counts = !fixed || fixed.counts !== false;
+  const clearance = [...filled.map((f) => f.hex), ...(counts && fixed && fixed.hex ? [fixed.hex] : [])];
+  const rule = floorFor(clearance, {
     space: s.space, ladder: s.ladder, minShare: s.field_share,
   });
 
@@ -301,7 +324,9 @@ export function seriesState(store, { now = new Date(), openIds = null } = {}) {
     space: spaceOf(s.space),
     board: slots,
     locked: filled,
-    against,
+    /* The hexes the floor is measured from, which is not the list any page
+       draws. Nothing renders this. */
+    clearance,
     floor: rule.floor,
     field: rule.share,
     complete: filled.length >= count,
@@ -331,25 +356,28 @@ export function constraintFor(store, nudge, state = null) {
   /* What was locked before this slot, not everything locked ... a nudge asked
      again after a later one banked is still answering its own question. */
   const before = st.locked.filter((f) => f.slot < slot);
-  const fixed = st.fixed && st.fixed.hex ? [st.fixed.hex] : [];
-  const against = [...before.map((f) => f.hex), ...fixed];
-  const rule = floorFor(against, { space: s.space, ladder: s.ladder, minShare: s.field_share });
+  const counts = !st.fixed || st.fixed.counts !== false;
+  const fixed = counts && st.fixed && st.fixed.hex ? [String(st.fixed.hex).toUpperCase()] : [];
+  const community = before.map((f) => f.hex);
+  const rule = floorFor([...community, ...fixed], {
+    space: s.space, ladder: s.ladder, minShare: s.field_share,
+  });
   return {
     slot,
     slots: st.slots,
     floor: rule.floor,
     field: rule.share,
     space: st.space,
-    fixed: st.fixed,
     /* Drawn beside every candidate, so a voter weighs the pair rather than the
-       colour on its own. */
-    against: [
-      ...before.map((f) => ({ hex: f.hex, slot: f.slot, number: f.number, nudge: f.nudge, label: `Nudge #${f.number}` })),
-      ...(st.fixed && st.fixed.hex
-        ? [{ hex: String(st.fixed.hex).toUpperCase(), slot: null, number: null, nudge: null,
-          label: st.fixed.label || 'Red line', fixed: true }]
-        : []),
-    ],
+       colour on its own. The community's colours, and only those: the red line
+       is the artist's constant and not part of this conversation. */
+    against: before.map((f) => ({
+      hex: f.hex, slot: f.slot, number: f.number, nudge: f.nudge, label: `Nudge #${f.number}`,
+    })),
+    /* What the floor is measured from, which includes the red. The picker runs
+       the same arithmetic as the route off this, so it can refuse a colour the
+       route would refuse without ever saying what it clashed with. */
+    clearance: [...community, ...fixed],
   };
 }
 

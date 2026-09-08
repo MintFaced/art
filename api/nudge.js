@@ -165,12 +165,14 @@ export async function GET(request) {
 
   return json({
     nudges: out,
-    /* The whole series in one reading: twelve slots, the red beside them, what
-       is locked, what is being asked, and the constraint on the next colour.
-       The strip on /studio, on the collection page and in the maker are all
-       this ... one config, so the maker's palette is complete the moment the
-       last slot locks rather than being copied across at the end. */
-    series: arc ? { ...arc, provenance: seriesProvenanceLine(arc) } : null,
+    /* The whole series in one reading: twelve slots, what is locked, what is
+       being asked, and the constraint on the next colour. The strip on
+       /studio, on the collection page and in the maker are all this ... one
+       config, so the maker's palette is complete the moment the last slot
+       locks rather than being copied across at the end. */
+    /* Without the red. It is the artist's constant, it is on the paintings and
+       in the maker, and a page that never receives it cannot draw it. */
+    series: arc ? { ...arc, fixed: null, clearance: null, provenance: seriesProvenanceLine(arc) } : null,
     tao: who ? readTao(who) : null,
     rule: 'A nudge steers. It never commands. The studio may act with, against, or without the result.',
   });
@@ -256,7 +258,14 @@ export async function POST(request) {
        twelve-colour palette from drifting into twelve warm mid-tones. */
     const bound = constraintFor(data.nudges, n);
     const colour = bound
-      ? checkCandidate(body.hex, { against: bound.against.map((a) => a.hex), floor: bound.floor, space: bound.space })
+      ? checkCandidate(body.hex, {
+        against: bound.clearance,
+        /* Only the community's colours may be named back. The red line holds
+           the floor and is never the reason a refusal gives. */
+        named: bound.against.map((a) => a.hex),
+        floor: bound.floor,
+        space: bound.space,
+      })
       : checkHex(body.hex);
     if (colour.error) return json({ error: colour.error }, 400);
 
