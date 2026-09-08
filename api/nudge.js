@@ -165,6 +165,14 @@ export async function GET(request) {
 
   return json({
     nudges: out,
+    /* WHO THIS BOARD IS ABOUT. Every personal thing in it ... where you stand,
+       what is spare, whether you have proposed ... is answered for this
+       address and for nobody else, so the page has to be able to tell whether
+       the board in front of a reader is a board about them. It could not: it
+       asked the cookie whether it might weigh and asked the payload where it
+       stood, and a session opened after the board loaded made those two
+       disagree. */
+    viewer: who ? lower(who) : null,
     /* The whole series in one reading: twelve slots, what is locked, what is
        being asked, and the constraint on the next colour. The strip on
        /studio, on the collection page and in the maker are all this ... one

@@ -96,7 +96,7 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 /* what the studio undertook, which is what makes this one more than a steer */
 .nudges .promise{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink);border-left:2px solid var(--ink);padding-left:14px;margin:16px 0 0;line-height:1.8}
-.nudges .propose{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0 0}
+.nudges .propose{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .nudges .propose input[type="color"]{width:46px;height:36px;padding:0;border:1px solid var(--rule);
   background:none;cursor:pointer}
 .nudges .weigh.ghosted{background:none;color:var(--muted);border:1px solid var(--rule)}
@@ -234,6 +234,13 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 .nudges .crow.putting .go{border-color:var(--ink);color:var(--ink)}
 .nudges .crow .put .amt{flex:1 1 90px;min-width:0;width:auto;padding:8px 10px;font-size:13px}
 .nudges .crow .put .weigh{flex:none;padding:8px 14px;font-size:10px;letter-spacing:.14em}
+/* The field says what it is asking for and what there is to give it. An empty
+   box with a placeholder of nought, on a card that also carries a colour
+   picker, is a box a reader has to guess at ... and one of them guessed
+   wrong. */
+.nudges .plab,.nudges .have{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--faint);flex:0 0 auto}
+.nudges .have{font-variant-numeric:tabular-nums}
 /* Where the TAO comes off, when the wallet has none spare. Named on the row
    that is taking it, because "move it here" is a sentence with two ends. */
 .nudges .src{flex:1 1 128px;min-width:0;max-width:100%;padding:7px 8px;background:var(--paper);
@@ -250,8 +257,12 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
  * all. Changing your mind is the act this surface is for.
  */
 .nudges .stand{margin:18px 0 0;padding:12px 0 0;border-top:1px solid var(--rule);max-width:560px}
-.nudges .stand .slab{margin:0 0 7px;font-family:var(--font-mono);font-size:9.5px;
+.nudges .slab{display:block;margin:0 0 7px;font-family:var(--font-mono);font-size:9.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+/* Proposing is a different act and is drawn as one: its own rule above it, so
+   that the only other field on this card cannot be read as part of a weigh. */
+.nudges .propose{border-top:1px solid var(--rule);padding-top:13px;margin-top:18px}
+.nudges .propose .slab{flex:1 0 100%}
 /* The same discipline as the board row, in a line that wraps rather than a
    grid: the figure and the hex are what this sentence is, and they hold their
    own width; the Pantone is the one thing allowed to be cut. */
@@ -1485,6 +1496,9 @@ async function signIn() {
   });
   status(`Signed in until ${new Date(j.until).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' })}. No more wallet prompts here until then.`);
   await MF.nav.refresh();
+  /* The board was fetched before this signature existed and is about nobody.
+     The nudges are the half of this page a sign-in changes most. */
+  void loadNudges();
   return j;
 }
 
@@ -1900,7 +1914,8 @@ const sent = (location.hash.match(/^#m-(\d+)$/) || [])[1];
    change. Both are held here rather than in the DOM, because a card is rebuilt
    whenever the board comes back and a panel somebody is typing into should not
    close under them. */
-const NUDGE = { state: null, tao: 0, picked: {}, putting: new Set(), moving: new Set() };
+const NUDGE = { state: null, tao: 0, who: null, tried: null, loading: false,
+  picked: {}, putting: new Set(), moving: new Set() };
 const num = (x) => Number(x || 0).toLocaleString('en-NZ');
 const dateOf = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
 /* A ledger row is one of many and a nudge runs for a fortnight, so the day and
@@ -1911,12 +1926,39 @@ const shortDate = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'nu
 async function loadNudges() {
   const s = MF.session.current();
   const q = s ? `?address=${encodeURIComponent(s.address)}` : '';
+  NUDGE.loading = true;
+  NUDGE.tried = s ? s.address : 'nobody';
   try {
     NUDGE.state = await fetch(`/api/nudge${q}`).then((r) => (r.ok ? r.json() : null));
   } catch (err) { NUDGE.state = null; }
+  NUDGE.loading = false;
   NUDGE.tao = (NUDGE.state && NUDGE.state.tao) || 0;
+  /* Who the board that just arrived is about, as the route says rather than as
+     this page assumed. */
+  NUDGE.who = (NUDGE.state && NUDGE.state.viewer) || null;
   drawNudges();
 }
+
+/* ---------- who the board in front of the reader is about ----------
+ *
+ * THE CARD USED TO ASK TWO QUESTIONS AND TAKE TWO ANSWERS. May I weigh was
+ * answered by the cookie, read at the moment of drawing; where do I stand came
+ * out of a payload fetched at some earlier moment. Sign in after the board has
+ * loaded ... which is exactly what a reader who arrives at /studio does, since
+ * the sign-in button is in the room below ... and the first went true while
+ * the second still said nobody. So the board offered every colour a WEIGH
+ * button, showed the propose picker because as far as it knew this wallet had
+ * proposed nothing, said `nothing on the board yet` with no TAO beside it, and
+ * refused every amount as more than a wallet it had never heard of holds ...
+ * telling a collector with everything spare to move some off a colour they
+ * were not on.
+ *
+ * One answer now. The board is editable only for the reader it was fetched
+ * for, and where that is not the reader looking at it, it is fetched again. */
+const viewer = () => {
+  const s = MF.session.current();
+  return s && NUDGE.who && NUDGE.who === s.address ? s : null;
+};
 
 function meters(x) {
   return `<div class="bars">${[['yes', 'Yes'], ['no', 'No']].map(([k, label]) => `
@@ -2011,7 +2053,12 @@ const mineOn = (x, hex) => {
 const myPositions = (x) => ((x.mine && x.mine.allocations) || [])
   .filter((a) => Number(a.amount) > 0)
   .slice().sort((a, b) => Number(b.amount) - Number(a.amount));
-const mySpare = (x) => Math.max(0, (x.mine && x.mine.available) || 0);
+/* What is left to weigh with. A board that does not know the reader has no
+   answer to this and must not guess one: it said nought, which reads as a
+   wallet with nothing rather than as a page that has not asked yet. The card
+   is not editable in that state at all now, and this falls back to the TAO the
+   route reported rather than to nought. */
+const mySpare = (x) => (x.mine ? Math.max(0, x.mine.available) : Math.max(0, NUDGE.tao || 0));
 
 /* What a change asks for, and where it has to come from.
  *
@@ -2038,6 +2085,16 @@ function changeCalc(x, { candidate, amount, source }) {
   const short = need - took - mySpare(x);
   if (short > 0) {
     const most = onTarget + mySpare(x) + onSource;
+    /* WHAT THEY ARE TOLD DEPENDS ON WHETHER THEY ARE ON ANYTHING. A collector
+       standing nowhere, with every TAO they hold spare, was being told to move
+       some off a colour they were already on ... advice about a position they
+       did not have, from a check that had answered a question about somebody
+       else's board. Moving is only ever mentioned where there is something to
+       move. */
+    const elsewhere = myPositions(x).filter((a) => a.hex !== candidate);
+    if (!elsewhere.length) {
+      return { error: `You hold ${num(mySpare(x) + onTarget)} TAO, so ${num(most)} is the most that can sit on ${candidate}.` };
+    }
     return { error: src
       ? `${src} has ${num(onSource)} TAO on it and you have ${num(mySpare(x))} spare, so ${num(most)} is the most that can sit on ${candidate}.`
       : `You have ${num(mySpare(x))} TAO spare, so ${num(most)} is the most that can sit on ${candidate}. Move some off a colour you are already on.` };
@@ -2050,7 +2107,12 @@ function changeCalc(x, { candidate, amount, source }) {
    move in one act, so the card says where both of them land. */
 function changeLine(x, { candidate, amount, source }) {
   const c = changeCalc(x, { candidate, amount, source });
-  if (c.error) return { bad: true, text: c.error };
+  /* A refusal is not said here. It is said once, where every other refusal on
+     this card is said, in the one line under the board: this used to print it
+     in the panel in mono caps while the submit printed the same sentence
+     underneath in the alert face, which is one message wearing two voices and
+     reads as two problems. */
+  if (c.error) return { bad: true, text: '' };
   const parts = [`${candidate} \u2192 ${num(amount)}`];
   if (c.from) parts.push(`${c.from} \u2192 ${num(c.fromAmount)}`);
   /* What is left over afterwards: what was spare, plus whatever this colour
@@ -2069,7 +2131,12 @@ function proposer(x) {
      to be refused the moment the picker opens. Not the leader, which is on the
      board already and would be refused for that instead. */
   const start = x.constraint ? openingColour(x) : '#C0392B';
-  return `<div class="propose">
+  /* Under its own heading and its own rule. It is the only other thing on this
+     card with a field in it, and a reader who came to weigh should never be
+     able to mistake a colour picker for the amount box ... which is exactly
+     what happened when the board stopped knowing who they were and drew this
+     to a collector who had already proposed. */
+  return `<div class="propose"><span class="slab">Propose a new colour</span>
     <input type="color" id="hex-${e(x.id)}" value="${e(start)}" data-colourfield="${e(x.id)}"
       aria-label="A colour to propose">
     <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Propose this colour</button>
@@ -2108,7 +2175,7 @@ function verdictText(v) {
 }
 const verdictLine = (x, hex) => verdictText(MF.colour.check(hex, x.constraint));
 
-const mayWeigh = () => Boolean(MF.session.current());
+const mayWeigh = () => Boolean(viewer());
 
 /* One way in and out of the nudges, carrying the session. Same origin, so the
    cookie rides anyway; it is asked for explicitly because a preview or a
@@ -2320,10 +2387,12 @@ function colourRow(x, c, editable) {
       : ''}
     ${who ? `<span class="by">proposed by ${who}</span>` : '<span class="by"></span>'}
     ${editable ? `<span class="put">
+      <label class="plab" for="ramt-${e(x.id)}-${e(c.hex.slice(1))}">TAO to weigh</label>
       <input class="amt" id="ramt-${e(x.id)}-${e(c.hex.slice(1))}" type="text" inputmode="numeric"
-        value="${on || ''}" placeholder="0" aria-label="TAO on ${e(c.hex)}">
+        value="${on || ''}" placeholder="0" aria-label="TAO to weigh on ${e(c.hex)}">
       ${src}
-      <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">${on ? 'Save' : (needsSource ? 'Move it here' : 'Put it on')}</button>
+      <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">${on ? 'Save' : (needsSource ? 'Move it here' : 'Weigh it')}</button>
+      <span class="have">${num(mySpare(x))} spare${on ? ` &middot; ${num(on)} here` : ''}</span>
       <p class="res" aria-live="polite"></p>
     </span>` : ''}
   </div>`;
@@ -2454,7 +2523,12 @@ function candidateCard(x) {
     ${ledgerRows(x)}
     ${!x.open ? '' : (mayWeigh()
       ? ''
-      : '<p class="said">Sign in to propose or weigh.</p>')}
+      /* Signed in, but this board was fetched before that and is being fetched
+         again. Not the same sentence as "sign in": telling somebody who just
+         signed in to sign in is how a page loses their trust in one line. */
+      : `<p class="said">${MF.session.current()
+        ? 'Reading where you stand ...'
+        : 'Sign in to propose or weigh.'}</p>`)}
     ${proposer(x)}
     ${x.open ? '' : `<p class="banked">${x.locked
       ? `Locked &middot; ${e(x.locked.hex)}${nameOf(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
@@ -2482,7 +2556,7 @@ function candidateCard(x) {
 function openCard(x) {
   const mine = x.mine;
   const pick = NUDGE.picked[x.id] || (mine && mine.side) || null;
-  const signed = Boolean(MF.session.current());
+  const signed = mayWeigh();
   const inner = `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
     ${x.image ? `<div class="shot"><img src="${e(x.image)}" alt="" loading="lazy"></div>` : ''}
     <div class="act">
@@ -2568,6 +2642,14 @@ function drawNudges() {
   /* The room draws the pointer that says a question is waiting, and only the
      room knows when its own composer has been rebuilt. */
   draw();
+
+  /* Signed in ... or out ... since this board was fetched. Fetch it again for
+     the reader who is actually here rather than leave a board that is about
+     somebody else on the screen. Once per reader, so a route that cannot
+     answer for them is a board that stays honest rather than a loop. */
+  const me = MF.session.current();
+  const asked = me ? me.address : 'nobody';
+  if (NUDGE.state && !NUDGE.loading && NUDGE.tried !== asked) void loadNudges();
 }
 
 document.addEventListener('click', (ev) => {
@@ -2698,8 +2780,12 @@ function nudgeSay(id, text, bad) {
 /* Putting a colour on the board. Its own signature, naming the colour, so a
    proposal cannot be replayed as a different one. */
 async function propose(id) {
-  const s = MF.session.current();
-  if (!s) { nudgeSay(id, 'Sign in first ... the button is in the room below.', true); return; }
+  const s = viewer();
+  if (!s) {
+    if (MF.session.current()) { nudgeSay(id, 'One moment ... reading where you stand.'); void loadNudges(); }
+    else nudgeSay(id, 'Sign in first ... the button is in the room below.', true);
+    return;
+  }
   const x = openNudges().find((y) => y.id === id);
   if (!x) return;
   const input = document.getElementById(`hex-${id}`);
@@ -2732,8 +2818,16 @@ function onlyOther(x, candidate) {
 }
 
 async function weigh(id, hex, from) {
-  const s = MF.session.current();
-  if (!s) { nudgeSay(id, 'Sign in first ... the button is in the room below.', true); return; }
+  const s = viewer();
+  if (!s) {
+    /* Either they are not signed in, or the board on the screen was fetched
+       before they were and does not know where they stand ... in which case it
+       is fetched again rather than a number being sent against a position
+       nobody has read. */
+    if (MF.session.current()) { nudgeSay(id, 'One moment ... reading where you stand.'); void loadNudges(); }
+    else nudgeSay(id, 'Sign in first ... the button is in the room below.', true);
+    return;
+  }
   const x = openNudges().find((y) => y.id === id);
   if (!x) return;
   const colours = x.kind === 'candidates';
