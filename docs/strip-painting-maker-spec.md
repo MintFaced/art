@@ -63,6 +63,7 @@ A public tool where a shop owner or landlord designs a colourway for a MintFace 
 
 - **Regenerate pattern**: new seed
 - **Copy spec**: plain-text spec to clipboard... dimensions, intensity, sequence setting, strip count, price working, then the full bottom-up strip list (`NN  #hex  HHmm`), red line flagged
+- **Download PNG**: the strips and nothing else... no border, no caption, no strip count baked in. True to the wall's proportions, 3000px on the long edge, or larger where that is what it takes to give the narrowest band a whole pixel. Every band edge lands on an integer so there is no antialiasing between colours. Named `strip-painting-site<seed>-<n>strips-redline<r>.png`. The preview is an `<img>` backed by the same blob, so Save Image As gives the same file the button does
 - Enquiry path: TBD by Ryan... likely "email the spec to ryan@ryanjennings.net" as v1, Stripe deposit later. Leave a clear TODO if unresolved.
 
 ## Acceptance checks
@@ -70,6 +71,8 @@ A public tool where a shop owner or landlord designs a colourway for a MintFace 
 - Height 550, High: strip count lands at ~55 and heights sum exactly to input height
 - Strip 16 from bottom is #d32011 at 12mm at every intensity and any height ≥ ~400mm
 - Slider at 0 vs 100 on the same seed produces visibly calmer vs higher-contrast adjacencies without a full reshuffle
+- Exported PNG contains only colours that are in the design ... every stray colour is an antialiased edge
+- Every strip survives the export at any wall size, including long and low (20m x 300mm)
 - Photo upload replaces the default palette only when ≥ 4 colours extract cleanly
 - Copied spec round-trips everything needed to recreate the design
 - Mobile: preview, slider, and photo tap-sampling all usable at phone width

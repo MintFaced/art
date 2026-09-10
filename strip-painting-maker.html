@@ -118,14 +118,31 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   color:var(--muted);font-weight:400;margin:0;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
 .community .chead span{color:var(--faint);font-variant-numeric:tabular-nums}
 
-/* ---------- preview ---------- */
+/* ---------- preview ----------
+ *
+ * THE PREVIEW IS THE FILE. It was a stack of divs, which is a thing no browser
+ * will let anybody keep: right-click offered nothing, because there was no
+ * image there to save. It is an <img> now, backed by the very blob the
+ * DOWNLOAD PNG button hands over ... so Save Image As gives the same pixels as
+ * the button, and neither can drift from the other because there is only one
+ * of them.
+ *
+ * Stretched to the box rather than to its own proportions, which is what the
+ * stack of divs did and what the note under it has always said: a 6m wall at
+ * 550mm is eleven to one, and eleven to one across this column is a preview
+ * sixty pixels tall. The FILE is true to the wall. The preview is a swatch of
+ * it. Pixelated rather than smoothed, because a band edge is a band edge and
+ * the browser softening it is the browser inventing a colour that is not in
+ * the painting. */
 .preview{border:1px solid var(--rule);padding:9px;background:var(--paper)}
-.strips{display:flex;flex-direction:column;height:190px;width:100%}
-.strip{width:100%;position:relative}
-.strip.red::after{
-  content:attr(data-n);position:absolute;right:6px;top:50%;transform:translateY(-50%);
-  font-family:var(--font-mono);font-size:9px;color:#fff;letter-spacing:.08em;
-}
+.strips{position:relative;height:190px;width:100%}
+.strips img{display:block;width:100%;height:100%;object-fit:fill;
+  image-rendering:pixelated;image-rendering:crisp-edges}
+/* The red line's number, over the image rather than baked into it: the file
+   carries the painting and nothing else, and this is a note about it. */
+.redmark{position:absolute;right:6px;transform:translateY(-50%);
+  font-family:var(--font-mono);font-size:9px;color:#fff;letter-spacing:.08em;pointer-events:none}
+.redmark[hidden]{display:none}
 .preview-note{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:9px}
 
 /* ---------- price ---------- */
@@ -235,7 +252,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 
   <section class="sect">
     <h2>Preview</h2>
-    <div class="preview"><div class="strips" id="strips"></div></div>
+    <div class="preview"><div class="strips" id="strips">
+      <img id="stripImg" alt="The strip painting as configured">
+      <span class="redmark" id="redMark" hidden></span>
+    </div></div>
     <div class="preview-note" id="previewNote">Preview not to scale</div>
   </section>
 
@@ -253,11 +273,15 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   <div class="actions">
     <button type="button" id="regen">Regenerate pattern</button>
     <button type="button" id="copy">Copy spec</button>
+    <button type="button" id="png">Download PNG</button>
     <a class="go" id="enquire" href="#">Send this to the studio</a>
   </div>
   <div class="said" id="said"></div>
 
   <canvas id="cv" hidden></canvas>
+  <!-- Where the file is drawn. Never shown: what the page shows is the <img>
+       above, which is this canvas after it has been through PNG. -->
+  <canvas id="out" hidden></canvas>
 </main>
 
 <footer class="foot">
@@ -453,15 +477,116 @@ const said = (hex) => {
 };
 const e = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/* ---------- the file ----------
+ *
+ * The painting, drawn to its own proportions at a size worth looking at, and
+ * nothing else in the frame: no border, no caption, no strip count baked into
+ * a corner. The spec is a thing you copy; this is a thing you look at, and a
+ * picture carrying its own label is a picture that cannot be used for anything
+ * but the page it came off.
+ *
+ * INTEGER EDGES, EVERY BAND. A wall is measured in millimetres and a file in
+ * pixels, and dividing one by the other lands band edges on fractions ... which
+ * the canvas then antialiases, putting a row of colours along every boundary
+ * that are in neither of the strips they sit between. On a painting made ENTIRELY
+ * of boundaries that is not a rounding error, it is a different painting. So
+ * every edge is the running total rounded once: adjacent bands share the exact
+ * integer, the seams are hard, and the heights still add up to the whole
+ * because each one is the difference between two rounded totals rather than a
+ * rounded difference.
+ */
+const EXPORT_LONG = 3000;
+
+function exportCanvas() {
+  const cv = $('out');
+  const wMM = S.widthM * 1000;
+  const hMM = S.heightMM;
+  let scale = EXPORT_LONG / Math.max(wMM, hMM);
+  /* EVERY BAND HAS TO SURVIVE THE ROUNDING, and it is the narrowest one that
+     decides. A 6mm strip on a wall twenty metres long and a third of a metre
+     high is nine tenths of a pixel at this scale, which rounds to nothing on
+     about half the offsets it can land on ... and a painting with strips
+     missing from it is not the painting. Give the smallest strip a whole
+     pixel and every strip has one, because each height is the difference
+     between two rounded totals and a gap of one or more never rounds to zero.
+     The file gets bigger rather than poorer; 3000 is a floor, not a budget. */
+  const minMM = Math.min(...S.strips.map((x) => x.h));
+  if (minMM * scale < 1) scale = 1 / minMM;
+  const W = Math.round(wMM * scale);
+  const H = Math.round(hMM * scale);
+  cv.width = W;
+  cv.height = H;
+  const ctx = cv.getContext('2d', { alpha: false });
+  ctx.imageSmoothingEnabled = false;
+  /* Bottom up, the way it is painted and the way S.strips is laid. */
+  let mm = 0;
+  for (const st of S.strips) {
+    const y0 = H - Math.round((mm + st.h) * scale);
+    const y1 = H - Math.round(mm * scale);
+    ctx.fillStyle = st.hex;
+    ctx.fillRect(0, y0, W, y1 - y0);
+    mm += st.h;
+  }
+  return cv;
+}
+
+/* What the file is called, and it is the whole of what a shared file knows
+   about itself. The design number is the one this maker counts: it moves every
+   time the pattern is regenerated, a colour is dropped or a photograph is
+   read, which is exactly the set of things that make it a different painting. */
+function exportName() {
+  const redAt = S.strips.findIndex((x) => x.red) + 1;
+  return `strip-painting-site${S.seed}-${S.strips.length}strips-redline${redAt}.png`;
+}
+
+/* The preview and the download are one blob.
+ *
+ * Debounced, because the sequence slider redraws on every pixel of its travel
+ * and encoding a three-thousand pixel PNG per pixel of slider is a slider that
+ * stutters. The old picture stays up until the new one has decoded, so the
+ * preview never blinks white in the middle of a drag.
+ */
+const SHOT = { url: null, timer: null, name: '' };
+
+function paintPreview() {
+  const img = $('stripImg');
+  if (!img) return;
+  exportCanvas().toBlob((blob) => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const old = SHOT.url;
+    SHOT.url = url;
+    /* The old one goes only once the new one is on screen: revoking it while
+       it is still the src is a preview that turns into a broken image. */
+    img.onload = () => { if (old) URL.revokeObjectURL(old); };
+    img.src = url;
+  }, 'image/png');
+}
+
+function refreshShot() {
+  clearTimeout(SHOT.timer);
+  SHOT.timer = setTimeout(paintPreview, 90);
+}
+
 function draw() {
   S.strips = generateStrips(S.palette, S.intensity, S.heightMM, S.seed, S.vib);
   const conf = INTENSITY[S.intensity];
 
-  // the preview runs top down, so the last strip generated is the top one
   const total = S.strips.reduce((n, s) => n + s.h, 0) || 1;
   const redAt = S.strips.findIndex((x) => x.red) + 1;
-  $('strips').innerHTML = [...S.strips].reverse().map((s) =>
-    `<div class="strip${s.red ? ' red' : ''}"${s.red ? ` data-n="${redAt}"` : ''} style="background:${e(s.hex)};flex:0 0 ${(s.h / total * 100).toFixed(4)}%"></div>`).join('');
+  SHOT.name = exportName();
+  $('stripImg').alt = `Strip painting, ${S.widthM}m by ${S.heightMM}mm, ${S.strips.length} strips, red line at ${redAt} from the base`;
+  refreshShot();
+  /* The red line's number, put where the red line is. The preview is stretched
+     to its box, so the mark goes by the same fraction the band does. */
+  const above = S.strips.slice(redAt).reduce((n, x) => n + x.h, 0);
+  const red = S.strips[redAt - 1];
+  const mark = $('redMark');
+  if (red) {
+    mark.hidden = false;
+    mark.textContent = String(redAt);
+    mark.style.top = `${((above + red.h / 2) / total * 100).toFixed(3)}%`;
+  } else { mark.hidden = true; }
   $('previewNote').textContent = `${S.strips.length} strips ... red line at ${redAt} from base ... preview not to scale`;
 
   $('swatches').innerHTML = S.palette.map((c) => (c.tao
@@ -593,6 +718,31 @@ $('copy').addEventListener('click', async () => {
   } catch {
     say('Could not reach the clipboard');
   }
+});
+
+/* The same blob the preview is showing, handed over under a name that says
+   what it is. Not a fresh render: a button that quietly drew its own copy
+   could hand somebody a file that is not the picture they were looking at. */
+$('png').addEventListener('click', () => {
+  const go = (url, name) => {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+  const name = SHOT.name || exportName();
+  if (SHOT.url) { go(SHOT.url, name); say(`Saved ${name}`); return; }
+  /* Before the first encode has come back, which is a tenth of a second after
+     the page settles and can still be beaten by a fast hand. */
+  exportCanvas().toBlob((blob) => {
+    if (!blob) { say('Could not draw the file'); return; }
+    const url = URL.createObjectURL(blob);
+    go(url, name);
+    setTimeout(() => URL.revokeObjectURL(url), 20000);
+    say(`Saved ${name}`);
+  }, 'image/png');
 });
 
 let sayTimer;
