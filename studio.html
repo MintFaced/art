@@ -509,6 +509,29 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .nudges .verdict.no{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);
   font-size:13.5px;line-height:1.55}
 
+/* ---------- back to the top ----------
+   This page opens at the foot of a log kept forever, which puts the shelf,
+   the open question and the masthead a long way up. The nav is sticky and
+   takes you to another page; nothing took you back to the head of this one
+   but the whole journey.
+
+   It is the `Earlier` button's voice at the other end of the same log: mono
+   smallcaps, one hairline, one arrow. It is not drawn until there is
+   somewhere to go back to ... a control that says TOP while you are at the
+   top is furniture. And it sits inside the 110px of air under the composer,
+   so at the very foot of the page it is beside the SAY IT button rather than
+   on top of it. */
+.totop{position:fixed;right:20px;bottom:20px;z-index:40;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);background:var(--paper);border:1px solid var(--rule);border-radius:0;
+  padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.totop:hover{color:var(--ink);border-color:var(--ink)}
+.totop:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.totop .arw{font-size:12px;line-height:1}
+/* The author display wins over the UA's, so hidden has to be said here or the
+   button is never away. */
+.totop[hidden]{display:none}
+
 .earlier{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);background:none;border:0;padding:14px 0;cursor:pointer;display:block;width:100%;text-align:left;
   border-bottom:1px solid var(--rule)}
@@ -691,6 +714,7 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   .nudges .amt{width:100%}
   .room{padding:18px 20px 30px}
   .speak{padding:0 20px 80px}
+  .totop{right:14px;bottom:14px;padding:9px 12px}
   .m .who .at{margin-left:0;width:100%}
   /* The line of what you are answering keeps the name and drops the quote:
      a nowrap sentence in a flex row is the one thing on this page that would
@@ -782,6 +806,13 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   <section class="speak" id="speak"></section>
 </main>
 
+<!-- Back to the head of the page. Written in the HTML rather than drawn,
+     because draw() rebuilds the room and the composer every time anybody
+     speaks and this belongs to neither of them. -->
+<button type="button" class="totop" id="totop" hidden>
+  <span class="arw" aria-hidden="true">&#8593;</span> Top
+</button>
+
 <footer class="foot">
   <a class="smallcaps" href="/notes">Notes</a>
   <a class="smallcaps" href="/provenance">Provenance</a>
@@ -853,6 +884,69 @@ const TOUCH = (() => {
    latest, and must not haul you there when you are reading last winter. */
 const nearBottom = (slack = 140) =>
   window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - slack;
+
+/* WHETHER THE ROOM IS STILL FOLLOWING THE FOOT OF THE LOG.
+ *
+ * nearBottom asks where the page is. This asks what the reader is doing, and
+ * they are not the same question. The room opens at the latest message and
+ * then goes on loading link cards and marks for a second or two afterwards;
+ * somebody who lands and immediately starts reading upward has moved eighty
+ * pixels when the cards come back, which nearBottom's slack still counts as
+ * the bottom ... so every one of them put the reader back at the foot, and
+ * scrolling up read as a thing the page kept cancelling.
+ *
+ * Opening at the latest is something this page does ONCE, on arrival. After
+ * that, following is something the reader opts into by being there: it goes
+ * off at the first upward scroll and back on the moment they return to the
+ * foot under their own steam, so a reader parked at the latest is still
+ * carried down by a new message, which is the half of it worth keeping. */
+const FOLLOW = { on: true, at: 0, settling: false };
+/* `settling` is the once-after-load half of it. The room jumps to the foot the
+   moment it has rows, and then goes on getting taller for a second or two as
+   the link cards and the pictures arrive ... so the jump has to hold for that
+   long or the page lands a card's height short of the message it opened for.
+   It holds for the settle and then never again, and the reader scrolling up
+   ends it early: an opening position is a thing you can walk away from. */
+const following = () => FOLLOW.on && (FOLLOW.settling || nearBottom());
+
+/* And whether the log is allowed to load more of itself right now.
+ *
+ * The head of the log loads another page when it comes into view, which is
+ * the right behaviour for somebody reading backwards and the wrong one for
+ * somebody who asked for the head of the PAGE: the journey up passes the
+ * Earlier button, a year of history is prepended, and the scrollBy that keeps
+ * a reader's place puts them back where they started. Asking for the top is
+ * not asking for more history. The watcher stands down for the journey and is
+ * re-armed the next time the reader goes back down into the log. */
+const TOP = { held: false, arrived: false };
+
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  /* Upward, by more than a rounding error: the reader has the scroll now. */
+  if (y < FOLLOW.at - 2) { FOLLOW.on = false; FOLLOW.settling = false; }
+  /* Back at the foot. A tighter slack than nearBottom's, because this is a
+     decision to follow rather than a guess about where somebody is looking. */
+  if (nearBottom(24)) FOLLOW.on = true;
+  /* The hold ends when the journey is over AND the reader has gone back down
+     into the log ... a whole viewport of it, deliberately. Not on the first
+     downward pixel: a smooth scroll is not reliably monotonic, and reading one
+     backwards step as `more history please` is what dropped the reader into
+     the middle of a year they never asked for, half way up. */
+  if (TOP.held) {
+    if (y < 60) TOP.arrived = true;
+    else if (TOP.arrived && y > window.innerHeight) { TOP.held = false; watchTop(); }
+  }
+  FOLLOW.at = y;
+  topButton();
+}, { passive: true });
+
+/* The button is there once there is a page above worth going back to, and
+   gone again at the head of it. A viewport and a half: far enough that it is
+   not blinking on and off while somebody nudges the wheel near the top. */
+function topButton() {
+  const el = document.getElementById('totop');
+  if (el) el.hidden = window.scrollY < window.innerHeight * 1.5;
+}
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
 const stamp = (s) => {
@@ -933,6 +1027,13 @@ async function load({ bottom = false } = {}) {
      the place that knows the number first. */
   MF.nav.mentions(ROOM.waiting, ROOM.next);
   draw({ toBottom: bottom });
+  /* Opening at the latest message, and holding there while the room finishes
+     arriving. Two and a half seconds, or until the reader scrolls up ...
+     whichever comes first, and it is usually them. */
+  if (bottom) {
+    FOLLOW.settling = true;
+    setTimeout(() => { FOLLOW.settling = false; }, 2500);
+  }
   askCards();
 }
 
@@ -948,7 +1049,14 @@ async function markSeen() {
 /* Earlier, a page at a time. The guard is on the affordance rather than on the
    work, because the cherry walks back through the log with this and cannot be
    held off by its own busy flag. */
-async function earlier() {
+async function earlier(asked) {
+  /* Not while somebody is on their way to the head of the page. Standing the
+     watcher down is not enough on its own: an observer callback already queued
+     when the button was pressed still arrives, prepends a year, and the
+     scrollBy that keeps a reader's place lands them below where they started
+     ... which re-arms the watcher, which is at the top of the log again. That
+     is a loop, and this is the door it comes through. */
+  if (TOP.held && !asked) return;
   if (!ROOM.more || ROOM.busy) return;
   ROOM.busy = true;
   try { await pullEarlier(); } finally { ROOM.busy = false; }
@@ -980,11 +1088,11 @@ async function poll() {
   if (!d.messages || !d.messages.length) return;
   /* Asked before anything is added. Somebody speaking should follow you down
      when you are at the latest and must not haul you there when you are not. */
-  const following = nearBottom();
+  const follow = following();
   ROOM.rows = ROOM.rows.concat(d.messages);
   ROOM.total = d.total || ROOM.total + d.messages.length;
   told(d.messages);
-  draw({ toEnd: following });
+  draw({ toEnd: follow });
   askCards();
 }
 
@@ -1051,13 +1159,15 @@ async function askCards() {
   Object.assign(ROOM.cards, d.cards);
   /* A card arriving makes the room taller. Somebody sitting at the latest
      message should stay at the latest message rather than be pushed a card's
-     height up it, which is what opening at the bottom is for. */
-  const following = nearBottom();
+     height up it, which is what opening at the bottom is for ... and somebody
+     who has started reading upward in the second it took these to arrive
+     should be left exactly where they are. */
+  const follow = following();
   for (const m of ROOM.rows) {
     const box = document.getElementById(`cards-${m.n}`);
     if (box) box.innerHTML = cardsFor(m.links);
   }
-  if (following) window.scrollTo(0, document.documentElement.scrollHeight);
+  if (follow) window.scrollTo(0, document.documentElement.scrollHeight);
 }
 
 /* What is under the messages on screen now.
@@ -1485,6 +1595,7 @@ function draw({ keep = false, toEnd = false, toBottom = false } = {}) {
 let watcher = null;
 function watchTop() {
   if (watcher) { watcher.disconnect(); watcher = null; }
+  if (TOP.held) return;
   const el = document.getElementById('earlier');
   if (!el || !ROOM.more || !window.IntersectionObserver) return;
   watcher = new IntersectionObserver((entries) => {
@@ -1902,7 +2013,10 @@ document.addEventListener('click', async (ev) => {
   const act = b.dataset.act;
 
   if (act === 'attag') return takeTag(Number(b.dataset.i));
-  if (act === 'earlier') return earlier();
+  /* Pressing the button is asking for history in so many words, so it goes
+     through the hold and ends it: whatever the reader was doing before, this
+     is them back in the log. */
+  if (act === 'earlier') { TOP.held = false; return earlier(true); }
   if (act === 'goto') return void goTo(b.dataset.n);
   if (act === 'connect') return void connect();
   if (act === 'pick') return void connect(b.dataset.uuid);
@@ -3141,6 +3255,18 @@ async function weigh(id, hex, from) {
       : `${num(amount)} TAO on ${candidate || side}. Your TAO has not moved.`)
     : `${candidate} taken back. Your TAO has not moved.`);
 }
+
+/* Back to the top, and the room stops following the foot while somebody is on
+   their way to the head of the page ... a message arriving mid-journey and
+   hauling them back down is the same cancelled scroll, wearing a poll for a
+   hat. */
+document.getElementById('totop').addEventListener('click', () => {
+  FOLLOW.on = false;
+  TOP.held = true;
+  TOP.arrived = false;
+  watchTop();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 /* Open at the bottom. The room is a log kept forever, and a log kept forever
    that opens at its first line is a room nobody reaches the end of. */
