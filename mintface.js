@@ -1398,7 +1398,8 @@ const MF = {
     return 'an injected wallet';
   },
 
-  /** Every wallet that answered, newest standard first, the old slot last. */
+  /** Every wallet that answered, newest standard first, the old slot last,
+      and WalletConnect after all of them as the rail that needs no extension. */
   async wallets() {
     const found = this.listenForWallets();
     // announcements arrive on the next turn, and a slow extension on the one
@@ -1406,17 +1407,111 @@ const MF = {
     await new Promise((r) => setTimeout(r, 150));
     try { window.dispatchEvent(new Event('eip6963:requestProvider')); } catch (e) { /* fine */ }
     await new Promise((r) => setTimeout(r, 150));
-    const list = [...found.values()];
-    if (list.length) return list;
-    const slot = typeof window !== 'undefined' ? window.ethereum : null;
-    if (!slot) return [];
-    /* Some extensions stack themselves under window.ethereum.providers rather
-       than announcing. It is the older convention and worth reading. */
-    const stacked = Array.isArray(slot.providers) ? slot.providers : [slot];
-    return stacked.map((p, i) => ({
-      info: { uuid: `injected-${i}`, rdns: 'window.ethereum', name: this.walletName(p) },
-      provider: p,
-    }));
+    let list = [...found.values()];
+    if (!list.length) {
+      const slot = typeof window !== 'undefined' ? window.ethereum : null;
+      if (slot) {
+        /* Some extensions stack themselves under window.ethereum.providers
+           rather than announcing. It is the older convention and worth reading. */
+        const stacked = Array.isArray(slot.providers) ? slot.providers : [slot];
+        list = stacked.map((p, i) => ({
+          info: { uuid: `injected-${i}`, rdns: 'window.ethereum', name: this.walletName(p) },
+          provider: p,
+        }));
+      }
+    }
+    /* WalletConnect is the second rail: the only wallet on a browser with no
+       extension (mobile Safari, anything extensionless), and one more entry in
+       the picker where injected wallets do exist. It rides the same MF.sign and
+       MF.session.open as everything else, because those use the provider we
+       connected through ... so a session opened over the relay signs over the
+       relay, with no separate path to keep in step. */
+    const wc = await this.walletConnect();
+    if (wc) list = list.concat([wc]);
+    return list;
+  },
+
+  /* ---------- WalletConnect, lazily ----------
+     The project id is public and comes from /api/config (cross-origin from
+     collectors, same as the register). We do not import the library or open a
+     relay until someone actually chooses this rail: the entry we return holds a
+     stub provider that answers the silent eth_accounts probe with an empty list
+     ... so it never wins connect()'s auto-resolution and never opens its modal
+     unbidden ... and only on eth_requestAccounts does it import the provider and
+     open the WalletConnect modal (a QR on desktop, a deep-link list on mobile,
+     app-store fallback and all). One entry, real work deferred to first use. */
+  _wc: undefined,          // the cached entry: an object, or null when no id
+  _wcTheme: {
+    // warm-white as far as their theming allows
+    '--wcm-font-family': "'Geist',Helvetica,Arial,sans-serif",
+    '--wcm-accent-color': '#14120f',
+    '--wcm-accent-fill-color': '#faf9f6',
+    '--wcm-background-color': '#faf9f6',
+    '--wcm-color-bg-1': '#faf9f6',
+    '--wcm-color-fg-1': '#14120f',
+    '--wcm-border-radius-master': '0px',
+  },
+
+  async walletConnect() {
+    if (this._wc !== undefined) return this._wc;
+    let pid = null;
+    try {
+      const cfg = await fetch(`${MF.ART}/api/config`, { credentials: 'omit' })
+        .then((r) => (r.ok ? r.json() : {}));
+      pid = (cfg && cfg.walletConnectProjectId) || null;
+    } catch (e) { pid = null; }           // no relay to reach ... simply no WC rail
+    this._wc = pid
+      ? { info: { uuid: 'walletconnect', rdns: 'walletconnect', name: 'WalletConnect' }, provider: this._wcProvider(pid) }
+      : null;
+    return this._wc;
+  },
+
+  _wcProvider(projectId) {
+    const theme = this._wcTheme;
+    let real = null;                      // the initialised EthereumProvider
+    const ensure = async () => {
+      if (real) return real;
+      const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2');
+      const EthereumProvider = mod.EthereumProvider || (mod.default && mod.default.EthereumProvider) || mod.default;
+      real = await EthereumProvider.init({
+        projectId,
+        /* Optional, never required. A required chain or method is a namespace the
+           wallet must pre-approve or refuse the whole session with "no accounts
+           found in approved namespace" ... which is exactly the error Rainbow
+           was showing on mobile. We only ever ask for a signature on mainnet, so
+           mainnet is all we declare, and as optional. */
+        optionalChains: [1],
+        rpcMap: { 1: 'https://cloudflare-eth.com' },
+        optionalMethods: ['personal_sign', 'eth_sendTransaction', 'eth_signTypedData', 'eth_signTypedData_v4'],
+        optionalEvents: ['chainChanged', 'accountsChanged'],
+        showQrModal: true,
+        qrModalOptions: { themeMode: 'light', themeVariables: theme },
+        metadata: {
+          name: 'MintFace',
+          description: 'MintFace',
+          url: (typeof location !== 'undefined' && location.origin) || 'https://mintface.art',
+          icons: ['https://mintface.art/apple-touch-icon.png'],
+        },
+      });
+      return real;
+    };
+    return {
+      _walletconnect: true,
+      get accounts() { return real ? real.accounts : []; },
+      async request({ method, params }) {
+        // the silent probe must never import the library or open the modal
+        if (!real && (method === 'eth_accounts')) return [];
+        if (!real && (method === 'eth_chainId')) return '0x1';
+        const p = await ensure();
+        if (method === 'eth_requestAccounts') {
+          await p.enable();               // opens the WalletConnect modal / deep-link
+          return p.accounts;
+        }
+        return p.request({ method, params });
+      },
+      on(...a) { if (real) real.on(...a); },
+      removeListener(...a) { if (real) real.removeListener(...a); },
+    };
   },
 
   /* Who is here, without asking anybody anything.
