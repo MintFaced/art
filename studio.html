@@ -36,12 +36,18 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 <style>
 .mast{max-width:720px;margin:0 auto;padding:60px 28px 0}
 h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);line-height:.96;margin:0;letter-spacing:-.035em}
-h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-spacing:-.02em;margin-top:16px}
-.sub{font-size:13px;color:var(--muted);margin-top:20px;max-width:44em;line-height:1.7}
-.frame{margin-top:34px}
-.frame p{font-size:16.5px;line-height:1.7;color:var(--ink-4);max-width:34em;margin:0 0 14px}
-.rule{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-  border-left:2px solid var(--ink);padding-left:16px;margin:26px 0 0;line-height:1.8}
+/* One paragraph under the name, and that is the whole door.
+   What stood here was a masthead: an italic subtitle, a paragraph of
+   positioning and the steers-never-commands promise set in a rule ... all of
+   it read before the reader had been shown one thing the studio actually does.
+   The promise is not gone. It moved to the cards it is a promise about, where
+   somebody is about to weigh TAO and it is the terms they are weighing under
+   rather than a notice over the door. */
+.lede{font-size:17px;line-height:1.7;color:var(--ink-4);max-width:34em;margin:24px 0 0}
+/* The house link: no underline, a hairline under it, and the hairline goes to
+   ink on hover. The same one the room's links and a candidate's proposer keep. */
+.lede a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.lede a:hover{border-color:var(--ink)}
 .room{max-width:720px;margin:0 auto;padding:24px 28px 40px}
 
 /* ---------- what the studio is asking ----------
@@ -50,7 +56,6 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
    written apart, and a bar or a go or an empty meaning one thing at the top
    and another at the bottom is how a merge goes quietly wrong. */
 .nudges{max-width:720px;margin:0 auto;padding:0 28px}
-#banked{padding-top:54px}
 #open:not(:empty){padding-bottom:8px}
 .nudges .sec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;
   margin:0 0 20px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
@@ -96,6 +101,15 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 /* what the studio undertook, which is what makes this one more than a steer */
 .nudges .promise{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink);border-left:2px solid var(--ink);padding-left:14px;margin:16px 0 0;line-height:1.8}
+/* And what it undertakes on every one of them, which is the opposite promise:
+   that the result does not bind it. It used to stand in the masthead in the
+   studio's loudest quiet voice, two rules up the page from the nearest vote.
+   It is quieter here and it is in the right place ... a hairline under the
+   board, on the card, where the TAO goes on. Not .promise: that is what this
+   particular nudge undertook, and reading the standing terms in the same
+   weight as a specific undertaking is how the two of them stop being read. */
+.nudges .rule{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);border-left:1px solid var(--rule);padding-left:13px;margin:20px 0 0;line-height:1.85}
 .nudges .propose{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .nudges .propose input[type="color"]{width:46px;height:36px;padding:0;border:1px solid var(--rule);
   background:none;cursor:pointer}
@@ -353,28 +367,108 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
    saying "a question is waiting" directly under the question would be the page
    talking about what it is already showing. */
 
-/* ---------- the palette strip ----------
+/* ---------- the shelf ----------
  *
- * The arc, drawn once, at the top of the page: twelve slots in nudge order
- * and the red after them, which is what a Strip Painting is ... bands of
- * colour with the red sixteen up from the base, and the red is not a slot
- * because nobody chose it.
+ * Twelve pottles in one row, in nudge order, and that is the whole palette on
+ * this page. There used to be two pictures of the same twelve things: a strip
+ * of swatches saying where the arc had got to, and under it a stack of banked
+ * cards saying the same thing again at card size. Two drawings of one arc is
+ * two places for it to drift, and the stack is what made the page long.
  *
- * The strip itself is MF.palette, in mintface.css, because this page is not
- * the only one that draws it. What is here is the room around it: the heading
- * that counts the arc, the studio's note, and the line the finished palette
- * gets to say about itself.
+ * A pot is the palette AND the door to the record. Locked ones carry their
+ * colour; the one being asked stands open with the colour in front of it
+ * barely in it; the rest are empty and drawn rather than left out, because
+ * three pots would read as a palette of three and this one is a twelfth done.
+ * Click a locked pot and the banked card ... the question, the day it closed,
+ * the tally, the whole who-weighed-what ... opens underneath the row. One at
+ * a time, closed until asked for. The record is a thing you go and look at.
+ *
+ * The red is not on this shelf. It is the artist's constant, sixteen strips up
+ * on every painting, and nobody weighed a single TAO on it ... a thirteenth
+ * pot here would say they had. It is the standing rule and it stays.
  */
-.palette{max-width:720px;margin:0 auto;padding:46px 28px 0}
-.palette .sec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;
+.pots{max-width:720px;margin:0 auto;padding:46px 28px 0}
+.pots .sec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;
   margin:0;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
-.palette .sec .count{color:var(--faint);font-family:var(--font-mono);font-variant-numeric:tabular-nums}
-.palette .note{font-size:14.5px;line-height:1.6;color:var(--ink-4);margin:12px 0 0;max-width:34em}
-.palette .done{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--ink);margin:18px 0 0;padding-left:12px;border-left:2px solid var(--ink);
+.pots .sec .count{color:var(--faint);font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.pots .note{font-size:14.5px;line-height:1.6;color:var(--ink-4);margin:12px 0 0;max-width:34em}
+.pots .done{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);margin:22px 0 0;padding-left:12px;border-left:2px solid var(--ink);
   font-variant-numeric:tabular-nums}
+
+/* Twelve across, and twelve across at every width: they are a sequence, and a
+   sequence that wraps at four is three sequences. Each pot takes an equal
+   twelfth of whatever measure it is given and the drawing inside it scales to
+   fit, so the row answers the column rather than pushing it out. */
+.pots .shelf{display:flex;gap:6px;align-items:flex-start;margin:22px 0 0}
+.pot{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px;
+  background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:center;
+  text-decoration:none;-webkit-appearance:none}
+button.pot,a.pot{cursor:pointer}
+.pot svg{display:block;width:100%;max-width:48px;height:auto}
+/* The hairline, and one weight of it whatever is in the pot. A filled pot is
+   an outline with colour in it, not a heavier outline: thickening the line to
+   say `locked` would put a second meaning on the one mark this site keeps for
+   structure. non-scaling-stroke because the pot scales and the hairline must
+   not ... a 1px rule that is 0.6px in the twelfth column is a rule that has
+   quietly become two rules. */
+.pot .ln{fill:none;stroke:var(--rule);stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.pot .paint{stroke:none}
+.pot .cap{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;color:var(--faint);
+  font-variant-numeric:tabular-nums;line-height:1.55;min-width:0;max-width:100%}
+.pot .cap b{display:block;font-weight:400}
+/* The hex under the ones that have one, and the word under the one that does
+   not. Cut rather than wrapped: a caption that goes to two lines under one pot
+   and one under the next takes the row's baseline with it. */
+.pot .hx{display:block;font-size:8px;letter-spacing:.03em;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+
+/* Settled. The number goes to ink because a slot with a colour in it is a
+   fact, and the eleven around it are not yet. */
+.pot.filled .ln{stroke:var(--ink)}
+.pot.filled .cap,.pot.live .cap{color:var(--ink)}
+/* Being asked. The leading candidate is in the pot at a quarter of itself:
+   enough to say which way the board is leaning, nowhere near enough to be
+   mistaken for paint that has set. The word under it says which state this is,
+   because a faint colour is not a state anybody can read. */
+.pot.live .ln{stroke:var(--ink)}
+.pot.live .hx{color:var(--ink)}
+.pot.empty .ln{stroke:var(--rule)}
+.pot.empty{cursor:default}
+
+button.pot:hover .ln,a.pot:hover .ln{stroke:var(--ink)}
+button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
+/* The pot whose record is open, marked on the shelf: without it the panel
+   below is a card that appeared from nowhere. */
+.pot.on .ln{stroke:var(--ink);stroke-width:1.6}
+.pot.on .cap b{color:var(--ink)}
+
+/* ---------- what is in the pot ----------
+   The banked card, drawn by the same function that always drew it, so the
+   record cannot say one thing here and another in the ledger it is built from.
+   It borrows the whole .nudges vocabulary and gives back the measure: the
+   shelf is already inside the column's padding, and a card that set its own
+   again would be indented from the row it belongs to. */
+.pots .nudges{max-width:none;margin:0;padding:0}
+.pots .record{margin:26px 0 0;border-top:1px solid var(--rule);padding-top:4px}
+.pots .record .nudge{padding:0;border-bottom:0}
+#record{scroll-margin-top:92px}
+.pots .rechead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+  gap:6px 16px;margin:18px 0 16px}
+.pots .reclab{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted)}
+.pots .recx{background:none;border:0;padding:0;cursor:pointer;color:var(--faint);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.pots .recx:hover{color:var(--ink)}
+
 @media(max-width:560px){
-  .palette{padding:34px 20px 0}
+  .pots{padding:34px 20px 0}
+  .pots .shelf{gap:4px}
+  /* Twelve pots in a phone's width leave about two dozen pixels each, which is
+     a pot and a number and no room for seven characters of hex. The number
+     stays, because it is what makes the twelve a sequence; the hex is in the
+     record behind the pot, which is one tap away. */
+  .pot .hx{display:none}
 }
 
 /* ---------- a constrained board ----------
@@ -593,7 +687,6 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
 @media(max-width:640px){
   .mast{padding:34px 20px 0}
   .nudges{padding:0 20px}
-  #banked{padding-top:38px}
   #open .nudge{padding:20px 16px}
   .nudges .amt{width:100%}
   .room{padding:18px 20px 30px}
@@ -618,13 +711,21 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
    The two columns are drawn only where there is something to put in the
    second one: a page with no open nudge on it keeps the single column it has
    always had, rather than a third of the screen held empty for a question
-   nobody has asked. The room says which, because the room knows. */
+   nobody has asked. The room says which, because the room knows.
+
+   EVERY CHILD OF THIS GRID IS PLACED BY NAME, and that is not tidiness. The
+   palette had no area, so on any page with an open nudge on it the browser
+   auto-placed it into a row of its own invention below the composer ... the
+   arc, which is the first thing this page has to say, arriving after the last
+   thing. An unnamed child of a named grid is a child in a row nobody drew, so
+   the areas below and the sections in the markup are one list, and adding a
+   section to this page means adding it here too. */
 @media(min-width:1024px){
   #main.asking{display:grid;max-width:1180px;margin:0 auto;column-gap:34px;
     grid-template-columns:minmax(0,1fr) 352px;
-    grid-template-areas:"mast side" "banked side" "log side" "speak side"}
+    grid-template-areas:"mast side" "pots side" "log side" "speak side"}
   #main.asking .mast{grid-area:mast}
-  #main.asking #banked{grid-area:banked}
+  #main.asking #pots{grid-area:pots}
   #main.asking #log{grid-area:log}
   #main.asking #speak{grid-area:speak}
   #main.asking #open{grid-area:side;align-self:start;position:sticky;top:76px;margin:0;padding:0 28px 0 0;
@@ -654,24 +755,19 @@ h1 em{font-style:italic;display:block;font-size:.28em;color:var(--muted);letter-
        surface nothing rewrites, so it is written once in HTML rather than
        rebuilt every time somebody speaks. -->
   <section class="mast">
-    <h1>Studio<em>TAO gets a voice</em></h1>
-    <div class="sub">Two things happen here. The studio asks the collectors a question and they weigh their TAO behind a yes or a no; and the room talks, all day, about the work. TAO gets you into both. Anyone may read.</div>
-    <div class="frame">
-      <p>While some build at nation-state size ... huge scale, complex coordination ... there is also a need for smaller experiments, shorter runways, faster iteration. The Artist Virtual Studio is smol scale, needing simple coordination: a yes or a no, built on MintFace art tokens. Co-creation between the artist and collectoors ... and eventually beyond.</p>
-      <p class="rule">A nudge steers. It never commands.<br>The studio may act with, against, or without the result.</p>
-    </div>
+    <h1>Studio</h1>
+    <p class="lede">MintFace collectoors have a voice in the Studio. Chat with each other.
+      Chat with MintFace. Weigh in on the next decision with
+      <a href="https://collectors.mintface.art/">TAO</a> 🧧</p>
   </section>
 
-  <!-- The arc. Twelve colours, one nudge each, and where it has got to. It is
-       above the banked cards because it is the shape they are part of: a
-       reader who sees three banked nudges and no strip has no way of knowing
-       there are nine more coming. -->
-  <section class="palette" id="palette"></section>
-
-  <!-- What the studio has already asked and banked. Above the room, because it
-       is the record rather than the question, and a record is a thing you go
-       and look at. -->
-  <section class="nudges" id="banked"></section>
+  <!-- The arc and the record, as one thing. Twelve pottles: what the collectors
+       have locked, what is being asked, and how much of it is still to come ...
+       and behind each locked one, the card that banked it. It stands above the
+       room because it is the shape everything under it is part of, and a reader
+       who sees one colour and no shelf has no way of knowing eleven more are
+       coming. -->
+  <section class="pots" id="pots"></section>
 
   <!-- Four owners, four containers, and none of them redraws another. The room
        is rebuilt whenever somebody speaks; the nudges hold a half-typed number
@@ -1915,7 +2011,11 @@ const sent = (location.hash.match(/^#m-(\d+)$/) || [])[1];
    whenever the board comes back and a panel somebody is typing into should not
    close under them. */
 const NUDGE = { state: null, tao: 0, who: null, tried: null, loading: false,
-  picked: {}, putting: new Set(), moving: new Set() };
+  picked: {}, putting: new Set(), moving: new Set(),
+  /* Which pot is open, as a nudge id, and whether a link that arrived pointing
+     at one has been answered yet. Both are about the page rather than about
+     the board, which is why they are here and not in what the route sent. */
+  pot: null, hashed: false };
 const num = (x) => Number(x || 0).toLocaleString('en-NZ');
 const dateOf = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
 /* A ledger row is one of many and a nudge runs for a fortnight, so the day and
@@ -1967,6 +2067,17 @@ function meters(x) {
       <div class="track"><div class="fill" style="width:${(x.share[k] * 100).toFixed(1)}%"></div></div>
     </div>`).join('')}</div>`;
 }
+
+/* A nudge steers. It never commands.
+ *
+ * The line that used to stand in the masthead, over the whole page, where it
+ * was read once by somebody who had not yet seen a vote and then never again.
+ * It does its work beside the thing it is about: on every card, open or
+ * banked, because a collector deciding what to weigh needs the terms in front
+ * of them, and a record read in two years has to carry the terms it was made
+ * under. Written once here rather than three times in three card builders. */
+const RULE = `<p class="rule">A nudge steers. It never commands.<br>
+  The studio may act with, against, or without the result.</p>`;
 
 /* A ledger row says who steered, so it leads to them. A weighing is a public
    record of influence, and a name in it that goes nowhere is a name nobody can
@@ -2534,7 +2645,8 @@ function candidateCard(x) {
       ? `Locked &middot; ${e(x.locked.hex)}${nameOf(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
       : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
     ${x.open || x.locked || !x.why ? '' : `<p class="said">${e(x.why)}</p>`}
-    ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}`;
+    ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
+    ${x.open ? '' : RULE}`;
   /* The refusal line stays outside the fold. Weighing can now be done from a
      collapsed card, so anything it has to say back has to be sayable there. */
   return `<div class="nudge" id="nudge-${e(x.id)}">
@@ -2548,6 +2660,7 @@ function candidateCard(x) {
     ${x.open ? againstBlock(x) : ''}
     ${x.open ? colourRows(x) : ''}
     ${position(x)}
+    ${x.open ? RULE : ''}
     <p class="said" id="say-${e(x.id)}" hidden></p>
     ${folded(x, 'Details', inner)}
   </div>`;
@@ -2578,6 +2691,7 @@ function openCard(x) {
     <div class="when">Nudge #${x.number} &middot; closes ${e(dateOf(x.closes))}</div>
     ${meters(x)}
     ${yours(x)}
+    ${RULE}
     ${folded(x, 'Weigh in &amp; history', inner)}
   </div>`;
 }
@@ -2590,6 +2704,7 @@ function bankedCard(x) {
     <p class="banked">${x.result === 'even' ? 'Even' : x.result === 'yes' ? 'Yes' : 'No'}
       &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}</p>
     ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
+    ${RULE}
     ${ledger(x)}
   </div>`;
 }
@@ -2598,47 +2713,159 @@ const openNudges = () => ((NUDGE.state && NUDGE.state.nudges) || []).filter((x) 
 
 const cardFor = (x, closed) => (x.kind === 'candidates' ? candidateCard(x) : (closed ? bankedCard(x) : openCard(x)));
 
-/* ---------- the arc ----------
+/* ---------- the arc, and the record, as one row ----------
  *
- * Twelve slots in nudge order and the red after them, at the top of the page.
- * It is drawn from the same reading the cards are, so a slot cannot say one
- * thing while the card that filled it says another ... and it is drawn by
- * MF.palette rather than here, so it cannot say one thing while the same
- * strip on the collection page or in the maker says another.
+ * Twelve pottles at the top of the page. It is drawn from the same reading the
+ * cards are, and the order comes from MF.palette rather than from here, so a
+ * pot cannot say one thing while the card that filled it ... or the strip on
+ * the collection page, or the maker ... says another.
  *
- * Empty slots are drawn rather than left out. Three swatches would look like a
- * palette of three; three swatches and nine hairlines is a palette of twelve
- * that is a quarter done, which is the true thing and also the interesting one.
+ * Empty pots are drawn rather than left out. One pot would look like a palette
+ * of one; one pot and eleven hairline outlines is a palette of twelve with a
+ * twelfth of it done, which is the true thing and also the interesting one.
+ *
+ * The red is not drawn. It is the artist's constant and nobody weighed on it.
  */
-function drawPalette() {
-  const el = document.getElementById('palette');
-  if (!el) return;
-  const s = NUDGE.state && NUDGE.state.series;
-  if (!s || !s.board) { el.innerHTML = ''; return; }
-  const done = s.locked.length;
-  el.innerHTML = `<h2 class="sec">Palette
-      <span class="count">${done} of ${s.slots} locked</span></h2>
-    ${s.note ? `<p class="note">${e(s.note)}</p>` : ''}
-    ${MF.palette.strip(s)}
-    ${s.complete && s.provenance
-      ? `<p class="done">${e(s.provenance)}</p>`
-      : ''}`;
+
+/* The pot. Straight sides, a lid ring above them, and the paint inside the
+   sides rather than behind the whole drawing ... paint goes in a pot, not
+   round it. Two paths and a fill: at this size anything more is mud. */
+function potSVG(paint, faint) {
+  return `<svg viewBox="0 0 30 42" aria-hidden="true" focusable="false">
+    ${paint ? `<path class="paint" fill="${e(paint)}"${faint ? ' opacity=".26"' : ''}
+      d="M6.5 10H23.5V35.5A2.5 2.5 0 0 1 21 38H9A2.5 2.5 0 0 1 6.5 35.5Z"/>` : ''}
+    <path class="ln" d="M4.5 10V5.5H25.5V10H4.5"/>
+    <path class="ln" d="M6.5 10V35.5A2.5 2.5 0 0 0 9 38H21A2.5 2.5 0 0 0 23.5 35.5V10"/>
+  </svg>`;
 }
+
+/* One slot, as a pot and a caption.
+ *
+ * Three states and three shapes of door. A locked pot opens the record behind
+ * it, so it is a button. The open one has no record yet ... what a reader
+ * wants from it is the vote ... so it is a link to the card being asked on,
+ * which is also what the strip did and what every link to it off this page
+ * expects. An empty one is not a door at all, and is not focusable: eleven
+ * tab stops that do nothing is how a keyboard leaves this page.
+ */
+function pottle(v) {
+  const nn = String(v.slot).padStart(2, '0');
+  const hex = v.hex ? String(v.hex).toUpperCase() : null;
+  const nm = hex ? MF.colour.name(hex) : null;
+  const x = v.nudge ? nudgeById(v.nudge) : null;
+  /* The open slot has no colour, only one in front of it. It goes in at a
+     quarter of itself: enough to say which way the board is leaning, nowhere
+     near enough to be read as paint that has set. */
+  const lead = !hex && x && x.leader && x.leader.hex ? String(x.leader.hex).toUpperCase() : null;
+  const state = v.state === 'locked' ? 'filled' : (v.state === 'open' ? 'live' : 'empty');
+  const on = state === 'filled' && NUDGE.pot === v.nudge;
+  const inner = `${potSVG(hex || lead, !hex)}
+    <span class="cap"><b>${nn}</b><span class="hx">${
+      hex ? e(hex) : (state === 'live' ? 'Open' : '&mdash;')}</span></span>`;
+  const title = hex
+    ? `Pottle ${nn} \u00b7 ${hex}${nm ? ` \u00b7 ${nm.label}` : ''} \u00b7 Nudge #${v.number}`
+    : (state === 'live'
+      ? `Pottle ${nn} \u00b7 open \u00b7 Nudge #${v.number}`
+      : `Pottle ${nn} \u00b7 not asked yet`);
+  const cls = `pot ${state}${on ? ' on' : ''}`;
+  if (state === 'filled') {
+    return `<button type="button" class="${cls}" data-pot="${e(v.nudge)}"
+      aria-expanded="${on}" title="${e(title)}">${inner}</button>`;
+  }
+  if (state === 'live') {
+    return `<a class="${cls}" href="#nudge-${encodeURIComponent(v.nudge)}"
+      title="${e(title)}">${inner}</a>`;
+  }
+  return `<span class="${cls}" title="${e(title)}">${inner}</span>`;
+}
+
+const nudgeById = (id) => ((NUDGE.state && NUDGE.state.nudges) || []).find((y) => y.id === id) || null;
+
+/* What is in the pot, opened. The banked card exactly as it has always been
+   drawn ... question, the day it closed, the final tally, the whole
+   who-weighed-what ... reached through the pot instead of stacked on the page.
+   One at a time: twelve records standing open is the page this replaces. */
+function record() {
+  const x = NUDGE.pot ? nudgeById(NUDGE.pot) : null;
+  if (!x || x.open) return '';
+  const slot = x.slot ? String(x.slot).padStart(2, '0') : null;
+  const hex = x.locked && x.locked.hex ? String(x.locked.hex).toUpperCase() : null;
+  const nm = hex ? MF.colour.name(hex) : null;
+  return `<div class="record nudges" id="record">
+    <div class="rechead">
+      <span class="reclab">${slot ? `Pottle ${slot}` : `Nudge #${x.number}`}${
+        hex ? ` &middot; ${e(hex)}` : ''}${nm ? ` &middot; ${e(nm.label)}` : ''}</span>
+      <button type="button" class="recx" data-pot="">Close</button>
+    </div>
+    ${cardFor(x, true)}
+  </div>`;
+}
+
+/* A link that arrived pointing at a banked nudge ... from the room, from the
+   collection page, from somebody's bookmark ... opens the pot it is behind.
+   Without this those links now land on a shelf and nothing happens, because
+   the card they name is no longer standing open on the page. */
+function potFromHash() {
+  const m = /^#nudge-(.+)$/.exec(location.hash || '');
+  if (!m) return false;
+  const x = nudgeById(decodeURIComponent(m[1]));
+  if (!x || x.open) return false;
+  NUDGE.pot = x.id;
+  return true;
+}
+
+function drawPottles() {
+  const el = document.getElementById('pots');
+  if (!el) return;
+  const s = (NUDGE.state && NUDGE.state.series) || null;
+  const closed = ((NUDGE.state && NUDGE.state.nudges) || []).filter((x) => !x.open);
+  /* No series to draw ... a board that is not a palette at all. The record
+     keeps the shape it had, because a page with nothing to put the record
+     behind still has to put it somewhere. */
+  if (!s || !s.board) {
+    el.innerHTML = NUDGE.state
+      ? `<h2 class="sec">${closed.length ? 'Banked' : 'Nudges'}</h2>
+        <div class="nudges">${closed.length
+          ? closed.map((x) => cardFor(x, true)).join('')
+          : '<p class="none">The studio has not asked anything yet.</p>'}</div>`
+      : '';
+    return;
+  }
+  /* A banked nudge that was never a slot ... a plain yes or no, asked beside
+     the palette rather than in it ... has no pot to stand behind. It keeps its
+     card, under the shelf. There are none today; the day there is one, its
+     record is still on the page rather than quietly gone. */
+  const off = closed.filter((x) => !s.board.some((b) => b.nudge === x.id));
+  el.innerHTML = `<h2 class="sec">Palette
+      <span class="count">${s.locked.length} of ${s.slots} locked</span></h2>
+    ${s.note ? `<p class="note">${e(s.note)}</p>` : ''}
+    <div class="shelf">${MF.palette.slots(s).map(pottle).join('')}</div>
+    ${record()}
+    ${off.length ? `<div class="nudges">${off.map((x) => cardFor(x, true)).join('')}</div>` : ''}
+    ${s.complete && s.provenance ? `<p class="done">${e(s.provenance)}</p>` : ''}`;
+}
+
+window.addEventListener('hashchange', () => {
+  if (!potFromHash()) return;
+  drawPottles();
+  const el = document.getElementById('record');
+  if (el) el.scrollIntoView({ block: 'start' });
+});
 
 function drawNudges() {
   const all = (NUDGE.state && NUDGE.state.nudges) || [];
   const open = all.filter((x) => x.open);
-  const done = all.filter((x) => !x.open);
-  drawPalette();
+  /* Answered once, on the first board that can answer it: after that the pot
+     is open or the reader has shut it, and a redraw that re-opened it would be
+     a panel that will not close. */
+  if (NUDGE.state && !NUDGE.hashed) { NUDGE.hashed = true; potFromHash(); }
+  drawPottles();
   document.getElementById('open').innerHTML = open.map((x) => cardFor(x, false)).join('');
   /* Whether there is a second column to draw at all. On a wide screen the
      panel docks beside the room; with nothing being asked there is nothing to
      dock, and a third of the screen held empty for it would be worse than the
      single column this page has always had. */
   document.getElementById('main').classList.toggle('asking', open.length > 0);
-  document.getElementById('banked').innerHTML = done.length
-    ? `<h2 class="sec">Banked</h2>${done.map((x) => cardFor(x, true)).join('')}`
-    : (NUDGE.state ? '<h2 class="sec">Nudges</h2><p class="none">The studio has not asked anything yet.</p>' : '');
   /* The room draws the pointer that says a question is waiting, and only the
      room knows when its own composer has been rebuilt. */
   draw();
@@ -2653,6 +2880,18 @@ function drawNudges() {
 }
 
 document.addEventListener('click', (ev) => {
+  /* A pot, opened or shut. Only the shelf is redrawn: the room below it may be
+     holding a half-typed message and the open nudge a half-typed number, and
+     neither of them is what was clicked. */
+  const pot = ev.target.closest('[data-pot]');
+  if (pot) {
+    const id = pot.dataset.pot;
+    NUDGE.pot = id && NUDGE.pot !== id ? id : null;
+    drawPottles();
+    const rec = NUDGE.pot ? document.getElementById('record') : null;
+    if (rec) rec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
   const prop = ev.target.closest('[data-propose]');
   if (prop) { void propose(prop.dataset.propose); return; }
   const side = ev.target.closest('.side[data-nudge]');
