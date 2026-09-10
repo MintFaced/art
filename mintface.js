@@ -1475,12 +1475,17 @@ const MF = {
       const EthereumProvider = mod.EthereumProvider || (mod.default && mod.default.EthereumProvider) || mod.default;
       real = await EthereumProvider.init({
         projectId,
-        chains: [1],
-        optionalChains: [1, 8453],
+        /* Optional, never required. A required chain or method is a namespace the
+           wallet must pre-approve or refuse the whole session with "no accounts
+           found in approved namespace" ... which is exactly the error Rainbow
+           was showing on mobile. We only ever ask for a signature on mainnet, so
+           mainnet is all we declare, and as optional. */
+        optionalChains: [1],
+        rpcMap: { 1: 'https://cloudflare-eth.com' },
+        optionalMethods: ['personal_sign', 'eth_sendTransaction', 'eth_signTypedData', 'eth_signTypedData_v4'],
+        optionalEvents: ['chainChanged', 'accountsChanged'],
         showQrModal: true,
         qrModalOptions: { themeMode: 'light', themeVariables: theme },
-        methods: ['eth_sendTransaction', 'personal_sign', 'eth_signTypedData', 'eth_signTypedData_v4'],
-        events: ['chainChanged', 'accountsChanged'],
         metadata: {
           name: 'MintFace',
           description: 'MintFace',
