@@ -656,9 +656,62 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .m:hover .quiet,.m:focus-within .quiet,.m.open .quiet{opacity:1}
 .quiet:hover{color:var(--ink)}
 @media(hover:none){.quiet{opacity:.65}}
-.pal{display:inline-flex;gap:1px;border:1px solid var(--rule);padding:2px}
+.pal{display:inline-flex;gap:1px;border:1px solid var(--rule);padding:2px;align-items:center}
 .pal button{background:none;border:0;padding:3px 6px;font-size:15px;line-height:1;cursor:pointer;opacity:.7}
 .pal button:hover,.pal button:focus-visible{opacity:1;background:var(--sunk);outline:none}
+/* The door to the rest of them. Quiet, and in the furniture's voice rather
+   than the glyphs' ... it is the only thing in this row that is not an emoji,
+   and it should not look like one that failed to load. */
+.pal .pk-more{font-family:var(--font-mono);font-size:13px;color:var(--faint);
+  padding:3px 8px;opacity:1;border-left:1px solid var(--rule);margin-left:2px}
+.pal .pk-more:hover,.pal .pk-more:focus-visible{color:var(--ink)}
+
+/* ---------- the full picker ----------
+ *
+ * The glyphs are the world's; the box they sit in is the site's. Warm ground,
+ * one hairline, mono smallcaps over each group, and no rainbow of category
+ * tabs down the side ... a picker that arrives wearing another product's
+ * chrome is a hole in the page, whatever it is offering.
+ *
+ * Anchored to the + it came out of on a pointer screen. On a touch screen it
+ * docks to the foot of the window as a sheet, because that is where a sheet
+ * belongs and because the platform's own keyboard is about to want the bottom
+ * half of the screen ... which is an argument not worth having.
+ */
+.picker{position:fixed;z-index:60;width:312px;max-width:calc(100vw - 24px);
+  background:var(--paper);border:1px solid var(--rule);display:flex;flex-direction:column;
+  max-height:340px;box-shadow:0 1px 24px rgba(0,0,0,.07)}
+.picker[hidden]{display:none}
+.pk-head{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--rule);flex:none}
+.pk-q{flex:1 1 auto;min-width:0;background:none;border:0;padding:4px 2px;color:var(--ink);
+  font-family:var(--font-mono);font-size:12px;border-radius:0;-webkit-appearance:none}
+.pk-q::placeholder{color:var(--faint)}
+.pk-q:focus{outline:none}
+.pk-x{background:none;border:0;padding:2px;cursor:pointer;flex:none;color:var(--faint);
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase}
+.pk-x:hover{color:var(--ink)}
+.pk-body{overflow-y:auto;overscroll-behavior:contain;padding:4px 10px 10px;flex:1 1 auto}
+/* Nineteen hundred buttons is a lot to lay out at once, and the reader sees
+   thirty of them. The ones off screen are measured and not drawn. */
+.pk-g{content-visibility:auto;contain-intrinsic-size:auto 220px}
+.pk-lab{font-family:var(--font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--faint);font-weight:400;margin:12px 0 6px;position:sticky;top:0;background:var(--paper);
+  padding:4px 0 3px}
+.pk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:1px}
+.pk-e{background:none;border:0;padding:4px 0;font-size:19px;line-height:1.25;cursor:pointer;border-radius:0}
+.pk-e:hover,.pk-e:focus-visible{background:var(--sunk);outline:none}
+.pk-say{font-family:var(--font-mono);font-size:10.5px;color:var(--faint);padding:14px 0;margin:0}
+
+/* The sheet. Full width at the foot, and taller, because a thumb needs the
+   room a pointer does not. */
+.picker.sheet{left:0;right:0;bottom:0;top:auto;width:auto;max-width:none;
+  max-height:min(58vh,420px);border-left:0;border-right:0;border-bottom:0;
+  padding-bottom:env(safe-area-inset-bottom)}
+.picker.sheet .pk-head{padding:12px 16px}
+.picker.sheet .pk-q{font-size:16px}
+.picker.sheet .pk-body{padding:4px 16px 14px}
+.picker.sheet .pk-grid{grid-template-columns:repeat(auto-fill,minmax(40px,1fr))}
+.picker.sheet .pk-e{font-size:24px;padding:7px 0}
 
 /* Your name used to be said again under the masthead. The nav says it now, on
    this page and on every other, and the composer says it a third time with
@@ -806,6 +859,12 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   <section class="speak" id="speak"></section>
 </main>
 
+<!-- Every standard emoji, opened by the + at the end of the quick row. It is
+     written here rather than inside a message because it outlives the message
+     it was opened for: draw() rebuilds the room whenever anybody speaks, and a
+     panel somebody is searching in should not go with it. -->
+<div class="picker" id="picker" hidden></div>
+
 <!-- Back to the head of the page. Written in the HTML rather than drawn,
      because draw() rebuilds the room and the composer every time anybody
      speaks and this belongs to neither of them. -->
@@ -938,7 +997,12 @@ window.addEventListener('scroll', () => {
   }
   FOLLOW.at = y;
   topButton();
+  if (PICK.n != null) placePicker();
 }, { passive: true });
+
+/* A window that changed shape is a panel pointing at the wrong place, and on a
+   phone it may have changed from a panel into a sheet. */
+window.addEventListener('resize', () => { topButton(); if (PICK.n != null) placePicker(); });
 
 /* The button is there once there is a page above worth going back to, and
    gone again at the head of it. A viewport and a half: far enough that it is
@@ -1293,12 +1357,137 @@ function actsRow(m) {
   const marks = (m.reactions || []).map((r) => `<button class="rxn${r.mine ? ' mine' : ''}" data-act="rx"
     data-n="${m.n}" data-e="${e(r.emoji)}" title="${r.mine ? 'Take yours back' : 'Add yours'}"
     aria-pressed="${r.mine ? 'true' : 'false'}"><span class="e">${e(r.emoji)}</span><span class="c">${r.count}</span></button>`).join('');
+  /* The quick row, and the door to the rest. The row is the room's own
+     vocabulary and stays short enough to read at a glance; anything the room
+     has not thought of is one press further in, and attaches exactly the same
+     way when it gets here. */
   const palette = ROOM.palette === m.n && mayAct()
     ? `<span class="pal">${(ROOM.emoji || []).map((x) => `<button type="button" data-act="rx"
-        data-n="${m.n}" data-e="${e(x)}" title="${e(x)}">${e(x)}</button>`).join('')}</span>`
+        data-n="${m.n}" data-e="${e(x)}" title="${e(x)}">${e(x)}</button>`).join('')}<button
+        type="button" class="pk-more" data-act="more" data-n="${m.n}"
+        aria-label="More emoji" title="More emoji">+</button></span>`
     : '';
   if (!marks && !palette) return '';
   return `<div class="acts">${marks}${palette}</div>`;
+}
+
+/* ---------- every other emoji ----------
+ *
+ * The quick row is a nod: eight marks the room reaches for without thinking.
+ * This is the rest of them, which is a keyboard, and a keyboard is a thing you
+ * go and ask for rather than a thing that sits under every message forever.
+ *
+ * The list is vendored at data/emoji.json ... built by scripts/build-emoji.mjs
+ * from the Unicode tables ... and fetched the first time somebody presses `+`,
+ * then held for the visit. Nobody who never opens it pays for it, and the room
+ * does not depend on unicode.org being up to draw a picker.
+ *
+ * What comes back out attaches like any other mark: the same data-act, the
+ * same route, the same one-per-wallet-per-message-per-emoji, the same small
+ * mono count underneath. An emoji nobody has ever used here is not a special
+ * occasion, and the row of counts should not start reporting one.
+ */
+const PICK = { n: null, q: '', list: null, loading: false, failed: false };
+
+async function emojiList() {
+  if (PICK.list || PICK.loading) return PICK.list;
+  PICK.loading = true;
+  try {
+    const d = await fetch('/data/emoji.json').then((r) => (r.ok ? r.json() : null));
+    PICK.list = d && Array.isArray(d.groups) && d.groups.length ? d.groups : null;
+  } catch (err) { PICK.list = null; }
+  PICK.failed = !PICK.list;
+  PICK.loading = false;
+  return PICK.list;
+}
+
+const pickCell = (g, name) => `<button type="button" class="pk-e" data-act="rx"
+  data-n="${PICK.n}" data-e="${e(g)}" title="${e(name)}" aria-label="${e(name)}">${e(g)}</button>`;
+
+function pickerBody() {
+  if (!PICK.list) {
+    return `<p class="pk-say">${PICK.failed
+      ? 'The emoji list did not load. The row above still works.'
+      : 'One moment ...'}</p>`;
+  }
+  const q = PICK.q.trim().toLowerCase();
+  if (q) {
+    /* By name, or by the emoji itself for somebody who pasted one in. Capped:
+       a search that matches half the standard is a search nobody scrolled. */
+    const hits = [];
+    for (const grp of PICK.list) {
+      for (const [g, name] of grp.e) {
+        if (g === q || name.includes(q)) hits.push(pickCell(g, name));
+      }
+      if (hits.length >= 240) break;
+    }
+    return hits.length
+      ? `<div class="pk-grid">${hits.slice(0, 240).join('')}</div>`
+      : '<p class="pk-say">Nothing by that name.</p>';
+  }
+  return PICK.list.map((grp) => `<section class="pk-g">
+    <h3 class="pk-lab">${e(grp.g)}</h3>
+    <div class="pk-grid">${grp.e.map(([g, name]) => pickCell(g, name)).join('')}</div>
+  </section>`).join('');
+}
+
+/* Anchored to the + it came out of, and docked to the foot of the window on a
+   touch screen. The anchor is re-read rather than remembered: the room redraws
+   under this panel whenever somebody speaks, and the button it is pointing at
+   is a new button by then. */
+function placePicker() {
+  const el = document.getElementById('picker');
+  if (!el || PICK.n == null) return;
+  const sheet = TOUCH || window.innerWidth < 560;
+  el.classList.toggle('sheet', sheet);
+  if (sheet) { el.style.left = ''; el.style.top = ''; return; }
+  const from = document.querySelector(`[data-act="more"][data-n="${PICK.n}"]`);
+  if (!from) return;
+  const r = from.getBoundingClientRect();
+  const box = el.getBoundingClientRect();
+  const w = box.width || 312;
+  const h = box.height || 340;
+  const pad = 12;
+  el.style.left = `${Math.round(Math.max(pad, Math.min(window.innerWidth - w - pad, r.left)))}px`;
+  /* Under the button where there is room, over it where there is not. */
+  el.style.top = `${Math.round(window.innerHeight - r.bottom > h + pad
+    ? r.bottom + 6
+    : Math.max(pad, r.top - h - 6))}px`;
+}
+
+function openPicker(n) {
+  const el = document.getElementById('picker');
+  if (!el) return;
+  PICK.n = n;
+  PICK.q = '';
+  el.hidden = false;
+  el.innerHTML = `<div class="pk-head">
+      <input class="pk-q" id="pk-q" type="search" placeholder="Search emoji"
+        autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search emoji">
+      <button type="button" class="pk-x" data-act="unmore">Close</button>
+    </div>
+    <div class="pk-body" id="pk-body">${pickerBody()}</div>`;
+  placePicker();
+  /* Not on a touch screen. Focusing the field there summons the platform
+     keyboard over the sheet before the reader has seen what is in it, and the
+     field is right there to be tapped when they want it. */
+  if (!TOUCH) { const q = document.getElementById('pk-q'); if (q) q.focus(); }
+  if (!PICK.list) {
+    void emojiList().then(() => {
+      if (PICK.n == null) return;
+      const body = document.getElementById('pk-body');
+      if (body) body.innerHTML = pickerBody();
+      placePicker();
+    });
+  }
+}
+
+function closePicker() {
+  if (PICK.n == null) return;
+  PICK.n = null;
+  PICK.q = '';
+  const el = document.getElementById('picker');
+  if (el) { el.hidden = true; el.innerHTML = ''; el.style.left = ''; el.style.top = ''; }
 }
 
 /* Offered exactly when the composer is a box you can type in: a wallet the
@@ -1737,6 +1926,15 @@ let tagTimer = null;
    `change`, because a colour dialog fires change when it closes and by then
    the answer has arrived too late to have been useful. */
 document.addEventListener('input', (ev) => {
+  /* Only the grid is redrawn. Rebuilding the panel would rebuild the field
+     being typed into, and a search box that loses the caret every keystroke is
+     a search box nobody finishes a word in. */
+  if (ev.target.id === 'pk-q') {
+    PICK.q = String(ev.target.value || '');
+    const body = document.getElementById('pk-body');
+    if (body) { body.innerHTML = pickerBody(); body.scrollTop = 0; }
+    return;
+  }
   const pick = ev.target.closest && ev.target.closest('[data-colourfield]');
   if (pick) {
     const id = pick.dataset.colourfield;
@@ -1790,6 +1988,10 @@ document.addEventListener('keydown', (ev) => {
     MF.zoom.show(ev.target.dataset.src, 'A picture from Studio');
     return;
   }
+  /* The picker first: it is the thing in front, and escaping out of both at
+     once would take the quick row down with it while somebody was still
+     looking at it. */
+  if (ev.key === 'Escape' && PICK.n != null && !ROOM.tag.open) { closePicker(); return; }
   if (ev.key === 'Escape' && ROOM.palette != null && !ROOM.tag.open) {
     const was = ROOM.palette;
     ROOM.palette = null;
@@ -1857,9 +2059,17 @@ document.addEventListener('click', (ev) => {
     shutTag();
     paintTags();
   }
+  /* The picker likewise: a press anywhere but inside it shuts it. */
+  if (PICK.n != null && !ev.target.closest('#picker') && !ev.target.closest('[data-act="more"]')) {
+    closePicker();
+  }
   /* And the palette likewise. Not when the press was the palette itself, or
-     the affordance that opened it ... that one is a toggle. */
-  if (ROOM.palette != null && !ev.target.closest('.pal') && !ev.target.closest('[data-act="palette"]')) {
+     the affordance that opened it ... that one is a toggle. And not while the
+     picker is up: the picker is anchored to the + inside this row, and taking
+     the row down under it would leave it pointing at nothing. */
+  if (ROOM.palette != null && PICK.n == null
+    && !ev.target.closest('.pal') && !ev.target.closest('[data-act="palette"]')
+    && !ev.target.closest('#picker')) {
     const was = ROOM.palette;
     ROOM.palette = null;
     repaint(was);
@@ -1999,6 +2209,7 @@ async function mark(b, n, emoji) {
     if (m) m.reactions = j.reactions || [];
     if (j.rx != null) ROOM.rxv = j.rx;
     ROOM.palette = null;
+    closePicker();
     repaint(n);
     status(null);
   }, { redraw: false });     // the work redrew the one article this ran from
@@ -2032,6 +2243,8 @@ document.addEventListener('click', async (ev) => {
     if (ROOM.palette != null) repaint(ROOM.palette);
     return;
   }
+  if (act === 'more') { openPicker(Number(b.dataset.n)); return; }
+  if (act === 'unmore') { closePicker(); return; }
   if (act === 'rx') return void mark(b, Number(b.dataset.n), b.dataset.e);
 
   /* Answering somebody. The composer says who, the log says nothing yet ...

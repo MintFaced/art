@@ -129,21 +129,66 @@ export function wearTao(n) {
 
 /* ---------------------------------------------------------------- marks */
 
-/* The set is small on purpose, and it is Ryan's to change: it lives in
+/* THE QUICK ROW. Small on purpose, and it is Ryan's to change: it lives in
    data/source/chat.json, and this list is only what stands in where a config
-   has not said. Eight would already be a keyboard; six is a nod. */
-export const REACTIONS = ['\ud83c\udf52', '\u2764\ufe0f', '\ud83d\udc4d', '\ud83d\udd25', '\ud83d\ude02', '\u2726'];
+   has not said. Eight is the ceiling, and eight is what it now holds ... the
+   red envelope because the Studio header took it as the TAO glyph and the room
+   should be able to say `that is the good stuff` in the same character, and a
+   hundred points because the room was already saying it in words.
+
+   The row is not the whole vocabulary any more. The `+` at the end of it opens
+   every standard emoji, and what comes back through that is checked below by
+   its shape rather than by this list. */
+export const REACTIONS = ['\ud83c\udf52', '\u2764\ufe0f', '\ud83d\udc4d', '\ud83d\udd25',
+  '\ud83d\ude02', '\u2726', '\ud83d\udcaf', '\ud83e\uddE7'];
 
 export const reactionSet = (cfg = {}) => {
   const list = Array.isArray(cfg.reactions) && cfg.reactions.length ? cfg.reactions : REACTIONS;
   return list.map((x) => String(x)).slice(0, 8);
 };
 
-/** One of Studio's marks, or nothing. Never what a browser felt like sending:
-    the log is kept forever, so what may go into it is a list, not a length. */
+/* WHAT AN EMOJI IS, WRITTEN OUT.
+ *
+ * The room used to take a list of six and nothing else, on the reasoning that
+ * the log is kept forever so what goes into it should be enumerated rather
+ * than measured. That was the right guard for a set of six. It is the wrong
+ * one for a picker holding all of Unicode: a list long enough to cover the
+ * world is not a list any more, it is a copy of the standard that goes stale
+ * the year after it is written.
+ *
+ * So the guard is a grammar instead. Not a length ... a length is what lets a
+ * browser put forty characters of anything under a message. One emoji: a
+ * pictograph with its optional variation selector and skin tone, joined into a
+ * family by zero-width joiners if it is one; or a two-letter flag; or a
+ * keycap; or one of the tag-sequence flags. Anything else, including two
+ * emoji, a letter, a space or an empty string, is not a mark.
+ *
+ * The bound comes first, because the check that follows should never be handed
+ * a megabyte to think about. The longest thing this accepts is a tag flag at
+ * fourteen units, so sixty-four is room and then some. */
+const PIC = '\\p{Extended_Pictographic}';
+const TONE = '[\\u{1F3FB}-\\u{1F3FF}]';
+const ATOM = `${PIC}(?:\\uFE0F)?(?:${TONE})?`;
+const EMOJI = new RegExp(`^(?:${ATOM}(?:\\u200D${ATOM})*`
+  + '|[\\u{1F1E6}-\\u{1F1FF}]{2}'
+  + '|[0-9#*]\\uFE0F?\\u20E3'
+  + '|\\u{1F3F4}[\\u{E0020}-\\u{E007E}]{1,6}\\u{E007F})$', 'u');
+
+export const isEmoji = (x) => {
+  const e = String(x == null ? '' : x);
+  return e.length > 0 && e.length <= 64 && EMOJI.test(e);
+};
+
+/** One mark, or nothing.
+ *
+ * The quick row is allowed whatever it holds, so a house glyph that Unicode
+ * does not call an emoji ... the four-pointed star has never been one ... goes
+ * on working the day somebody puts it in the config. Everything else has to
+ * look like an emoji. */
 export function checkReaction(emoji, cfg) {
   const e = String(emoji == null ? '' : emoji);
-  if (!reactionSet(cfg).includes(e)) return { error: 'that is not one of Studio\'s reactions' };
+  if (reactionSet(cfg).includes(e)) return { emoji: e };
+  if (!isEmoji(e)) return { error: 'that is not an emoji' };
   return { emoji: e };
 }
 
