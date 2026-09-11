@@ -1267,6 +1267,26 @@ const MF = {
      broken. The caller is told the moment the request goes out, told again if
      the wallet has said nothing for a while, and told exactly what happened if
      it refuses. */
+  /* What a wallet actually said, dug out.
+   *
+   * A relayed refusal arrives wrapped: the useful sentence is often on
+   * err.data or nested a level down, and the outer message is the generic one
+   * the wallet showed the person ... `an error occurred`, which tells nobody
+   * anything. Whatever is specific gets shown, with the code, because a code
+   * is the one thing that can be looked up. */
+  whyFailed(err) {
+    const bits = [];
+    const push = (v) => { const t = String(v || '').trim(); if (t && !bits.includes(t)) bits.push(t); };
+    try {
+      push(err && err.message);
+      const d = err && err.data;
+      if (d) { push(typeof d === 'string' ? d : d.message); }
+      if (err && err.cause) push(err.cause.message || err.cause);
+      if (err && err.code != null) push(`code ${err.code}`);
+    } catch (e) { /* nothing more to say */ }
+    return (bits.join(' · ') || String(err)).slice(0, 200);
+  },
+
   toHex(text) {
     const bytes = new TextEncoder().encode(String(text));
     let out = '0x';
@@ -1326,12 +1346,23 @@ const MF = {
       throw e;
     }
     const data = this.toHex(message);
+    /* Over the relay, spelled as the session spells it. */
+    const relay = this.wc.is(this._wallet);
+    const who = (relay && this.wc.exact(address)) || address;
     onState('requested');
     // a hardware wallet is slow, and a prompt that opened behind the window is
     // slower still. Say so rather than letting it read as a dead button.
     const slow = setTimeout(() => onState('slow'), 12000);
     try {
-      const signature = await provider.request({ method: 'personal_sign', params: [data, address] });
+      /* THE CHAIN IS NAMED ON THE REQUEST, not left to a default.
+         universal-provider routes a request to a chain in the session, and a
+         request with no chain on it is one the relay has to guess the
+         destination of ... which it declines to do. Every injected provider
+         takes the two-argument form as one argument and ignores the rest, so
+         this is one call either way. */
+      const signature = relay
+        ? await provider.request({ method: 'personal_sign', params: [data, who] }, 'eip155:1')
+        : await provider.request({ method: 'personal_sign', params: [data, who] });
       if (!signature || typeof signature !== 'string' || !signature.startsWith('0x')) {
         const e = new Error('The wallet answered without a signature.');
         e.code = 'no-signature';
@@ -1346,7 +1377,7 @@ const MF = {
         : code === 4001 ? 'Signature refused in the wallet.'
         : code === -32002 ? 'The wallet already has a request waiting. Open it and answer that one first.'
           : code === 4900 || code === 4100 ? 'The wallet is not connected to this site. Reconnect and try again.'
-            : `The wallet could not sign: ${String((err && err.message) || err).slice(0, 160)}`;
+            : `The wallet could not sign: ${this.whyFailed(err)}`;
       onState('failed', why);
       const out = new Error(why);
       out.code = code;
@@ -1509,9 +1540,15 @@ const MF = {
      */
     async open(onUri) {
       const p = await this.provider();
-      /* A session already approved and still alive: nothing to ask for. */
+      /* A session already approved and still alive: nothing to ask for ...
+         unless it was granted under an older set of methods. A session is
+         negotiated once and kept, so a wallet that agreed to a namespace this
+         site has since changed will go on refusing the thing it never granted,
+         and every retry looks like the same unexplained failure. Check what it
+         actually gave us and pair again if personal_sign is not in it. */
       const already = this.account(p);
-      if (already) { this.mark(true); return already; }
+      if (already && this.grants(p, 'personal_sign')) { this.mark(true); return already; }
+      if (already) { try { await p.disconnect(); } catch (e) { /* it is going anyway */ } }
       let handed = false;
       const hand = (uri) => {
         if (handed || !uri) return;
@@ -1522,7 +1559,12 @@ const MF = {
       await p.connect({
         namespaces: {
           eip155: {
-            methods: ['personal_sign', 'eth_sign', 'eth_signTypedData', 'eth_signTypedData_v4', 'eth_sendTransaction'],
+            /* NOT eth_sign. It is the deprecated one that signs arbitrary
+               bytes, several wallets now refuse to grant it at all, and a
+               session that asks for a method it will not give is a session
+               that errors on the first thing it is asked to do. Nothing here
+               has ever used it. */
+            methods: ['personal_sign', 'eth_signTypedData', 'eth_signTypedData_v4', 'eth_sendTransaction'],
             chains: ['eip155:1'],
             events: ['chainChanged', 'accountsChanged'],
           },
@@ -1535,6 +1577,44 @@ const MF = {
          answered is not something to come back to. */
       this.mark(true);
       return a;
+    },
+
+    /**
+     * THE SESSION'S OWN SPELLING OF AN ADDRESS.
+     *
+     * Everything on this site holds addresses in lower case, and rightly: they
+     * are compared, stored and looked up, and a checksum is a display detail.
+     * A wallet asked to sign is the one place that is not true. The relay
+     * checks the address in a personal_sign against the accounts it granted,
+     * and some wallets do it byte for byte ... so a lower-cased address on an
+     * otherwise perfect request comes back as `an error occurred`, which is
+     * the least useful sentence a wallet can say.
+     */
+    exact(address) {
+      const want = String(address || '').toLowerCase();
+      try {
+        const acc = this._provider && this._provider.session
+          && this._provider.session.namespaces.eip155.accounts;
+        for (const a of acc || []) {
+          const one = String(a).split(':').pop();
+          if (one.toLowerCase() === want) return one;
+        }
+      } catch (e) { /* no session, so nothing to match */ }
+      return null;
+    },
+
+    /** Whether a live session actually granted a method. */
+    grants(p, method) {
+      try {
+        const m = p && p.session && p.session.namespaces
+          && p.session.namespaces.eip155 && p.session.namespaces.eip155.methods;
+        return Array.isArray(m) && m.includes(method);
+      } catch (e) { return false; }
+    },
+
+    /** Whether a given provider is the relay's. */
+    is(w) {
+      return Boolean(w && w.info && w.info.rdns === 'walletconnect');
     },
 
     /** The address on a live session, as the namespace spells it. */
@@ -1654,7 +1734,11 @@ const MF = {
         try {
           const p = await this.wc.provider();
           const a = this.wc.account(p);
-          if (a) {
+          if (a && !this.wc.grants(p, 'personal_sign')) {
+            /* Granted under an older namespace: not a session this site can
+               use, so it is not one to silently adopt. */
+            this.wc.mark(false);
+          } else if (a) {
             this._wallet = { info: { uuid: 'walletconnect', rdns: 'walletconnect', name: 'WalletConnect' }, provider: p };
             try { p.setDefaultChain('eip155:1'); } catch (e) { /* it has one */ }
             return a;
