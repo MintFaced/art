@@ -222,9 +222,16 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .nudges .crow .chip{width:24px;height:24px;border:1px solid var(--rule);display:block}
 /* The swatch and its slivers, which are one item standing beside both rows. */
 .nudges .crow .pair{grid-area:1/1/3/2;align-self:stretch}
+/* AND NEVER TRUNCATED, which this said and then did not do. It carried
+   `min-width:0` and `overflow:hidden`, and an item with hidden overflow has an
+   automatic minimum size of nought ... so the auto track it sits in was free
+   to collapse under it, and in the 352px panel beside the room it did: #80E080
+   came out as #80E... beside a total with every digit of 625,000 intact. Seven
+   characters is the identity of the colour and the whole of what somebody
+   reads back to a decorator. It takes its content's width, and the name beside
+   it goes on being the one that yields. */
 .nudges .crow .hex{grid-area:1/2/2/3;font-family:var(--font-mono);font-size:11.5px;
-  letter-spacing:.12em;color:var(--ink);white-space:nowrap;min-width:0;
-  overflow:hidden;text-overflow:ellipsis}
+  letter-spacing:.12em;color:var(--ink);white-space:nowrap}
 /* The nearest Pantone, beside the hex it stands in for. A column of its own,
    so that giving way is truncation rather than trespass. */
 .nudges .crow .cname{grid-area:1/3/2/4;min-width:0;overflow:hidden;text-overflow:ellipsis;
@@ -330,7 +337,13 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
    thing this row is for. */
 .nudges .nudge{container-type:inline-size}
 @container (max-width:460px){
-  .nudges .crow{grid-template-columns:auto minmax(0,1fr) auto auto}
+  /* THE SLACK GOES TO THE FIGURE'S COLUMN, not to the hex's. The flexible
+     track was the one the hex sat in, so in the narrow panel the hex was the
+     only thing that could give ... and it did, to `#80E...`, beside a total
+     printing all of 625,000. The figure is right-aligned and nowrap, so a
+     track that grows simply pushes it further right; the hex sits in an auto
+     track and keeps all seven characters at every width this row is drawn at. */
+  .nudges .crow{grid-template-columns:auto auto minmax(0,1fr) auto}
   .nudges .crow .pair{grid-area:1/1/4/2}
   .nudges .crow .hex{grid-area:1/2/2/3}
   .nudges .crow .w{grid-area:1/3/2/4}
@@ -3251,7 +3264,12 @@ document.addEventListener('click', (ev) => {
     return;
   }
   const prop = ev.target.closest('[data-propose]');
-  if (prop) { void propose(prop.dataset.propose); return; }
+  if (prop) {
+    propose(prop.dataset.propose).catch((err) => {
+      nudgeSay(prop.dataset.propose, `That did not go through: ${String((err && err.message) || err)}`, true);
+    });
+    return;
+  }
   const side = ev.target.closest('.side[data-nudge]');
   if (side) {
     NUDGE.picked[side.dataset.nudge] = side.dataset.side;
@@ -3294,7 +3312,17 @@ document.addEventListener('click', (ev) => {
     return;
   }
   const go = ev.target.closest('[data-weigh]');
-  if (go) weigh(go.dataset.weigh, go.dataset.hex || null, go);
+  /* NOTHING HERE IS ALLOWED TO FAIL MUTELY. weigh() is an async function called
+     off a click, so anything it throws ... a network that dropped, a route that
+     never came back ... becomes an unhandled rejection and the button simply
+     does nothing. A button that does nothing is the worst answer this page can
+     give: the collector cannot tell a refusal from a bug from a slow line, and
+     tries again, and again. */
+  if (go) {
+    weigh(go.dataset.weigh, go.dataset.hex || null, go).catch((err) => {
+      nudgeSay(go.dataset.weigh, `That did not go through: ${String((err && err.message) || err)}`, true);
+    });
+  }
 });
 
 /* What a change will leave behind, said while it is being typed rather than
@@ -3348,8 +3376,20 @@ document.addEventListener('toggle', (ev) => {
   FOLD.set(d.dataset.fold, d.open);
 }, true);
 
-/* A refusal is told, or it did not happen. */
-function nudgeSay(id, text, bad) {
+/* A refusal is told, or it did not happen.
+ *
+ * TWICE, WHERE THERE IS A ROW OPEN. The card's line is at the top of the board
+ * and the row somebody is typing in may be a long way below it, inside a fold,
+ * or off the bottom of a 352px panel ... so a refusal printed only up there is
+ * a refusal nobody reads, and the button has failed mutely as far as they are
+ * concerned. The row's own line says it where they are looking. */
+function nudgeSay(id, text, bad, near) {
+  const row = near && near.closest ? near.closest('.crow, .pos') : null;
+  const res = row ? row.querySelector('.res') : null;
+  if (res) {
+    res.textContent = text || '';
+    res.classList.toggle('bad', Boolean(bad));
+  }
   const el = document.getElementById(`say-${id}`);
   if (!el) return MF.say(`nudge-${id}`, text, bad);
   el.textContent = text;
@@ -3397,7 +3437,11 @@ async function propose(id) {
     try { await MF.session.open(s.address, ROOM.days || 30, (state, why) => {
       if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
       if (state === 'failed') nudgeSay(id, why, true);
-    }); } catch (err) { return; }
+    }); } catch (err) {
+      nudgeSay(id, `That signature was not given, so nothing was proposed. ${
+        String((err && err.message) || '')}`.trim(), true);
+      return;
+    }
     r = await sendNudge({ action: 'propose', nudge: id, address: s.address, hex });
     j = await r.json().catch(() => ({}));
   }
@@ -3421,8 +3465,8 @@ async function weigh(id, hex, from) {
        before they were and does not know where they stand ... in which case it
        is fetched again rather than a number being sent against a position
        nobody has read. */
-    if (MF.session.current()) { nudgeSay(id, 'One moment ... reading where you stand.'); void loadNudges(); }
-    else nudgeSay(id, 'Sign in first ... the button is in the room below.', true);
+    if (MF.session.current()) { nudgeSay(id, 'One moment ... reading where you stand.', false, from); void loadNudges(); }
+    else nudgeSay(id, 'Sign in first ... the button is in the room below.', true, from);
     return;
   }
   const x = openNudges().find((y) => y.id === id);
@@ -3434,8 +3478,8 @@ async function weigh(id, hex, from) {
   const chosen = panel ? panel.querySelector('select.to') : null;
   const candidate = colours ? ((chosen && chosen.value) || hex) : null;
   const side = colours ? null : (NUDGE.picked[id] || (x.mine && x.mine.side));
-  if (colours && !candidate) { nudgeSay(id, 'Which colour?', true); return; }
-  if (!colours && !side) { nudgeSay(id, 'Pick a yes or a no first.', true); return; }
+  if (colours && !candidate) { nudgeSay(id, 'Which colour?', true, from); return; }
+  if (!colours && !side) { nudgeSay(id, 'Pick a yes or a no first.', true, from); return; }
   /* The field beside the button that was pressed, not the first one on the page
      with the right id. The same colour now has a field in two places ... on its
      row, and on the full board inside the fold ... and reading them by id would
@@ -3448,8 +3492,8 @@ async function weigh(id, hex, from) {
   const amount = Math.floor(Number(typed || 0));
   /* Nought is meaningful on a colour ... it is how one is taken back ... and
      meaningless on a yes or a no. */
-  if (!colours && !amount) { nudgeSay(id, 'How much of your TAO do you want behind it?', true); return; }
-  if (colours && typed === '') { nudgeSay(id, 'Put a number in, or nought to take this colour back.', true); return; }
+  if (!colours && !amount) { nudgeSay(id, 'How much of your TAO do you want behind it?', true, from); return; }
+  if (colours && typed === '') { nudgeSay(id, 'Put a number in, or nought to take this colour back.', true, from); return; }
   /* Where it comes off, where it has to come off anything: the panel's own
      source, or the colour whose position is being changed. */
   const srcSel = panel ? panel.querySelector('select.src') : null;
@@ -3464,30 +3508,38 @@ async function weigh(id, hex, from) {
   let move = { from: null, fromAmount: 0 };
   if (colours && x.mine) {
     const c = changeCalc(x, { candidate, amount, source });
-    if (c.error) { nudgeSay(id, c.error, true); return; }
+    if (c.error) { nudgeSay(id, c.error, true, from); return; }
     move = c;
   } else if (!colours && amount > NUDGE.tao) {
-    nudgeSay(id, `That is more TAO than this wallet holds. Yours is ${num(NUDGE.tao)}.`, true); return;
+    nudgeSay(id, `That is more TAO than this wallet holds. Yours is ${num(NUDGE.tao)}.`, true, from); return;
   }
 
   const body = { nudge: id, address: s.address, side, candidate, amount,
     ...(move.from ? { from: move.from, from_amount: move.fromAmount } : {}) };
-  nudgeSay(id, move.from ? `Moving ${num(move.took)} from ${move.from} ...` : 'Recording ...');
+  nudgeSay(id, move.from ? `Moving ${num(move.took)} from ${move.from} ...` : 'Recording ...', false, from);
   let r = await sendNudge(body);
   let j = await r.json().catch(() => ({}));
   /* A session from before weighing joined the sentence. One signature puts it
      right, and then it does not ask again ... which is the whole arrangement,
      said at the moment it matters rather than in a banner nobody reads. */
   if (!r.ok && j.rescope) {
-    nudgeSay(id, 'One more signature: your sign-in was opened before weighing joined it.');
+    nudgeSay(id, 'One more signature: your sign-in was opened before weighing joined it.', false, from);
     try { await MF.session.open(s.address, ROOM.days || 30, (state, why) => {
-      if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.');
-      if (state === 'failed') nudgeSay(id, why, true);
-    }); } catch (err) { return; }
+      if (state === 'requested') nudgeSay(id, 'Signature requested ... check your wallet.', false, from);
+      if (state === 'failed') nudgeSay(id, why, true, from);
+    }); } catch (err) {
+      /* Dismissed in the wallet, or it never answered. This returned in
+         silence, which from the button's side is indistinguishable from the
+         button being broken ... and this is the path a collector lands on
+         exactly once, the first time they weigh on an older sign-in. */
+      nudgeSay(id, `That signature was not given, so nothing was weighed. ${
+        String((err && err.message) || '')}`.trim(), true, from);
+      return;
+    }
     r = await sendNudge(body);
     j = await r.json().catch(() => ({}));
   }
-  if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true); return; }
+  if (!r.ok) { nudgeSay(id, j.error || 'That did not go through.', true, from); return; }
   /* The panel that did it closes, because the position it was changing is now
      somewhere else and the banner underneath says where. */
   if (move.from) NUDGE.moving.delete(`${id}|${move.from}`);
@@ -3497,7 +3549,7 @@ async function weigh(id, hex, from) {
     ? (move.from
       ? `${num(move.took)} TAO moved from ${move.from} to ${candidate}. ${candidate} now carries ${num(amount)} of yours, and your TAO has not moved.`
       : `${num(amount)} TAO on ${candidate || side}. Your TAO has not moved.`)
-    : `${candidate} taken back. Your TAO has not moved.`);
+    : `${candidate} taken back. Your TAO has not moved.`, false, from);
 }
 
 /* Back to the top, and the room stops following the foot while somebody is on

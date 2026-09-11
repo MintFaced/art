@@ -31,19 +31,17 @@
  * registry hiccup must never stop a plain wallet connecting and speaking: the
  * COMBO is additive, and additive things do not get to break the base case.
  *
- * ONE DOOR IN V1. Delegate Cash, and only Delegate Cash. The 6529
- * NFTDelegation registry is deferred rather than dropped, and the shape of
- * this file is the whole of what a second door needs: `incoming()` reads each
- * registry into one `want` map keyed by vault address, so a wallet that has
- * delegated in both is already ONE member rather than two, and a second
- * reader is a third entry in that first `calls()` batch plus its own row in
- * the verification batch under it. Its use case `All` maps to TYPE_ALL here;
- * its other codes are Memes-specific and are not a voice on this site. What a
- * second door needs before it can be written is the registry's mainnet
- * address and its two selectors, verified against a live delegation the way
- * both of these were ... which is why there is no flag standing here switching
- * nothing on: a flag that gates an unwritten reader is a promise the config
- * cannot keep.
+ * TWO DOORS, AND ONE OF THEM SHUT. Delegate Cash is the door for v1. 6529's
+ * NFTDelegation is written and verified against a delegation somebody
+ * actually made on mainnet, and it is OFF: `COMBO_DOORS` opens it and nothing
+ * else has to change, which is what deferred rather than dropped should mean.
+ *
+ * The union is by vault address, so a wallet that has delegated in both
+ * registries is ONE member rather than two, verified against whichever
+ * registry granted it. Only 6529's use case 1 ... `All` ... is read: its other
+ * codes carry Memes-specific meanings that are not a voice on this site, and
+ * the cautious-scope need they might have served is already covered by
+ * Delegate's `mintface` rights.
  */
 
 /* Both registries live at the same address on every chain they are deployed
@@ -61,11 +59,40 @@ export const RIGHTS_MINTFACE = `0x${[...RIGHTS_LABEL]
   .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0')).join('')
   .padEnd(64, '0')}`;
 
-/* DelegationType.ALL, in both registries. The others are per-contract and
-   per-token, which are about NFTs rather than about who somebody is, and
-   carrying somebody's whole TAO on a delegation scoped to one token id would
-   be reading a permission as something much larger than it was written. */
+/* DelegationType.ALL, in both Delegate registries. The others are
+   per-contract and per-token, which are about NFTs rather than about who
+   somebody is, and carrying somebody's whole TAO on a delegation scoped to one
+   token id would be reading a permission as something much larger than it was
+   written. */
 const TYPE_ALL = 1;
+
+/* ---------------------------------------------------- the second door
+ *
+ * 6529's NFTDelegation, on mainnet. `retrieveDelegators(hot, collection,
+ * useCase)` answers with the wallets that have delegated to this one, and the
+ * all-collections sentinel with use case 1 is 6529's way of saying what
+ * Delegate says with a wallet-level ALL.
+ *
+ * The check is NOT symmetric ... the delegator goes first and the delegate
+ * third ... and asking it the other way round answers a confident no about a
+ * real delegation, which is the quietest way a verify step can be wrong. Both
+ * orders were put to the chain against a live grant before this was written.
+ */
+export const NFTD = '0x2202cb9c00487e7e8ef21e6d8e914b32e709f43d';
+const NFTD_ALL_COLLECTIONS = '0x8888888888888888888888888888888888888888';
+const NFTD_USE_CASE_ALL = 1;
+/* retrieveDelegators(address delegationAddress, address collection, uint256 useCase) -> address[] */
+const NFTD_INCOMING = '0x6cfcae20';
+/* retrieveGlobalStatusOfDelegation(address delegator, address collection,
+                                    address delegationAddress, uint256 useCase) -> bool */
+const NFTD_CHECK = '0xd986ff6d';
+
+/** Which registries are open. Config, not a build. */
+export function doors() {
+  const on = String(process.env.COMBO_DOORS || 'delegate').toLowerCase()
+    .split(',').map((x) => x.trim()).filter(Boolean);
+  return { delegate: on.includes('delegate'), nftd: on.includes('nftdelegation') };
+}
 
 /* Public nodes, tried in turn, exactly as api/eth-payment.js does it. No key,
    so no secret to leak and nothing to expire; three of them, so one being down
@@ -84,19 +111,48 @@ const word = (v) => lower(v).replace(/^0x/, '').padStart(64, '0');
 /* A batch of eth_calls as one request where the node will take it, and one at
    a time where it will not. Public nodes vary; the answer has to be the same
    either way, so the fallback is a real fallback rather than an error. */
-async function calls(list, { timeout = 6000 } = {}) {
+/* A BUDGET, NOT A TIMEOUT. This tried each node in turn on its own six-second
+ * clock: six seconds a node, three nodes, and twice over for the verify pass
+ * ... thirty-six seconds in the worst case, on routes whose functions are
+ * allowed ten. One slow public node and a weigh POST did not fail, it simply
+ * never came back, and the button did nothing at all.
+ *
+ * So the whole attempt gets one wall-clock allowance and the next node may
+ * have whatever is left of it. When it is gone the answer is null, which every
+ * caller here already reads as degraded and falls back from. A COMBO is
+ * additive, and nothing additive is worth making somebody wait for.
+ */
+async function calls(list, { timeout = 2500, budget = 5000 } = {}) {
   if (!list.length) return [];
   const body = list.map((c, i) => ({
     jsonrpc: '2.0', id: i + 1, method: 'eth_call',
     params: [{ to: c.to, data: c.data }, 'latest'],
   }));
+  const until = Date.now() + Math.max(0, budget);
   for (const url of NODES) {
+    const left = until - Date.now();
+    if (left <= 50) break;
     try {
-      const out = await once(url, body, timeout);
+      const out = await within(once(url, body, Math.min(timeout, left)), left);
       if (out) return out;
-    } catch (e) { /* the next node */ }
+    } catch (e) { /* the next node, if there is time for one */ }
   }
   return null;
+}
+
+/* The budget, enforced here rather than only asked for.
+ *
+ * The abort signal below is the polite request and a real fetch honours it;
+ * this is the guarantee. A promise that never settles ... a runtime without
+ * AbortSignal.timeout, a socket that is neither open nor closed ... would
+ * otherwise hold the whole route open for as long as the platform allows, and
+ * the caller would never get the `degraded` it is written to handle. The timer
+ * is cleared either way, so a slow answer that does arrive does not leave one
+ * running behind it. */
+function within(promise, ms) {
+  let timer = null;
+  const bell = new Promise((_, stop) => { timer = setTimeout(() => stop(new Error('out of budget')), Math.max(0, ms)); });
+  return Promise.race([promise, bell]).finally(() => clearTimeout(timer));
 }
 
 async function once(url, body, timeout) {
@@ -179,14 +235,25 @@ const truthy = (hex) => Boolean(hex) && /[1-9a-f]/.test(String(hex).replace(/^0x
  *
  * @returns {{ members: Array<{address, rights, registry, scoped}>, degraded: boolean }}
  */
-export async function incoming(hot) {
+export async function incoming(hot, { budget = 5000 } = {}) {
   const to = lower(hot);
   if (!isAddress(to)) return { members: [], degraded: false };
 
-  const found = await calls([
+  /* Both passes share one allowance, because what a caller can afford is the
+     whole read rather than either half of it. */
+  const until = Date.now() + Math.max(0, budget);
+  const left = () => Math.max(0, until - Date.now());
+
+  const open = doors();
+  const asks = [
     { to: V2, data: V2_INCOMING + word(to) },
     { to: V1, data: V1_INCOMING + word(to) },
-  ]);
+  ];
+  if (open.nftd) {
+    asks.push({ to: NFTD,
+      data: NFTD_INCOMING + word(to) + word(NFTD_ALL_COLLECTIONS) + word(NFTD_USE_CASE_ALL) });
+  }
+  const found = await calls(asks, { budget: left() });
   /* The registries could not be read. Say so rather than saying `no
      delegations`: one is a fact about the chain and the other is a fact about
      the network, and a caller deciding whether to clamp somebody's vote needs
@@ -214,6 +281,13 @@ export async function incoming(hot) {
     if (intAt(s[0]) !== TYPE_ALL) continue;
     take(addrAt(s[1]), RIGHTS_ALL, 'v1', false);
   }
+  /* And 6529's, which answers with a plain array of the wallets that have
+     delegated. A vault already taken from Delegate above stays attributed
+     there and is verified there: the same vault in both registries is ONE
+     member, not two. */
+  if (open.nftd && found[2]) {
+    for (const s of structs(found[2], 1)) take(addrAt(s[0]), RIGHTS_ALL, 'nftd', false);
+  }
 
   const list = [...want.values()];
   if (!list.length) return { members: [], degraded: false };
@@ -221,9 +295,17 @@ export async function incoming(hot) {
   /* And now the registry's own yes or no, for each one. This is the answer
      that counts: the enumeration above is a convenience, and a convenience is
      not a permission. */
-  const checks = await calls(list.map((m) => (m.registry === 'v2'
-    ? { to: V2, data: V2_CHECK + word(to) + word(m.address) + word(m.rights) }
-    : { to: V1, data: V1_CHECK + word(to) + word(m.address) })));
+  const checks = await calls(list.map((m) => {
+    if (m.registry === 'v2') return { to: V2, data: V2_CHECK + word(to) + word(m.address) + word(m.rights) };
+    /* 6529's check takes the delegator first and the delegate third, and it is
+       not symmetric ... asking it the other way round answers no about a real
+       delegation, which is the quietest way a verify step can be wrong. */
+    if (m.registry === 'nftd') {
+      return { to: NFTD, data: NFTD_CHECK + word(m.address) + word(NFTD_ALL_COLLECTIONS)
+        + word(to) + word(NFTD_USE_CASE_ALL) };
+    }
+    return { to: V1, data: V1_CHECK + word(to) + word(m.address) };
+  }), { budget: left() });
   if (!checks) return { members: [], degraded: true };
 
   return { members: list.filter((_, i) => truthy(checks[i])), degraded: false };
@@ -242,13 +324,28 @@ export async function stillDelegated(hot, vault, rights = RIGHTS_ALL) {
   const to = lower(hot);
   const from = lower(vault);
   if (!isAddress(to) || !isAddress(from) || to === from) return { ok: false, degraded: false };
-  const out = await calls([
-    { to: V2, data: V2_CHECK + word(to) + word(from) + word(rights) },
-    { to: V2, data: V2_CHECK + word(to) + word(from) + word(RIGHTS_ALL) },
-    { to: V1, data: V1_CHECK + word(to) + word(from) },
-  ]);
+  const out = await calls(asksFor(to, from, rights));
   if (!out) return { ok: false, degraded: true };
   return { ok: out.some(truthy), degraded: false };
+}
+
+/* Every way a delegation from this vault to this wallet could still stand.
+   One of them being true is the whole question, so they go as one batch and
+   the answer is any. A door that has been shut since the weighing simply stops
+   being one of the ways, which is the same clamp a revocation gets ... and is
+   the honest reading of a grant this site no longer recognises. */
+function asksFor(to, from, rights) {
+  const open = doors();
+  const out = [
+    { to: V2, data: V2_CHECK + word(to) + word(from) + word(rights || RIGHTS_ALL) },
+    { to: V2, data: V2_CHECK + word(to) + word(from) + word(RIGHTS_ALL) },
+    { to: V1, data: V1_CHECK + word(to) + word(from) },
+  ];
+  if (open.nftd) {
+    out.push({ to: NFTD, data: NFTD_CHECK + word(from) + word(NFTD_ALL_COLLECTIONS)
+      + word(to) + word(NFTD_USE_CASE_ALL) });
+  }
+  return out;
 }
 
 /** Many of them at once, for a close that has a board's worth to check. */
@@ -257,16 +354,16 @@ export async function stillDelegatedMany(pairs) {
     && lower(p.hot) !== lower(p.vault));
   if (!list.length) return { ok: new Map(), degraded: false };
   const body = [];
-  for (const p of list) {
-    body.push({ to: V2, data: V2_CHECK + word(p.hot) + word(p.vault) + word(p.rights || RIGHTS_ALL) });
-    body.push({ to: V2, data: V2_CHECK + word(p.hot) + word(p.vault) + word(RIGHTS_ALL) });
-    body.push({ to: V1, data: V1_CHECK + word(p.hot) + word(p.vault) });
-  }
-  const out = await calls(body, { timeout: 12000 });
+  const per = asksFor(list[0].hot, list[0].vault, list[0].rights).length;
+  for (const p of list) body.push(...asksFor(p.hot, p.vault, p.rights));
+  /* The close is a cron with minutes to spend and a record it is about to
+     freeze forever, so this one may wait properly ... unlike the weigh, which
+     is somebody with a finger on a button. */
+  const out = await calls(body, { timeout: 8000, budget: 30000 });
   if (!out) return { ok: new Map(), degraded: true };
   const ok = new Map();
   list.forEach((p, i) => {
-    ok.set(`${lower(p.hot)}|${lower(p.vault)}`, out.slice(i * 3, i * 3 + 3).some(truthy));
+    ok.set(`${lower(p.hot)}|${lower(p.vault)}`, out.slice(i * per, (i + 1) * per).some(truthy));
   });
   return { ok, degraded: false };
 }

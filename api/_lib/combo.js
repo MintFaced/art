@@ -57,14 +57,19 @@ export async function forget(address) {
  *
  * @returns {{ members: Array<{address, rights, registry, scoped}>, degraded, cached }}
  */
-export async function membersFor(address, { fresh = false } = {}) {
+export async function membersFor(address, { fresh = false, budget } = {}) {
   const a = lower(address);
   if (!isAddress(a)) return { members: [], degraded: false, cached: false };
   if (!fresh) {
     const hit = await cached(a);
     if (hit) return { members: hit, degraded: false, cached: true };
   }
-  const out = await incoming(a);
+  /* WHAT A PERSON WAITING WILL PUT UP WITH, and no more. Every caller of this
+     is in a request somebody is waiting on ... a board being drawn, a weighing
+     being submitted ... and the honest failure is to degrade to the wallet's
+     own TAO rather than to hold the page open for a public node having a bad
+     minute. Four seconds is already longer than it should ever take. */
+  const out = await incoming(a, { budget: Math.max(500, Number(budget) || 4000) });
   /* A degraded read is never written down. Remembering `no members` because
      the network was unwell is how a two-minute cache turns a hiccup into a
      collector's vote being clamped. */

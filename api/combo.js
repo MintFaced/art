@@ -16,7 +16,7 @@ import { storeConfigured, pipe } from './_lib/kv.js';
 import { chatStore } from './_lib/chat.js';
 import { cookieFrom, TOKEN_COOKIE, corsFor } from './_lib/session.js';
 import { comboFor, forget, comboMark } from './_lib/combo.js';
-import { delegateUrl, isAddress, RIGHTS_LABEL, RIGHTS_MINTFACE } from './_lib/delegate.js';
+import { delegateUrl, isAddress, doors, RIGHTS_LABEL, RIGHTS_MINTFACE } from './_lib/delegate.js';
 import { loadRegister } from './_lib/register.js';
 
 const at = async (origin, p) => {
@@ -52,15 +52,23 @@ export async function GET(request) {
 
   /* What a vault has to be told, whether or not anybody is connected. The page
      is readable signed out ... it is the explanation as much as the machine. */
+  const open = doors();
   const how = {
     rights: RIGHTS_LABEL,
     rights_bytes32: RIGHTS_MINTFACE,
     registry: 'delegate.xyz',
     type: 'ALL',
   };
+  /* The second door, drawn only where the config has opened it. The page reads
+     this rather than knowing about registries, so opening one is a config
+     change on both halves at once rather than a deploy of the page. */
+  const second = open.nftd
+    ? { registry: 'nftdelegation.com', url: 'https://nftdelegation.com/', use_case: 'All',
+      collection: 'All collections' }
+    : null;
 
   if (!isAddress(address)) {
-    return reply(request, { signed_in: false, address: null, combo: null, how, url: null });
+    return reply(request, { signed_in: false, address: null, combo: null, how, second, url: null });
   }
 
   /* A collector who has just delegated is looking at this page waiting for it
@@ -83,6 +91,7 @@ export async function GET(request) {
     signed_in: Boolean(signed),
     address,
     how,
+    second,
     /* Where the vault goes. Pre-filled as far as delegate.xyz's own URL will
        take it; the page shows the values to paste for anything it will not. */
     url: delegateUrl(address, { scoped: true }),

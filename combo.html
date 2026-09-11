@@ -136,6 +136,8 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
       <a class="go" id="open" href="https://delegate.xyz/" target="_blank" rel="noopener"
         aria-disabled="true">Open delegate.xyz</a>
       <div class="paste" id="paste" hidden></div>
+      <!-- The second registry, drawn only where the config has opened it. -->
+      <div id="second" hidden></div>
     </section>
 
     <section class="step">
@@ -244,6 +246,29 @@ function combo(d) {
   </div>`;
 }
 
+/* 6529's registry, where it is open. Same outcome, another door: a collector
+   who delegated years ago for the Memes has a COMBO here already and only has
+   to sign in to find out. */
+function second(d) {
+  const el = document.getElementById('second');
+  if (!el) return;
+  if (!d || !d.second) { el.hidden = true; el.innerHTML = ''; return; }
+  el.hidden = false;
+  el.innerHTML = `<p>Already delegated for the Memes? Your COMBO may exist already ...
+      sign in and see. Otherwise it is the same one delegation, on
+      ${e(d.second.registry)}, with use case ${e(d.second.use_case)}.</p>
+    <a class="go ghost" href="${e(d.second.url)}" target="_blank" rel="noopener">Open ${e(d.second.registry)}</a>
+    <div class="paste">
+      <div class="row"><span class="k">Delegate to</span>
+        <span class="v">${e(d.address || 'your hot wallet')}</span>
+        ${d.address ? `<button type="button" class="cp" data-copy="${e(d.address)}">Copy</button>` : ''}</div>
+      <div class="row"><span class="k">Collection</span>
+        <span class="v">${e(d.second.collection)}</span></div>
+      <div class="row"><span class="k">Use case</span>
+        <span class="v">${e(d.second.use_case)}</span></div>
+    </div>`;
+}
+
 function draw() {
   const d = C.data;
   const box = $('state');
@@ -264,6 +289,7 @@ function draw() {
     box.innerHTML = '';
   }
 
+  second(d);
   const open = $('open');
   if (d.address) {
     open.href = d.url;
