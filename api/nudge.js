@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
-import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, comboReader, comboOf, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { tally, latest, isOpen, weighMessage, proposeMessage, replaceMessage, withdrawMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, comboReader, comboOf, mayEdit, CANDIDATES, SIDES } from './_lib/nudges.js';
 import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 import { seriesState, constraintFor, checkCandidate, slotLine, seriesProvenanceLine } from './_lib/palette.js';
 import { loadRegister } from './_lib/register.js';
@@ -259,7 +259,7 @@ export async function POST(request) {
   const nudgeId = String(body.nudge || '');
 
   if (!/^0x[0-9a-f]{40}$/.test(address)) return json({ error: 'that is not a wallet address' }, 400);
-  if (!['weigh', 'propose'].includes(action)) return json({ error: 'no such action' }, 400);
+  if (!['weigh', 'propose', 'replace', 'withdraw'].includes(action)) return json({ error: 'no such action' }, 400);
   if (!session) {
     /* Signing per act is still a way to do this, and still the only way
        without a session. */
@@ -318,6 +318,112 @@ export async function POST(request) {
    * One per wallet per nudge, and final. A proposal is a thing other people
    * weigh on, so letting it be changed would move TAO somebody put behind one
    * colour onto another without asking them. */
+  /* ---- a proposer's own colour ----
+   *
+   * PROPOSE FREELY, EDIT FREELY, UNTIL SOMEBODY AGREES WITH YOU. A colour on
+   * the board with nobody but its proposer behind it is still only a
+   * suggestion, and a suggestion should be as easy to correct or take back as
+   * it was to make. The moment another wallet weighs on it, it stops being a
+   * suggestion and becomes a position other people are standing in ... and
+   * withdrawing it then would eject their TAO to make a point, which is a
+   * thing this board must never let one collector do to another. So both
+   * powers end at the first outside backer. The proposer keeps every power
+   * anybody has: they may move their own weight off it like anyone.
+   */
+  if (action === 'replace' || action === 'withdraw') {
+    if (!candidates) return json({ error: 'this nudge is a yes or a no' }, 400);
+    const was = checkHex(body.hex);
+    if (was.error) return json({ error: was.error }, 400);
+
+    const props = (data.weighings.proposals || []).filter((x) => x.nudge === n.id);
+    const board = palette(rowsHere, props, readHere, n);
+    const c = (board.candidates || []).find((x) => x.hex === was.hex);
+    if (!c) return json({ error: 'that colour is not on the board.' }, 404);
+    if (lower(c.proposed_by) !== address) {
+      return json({ error: 'only the wallet that proposed a colour can change it.' }, 403);
+    }
+    if (!mayEdit(c, address)) {
+      return json({ error: `other collectors have weighed on ${was.hex}, so it belongs to the board now. `
+        + 'You can still move your own TAO off it.' }, 409);
+    }
+
+    /* What this wallet has on it, which is the only weight that can be here. */
+    const mineNow = allocations(rowsHere).by.get(address) || new Map();
+    const onIt = mineNow.get(was.hex) || 0;
+
+    let to = null;
+    if (action === 'replace') {
+      const bound = constraintFor(data.nudges, n);
+      const picked = bound
+        ? checkCandidate(body.to, { against: bound.clearance, named: bound.against.map((a) => a.hex),
+          floor: bound.floor, space: bound.space })
+        : checkHex(body.to);
+      if (picked.error) return json({ error: picked.error }, 400);
+      if (picked.hex === was.hex) return json({ error: 'that is the colour it already is.' }, 400);
+      if (props.some((x) => String(x.hex).toUpperCase() === picked.hex)) {
+        return json({ error: `${picked.hex} is already on the board.` }, 409);
+      }
+      to = picked.hex;
+    }
+
+    if (!session) {
+      const issuedAt = String(body.issued || '');
+      const message = action === 'replace'
+        ? replaceMessage({ nudge: n.question, hex: was.hex, to, address, issued: issuedAt })
+        : withdrawMessage({ nudge: n.question, hex: was.hex, address, issued: issuedAt });
+      let good = false;
+      try { good = await verifyMessage({ address, message, signature }); } catch (e) { good = false; }
+      if (!good) return json({ error: 'that signature does not match the wallet' }, 401);
+    }
+
+    const at = new Date().toISOString();
+    const edit = { nudge: n.id, address, action, hex: was.hex, ...(to ? { to } : {}), at,
+      ...(session ? { session: session.id } : { issued, signature }) };
+    /* The weight follows the colour, or comes home. A move where there is one
+       to make, a take-back where there is not: both are ordinary rows through
+       the ordinary fold, so no reading of this board has to know an edit
+       happened to add up. */
+    const move = onIt > 0
+      ? (to
+        ? { nudge: n.id, address, side: null, candidate: to, amount: onIt, from: was.hex, from_amount: 0,
+          alloc: true, name: null, at, ...(session ? { session: session.id } : { issued, signature }) }
+        : { nudge: n.id, address, side: null, candidate: was.hex, amount: 0,
+          alloc: true, name: null, at, ...(session ? { session: session.id } : { issued, signature }) })
+      : null;
+
+    const file = await readFile('data/nudge-weighings.json');
+    const store = JSON.parse(file.text);
+    store.proposals = store.proposals || [];
+    const i = store.proposals.findIndex((x) => x.nudge === n.id
+      && String(x.hex).toUpperCase() === was.hex);
+    if (i >= 0) {
+      if (action === 'withdraw') store.proposals.splice(i, 1);
+      else store.proposals[i] = { ...store.proposals[i], hex: to, replaced_from: was.hex, replaced_at: at };
+    }
+    if (move) store.weighings = [...(store.weighings || []), move];
+
+    /* The overlay first, because this deploy does not rebuild itself when the
+       file moves and the collector is looking at the board right now. */
+    if (storeConfigured()) {
+      await nudgeStore(pipe).add(edit).catch(() => {});
+      if (move) await nudgeStore(pipe).add(move).catch(() => {});
+    }
+    const reg = await registerFor(origin);
+    const whose = reg && reg.who(address);
+    const said = (whose && !whose.private ? whose.name : null) || address.slice(0, 10);
+    await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
+      action === 'withdraw'
+        ? `Nudge ${n.number}: ${said} withdraws ${was.hex}`
+        : `Nudge ${n.number}: ${said} changes ${was.hex} to ${to}`, file.sha);
+
+    const after = withLive({ weighings: store.weighings, proposals: store.proposals }, []);
+    const rowsAfter = (after.weighings || []).filter((x) => x.nudge === n.id);
+    const readAfter = comboReader(taoReader(data.tao), rowsAfter);
+    return json({ ok: true,
+      palette: palette(rowsAfter, (after.proposals || []).filter((x) => x.nudge === n.id), readAfter, n),
+      mine: standing(rowsAfter, address, readAfter) });
+  }
+
   if (action === 'propose') {
     if (!candidates) return json({ error: 'this nudge is a yes or a no' }, 400);
     /* The picker enforces this too, so a collector never signs for a colour

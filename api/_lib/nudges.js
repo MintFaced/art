@@ -690,9 +690,82 @@ export function nudgeStore(pipe) {
 }
 
 /** The file, with anything said since it was last deployed laid over it. */
+/* WHO IS BEHIND A COLOUR, and the whole of the guard on editing one.
+ *
+ * A proposer may change or withdraw their own candidate while they are the
+ * only wallet standing on it. The moment somebody else weighs, it stops being
+ * theirs to rewrite: the colour belongs to the board, and TAO other people put
+ * behind it is not the proposer's to vaporise. They may still move their own
+ * weight off it exactly as anybody may.
+ *
+ * Nought backers counts as sole. A colour nobody has weighed on yet is still
+ * entirely the proposer's ... including their own nought. */
+export function backersOf(candidate) {
+  return ((candidate && candidate.wallets) || [])
+    .filter((w) => Number(w.weight) > 0)
+    .map((w) => lower(w.address));
+}
+
+export function mayEdit(candidate, address) {
+  const a = lower(address);
+  if (!candidate || lower(candidate.proposed_by) !== a) return false;
+  const backers = backersOf(candidate);
+  return backers.length === 0 || (backers.length === 1 && backers[0] === a);
+}
+
+/* A colour changed, and a colour taken back off the board.
+ *
+ * These name the colour they are about at both ends, so a signature for one
+ * swap cannot be spent on another, and they say plainly what does and does not
+ * happen to the TAO ... which is the only question a proposer pressing either
+ * of them actually has. */
+export function replaceMessage({ nudge, hex, to, address, issued }) {
+  return [
+    'MintFace Artist Virtual Studio',
+    '',
+    `Nudge: ${nudge}`,
+    `Colour: ${String(hex).toUpperCase()}`,
+    `Becomes: ${String(to).toUpperCase()}`,
+    `Wallet: ${address}`,
+    `Issued: ${issued}`,
+    '',
+    'Changing a colour you proposed, while you are the only wallet behind it.',
+    'Your weight stays on it. It moves nothing and spends nothing.',
+  ].join('\n');
+}
+
+export function withdrawMessage({ nudge, hex, address, issued }) {
+  return [
+    'MintFace Artist Virtual Studio',
+    '',
+    `Nudge: ${nudge}`,
+    `Colour: ${String(hex).toUpperCase()}`,
+    `Wallet: ${address}`,
+    `Issued: ${issued}`,
+    '',
+    'Taking a colour you proposed back off the board.',
+    'Any weight you had on it returns to your spare. It spends nothing.',
+  ].join('\n');
+}
+
+/* THE BOARD IS STATE, NOT ONLY A LOG.
+ *
+ * Weighings are appended forever and folded; a proposal says which colours are
+ * on the board NOW, and a proposer may change or withdraw their own. The file
+ * is the record and is written on every act, but this deploy does not rebuild
+ * itself when the file moves, so an edit that lived only in the file would not
+ * be seen until somebody shipped. The overlay therefore carries edits as well
+ * as additions, and they are applied over the file after everything is in.
+ *
+ * Idempotent on purpose. Once the file has caught up, an edit finds nothing
+ * left to change ... a replaced proposal is already at its new colour, a
+ * withdrawn one is already gone ... and does nothing at all. */
+const EDITS = new Set(['replace', 'withdraw']);
+
 export function withLive(file, live) {
   const seen = new Set();
   const out = { weighings: [], proposals: [] };
+  const edits = [];
   const put = (row, into) => {
     /* Deduplicated by whatever names the act uniquely: the signature where one
        was given, and otherwise the session and the moment, which together are
@@ -706,8 +779,26 @@ export function withLive(file, live) {
   for (const p of (file && file.proposals) || []) put(p, 'proposals');
   for (const row of live || []) {
     if (!row) continue;
+    if (EDITS.has(row.action)) { edits.push(row); continue; }
     if (row.hex && !row.candidate) put(row, 'proposals');
     else put(row, 'weighings');
+  }
+
+  /* In the order they were made, so two edits to one colour land the way they
+     were pressed rather than the way a list happened to be read. */
+  for (const ed of edits.slice().sort((a, b) => String(a.at || '').localeCompare(String(b.at || '')))) {
+    const i = out.proposals.findIndex((p) => p.nudge === ed.nudge
+      && String(p.hex).toUpperCase() === String(ed.hex).toUpperCase());
+    if (i < 0) continue;
+    /* Only ever its own proposer's. The route checks this too and is the check
+       that counts; this is so a stray row can never rewrite somebody else's
+       colour on the way through. */
+    if (lower(out.proposals[i].address) !== lower(ed.address)) continue;
+    if (ed.action === 'withdraw') { out.proposals.splice(i, 1); continue; }
+    if (ed.to) {
+      out.proposals[i] = { ...out.proposals[i], hex: String(ed.to).toUpperCase(),
+        replaced_from: out.proposals[i].hex, replaced_at: ed.at || null };
+    }
   }
   return out;
 }
