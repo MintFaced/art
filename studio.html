@@ -832,6 +832,24 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   .replying .quote{display:none}
 }
 
+/* ---------- the divider ----------
+   A grab handle in the gap, the width of a finger's worth of slop around a
+   hairline. It draws nothing of its own until the pointer is over it: the rule
+   between the columns was always the white space, and a permanent vertical
+   line down the page would be a new piece of furniture rather than a handle on
+   an old one. */
+:root{--panel:420px;--tail:0px}
+.split{display:none;position:absolute;top:0;bottom:0;z-index:20;width:11px;
+  right:calc(var(--panel) + 11.5px);cursor:col-resize;background:none;border:0;padding:0}
+.split::after{content:'';position:absolute;top:0;bottom:0;left:5px;width:1px;background:var(--rule);
+  opacity:0;transition:opacity .15s ease}
+.split:hover::after,.split:focus-visible::after,body.resizing .split::after{opacity:1;background:var(--ink)}
+.split:focus-visible{outline:none}
+/* While it is being dragged, nothing else on the page is selectable: a drag
+   that leaves a trail of highlighted conversation behind it is a drag that has
+   fought the reader for the text they were holding. */
+body.resizing{user-select:none;-webkit-user-select:none;cursor:col-resize}
+
 /* ---------- the room, and the question beside it (1024px and up) ----------
    On a wide screen the open nudge leaves the column and docks at the right,
    where it can stand still while the room scrolls past it. The room keeps the
@@ -855,15 +873,34 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
    the areas below and the sections in the markup are one list, and adding a
    section to this page means adding it here too. */
 @media(min-width:1024px){
-  #main.asking{display:grid;max-width:1180px;margin:0 auto;column-gap:34px;
-    grid-template-columns:minmax(0,1fr) 352px;
-    grid-template-areas:"mast side" "pots side" "log side" "speak side"}
+  #main.asking{display:grid;position:relative;margin:0 auto;column-gap:34px;
+    /* THE PANEL'S WIDTH IS THE READER'S, and the room keeps its measure.
+       A fixed 1180 with a wider panel would have taken the difference out of
+       the conversation, which is the one thing the note below says this layout
+       must not do. So the grid grows with the panel instead: the room is
+       always its own 720 and the panel is whatever it has been dragged to. */
+    max-width:calc(720px + 34px + var(--panel));
+    grid-template-columns:minmax(0,1fr) var(--panel);
+    /* A FIFTH ROW WITH NOTHING IN IT. A sticky element sticks inside its own
+       grid area and no further, and the side area used to end at the foot of
+       the composer ... so the last stretch of page scroll, the footer's worth,
+       dragged the panel up out of the viewport with it. That is the bug: the
+       chat's scroll-to-latest taking the nudge with it. The area now runs past
+       the end of the page, so the panel is pinned at every scroll position
+       there is. `--tail` is the footer, measured. */
+    grid-template-rows:auto auto auto auto var(--tail);
+    grid-template-areas:"mast side" "pots side" "log side" "speak side" "tail side"}
   #main.asking .mast{grid-area:mast}
   #main.asking #pots{grid-area:pots}
   #main.asking #log{grid-area:log}
   #main.asking #speak{grid-area:speak}
   #main.asking #open{grid-area:side;align-self:start;position:sticky;top:76px;margin:0;padding:0 28px 0 0;
     max-height:calc(100vh - 104px);overflow-y:auto;overscroll-behavior:contain}
+  /* THE RULE BETWEEN THE COLUMNS IS A HANDLE. It sits in the gap rather than
+     in a track of its own, so the two columns stay two columns and nothing
+     about the areas above has to know it exists. Pointer-fine only: there is
+     nothing to drag on a phone, where this layout is one column anyway. */
+  #main.asking .split{display:block}
   #main.asking #open .nudge{padding:20px 18px;margin-bottom:0}
   /* The question is a panel heading here rather than a masthead line, so it
      stops taking the viewport width for its size. */
@@ -914,6 +951,12 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   <section class="nudges" id="open"></section>
 
   <section class="speak" id="speak"></section>
+
+  <!-- The handle between the columns. Written here rather than drawn, because
+       draw() rebuilds the room whenever anybody speaks and a handle somebody
+       has their finger on must not go with it. -->
+  <div class="split" id="split" role="separator" aria-orientation="vertical"
+    aria-label="Drag to resize the panel" tabindex="0"></div>
 </main>
 
 <!-- Every standard emoji, opened by the + at the end of the quick row. It is
@@ -3837,6 +3880,123 @@ async function weigh(id, hex, from) {
       : `${num(amount)} TAO on ${candidate || side}. Your TAO has not moved.`)
     : `${candidate} taken back. Your TAO has not moved.`, false, from);
 }
+
+/* ---------- the split between the columns ----------
+ *
+ * TWO COLUMNS, AND THE READER SAYS WHERE THE LINE IS. The panel was 352px
+ * because 352px was a guess, and a guess is the wrong width for a column whose
+ * job is to hold colour names of a length nobody controls.
+ *
+ * The default is set from the content rather than from taste: the widest row a
+ * board can currently produce ... swatch, name, hex, figure and the button that
+ * weighs on it ... fits inside it with room to breathe, and at this width the
+ * row's own container query still stacks the name on a line of its own, which
+ * is what makes `never truncates` true rather than merely usually true.
+ *
+ * The room's measure is not the price of it. The grid's width grows with the
+ * panel, so widening the panel takes the space from the margins rather than
+ * from the conversation, which is the promise this layout was built on.
+ */
+const SPLIT = {
+  KEY: 'mf_studio_split',
+  MIN: 320,
+  /* Wide enough for the longest name a board can carry; past this the panel is
+     competing with the room for the screen rather than sharing it. */
+  MAX: 620,
+  /* What the panel is worth before anybody has an opinion. */
+  DEFAULT: 420,
+  /* The room's own measure, which the panel may never eat into. */
+  ROOM: 720,
+  GAP: 34,
+
+  /* The widest the panel may be on THIS screen: never so wide that the room
+     drops below a readable column. */
+  ceiling() {
+    const room = Math.max(0, window.innerWidth - 40);
+    return Math.max(this.MIN, Math.min(this.MAX, room - 420));
+  },
+
+  saved() {
+    try { return Math.round(Number(localStorage.getItem(this.KEY)) || 0); } catch (e) { return 0; }
+  },
+  keep(px) {
+    try { localStorage.setItem(this.KEY, String(Math.round(px))); } catch (e) { /* private mode */ }
+  },
+
+  clamp(px) {
+    return Math.max(this.MIN, Math.min(this.ceiling(), Math.round(Number(px) || 0) || this.DEFAULT));
+  },
+
+  set(px, save) {
+    const w = this.clamp(px);
+    document.documentElement.style.setProperty('--panel', `${w}px`);
+    if (save) this.keep(w);
+    return w;
+  },
+
+  /* The fifth grid row, which is what keeps the panel pinned all the way to
+     the foot of the page rather than for all of it but the last screenful. */
+  tail() {
+    const foot = document.querySelector('.foot');
+    const h = foot ? Math.ceil(foot.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty('--tail', `${h}px`);
+  },
+
+  start() {
+    this.set(this.saved() || this.DEFAULT, false);
+    this.tail();
+    window.addEventListener('resize', () => { this.set(this.saved() || this.DEFAULT, false); this.tail(); });
+
+    const bar = document.getElementById('split');
+    const main = document.getElementById('main');
+    if (!bar || !main) return;
+
+    let dragging = false;
+    /* preventDefault on the press is what stops a drag from painting a
+       selection across the conversation on its way past. */
+    bar.addEventListener('pointerdown', (ev) => {
+      if (ev.button != null && ev.button !== 0) return;
+      ev.preventDefault();
+      dragging = true;
+      /* The class first, and the capture inside a guard. Capture is the nicety
+         ... it keeps the drag alive when the pointer runs off the handle ...
+         and it throws for a pointer the element does not own. Doing it first
+         meant a throw left the drag half-begun: tracking the pointer, with the
+         page still selectable under it. */
+      document.body.classList.add('resizing');
+      try { bar.setPointerCapture(ev.pointerId); } catch (e) { /* the move listener still has it */ }
+    });
+    bar.addEventListener('pointermove', (ev) => {
+      if (!dragging) return;
+      ev.preventDefault();
+      /* The panel runs from the pointer to the right edge of the grid, less
+         half the gap the handle is sitting in. */
+      const right = main.getBoundingClientRect().right;
+      this.set(right - ev.clientX - this.GAP / 2, false);
+    });
+    const stop = (ev) => {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove('resizing');
+      try { bar.releasePointerCapture(ev.pointerId); } catch (e) { /* already gone */ }
+      const px = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--panel'), 10);
+      if (px) this.keep(px);
+    };
+    bar.addEventListener('pointerup', stop);
+    bar.addEventListener('pointercancel', stop);
+
+    /* A separator that can be dragged can be nudged, or it is a control only a
+       mouse can reach. */
+    bar.addEventListener('keydown', (ev) => {
+      const step = ev.shiftKey ? 40 : 12;
+      const now = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--panel'), 10) || this.DEFAULT;
+      if (ev.key === 'ArrowLeft') { ev.preventDefault(); this.set(now + step, true); }
+      if (ev.key === 'ArrowRight') { ev.preventDefault(); this.set(now - step, true); }
+      if (ev.key === 'Home') { ev.preventDefault(); this.set(this.DEFAULT, true); }
+    });
+  },
+};
+SPLIT.start();
 
 /* Back to the top, and the room stops following the foot while somebody is on
    their way to the head of the page ... a message arriving mid-journey and
