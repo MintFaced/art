@@ -1948,9 +1948,15 @@ async function connect(choice) {
   ROOM.asking = true;
   status('Asking your wallet for an account ... check your wallet.');
   draw();
-  const slow = setTimeout(() => status('Still waiting on the wallet. Its prompt may have opened behind this window.'), 8000);
   try {
     ROOM.wallet = await MF.connect(choice, {
+      /* The room's rendering of the one sequence. The timer that says a prompt
+         may have opened behind the window used to live here and in nowhere
+         else; it is the shared layer's now, so the bar says it too. */
+      onState: (state) => {
+        if (state === 'asking') status('Asking your wallet for an account ... check your wallet.');
+        if (state === 'slow') status('Still waiting on the wallet. Its prompt may have opened behind this window.');
+      },
       /* The relay has a pairing. Put the wallets in front of them while it
          waits, with the session to approve already in the link. */
       onUri: (uri, links) => {
@@ -1963,7 +1969,6 @@ async function connect(choice) {
     ROOM.pick = null;
   } catch (err) {
     ROOM.asking = false;
-    clearTimeout(slow);
     /* Two wallets answering, neither already authorised here. The page cannot
        guess which one this person means, and guessing wrong sends the request
        somewhere it will never be answered ... which is the failure that looks
@@ -1988,11 +1993,14 @@ async function connect(choice) {
       status('Open this page in your wallet to connect.');
       return false;
     }
-    if (err.code === 'no-provider') await sayWhatWeSee();
+    /* The diagnostic comes with the error now rather than being fetched again
+       here, so the bar and the room say the identical sentence. */
+    if (err.code === 'no-provider') {
+      status(`${String(err.message || err)}${err.report ? ` \u00b7 ${err.report}` : ''}`, true);
+    }
     draw();
     return false;
   }
-  clearTimeout(slow);
   ROOM.asking = false;
   /* Answered: the wallets come down and the room goes on. */
   ROOM.openIn = null;

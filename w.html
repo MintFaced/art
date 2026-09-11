@@ -1514,7 +1514,7 @@ function stepEth(chosen) {
     <p class="ok">${eth ? eth.toFixed(4) + ' ETH' : 'rate unavailable'}</p>
     <div class="step">Send to</div>
     <p class="mono-line">mintface.eth<br>${e(to)}</p>
-    ${window.ethereum ? '<button class="choice go" id="ethGo"><span class="what">Connect wallet and pay</span><span class="amt">' + (eth ? eth.toFixed(4) + ' ETH' : '') + '</span></button>' : ''}
+    <button class="choice go" id="ethGo"><span class="what">Connect wallet and pay</span><span class="amt">${eth ? eth.toFixed(4) + ' ETH' : ''}</span></button>
     <div class="step">Or paste the transaction</div>
     <input id="ethTx" type="text" placeholder="0x transaction hash" spellcheck="false">
     <button class="choice go" id="ethConfirm"><span class="what">I have sent it</span><span class="amt">&rarr;</span></button>
@@ -1546,16 +1546,27 @@ function stepEth(chosen) {
     const err = document.getElementById('ethErr');
     try {
       if (!eth) throw new Error('the rate is not available, paste a transaction hash instead');
-      const [from] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      /* The same connect the rest of the site uses. This used to take
+         window.ethereum, which on a machine with two wallets installed is
+         whichever one loaded last ... so a collector could be asked to pay
+         from a wallet they did not choose, or from an empty one. */
+      err.innerHTML = '<p class="note">Check your wallet...</p>';
+      const from = await MF.connect(null, {
+        onState: (s) => { if (s === 'slow') err.innerHTML = '<p class="note">Still waiting on your wallet. It may have opened behind this window.</p>'; },
+      });
       const wei = '0x' + BigInt(Math.round(eth * 1e18)).toString(16);
-      const txHash = await window.ethereum.request({
+      const txHash = await MF._wallet.provider.request({
         method: 'eth_sendTransaction',
         params: [{ from, to, value: wei }],
       });
       document.getElementById('ethTx').value = txHash;
       await confirm(txHash);
     } catch (e2) {
-      err.innerHTML = `<p class="err">${e(e2.message || 'the wallet declined')}</p>`;
+      /* One error surface: whatever connecting knows how to say, said here
+         too, including the way out when no wallet answered at all. */
+      const links = (e2 && e2.links || []).map((l) => `<a href="${e(l.url)}" target="_blank" rel="noopener">${e(l.name)}</a>`).join(' &middot; ');
+      err.innerHTML = `<p class="err">${e(e2.message || 'the wallet declined')}</p>`
+        + (links ? `<p class="note">${links}</p>` : '');
     }
   });
   document.getElementById('ethConfirm').addEventListener('click', () => {

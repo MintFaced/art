@@ -1452,6 +1452,20 @@ const MF = {
     ];
   },
 
+  /* What this browser looks like from inside the page, in one line somebody
+     can read back over a message. Every wallet problem that is not the page is
+     visible here: nothing installed, an extension switched off for this site,
+     two fighting over one slot, or a page served insecurely. */
+  async walletWhy() {
+    const r = await this.walletReport();
+    const bits = [];
+    bits.push(r.announced.length ? `Wallets answering: ${r.announced.join(', ')}` : 'No wallet announced itself');
+    bits.push(r.injected ? `window.ethereum: ${r.injectedName}${r.stacked ? `, with ${r.stacked} stacked behind it` : ''}` : 'window.ethereum: absent');
+    if (!r.secure) bits.push('This page is not on a secure origin, which stops extensions injecting');
+    if (!r.count) bits.push('Nothing to connect to. Check the extension is enabled for mintface.art, then reload.');
+    return bits.join(' \u00b7 ');
+  },
+
   /* ---------- WalletConnect, the second rail ----------
    *
    * THREE RAILS AND NO DEAD END AT ANY LAYER.
@@ -1793,8 +1807,34 @@ const MF = {
    * eth_requestAccounts, on a provider we chose on purpose.
    * @param choice  uuid or rdns from wallets(), or nothing for the only one
    */
+  /**
+   * ONE CONNECT, WORN TWO WAYS.
+   *
+   * The rails were always shared; the SEQUENCE around them was not, and that
+   * is where the two surfaces came apart. The room ran a wallet picker, a slow
+   * timer and a diagnostic; the bar ran none of them, and sent anybody with
+   * two wallets installed to another page instead of asking which. So the
+   * sequence lives here now and the surfaces only draw it: `onState` for what
+   * is happening, `onUri` for a pairing to approve, and one shaped error for
+   * everything that can go wrong. A surface that renders those three renders
+   * the whole of connecting.
+   */
   async connect(choice, opts) {
     const o = opts || {};
+    const say = typeof o.onState === 'function' ? o.onState : () => {};
+    /* A wallet prompt can open behind the window, and a hardware wallet can be
+       in a drawer. Said once, by the layer that knows how long it has been,
+       rather than by whichever surface remembered to set a timer. */
+    let slow = setTimeout(() => say('slow'), 8000);
+    const done = () => { clearTimeout(slow); slow = null; };
+    try {
+      const a = await this._connect(choice, o, say);
+      done();
+      return a;
+    } catch (err) { done(); throw err; }
+  },
+
+  async _connect(choice, o, say) {
     const list = await this.wallets();
     if (!list.length) {
       /* RAIL TWO. Nothing in the browser, so the wallet is somewhere else and
@@ -1825,9 +1865,16 @@ const MF = {
         e.code = this.touch() ? 'no-provider-mobile' : 'no-provider';
         e.links = this.walletLinks();
         e.because = String((err && err.message) || err).slice(0, 120);
+        /* The same sentence at both surfaces. The room used to fetch this for
+           itself and the bar never did, so one failure read as two different
+           problems depending on which button raised it. */
+        if (e.code === 'no-provider') {
+          try { e.report = await this.walletWhy(); } catch (x) { /* nothing to add */ }
+        }
         throw e;
       }
     }
+    say('asking');
     const hit = choice ? list.find((w) => w.info.uuid === choice || w.info.rdns === choice) : null;
     if (choice && !hit) throw new Error('That wallet is no longer answering. Try again.');
     /* More than one answering and no choice made. Before asking a person to
@@ -2705,6 +2752,8 @@ MF.nav = {
         <span class="me">${right}${this.note ? `<span class="menu note" role="status">
           <span class="say">${e(this.note.text)}</span>
           ${(this.note.links || []).map((w) => `<a href="${e(w.url)}">${e(w.name)}</a>`).join('')}
+          ${(this.note.wallets || []).map((w) => `<button type="button" data-nav="pick"
+            data-uuid="${e(w.uuid)}">${e(w.name)}</button>`).join('')}
         </span>` : ''}</span></span>`;
   },
 
@@ -2762,7 +2811,7 @@ MF.nav = {
       /* A press that belongs to the menu: the name that opens it, or anything
          inside it. Both selectors stand on their own rather than on an
          ancestor that is about to be replaced. */
-      const keep = act === 'menu' || act === 'signout' || Boolean(ev.target.closest('.menu'));
+      const keep = act === 'menu' || act === 'signout' || act === 'pick' || Boolean(ev.target.closest('.menu'));
       const shut = this.menu && !keep;
       /* A notice stands until the next press anywhere that is not inside it. */
       if (this.note && !ev.target.closest('.nav .note')) { this.note = null; this.draw(); }
@@ -2771,7 +2820,8 @@ MF.nav = {
       if (act === 'signout') { ev.preventDefault(); void this.signOut(); return; }
       if (shut) { this.menu = false; this.draw(); }
       if (!mine) return;
-      if (act === 'connect') { ev.preventDefault(); this.connect(); }
+      if (act === 'connect') { ev.preventDefault(); this.startConnect(); }
+      if (act === 'pick') { ev.preventDefault(); this.startConnect(b.dataset.uuid); }
       if (act === 'cherry') { ev.preventDefault(); this.toMention(); }
       if (act === 'day' || act === 'night') { ev.preventDefault(); MF.theme.set(act); }
     });
@@ -2869,29 +2919,57 @@ MF.nav = {
    * is furniture. What went wrong belongs at the surface that raised it, which
    * here is a panel under the control that was pressed: the same hairline the
    * sign-out menu uses, in the same place, dismissed the same way. */
-  notice(text, links) {
+  notice(text, links, wallets) {
     this.busy = null;
     this.menu = false;
-    this.note = text ? { text: String(text), links: links || null } : null;
+    this.note = text
+      ? { text: String(text), links: links || null, wallets: wallets || null }
+      : null;
     this.draw();
   },
 
-  async connect() {
+  /**
+   * The bar's rendering of the one connect sequence. It takes a `choice` now,
+   * because the thing it was missing was the ability to be asked one.
+   *
+   * WHAT THIS USED TO DO WITH TWO WALLETS INSTALLED: send you to /studio. On
+   * any other page that is being thrown off the page you were reading; on
+   * /studio itself it is a reload, which looks exactly like a button that does
+   * nothing. The room had asked which wallet since the day it was written. The
+   * bar now asks the same question in the same words.
+   */
+  /* NOT `connect`. This is the bar's RENDERING of the one connect sequence,
+     and a second method called connect on a second object is how a page grows
+     a second way of connecting without anybody deciding to. There is one
+     implementation, MF.connect, and every surface starts it. */
+  async startConnect(choice) {
     const say = (label) => { this.busy = label; this.note = null; this.draw(); };
     say('Connecting');
     let address;
     try {
-      /* The pairing, the moment the relay hands one over: a wallet in front of
-         somebody while it is still waiting to be answered, rather than a bar
-         that says `Connecting` at them until it times out. */
-      address = await MF.connect(null, {
+      address = await MF.connect(choice, {
+        onState: (state) => {
+          if (state === 'asking') say('Check your wallet');
+          if (state === 'slow') say('Still waiting');
+        },
+        /* The pairing, the moment the relay hands one over: a wallet in front
+           of somebody while it is still waiting to be answered, rather than a
+           bar that says `Connecting` at them until it times out. */
         onUri: (uri, links) => this.notice('Choose your wallet to approve the connection.', links),
       });
     } catch (err) {
       this.busy = null;
-      if (err && err.code === 'many-providers') { location.href = `${MF.ART}/studio`; return; }
+      /* More than one answering and none of them already authorised here. The
+         page cannot guess, and guessing sends the request to a wallet that
+         will never answer it ... which is the failure that looks like nothing
+         happening at all. */
+      if (err && err.code === 'many-providers') {
+        this.notice('More than one wallet is answering. Which one?', null, err.wallets);
+        return;
+      }
       /* On a phone this is not a failure, it is the next step. */
-      this.notice(String((err && err.message) || err), err && err.links);
+      this.notice(String((err && err.message) || err)
+        + (err && err.report ? ` \u00b7 ${err.report}` : ''), err && err.links);
       return;
     }
     try {
