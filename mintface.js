@@ -1384,6 +1384,43 @@ const MF = {
     return found;
   },
 
+  /* A PHONE IS NOT A BROWSER WITH A MISSING EXTENSION.
+   *
+   * Every wallet answer this file gives assumed a desktop: install one, switch
+   * it on for this site, check it is not fighting another. On an iPhone none
+   * of that is advice, it is a description of a thing that does not exist.
+   * Safari has no extension to install and never will have this one, so a page
+   * that says `no wallet is answering, check your extension` has told a
+   * phone-first collector that the site is not for them. */
+  touch() {
+    try { return window.matchMedia('(hover: none) and (pointer: coarse)').matches; }
+    catch (e) { return false; }
+  },
+
+  /* THE WAY IN, ON A PHONE, WITHOUT A RELAY.
+   *
+   * A wallet app on iOS carries its own browser, and every one of them takes a
+   * link that opens this page inside it. There, window.ethereum exists and the
+   * whole of the rest of this file works exactly as it does on a desktop: one
+   * connect, one signature, and the board is writable from a phone.
+   *
+   * It is not WalletConnect. WalletConnect would keep the reader in Safari and
+   * pair with the wallet over a relay, which is better and needs a project id
+   * and an SDK this site does not have. This needs neither and unblocks the
+   * same people today, which is the trade while the other is unbuilt.
+   */
+  walletLinks(url) {
+    const here = String(url || (typeof location !== 'undefined' ? location.href : ''));
+    let bare = here.replace(/^https?:\/\//, '');
+    const enc = encodeURIComponent(here);
+    return [
+      { name: 'Rainbow', url: `https://rnbwapp.com/dapp?url=${enc}` },
+      { name: 'MetaMask', url: `https://metamask.app.link/dapp/${bare}` },
+      { name: 'Coinbase Wallet', url: `https://go.cb-w.com/dapp?cb_url=${enc}` },
+      { name: 'Trust', url: `https://link.trustwallet.com/open_url?url=${enc}` },
+    ];
+  },
+
   /** What an injected provider calls itself, for a legible choice. */
   walletName(p) {
     if (!p) return 'a wallet';
@@ -1481,6 +1518,16 @@ const MF = {
   async connect(choice) {
     const list = await this.wallets();
     if (!list.length) {
+      /* PLATFORM-AWARE, BECAUSE THE ADVICE IS DIFFERENT AND ONE OF THEM IS
+         USELESS ON THE OTHER. A phone is not missing an extension; it is
+         waiting to be handed to a wallet app. This is not an error there at
+         all, and it must never be a dead end. */
+      if (this.touch()) {
+        const e = new Error('Open this page in your wallet to connect.');
+        e.code = 'no-provider-mobile';
+        e.links = this.walletLinks();
+        throw e;
+      }
       const e = new Error('No wallet is answering in this browser. If an extension is installed, it may be switched off for this site, or this may be a browser without one.');
       e.code = 'no-provider';
       throw e;
@@ -2269,6 +2316,8 @@ MF.nav = {
      is no longer signed in cannot land on top of a fast one for the wallet
      that is. */
   menu: false,
+  /* What went wrong, shown under the control that raised it and nowhere else. */
+  note: null,
   seq: 0,
   days: 30,
   unseen: 0,
@@ -2352,7 +2401,11 @@ MF.nav = {
       <a href="${MF.ART}/collections"${on('/collections')}>Collections</a>
       <a href="${MF.PEOPLE || '/'}"${AT_PEOPLE && here === '' ? ' aria-current="page"' : ''}>Collectors</a>
       <a href="${MF.ART}/studio"${on('/studio')}>Studio</a>
-      <span class="right">${this.brightness()}${this.cherry()}${right}</span>`;
+      <span class="right">${this.brightness()}${this.cherry()}
+        <span class="me">${right}${this.note ? `<span class="menu note" role="status">
+          <span class="say">${e(this.note.text)}</span>
+          ${(this.note.links || []).map((w) => `<a href="${e(w.url)}">${e(w.name)}</a>`).join('')}
+        </span>` : ''}</span></span>`;
   },
 
   /* One mark, beside the cherry, showing the ground you are going to rather
@@ -2411,6 +2464,8 @@ MF.nav = {
          ancestor that is about to be replaced. */
       const keep = act === 'menu' || act === 'signout' || Boolean(ev.target.closest('.menu'));
       const shut = this.menu && !keep;
+      /* A notice stands until the next press anywhere that is not inside it. */
+      if (this.note && !ev.target.closest('.nav .note')) { this.note = null; this.draw(); }
 
       if (act === 'menu') { ev.preventDefault(); this.menu = !this.menu; this.draw(); return; }
       if (act === 'signout') { ev.preventDefault(); void this.signOut(); return; }
@@ -2421,7 +2476,7 @@ MF.nav = {
       if (act === 'day' || act === 'night') { ev.preventDefault(); MF.theme.set(act); }
     });
     document.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Escape' && this.menu) { this.menu = false; this.draw(); }
+      if (ev.key === 'Escape' && (this.menu || this.note)) { this.menu = false; this.note = null; this.draw(); }
     });
     /* which mark is showing follows the theme however it changed ... this bar,
        the other tab, or the machine at sunset */
@@ -2506,8 +2561,23 @@ MF.nav = {
      the seam this bar exists to remove. Anything that needs more than a
      sentence to explain ... two wallets answering at once, nothing answering
      at all ... is handed to the room, where that apparatus already lives. */
+  /* THE BAR SAYS CONNECT OR IT SAYS WHO YOU ARE. It never says anything else.
+   *
+   * A failed connect was being poured into `busy`, which is drawn as the
+   * control itself ... so an error sentence took the name slot and ran the
+   * width of the bar, on every page of the site, as a disabled button. A bar
+   * is furniture. What went wrong belongs at the surface that raised it, which
+   * here is a panel under the control that was pressed: the same hairline the
+   * sign-out menu uses, in the same place, dismissed the same way. */
+  notice(text, links) {
+    this.busy = null;
+    this.menu = false;
+    this.note = text ? { text: String(text), links: links || null } : null;
+    this.draw();
+  },
+
   async connect() {
-    const say = (label) => { this.busy = label; this.draw(); };
+    const say = (label) => { this.busy = label; this.note = null; this.draw(); };
     say('Connecting');
     let address;
     try {
@@ -2515,8 +2585,8 @@ MF.nav = {
     } catch (err) {
       this.busy = null;
       if (err && err.code === 'many-providers') { location.href = `${MF.ART}/studio`; return; }
-      say(String((err && err.message) || err).slice(0, 40));
-      setTimeout(() => { this.busy = null; this.draw(); }, 4000);
+      /* On a phone this is not a failure, it is the next step. */
+      this.notice(String((err && err.message) || err), err && err.links);
       return;
     }
     try {
@@ -2538,8 +2608,7 @@ MF.nav = {
       await this.refresh();
     } catch (err) {
       this.busy = null;
-      say(String((err && err.message) || err).slice(0, 40));
-      setTimeout(() => { this.busy = null; this.draw(); }, 4000);
+      this.notice(String((err && err.message) || err));
     }
   },
 };

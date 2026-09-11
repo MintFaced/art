@@ -222,6 +222,16 @@ img{max-width:100%;display:block}
 .nav .menu a:last-child,.nav .menu button:last-child{border-bottom:0}
 .nav .menu a:hover,.nav .menu button:hover{color:var(--ink);background:var(--sunk)}
 .nav .menu a:focus-visible,.nav .menu button:focus-visible{outline:1px solid var(--ink);outline-offset:-1px}
+/* A notice under the control that raised it: wider than the menu because it
+   carries a sentence rather than two labels, and capped so a long one wraps
+   inside the panel instead of running the width of the bar ... which is the
+   bug it exists to end. */
+.nav .menu.note{min-width:min(20em,calc(100vw - 32px));max-width:min(24em,calc(100vw - 32px))}
+.nav .menu.note .say{font-family:var(--font-sans);font-size:12.5px;line-height:1.55;letter-spacing:0;
+  text-transform:none;color:var(--ink);padding:13px 14px;display:block;white-space:normal;
+  border-bottom:1px solid var(--rule)}
+.nav .menu.note .say:last-child{border-bottom:0}
+.nav .menu.note a{white-space:normal}
 .nav [aria-current="page"]{color:var(--ink)}
 /* The COMBO marker, beside whoever is signed in. The bar's own smallcaps at
    the bar's own faint, because it is a fact about the wallet rather than an

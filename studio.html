@@ -808,6 +808,10 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .speak .go{background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;padding:8px 15px;
   font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
 .speak .go:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.speak a.go{text-decoration:none;display:inline-block}
+.openin-lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 12px}
+.openin-note{font-size:13px;line-height:1.6;color:var(--muted);margin:14px 0 0;max-width:34em}
 .speak .go:disabled{opacity:.45;cursor:default}
 .say{font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--muted);margin-top:10px}
 .say.bad{color:var(--alert)}
@@ -960,6 +964,9 @@ const ROOM = {
      stands until the cherry is pressed, and pressing it is what marks it read.
      `next` is the earliest one you have not seen, which is where it takes you. */
   waiting: 0, next: null,
+  /* The wallet apps offered on a touch screen with nothing injected. Null
+     everywhere else, which is every desktop. */
+  openIn: null,
   /* Who you are answering, as a message number, and which message has its
      palette open. Both are about the page rather than about the log. */
   replyTo: null, palette: null,
@@ -1570,6 +1577,20 @@ function composer() {
       ${ROOM.pick.map((w) => `<button class="go" data-act="pick" data-uuid="${e(w.uuid)}">${e(w.name)}</button>`).join('')}
     </div></div>`;
   }
+  /* THE WAY IN FROM A PHONE. Safari has no wallet in it and never will have
+     this one, so the room does not ask for an extension it cannot have: it
+     hands the page to a wallet app, which carries a browser of its own where
+     everything below works exactly as it does on a desktop. */
+  if (ROOM.openIn) {
+    return `<div class="box">
+      <p class="openin-lab">Open this page in your wallet</p>
+      <div class="row" style="justify-content:flex-start;flex-wrap:wrap">
+        ${ROOM.openIn.map((w) => `<a class="go" href="${e(w.url)}">${e(w.name)}</a>`).join('')}
+      </div>
+      <p class="openin-note">Your wallet opens Studio in its own browser. Connect and sign there,
+        and you can weigh from your phone.</p>
+    </div>`;
+  }
   /* Three states out of the payload, and every one of them an affordance.
      The middle one used to be a dead end: a wallet connected, `me` absent
      because the request that would have fetched it never completed, and a
@@ -1898,6 +1919,16 @@ async function connect(choice) {
     status(String(err.message || err), true);
     // no wallet answering at all is worth saying precisely, because the reason
     // is nearly always outside the page
+    /* A PHONE IS NOT A BROWSER WITH A MISSING EXTENSION, so it is not shown a
+       report about window.ethereum and extensions ... none of which it has, can
+       have, or can act on. It is handed the way in. */
+    if (err.code === 'no-provider-mobile') {
+      ROOM.pick = null;
+      ROOM.openIn = err.links || MF.walletLinks();
+      draw();
+      status('Open this page in your wallet to connect.');
+      return false;
+    }
     if (err.code === 'no-provider') await sayWhatWeSee();
     draw();
     return false;
