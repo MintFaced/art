@@ -43,12 +43,26 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .step h2{font-family:var(--font-sans);font-weight:400;font-size:clamp(20px,2.4vw,26px);line-height:1.25;
   letter-spacing:-.02em;margin:0;max-width:24em}
 .step p{font-size:15px;line-height:1.7;color:var(--ink-4);margin:14px 0 0;max-width:34em}
-.step .go{display:inline-block;margin-top:20px;background:var(--ink);border:1px solid var(--ink);color:var(--paper);
+/* The path lines are a list rather than paragraphs, so they sit closer to each
+   other than a paragraph would, and the line that closes the page sits clear
+   of the table above it. */
+.step p + p{margin-top:7px}
+.step .last{margin-top:22px}
+/* Signed out there is no address to show, so the row says what will go there
+   rather than an example somebody might paste into their vault. */
+.paste .v.waiting{color:var(--faint)}
+/* CHECK AGAIN lives inside the COMBO rectangle now, under the member table. */
+.combo .go{margin-top:24px}
+/* NOT SCOPED TO .step, because these buttons are not only in steps any more:
+   CHECK AGAIN moved inside the COMBO rectangle, where a rule hanging off .step
+   does not reach it, and it came out wearing the browser's own grey pill in
+   the browser's own font. */
+.go{display:inline-block;margin-top:20px;background:var(--ink);border:1px solid var(--ink);color:var(--paper);
   text-decoration:none;font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;
-  text-transform:uppercase;padding:13px 22px;cursor:pointer}
-.step .go[aria-disabled="true"]{background:none;border-color:var(--rule);color:var(--faint);cursor:default}
-.step .ghost{background:none;border:1px solid var(--rule);color:var(--muted)}
-.step .ghost:hover{border-color:var(--ink);color:var(--ink)}
+  text-transform:uppercase;padding:13px 22px;cursor:pointer;border-radius:0}
+.go[aria-disabled="true"]{background:none;border-color:var(--rule);color:var(--faint);cursor:default}
+.ghost{background:none;border:1px solid var(--rule);color:var(--muted)}
+.ghost:hover{border-color:var(--ink);color:var(--ink)}
 
 /* What to paste, for the fields delegate.xyz will not take from a link. Mono,
    because every one of them is a string that has to survive being copied by
@@ -94,9 +108,6 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
    sold it rather than in a FAQ nobody opens. */
 .rule{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
   color:var(--faint);border-left:1px solid var(--rule);padding-left:13px;margin:34px 0 0;line-height:1.85}
-.foot-note{font-size:14px;line-height:1.7;color:var(--muted);margin:26px 0 0;max-width:34em}
-.foot-note a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
-.foot-note a:hover{border-color:var(--ink)}
 
 @media(max-width:640px){
   .mast{padding:34px 20px 0}
@@ -119,7 +130,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
          is faster read than said. -->
     <p class="lede">&#128444;&#65039; Your vault holds your art.<br>
       &#128483;&#65039; Your hot wallet is how you join Studio Chat... and weigh in with TAO &#129511;</p>
-    <p class="lede">COMBO lets the two act as one.</p>
+    <p class="lede">COMBO groups your TAO across a pair of wallets.</p>
   </section>
 
   <div class="wrap">
@@ -127,42 +138,32 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
          here to see it rather than to read three steps about making one. -->
     <div id="state"></div>
 
+    <!-- TWO PATHS RATHER THAN STEPS, because for a great many collectors there
+         are no steps: they delegated years ago for something else and their
+         COMBO is already here. Telling those people to do three things they
+         have already done is how a page loses them at the first one. -->
     <section class="step">
-      <h2>1. Delegate Vault</h2>
-      <p>&#128737;&#65039; Sign one delegation on delegate.xyz with your vault. Delegate is the
-        standard every serious vault already uses.</p>
-      <p>Your vault signs nothing on mintface.art.</p>
-      <p id="s1note">Connect your hot wallet first, so the link knows who to name.</p>
+      <h2>COMBO Existing Delegate Vault</h2>
+      <p>&#129511; TAO automatically supported on mintface.art</p>
+      <p>&#9745;&#65039; Nothing to sign.</p>
+      <p>&#9745;&#65039; Nothing to setup.</p>
+    </section>
+
+    <section class="step">
+      <h2>New COMBO</h2>
+      <p>&#128293; Connect your hot wallet on mintface.art</p>
+      <p>&#128444;&#65039; Sign once on delegate.xyz with your vault</p>
       <a class="go" id="open" href="https://delegate.xyz/" target="_blank" rel="noopener"
         aria-disabled="true">Open delegate.xyz</a>
-      <div class="paste" id="paste" hidden></div>
+      <!-- What the vault is told, live: the address is whoever is signed in
+           here, and it is never written into the page. -->
+      <div class="paste" id="paste"></div>
       <!-- The second registry, drawn only where the config has opened it. -->
       <div id="second" hidden></div>
-    </section>
-
-    <section class="step">
-      <h2>Start Chatting</h2>
-      <p>&#128293; Connect your hot wallet and join Studio Chat.</p>
-      <p>&#129511; Weigh in with your combined TAO.</p>
-      <button type="button" class="go ghost" id="again">Check again</button>
-    </section>
-
-    <!-- Not a step: two standing facts about what a COMBO is and how to end
-         one. They were inside the third step, and the third step has gone, but
-         a page that sells a delegation is the page that owes both of these. -->
-    <section class="step">
-      <p>Every gate here reads the COMBO: weighing on a nudge, the notes threshold, the room.
-        The register does not change &mdash; the leaderboard, the collector pages and the TAO totals
-        still say exactly which wallet holds what, because a delegation does not move a token.
-        A COMBO is a voting-time power, not a merge.</p>
-      <p class="rule">Revoke any time at delegate.xyz.<br>
-        A revoked delegation drops out of your COMBO within the session, and at any nudge close it
-        clamps like a sale.</p>
+      <p class="last">Your vault signs nothing on mintface.art.</p>
     </section>
 
     <p class="said" id="said"></p>
-    <p class="foot-note">Weighing happens in the <a href="/studio">Studio</a>.
-      What TAO is, and how it accrues, is in the <a href="/provenance">provenance</a> notes.</p>
   </div>
 </main>
 
@@ -213,15 +214,18 @@ async function read({ fresh = false } = {}) {
    carry. Every one of them is copyable, because typing a bytes32 by hand is
    how a delegation ends up scoped to a rights label nobody here reads. */
 function pasteRows(d) {
+  /* The address is the signed-in wallet's and is never written into the page.
+     Signed out there is nothing true to put there, so the row says what will
+     go there rather than an example somebody might paste into a vault. */
   const rows = [
-    ['Delegate to', d.address, 'Your hot wallet ... the one you just connected'],
+    ['Delegate to', d.address || null, 'Your hot wallet ... the one you signed in with'],
     ['Type', d.how.type, 'Wallet-level, so it covers the whole vault'],
-    ['Rights', d.how.rights, 'Optional. This scopes the delegation to MintFace alone'],
+    ['Rights', d.how.rights, 'This scopes the delegation to MintFace alone'],
   ];
   return rows.map(([k, v, why]) => `<div class="row">
     <span class="k">${e(k)}</span>
-    <span class="v" title="${e(why)}">${e(v)}</span>
-    <button type="button" class="cp" data-copy="${e(v)}">Copy</button>
+    <span class="v${v ? '' : ' waiting'}" title="${e(why)}">${v ? e(v) : 'sign in and it appears here'}</span>
+    ${v ? `<button type="button" class="cp" data-copy="${e(v)}">Copy</button>` : ''}
   </div>`).join('');
 }
 
@@ -243,6 +247,7 @@ function combo(d) {
     <p class="mark">Your ${e(c.mark)}</p>
     <p class="sum">${num(c.total)}<span>TAO</span></p>
     <table class="who">${rows}</table>
+    <button type="button" class="go ghost" id="again">Check again</button>
   </div>`;
 }
 
@@ -283,27 +288,24 @@ function draw() {
   } else if (d.combo && d.combo.combo) {
     box.innerHTML = combo(d);
   } else if (d.address) {
+    /* And the button belongs here too, which is the state it exists for: a
+       collector who has just signed at delegate.xyz and come back to see. */
     box.innerHTML = `<p class="none">No delegations to ${e(short(d.address))} yet.
-      ${num(d.combo ? d.combo.solo : 0)} TAO in this wallet on its own.</p>`;
+      ${num(d.combo ? d.combo.solo : 0)} TAO in this wallet on its own.</p>
+      <button type="button" class="go ghost" id="again">Check again</button>`;
   } else {
     box.innerHTML = '';
   }
 
   second(d);
+  $('paste').innerHTML = pasteRows(d);
   const open = $('open');
   if (d.address) {
     open.href = d.url;
     open.removeAttribute('aria-disabled');
-    $('s1note').textContent = 'The link below already names your hot wallet. Open it in the browser '
-      + 'your vault signs from, connect the VAULT there, and approve one delegation.';
-    $('paste').hidden = false;
-    $('paste').innerHTML = pasteRows(d);
   } else {
     open.href = 'https://delegate.xyz/';
     open.setAttribute('aria-disabled', 'true');
-    $('s1note').textContent = 'Connect your hot wallet first, using the button at the top of this page, '
-      + 'so the link knows who to name.';
-    $('paste').hidden = true;
   }
 }
 
@@ -333,7 +335,11 @@ document.addEventListener('visibilitychange', () => {
   void refresh({ fresh: true });
 });
 
-$('again').addEventListener('click', async () => {
+/* Delegated rather than bound: CHECK AGAIN lives inside the COMBO box now,
+   and that box is rebuilt on every read ... a listener on the button itself
+   would go with the first redraw. */
+document.addEventListener('click', async (ev) => {
+  if (!ev.target.closest('#again')) return;
   say('Asking the chain ...');
   const d = await refresh({ fresh: true });
   if (!d) return;
