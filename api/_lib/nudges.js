@@ -102,6 +102,185 @@ const isAlloc = (r) => Boolean(r && r.alloc);
  * An amount of nought is how a colour is taken back, and it is a change like
  * any other rather than a deletion.
  */
+/* ------------------------------------------------------------- the COMBO
+ *
+ * A wallet may deploy the TAO of the vaults that have delegated to it. The
+ * membership is verified against the chain when the weighing is made and
+ * written onto the row, so reading the board afterwards is arithmetic rather
+ * than a registry call for every visitor ... and so that a revocation shows up
+ * where the doc says it does: at the close, clamping like a sale, rather than
+ * silently rewriting a record that was true when it was made.
+ *
+ * NO WALLET'S TAO COUNTS TWICE. A vault's TAO is one thing and it is awarded
+ * to exactly one claimant on any given nudge: itself, if it weighed here
+ * directly, or the hot wallet that carries it in a COMBO. Where more than one
+ * has a claim ... the vault connected directly after delegating, or two hot
+ * wallets both carry it ... the LATEST ACT STANDS. The earlier position is
+ * still in the ledger and still says what it said; it simply weighs what is
+ * left, which is the same clamp a sale would have applied and reads the same
+ * way on the card.
+ *
+ * A tie goes to the wallet itself. Somebody's own TAO is theirs by default and
+ * only leaves on an act with a time on it.
+ */
+export function comboOwners(rows) {
+  const acted = new Map();               // wallet -> its latest act, as a string
+  const claims = new Map();              // claimed wallet -> [{ by, at }]
+  const claim = (on, by, at) => {
+    const k = lower(on);
+    if (!k) return;
+    if (!claims.has(k)) claims.set(k, []);
+    claims.get(k).push({ by: lower(by), at: String(at || '') });
+  };
+
+  for (const r of rows || []) {
+    const a = lower(r.address);
+    if (!a) continue;
+    const at = String(r.at || '');
+    if (!acted.has(a) || at > acted.get(a)) acted.set(a, at);
+  }
+  /* A wallet that weighed claims its own TAO, at the moment it last acted. */
+  for (const [a, at] of acted) claim(a, a, at);
+  /* And claims every vault it was carrying when it acted. */
+  for (const r of rows || []) {
+    for (const m of r.combo || []) {
+      if (lower(m) !== lower(r.address)) claim(m, r.address, r.at);
+    }
+  }
+
+  const owner = new Map();
+  for (const [on, list] of claims) {
+    let best = null;
+    for (const c of list) {
+      if (!best) { best = c; continue; }
+      if (c.at > best.at) { best = c; continue; }
+      /* Same instant, and one of them is the wallet itself. It keeps it. */
+      if (c.at === best.at && c.by === on) best = c;
+    }
+    owner.set(on, best.by);
+  }
+  return owner;
+}
+
+/**
+ * What each wallet weighs with on THIS nudge, COMBO and all.
+ *
+ * Drop-in for the plain per-wallet reader every tally and board already takes,
+ * so nothing downstream has to know whether a COMBO is involved. A wallet with
+ * no delegation anywhere near it gets exactly the number it always got.
+ */
+/**
+ * WHAT EACH WALLET WEIGHS WITH ON THIS NUDGE. One purse per COMBO.
+ *
+ * A COMBO is not a pile of wallets each spending its own TAO; it is one purse
+ * that several wallets may draw on. The purse holds everything its members
+ * hold, and every position any member has taken on this nudge draws from it.
+ * That is what makes `available` mean what the doc says it means: the COMBO
+ * total, minus whatever any member has already committed here.
+ *
+ * When the purse will not cover what has been asked of it, THE LATEST ACT
+ * STANDS. The most recent position is met in full, then the one before it,
+ * until the purse is empty; an older position weighs what is left. That is the
+ * same clamp a sale applies, arriving for the same reason ... the TAO behind it
+ * is not there any more ... and it reads the same way on the card, which is
+ * why the vault-connects-directly case needs no special case.
+ *
+ * A wallet with no delegation anywhere near it is a purse of one and gets
+ * exactly the number it always got: min(what it asked for, what it holds),
+ * which is what spread() then scales its colours against.
+ */
+export function comboReader(taoOf, rows) {
+  const owner = comboOwners(rows);
+  const solo = (a) => Math.max(0, Math.floor(Number(taoOf(a)) || 0));
+
+  /* Every wallet that has taken a position here, and what it asked for. */
+  const { by } = allocations(rows);
+  const asked = new Map();
+  for (const [a, mine] of by) asked.set(a, [...mine.values()].reduce((n, v) => n + v, 0));
+  const acted = new Map();
+  for (const r of rows || []) {
+    const a = lower(r.address);
+    const at = String(r.at || '');
+    if (a && (!acted.has(a) || at > acted.get(a))) acted.set(a, at);
+  }
+
+  /* The purses. A wallet's TAO goes into the purse of whoever owns it, and a
+     wallet that owns nothing but itself is its own purse of one. */
+  const purses = new Map();
+  const purseOf = new Map();
+  const open = (holder) => {
+    if (!purses.has(holder)) purses.set(holder, { total: 0, members: new Set([holder]) });
+    return purses.get(holder);
+  };
+  for (const [on, holder] of owner) {
+    const p = open(holder);
+    p.total += solo(on);
+    p.members.add(on);
+    purseOf.set(on, holder);
+  }
+
+  /* Met latest first, each within what it actually asked for. */
+  const held = new Map();
+  for (const [holder, p] of purses) {
+    let left = p.total;
+    const order = [...p.members].sort((a, b) => String(acted.get(b) || '').localeCompare(String(acted.get(a) || '')));
+    for (const m of order) {
+      const want = Math.max(0, Math.floor(asked.get(m) || 0));
+      const give = Math.min(want, left);
+      held.set(m, give);
+      left -= give;
+    }
+    p.spent = p.total - left;
+    p.left = left;
+    p.holder = holder;
+  }
+
+  const read = (address) => {
+    const a = lower(address);
+    if (held.has(a)) return held.get(a);
+    /* Nobody here has taken a position, so what they weigh with is what they
+       have ... which is what a board asks when it is about to be told. */
+    if (purseOf.has(a)) return purses.get(purseOf.get(a)).left;
+    return solo(a);
+  };
+
+  /**
+   * The purse behind one wallet, for the card that has to say what is spare.
+   *
+   * `extra` is a COMBO read live off the chain a moment ago that the rows do
+   * not know about yet ... the first weighing of a brand new delegation, where
+   * nothing on this nudge has ever recorded it. Those vaults join the purse
+   * here so the collector is offered the TAO they actually have.
+   */
+  read.purse = (address, extra = []) => {
+    const a = lower(address);
+    const seen = new Set(purseOf.has(a) ? purses.get(purseOf.get(a)).members : [a]);
+    let total = purseOf.has(a) ? purses.get(purseOf.get(a)).total : solo(a);
+    for (const v of extra || []) {
+      const m = lower(v);
+      /* Not one already in somebody else's purse: a vault another hot wallet
+         took later is not this one's to offer. */
+      if (seen.has(m) || (purseOf.has(m) && purseOf.get(m) !== a)) continue;
+      seen.add(m);
+      total += solo(m);
+    }
+    let spent = 0;
+    for (const m of seen) spent += Math.max(0, Math.floor(asked.get(m) || 0));
+    return { total, spent, available: Math.max(0, total - spent), members: [...seen] };
+  };
+
+  return read;
+}
+
+/** Which wallets one address is weighing on behalf of here, itself aside. */
+export function comboOf(rows, address) {
+  const a = lower(address);
+  const owner = comboOwners(rows);
+  const out = [];
+  for (const [on, by] of owner) if (by === a && on !== a) out.push(on);
+  return out.sort();
+}
+
 export function allocations(rows) {
   const by = new Map();
   const history = [];
@@ -121,6 +300,10 @@ export function allocations(rows) {
         address, name: r.name || null, candidate: colour,
         delta: now - was, amount: now, at: r.at || null,
         signature: r.signature || null,
+        /* What this act was made of, as the row itself recorded it. The log is
+           the record of how the board got here, so a row weighed by a COMBO
+           says so where it happened rather than only in today's standings. */
+        combo: (r.combo || []).length ? (r.combo || []).length + 1 : null,
         /* Two entries can come from one signature, where a row from the old
            model moved weight rather than adding it. They are the same act and
            say so, so a card can draw them together and a reader can see that
@@ -216,6 +399,12 @@ export function palette(weighings, proposals, taoOf, n = null) {
   const { by: alloc, history } = allocations(weighings);
   const names = new Map();
   for (const w of weighings || []) if (w.name) names.set(lower(w.address), w.name);
+  /* How many wallets each row is speaking for, so the ledger can say so. A
+     weighing carried by a COMBO is still one collector steering one decision;
+     the marker says what it was made of and claims nothing else. */
+  const owner = comboOwners(weighings);
+  const carries = new Map();
+  for (const [on, by] of owner) if (on !== by) carries.set(by, (carries.get(by) || 0) + 1);
 
   const over = [];
   const collectors = new Set();
@@ -226,7 +415,8 @@ export function palette(weighings, proposals, taoOf, n = null) {
     for (const [hex, weight] of fit.weights) {
       const c = put(hex);
       c.wallets.push({ address, name: names.get(address) || null, amount: mine.get(hex) || 0, weight,
-        clamped: weight < (mine.get(hex) || 0) });
+        clamped: weight < (mine.get(hex) || 0),
+        combo: carries.has(address) ? carries.get(address) + 1 : null });
       if (weight <= 0) continue;
       c.total += weight;
       /* A wallet counts once on a colour, however it got there ... and once on

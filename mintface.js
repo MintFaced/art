@@ -2307,6 +2307,15 @@ MF.nav = {
     else if (!s) right = '<button type="button" data-nav="connect">Connect</button>';
     else if (url) right = `<a class="you" href="${e(url)}">${e(name)}</a>`;
     else right = `<span class="you">${e(name)}</span>`;
+    /* AMBIENT DISCOVERY. Plenty of collectors delegated to their hot wallet
+       years ago, for some other project, and have never heard of this feature.
+       Their COMBO simply forms, and the bar says so once, quietly, beside
+       their name ... and leads to the page that explains what it is. Nobody is
+       asked to opt in to something they already did. */
+    const combo = this.me && this.me.combo;
+    if (s && combo) {
+      right += `<a class="combo" href="${MF.ART}/combo" title="What is this?">${e(combo.mark)}</a>`;
+    }
 
     this.el.innerHTML = `
       <a class="wordmark" href="${MF.ART || '/'}" aria-label="MintFace"

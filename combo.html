@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMBO ... MintFace</title>
+<meta name="description" content="Your vault holds the art. Your hot wallet does the talking. A COMBO lets the two act as one, so your TAO works from the wallet you actually connect with.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<meta property="og:title" content="COMBO ... MintFace">
+<meta property="og:description" content="The vault signs once, ever, and never connects here. Your TAO works from your hot wallet.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.mast{max-width:720px;margin:0 auto;padding:60px 28px 0}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);line-height:.96;margin:0;letter-spacing:-.035em}
+.lede{font-size:17px;line-height:1.7;color:var(--ink-4);max-width:34em;margin:24px 0 0}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px 90px}
+
+/* ---------- the three steps ----------
+   Numbered because the order is the whole of it: a collector who reconnects
+   before delegating sees nothing and concludes it is broken. The number is in
+   the mono furniture voice and the step's own words are in the reading one. */
+.step{border-top:1px solid var(--rule);padding:30px 0 0;margin-top:34px}
+.step .lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 12px}
+.step h2{font-family:var(--font-sans);font-weight:400;font-size:clamp(20px,2.4vw,26px);line-height:1.25;
+  letter-spacing:-.02em;margin:0;max-width:24em}
+.step p{font-size:15px;line-height:1.7;color:var(--ink-4);margin:14px 0 0;max-width:34em}
+.step .go{display:inline-block;margin-top:20px;background:var(--ink);border:1px solid var(--ink);color:var(--paper);
+  text-decoration:none;font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;padding:13px 22px;cursor:pointer}
+.step .go[aria-disabled="true"]{background:none;border-color:var(--rule);color:var(--faint);cursor:default}
+.step .ghost{background:none;border:1px solid var(--rule);color:var(--muted)}
+.step .ghost:hover{border-color:var(--ink);color:var(--ink)}
+
+/* What to paste, for the fields delegate.xyz will not take from a link. Mono,
+   because every one of them is a string that has to survive being copied by
+   hand, and a proportional font is where a zero becomes an O. */
+.paste{margin:22px 0 0;border:1px solid var(--rule)}
+.paste .row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--rule)}
+.paste .row:last-child{border-bottom:0}
+.paste .k{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);flex:0 0 8.5em}
+.paste .v{font-family:var(--font-mono);font-size:12px;color:var(--ink);flex:1 1 auto;min-width:0;
+  overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+.paste .cp{background:none;border:0;padding:2px 0;cursor:pointer;flex:none;color:var(--faint);
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase}
+.paste .cp:hover{color:var(--ink)}
+
+/* ---------- the COMBO, once it exists ----------
+   The payoff, and it is drawn like the register rather than like a receipt:
+   the mono ledger dialect the rest of the site counts in. */
+.combo{border:1px solid var(--ink);border-left-width:2px;padding:24px 22px;margin-top:34px}
+.combo .mark{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.combo .sum{font-family:var(--font-sans);font-weight:400;font-size:clamp(24px,3.4vw,34px);letter-spacing:-.02em;
+  margin:10px 0 0;font-variant-numeric:tabular-nums}
+.combo .sum span{color:var(--muted);font-size:.45em;letter-spacing:.16em;text-transform:uppercase;
+  font-family:var(--font-mono);margin-left:10px}
+.who{margin:22px 0 0;width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.who td{padding:11px 0;border-bottom:1px solid var(--rule);font-size:13.5px}
+.who tr:last-child td{border-bottom:0}
+.who .r{text-align:right;font-family:var(--font-mono);font-size:12.5px;white-space:nowrap}
+.who .n{max-width:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who .n a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.who .n a:hover{border-color:var(--ink)}
+.who .tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);margin-left:8px}
+.none{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);margin:18px 0 0}
+.said{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-top:14px;min-height:14px}
+.said.bad{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
+
+/* The plain words about taking it away again, which belong on the page that
+   sold it rather than in a FAQ nobody opens. */
+.rule{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);border-left:1px solid var(--rule);padding-left:13px;margin:34px 0 0;line-height:1.85}
+.foot-note{font-size:14px;line-height:1.7;color:var(--muted);margin:26px 0 0;max-width:34em}
+.foot-note a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.foot-note a:hover{border-color:var(--ink)}
+
+@media(max-width:640px){
+  .mast{padding:34px 20px 0}
+  .wrap{padding:0 20px 70px}
+  .combo{padding:20px 16px}
+  .paste .row{flex-wrap:wrap;gap:6px 12px}
+  .paste .k{flex:0 0 100%}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav"></header>
+
+<main>
+  <section class="mast">
+    <h1>COMBO</h1>
+    <p class="lede">Your vault holds the art. Your hot wallet does the talking. A COMBO lets the two
+      act as one &mdash; the vault signs once, ever, and never connects here.</p>
+  </section>
+
+  <div class="wrap">
+    <!-- The state of it, first, because a collector who already has one came
+         here to see it rather than to read three steps about making one. -->
+    <div id="state"></div>
+
+    <section class="step">
+      <p class="lab">Step 1 &mdash; Delegate</p>
+      <h2>Your vault signs one delegation, on delegate.xyz.</h2>
+      <p>Delegate Cash is the standard every serious vault already uses, and it is where this
+        happens: their site, audited, and not ours. We will never ask your vault to sign anything
+        here &mdash; a site that offers to collect a vault&rsquo;s signature is teaching you the exact
+        habit every drainer relies on.</p>
+      <p id="s1note">Connect your hot wallet first, so the link knows who to name.</p>
+      <a class="go" id="open" href="https://delegate.xyz/" target="_blank" rel="noopener"
+        aria-disabled="true">Open delegate.xyz</a>
+      <div class="paste" id="paste" hidden></div>
+    </section>
+
+    <section class="step">
+      <p class="lab">Step 2 &mdash; Reconnect</p>
+      <h2>Sign in here with your hot wallet.</h2>
+      <p>The vault is finished and does not come back. Everything after this happens from the wallet
+        you connect with every day &mdash; weighing on a nudge, writing a note, the room.</p>
+      <button type="button" class="go ghost" id="again">Check again</button>
+    </section>
+
+    <section class="step">
+      <p class="lab">Step 3 &mdash; Done</p>
+      <h2>Your TAO works from your hot wallet.</h2>
+      <p>Every gate here reads the COMBO: weighing on a nudge, the notes threshold, the room.
+        The register does not change &mdash; the leaderboard, the collector pages and the TAO totals
+        still say exactly which wallet holds what, because a delegation does not move a token.
+        A COMBO is a voting-time power, not a merge.</p>
+      <p class="rule">Revoke any time at delegate.xyz.<br>
+        A revoked delegation drops out of your COMBO within the session, and at any nudge close it
+        clamps like a sale.</p>
+    </section>
+
+    <p class="said" id="said"></p>
+    <p class="foot-note">Weighing happens in the <a href="/studio">Studio</a>.
+      What TAO is, and how it accrues, is in the <a href="/provenance">provenance</a> notes.</p>
+  </div>
+</main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/studio">Studio</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="https://collectors.mintface.art/">Collectors</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+/* The COMBO page.
+ *
+ * The mechanics are three lines of arithmetic on a server. THIS is the
+ * feature: a collector with a vault they are right to be careful with, being
+ * walked through the one safe way to let it speak, in words that do not assume
+ * they have read a delegation standard.
+ *
+ * Nothing here signs anything. The page reads /api/combo, hands the vault a
+ * link to somebody else's audited site, and reads again when they come back.
+ */
+const e = MF.escape;
+const $ = (id) => document.getElementById(id);
+const num = (x) => Number(x || 0).toLocaleString('en-NZ');
+
+const C = { data: null, timer: null, tries: 0 };
+
+const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
+
+async function read({ fresh = false } = {}) {
+  /* THE SERVER SAYS WHO THIS IS. It holds the session cookie, which is
+     HttpOnly and which this page therefore cannot read; asking the browser
+     instead would mean guessing, and a page that guesses wrong shows somebody
+     an empty COMBO they have already made. Signed out, the route answers with
+     the explanation and no wallet, which is the right page for that reader. */
+  const q = new URLSearchParams();
+  if (fresh) q.set('fresh', '1');
+  const r = await fetch(`/api/combo${q.toString() ? `?${q}` : ''}`, {
+    credentials: 'include', headers: { accept: 'application/json' },
+  });
+  if (!r.ok) throw new Error('combo');
+  return r.json();
+}
+
+/* What a vault has to be told, for the fields delegate.xyz's own link will not
+   carry. Every one of them is copyable, because typing a bytes32 by hand is
+   how a delegation ends up scoped to a rights label nobody here reads. */
+function pasteRows(d) {
+  const rows = [
+    ['Delegate to', d.address, 'Your hot wallet ... the one you just connected'],
+    ['Type', d.how.type, 'Wallet-level, so it covers the whole vault'],
+    ['Rights', d.how.rights, 'Optional. This scopes the delegation to MintFace alone'],
+  ];
+  return rows.map(([k, v, why]) => `<div class="row">
+    <span class="k">${e(k)}</span>
+    <span class="v" title="${e(why)}">${e(v)}</span>
+    <button type="button" class="cp" data-copy="${e(v)}">Copy</button>
+  </div>`).join('');
+}
+
+/* The payoff, drawn the way the register draws everything: a mono count, a
+   list of wallets, and no celebration. */
+function combo(d) {
+  const c = d.combo;
+  const rows = c.members.map((m) => `<tr>
+    <td class="n">${m.name ? `<a href="https://collectors.mintface.art/${e(m.name)}">${e(m.name)}</a>`
+      : e(short(m.address))}${m.hot ? '<span class="tag">hot wallet</span>'
+      : `<span class="tag">vault${m.scoped ? ' &middot; mintface only' : ''}</span>`}</td>
+    <td class="r">${num(m.tao)} TAO</td>
+  </tr>`).join('');
+  return `<div class="combo">
+    <p class="mark">Your ${e(c.mark)}</p>
+    <p class="sum">${num(c.total)}<span>TAO</span></p>
+    <table class="who">${rows}</table>
+  </div>`;
+}
+
+function draw() {
+  const d = C.data;
+  const box = $('state');
+  if (!d) { box.innerHTML = ''; return; }
+
+  /* The registry could not be reached. Said plainly: a page reporting `no
+     delegations` when it could not ask is a page lying with a straight face,
+     and this one is asking people to trust it with a vault. */
+  if (d.degraded) {
+    box.innerHTML = `<p class="none">The delegation registry could not be reached just now.
+      Your wallet works exactly as it always did; a COMBO would only add to it. Try again shortly.</p>`;
+  } else if (d.combo && d.combo.combo) {
+    box.innerHTML = combo(d);
+  } else if (d.address) {
+    box.innerHTML = `<p class="none">No delegations to ${e(short(d.address))} yet.
+      ${num(d.combo ? d.combo.solo : 0)} TAO in this wallet on its own.</p>`;
+  } else {
+    box.innerHTML = '';
+  }
+
+  const open = $('open');
+  if (d.address) {
+    open.href = d.url;
+    open.removeAttribute('aria-disabled');
+    $('s1note').textContent = 'The link below already names your hot wallet. Open it in the browser '
+      + 'your vault signs from, connect the VAULT there, and approve one delegation.';
+    $('paste').hidden = false;
+    $('paste').innerHTML = pasteRows(d);
+  } else {
+    open.href = 'https://delegate.xyz/';
+    open.setAttribute('aria-disabled', 'true');
+    $('s1note').textContent = 'Connect your hot wallet first, using the button at the top of this page, '
+      + 'so the link knows who to name.';
+    $('paste').hidden = true;
+  }
+}
+
+function say(msg, bad) {
+  const el = $('said');
+  el.textContent = msg || '';
+  el.classList.toggle('bad', Boolean(bad));
+}
+
+async function refresh(opts) {
+  try {
+    C.data = await read(opts);
+    draw();
+    return C.data;
+  } catch (err) {
+    say('Could not read the registry just now.', true);
+    return null;
+  }
+}
+
+/* Coming back from delegate.xyz is the moment this page exists for, and a
+   collector should not have to work out that they need to reload. The page
+   asks again when it is looked at, which is exactly when they have returned
+   from the other tab. */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) return;
+  void refresh({ fresh: true });
+});
+
+$('again').addEventListener('click', async () => {
+  say('Asking the chain ...');
+  const d = await refresh({ fresh: true });
+  if (!d) return;
+  say(d.combo && d.combo.combo
+    ? `${d.combo.mark} · ${num(d.combo.total)} TAO`
+    : 'No delegation found yet. Sign it from your vault on delegate.xyz, then check again.');
+});
+
+document.addEventListener('click', async (ev) => {
+  const cp = ev.target.closest('[data-copy]');
+  if (!cp) return;
+  try {
+    await navigator.clipboard.writeText(cp.dataset.copy);
+    say('Copied');
+  } catch (err) { say('Could not reach the clipboard', true); }
+});
+
+/* Once when the page opens, and again whenever the bar's own sign-in changes
+   under it. The nav connects on its own and tells nobody, so this watches the
+   readable half of the session rather than making the nav announce itself. */
+void refresh();
+let had = Boolean(MF.session.current());
+setInterval(() => {
+  const now = Boolean(MF.session.current());
+  if (now !== had) { had = now; void refresh({ fresh: true }); }
+}, 1500);
+</script>
+</body>
+</html>

@@ -140,6 +140,12 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
    number rather than a fact about that collector. */
 .nudges .ledger .cl{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--faint);margin-left:6px}
+/* A COMBO said in the register's own dialect: the same mono, the same faint,
+   the same size as `clamped` and `moved`. One collector steering one decision
+   is what the row already says; this only says what it was made of, and an
+   exotic provenance gets no more prominence than a clamp does. */
+.combolink{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.combolink:hover{border-color:var(--ink)}
 /* A private collector: named as the register names them, and going nowhere.
    Not .quiet ... that is the room's hover affordance and sits at opacity nought
    until the pointer is over a message, which made these names invisible. */
@@ -873,6 +879,7 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 </button>
 
 <footer class="foot">
+  <a class="smallcaps" href="/combo">Combo</a>
   <a class="smallcaps" href="/notes">Notes</a>
   <a class="smallcaps" href="/provenance">Provenance</a>
   <a class="smallcaps" href="https://collectors.mintface.art/">Collectors</a>
@@ -2474,6 +2481,25 @@ function againstBlock(x) {
   </div>`;
 }
 
+/* WHERE THE TAO CAME FROM, where it came from more than one wallet.
+ *
+ * A collector whose number grew because a vault delegated to them should be
+ * told which, once, quietly, rather than left wondering whether the board has
+ * miscounted. The same marker the ledger rows wear, and it leads to the page
+ * that explains it. */
+const comboMarkOf = (n) => `COMBO \u00b7 ${n} WALLET${n === 1 ? '' : 'S'}`;
+function comboLine() {
+  const c = NUDGE.state && NUDGE.state.combo;
+  if (c) return ` &middot; <a class="combolink" href="/combo">${e(c.mark)}</a>`;
+  /* And the invitation, for a collector whose art is somewhere safer than the
+     wallet they are standing in. It is offered where the TAO is about to be
+     weighed, because that is the moment somebody notices their number is
+     smaller than their collection ... and it is offered in the same eight
+     point mono as everything else in this line, once. */
+  if (!mayWeigh()) return '';
+  return ' &middot; <a class="combolink" href="/combo">Art in a vault?</a>';
+}
+
 /* A colour, said so it can be spoken about. A board of hexes is a board
    nobody can discuss out loud, and these are being chosen for a wall. */
 const nameOf = (hex) => {
@@ -2681,6 +2707,9 @@ function standingsRows(x) {
       r.on.push({ hex: c.hex, weight: Number(w.weight) || 0 });
       r.total += Number(w.weight) || 0;
       r.clamped = r.clamped || Boolean(w.clamped);
+      /* One collector, several wallets. A fact about the weigher rather than
+         about the colour, so it is kept on the standings row. */
+      if (w.combo) r.combo = comboMarkOf(w.combo);
     }
   }
   const rows = [...by.values()].sort((a, b) => b.total - a.total);
@@ -2693,7 +2722,7 @@ function standingsRows(x) {
       return `<tr>
         <td class="c">${r.on.map((o) => `<span class="hexdot" style="background:${e(o.hex)}"
           title="${e(o.hex)}"></span>`).join('')}</td>
-        <td class="n">${who}</td>
+        <td class="n">${who}${r.combo ? `<span class="cl">${e(r.combo)}</span>` : ''}</td>
         <td class="w">${num(r.total)} TAO${r.on.length > 1
           ? `<span class="cl"> across ${r.on.length}</span>` : ''}</td>
         <td class="t">${r.clamped ? '<span class="cl">clamped</span>' : ''}</td>
@@ -2724,7 +2753,7 @@ function ledgerRows(x) {
         <td class="c"><span class="hexdot" style="background:${e(r.candidate || '#fff')}"
           title="${e(r.candidate || '')}"></span></td>
         <td class="n">${who}</td>
-        <td class="w"><span class="${d < 0 ? 'down' : 'up'}">${d < 0 ? '&minus;' : '+'}${num(Math.abs(d))}</span>${r.moved ? '<span class="cl"> moved</span>' : ''}</td>
+        <td class="w"><span class="${d < 0 ? 'down' : 'up'}">${d < 0 ? '&minus;' : '+'}${num(Math.abs(d))}</span>${r.moved ? '<span class="cl"> moved</span>' : ''}${r.combo ? `<span class="cl"> ${e(r.combo)}</span>` : ''}</td>
         <td class="t">${e(shortDate(r.at))}</td>
       </tr>`;
     }).join('')}</tbody>
@@ -2903,14 +2932,14 @@ function position(x) {
   const on = myPositions(x);
   if (!on.length) {
     return `<div class="stand"><p class="slab">Your weigh-in</p>
-      <p class="spare">Nothing on the board yet &middot; ${num(held)} TAO to weigh</p></div>`;
+      <p class="spare">Nothing on the board yet &middot; ${num(held)} TAO to weigh${comboLine()}</p></div>`;
   }
   /* Over-allocated, which selling down does without anybody weighing. Said
      here, where the position it is about is, rather than in the fold. */
   const over = m && m.over > 0
     ? `<p class="spare">You have ${num(m.asked)} TAO spread and hold ${num(m.held)}.
        The board counts ${num(m.held)} of it, in proportion, until you bring it down.</p>`
-    : `<p class="spare">${num(mySpare(x))} available &middot; your TAO ${num(held)}</p>`;
+    : `<p class="spare">${num(mySpare(x))} available &middot; your TAO ${num(held)}${comboLine()}</p>`;
   return `<div class="stand">
     <p class="slab">Your weigh-in</p>
     ${on.map((a) => positionRow(x, a)).join('')}
@@ -3009,7 +3038,7 @@ function openCard(x) {
         : ''}
     </div>
     ${signed
-      ? `<p class="said">Your TAO ${num(NUDGE.tao)}${mine ? ` &middot; you weighed ${num(mine.amount)} on ${e(mine.side)}` : ''}</p>`
+      ? `<p class="said">Your TAO ${num(NUDGE.tao)}${comboLine()}${mine ? ` &middot; you weighed ${num(mine.amount)} on ${e(mine.side)}` : ''}</p>`
       : '<p class="said">Sign in to weigh.</p>'}
     <p class="said" id="say-${e(x.id)}" hidden></p>
     ${ledger(x)}`;

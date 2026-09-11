@@ -8,6 +8,7 @@ import { parseTags, tagIndex } from './_lib/names.js';
 import { linksIn } from './_lib/text.js';
 import { cardStore, familyKind, fetchCard, ourCard } from './_lib/cards.js';
 import { corsFor, cookieFrom, openCookies, clearCookies, domainOk, hostOf, TOKEN_COOKIE, WHO_COOKIE } from './_lib/session.js';
+import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 import { checkImage, imageKey, imageFingerprint } from './_lib/images.js';
 import { putObject, r2Configured } from './_lib/r2.js';
 
@@ -74,12 +75,20 @@ const SHUT = 'Studio is for anyone holding TAO. One MintFace artwork, held a lit
  * address even where the chain had a name for it. */
 async function whois(origin, address, register) {
   const a = lower(address);
-  const tao = await at(origin, 'data/tao.json').then((t) => {
-    const w = t.wallets && t.wallets[a];
-    return w ? w.tao : 0;
-  }).catch(() => 0);
+  /* THE COMBO, not the wallet. The room's threshold is a TAO gate like every
+     other one here, and the promise is that a collector's TAO works from their
+     hot wallet ... which would be a strange promise to keep at the nudge and
+     break at the door. A wallet that has delegated nothing gets exactly the
+     number it always got, and makes no chain call it was not already making. */
+  const tao = await at(origin, 'data/tao.json').catch(() => null);
+  const combo = tao ? await comboFor(tao, a).catch(() => soloOnly(tao, a)) : null;
   const who = register ? register.who(a) : null;
-  return { tao, name: who && who.known ? who.name : null };
+  return {
+    tao: combo ? combo.total : 0,
+    solo: combo ? combo.solo : 0,
+    combo: combo && combo.combo ? { wallets: combo.members.length, mark: comboMark(combo.members.length) } : null,
+    name: who && who.known ? who.name : null,
+  };
 }
 
 /** Where a wallet stands in the room: what to call it, whether it may speak,
@@ -95,6 +104,10 @@ async function standing(db, origin, viewer, cfg, register, isArtist) {
   const said = await db.mentionsSince(viewer, seen == null ? 0 : seen);
   return {
     tao: gate.role === 'artist' ? null : who.tao,
+    /* What the nav puts its quiet marker beside. The artist holds no TAO by
+       design, so he has no COMBO to report either. */
+    combo: gate.role === 'artist' ? null : (who.combo || null),
+    solo: gate.role === 'artist' ? null : who.solo,
     name: gate.role === 'artist' ? ARTIST_NAME : who.name,
     role: gate.role,
     can_speak: gate.ok && !muted,

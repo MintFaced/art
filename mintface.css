@@ -204,6 +204,14 @@ img{max-width:100%;display:block}
 .nav .you{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:14em;
   min-width:0;flex:0 1 auto;display:inline-block}
 .nav [aria-current="page"]{color:var(--ink)}
+/* The COMBO marker, beside whoever is signed in. The bar's own smallcaps at
+   the bar's own faint, because it is a fact about the wallet rather than an
+   announcement: a collector who has had a delegation for two years should
+   notice it once and never be nagged by it. It is the only thing here that
+   explains itself, so it is the only thing here with a title. */
+.nav .combo{font-size:9px;letter-spacing:.12em;color:var(--faint);white-space:nowrap;
+  flex:0 0 auto;text-decoration:none;border-bottom:1px solid transparent}
+.nav .combo:hover{color:var(--ink);border-color:var(--rule)}
 
 /* ---------- the other ground ----------
    One mark beside the cherry, naming where it takes you. Everything else in
@@ -263,6 +271,9 @@ body[data-nav="flow"] .nav{position:static}
      read across, a name is a word being recognised, and every character of it
      that survives the squeeze is worth more than the air around it */
   .nav .you{max-width:9em;letter-spacing:.06em}
+  /* A phone's bar has no room for a second label beside the name. The marker
+     is on every page of the site and on /combo in full; here it goes. */
+  .nav .combo{display:none}
   .cherry{gap:5px}
   .cherry .fruit{font-size:14px}
 }

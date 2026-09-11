@@ -1,7 +1,8 @@
 import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
-import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { tally, latest, isOpen, weighMessage, proposeMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, comboReader, comboOf, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 import { seriesState, constraintFor, checkCandidate, slotLine, seriesProvenanceLine } from './_lib/palette.js';
 import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
@@ -65,6 +66,30 @@ export async function GET(request) {
   const url = new URL(request.url);
   const who = url.searchParams.get('address');
 
+  /* WHO IS ASKING, AND WHO SPEAKS THROUGH THEM.
+   *
+   * One registry read for the reader in front of us, and none at all for the
+   * anonymous majority: a page nobody has signed in on never touches the
+   * chain. What it buys is that a collector who delegated a minute ago is
+   * offered their vault's TAO on the first board they open, before any row
+   * here has ever heard of it. */
+  const mine = who ? await comboFor(data.tao, who).catch(() => soloOnly(data.tao, who))
+    : { members: [], wallets: [], total: 0, combo: false, degraded: false };
+  const vaults = mine.wallets.slice(1);
+
+  /* What this wallet may still deploy here: its purse, less everything any
+     member of it has already committed on this nudge. */
+  const mineOn = (rows, addr, read) => {
+    const base = standing(rows, addr, read);
+    const purse = read.purse(addr, vaults);
+    return {
+      ...base,
+      held: purse.total,
+      available: purse.available,
+      combo: mine.combo ? { wallets: mine.members.length, members: mine.wallets, mark: comboMark(mine.members.length) } : null,
+    };
+  };
+
   /* Who a ledger row is, said as the register reads them today. A weighing is
      a public record of who steered a decision, so the name on it has to be the
      name that person answers to now, and it has to lead somewhere. */
@@ -72,6 +97,8 @@ export async function GET(request) {
     const w = register ? register.who(r.address) : null;
     return {
       address: r.address,
+      /* The quiet marker, built the one way it is built everywhere. */
+      combo: r.combo ? comboMark(r.combo) : null,
       name: (w && w.known ? w.name : null) || r.name || (w ? w.name : null) || null,
       delta: r.delta == null ? null : r.delta,
       moved: Boolean(r.moved),
@@ -115,8 +142,12 @@ export async function GET(request) {
       /* Every row, not the latest one per wallet: a wallet holds a map now,
          and the fold is what turns its signatures into that map. */
       const forNudge = (data.weighings.weighings || []).filter((x) => x.nudge === n.id);
+      /* And every COMBO those rows recorded, so a vault's TAO is weighed once
+         and by whoever is entitled to it here. A board with no delegations
+         anywhere in it reads exactly as it always did. */
+      const readHere = comboReader(readTao, forNudge);
       // a banked nudge keeps what it closed with, whatever has happened since
-      const p = n.banked ? n.banked : palette(forNudge, props, readTao, n);
+      const p = n.banked ? n.banked : palette(forNudge, props, readHere, n);
       return {
         ...base,
         /* What a colour on this nudge has to stand clear of, and by how much.
@@ -148,12 +179,12 @@ export async function GET(request) {
         })),
         /* Everything the viewer needs to spread their own TAO: what they have
            put where, what it is worth now, and what is left to allocate. */
-        mine: who ? standing(forNudge, who, readTao) : null,
+        mine: who ? mineOn(forNudge, who, readHere) : null,
         proposed: who ? Boolean(props.find((x) => lower(x.address) === lower(who))) : false,
       };
     }
 
-    const t = n.banked ? n.banked : tally(rows, readTao);
+    const t = n.banked ? n.banked : tally(rows, comboReader(readTao, rows));
     return {
       ...base,
       totals: t.totals, counts: t.counts, total: t.total, collectors: t.collectors,
@@ -181,7 +212,16 @@ export async function GET(request) {
     /* Without the red. It is the artist's constant, it is on the paintings and
        in the maker, and a page that never receives it cannot draw it. */
     series: arc ? { ...arc, fixed: null, clearance: null, provenance: seriesProvenanceLine(arc) } : null,
-    tao: who ? readTao(who) : null,
+    /* The figure the composer puts beside the box: what this reader can
+       actually weigh with, COMBO and all. */
+    tao: who ? mine.total : null,
+    /* And what that figure is made of, so the page can say so quietly rather
+       than a collector wondering why their number grew. */
+    combo: who && mine.combo
+      ? { wallets: mine.members.length, mark: comboMark(mine.members.length), solo: mine.solo,
+        members: mine.members.map((m) => ({ address: m.address, tao: m.tao, hot: Boolean(m.hot), scoped: Boolean(m.scoped) })) }
+      : null,
+    combo_degraded: Boolean(who && mine.degraded),
     rule: 'A nudge steers. It never commands. The studio may act with, against, or without the result.',
   });
 }
@@ -245,8 +285,29 @@ export async function POST(request) {
   if (!isOpen(n)) return json({ error: 'this nudge has closed' }, 409);
   const candidates = kindOf(n) === CANDIDATES;
 
-  const held = Math.floor(taoReader(data.tao)(address) || 0);
-  if (held <= 0) return json({ error: 'this wallet holds no TAO yet' }, 403);
+  /* WHAT THIS WALLET MAY DEPLOY, ASKED OF THE CHAIN NOW.
+   *
+   * Weigh time is the second of the three moments the COMBO is read at, and it
+   * is read fresh: a delegation revoked this morning must not be spendable
+   * this afternoon because a cache had two minutes left on it. A registry that
+   * cannot be reached leaves the wallet weighing solo, which is the additive
+   * promise kept in the only direction it can be kept ... never less than the
+   * wallet's own TAO, never more than the chain has just confirmed. */
+  const live = await comboFor(data.tao, address, { fresh: true }).catch(() => soloOnly(data.tao, address));
+  const vaults = live.wallets.slice(1);
+  const rowsHere = (data.weighings.weighings || []).filter((x) => x.nudge === n.id);
+  const readHere = comboReader(taoReader(data.tao), rowsHere);
+  const purse = readHere.purse(address, vaults);
+  const ownAsk = [...(allocations(rowsHere).by.get(address) || new Map()).values()]
+    .reduce((a, v) => a + v, 0);
+  /* The ceiling for THIS wallet: everything in the purse that is not already
+     spoken for by another member of it. Its own current position is not spent
+     against it ... it is the thing being changed. */
+  const held = Math.max(0, purse.total - (purse.spent - ownAsk));
+  if (purse.total <= 0) return json({ error: 'this wallet holds no TAO yet' }, 403);
+  if (held <= 0) {
+    return json({ error: `every TAO in this COMBO is already weighed on this nudge. Move some of it instead.` }, 400);
+  }
 
   /* ---- putting a colour on the board ----
    *
@@ -393,6 +454,13 @@ export async function POST(request) {
        and are folded as the whole of a wallet's position, which is what they
        were ... see allocations() in _lib/nudges.js. */
     ...(candidates ? { alloc: true } : {}),
+    /* WHO THIS WALLET WAS CARRYING WHEN IT SIGNED, verified against the
+       registry a moment ago. It is written down rather than looked up again
+       because the board is read by everybody and the chain should not be: what
+       was true at the moment of the act is what the record is of. The close
+       asks the chain once more, and a delegation revoked in between clamps
+       there exactly as a sale would. */
+    ...(vaults.length ? { combo: vaults } : {}),
     at: new Date().toISOString(),
     ...(session ? { session: session.id } : { issued, signature }),
   };
@@ -407,9 +475,12 @@ export async function POST(request) {
   if (candidates) {
     const forNudge = [...(data.weighings.weighings || []).filter((x) => x.nudge === n.id), row];
     const props = (store.proposals || []).filter((x) => x.nudge === n.id);
+    const readBack = comboReader(taoReader(data.tao), forNudge);
+    const back = readBack.purse(address, vaults);
     return json({ ok: true,
-      palette: palette(forNudge, props, taoReader(data.tao), n),
-      mine: standing(forNudge, address, taoReader(data.tao)) });
+      palette: palette(forNudge, props, readBack, n),
+      mine: { ...standing(forNudge, address, readBack), held: back.total, available: back.available },
+      combo: live.combo ? { wallets: live.members.length, mark: comboMark(live.members.length) } : null });
   }
-  return json({ ok: true, tally: tally(rows, taoReader(data.tao)) });
+  return json({ ok: true, tally: tally(rows, comboReader(taoReader(data.tao), rows)) });
 }

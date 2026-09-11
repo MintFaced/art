@@ -6,6 +6,7 @@ import {
   arrange, holdersOf, heldSince,
 } from './_lib/notes.js';
 import { loadRegister } from './_lib/register.js';
+import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 
 /* The notes layer.
  *
@@ -106,13 +107,24 @@ async function nameOf(register, address) {
   const who = reg.who(address);
   return who.private ? null : who.name;
 }
-async function taoOf(origin, address) {
+/* THE SENIORITY GATE COUNTS THE COMBO.
+ *
+ * The threshold here asks whether this collector is above a line, and a
+ * collector whose art is in a vault is above it or not regardless of which of
+ * their wallets is doing the typing. Every other gate on this site now reads
+ * the same way; a note is not the place to make them disagree.
+ *
+ * Solo is carried back alongside so the row can say what it was: a note left
+ * at combined seniority should be able to show that is what it was, years
+ * later, without anybody having to re-derive a delegation that has long since
+ * been revoked. */
+async function comboAt(origin, address) {
   try {
     const tao = await at(origin, 'data/tao.json');
-    const w = tao.wallets && tao.wallets[lower(address)];
-    return w ? w.tao : 0;
-  } catch (e) { return 0; }
+    return await comboFor(tao, address).catch(() => soloOnly(tao, address));
+  } catch (e) { return { total: 0, solo: 0, combo: false, members: [], wallets: [] }; }
 }
+const taoOf = async (origin, address) => (await comboAt(origin, address)).total;
 
 /** One row as the stream and a collector's own list read it. */
 const rowOf = (r, register) => {
@@ -120,6 +132,7 @@ const rowOf = (r, register) => {
   return {
     id: r.id, work: r.work, title: r.title || null, image: r.image || null,
     at: r.at, role: r.role, tao_at_post: r.tao_at_post || 0,
+    combo: r.combo_at_post ? comboMark(r.combo_at_post) : null,
     // named and linked as the register reads today, not as the row was written,
     // and as the row was written for an author the register no longer holds
     name: (who && who.known ? who.name : null) || r.name || (who ? who.name : null) || null,
@@ -286,7 +299,8 @@ export async function POST(request) {
   const chain = await holdsNow(hit.work, address);
   const holders = holdersOf(hit.work);
   if (chain.holds) holders.add(address);
-  const tao = await taoOf(origin, address);
+  const purse = await comboAt(origin, address);
+  const tao = purse.total;
   const who = standing({ address, cfg, tao, holders });
   if (who.error) return json({ error: who.error, tao }, 403);
 
@@ -312,6 +326,10 @@ export async function POST(request) {
       || (hit.work.digital && hit.work.digital.image) || null,
     address, name: who.name || (await nameOf(register, address)),
     role: who.role, tao_at_post: who.role === 'senior' ? who.tao : (tao || 0),
+    /* What the seniority was made of, frozen with the note. A delegation is a
+       live thing and this is a record: a note written at combined seniority
+       should still be able to say so years after the delegation was revoked. */
+    ...(purse.combo ? { combo_at_post: purse.wallets.length, combo_wallets: purse.wallets } : {}),
     held_since: who.role === 'collector' ? (heldSince(hit.work, address) || now) : null,
     text: text.text, visibility: vis.visibility, hidden: false,
     at: now, edited_at: null, verified: chain.how,
