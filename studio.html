@@ -2621,7 +2621,7 @@ function proposer(x) {
   return `<div class="propose"><span class="slab">Propose a new colour</span>
     <input type="color" id="hex-${e(x.id)}" value="${e(start)}" data-colourfield="${e(x.id)}"
       aria-label="A colour to propose">
-    <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Put it on</button>
+    <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Propose this colour</button>
     <span class="${x.constraint ? 'verdict' : 'said'}" id="verdict-${e(x.id)}">${x.constraint
       ? e(verdictLine(x, start))
       : 'One colour per wallet, and final.'}</span>
@@ -2726,8 +2726,12 @@ function standingsRows(x) {
       r.total += Number(w.weight) || 0;
       r.clamped = r.clamped || Boolean(w.clamped);
       /* One collector, several wallets. A fact about the weigher rather than
-         about the colour, so it is kept on the standings row. */
-      if (w.combo) r.combo = comboMarkOf(w.combo);
+         about the colour, so it is kept on the standings row.
+         MARKED ONCE. The route dresses these rows and hands the marker over
+         already written, and putting it through the formatter a second time
+         produced `COMBO · COMBO · 2 WALLETS WALLETS`. A count still gets
+         formatted, because the reply to a weighing carries one undressed. */
+      if (w.combo) r.combo = typeof w.combo === 'number' ? comboMarkOf(w.combo) : String(w.combo);
     }
   }
   const rows = [...by.values()].sort((a, b) => b.total - a.total);
@@ -3001,8 +3005,20 @@ function candidateCard(x) {
   /* Everything that is not a colour row. What this wallet has spread and where,
      and how far the lock is, moved in here: both are the reader's own second
      question, asked after they have seen what is in front. */
-  const inner = `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
-    ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
+  /* NO EXPLANATION IN THE FOLD OF AN OPEN NUDGE. The note explained that a
+     colour has to stand clear of what is locked, and the constraint line under
+     STANDING CLEAR OF says the same thing three inches higher and says it
+     about the actual numbers; the picker refuses a clash as it is dragged; and
+     the board teaches the rest of itself now that a row carries WEIGH, CHANGE
+     and MOVE HERE with the source named on it. Prose that repeats working
+     furniture is prose nobody reads twice.
+
+     A BANKED CARD KEEPS BOTH. It has no fold and no live picker to explain
+     itself with, and the promise is a thing the studio undertook ... a record
+     read in two years should carry what was said at the time rather than
+     having to guess at it. */
+  const inner = `${x.open ? '' : `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
+    ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}`}
     ${x.open ? lockLine(x) : ''}
     ${thresholdBars(x)}
     ${ledgerRows(x)}
