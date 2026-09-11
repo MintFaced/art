@@ -197,7 +197,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
    question out. */
 .nudges .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0}
 .nudges .head .q{margin:0;flex:1 1 14em;min-width:0}
-.nudges .head .when{margin:0;flex:0 0 auto}
+/* IT WRAPS BEFORE IT EVER TRUNCATES. The line is three facts separated by
+   spaced middots, so wrapping happens between them and never inside a word;
+   what it must not do is sit in a box narrow enough to cut COLOUR 2 OF 12 in
+   half. It may take a line of its own where it needs one. */
+.nudges .head .when{margin:0;flex:1 1 auto;min-width:0;white-space:normal;overflow-wrap:normal}
 
 .nudges .crows{margin:20px 0 0;max-width:560px}
 /* ---------- the candidate row ----------
@@ -214,7 +218,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
  * hex is the identity and is never abbreviated either. Who proposed it sits
  * under the hex where it can be cut without moving anything above it, and the
  * field, when it is asked for, is a row of its own across the whole width. */
-.nudges .crow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto;
+.nudges .crow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;
   column-gap:11px;row-gap:2px;align-items:center;padding:11px 0;
   border-bottom:1px solid var(--rule)}
 .nudges .crows .crow:last-child{border-bottom:0}
@@ -233,13 +237,21 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
    characters is the identity of the colour and the whole of what somebody
    reads back to a decorator. It takes its content's width, and the name beside
    it goes on being the one that yields. */
-.nudges .crow .hex{grid-area:1/2/2/3;font-family:var(--font-mono);font-size:11.5px;
-  letter-spacing:.12em;color:var(--ink);white-space:nowrap}
-/* The nearest Pantone, beside the hex it stands in for. A column of its own,
-   so that giving way is truncation rather than trespass. */
-.nudges .crow .cname{grid-area:1/3/2/4;min-width:0;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap;font-family:var(--font-mono);color:var(--faint);
-  letter-spacing:.08em;font-size:9.5px;text-transform:uppercase}
+/* THE NAME LEADS AND THE HEX IS THE FINE PRINT. What a collector says out
+   loud is LIGHT GREEN; #80E080 is what they write down afterwards. The board
+   led with the machine's name for the colour, in the reader's size, and put
+   the human one in grey beside it.
+
+   Which of the two yields has not changed, and it still cannot be the hex:
+   seven characters are the identity and are what somebody reads back to a
+   decorator. So the NAME sits in the flexible track and truncates if a very
+   long one ever turns up, and the hex sits in an auto track with no hidden
+   overflow, which is what keeps its automatic minimum size honest. */
+.nudges .crow .cname{grid-area:1/2/2/3;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.1em;
+  color:var(--ink);text-transform:uppercase}
+.nudges .crow .hex{grid-area:1/3/2/4;font-family:var(--font-mono);font-size:9.5px;
+  letter-spacing:.1em;color:var(--faint);white-space:nowrap}
 .nudges .crow .w{grid-area:1/4/2/5;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
   text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;
   white-space:nowrap;text-align:right}
@@ -356,18 +368,16 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
    thing this row is for. */
 .nudges .nudge{container-type:inline-size}
 @container (max-width:460px){
-  /* THE SLACK GOES TO THE FIGURE'S COLUMN, not to the hex's. The flexible
-     track was the one the hex sat in, so in the narrow panel the hex was the
-     only thing that could give ... and it did, to `#80E...`, beside a total
-     printing all of 625,000. The figure is right-aligned and nowrap, so a
-     track that grows simply pushes it further right; the hex sits in an auto
-     track and keeps all seven characters at every width this row is drawn at. */
-  .nudges .crow{grid-template-columns:auto auto minmax(0,1fr) auto}
+  /* Narrow enough that the name takes the top line to itself and the hex drops
+     under it. The flexible track is the name's, which is the one that may
+     give; the hex is never in it, at any width, because seven characters are
+     the identity of the colour and `#80E...` is not. */
+  .nudges .crow{grid-template-columns:auto minmax(0,1fr) auto auto}
   .nudges .crow .pair{grid-area:1/1/4/2}
-  .nudges .crow .hex{grid-area:1/2/2/3}
+  .nudges .crow .cname{grid-area:1/2/2/3}
+  .nudges .crow .hex{grid-area:2/2/3/5}
   .nudges .crow .w{grid-area:1/3/2/4}
   .nudges .crow .go{grid-area:1/4/2/5}
-  .nudges .crow .cname{grid-area:2/2/3/5}
   .nudges .crow .by{grid-area:3/2/4/5}
   .nudges .crow .put{grid-area:4/1/5/5}
   .nudges .crow .swap{grid-area:5/1/6/5}
@@ -525,15 +535,19 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .nudges .against .ac{display:flex;gap:9px;align-items:center;min-width:0}
 .nudges .against .ac .chip{width:34px;height:34px;flex:none;border:1px solid var(--rule);display:block}
 .nudges .against .ac .al{display:flex;flex-direction:column;gap:2px;min-width:0}
-.nudges .against .ac .al b{font-weight:400;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink)}
-.nudges .against .ac .al span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;color:var(--faint)}
+/* THE COLOUR LEADS, and where it came from is the note under it. It was the
+   other way round: LOCKED · 01 · NUDGE #1 in ink with the colour itself in
+   grey underneath, which is the provenance shouting over the thing it is the
+   provenance of. */
+.nudges .against .ac .al b{font-weight:400;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink);display:flex;align-items:baseline;gap:6px;min-width:0}
+.nudges .against .ac .al span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;color:var(--faint)}
 /* The hex and the name it goes by, on one line and in that order of
    importance ... the same contract the board row keeps. They were one string
    in one span, which is the shape the collision came in: the identity and the
    decoration sharing a box, and the box being the part that has to give. */
 .nudges .against .ac .l2{display:flex;align-items:baseline;gap:5px;min-width:0}
-.nudges .against .ac .ahex{flex:0 0 auto;white-space:nowrap;color:var(--muted)}
+.nudges .against .ac .ahex{flex:0 0 auto;white-space:nowrap;color:var(--ink)}
 .nudges .against .ac .cname{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;
   white-space:nowrap}
 .nudges .against .anote{font-size:13.5px;line-height:1.62;color:var(--muted);margin:13px 0 0;max-width:36em}
@@ -2405,6 +2419,21 @@ const NUDGE = { state: null, tao: 0, who: null, tried: null, loading: false,
   pot: null, hashed: false };
 const num = (x) => Number(x || 0).toLocaleString('en-NZ');
 const dateOf = (d) => (d ? new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+/* The close date in the furniture's own dialect: 21 SEP '26 rather than 21
+   SEPTEMBER 2026. The meta line carries three facts and has to hold them on
+   one line in a 352px panel, and the month was the only one of the three long
+   enough to be worth shortening. The year stays, in two digits, because a
+   record outlives the nudge. */
+const whenOf = (d) => {
+  if (!d) return '';
+  const t = new Date(d);
+  if (isNaN(t)) return '';
+  const day = t.toLocaleDateString('en-NZ', { day: 'numeric' });
+  /* Three letters, always. en-NZ's short September is `Sept`, which is the one
+     month long enough to be the reason this line wrapped in the first place. */
+  const mon = t.toLocaleDateString('en-NZ', { month: 'short' }).slice(0, 3);
+  return `${day} ${mon} \u2019${String(t.getFullYear()).slice(-2)}`;
+};
 /* A ledger row is one of many and a nudge runs for a fortnight, so the day and
    the month carry it. The year stays because the record outlives the nudge and
    a banked card read in two years should not have to guess. */
@@ -2517,20 +2546,23 @@ function pair(x, hex) {
   return `<span class="pair">${MF.palette.slivers(x.constraint)}<span class="chip" style="background:${e(hex)}"></span></span>`;
 }
 
+/* WHAT THE COLLECTORS HAVE CHOSEN, and what the next colour has to live
+   beside. The arithmetic of the rule ... how far clear, how much of the range
+   is left ... used to be spelled out underneath. It is gone: the picker
+   refuses a clashing colour while it is being dragged and says by how much, so
+   the rule was being stated twice and obeyed once. */
 function againstBlock(x) {
   const list = MF.palette.against(x.constraint);
   if (!list.length) return '';
-  const c = x.constraint;
   return `<div class="against">
-    <span class="alab">Standing clear of</span>
+    <span class="alab">Collector chosen</span>
     <div class="row">${list.map((a) => `<span class="ac">
       <span class="chip" style="background:${e(a.hex)}"></span>
-      <span class="al"><b>Locked &middot; ${e(a.caption)}</b>
-        <span class="l2"><span class="ahex">${e(a.hex)}</span>${
-          a.name ? `<span class="cname">${e(a.name.label)}</span>` : ''}</span></span>
+      <span class="al">
+        <b><span class="ahex">${e(a.hex)}</span>${
+          a.name ? ` <span class="cname">${e(a.name.label)}</span>` : ''}</b>
+        <span class="l2">Locked &middot; ${e(a.caption)}</span></span>
     </span>`).join('')}</div>
-    <p class="anote">At least ${c.floor.toFixed(2)} clear of each,
-      ${Math.round(c.field * 100)}% of the range still open. The picker refuses the rest.</p>
   </div>`;
 }
 
@@ -2558,6 +2590,38 @@ function comboLine() {
 const nameOf = (hex) => {
   const n = MF.colour.name(hex);
   return n ? ` <span class="cname">${e(n.label)}</span>` : '';
+};
+
+/* NAMES FIRST, HEX AS THE FINE PRINT.
+ *
+ * LIGHT GREEN is what somebody says out loud to a decorator on a scaffold;
+ * #80E080 is what they write down afterwards. The board led with the hex,
+ * which is the machine's name for the colour set in the reader's size, and put
+ * the human one in grey beside it.
+ *
+ * Where there is no name ... a hex that falls between everything the naming
+ * tables know ... the hex takes the lead back rather than leaving the row
+ * headed by nothing. An unnamed colour is still a colour and still has to be
+ * pointed at. */
+const said = (hex) => {
+  const h = String(hex || '').toUpperCase();
+  const n = MF.colour.name(h);
+  return { lead: n ? n.label : h, fine: n ? h : '', named: Boolean(n) };
+};
+/* The two cells a candidate row keeps for it, in that order. `chosen` rides
+   with the fine print, or with the lead where there is no fine print to ride
+   with: it is a state of the colour rather than part of its name, and it must
+   not sit in the cell that truncates. */
+const colourCells = (hex, chosen) => {
+  const c = said(hex);
+  const mark = chosen ? ' \u00b7 chosen' : '';
+  return `<span class="cname">${e(c.lead)}${c.fine ? '' : e(mark)}</span>
+    <span class="hex">${c.fine ? e(c.fine + mark) : ''}</span>`;
+};
+/* And in a line of running text, where there is only one slot. */
+const saidLine = (hex) => {
+  const c = said(hex);
+  return `${e(c.lead)}${c.fine ? ` <span class="cname">${e(c.fine)}</span>` : ''}`;
 };
 
 /* PROPOSE FREELY, EDIT FREELY, UNTIL SOMEBODY AGREES WITH YOU.
@@ -2940,13 +3004,12 @@ function colourRow(x, c, editable) {
   const src = needsSource ? `<span class="from">from</span>
       <select class="src" aria-label="Where the TAO comes from">
         ${mySpare(x) > 0 ? `<option value="">Spare &middot; ${num(mySpare(x))} TAO</option>` : ''}
-        ${elsewhere.map((a) => `<option value="${e(a.hex)}">${e(a.hex)} &middot; ${num(a.amount)} TAO</option>`).join('')}
+        ${elsewhere.map((a) => `<option value="${e(a.hex)}">${e(said(a.hex).lead)} &middot; ${num(a.amount)} TAO</option>`).join('')}
       </select>` : '';
   return `<div class="crow${chosen ? ' chosen' : ''}${on ? ' mine' : ''}${putting ? ' putting' : ''}${
     mine && NUDGE.swapping.has(key) ? ' swapping' : ''}">
     ${pair(x, c.hex)}
-    <span class="hex">${e(c.hex)}${chosen ? ' &middot; chosen' : ''}</span>
-    ${nameOf(c.hex)}
+    ${colourCells(c.hex, chosen)}
     <span class="w">${num(c.total)} TAO</span>
     ${editable
       ? `<button type="button" class="go" data-put="${e(key)}"
@@ -3007,8 +3070,8 @@ function positionPanel(x, a) {
       aria-label="TAO to weigh">
     <span class="lab">TAO on</span>
     <select class="to" aria-label="Which colour">
-      ${cs.map((c) => `<option value="${e(c.hex)}"${c.hex === a.hex ? ' selected' : ''}>${e(c.hex)}${
-        MF.colour.name(c.hex) ? ` \u00b7 ${e(MF.colour.name(c.hex).label)}` : ''}</option>`).join('')}
+      ${cs.map((c) => `<option value="${e(c.hex)}"${c.hex === a.hex ? ' selected' : ''}>${
+        e(said(c.hex).lead)}${said(c.hex).fine ? ` \u00b7 ${e(said(c.hex).fine)}` : ''}</option>`).join('')}
     </select>
     <button class="weigh" data-weigh="${e(x.id)}" data-src="${e(a.hex)}">Save</button>
     <p class="res${line.bad ? ' bad' : ''}" aria-live="polite">${e(line.text)}</p>
@@ -3022,8 +3085,7 @@ function positionRow(x, a) {
     ? `<span class="cl">counts ${worn(a.weight)}</span>` : '';
   return `<div class="pos${open ? ' changing' : ''}">
     <span class="chip" style="background:${e(a.hex)}"></span>
-    <span class="pw">${num(a.amount)} TAO on ${e(a.hex)}</span>
-    ${nameOf(a.hex)}
+    <span class="pw">${num(a.amount)} TAO on ${saidLine(a.hex)}</span>
     ${clamped}
     <button type="button" class="go" data-change="${e(key)}" aria-expanded="${open}">Change</button>
     ${positionPanel(x, a)}
@@ -3114,7 +3176,7 @@ function candidateCard(x) {
         ? 'Reading where you stand ...'
         : 'Sign in to propose or weigh.'}</p>`)}
     ${x.open ? '' : `<p class="banked">${x.locked
-      ? `Locked &middot; ${e(x.locked.hex)}${nameOf(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
+      ? `Locked &middot; ${saidLine(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
       : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
     ${x.open || x.locked || !x.why ? '' : `<p class="said">${e(x.why)}</p>`}
     ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
@@ -3124,7 +3186,7 @@ function candidateCard(x) {
   return `<div class="nudge" id="nudge-${e(x.id)}">
     <div class="head">
       <p class="q">${e(x.question)}</p>
-      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(dateOf(x.closes))}${
+      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(whenOf(x.closes))}${
         /* Where this colour sits in the arc. A banked card that says only what
            it chose reads as a one-off, and this one never was. */
         x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
@@ -3168,7 +3230,7 @@ function openCard(x) {
     ${ledger(x)}`;
   return `<div class="nudge" id="nudge-${e(x.id)}">
     <p class="q">${e(x.question)}</p>
-    <div class="when">Nudge #${x.number} &middot; closes ${e(dateOf(x.closes))}</div>
+    <div class="when">Nudge #${x.number} &middot; closes ${e(whenOf(x.closes))}</div>
     ${meters(x)}
     ${yours(x)}
     ${RULE}
@@ -3179,7 +3241,7 @@ function openCard(x) {
 function bankedCard(x) {
   return `<div class="nudge" id="nudge-${e(x.id)}">
     <p class="q">${e(x.question)}</p>
-    <div class="when">Nudge #${x.number} &middot; closed ${e(dateOf(x.closes))}</div>
+    <div class="when">Nudge #${x.number} &middot; closed ${e(whenOf(x.closes))}</div>
     ${meters(x)}
     <p class="banked">${x.result === 'even' ? 'Even' : x.result === 'yes' ? 'Yes' : 'No'}
       &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}</p>
