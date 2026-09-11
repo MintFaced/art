@@ -203,6 +203,25 @@ img{max-width:100%;display:block}
    that gives: everything else in the bar is a fixed label. */
 .nav .you{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:14em;
   min-width:0;flex:0 1 auto;display:inline-block}
+/* ---------- the name, and what is behind it ----------
+   The name was a link to the collector's own page and nothing else, which left
+   a signed-in reader no way to sign out except to go and find the room. It is
+   a door now: the same smallcaps, a hairline panel under it, two lines. The
+   panel is positioned against the bar rather than the button so it cannot be
+   clipped by the bar's own overflow, and it is on the right because the name
+   is. */
+.nav .me{position:relative;display:inline-flex;flex:0 1 auto;min-width:0}
+.nav .me .you{background:none;border:0;padding:0;cursor:pointer;font:inherit;color:inherit;
+  letter-spacing:inherit;text-transform:inherit}
+.nav .me .you:hover{color:var(--ink)}
+.nav .menu{position:absolute;top:calc(100% + 10px);right:0;z-index:60;min-width:11em;
+  background:var(--paper);border:1px solid var(--rule);display:flex;flex-direction:column}
+.nav .menu a,.nav .menu button{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);background:none;border:0;border-bottom:1px solid var(--rule);
+  padding:12px 14px;text-align:left;text-decoration:none;cursor:pointer;white-space:nowrap;display:block}
+.nav .menu a:last-child,.nav .menu button:last-child{border-bottom:0}
+.nav .menu a:hover,.nav .menu button:hover{color:var(--ink);background:var(--sunk)}
+.nav .menu a:focus-visible,.nav .menu button:focus-visible{outline:1px solid var(--ink);outline-offset:-1px}
 .nav [aria-current="page"]{color:var(--ink)}
 /* The COMBO marker, beside whoever is signed in. The bar's own smallcaps at
    the bar's own faint, because it is a fact about the wallet rather than an

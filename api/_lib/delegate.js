@@ -30,6 +30,20 @@
  * FAIL OPEN. Every path here returns `degraded` rather than throwing. A
  * registry hiccup must never stop a plain wallet connecting and speaking: the
  * COMBO is additive, and additive things do not get to break the base case.
+ *
+ * ONE DOOR IN V1. Delegate Cash, and only Delegate Cash. The 6529
+ * NFTDelegation registry is deferred rather than dropped, and the shape of
+ * this file is the whole of what a second door needs: `incoming()` reads each
+ * registry into one `want` map keyed by vault address, so a wallet that has
+ * delegated in both is already ONE member rather than two, and a second
+ * reader is a third entry in that first `calls()` batch plus its own row in
+ * the verification batch under it. Its use case `All` maps to TYPE_ALL here;
+ * its other codes are Memes-specific and are not a voice on this site. What a
+ * second door needs before it can be written is the registry's mainnet
+ * address and its two selectors, verified against a live delegation the way
+ * both of these were ... which is why there is no flag standing here switching
+ * nothing on: a flag that gates an unwritten reader is a promise the config
+ * cannot keep.
  */
 
 /* Both registries live at the same address on every chain they are deployed

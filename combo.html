@@ -329,6 +329,10 @@ document.addEventListener('click', async (ev) => {
    under it. The nav connects on its own and tells nobody, so this watches the
    readable half of the session rather than making the nav announce itself. */
 void refresh();
+/* And the moment the bar signs out, rather than up to a second and a half
+   later: a page still showing somebody's COMBO after they have signed out is
+   showing them a thing they can no longer act on. */
+document.addEventListener('mf:session', () => { void refresh({ fresh: true }); });
 let had = Boolean(MF.session.current());
 setInterval(() => {
   const now = Boolean(MF.session.current());

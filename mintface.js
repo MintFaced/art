@@ -2259,6 +2259,17 @@ MF.theme = {
 MF.nav = {
   el: null,
   me: null,
+  /* WHICH WALLET `me` IS ABOUT. The bar caches what the room said about the
+     signed-in wallet, and the signed-in wallet can change under it: sign out,
+     connect another, and the cached answer is somebody else's name sitting
+     over somebody else's session. So the cache carries its own subject, and
+     the bar draws it only while the two still agree. */
+  meFor: null,
+  /* The menu behind the name, and a counter so a slow answer for a wallet that
+     is no longer signed in cannot land on top of a fast one for the wallet
+     that is. */
+  menu: false,
+  seq: 0,
   days: 30,
   unseen: 0,
   next: null,
@@ -2298,15 +2309,30 @@ MF.nav = {
     const here = location.pathname.replace(/\.html$/, '').replace(/\/$/, '');
     const on = (path) => (!AT_PEOPLE && here === path ? ' aria-current="page"' : '');
     const s = MF.session.current();
-    const name = this.me && this.me.name ? this.me.name
-      : (s ? MF.shortAddress(s.address) : null);
-    const url = this.me && this.me.url ? this.me.url : null;
+    /* Only while the cached answer is about the wallet that is actually signed
+       in. Otherwise the address, which is always true of whoever this is. */
+    const mine = s && this.me && this.meFor === s.address ? this.me : null;
+    const name = mine && mine.name ? mine.name : (s ? MF.shortAddress(s.address) : null);
+    const url = mine && mine.url ? mine.url : null;
 
     let right;
     if (this.busy) right = `<button type="button" data-nav="wait" disabled>${e(this.busy)}</button>`;
     else if (!s) right = '<button type="button" data-nav="connect">Connect</button>';
-    else if (url) right = `<a class="you" href="${e(url)}">${e(name)}</a>`;
-    else right = `<span class="you">${e(name)}</span>`;
+    else {
+      /* THE NAME IS A DOOR, not a link. It was a link to the collector's own
+         page, which meant a signed-in reader had nowhere at all to sign out
+         from except the room ... and switching wallets, which is the first
+         thing anybody testing this does, meant finding that one page first.
+         Two lines, the bar's own smallcaps, on a hairline. */
+      right = `<span class="me">
+        <button type="button" class="you" data-nav="menu"
+          aria-haspopup="true" aria-expanded="${this.menu ? 'true' : 'false'}">${e(name)}</button>
+        ${this.menu ? `<span class="menu" role="menu">
+          ${url ? `<a role="menuitem" href="${e(url)}">Your page</a>` : ''}
+          <button type="button" role="menuitem" data-nav="signout">Sign out</button>
+        </span>` : ''}
+      </span>`;
+    }
     /* AMBIENT DISCOVERY. Plenty of collectors delegated to their hot wallet
        years ago, for some other project, and have never heard of this feature.
        Their COMBO simply forms, and the bar says so once, quietly, beside
@@ -2367,14 +2393,35 @@ MF.nav = {
   wire() {
     if (this._wired) return;
     this._wired = true;
+    /* ONE LISTENER, AND EVERY QUESTION ASKED BEFORE ANYTHING IS REDRAWN.
+     *
+     * This was two: one to open the menu, one to close it on a press
+     * elsewhere. They ran on the same press, in order, and the first redrew
+     * the bar ... which detaches the node that was pressed, so the second
+     * asked `was this inside the bar?` of an element that no longer had the
+     * bar as an ancestor, decided no, and shut the menu it had just opened.
+     * The menu could not be opened at all. So: read the press, decide, then
+     * act, and never look at the DOM after touching it. */
     document.addEventListener('click', (ev) => {
       const b = ev.target.closest('[data-nav]');
-      if (!b || !this.el || !this.el.contains(b)) return;
-      if (b.dataset.nav === 'connect') { ev.preventDefault(); this.connect(); }
-      if (b.dataset.nav === 'cherry') { ev.preventDefault(); this.toMention(); }
-      if (b.dataset.nav === 'day' || b.dataset.nav === 'night') {
-        ev.preventDefault(); MF.theme.set(b.dataset.nav);
-      }
+      const mine = Boolean(b && this.el && this.el.contains(b));
+      const act = mine ? b.dataset.nav : null;
+      /* A press that belongs to the menu: the name that opens it, or anything
+         inside it. Both selectors stand on their own rather than on an
+         ancestor that is about to be replaced. */
+      const keep = act === 'menu' || act === 'signout' || Boolean(ev.target.closest('.menu'));
+      const shut = this.menu && !keep;
+
+      if (act === 'menu') { ev.preventDefault(); this.menu = !this.menu; this.draw(); return; }
+      if (act === 'signout') { ev.preventDefault(); void this.signOut(); return; }
+      if (shut) { this.menu = false; this.draw(); }
+      if (!mine) return;
+      if (act === 'connect') { ev.preventDefault(); this.connect(); }
+      if (act === 'cherry') { ev.preventDefault(); this.toMention(); }
+      if (act === 'day' || act === 'night') { ev.preventDefault(); MF.theme.set(act); }
+    });
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && this.menu) { this.menu = false; this.draw(); }
     });
     /* which mark is showing follows the theme however it changed ... this bar,
        the other tab, or the machine at sunset */
@@ -2384,16 +2431,61 @@ MF.nav = {
   /** What the room says about the wallet this browser is signed in as. */
   async refresh() {
     const s = MF.session.current();
-    if (!s) { this.me = null; this.unseen = 0; this.next = null; this.draw(); return; }
+    if (!s) { this.me = null; this.meFor = null; this.unseen = 0; this.next = null; this.draw(); return; }
+    const mine = (this.seq += 1);
+    const asked = s.address;
     let d = null;
-    try { d = await MF.session.who(s.address); } catch (err) { d = null; }
+    try { d = await MF.session.who(asked); } catch (err) { d = null; }
+    /* Overtaken, or answered for a wallet that has since signed out. Either
+       way this answer is about somebody who is not here and is dropped. */
+    if (mine !== this.seq) return;
+    const now = MF.session.current();
+    if (!now || now.address !== asked) return;
     if (!d) return;                       // the nav stands with what it had
     if (d.session_days) this.days = d.session_days;
     this.me = d.me || null;
+    this.meFor = asked;
     const m = (d.me && d.me.mentions) || null;
     this.unseen = m ? (m.unseen || 0) : 0;
     this.next = m ? m.next : null;
     this.draw();
+  },
+
+  /**
+   * Signing out, once, for the whole site.
+   *
+   * The session is a cookie on .mintface.art, which both deploys share, so
+   * clearing it is clearing it everywhere: one sign-out, signed out on the
+   * catalogue and in the room and on the collectors' side. The server does the
+   * clearing because the token cookie is HttpOnly and nothing here can touch
+   * it; `forget()` behind it is only for a browser that could not reach us.
+   *
+   * IT DOES NOT TOUCH THE WALLET. Disconnecting a wallet from a site is the
+   * wallet's own business and its own UI, and a button here that pretended to
+   * do it would be lying about somebody's security posture. This ends OUR
+   * session and says so.
+   *
+   * The room has a SIGN OUT of its own and calls this, so there is one
+   * implementation and the two can never drift.
+   */
+  async signOut() {
+    this.menu = false;
+    this.busy = 'Signing out';
+    this.draw();
+    try { await MF.session.close(); } catch (err) { /* forget() ran regardless */ }
+    /* Everything cached about who that was goes with the session. */
+    this.me = null;
+    this.meFor = null;
+    this.unseen = 0;
+    this.next = null;
+    this.busy = null;
+    this.seq += 1;
+    this.draw();
+    /* Pages watching the session hear it at once rather than on their next
+       poll: the room has a composer to take down and /combo a COMBO to stop
+       showing. */
+    try { document.dispatchEvent(new CustomEvent('mf:session', { detail: { address: null } })); }
+    catch (err) { /* an old browser simply misses the hint */ }
   },
 
   /** Set from outside, by a page that is watching the room in real time. */
@@ -2428,6 +2520,13 @@ MF.nav = {
       return;
     }
     try {
+      /* A WALLET THAT IS NOT THE ONE SIGNED IN. Connecting again as somebody
+         else is the ordinary case while testing and a real one afterwards, and
+         what must not survive it is the previous wallet's name. The cache goes
+         before the new signature is even asked for, so nothing can draw the
+         old identity over the new session at any point in between. */
+      const had = MF.session.current();
+      if (had && had.address !== address) { this.me = null; this.meFor = null; this.unseen = 0; this.next = null; }
       const d = await MF.session.who(address);
       if (d && d.session_days) this.days = d.session_days;
       await MF.session.open(address, this.days, (state) => {

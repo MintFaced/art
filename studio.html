@@ -2271,10 +2271,12 @@ document.addEventListener('click', async (ev) => {
   if (act === 'unattach') { dropPicture(); ROOM.focus = true; draw(); return; }
 
   if (act === 'signout') {
-    await MF.session.close();
+    /* One implementation, in the bar. The room had its own, which cleared the
+       session without clearing what the bar had cached about who that was ...
+       so the name stayed in the corner of a signed-out page. */
+    await MF.nav.signOut();
     status('Signed out.');
     draw();
-    MF.nav.refresh();
     return;
   }
 
