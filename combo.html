@@ -35,13 +35,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .lede{font-size:17px;line-height:1.7;color:var(--ink-4);max-width:34em;margin:24px 0 0}
 .wrap{max-width:720px;margin:0 auto;padding:0 28px 90px}
 
-/* ---------- the three steps ----------
-   Numbered because the order is the whole of it: a collector who reconnects
-   before delegating sees nothing and concludes it is broken. The number is in
-   the mono furniture voice and the step's own words are in the reading one. */
+/* ---------- the steps ----------
+   The order is the whole of it: a collector who connects before delegating
+   sees nothing and concludes it is broken. So the number is in the heading
+   where it cannot be skimmed past, rather than in a mono label above it. */
 .step{border-top:1px solid var(--rule);padding:30px 0 0;margin-top:34px}
-.step .lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--faint);margin:0 0 12px}
 .step h2{font-family:var(--font-sans);font-weight:400;font-size:clamp(20px,2.4vw,26px);line-height:1.25;
   letter-spacing:-.02em;margin:0;max-width:24em}
 .step p{font-size:15px;line-height:1.7;color:var(--ink-4);margin:14px 0 0;max-width:34em}
@@ -82,8 +80,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .who .n{max-width:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .who .n a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
 .who .n a:hover{border-color:var(--ink)}
-.who .tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--faint);margin-left:8px}
+/* The gap between columns is the house's, the same one the studio's ledger
+   keeps, so a name and the role beside it can never read as one word. */
+.who td + td{padding-left:22px}
+.who .role{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);white-space:nowrap;text-align:right}
 .none{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);margin:18px 0 0}
 .said{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);margin-top:14px;min-height:14px}
@@ -113,8 +114,12 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 <main>
   <section class="mast">
     <h1>COMBO</h1>
-    <p class="lede">Your vault holds the art. Your hot wallet does the talking. A COMBO lets the two
-      act as one &mdash; the vault signs once, ever, and never connects here.</p>
+    <!-- Two facts and then the offer. The emoji carry the pairing ... the art
+         in one place, the talking in another ... which is the whole idea and
+         is faster read than said. -->
+    <p class="lede">&#128444;&#65039; Your vault holds your art.<br>
+      &#128483;&#65039; Your hot wallet is how you join Studio Chat... and weigh in with TAO &#129511;</p>
+    <p class="lede">COMBO lets the two act as one.</p>
   </section>
 
   <div class="wrap">
@@ -123,12 +128,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
     <div id="state"></div>
 
     <section class="step">
-      <p class="lab">Step 1 &mdash; Delegate</p>
-      <h2>Your vault signs one delegation, on delegate.xyz.</h2>
-      <p>Delegate Cash is the standard every serious vault already uses, and it is where this
-        happens: their site, audited, and not ours. We will never ask your vault to sign anything
-        here &mdash; a site that offers to collect a vault&rsquo;s signature is teaching you the exact
-        habit every drainer relies on.</p>
+      <h2>1. Delegate Vault</h2>
+      <p>&#128737;&#65039; Sign one delegation on delegate.xyz with your vault. Delegate is the
+        standard every serious vault already uses.</p>
+      <p>Your vault signs nothing on mintface.art.</p>
       <p id="s1note">Connect your hot wallet first, so the link knows who to name.</p>
       <a class="go" id="open" href="https://delegate.xyz/" target="_blank" rel="noopener"
         aria-disabled="true">Open delegate.xyz</a>
@@ -136,16 +139,16 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
     </section>
 
     <section class="step">
-      <p class="lab">Step 2 &mdash; Reconnect</p>
-      <h2>Sign in here with your hot wallet.</h2>
-      <p>The vault is finished and does not come back. Everything after this happens from the wallet
-        you connect with every day &mdash; weighing on a nudge, writing a note, the room.</p>
+      <h2>Start Chatting</h2>
+      <p>&#128293; Connect your hot wallet and join Studio Chat.</p>
+      <p>&#129511; Weigh in with your combined TAO.</p>
       <button type="button" class="go ghost" id="again">Check again</button>
     </section>
 
+    <!-- Not a step: two standing facts about what a COMBO is and how to end
+         one. They were inside the third step, and the third step has gone, but
+         a page that sells a delegation is the page that owes both of these. -->
     <section class="step">
-      <p class="lab">Step 3 &mdash; Done</p>
-      <h2>Your TAO works from your hot wallet.</h2>
       <p>Every gate here reads the COMBO: weighing on a nudge, the notes threshold, the room.
         The register does not change &mdash; the leaderboard, the collector pages and the TAO totals
         still say exactly which wallet holds what, because a delegation does not move a token.
@@ -224,10 +227,14 @@ function pasteRows(d) {
    list of wallets, and no celebration. */
 function combo(d) {
   const c = d.combo;
+  /* Three columns, not a name with a label stuck to the back of it. Who,
+     what they are, what they hold ... the register's own shape, and the only
+     shape in which a long .eth name and a role label do not end up printed as
+     one word. */
   const rows = c.members.map((m) => `<tr>
     <td class="n">${m.name ? `<a href="https://collectors.mintface.art/${e(m.name)}">${e(m.name)}</a>`
-      : e(short(m.address))}${m.hot ? '<span class="tag">hot wallet</span>'
-      : `<span class="tag">vault${m.scoped ? ' &middot; mintface only' : ''}</span>`}</td>
+      : e(short(m.address))}</td>
+    <td class="role">${m.hot ? 'hot wallet' : `vault${m.scoped ? ' &middot; mintface only' : ''}`}</td>
     <td class="r">${num(m.tao)} TAO</td>
   </tr>`).join('');
   return `<div class="combo">
