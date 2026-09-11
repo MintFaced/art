@@ -1,6 +1,6 @@
 {
   "_note": "Live sale state, written by the Vercel functions in api/ and committed back here. The static catalog is the record of the work; this is the record of what has happened to it since the last catalog rebuild.",
-  "updated": "2026-08-23T19:21:21.286Z",
+  "updated": "2026-09-11T10:10:27.981Z",
   "works": {
     "two-burdens-9": {
       "status": "available",
@@ -65,6 +65,15 @@
       },
       "token_transfer": "pending",
       "updated": "2026-08-23T19:21:21.286Z"
+    },
+    "cycle-of-silence": {
+      "status": "pending",
+      "pending": {
+        "session": "cs_live_a1QJdEZSYN2M1bXfLFJl3mkOS9RNQTuCE7AIBXAcBABwrGL3dI3qapn8xL",
+        "what": "both",
+        "expires": "2026-09-11T10:40:27.000Z"
+      },
+      "updated": "2026-09-11T10:10:27.981Z"
     }
   }
 }
