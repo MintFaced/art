@@ -100,8 +100,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .who .role{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--faint);white-space:nowrap;text-align:right}
 .none{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);margin:18px 0 0}
+/* No reserved height: with nothing to say this takes no room at all, so the
+   page rests on its own last sentence rather than on a blank line under it. */
 .said{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);margin-top:14px;min-height:14px}
+  color:var(--muted)}
+.said:not(:empty){margin-top:22px}
 .said.bad{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
 
 /* The plain words about taking it away again, which belong on the page that
@@ -191,7 +194,7 @@ const e = MF.escape;
 const $ = (id) => document.getElementById(id);
 const num = (x) => Number(x || 0).toLocaleString('en-NZ');
 
-const C = { data: null, timer: null, tries: 0 };
+const C = { data: null, timer: null, tries: 0, checking: false };
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
 
@@ -229,6 +232,17 @@ function pasteRows(d) {
   </div>`).join('');
 }
 
+/* THE BUTTON PEOPLE PRESS WITH THE OTHER TAB STILL OPEN.
+ *
+ * Somebody signs at delegate.xyz, comes back, and presses this within seconds
+ * of a delegation existing ... so it says what it is doing while it does it,
+ * and what it asks for is the chain rather than anything this session already knew.
+ * It is drawn by the same function wherever it appears, because it appears in
+ * two states and a button that means the same thing should not be written
+ * twice. */
+const againButton = () => `<button type="button" class="go ghost" id="again"${
+  C.checking ? ' disabled' : ''}>${C.checking ? 'Checking...' : 'Check again'}</button>`;
+
 /* The payoff, drawn the way the register draws everything: a mono count, a
    list of wallets, and no celebration. */
 function combo(d) {
@@ -247,7 +261,7 @@ function combo(d) {
     <p class="mark">Your ${e(c.mark)}</p>
     <p class="sum">${num(c.total)}<span>TAO</span></p>
     <table class="who">${rows}</table>
-    <button type="button" class="go ghost" id="again">Check again</button>
+    ${againButton()}
   </div>`;
 }
 
@@ -292,7 +306,7 @@ function draw() {
        collector who has just signed at delegate.xyz and come back to see. */
     box.innerHTML = `<p class="none">No delegations to ${e(short(d.address))} yet.
       ${num(d.combo ? d.combo.solo : 0)} TAO in this wallet on its own.</p>
-      <button type="button" class="go ghost" id="again">Check again</button>`;
+      ${againButton()}`;
   } else {
     box.innerHTML = '';
   }
@@ -335,17 +349,34 @@ document.addEventListener('visibilitychange', () => {
   void refresh({ fresh: true });
 });
 
-/* Delegated rather than bound: CHECK AGAIN lives inside the COMBO box now,
-   and that box is rebuilt on every read ... a listener on the button itself
-   would go with the first redraw. */
+/* Delegated rather than bound: CHECK AGAIN lives inside the COMBO box, and
+   that box is rebuilt on every read ... a listener on the button itself would
+   go with the first redraw.
+ *
+ * IN PLACE. Only the box is rewritten, so nothing reloads; and the page's
+ * scroll is put back afterwards, because the box changes height when a wallet
+ * appears in it and a reader who was looking at the table should not be moved
+ * away from the moment it finally says what they were waiting for.
+ *
+ * AND IT SAYS NOTHING ON SUCCESS. The rectangle is the answer ... a line at
+ * the foot of the page repeating the total it has just drawn is the page
+ * telling somebody a thing they are already looking at. */
 document.addEventListener('click', async (ev) => {
   if (!ev.target.closest('#again')) return;
-  say('Asking the chain ...');
-  const d = await refresh({ fresh: true });
-  if (!d) return;
-  say(d.combo && d.combo.combo
-    ? `${d.combo.mark} · ${num(d.combo.total)} TAO`
-    : 'No delegation found yet. Sign it from your vault on delegate.xyz, then check again.');
+  if (C.checking) return;
+  C.checking = true;
+  draw();
+  const at = window.scrollY;
+  try {
+    C.data = await read({ fresh: true });
+    say(null);
+  } catch (err) {
+    say('Could not read the registry just now.', true);
+  } finally {
+    C.checking = false;
+    draw();
+    if (window.scrollY !== at) window.scrollTo(0, at);
+  }
 });
 
 document.addEventListener('click', async (ev) => {

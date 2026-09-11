@@ -110,7 +110,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
    weight as a specific undertaking is how the two of them stop being read. */
 .nudges .rule{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
   color:var(--faint);border-left:1px solid var(--rule);padding-left:13px;margin:20px 0 0;line-height:1.85}
+/* A block at the top of the panel now rather than a line at the foot of a
+   fold, so it takes the air a block gets rather than the none it needed. */
 .nudges .propose{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.nudges .nudge > .propose{margin:20px 0 0}
 .nudges .propose input[type="color"]{width:46px;height:36px;padding:0;border:1px solid var(--rule);
   background:none;cursor:pointer}
 .nudges .weigh.ghosted{background:none;color:var(--muted);border:1px solid var(--rule)}
@@ -2618,7 +2621,7 @@ function proposer(x) {
   return `<div class="propose"><span class="slab">Propose a new colour</span>
     <input type="color" id="hex-${e(x.id)}" value="${e(start)}" data-colourfield="${e(x.id)}"
       aria-label="A colour to propose">
-    <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Propose this colour</button>
+    <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Put it on</button>
     <span class="${x.constraint ? 'verdict' : 'said'}" id="verdict-${e(x.id)}">${x.constraint
       ? e(verdictLine(x, start))
       : 'One colour per wallet, and final.'}</span>
@@ -3011,7 +3014,6 @@ function candidateCard(x) {
       : `<p class="said">${MF.session.current()
         ? 'Reading where you stand ...'
         : 'Sign in to propose or weigh.'}</p>`)}
-    ${proposer(x)}
     ${x.open ? '' : `<p class="banked">${x.locked
       ? `Locked &middot; ${e(x.locked.hex)}${nameOf(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
       : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
@@ -3028,6 +3030,14 @@ function candidateCard(x) {
            it chose reads as a one-off, and this one never was. */
         x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
     </div>
+    ${/* ACTION FIRST, RULES BENEATH, CANDIDATES LAST.
+          Proposing was at the foot of a fold, under the board and under the
+          record ... a long walk to do the thing the nudge is actually asking
+          for. It leads now, and STANDING CLEAR OF reads as the explanation
+          under it rather than as a preamble before it: the picker refuses a
+          clashing colour while it is being dragged, so the rule does not have
+          to be read first in order to be obeyed. */''}
+    ${proposer(x)}
     ${x.open ? againstBlock(x) : ''}
     ${x.open ? colourRows(x) : ''}
     ${position(x)}
