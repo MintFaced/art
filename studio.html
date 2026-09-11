@@ -1010,6 +1010,10 @@ const ROOM = {
   /* The wallet apps offered on a touch screen with nothing injected. Null
      everywhere else, which is every desktop. */
   openIn: null,
+  /* True while a WalletConnect pairing is live and unanswered: the same list
+     of wallets, but each link carries a session to approve rather than a page
+     to open, and the words above it have to say which. */
+  waitingOnWallet: false,
   /* Who you are answering, as a message number, and which message has its
      palette open. Both are about the page rather than about the log. */
   replyTo: null, palette: null,
@@ -1625,13 +1629,15 @@ function composer() {
      hands the page to a wallet app, which carries a browser of its own where
      everything below works exactly as it does on a desktop. */
   if (ROOM.openIn) {
+    const waiting = ROOM.waitingOnWallet;
     return `<div class="box">
-      <p class="openin-lab">Open this page in your wallet</p>
+      <p class="openin-lab">${waiting ? 'Approve the connection in your wallet' : 'Open this page in your wallet'}</p>
       <div class="row" style="justify-content:flex-start;flex-wrap:wrap">
         ${ROOM.openIn.map((w) => `<a class="go" href="${e(w.url)}">${e(w.name)}</a>`).join('')}
       </div>
-      <p class="openin-note">Your wallet opens Studio in its own browser. Connect and sign there,
-        and you can weigh from your phone.</p>
+      <p class="openin-note">${waiting
+        ? 'Your wallet opens, you approve, and you come straight back here signed in.'
+        : 'Your wallet opens Studio in its own browser. Connect and sign there, and you can weigh from your phone.'}</p>
     </div>`;
   }
   /* Three states out of the payload, and every one of them an affordance.
@@ -1944,7 +1950,16 @@ async function connect(choice) {
   draw();
   const slow = setTimeout(() => status('Still waiting on the wallet. Its prompt may have opened behind this window.'), 8000);
   try {
-    ROOM.wallet = await MF.connect(choice);
+    ROOM.wallet = await MF.connect(choice, {
+      /* The relay has a pairing. Put the wallets in front of them while it
+         waits, with the session to approve already in the link. */
+      onUri: (uri, links) => {
+        ROOM.openIn = links;
+        ROOM.waitingOnWallet = true;
+        draw();
+        status('Choose your wallet to approve the connection.');
+      },
+    });
     ROOM.pick = null;
   } catch (err) {
     ROOM.asking = false;
@@ -1967,6 +1982,7 @@ async function connect(choice) {
        have, or can act on. It is handed the way in. */
     if (err.code === 'no-provider-mobile') {
       ROOM.pick = null;
+      ROOM.waitingOnWallet = false;
       ROOM.openIn = err.links || MF.walletLinks();
       draw();
       status('Open this page in your wallet to connect.');
@@ -1978,6 +1994,9 @@ async function connect(choice) {
   }
   clearTimeout(slow);
   ROOM.asking = false;
+  /* Answered: the wallets come down and the room goes on. */
+  ROOM.openIn = null;
+  ROOM.waitingOnWallet = false;
   ROOM.focus = true;
   await load();
   status(ROOM.me && ROOM.me.can_speak

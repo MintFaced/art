@@ -1421,6 +1421,181 @@ const MF = {
     ];
   },
 
+  /* ---------- WalletConnect, the second rail ----------
+   *
+   * THREE RAILS AND NO DEAD END AT ANY LAYER.
+   *
+   *   a wallet in the browser   ->  the picker, as it has always been
+   *   none, and a relay         ->  WalletConnect: the reader stays here
+   *   none, and no relay        ->  open this page inside the wallet's browser
+   *
+   * The middle one is the one that was missing, and it is the only one that
+   * keeps somebody in Safari: they press CONNECT, their wallet opens, they
+   * approve, and they come back to the page they were already reading with a
+   * session on it. The third rail is what happens when the relay cannot be
+   * reached, and it is a worse answer rather than no answer.
+   *
+   * The project id is public by design ... it identifies this dapp to the
+   * relay and authorises nothing ... so it is here rather than in a build-time
+   * substitution this static site has no step to perform. It is also set in
+   * both Vercel projects as NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, which is a
+   * name from a framework this site does not use: nothing inlines it into a
+   * static file, so the server can read it and the browser never could. The
+   * constant below is what the browser actually uses; `window.MF_WC_PROJECT`
+   * overrides it if a build step ever wants to.
+   */
+  wc: {
+    PROJECT: 'aefe66ac50fb0c1c2de0e3e3c8e76d73',
+    SRC: '/vendor/walletconnect.js',
+    _sdk: null,
+    _provider: null,
+
+    id() {
+      try { return String(window.MF_WC_PROJECT || this.PROJECT); } catch (e) { return this.PROJECT; }
+    },
+
+    /* Fetched the first time somebody needs it and never before: a reader with
+       a wallet in their browser pays nothing for this at all. */
+    load() {
+      if (this._sdk) return this._sdk;
+      this._sdk = new Promise((done, fail) => {
+        if (window.MF_WC) { done(window.MF_WC); return; }
+        const el = document.createElement('script');
+        el.src = this.SRC;
+        el.async = true;
+        el.onload = () => (window.MF_WC ? done(window.MF_WC) : fail(new Error('WalletConnect did not load')));
+        el.onerror = () => fail(new Error('WalletConnect did not load'));
+        document.head.appendChild(el);
+      }).catch((e) => { this._sdk = null; throw e; });
+      return this._sdk;
+    },
+
+    async provider() {
+      if (this._provider) return this._provider;
+      const sdk = await this.load();
+      this._provider = await sdk.UniversalProvider.init({
+        projectId: this.id(),
+        metadata: {
+          name: 'MintFace',
+          description: 'The Artist Virtual Studio',
+          url: location.origin,
+          icons: [`${location.origin}/apple-touch-icon.png`],
+        },
+      });
+      return this._provider;
+    },
+
+    /* Where a wallet is sent, with the pairing it has to answer. The same four
+       apps the third rail offers, because they are the same four wallets ...
+       what changes is that this link carries a session to approve rather than
+       a page to open. */
+    links(uri) {
+      const q = encodeURIComponent(uri);
+      return [
+        { name: 'Rainbow', url: `https://rnbwapp.com/wc?uri=${q}` },
+        { name: 'MetaMask', url: `https://metamask.app.link/wc?uri=${q}` },
+        { name: 'Coinbase Wallet', url: `https://go.cb-w.com/wc?uri=${q}` },
+        { name: 'Trust', url: `https://link.trustwallet.com/wc?uri=${q}` },
+      ];
+    },
+
+    /**
+     * Open a session, and hand the pairing out the moment the relay gives one.
+     *
+     * `onUri` is called with the wc: string and the four links built from it,
+     * so the page can put a wallet in front of somebody while the relay is
+     * still waiting to be answered. The promise settles when they approve, or
+     * rejects when they refuse or the relay never answers.
+     */
+    async open(onUri) {
+      const p = await this.provider();
+      /* A session already approved and still alive: nothing to ask for. */
+      const already = this.account(p);
+      if (already) { this.mark(true); return already; }
+      let handed = false;
+      const hand = (uri) => {
+        if (handed || !uri) return;
+        handed = true;
+        try { onUri && onUri(uri, this.links(uri)); } catch (e) { /* the caller's problem */ }
+      };
+      p.on('display_uri', hand);
+      await p.connect({
+        namespaces: {
+          eip155: {
+            methods: ['personal_sign', 'eth_sign', 'eth_signTypedData', 'eth_signTypedData_v4', 'eth_sendTransaction'],
+            chains: ['eip155:1'],
+            events: ['chainChanged', 'accountsChanged'],
+          },
+        },
+      });
+      const a = this.account(p);
+      if (!a) throw new Error('the wallet approved nothing');
+      try { p.setDefaultChain('eip155:1'); } catch (e) { /* it has one already */ }
+      /* Written only once a wallet has actually approved. A pairing nobody
+         answered is not something to come back to. */
+      this.mark(true);
+      return a;
+    },
+
+    /** The address on a live session, as the namespace spells it. */
+    account(p) {
+      try {
+        const acc = p && p.session && p.session.namespaces
+          && p.session.namespaces.eip155 && p.session.namespaces.eip155.accounts;
+        const first = acc && acc[0];
+        return first ? String(first.split(':').pop()).toLowerCase() : null;
+      } catch (e) { return null; }
+    },
+
+    /* IS THERE A SESSION TO COME BACK TO?
+     *
+     * Asked of localStorage rather than of the SDK, because the answer decides
+     * whether to fetch the SDK at all: a reader with no wallet anywhere must
+     * not pay 143 kilobytes on every page of this site to be told so.
+     *
+     * It matters most on the platform this whole rail was built for. iOS
+     * discards background tabs, so somebody who approves in Rainbow and comes
+     * back can find Safari has reloaded the page underneath them ... the relay
+     * session is still good, and without this the page would have forgotten
+     * which provider to sign through and fallen back to a window.ethereum that
+     * is not there. */
+    MARK: 'mf_wc_session',
+
+    has() {
+      try {
+        if (localStorage.getItem(this.MARK)) return true;
+        /* And whatever the SDK itself left, for a session opened before this
+           mark existed. It keeps its own state in IndexedDB rather than here,
+           which is exactly why the mark is ours rather than a guess at its
+           internals: a storage layout we do not own is not a thing to build a
+           page-load decision on. */
+        for (let i = 0; i < localStorage.length; i += 1) {
+          const k = localStorage.key(i);
+          if (!k || k.indexOf('wc@2:') !== 0) continue;
+          const v = localStorage.getItem(k);
+          if (v && v !== '[]' && v !== '{}' && v !== 'null') return true;
+        }
+      } catch (e) { /* storage switched off, so there is nothing kept */ }
+      return false;
+    },
+
+    mark(on) {
+      try {
+        if (on) localStorage.setItem(this.MARK, '1');
+        else localStorage.removeItem(this.MARK);
+      } catch (e) { /* private mode: the session simply will not survive a reload */ }
+    },
+
+    /** Ended here as well as there, so CONNECT means connect again. */
+    async forget() {
+      const p = this._provider;
+      this._provider = null;
+      this.mark(false);
+      if (!p) return;
+      try { await p.disconnect(); } catch (e) { /* the relay will time it out */ }
+    },
+  },
+
   /** What an injected provider calls itself, for a legible choice. */
   walletName(p) {
     if (!p) return 'a wallet';
@@ -1471,6 +1646,25 @@ const MF = {
           if (accounts && accounts[0]) { this._wallet = w; return String(accounts[0]).toLowerCase(); }
         } catch (e) { /* a provider that will not answer is not the one */ }
       }
+      /* And a relay session from before this page was loaded, which on iOS is
+         the ordinary case rather than the unusual one: approving in a wallet
+         app can cost you the tab you approved from. Only ever asked when
+         something was actually kept, so nobody else fetches the SDK. */
+      if (this.wc.has()) {
+        try {
+          const p = await this.wc.provider();
+          const a = this.wc.account(p);
+          if (a) {
+            this._wallet = { info: { uuid: 'walletconnect', rdns: 'walletconnect', name: 'WalletConnect' }, provider: p };
+            try { p.setDefaultChain('eip155:1'); } catch (e) { /* it has one */ }
+            return a;
+          }
+          /* Marked, but the relay has nothing: the session expired or was
+             ended in the wallet. Clear the mark so the next page load is not
+             fetching the SDK to be told the same thing again. */
+          this.wc.mark(false);
+        } catch (e) { /* the relay is not reachable; the other rails remain */ }
+      }
     } catch (e) { /* no wallet here at all */ }
     return null;
   },
@@ -1515,22 +1709,40 @@ const MF = {
    * eth_requestAccounts, on a provider we chose on purpose.
    * @param choice  uuid or rdns from wallets(), or nothing for the only one
    */
-  async connect(choice) {
+  async connect(choice, opts) {
+    const o = opts || {};
     const list = await this.wallets();
     if (!list.length) {
-      /* PLATFORM-AWARE, BECAUSE THE ADVICE IS DIFFERENT AND ONE OF THEM IS
-         USELESS ON THE OTHER. A phone is not missing an extension; it is
-         waiting to be handed to a wallet app. This is not an error there at
-         all, and it must never be a dead end. */
-      if (this.touch()) {
-        const e = new Error('Open this page in your wallet to connect.');
-        e.code = 'no-provider-mobile';
+      /* RAIL TWO. Nothing in the browser, so the wallet is somewhere else and
+         WalletConnect is how it is reached without leaving this page. The
+         reader stays in the browser they opened; only the approval happens in
+         the wallet, and they come back to a session on the page they were
+         already reading. */
+      try {
+        const a = await this.wc.open(o.onUri);
+        this._wallet = { info: { uuid: 'walletconnect', rdns: 'walletconnect', name: 'WalletConnect' },
+          provider: await this.wc.provider() };
+        return a;
+      } catch (err) {
+        /* A refusal in the wallet is an answer, and repeating the question by
+           falling through to another rail would be arguing with it. */
+        const code = err && (err.code || err.message);
+        if (String(code).includes('rejected') || err && err.code === 5000) {
+          const no = new Error('Connection refused in your wallet.');
+          no.code = 'wc-refused';
+          throw no;
+        }
+        /* RAIL THREE. The relay could not be reached, or the SDK could not be
+           served. A worse answer, never no answer: the wallet's own browser
+           will open this page with a provider in it. */
+        const e = new Error(this.touch()
+          ? 'Could not reach WalletConnect. Open this page in your wallet instead.'
+          : 'Could not reach WalletConnect, and no wallet is answering in this browser.');
+        e.code = this.touch() ? 'no-provider-mobile' : 'no-provider';
         e.links = this.walletLinks();
+        e.because = String((err && err.message) || err).slice(0, 120);
         throw e;
       }
-      const e = new Error('No wallet is answering in this browser. If an extension is installed, it may be switched off for this site, or this may be a browser without one.');
-      e.code = 'no-provider';
-      throw e;
     }
     const hit = choice ? list.find((w) => w.info.uuid === choice || w.info.rdns === choice) : null;
     if (choice && !hit) throw new Error('That wallet is no longer answering. Try again.');
@@ -2064,6 +2276,10 @@ MF.session = {
 
   async close() {
     try { await this.post({ action: 'sign out' }); } catch (err) { /* say so anyway */ }
+    /* A WalletConnect session outlives the page it was opened on, so signing
+       out of the site has to end it there as well or CONNECT would silently
+       reuse the wallet somebody has just signed out of. */
+    try { await MF.wc.forget(); } catch (err) { /* nothing was open */ }
     this.forget();
   },
 };
@@ -2581,7 +2797,12 @@ MF.nav = {
     say('Connecting');
     let address;
     try {
-      address = await MF.connect();
+      /* The pairing, the moment the relay hands one over: a wallet in front of
+         somebody while it is still waiting to be answered, rather than a bar
+         that says `Connecting` at them until it times out. */
+      address = await MF.connect(null, {
+        onUri: (uri, links) => this.notice('Choose your wallet to approve the connection.', links),
+      });
     } catch (err) {
       this.busy = null;
       if (err && err.code === 'many-providers') { location.href = `${MF.ART}/studio`; return; }
