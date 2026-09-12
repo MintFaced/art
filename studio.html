@@ -1643,14 +1643,24 @@ function composer() {
      everything below works exactly as it does on a desktop. */
   if (ROOM.openIn) {
     const waiting = ROOM.waitingOnWallet;
+    /* Three moments, three sentences. The panel is the same panel: a wallet to
+       go to, and the reason. Saying `approve the connection` over a signature
+       that is already waiting is the page describing the step before the one
+       somebody is actually on. */
+    const lab = waiting === 'signing' ? 'Approve the sign-in in your wallet'
+      : waiting ? 'Approve the connection in your wallet'
+        : 'Open this page in your wallet';
+    const note = waiting === 'signing'
+      ? 'The signature is waiting there. Approve it and come back ... this page is still here.'
+      : waiting
+        ? 'Your wallet opens, you approve, and you come straight back here signed in.'
+        : 'Your wallet opens Studio in its own browser. Connect and sign there, and you can weigh from your phone.';
     return `<div class="box">
-      <p class="openin-lab">${waiting ? 'Approve the connection in your wallet' : 'Open this page in your wallet'}</p>
+      <p class="openin-lab">${lab}</p>
       <div class="row" style="justify-content:flex-start;flex-wrap:wrap">
         ${ROOM.openIn.map((w) => `<a class="go" href="${e(w.url)}" data-wallet="${e(w.name)}">${e(w.name)}</a>`).join('')}
       </div>
-      <p class="openin-note">${waiting
-        ? 'Your wallet opens, you approve, and you come straight back here signed in.'
-        : 'Your wallet opens Studio in its own browser. Connect and sign there, and you can weigh from your phone.'}</p>
+      <p class="openin-note">${note}</p>
     </div>`;
   }
   /* Three states out of the payload, and every one of them an affordance.
@@ -1981,7 +1991,20 @@ async function connect(choice) {
   try {
     const out = await MF.enter({
       choice: choice || null,
-      onState: (state) => status(WORDS[state] || WORDS.connecting),
+      onState: (state, extra) => {
+        /* The request is on the relay and the wallet is an app somebody has to
+           go to. Offered as a link they tap, not as a jump this page takes on
+           their behalf ... which raced the request and arrived first, leaving
+           the wallet spinning on a signature that had not been published. */
+        if (extra && extra.open) {
+          ROOM.openIn = [{ name: extra.wallet, url: extra.open.url }];
+          ROOM.waitingOnWallet = 'signing';
+          draw();
+          status(`Approve the sign-in in ${extra.wallet}.`);
+          return;
+        }
+        status(WORDS[state] || WORDS.connecting);
+      },
       /* The relay has a pairing. Put the wallets in front of them while it
          waits, with the session to approve already in the link. */
       onUri: (uri, links) => {

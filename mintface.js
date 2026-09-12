@@ -1459,13 +1459,24 @@ const MF = {
          this is one call either way. */
       let signature;
       if (relay) {
+        /* THE WALLET IS OFFERED, NOT SUMMONED.
+         *
+         * This used to switch to the wallet app the instant the request was
+         * started, which was a race and lost it: `provider.request` returns a
+         * promise, the publish to the relay is still in flight, and iOS
+         * freezes this page the moment another app comes forward. So the
+         * wallet opened with nothing waiting for it and sat on `loading`
+         * forever ... which is worse than the problem it was solving, because
+         * a request nobody can answer never times out into anything either.
+         *
+         * A tap is the fix and also the better manners. The way back is
+         * handed to the surface, which puts a button in front of somebody
+         * once the request is genuinely on its way; a tap is a gesture, and
+         * iOS trusts those with app switches in a way it does not trust a
+         * page that decided by itself. */
         const ask = provider.request({ method: 'personal_sign', params: [data, who] }, 'eip155:1');
-        /* GO TO THE WALLET, rather than telling somebody to. Over the relay the
-           request arrives in an app as a notification; on a phone the page then
-           says `check your wallet` to a person looking at Safari. Sent after
-           the request is on its way, so the wallet has something waiting when
-           it comes forward. */
-        MF.wc.wake();
+        const open = MF.touch() ? MF.wc.back() : null;
+        if (open) onState('requested', null, { open, wallet: MF.wc.peerName() });
         signature = await ask;
       } else {
         signature = await provider.request({ method: 'personal_sign', params: [data, who] });
@@ -1703,33 +1714,6 @@ const MF = {
       return scheme ? { url: scheme, scheme: true } : null;
     },
 
-    /** Bring it forward. Only on a touch device, where the wallet is an app
-        somebody has to leave the browser to reach.
-     *
-     * Never by navigating this page. window.location.href would work on a good
-     * day and on a bad one hand a universal link to Safari, replacing the page
-     * that is holding the pending signature ... which is a sign-in that can
-     * never complete, and looks from the outside like a wallet that showed
-     * nothing at all. A hidden iframe asks iOS to open the scheme and leaves
-     * the document alone. */
-    wake() {
-      if (!MF.touch()) return false;
-      const b = this.back();
-      if (!b) return false;
-      /* A CUSTOM SCHEME, NOT AN HTTPS LINK. `rainbow://` switches apps and
-         leaves this document standing; `https://rnbwapp.com/` is a universal
-         link, and iOS hands those to Safari about as often as to the app ...
-         which replaces the page holding the pending signature and leaves a
-         sign-in that can never complete. That is what a wallet showing
-         nothing at all looks like from the outside.
-         An https link is only used where the wallet named one and named no
-         scheme, and then in a new context rather than over this one. */
-      try {
-        if (b.scheme) { window.location.href = b.url; return true; }
-        window.open(b.url, '_blank', 'noopener');
-        return true;
-      } catch (e) { return false; }
-    },
 
     /**
      * Open a session, and hand the pairing out the moment the relay gives one.
@@ -1821,6 +1805,19 @@ const MF = {
     /** Whether a given provider is the relay's. */
     is(w) {
       return Boolean(w && w.info && w.info.rdns === 'walletconnect');
+    },
+
+    /** What the wallet on the other end calls itself, for a button that has to
+        name it. Its own metadata rather than the link somebody pressed, which
+        may not be the app that ended up answering. */
+    peerName() {
+      try {
+        const n = this._provider && this._provider.session
+          && this._provider.session.peer.metadata.name;
+        if (n) return String(n);
+      } catch (e) { /* nothing said */ }
+      try { return localStorage.getItem(this.WALLET_KEY) || 'your wallet'; }
+      catch (e) { return 'your wallet'; }
     },
 
     /** Which chain the session is on, off the session itself. The accounts
@@ -2068,7 +2065,12 @@ const MF = {
        on every call would redraw twice for one thing happening, which on a
        phone is a flicker somebody reads as the page restarting. */
     let last = null;
-    const say = (state) => { if (state !== last) { last = state; tell(state); } };
+    const say = (state, extra) => {
+      /* Deduped on the state, but a detail arriving later still goes through:
+         the way into the wallet turns up after `signing` has already been
+         said, and a surface that never heard it has no button to draw. */
+      if (state !== last || extra) { last = state; tell(state, extra); }
+    };
     say('connecting');
     const address = await this.connect(o.choice || null, {
       /* The connect layer's words, said in this layer's vocabulary. A surface
@@ -2089,8 +2091,8 @@ const MF = {
     const d = await MF.session.who(address).catch(() => null);
     const days = Number(d && d.session_days) || 30;
     if (d && d.sign_format) MF.session.format = d.sign_format;
-    const j = await MF.session.open(address, days, (state) => {
-      if (state === 'requested') say('signing');
+    const j = await MF.session.open(address, days, (state, why, extra) => {
+      if (state === 'requested') say('signing', extra);
       if (state === 'slow') say('slow');
     });
     say('done');
@@ -3342,7 +3344,19 @@ MF.nav = {
     try {
       await MF.enter({
         choice: choice || null,
-        onState: (state) => say(WORDS[state] || WORDS.connecting),
+        onState: (state, extra) => {
+          /* The way into the wallet, once the request is actually on its way
+             ... offered as a link somebody taps, never as a jump this page
+             decides on. A tap is a gesture, and iOS trusts those. */
+          if (extra && extra.open) {
+            this.busy = true;
+            this.note = { text: `Approve the sign-in in ${extra.wallet}.`,
+              links: [{ name: extra.wallet, url: extra.open.url }], wallets: null };
+            this.draw();
+            return;
+          }
+          say(WORDS[state] || WORDS.connecting);
+        },
         /* The pairing, the moment the relay hands one over: a wallet in front
            of somebody while it is still waiting to be answered, rather than a
            bar that says `Connecting` at them until it times out. */
@@ -3350,6 +3364,11 @@ MF.nav = {
       });
       this.busy = null;
       this.note = null;
+      /* Drawn here rather than left to refresh(). The panel says `approve this
+         in your wallet` and it is down the moment that is done ... leaning on
+         another method to notice would leave it standing over a signed-in bar
+         if that method ever failed or returned early. */
+      this.draw();
       await this.refresh();
     } catch (err) {
       this.busy = null;
