@@ -70,6 +70,16 @@ refuses('a domain with a scheme on it', { domain: 'https://mintface.art' });
 refuses('a domain with a trailing slash', { domain: 'mintface.art/' });
 refuses('a URI that is not a URI', { uri: '/studio' });
 refuses('an address that is not an address', { address: '0xnope' });
+refuses('a chain id that is not a number', { chainId: 'mainnet' });
+
+/* The chain the wallet says it is on, whatever that is. A wallet that parses
+   4361 checks this line against where it actually is, and a hardcoded 1 is a
+   sheet that renders perfectly and refuses at Confirm. */
+console.log('\nthe chain is the wallet\'s, not ours');
+for (const id of ['1', '8453', '10', '137', '42161']) {
+  const m = strict({ ...FIELDS, chainId: id });
+  ok(`chain ${id} serializes and parses`, parse(m).chainId === id);
+}
 
 console.log('\nwhat the wallet browser loads it as');
 ok('apex and www are different domains, and both are authorities',

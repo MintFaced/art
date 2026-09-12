@@ -56,7 +56,7 @@ const signFormat = (cfg) => (String(cfg && cfg.sign_format) === '4361' ? '4361' 
    fields the page sent and the signature is checked against the rebuild, so a
    page that sent something other than what it showed verifies as a mismatch
    rather than as a sign-in. */
-function siweSentence({ domain, address, uri, issued, until, nonce }) {
+function siweSentence({ domain, address, uri, issued, until, nonce, chainId }) {
   return siweStrict({
     domain,
     /* The address in the 4361 line is the wallet's own spelling, which is what
@@ -66,7 +66,9 @@ function siweSentence({ domain, address, uri, issued, until, nonce }) {
       + ' Until then this browser can speak here, and weigh your TAO on the'
       + " studio's nudges, without asking again.",
     uri,
-    chainId: '1',
+    /* The chain the wallet said it was on, not one we chose for it. A wallet
+       that parses 4361 checks this line against where it actually is. */
+    chainId,
     nonce,
     issuedAt: issued,
     expirationTime: until,
@@ -430,6 +432,10 @@ export async function POST(request) {
     if (format === '4361') {
       const nonce = String(body.nonce || '');
       const uri = String(body.uri || '');
+      const chainId = String(body.chainId || '1');
+      if (!/^[0-9]{1,10}$/.test(chainId)) {
+        return respond(request, { error: 'that sign-in names a chain that is not a chain' }, 400);
+      }
       /* The wallet's own spelling, as the page put it in front of the signer.
          It has to be the same characters or the rebuild is a different message;
          it has to be the same wallet or it is somebody else's sign-in. */

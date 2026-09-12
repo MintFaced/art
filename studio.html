@@ -815,6 +815,15 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .speak .go:disabled{opacity:.45;cursor:default}
 .say{font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--muted);margin-top:10px}
 .say.bad{color:var(--alert)}
+/* The request as it went out, folded under a refusal. Closed by default,
+   because the ordinary case is a person who pressed cancel and wants one line
+   about it; open, it is the whole message, wrapped, selectable and screenshot
+   sized on a phone. */
+.say .sent{margin-top:8px;color:var(--muted)}
+.say .sent summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.say .sent pre{margin:6px 0 0;padding:8px;border:1px solid var(--rule);border-radius:4px;
+  white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:10px;
+  line-height:1.6;max-height:40vh;overflow:auto;-webkit-user-select:text;user-select:text}
 .quiet-log{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding:34px 0}
 
 @media(max-width:640px){
@@ -2042,13 +2051,42 @@ const askWallet = (message) => MF.sign(message, ROOM.wallet, (state, why) => {
 // one way in and out of the room, shared with the nav
 const post = (body) => MF.session.post(body);
 
+/* WHAT WE SENT, WHERE A PHONE CAN SEE IT.
+ *
+ * A wallet that refuses with "an error occurred" has said nothing, and a phone
+ * has no console to go and look in ... which is how a signing bug costs a round
+ * trip through somebody's evening instead of a screenshot. MF.sign keeps the
+ * request as it went out; this puts it under the failure, folded, so the
+ * ordinary refusal stays one line and the strange one can be opened and sent.
+ */
+function sentReport(err) {
+  const x = err && err.sent;
+  if (!x) return;
+  const el = document.getElementById('say');
+  if (!el) return;
+  const d = document.createElement('details');
+  d.className = 'sent';
+  d.innerHTML = `<summary>What was sent to the wallet</summary><pre></pre>`;
+  d.querySelector('pre').textContent = [
+    `wallet    ${x.wallet}`,
+    `rail      ${x.rail}`,
+    `account   ${x.account}`,
+    `address   ${x.address}`,
+    `bytes     ${x.bytes}`,
+    `at        ${x.at}`,
+    '',
+    x.message,
+  ].join('\n');
+  el.appendChild(d);
+}
+
 /** The one signature. The same one the nav asks for on any other page. */
 async function signIn() {
   const j = await MF.session.open(ROOM.wallet, ROOM.days || 7, (state, why) => {
     if (state === 'requested') status('Signature requested ... check your wallet.');
     if (state === 'slow') status('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
-    if (state === 'failed') status(why, true);
-  });
+    if (state === 'failed') { status(why, true); }
+  }).catch((err) => { sentReport(err); throw err; });
   status(`Signed in until ${new Date(j.until).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' })}. No more wallet prompts here until then.`);
   await MF.nav.refresh();
   /* The board was fetched before this signature existed and is about nobody.

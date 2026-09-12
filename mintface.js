@@ -1335,6 +1335,30 @@ const MF = {
    * @param onState  (state, detail) => void ... 'requested' | 'slow' | 'signed' | 'failed'
    */
   /**
+   * Which chain the connected wallet is actually on, as a decimal string.
+   *
+   * WHY THIS IS NOT JUST 1. A wallet that parses EIP-4361 ... which is the
+   * whole reason for sending EIP-4361 ... reads the Chain ID line and checks it
+   * against the chain it is currently on. Say 1 to a wallet sitting on Base and
+   * it draws the sheet perfectly, because the sheet is the message, and then
+   * refuses at Confirm with a house error that names nothing.
+   *
+   * Nothing here cares what chain they are on. The signature is over a
+   * sentence; no transaction follows it; the TAO is read from the register by
+   * the server afterwards. So the message says where the wallet is rather than
+   * asking it to be somewhere, and there is nothing left to mismatch.
+   */
+  async chain() {
+    const provider = this._wallet && this._wallet.provider;
+    try {
+      const hex = await provider.request({ method: 'eth_chainId' });
+      const n = typeof hex === 'string' && hex.startsWith('0x') ? parseInt(hex, 16) : Number(hex);
+      if (Number.isFinite(n) && n > 0) return String(n);
+    } catch (e) { /* a provider that will not say gets the one we always sent */ }
+    return '1';
+  },
+
+  /**
    * How the connected wallet writes this address. Its own answer, asked for,
    * rather than a checksum computed here ... a wallet that returns lowercase
    * should be handed lowercase, and one that returns EIP-55 should be handed
@@ -2525,6 +2549,7 @@ MF.session = {
          that parses the message and compares that line to its own account is
          a wallet that will refuse a lowercase one. */
       const spelled = await MF.spelling(address);
+      const chainId = await MF.chain();
       const nonce = this.nonce();
       /* DOMAIN AND URI OUT OF ONE SOURCE.
        *
@@ -2546,7 +2571,7 @@ MF.session = {
           + ' Until then this browser can speak here, and weigh your TAO on the'
           + " studio's nudges, without asking again.",
         uri,
-        chainId: '1',
+        chainId,
         nonce,
         issuedAt: issued,
         expirationTime: until,
@@ -2558,7 +2583,7 @@ MF.session = {
         resources: ['https://mintface.art/studio'],
       });
       const signature = await MF.sign(message, address, onState);
-      return this.post({ action: 'sign in', format: '4361', address, spelled, issued, until, domain, nonce, uri, signature });
+      return this.post({ action: 'sign in', format: '4361', address, spelled, issued, until, domain, nonce, uri, chainId, signature });
     }
     const signature = await MF.sign(
       this.sentence({ action: 'sign in', address, issued, until, domain }), address, onState);
