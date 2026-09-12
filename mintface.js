@@ -1668,19 +1668,6 @@ const MF = {
     chose(name) {
       try { localStorage.setItem(this.WALLET_KEY, String(name)); } catch (e) { /* private mode */ }
     },
-    /** The way back into the wallet that approved this session, if we know it.
-        These are the apps' own universal links with no pairing on them, which
-        is simply `come to the front`. */
-    home() {
-      let name = null;
-      try { name = localStorage.getItem(this.WALLET_KEY); } catch (e) { /* nothing kept */ }
-      return ({
-        Rainbow: 'https://rnbwapp.com/',
-        MetaMask: 'https://metamask.app.link/',
-        'Coinbase Wallet': 'https://go.cb-w.com/',
-        Trust: 'https://link.trustwallet.com/',
-      })[name] || null;
-    },
     /** WHERE THE WALLET ITSELF SAYS TO COME BACK TO.
      *
      * A session's peer metadata carries a redirect: a native scheme like
