@@ -1349,6 +1349,19 @@ const MF = {
    * asking it to be somewhere, and there is nothing left to mismatch.
    */
   async chain() {
+    /* NOT OVER THE RELAY. The session already says which chain it is on ...
+       its accounts are `eip155:1:0x...` ... and asking anyway sends an
+       eth_chainId down the wire seconds before the signature. That method is
+       not in the namespace this site negotiates, so the wallet is handed a
+       request it never agreed to serve, immediately before the one it did.
+       Some wallets answer it, some refuse it, and a refusal arriving in the
+       middle of a sign-in is a wallet showing an error about something the
+       person never asked for. Read what we already hold instead. */
+    if (this.wc.is(this._wallet)) {
+      const from = this.wc.chainOf();
+      if (from) return from;
+      return '1';
+    }
     const provider = this._wallet && this._wallet.provider;
     try {
       const hex = await provider.request({ method: 'eth_chainId' });
@@ -1370,6 +1383,11 @@ const MF = {
       const exact = this.wc.exact(address);
       if (exact) return exact;
     }
+    /* And never over the relay either, for the same reason: eth_accounts is
+       not in the namespace, and the session's own list is the better answer
+       anyway. `exact` above has already read it; there is nothing left here
+       for a WalletConnect wallet to be asked. */
+    if (this.wc.is(this._wallet)) return address;
     const provider = this._wallet && this._wallet.provider;
     try {
       const accounts = await provider.request({ method: 'eth_accounts' });
@@ -1663,13 +1681,67 @@ const MF = {
         Trust: 'https://link.trustwallet.com/',
       })[name] || null;
     },
+    /** WHERE THE WALLET ITSELF SAYS TO COME BACK TO.
+     *
+     * A session's peer metadata carries a redirect: a native scheme like
+     * `rainbow://` and sometimes a universal link. That is the wallet telling
+     * us how to reach it, and it beats any list we could keep ... it is right
+     * for wallets we have never heard of, and it stays right when one of them
+     * changes its links.
+     *
+     * The native scheme is the one to use. A custom scheme switches apps and
+     * leaves this page exactly as it was, which matters enormously: the sign
+     * request is a promise waiting on this page, and a page that goes away
+     * takes the request with it. */
+    back() {
+      try {
+        const r = this._provider && this._provider.session
+          && this._provider.session.peer && this._provider.session.peer.metadata
+          && this._provider.session.peer.metadata.redirect;
+        if (r && r.native) return { url: String(r.native), scheme: true };
+        if (r && r.universal) return { url: String(r.universal), scheme: false };
+      } catch (e) { /* no session, or a wallet that said nothing */ }
+      /* Nothing from the wallet: the app we were told was pressed, as its own
+         scheme. Never the https homepage ... iOS hands a bare universal link
+         back to Safari as often as to the app, and that navigation unloads
+         this page and kills the request it was waiting on. */
+      let name = null;
+      try { name = localStorage.getItem(this.WALLET_KEY); } catch (e) { /* nothing kept */ }
+      const scheme = ({
+        Rainbow: 'rainbow://',
+        MetaMask: 'metamask://',
+        'Coinbase Wallet': 'cbwallet://',
+        Trust: 'trust://',
+      })[name];
+      return scheme ? { url: scheme, scheme: true } : null;
+    },
+
     /** Bring it forward. Only on a touch device, where the wallet is an app
-        somebody has to leave the browser to reach. */
+        somebody has to leave the browser to reach.
+     *
+     * Never by navigating this page. window.location.href would work on a good
+     * day and on a bad one hand a universal link to Safari, replacing the page
+     * that is holding the pending signature ... which is a sign-in that can
+     * never complete, and looks from the outside like a wallet that showed
+     * nothing at all. A hidden iframe asks iOS to open the scheme and leaves
+     * the document alone. */
     wake() {
       if (!MF.touch()) return false;
-      const url = this.home();
-      if (!url) return false;
-      try { window.location.href = url; return true; } catch (e) { return false; }
+      const b = this.back();
+      if (!b) return false;
+      /* A CUSTOM SCHEME, NOT AN HTTPS LINK. `rainbow://` switches apps and
+         leaves this document standing; `https://rnbwapp.com/` is a universal
+         link, and iOS hands those to Safari about as often as to the app ...
+         which replaces the page holding the pending signature and leaves a
+         sign-in that can never complete. That is what a wallet showing
+         nothing at all looks like from the outside.
+         An https link is only used where the wallet named one and named no
+         scheme, and then in a new context rather than over this one. */
+      try {
+        if (b.scheme) { window.location.href = b.url; return true; }
+        window.open(b.url, '_blank', 'noopener');
+        return true;
+      } catch (e) { return false; }
     },
 
     /**
@@ -1762,6 +1834,19 @@ const MF = {
     /** Whether a given provider is the relay's. */
     is(w) {
       return Boolean(w && w.info && w.info.rdns === 'walletconnect');
+    },
+
+    /** Which chain the session is on, off the session itself. The accounts
+        are `eip155:1:0x...`, so the chain is already in our hands and there is
+        nothing to ask the wallet for. */
+    chainOf() {
+      try {
+        const acc = this._provider && this._provider.session
+          && this._provider.session.namespaces.eip155.accounts;
+        const first = acc && acc[0];
+        const n = first && String(first).split(':')[1];
+        return /^[0-9]+$/.test(String(n)) ? String(n) : null;
+      } catch (e) { return null; }
     },
 
     /** The address on a live session, as the namespace spells it. */
