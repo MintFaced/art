@@ -118,6 +118,45 @@ ok('which is what a phone was being handed', true);
    literals it is fed ... the statement and the resource ... which live once in
    each file and would drift in silence, because a message that is valid 4361
    and says something slightly different still verifies as a mismatch. */
+/* EIP-55 IS PART OF THE GRAMMAR. The address line is defined as checksummed,
+   and the page computes it rather than taking the wallet's word ... so the
+   page's keccak has to be the same keccak viem uses, on every address, or a
+   message that reads correctly is signed against a different one. */
+console.log('\nthe address line is EIP-55, both sides');
+const { getAddress } = await import('viem');
+const mfSrc = readFileSync(join(here, '../../mintface.js'), 'utf8');
+const kStart = mfSrc.indexOf('  keccak: (() => {');
+const kEnd = mfSrc.indexOf('\n  })(),', kStart);
+ok('MF.keccak is where the test expects it', kStart > 0 && kEnd > kStart);
+// eslint-disable-next-line no-new-func
+const keccak = new Function(`${mfSrc.slice(kStart + '  keccak: (() => {'.length, kEnd)}\n})()`
+  .replace(/^/, 'return (() => {'))();
+const mfChecksum = (address) => {
+  const h = String(address).replace(/^0x/, '').toLowerCase();
+  const k = keccak(new TextEncoder().encode(h));
+  let out = '0x';
+  for (let i = 0; i < 40; i += 1) out += (parseInt(k[i], 16) >= 8 ? h[i].toUpperCase() : h[i]);
+  return out;
+};
+ok('keccak-256 of the empty string is the known vector',
+  keccak(new Uint8Array(0)) === 'c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470');
+for (const v of ['0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed', '0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359',
+  '0xdbF03B407c01E7cD3CBea99509d93f8DDDC8C6FB', '0xD1220A0cf47c7B9Be7A2E6BA89F429762e7b9aDb']) {
+  ok(`the EIP-55 vector ${v.slice(0, 10)}... round trips`, mfChecksum(v.toLowerCase()) === v, mfChecksum(v.toLowerCase()));
+}
+let drift = 0;
+for (let i = 0; i < 3000; i += 1) {
+  const hex = `0x${[...crypto.getRandomValues(new Uint8Array(20))].map((b) => b.toString(16).padStart(2, '0')).join('')}`;
+  if (mfChecksum(hex) !== getAddress(hex)) drift += 1;
+}
+ok('and the page agrees with viem on three thousand random addresses', drift === 0, `${drift} differed`);
+/* The case this is all for: the site holds addresses lowercase, and the line
+   that goes in the message is the checksummed one, computed from it. */
+ok('a lowercase address becomes exactly the line the message carries',
+  mfChecksum(FIELDS.address.toLowerCase()) === FIELDS.address, mfChecksum(FIELDS.address.toLowerCase()));
+ok('and the route computes the same line from the same lowercase address',
+  getAddress(FIELDS.address.toLowerCase()) === FIELDS.address);
+
 console.log('\nthe copy is the same copy');
 const routeSrc = readFileSync(join(here, '../../api/chat.js'), 'utf8');
 /* The expression is read out of each file and evaluated, not compared as

@@ -1,4 +1,4 @@
-import { verifyMessage } from 'viem';
+import { verifyMessage, getAddress } from 'viem';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 import { chatStore, chatMessage, checkMessage, checkReaction, marksOf, reactionSet, render, sessionUntil, SCOPE } from './_lib/chat.js';
@@ -434,13 +434,12 @@ export async function POST(request) {
       if (!/^[0-9]{1,10}$/.test(chainId)) {
         return respond(request, { error: 'that sign-in names a chain that is not a chain' }, 400);
       }
-      /* The wallet's own spelling, as the page put it in front of the signer.
-         It has to be the same characters or the rebuild is a different message;
-         it has to be the same wallet or it is somebody else's sign-in. */
-      const spelled = String(body.spelled || address);
-      if (lower(spelled) !== address) {
-        return respond(request, { error: 'that signature names a different wallet' }, 400);
-      }
+      /* EIP-55, computed here rather than taken off the wire. The page computes
+         the same line from the same address, so there is nothing for the two
+         of them to disagree about and nothing for a caller to get wrong ...
+         the spelling in the sentence is not a fact about the request, it is
+         a fact about the address, and the spec says which one. */
+      const spelled = getAddress(address);
       /* The two fields a phone actually checks, checked here too. A message
          whose URI is on a different host from the domain above it is the
          confusing thing 4361 exists to stop, and it is not something a page of

@@ -1287,6 +1287,99 @@ const MF = {
     return (bits.join(' · ') || String(err)).slice(0, 200);
   },
 
+  /* ---------- EIP-55, because the spec says so ----------
+   *
+   * The address line of an EIP-4361 message is defined as an EIP-55
+   * checksummed address. We were printing whatever spelling the wallet handed
+   * back, which is exactly right for telling a wallet which of its accounts to
+   * sign with and exactly wrong for a line whose shape is part of the grammar:
+   * a wallet whose session returns lowercase gave us a message that is not
+   * EIP-4361, and a wallet strict enough to check is one that shows it as
+   * plain text and then refuses to sign it as a sign-in.
+   *
+   * So the checksum is computed here rather than trusted from anywhere, which
+   * needs keccak-256 ... twenty bytes hashed once per sign-in, so it is
+   * written to be obviously right rather than quick. Checked against the
+   * EIP-55 vectors and against viem's getAddress over three thousand random
+   * addresses in scripts/chat/test-siwe.mjs; the server uses viem, so the two
+   * cannot drift without that failing.
+   */
+  keccak: (() => {
+    const M = (1n << 64n) - 1n;
+    const rotl = (x, n) => ((x << n) | (x >> (64n - n))) & M;
+    const RC = [
+      0x0000000000000001n, 0x0000000000008082n, 0x800000000000808an, 0x8000000080008000n,
+      0x000000000000808bn, 0x0000000080000001n, 0x8000000080008081n, 0x8000000000008009n,
+      0x000000000000008an, 0x0000000000000088n, 0x0000000080008009n, 0x000000008000000an,
+      0x000000008000808bn, 0x800000000000008bn, 0x8000000000008089n, 0x8000000000008003n,
+      0x8000000000008002n, 0x8000000000000080n, 0x000000000000800an, 0x800000008000000an,
+      0x8000000080008081n, 0x8000000000008080n, 0x0000000080000001n, 0x8000000080008008n];
+    const ROT = [
+      0n, 1n, 62n, 28n, 27n, 36n, 44n, 6n, 55n, 20n, 3n, 10n, 43n, 25n, 39n,
+      41n, 45n, 15n, 21n, 8n, 18n, 2n, 61n, 56n, 14n];
+
+    function f1600(A) {
+      for (let r = 0; r < 24; r += 1) {
+        const C = new Array(5);
+        for (let x = 0; x < 5; x += 1) C[x] = A[x] ^ A[x + 5] ^ A[x + 10] ^ A[x + 15] ^ A[x + 20];
+        for (let x = 0; x < 5; x += 1) {
+          const D = C[(x + 4) % 5] ^ rotl(C[(x + 1) % 5], 1n);
+          for (let y = 0; y < 25; y += 5) A[x + y] ^= D;
+        }
+        const B = new Array(25);
+        for (let x = 0; x < 5; x += 1) {
+          for (let y = 0; y < 5; y += 1) {
+            B[y + 5 * (((2 * x) + (3 * y)) % 5)] = rotl(A[x + (5 * y)], ROT[x + (5 * y)]);
+          }
+        }
+        for (let y = 0; y < 25; y += 5) {
+          for (let x = 0; x < 5; x += 1) {
+            A[y + x] = B[y + x] ^ (~B[y + ((x + 1) % 5)] & B[y + ((x + 2) % 5)]) & M;
+          }
+        }
+        A[0] ^= RC[r];
+      }
+    }
+
+    function keccak256(bytes) {
+      const RATE = 136;
+      const A = new Array(25).fill(0n);
+      const padded = new Uint8Array(Math.ceil((bytes.length + 1) / RATE) * RATE);
+      padded.set(bytes);
+      padded[bytes.length] = 0x01;
+      padded[padded.length - 1] |= 0x80;
+      for (let off = 0; off < padded.length; off += RATE) {
+        for (let i = 0; i < RATE / 8; i += 1) {
+          let lane = 0n;
+          for (let b = 7; b >= 0; b -= 1) lane = (lane << 8n) | BigInt(padded[off + (i * 8) + b]);
+          A[i] ^= lane;
+        }
+        f1600(A);
+      }
+      let out = '';
+      for (let i = 0; i < 4; i += 1) {
+        const le = A[i].toString(16).padStart(16, '0');
+        for (let b = 7; b >= 0; b -= 1) out += le.slice(b * 2, (b * 2) + 2);
+      }
+      return out;
+    }
+
+    return keccak256;
+  })(),
+
+  /** An address as EIP-55 spells it. Anything that is not an address comes
+      back untouched, because this is called on the way into a message and a
+      sentence with a mangled address in it is worse than one with a plain
+      address in it. */
+  checksum(address) {
+    const h = String(address || '').replace(/^0x/, '').toLowerCase();
+    if (!/^[0-9a-f]{40}$/.test(h)) return String(address || '');
+    const k = this.keccak(new TextEncoder().encode(h));
+    let out = '0x';
+    for (let i = 0; i < 40; i += 1) out += (parseInt(k[i], 16) >= 8 ? h[i].toUpperCase() : h[i]);
+    return out;
+  },
+
   toHex(text) {
     const bytes = new TextEncoder().encode(String(text));
     let out = '0x';
@@ -2729,11 +2822,15 @@ MF.session = {
     const domain = location.host;
     const until = new Date(Date.parse(issued) + Number(days) * 86400000).toISOString();
     if (String(use) === '4361') {
-      /* The wallet's own spelling in the message as well as on the request.
-         4361's address line is meant to be the checksummed form, and a wallet
-         that parses the message and compares that line to its own account is
-         a wallet that will refuse a lowercase one. */
-      const spelled = await MF.spelling(address);
+      /* COMPUTED, NOT ASKED FOR. The address line of a 4361 message is defined
+         as EIP-55, and the wallet's own spelling is only the same thing when
+         the wallet happens to spell it that way ... a session that hands back
+         lowercase accounts made every message we sent not-EIP-4361, which is a
+         wallet showing plain text where it meant to show a sign-in, and
+         refusing it at the last step. The server computes the same line from
+         the same address with viem, so there is nothing on the wire for the
+         two of them to disagree about. */
+      const spelled = MF.checksum(address);
       const chainId = await MF.chain();
       const nonce = this.nonce();
       /* DOMAIN AND URI OUT OF ONE SOURCE.
@@ -2771,7 +2868,11 @@ MF.session = {
         resources: ['https://mintface.art/studio'],
       });
       const signature = await MF.sign(message, address, onState);
-      return this.post({ action: 'sign in', format: '4361', address, spelled, issued, until, domain, nonce, uri, chainId, signature });
+      /* `spelled` used to ride along so the route could rebuild the address
+         line. It computes that line itself now, from the address, the way the
+         spec defines it ... so the field is gone rather than left on the wire
+         as something a route might one day be tempted to trust. */
+      return this.post({ action: 'sign in', format: '4361', address, issued, until, domain, nonce, uri, chainId, signature });
     }
     const signature = await MF.sign(
       this.sentence({ action: 'sign in', address, issued, until, domain }), address, onState);
@@ -3304,6 +3405,31 @@ MF.nav = {
    * is furniture. What went wrong belongs at the surface that raised it, which
    * here is a panel under the control that was pressed: the same hairline the
    * sign-out menu uses, in the same place, dismissed the same way. */
+  /* WHAT WAS SENT, WHERE A PHONE CAN SEE IT. A wallet that refuses with a
+     house error has said nothing, and there is no console on a phone to go and
+     look in. MF.sign keeps the request as it went out; this puts it under the
+     failure, folded, so an ordinary cancel is still one line. */
+  sentReport(err) {
+    const x = err && err.sent;
+    if (!x || !this.el) return;
+    const panel = this.el.querySelector('.menu.note');
+    if (!panel) return;
+    const d = document.createElement('details');
+    d.className = 'sent';
+    d.innerHTML = '<summary>What was sent to the wallet</summary><pre></pre>';
+    d.querySelector('pre').textContent = [
+      `wallet    ${x.wallet}`,
+      `rail      ${x.rail}`,
+      `account   ${x.account}`,
+      `address   ${x.address}`,
+      `bytes     ${x.bytes}`,
+      `at        ${x.at}`,
+      '',
+      x.message,
+    ].join('\n');
+    panel.appendChild(d);
+  },
+
   notice(text, links, wallets) {
     this.busy = null;
     this.menu = false;
@@ -3383,6 +3509,10 @@ MF.nav = {
       /* On a phone this is not a failure, it is the next step. */
       this.notice(String((err && err.message) || err)
         + (err && err.report ? ` \u00b7 ${err.report}` : ''), err && err.links);
+      /* And what actually went to the wallet, folded under it. The room has
+         had this since the first refusal that named nothing; the bar is the
+         surface somebody is more likely to be standing on when it happens. */
+      this.sentReport(err);
     }
   },
 };

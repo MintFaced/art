@@ -232,6 +232,14 @@ img{max-width:100%;display:block}
   border-bottom:1px solid var(--rule)}
 .nav .menu.note .say:last-child{border-bottom:0}
 .nav .menu.note a{white-space:normal}
+/* The request as it went out, folded under a refusal that named nothing.
+   Closed by default: the ordinary case is somebody who pressed cancel and
+   wants one line about it. Open, it is screenshot sized on a phone. */
+.nav .menu.note .sent{padding:8px 12px 10px;font-family:var(--font-mono);font-size:10px}
+.nav .menu.note .sent summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.nav .menu.note .sent pre{margin:6px 0 0;padding:8px;border:1px solid var(--rule);border-radius:4px;
+  white-space:pre-wrap;word-break:break-word;line-height:1.6;max-height:46vh;overflow:auto;
+  -webkit-user-select:text;user-select:text}
 .nav [aria-current="page"]{color:var(--ink)}
 /* The COMBO marker, beside whoever is signed in. The bar's own smallcaps at
    the bar's own faint, because it is a fact about the wallet rather than an
