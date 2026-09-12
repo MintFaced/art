@@ -88,7 +88,7 @@ async function burnNonce(nonce, seconds) {
   } catch (e) { return true; }   // a store that will not answer never locks anybody out
 }
 
-const ACTIONS = ['sign in', 'sign out', 'say', 'react', 'seen', 'delete', 'restore', 'mute', 'unmute'];
+const ACTIONS = ['sign in', 'sign out', 'say', 'react', 'seen', 'delete', 'restore', 'mute', 'unmute', 'note'];
 
 /* What one request for link previews may cost. A page is fifty messages, and
    a message may carry three links, so the caps are what keeps a page of the log
@@ -365,6 +365,46 @@ export async function POST(request) {
   try { body = await request.json(); } catch { return respond(request, { error: 'bad request' }, 400); }
 
   const action = String(body.action || 'say');
+
+  /* A NOTE ABOUT A WALLET THAT REFUSED, and nothing else.
+   *
+   * Written only by a page loaded with ?debug=1, which is a thing somebody
+   * does on purpose. It takes no signature and no session, because the whole
+   * point is that the sign-in did not happen ... and it therefore says nothing
+   * about who anybody is and changes nothing. It is a wallet's own error text
+   * and the sentence we asked it to sign, kept for a day, so a failure that
+   * says `an error occurred` can be read rather than guessed at.
+   *
+   * Capped, expiring, and last-fifty only: a debug note is a thing to look at
+   * this afternoon, not a store. */
+  if (action === 'note') {
+    if (!storeConfigured()) return respond(request, { ok: true, kept: false });
+    const keep = JSON.stringify({
+      what: String(body.what || '').slice(0, 32),
+      shown: String(body.shown || '').slice(0, 400),
+      code: String(body.code == null ? '' : body.code).slice(0, 64),
+      raw: String(body.raw || '').slice(0, 400),
+      data: String(body.data || '').slice(0, 400),
+      cause: String(body.cause || '').slice(0, 400),
+      sent: body.sent && typeof body.sent === 'object' ? {
+        wallet: String(body.sent.wallet || '').slice(0, 64),
+        rail: String(body.sent.rail || '').slice(0, 32),
+        account: String(body.sent.account || '').slice(0, 64),
+        address: String(body.sent.address || '').slice(0, 64),
+        bytes: Number(body.sent.bytes) || 0,
+        message: String(body.sent.message || '').slice(0, 2000),
+      } : null,
+      ua: String(body.ua || '').slice(0, 240),
+      at: new Date().toISOString(),
+      ip: null,
+    });
+    try {
+      await pipe([['LPUSH', 'mf:notes:sign', keep], ['LTRIM', 'mf:notes:sign', '0', '49'],
+        ['EXPIRE', 'mf:notes:sign', '86400']]);
+    } catch (e) { /* a note that will not write is still only a note */ }
+    return respond(request, { ok: true, kept: true });
+  }
+
   const signature = String(body.signature || '');
   const issued = String(body.issued || '');
   /* The cookie first, and the body only where there is no cookie.

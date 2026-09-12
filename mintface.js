@@ -1367,6 +1367,37 @@ const MF = {
     return keccak256;
   })(),
 
+  /** Whether this page has been asked to keep evidence. */
+  debugging() {
+    try { return new URLSearchParams(location.search).get('debug') === '1'; } catch (e) { return false; }
+  },
+
+  /** What the wallet actually said, written where it can be read back. Never
+      throws and never blocks: it is a note left behind a failure that has
+      already been reported to the person in front of it. */
+  report(shown, raw) {
+    if (!this.debugging()) return;
+    const pick = (v) => { try { return v == null ? null : String(v).slice(0, 400); } catch (e) { return null; } };
+    const body = {
+      action: 'note',
+      what: 'sign',
+      shown: pick(shown && shown.message),
+      code: raw && (raw.code != null ? String(raw.code) : null),
+      raw: pick(raw && raw.message),
+      data: pick(raw && raw.data && (typeof raw.data === 'string' ? raw.data : raw.data.message)),
+      cause: pick(raw && raw.cause && (raw.cause.message || raw.cause)),
+      sent: this.lastSign || null,
+      ua: pick(typeof navigator !== 'undefined' ? navigator.userAgent : null),
+      at: new Date().toISOString(),
+    };
+    try {
+      fetch(`${this.ART}/api/chat`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        credentials: 'include', keepalive: true, body: JSON.stringify(body),
+      }).catch(() => {});
+    } catch (e) { /* a note that cannot be left is still only a note */ }
+  },
+
   /** An address as EIP-55 spells it. Anything that is not an address comes
       back untouched, because this is called on the way into a message and a
       sentence with a mangled address in it is worse than one with a plain
@@ -1450,11 +1481,15 @@ const MF = {
        Some wallets answer it, some refuse it, and a refusal arriving in the
        middle of a sign-in is a wallet showing an error about something the
        person never asked for. Read what we already hold instead. */
-    if (this.wc.is(this._wallet)) {
-      const from = this.wc.chainOf();
-      if (from) return from;
-      return '1';
-    }
+    /* ON THE RELAY THE ANSWER IS THE CHAIN WE PINNED, and it has to be.
+       The session is negotiated for eip155:1 and the request is routed to
+       eip155:1 ... so a message naming any other chain names one the signature
+       is not being asked for, and a wallet that validates the pair refuses it.
+       That is what reading accounts[0] risked: a wallet answering with several
+       chains puts whichever it likes first, and the message would have quietly
+       followed it away from the request. The accounts are read only to say
+       whether the chain we pinned is in there at all. */
+    if (this.wc.is(this._wallet)) return this.wc.chainOf() === null ? '1' : this.wc.ROUTED;
     const provider = this._wallet && this._wallet.provider;
     try {
       const hex = await provider.request({ method: 'eth_chainId' });
@@ -1567,7 +1602,7 @@ const MF = {
          * once the request is genuinely on its way; a tap is a gesture, and
          * iOS trusts those with app switches in a way it does not trust a
          * page that decided by itself. */
-        const ask = provider.request({ method: 'personal_sign', params: [data, who] }, 'eip155:1');
+        const ask = provider.request({ method: 'personal_sign', params: [data, who] }, `eip155:${MF.wc.ROUTED}`);
         const open = MF.touch() ? MF.wc.back() : null;
         if (open) onState('requested', null, { open, wallet: MF.wc.peerName() });
         signature = await ask;
@@ -1593,6 +1628,21 @@ const MF = {
       const out = new Error(why);
       out.code = code;
       out.sent = this.lastSign;
+      /* EVIDENCE, WHEN IT IS ASKED FOR.
+       *
+       * A wallet that refuses with a house error has said nothing, and on a
+       * phone there is no console to open. Five rounds of this have been spent
+       * reasoning about what the wallet might have meant, which is the wrong
+       * way to fix anything.
+       *
+       * So `?debug=1` on the URL, and the refusal is written down where it can
+       * be read back: the wallet's own code, message and data, alongside the
+       * sentence we composed. Off by default and opt-in by hand, because a
+       * page that quietly posts what your wallet said to a server is a page
+       * doing something nobody asked it to. Nothing private is in it ... the
+       * message is the one the wallet just showed, and the address is on the
+       * leaderboard. */
+      this.report(out, err);
       throw out;
     } finally {
       clearTimeout(slow);
@@ -1913,16 +1963,22 @@ const MF = {
       catch (e) { return 'your wallet'; }
     },
 
-    /** Which chain the session is on, off the session itself. The accounts
-        are `eip155:1:0x...`, so the chain is already in our hands and there is
-        nothing to ask the wallet for. */
+    /* The one chain this site negotiates, routes on, and names in the
+       sentence. Written once so those three cannot come apart. */
+    ROUTED: '1',
+
+    /** Whether the session carries the chain we routed on ... `eip155:1:0x...`
+        somewhere in its accounts. Null when it has nothing to say at all. */
     chainOf() {
       try {
         const acc = this._provider && this._provider.session
           && this._provider.session.namespaces.eip155.accounts;
-        const first = acc && acc[0];
-        const n = first && String(first).split(':')[1];
-        return /^[0-9]+$/.test(String(n)) ? String(n) : null;
+        if (!acc || !acc.length) return null;
+        for (const a of acc) if (String(a).split(':')[1] === this.ROUTED) return this.ROUTED;
+        /* A session with accounts but not on the chain we asked for. Nothing
+           good comes of naming it, so the caller falls back to the routed one
+           and the request and the sentence stay in step. */
+        return null;
       } catch (e) { return null; }
     },
 
