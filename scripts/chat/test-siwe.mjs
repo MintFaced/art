@@ -26,9 +26,7 @@ const ok = (name, cond, detail) => {
 const FIELDS = {
   domain: 'mintface.art',
   address: '0x5B93FF82faaF241c15997ea3975419DDDd8362c5',
-  statement: 'Signing opens Studio until the expiry below. It moves nothing and spends nothing.'
-    + ' Until then this browser can speak here, and weigh your TAO on the'
-    + " studio's nudges, without asking again.",
+  statement: 'Sign in to MintFace for 30 days.',
   uri: 'https://mintface.art/studio',
   chainId: '1',
   nonce: 'a3f9c21b8e4d7605a3f9c21b8e4d7605',
@@ -63,6 +61,7 @@ const refuses = (name, patch) => {
   catch (e) { ok(`${name} ... ${e.message}`, true); }
 };
 refuses('a statement with a line break in it', { statement: 'one\ntwo' });
+ok('the statement is the one Ryan wrote', FIELDS.statement === 'Sign in to MintFace for 30 days.');
 refuses('a nonce of fewer than eight', { nonce: 'abc' });
 refuses('a nonce that is not alphanumeric', { nonce: 'aaaa-bbbb-cccc' });
 refuses('an issued-at that is not a datetime', { issuedAt: '12 September 2026' });
@@ -125,12 +124,13 @@ const routeSrc = readFileSync(join(here, '../../api/chat.js'), 'utf8');
    source: the two are indented differently and that is not a difference in
    what the wallet shows. What is compared is the string it comes to. */
 const statementOf = (src) => {
-  /* Anchored on "the expiry below", which is the 4361 copy and not the house
-     one ... mintface.js holds both, and matching the house sentence here would
-     compare the wrong pair and pass while the real pair drifted. */
-  const m = /'Signing opens Studio until the expiry below[\s\S]*?without asking again\."/.exec(src);
+  /* The 4361 statement, which is a template literal in both files. Matched on
+     its own opening rather than on `Signing opens Studio`, which is the house
+     sentence mintface.js also holds ... matching that would compare the wrong
+     pair and pass while the real pair drifted. */
+  const m = /`Sign in to MintFace for \$\{[^}]*\} days\.`/.exec(src);
   // eslint-disable-next-line no-new-func
-  return m ? new Function(`return ${m[0]}`)() : null;
+  return m ? new Function('days', `return ${m[0].replace(/\$\{[^}]*\}/, '${days}')}`)(30) : null;
 };
 const pageStatement = statementOf(js);
 const routeStatement = statementOf(routeSrc);

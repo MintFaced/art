@@ -56,15 +56,13 @@ const signFormat = (cfg) => (String(cfg && cfg.sign_format) === '4361' ? '4361' 
    fields the page sent and the signature is checked against the rebuild, so a
    page that sent something other than what it showed verifies as a mismatch
    rather than as a sign-in. */
-function siweSentence({ domain, address, uri, issued, until, nonce, chainId }) {
+function siweSentence({ domain, address, uri, issued, until, nonce, chainId, days }) {
   return siweStrict({
     domain,
     /* The address in the 4361 line is the wallet's own spelling, which is what
        the page put in front of the signer. Verification lowercases it back. */
     address,
-    statement: 'Signing opens Studio until the expiry below. It moves nothing and spends nothing.'
-      + ' Until then this browser can speak here, and weigh your TAO on the'
-      + " studio's nudges, without asking again.",
+    statement: `Sign in to MintFace for ${Number(days)} days.`,
     uri,
     /* The chain the wallet said it was on, not one we chose for it. A wallet
        that parses 4361 checks this line against where it actually is. */

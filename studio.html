@@ -1646,7 +1646,7 @@ function composer() {
     return `<div class="box">
       <p class="openin-lab">${waiting ? 'Approve the connection in your wallet' : 'Open this page in your wallet'}</p>
       <div class="row" style="justify-content:flex-start;flex-wrap:wrap">
-        ${ROOM.openIn.map((w) => `<a class="go" href="${e(w.url)}">${e(w.name)}</a>`).join('')}
+        ${ROOM.openIn.map((w) => `<a class="go" href="${e(w.url)}" data-wallet="${e(w.name)}">${e(w.name)}</a>`).join('')}
       </div>
       <p class="openin-note">${waiting
         ? 'Your wallet opens, you approve, and you come straight back here signed in.'
@@ -1659,7 +1659,7 @@ function composer() {
      sentence with nothing to press. */
   if (!ROOM.wallet) {
     return `<div class="box"><div class="row" style="justify-content:flex-start;gap:20px">
-      <button class="go" data-act="connect">${ROOM.asking ? 'Asking your wallet ...' : 'Connect a wallet to speak'}</button>
+      <button class="go" data-act="connect"${ROOM.asking ? ' disabled' : ''}>${ROOM.asking ? 'Asking your wallet ...' : 'Connect a wallet to speak'}</button>
       <button class="go" data-act="which" style="border-color:transparent">Nothing happening?</button>
     </div></div>`;
   }
@@ -1679,11 +1679,15 @@ function composer() {
         <button class="go" data-act="again">Check again</button>
       </div></div>`;
   }
+  /* A wallet connected with no session behind it. Ordinarily nobody sees this
+     now ... connecting signs in ... but a session that has run out lands here,
+     and so does a signature that was refused. The button runs the same one act
+     the first one does; it is only the words that know where we are. */
   if (!mySession()) {
     return `<div class="box">
       <div class="say">Connected as ${e(me.name || short(ROOM.wallet))}${me.role === 'artist' ? ', the artist' : ''}. One signature opens Studio for ${ROOM.days} days.</div>
       <div class="row" style="justify-content:flex-start;gap:20px">
-        <button class="go" data-act="signin">Sign in for ${ROOM.days} days</button>
+        <button class="go" data-act="connect"${ROOM.asking ? ' disabled' : ''}>${ROOM.asking ? 'Check your wallet ...' : `Sign in for ${ROOM.days} days`}</button>
       </div></div>`;
   }
   const len = ROOM.draft.length;
@@ -1953,23 +1957,31 @@ async function goTo(n) {
    none should be: there is no session to open, so there is nothing to sign
    until there are words to sign. That is worth saying out loud on the page,
    because a wallet that connects and then goes quiet reads as a failure. */
+/* ONE TAP.
+ *
+ * Connecting and signing in were two presses with a redraw between them, and
+ * on a phone that redraw reads as the page reloading and the button changing
+ * its mind. They are one act ... MF.enter ... and this is the room's rendering
+ * of it. Nothing here navigates: the states are said in place, in the room's
+ * own words, above the button that started them.
+ *
+ * The bar renders the same act with the same states. That is the point: a fix
+ * to any part of connecting lands once now rather than once per surface.
+ */
 async function connect(choice) {
-  /* Connecting never asks for a signature ... there is no session here, so
-     there is nothing to sign until there are words. But it does put a request
-     in the wallet, and that request can sit unanswered behind a window exactly
-     the way a signature can, so it gets the same treatment. */
   ROOM.asking = true;
   status('Asking your wallet for an account ... check your wallet.');
   draw();
+  const WORDS = {
+    connecting: 'Asking your wallet for an account ... check your wallet.',
+    slow: 'Still waiting on the wallet. Its prompt may have opened behind this window.',
+    signing: 'Check your wallet, and approve the sign-in.',
+    done: 'Signing in ...',
+  };
   try {
-    ROOM.wallet = await MF.connect(choice, {
-      /* The room's rendering of the one sequence. The timer that says a prompt
-         may have opened behind the window used to live here and in nowhere
-         else; it is the shared layer's now, so the bar says it too. */
-      onState: (state) => {
-        if (state === 'asking') status('Asking your wallet for an account ... check your wallet.');
-        if (state === 'slow') status('Still waiting on the wallet. Its prompt may have opened behind this window.');
-      },
+    const out = await MF.enter({
+      choice: choice || null,
+      onState: (state) => status(WORDS[state] || WORDS.connecting),
       /* The relay has a pairing. Put the wallets in front of them while it
          waits, with the session to approve already in the link. */
       onUri: (uri, links) => {
@@ -1979,6 +1991,7 @@ async function connect(choice) {
         status('Choose your wallet to approve the connection.');
       },
     });
+    ROOM.wallet = out.address;
     ROOM.pick = null;
   } catch (err) {
     ROOM.asking = false;
@@ -1992,9 +2005,6 @@ async function connect(choice) {
       draw();
       return false;
     }
-    status(String(err.message || err), true);
-    // no wallet answering at all is worth saying precisely, because the reason
-    // is nearly always outside the page
     /* A PHONE IS NOT A BROWSER WITH A MISSING EXTENSION, so it is not shown a
        report about window.ethereum and extensions ... none of which it has, can
        have, or can act on. It is handed the way in. */
@@ -2008,9 +2018,10 @@ async function connect(choice) {
     }
     /* The diagnostic comes with the error now rather than being fetched again
        here, so the bar and the room say the identical sentence. */
-    if (err.code === 'no-provider') {
-      status(`${String(err.message || err)}${err.report ? ` \u00b7 ${err.report}` : ''}`, true);
-    }
+    status(`${String(err.message || err)}${err.report ? ` \u00b7 ${err.report}` : ''}`, true);
+    /* And what actually went to the wallet, folded underneath, for the refusal
+       that names nothing. A phone has no console to go and look in. */
+    sentReport(err);
     draw();
     return false;
   }
@@ -2020,9 +2031,11 @@ async function connect(choice) {
   ROOM.waitingOnWallet = false;
   ROOM.focus = true;
   await load();
-  status(ROOM.me && ROOM.me.can_speak
-    ? 'Connected. Your wallet is asked to sign once, when you say something.'
-    : null);
+  await MF.nav.refresh();
+  /* The board was fetched before this signature existed and is about nobody.
+     The nudges are the half of this page a sign-in changes most. */
+  void loadNudges();
+  status(null);
   return true;
 }
 
@@ -2078,21 +2091,6 @@ function sentReport(err) {
     x.message,
   ].join('\n');
   el.appendChild(d);
-}
-
-/** The one signature. The same one the nav asks for on any other page. */
-async function signIn() {
-  const j = await MF.session.open(ROOM.wallet, ROOM.days || 7, (state, why) => {
-    if (state === 'requested') status('Signature requested ... check your wallet.');
-    if (state === 'slow') status('Still waiting on the wallet. A hardware wallet may need waking, or its prompt may have opened behind this window.');
-    if (state === 'failed') { status(why, true); }
-  }).catch((err) => { sentReport(err); throw err; });
-  status(`Signed in until ${new Date(j.until).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' })}. No more wallet prompts here until then.`);
-  await MF.nav.refresh();
-  /* The board was fetched before this signature existed and is about nobody.
-     The nudges are the half of this page a sign-in changes most. */
-  void loadNudges();
-  return j;
 }
 
 async function send(payload) {
@@ -2482,12 +2480,6 @@ document.addEventListener('click', async (ev) => {
     status('Signed out.');
     draw();
     return;
-  }
-
-  if (act === 'signin') {
-    // signing in is when the room first knows who you are, so it is the first
-    // moment it can say what was waiting for you
-    return run(b, async () => { await signIn(); await load(); });
   }
 
   if (act === 'say') return sayIt(b);

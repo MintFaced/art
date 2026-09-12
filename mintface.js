@@ -1439,9 +1439,19 @@ const MF = {
          destination of ... which it declines to do. Every injected provider
          takes the two-argument form as one argument and ignores the rest, so
          this is one call either way. */
-      const signature = relay
-        ? await provider.request({ method: 'personal_sign', params: [data, who] }, 'eip155:1')
-        : await provider.request({ method: 'personal_sign', params: [data, who] });
+      let signature;
+      if (relay) {
+        const ask = provider.request({ method: 'personal_sign', params: [data, who] }, 'eip155:1');
+        /* GO TO THE WALLET, rather than telling somebody to. Over the relay the
+           request arrives in an app as a notification; on a phone the page then
+           says `check your wallet` to a person looking at Safari. Sent after
+           the request is on its way, so the wallet has something waiting when
+           it comes forward. */
+        MF.wc.wake();
+        signature = await ask;
+      } else {
+        signature = await provider.request({ method: 'personal_sign', params: [data, who] });
+      }
       if (!signature || typeof signature !== 'string' || !signature.startsWith('0x')) {
         const e = new Error('The wallet answered without a signature.');
         e.code = 'no-signature';
@@ -1624,6 +1634,44 @@ const MF = {
       ];
     },
 
+    /* WHICH WALLET, REMEMBERED ... and where to go to reach it again.
+     *
+     * A signature sent over the relay arrives in the wallet as a notification
+     * and nothing more. On a desktop that is fine, the wallet is a window. On
+     * a phone it means the page says `check your wallet` to somebody looking
+     * at Safari, and the sheet they are being asked about is behind an app
+     * they have to go and find. One tap becomes three, and the third one is a
+     * guess.
+     *
+     * So the app that was used to pair is written down, and the signature step
+     * goes back to it. Written on the press rather than inferred, because a
+     * link somebody did not take is not a wallet they have. */
+    WALLET_KEY: 'mf_wc_app',
+    chose(name) {
+      try { localStorage.setItem(this.WALLET_KEY, String(name)); } catch (e) { /* private mode */ }
+    },
+    /** The way back into the wallet that approved this session, if we know it.
+        These are the apps' own universal links with no pairing on them, which
+        is simply `come to the front`. */
+    home() {
+      let name = null;
+      try { name = localStorage.getItem(this.WALLET_KEY); } catch (e) { /* nothing kept */ }
+      return ({
+        Rainbow: 'https://rnbwapp.com/',
+        MetaMask: 'https://metamask.app.link/',
+        'Coinbase Wallet': 'https://go.cb-w.com/',
+        Trust: 'https://link.trustwallet.com/',
+      })[name] || null;
+    },
+    /** Bring it forward. Only on a touch device, where the wallet is an app
+        somebody has to leave the browser to reach. */
+    wake() {
+      if (!MF.touch()) return false;
+      const url = this.home();
+      if (!url) return false;
+      try { window.location.href = url; return true; } catch (e) { return false; }
+    },
+
     /**
      * Open a session, and hand the pairing out the moment the relay gives one.
      *
@@ -1647,7 +1695,12 @@ const MF = {
       const hand = (uri) => {
         if (handed || !uri) return;
         handed = true;
-        try { onUri && onUri(uri, this.links(uri)); } catch (e) { /* the caller's problem */ }
+        /* The links are handed out wrapped, so that whichever one is actually
+           pressed is remembered. A signature over this relay has to be gone to
+           ... the wallet does not come forward on its own ... and the only way
+           to know which app to go to is that somebody just chose it. */
+        const links = this.links(uri).map((w) => ({ ...w, choose: () => this.chose(w.name) }));
+        try { onUri && onUri(uri, links); } catch (e) { /* the caller's problem */ }
       };
       p.on('display_uri', hand);
       await p.connect({
@@ -1912,6 +1965,64 @@ const MF = {
       done();
       return a;
     } catch (err) { done(); throw err; }
+  },
+
+  /* ---------- ONE WAY IN ----------
+   *
+   * Connecting and signing are one act. They were written as two because they
+   * are two requests, and every surface then grew its own choreography around
+   * the seam: the room asked you to press a button, redrew itself, and asked
+   * you to press a second one; the bar chained them; a collector page did
+   * something else again. Three surfaces, three behaviours, and every fix to
+   * any part of it landing one, two or three times depending on which.
+   *
+   * So the act lives here and the surfaces render it. One vocabulary of
+   * states, small enough to hold in the head:
+   *
+   *   connecting  the wallet is being asked for an account
+   *   slow        it has said nothing for a while
+   *   signing     the signature request is in front of them
+   *   done        there is a session
+   *
+   * Nothing here navigates. A surface that wants to redraw redraws; the one
+   * thing no rail of this may ever do is take somebody off the page they are
+   * standing on, which is how a button comes to look like a reload.
+   */
+  async enter(opts) {
+    const o = opts || {};
+    const tell = typeof o.onState === 'function' ? o.onState : () => {};
+    /* Said once per change. The two layers underneath each announce their own
+       start, and both map to the same word up here ... a surface that redrew
+       on every call would redraw twice for one thing happening, which on a
+       phone is a flicker somebody reads as the page restarting. */
+    let last = null;
+    const say = (state) => { if (state !== last) { last = state; tell(state); } };
+    say('connecting');
+    const address = await this.connect(o.choice || null, {
+      /* The connect layer's words, said in this layer's vocabulary. A surface
+         should never have to know that `asking` and `requested` came from two
+         different places and mean the same thing to a person. */
+      onState: (state) => say(state === 'asking' ? 'connecting' : state),
+      onUri: o.onUri,
+    });
+    /* Already signed in as this wallet: nothing to ask for. Connecting again
+       is how somebody switches wallets, and it must not cost a signature when
+       they have simply pressed it twice. */
+    const had = MF.session.current();
+    if (had && had.address === address) { say('done'); return { address, until: had.until, already: true }; }
+    say('signing');
+    /* What the room asks for, asked once: how long a session runs and which
+       sentence it wants signed. A surface holding its own opinion of either is
+       a surface that can disagree with the route about what was signed. */
+    const d = await MF.session.who(address).catch(() => null);
+    const days = Number(d && d.session_days) || 30;
+    if (d && d.sign_format) MF.session.format = d.sign_format;
+    const j = await MF.session.open(address, days, (state) => {
+      if (state === 'requested') say('signing');
+      if (state === 'slow') say('slow');
+    });
+    say('done');
+    return { address, until: j.until, days };
   },
 
   async _connect(choice, o, say) {
@@ -2567,9 +2678,12 @@ MF.session = {
       const message = this.siwe({
         domain,
         address: spelled,
-        statement: 'Signing opens Studio until the expiry below. It moves nothing and spends nothing.'
-          + ' Until then this browser can speak here, and weigh your TAO on the'
-          + " studio's nudges, without asking again.",
+        /* One line, and short. The grammar allows one line and a mobile
+           wallet renders the header and the address as its own chrome, so a
+           statement long enough to need a second look is a statement nobody
+           reads. `days` comes from the room's config, as every other sentence
+           here does, so the number cannot drift from the expiry above it. */
+        statement: `Sign in to MintFace for ${Number(days)} days.`,
         uri,
         chainId,
         nonce,
@@ -2898,7 +3012,18 @@ MF.nav = {
     const url = mine && mine.url ? mine.url : null;
 
     let right;
-    if (this.busy) right = `<button type="button" data-nav="wait" disabled>${e(this.busy)}</button>`;
+    /* THE SLOT HOLDS TWO THINGS EVER: Connect, or who you are. `true` means
+       something is in progress ... the slot goes quiet and disabled and says
+       the same word it said before, and what is actually happening is drawn
+       in the panel beneath, where a sentence fits. A progress line rendered
+       here comes out as STILL WAITIN... in a slot the eye reads as a name. A
+       string is still allowed, for the one or two labels short enough to
+       belong in a slot, and never for a sentence. */
+    if (this.busy === true) {
+      right = s
+        ? `<span class="me"><button type="button" class="you" disabled>${e(name)}</button></span>`
+        : '<button type="button" data-nav="wait" disabled>Connect</button>';
+    } else if (this.busy) right = `<button type="button" data-nav="wait" disabled>${e(this.busy)}</button>`;
     else if (!s) right = '<button type="button" data-nav="connect">Connect</button>';
     else {
       /* THE NAME IS A DOOR, not a link. It was a link to the collector's own
@@ -2937,7 +3062,7 @@ MF.nav = {
       <span class="right">${this.brightness()}${this.cherry()}
         <span class="me">${right}${this.note ? `<span class="menu note" role="status">
           <span class="say">${e(this.note.text)}</span>
-          ${(this.note.links || []).map((w) => `<a href="${e(w.url)}">${e(w.name)}</a>`).join('')}
+          ${(this.note.links || []).map((w) => `<a href="${e(w.url)}" data-wallet="${e(w.name)}">${e(w.name)}</a>`).join('')}
           ${(this.note.wallets || []).map((w) => `<button type="button" data-nav="pick"
             data-uuid="${e(w.uuid)}">${e(w.name)}</button>`).join('')}
         </span>` : ''}</span></span>`;
@@ -3129,20 +3254,31 @@ MF.nav = {
      a second way of connecting without anybody deciding to. There is one
      implementation, MF.connect, and every surface starts it. */
   async startConnect(choice) {
-    const say = (label) => { this.busy = label; this.note = null; this.draw(); };
-    say('Connecting');
-    let address;
+    /* THE SLOT SAYS CONNECT OR IT SAYS WHO YOU ARE, and progress is not
+       either of those. `Still waiting` rendered into the name slot and came
+       out as STILL WAITIN..., which is a bar telling somebody their name is
+       broken. What is happening goes in the panel, which is the place with
+       room for a sentence; the slot only ever goes quiet. */
+    const say = (label) => { this.busy = true; this.note = { text: label, links: null, wallets: null }; this.draw(); };
+    const WORDS = {
+      connecting: 'Connecting ... check your wallet.',
+      slow: 'Still waiting on the wallet. Its prompt may have opened behind this window.',
+      signing: 'Check your wallet, and approve the sign-in.',
+      done: 'Signing in ...',
+    };
+    say(WORDS.connecting);
     try {
-      address = await MF.connect(choice, {
-        onState: (state) => {
-          if (state === 'asking') say('Check your wallet');
-          if (state === 'slow') say('Still waiting');
-        },
+      await MF.enter({
+        choice: choice || null,
+        onState: (state) => say(WORDS[state] || WORDS.connecting),
         /* The pairing, the moment the relay hands one over: a wallet in front
            of somebody while it is still waiting to be answered, rather than a
            bar that says `Connecting` at them until it times out. */
         onUri: (uri, links) => this.notice('Choose your wallet to approve the connection.', links),
       });
+      this.busy = null;
+      this.note = null;
+      await this.refresh();
     } catch (err) {
       this.busy = null;
       /* More than one answering and none of them already authorised here. The
@@ -3156,32 +3292,23 @@ MF.nav = {
       /* On a phone this is not a failure, it is the next step. */
       this.notice(String((err && err.message) || err)
         + (err && err.report ? ` \u00b7 ${err.report}` : ''), err && err.links);
-      return;
-    }
-    try {
-      /* A WALLET THAT IS NOT THE ONE SIGNED IN. Connecting again as somebody
-         else is the ordinary case while testing and a real one afterwards, and
-         what must not survive it is the previous wallet's name. The cache goes
-         before the new signature is even asked for, so nothing can draw the
-         old identity over the new session at any point in between. */
-      const had = MF.session.current();
-      if (had && had.address !== address) { this.me = null; this.meFor = null; this.unseen = 0; this.next = null; }
-      const d = await MF.session.who(address);
-      if (d && d.session_days) this.days = d.session_days;
-      if (d && d.sign_format) MF.session.format = d.sign_format;
-      await MF.session.open(address, this.days, (state) => {
-        if (state === 'requested') say('Check your wallet');
-        if (state === 'slow') say('Still waiting');
-        if (state === 'signed') say('Signing in');
-      });
-      this.busy = null;
-      await this.refresh();
-    } catch (err) {
-      this.busy = null;
-      this.notice(String((err && err.message) || err));
     }
   },
 };
+
+/* WHICH WALLET THEY ACTUALLY PRESSED, caught once for the whole site.
+ *
+ * Any surface that draws a wallet link marks it `data-wallet` and gets this
+ * for nothing: the app is written down on the press, and the signature step
+ * knows where to go back to. A second listener per page, and each of them
+ * remembering in a slightly different way, is the shape of bug this whole
+ * pass exists to stop. */
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', (ev) => {
+    const a = ev.target && ev.target.closest && ev.target.closest('a[data-wallet]');
+    if (a) MF.wc.chose(a.dataset.wallet);
+  }, true);
+}
 
 if (typeof document !== 'undefined') {
   /* The head script already set the attribute; this reconciles the rest of it
