@@ -118,5 +118,11 @@ export function corsFor(request) {
 export function domainOk(domain, request) {
   const d = String(domain || '').toLowerCase();
   if (!d) return false;
-  return family(d) || d === hostOf(request);
+  /* The sentence names an authority, which may carry a port; this compares
+     hosts, which do not. The port is not what binds a signature to a site and
+     a page served on one is the same site as a page served on none ... it is
+     only a local server that ever has one, and refusing to sign in there is
+     a rule with no threat behind it. */
+  const host = d.split(':')[0];
+  return family(d) || family(host) || d === hostOf(request) || host === hostOf(request);
 }

@@ -11,6 +11,7 @@ import { corsFor, cookieFrom, openCookies, clearCookies, domainOk, hostOf, TOKEN
 import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 import { checkImage, imageKey, imageFingerprint } from './_lib/images.js';
 import { putObject, r2Configured } from './_lib/r2.js';
+import { strict as siweStrict, authorityOf } from './_lib/siwe.js';
 
 /* The room.
  *
@@ -36,6 +37,57 @@ const respond = (request, b, s = 200, extra = null) => {
   return new Response(JSON.stringify(b, null, 1), { status: s, headers: h });
 };
 const lower = (a) => String(a || '').toLowerCase();
+
+/* WHICH SENTENCE THE WALLET IS ASKED TO SIGN.
+ *
+ * "house" is the one this site wrote. "4361" is the same promise serialized to
+ * the EIP-4361 grammar, which mobile wallets sniff for and route down a signing
+ * path a million sign-ins have been down; anything else goes to the generic
+ * one, and the generic one is where `an error occurred` lives.
+ *
+ * The page is told which to send rather than guessing, and BOTH are verified
+ * here for as long as somebody may still have a page open holding the old one.
+ * That costs nothing in strength: each binds the same wallet to the same
+ * domain with the same expiry, and the 4361 one additionally burns a nonce. */
+const signFormat = (cfg) => (String(cfg && cfg.sign_format) === '4361' ? '4361' : 'house');
+
+/* The 4361 sentence, built the one way it is built. Character for character
+   what mintface.js puts in front of the wallet ... this rebuilds it from the
+   fields the page sent and the signature is checked against the rebuild, so a
+   page that sent something other than what it showed verifies as a mismatch
+   rather than as a sign-in. */
+function siweSentence({ domain, address, uri, issued, until, nonce }) {
+  return siweStrict({
+    domain,
+    /* The address in the 4361 line is the wallet's own spelling, which is what
+       the page put in front of the signer. Verification lowercases it back. */
+    address,
+    statement: 'Signing opens Studio until the expiry below. It moves nothing and spends nothing.'
+      + ' Until then this browser can speak here, and weigh your TAO on the'
+      + " studio's nudges, without asking again.",
+    uri,
+    chainId: '1',
+    nonce,
+    issuedAt: issued,
+    expirationTime: until,
+    /* The literal, not siteOrigin(), which moves with the request and would
+       make a preview deploy build a different message from the page it served.
+       mintface.js says the same characters. */
+    resources: ['https://mintface.art/studio'],
+  });
+}
+
+/* A nonce is spent once. Without this the 4361 message is exactly as replayable
+   as the house one inside its fifteen minute window, and the whole point of
+   having a nonce field is that it is not. */
+const nonceKey = (n) => `mf:siwe:${String(n).slice(0, 64)}`;
+async function burnNonce(nonce, seconds) {
+  try {
+    const [set] = await pipe([['SET', nonceKey(nonce), '1', 'NX', 'EX', String(seconds)]]);
+    return set != null && String(set).toUpperCase() === 'OK';
+  } catch (e) { return true; }   // a store that will not answer never locks anybody out
+}
+
 const ACTIONS = ['sign in', 'sign out', 'say', 'react', 'seen', 'delete', 'restore', 'mute', 'unmute'];
 
 /* What one request for link previews may cost. A page is fifty messages, and
@@ -217,8 +269,9 @@ export async function GET(request) {
      * answer to the same question. */
     if (url.searchParams.get('me') != null) {
       const days = Number(cfg.session_days || 7);
-      if (!/^0x[0-9a-f]{40}$/.test(viewer)) return respond(request, { me: null, session_days: days, store: true });
-      return respond(request, { me: await standing(db, origin, viewer, cfg, await register(), isArtist), session_days: days, store: true });
+      const fmt = signFormat(cfg);
+      if (!/^0x[0-9a-f]{40}$/.test(viewer)) return respond(request, { me: null, session_days: days, sign_format: fmt, store: true });
+      return respond(request, { me: await standing(db, origin, viewer, cfg, await register(), isArtist), session_days: days, sign_format: fmt, store: true });
     }
 
     /* ---- what is under a message now ----
@@ -291,6 +344,9 @@ export async function GET(request) {
       start: page.start, end: page.end, total: page.total, more: page.more,
       me, max_chars: cfg.max_chars, max_tags: Number(cfg.max_tags || 5),
       session_days: Number(cfg.session_days || 7),
+      /* Which sentence to put in front of a wallet. The page asks rather than
+         deciding, so the two halves cannot disagree about what was signed. */
+      sign_format: signFormat(cfg),
       emoji: reactionSet(cfg), rx: await db.marksVersion().catch(() => 0),
       max_image_kb: Number(cfg.max_image_kb || 1200), store: true,
     });
@@ -367,7 +423,44 @@ export async function POST(request) {
     if (!domainOk(domain, request)) {
       return respond(request, { error: 'that signature was not signed for this site' }, 400);
     }
-    if (!(await verify({ action: 'sign in', until, domain }))) {
+    /* Which of the two sentences this page signed. Declared rather than
+       sniffed: a route that guessed the format from the bytes would be a route
+       that can be talked into checking the wrong thing. */
+    const format = String(body.format || 'house');
+    if (format === '4361') {
+      const nonce = String(body.nonce || '');
+      const uri = String(body.uri || '');
+      /* The wallet's own spelling, as the page put it in front of the signer.
+         It has to be the same characters or the rebuild is a different message;
+         it has to be the same wallet or it is somebody else's sign-in. */
+      const spelled = String(body.spelled || address);
+      if (lower(spelled) !== address) {
+        return respond(request, { error: 'that signature names a different wallet' }, 400);
+      }
+      /* The two fields a phone actually checks, checked here too. A message
+         whose URI is on a different host from the domain above it is the
+         confusing thing 4361 exists to stop, and it is not something a page of
+         ours would ever send ... so a request carrying one is not one of ours. */
+      if (lower(authorityOf(uri)) !== lower(domain)) {
+        return respond(request, { error: 'that sign-in names one site and points at another' }, 400);
+      }
+      let message;
+      try {
+        message = siweSentence({ domain, address: spelled, uri, issued, until, nonce, days });
+      } catch (e) {
+        /* The grammar refused our own rebuild, which means the page sent a
+           field that is not a 4361 field. Said plainly, with the line that was
+           wrong, because a sign-in that fails silently is the bug this whole
+           pass is about. */
+        return respond(request, { error: `that sign-in was not a valid EIP-4361 message: ${e.message}` }, 400);
+      }
+      if (!(await burnNonce(nonce, 15 * 60))) {
+        return respond(request, { error: 'that sign-in has already been used, please sign again' }, 400);
+      }
+      let ok = false;
+      try { ok = await verifyMessage({ address, message, signature }); } catch (e) { ok = false; }
+      if (!ok) return respond(request, { error: 'that signature does not match the wallet' }, 401);
+    } else if (!(await verify({ action: 'sign in', until, domain }))) {
       return respond(request, { error: 'that signature does not match the wallet' }, 401);
     }
     if (await db.isMuted(address)) {
@@ -379,7 +472,7 @@ export async function POST(request) {
        that one of them stands behind a month of acts. It is what makes the
        audit chain real: this signature opened this session, and these
        weighings came from it. */
-    await db.openSession(fresh, address, seconds, SCOPE, { signature, issued, until, domain });
+    await db.openSession(fresh, address, seconds, SCOPE, { signature, issued, until, domain, format });
     /* Scoped to the parent domain, so signing in on the catalogue signs you in
        on the register. Same registrable domain, so Lax is enough and nothing
        here is a third-party cookie. */

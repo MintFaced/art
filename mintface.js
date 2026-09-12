@@ -1334,6 +1334,28 @@ const MF = {
    * @param address  the wallet, lowercased
    * @param onState  (state, detail) => void ... 'requested' | 'slow' | 'signed' | 'failed'
    */
+  /**
+   * How the connected wallet writes this address. Its own answer, asked for,
+   * rather than a checksum computed here ... a wallet that returns lowercase
+   * should be handed lowercase, and one that returns EIP-55 should be handed
+   * that. Falls back to what it was given, which is what it always sent.
+   */
+  async spelling(address) {
+    const want = String(address || '').toLowerCase();
+    if (this.wc.is(this._wallet)) {
+      const exact = this.wc.exact(address);
+      if (exact) return exact;
+    }
+    const provider = this._wallet && this._wallet.provider;
+    try {
+      const accounts = await provider.request({ method: 'eth_accounts' });
+      for (const a of accounts || []) {
+        if (String(a).toLowerCase() === want) return String(a);
+      }
+    } catch (e) { /* a provider that will not say keeps the spelling it got */ }
+    return address;
+  },
+
   async sign(message, address, onState = () => {}) {
     /* The provider we connected through, not whatever holds window.ethereum by
        now. With two extensions installed those are routinely not the same
@@ -1346,9 +1368,42 @@ const MF = {
       throw e;
     }
     const data = this.toHex(message);
-    /* Over the relay, spelled as the session spells it. */
     const relay = this.wc.is(this._wallet);
-    const who = (relay && this.wc.exact(address)) || address;
+    /* SPELLED THE WAY THE WALLET SPELLS IT, on every rail.
+     *
+     * This site lowercases addresses everywhere, because a wallet is one
+     * wallet however it is written and a register keyed on mixed case is a
+     * register with two of everybody in it. But `params[1]` of a personal_sign
+     * is not ours to normalise: it is the wallet being told which of its
+     * accounts to sign with, and a bridge that looks that up with `===`
+     * against its own checksummed spelling simply does not find it.
+     *
+     * What that failure looks like is the whole reason this is here. The sheet
+     * renders ... it is drawn from the message, and the message is fine ... and
+     * then Confirm fails with a house error that names nothing, on a wallet
+     * holding the key, which reads as the message being rejected when it is
+     * the account lookup. Rainbow's in-app browser is where it was found; the
+     * relay had the same bug and got the same fix one rail earlier.
+     *
+     * The message still says the lowercase spelling, because that is what the
+     * server rebuilds and verifies. Only the account named on the request
+     * changes, and a signature is over the message. */
+    const who = await this.spelling(address);
+    /* WHAT WE ACTUALLY SENT, KEPT.
+     *
+     * A wallet that fails with `an error occurred` has told us nothing, and on
+     * a phone there is no console to go and look in. So the request is written
+     * down as it went out ... the exact characters, the exact bytes, the exact
+     * account named ... and hung on the failure, where a surface can put it
+     * in front of somebody who can screenshot it. */
+    this.lastSign = {
+      message, hex: data, account: who, address,
+      wallet: (this._wallet && this._wallet.info && this._wallet.info.name) || 'unknown',
+      rail: relay ? 'walletconnect' : 'injected',
+      bytes: (data.length - 2) / 2,
+      at: new Date().toISOString(),
+    };
+    try { console.debug('[mintface] signing', this.lastSign); } catch (e) { /* no console */ }
     onState('requested');
     // a hardware wallet is slow, and a prompt that opened behind the window is
     // slower still. Say so rather than letting it read as a dead button.
@@ -1381,6 +1436,7 @@ const MF = {
       onState('failed', why);
       const out = new Error(why);
       out.code = code;
+      out.sent = this.lastSign;
       throw out;
     } finally {
       clearTimeout(slow);
@@ -2300,6 +2356,10 @@ MF.PEOPLE = AT_PEOPLE ? '' : 'https://collectors.mintface.art';
 MF.session = {
   OLD_KEY: 'mintface.room.session',
   WHO: 'mf_who',
+  /* The sentence format the room is asking for, learned from the room. The
+     safe default is the one every wallet has always signed; the route accepts
+     both, so a page that never learned is a page that still signs in. */
+  format: 'house',
   api() { return `${MF.ART}/api/chat`; },
 
   cookie(name) {
@@ -2393,12 +2453,113 @@ MF.session = {
     return r.ok ? r.json() : null;
   },
 
+  /* EIP-4361, MIRRORED FROM api/_lib/siwe.js, character for character.
+   *
+   * The house sentence signs fine in every extension, because personal_sign
+   * takes bytes and does not care what they spell. A phone is a different
+   * proposition: mobile wallets sniff a message for 4361 and, finding it, hand
+   * it to a signing path a million sign-ins have been down ... and finding
+   * anything else, hand it to the generic one, which is where Rainbow's `an
+   * error occurred` lives.
+   *
+   * So the same promise, serialized to the grammar. The copy is not lost: it
+   * is the statement, which every wallet draws, and the two resources say what
+   * the session may do. Built here and rebuilt on the server from the fields
+   * that come with it, so the sentence somebody approved is the sentence that
+   * gets verified.
+   *
+   * scripts/chat/test-siwe.mjs fails if this and the server's copy drift.
+   */
+  siwe(f) {
+    const lines = [
+      `${f.domain} wants you to sign in with your Ethereum account:`,
+      f.address,
+      '',
+    ];
+    if (f.statement) lines.push(f.statement, '');
+    lines.push(
+      `URI: ${f.uri}`,
+      'Version: 1',
+      `Chain ID: ${f.chainId}`,
+      `Nonce: ${f.nonce}`,
+      `Issued At: ${f.issuedAt}`,
+    );
+    if (f.expirationTime) lines.push(`Expiration Time: ${f.expirationTime}`);
+    if (f.notBefore) lines.push(`Not Before: ${f.notBefore}`);
+    if (f.requestId) lines.push(`Request ID: ${f.requestId}`);
+    if (f.resources && f.resources.length) {
+      lines.push('Resources:');
+      for (const r of f.resources) lines.push(`- ${r}`);
+    }
+    return lines.join('\n');
+  },
+
+  /** Alphanumeric, 8 or more, per the grammar. From the browser's own CSPRNG,
+      because a nonce that can be guessed is a nonce that can be spent. */
+  nonce() {
+    const b = new Uint8Array(16);
+    (crypto.getRandomValues ? crypto : window.crypto).getRandomValues(b);
+    return [...b].map((n) => n.toString(16).padStart(2, '0')).join('');
+  },
+
   /** The one signature. It names the site it was asked on, so a signature
       collected somewhere else cannot be spent here. */
-  async open(address, days, onState = () => {}) {
+  async open(address, days, onState = () => {}, format) {
+    /* Which sentence, decided by the room and not by the caller. Four call
+       sites ask for a sign-in and none of them should have an opinion about
+       the wire format ... one of them having a stale opinion is how the page
+       and the route come to disagree about what was signed. */
+    const use = format !== undefined ? format : this.format;
     const issued = new Date().toISOString();
-    const domain = location.hostname;
+    /* THE AUTHORITY, WHICH INCLUDES THE PORT. 4361 says `domain` is an RFC
+       3986 authority, and `location.host` is exactly that where `hostname` is
+       the authority with the port quietly removed. On mintface.art the two are
+       the same string and this reads as pedantry; anywhere with a port ... a
+       preview, a laptop ... hostname makes the domain line and the URI line
+       disagree, which is the mismatch a phone refuses and says nothing about. */
+    const domain = location.host;
     const until = new Date(Date.parse(issued) + Number(days) * 86400000).toISOString();
+    if (String(use) === '4361') {
+      /* The wallet's own spelling in the message as well as on the request.
+         4361's address line is meant to be the checksummed form, and a wallet
+         that parses the message and compares that line to its own account is
+         a wallet that will refuse a lowercase one. */
+      const spelled = await MF.spelling(address);
+      const nonce = this.nonce();
+      /* DOMAIN AND URI OUT OF ONE SOURCE.
+       *
+       * The classic 4361 failure on a phone is these two disagreeing: a domain
+       * written by hand as the apex while the wallet browser loaded www, or a
+       * URI with a scheme the page is not actually on, or one with a trailing
+       * slash the other does not have. A wallet that checks them against the
+       * origin it loaded refuses, and says nothing useful about why.
+       *
+       * They cannot disagree here, because they are the same `location`: the
+       * authority of the page, and the page. No query and no fragment ... those
+       * are not part of what is being signed in to, and a session link with a
+       * tracking parameter on it should not sign a different sentence. */
+      const uri = `${location.origin}${location.pathname}`;
+      const message = this.siwe({
+        domain,
+        address: spelled,
+        statement: 'Signing opens Studio until the expiry below. It moves nothing and spends nothing.'
+          + ' Until then this browser can speak here, and weigh your TAO on the'
+          + " studio's nudges, without asking again.",
+        uri,
+        chainId: '1',
+        nonce,
+        issuedAt: issued,
+        expirationTime: until,
+        /* Where the session is spent, named. Written out rather than built
+           from MF.ART, which is empty on mintface.art itself and would make
+           this a relative path ... which the grammar refuses, and which the
+           server would not have built the same way. Both halves say the
+           literal, and scripts/chat/test-siwe.mjs fails if they ever differ. */
+        resources: ['https://mintface.art/studio'],
+      });
+      const signature = await MF.sign(message, address, onState);
+      return this.post({ action: 'sign in', format: '4361', address, spelled, issued, until, domain, nonce, uri, signature });
+    }
     const signature = await MF.sign(
       this.sentence({ action: 'sign in', address, issued, until, domain }), address, onState);
     // the cookies come back on this answer; nothing is kept here
@@ -2982,6 +3143,7 @@ MF.nav = {
       if (had && had.address !== address) { this.me = null; this.meFor = null; this.unseen = 0; this.next = null; }
       const d = await MF.session.who(address);
       if (d && d.session_days) this.days = d.session_days;
+      if (d && d.sign_format) MF.session.format = d.sign_format;
       await MF.session.open(address, this.days, (state) => {
         if (state === 'requested') say('Check your wallet');
         if (state === 'slow') say('Still waiting');

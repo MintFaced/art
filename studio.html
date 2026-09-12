@@ -1182,6 +1182,10 @@ async function load({ bottom = false } = {}) {
   ROOM.maxTags = d.max_tags || 5;
   ROOM.maxImageKb = d.max_image_kb || 1200;
   ROOM.days = d.session_days || 7;
+  /* Which sentence the room wants signed. Set here rather than at the four
+     places that ask for a signature, so they cannot come to hold four
+     different opinions about it. */
+  if (d.sign_format) MF.session.format = d.sign_format;
   ROOM.emoji = d.emoji || ROOM.emoji;
   ROOM.rxv = d.rx || 0;
   ROOM.open = d.store !== false;

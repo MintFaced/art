@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Static site. The dependencies are for the Vercel functions in api/ only, there is no build step.",
   "scripts": {
-    "test": "node test/tao-cron.test.mjs && node scripts/tao/test-nudges.mjs && node scripts/tao/test-weigh-journey.mjs"
+    "test": "node test/tao-cron.test.mjs && node scripts/chat/test-siwe.mjs && node scripts/tao/test-nudges.mjs && node scripts/tao/test-weigh-journey.mjs"
   },
   "dependencies": {
     "@vercel/og": "^1.0.1",
