@@ -1375,12 +1375,12 @@ const MF = {
   /** What the wallet actually said, written where it can be read back. Never
       throws and never blocks: it is a note left behind a failure that has
       already been reported to the person in front of it. */
-  report(shown, raw) {
+  report(shown, raw, what) {
     if (!this.debugging()) return;
     const pick = (v) => { try { return v == null ? null : String(v).slice(0, 400); } catch (e) { return null; } };
     const body = {
       action: 'note',
-      what: 'sign',
+      what: what || 'sign',
       shown: pick(shown && shown.message),
       code: raw && (raw.code != null ? String(raw.code) : null),
       raw: pick(raw && raw.message),
@@ -1603,9 +1603,26 @@ const MF = {
          * iOS trusts those with app switches in a way it does not trust a
          * page that decided by itself. */
         const ask = provider.request({ method: 'personal_sign', params: [data, who] }, `eip155:${MF.wc.ROUTED}`);
+        /* IT WENT OUT, noted at the moment it went out rather than only if it
+           comes back badly. The difference between `the wallet refused` and
+           `the wallet never answered` is the whole diagnosis, and only one of
+           those two ever reaches a catch. */
+        this.report({ message: 'sent' }, null, 'sign-issued');
         const open = MF.touch() ? MF.wc.back() : null;
         if (open) onState('requested', null, { open, wallet: MF.wc.peerName() });
-        signature = await ask;
+        /* AND A RELAY REQUEST CANNOT WAIT FOREVER.
+         *
+         * A wallet that shows its own error and answers nothing leaves this
+         * promise pending for the life of the page: no catch runs, nothing is
+         * said, and the page sits on `approve the sign-in` over a wallet that
+         * has already given up. Three minutes is longer than anybody spends
+         * reading a sentence and short enough to be a failure somebody is
+         * still in front of. */
+        signature = await Promise.race([ask, new Promise((_, no) => setTimeout(() => {
+          const e = new Error(`${MF.wc.peerName()} never answered the signature. Open it and try again.`);
+          e.code = 'no-answer';
+          no(e);
+        }, 180000))]);
       } else {
         signature = await provider.request({ method: 'personal_sign', params: [data, who] });
       }
@@ -2240,10 +2257,22 @@ const MF = {
     const d = await MF.session.who(address).catch(() => null);
     const days = Number(d && d.session_days) || 30;
     if (d && d.sign_format) MF.session.format = d.sign_format;
-    const j = await MF.session.open(address, days, (state, why, extra) => {
-      if (state === 'requested') say('signing', extra);
-      if (state === 'slow') say('slow');
-    });
+    let j;
+    try {
+      j = await MF.session.open(address, days, (state, why, extra) => {
+        if (state === 'requested') say('signing', extra);
+        if (state === 'slow') say('slow');
+      });
+    } catch (err) {
+      /* THE WHOLE ACT, NOT JUST THE WALLET STEP. The wallet's own refusal is
+         noted where it happens; this catches everything after it ... a route
+         that would not take the signature, a message the two halves built
+         differently, a session that could not be opened ... none of which ever
+         touches the signing catch, and all of which look identical to somebody
+         holding a phone. */
+      this.report(err, err, 'sign-in');
+      throw err;
+    }
     say('done');
     return { address, until: j.until, days };
   },

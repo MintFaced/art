@@ -380,7 +380,7 @@ export async function POST(request) {
   if (action === 'note') {
     if (!storeConfigured()) return respond(request, { ok: true, kept: false });
     const keep = JSON.stringify({
-      what: String(body.what || '').slice(0, 32),
+      what: String(body.what || '').slice(0, 32),          // sign-issued | sign | sign-in
       shown: String(body.shown || '').slice(0, 400),
       code: String(body.code == null ? '' : body.code).slice(0, 64),
       raw: String(body.raw || '').slice(0, 400),
