@@ -1875,6 +1875,73 @@ const MF = {
     },
 
 
+    /* ---------- COMING BACK ----------
+     *
+     * The whole rail turns on leaving this browser and returning to it, and
+     * iOS does not leave a page running while you are gone. Safari freezes the
+     * tab; the socket to the relay goes with it. So a wallet that approves
+     * while you are looking at it publishes the approval to a relay this page
+     * is no longer listening to, and when you come back the page is still
+     * waiting for an answer that has already been given. Nothing errors.
+     * Nothing advances. It is the quietest failure in the whole flow.
+     *
+     * `connect()` does not recover from this on its own, so on return the
+     * relay is restarted and the session is looked for directly. Whichever
+     * arrives first ... the original promise or what we find on waking ... is
+     * the answer, and the loser is dropped.
+     *
+     * This lives here, once, because every surface has the same gap and none
+     * of them should have to know about it.
+     */
+    async onReturn(p, ms = 25000) {
+      const woke = [];
+      const listen = (name, fn) => { window.addEventListener(name, fn); woke.push([name, fn]); };
+      let nudge = () => {};
+      const done = () => { for (const [n, f] of woke) window.removeEventListener(n, f); };
+      /* pageshow catches a tab restored from the back/forward cache, which is
+         what Safari often hands back; visibilitychange catches the ordinary
+         app switch; focus catches the rest. All three, because which one fires
+         is not a thing to be confident about across iOS versions. */
+      const out = new Promise((settle) => {
+        nudge = () => { if (!document.hidden) settle('woke'); };
+        listen('pageshow', nudge);
+        listen('visibilitychange', nudge);
+        listen('focus', nudge);
+      });
+      const found = await Promise.race([out, new Promise((r) => setTimeout(() => r(null), ms))]);
+      done();
+      if (found !== 'woke') return null;
+      /* Back in the foreground. Put the socket up again before asking what it
+         knows, and do not let a relay that will not come back hold the page:
+         the original promise is still running underneath this. */
+      try {
+        const relayer = p && p.client && p.client.core && p.client.core.relayer;
+        if (relayer && !relayer.connected) {
+          await Promise.race([relayer.restartTransport(), new Promise((r) => setTimeout(r, 6000))]);
+        }
+      } catch (e) { /* the poll below is the part that matters */ }
+      /* And then simply look. An approval that landed while we were away is a
+         session sitting in the client's own store, whether or not the promise
+         that was waiting for it ever hears. */
+      for (let i = 0; i < 40; i += 1) {
+        const a = this.account(p);
+        if (a && this.grants(p, 'personal_sign')) return a;
+        try {
+          const all = p && p.client && p.client.session && p.client.session.getAll();
+          if (all && all.length) {
+            const live = all[all.length - 1];
+            if (live && live.topic) {
+              try { await p.setDefaultChain(`eip155:${this.ROUTED}`); } catch (e2) { /* later */ }
+              const acc = this.account(p);
+              if (acc) return acc;
+            }
+          }
+        } catch (e) { /* nothing in the store yet */ }
+        await new Promise((r) => setTimeout(r, 500));
+      }
+      return null;
+    },
+
     /**
      * Open a session, and hand the pairing out the moment the relay gives one.
      *
@@ -1903,10 +1970,11 @@ const MF = {
            ... the wallet does not come forward on its own ... and the only way
            to know which app to go to is that somebody just chose it. */
         const links = this.links(uri).map((w) => ({ ...w, choose: () => this.chose(w.name) }));
+        MF.report({ message: 'pairing handed out' }, null, 'pairing-issued');
         try { onUri && onUri(uri, links); } catch (e) { /* the caller's problem */ }
       };
       p.on('display_uri', hand);
-      await p.connect({
+      const approved = p.connect({
         namespaces: {
           eip155: {
             /* NOT eth_sign. It is the deprecated one that signs arbitrary
@@ -1915,14 +1983,32 @@ const MF = {
                that errors on the first thing it is asked to do. Nothing here
                has ever used it. */
             methods: ['personal_sign', 'eth_signTypedData', 'eth_signTypedData_v4', 'eth_sendTransaction'],
-            chains: ['eip155:1'],
+            chains: [`eip155:${this.ROUTED}`],
             events: ['chainChanged', 'accountsChanged'],
           },
         },
       });
-      const a = this.account(p);
-      if (!a) throw new Error('the wallet approved nothing');
-      try { p.setDefaultChain('eip155:1'); } catch (e) { /* it has one already */ }
+      /* WHICHEVER GETS THERE FIRST. On a desktop the promise resolves and this
+         is one line of nothing. On a phone the approval routinely lands while
+         the tab is frozen, and then coming back is the only thing that will
+         ever tell us. The promise is left running rather than cancelled: if
+         the relay does recover on its own, it resolves into a session this has
+         already found, which is harmless. */
+      approved.catch(() => {});              // the loser must not go unhandled
+      const byWaking = this.onReturn(p);
+      const a = await Promise.race([
+        approved.then(() => this.account(p)).catch(() => null),
+        byWaking,
+      ]) || this.account(p) || await byWaking;
+      if (!a) {
+        /* Neither the promise nor the return found anything. Distinguishable
+           in the notes from `it approved and we missed it`, which is the
+           whole reason the pairing is noted on its way out. */
+        MF.report({ message: 'no session after pairing and return' }, null, 'pairing-lost');
+        throw new Error('the wallet approved nothing');
+      }
+      MF.report({ message: 'session in hand' }, null, 'pairing-approved');
+      try { p.setDefaultChain(`eip155:${this.ROUTED}`); } catch (e) { /* it has one already */ }
       /* Written only once a wallet has actually approved. A pairing nobody
          answered is not something to come back to. */
       this.mark(true);
