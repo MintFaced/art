@@ -25,6 +25,9 @@
     },
     "api/cron/nudges.js": {
       "maxDuration": 60
+    },
+    "api/cron/active.js": {
+      "maxDuration": 300
     }
   },
   "redirects": [
@@ -118,6 +121,10 @@
     {
       "path": "/api/cron/nudges",
       "schedule": "0 22 * * *"
+    },
+    {
+      "path": "/api/cron/active",
+      "schedule": "30 22 * * *"
     }
   ],
   "headers": [
