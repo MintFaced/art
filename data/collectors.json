@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-09-14T21:31:04.670Z",
+ "generated": "2026-09-20T02:40:43.433Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -10,8 +10,8 @@
    "unique_per_day": 69,
    "edition_copy_per_day": 4.2
   },
-  "generated": "2026-09-14T21:31:01.000Z",
-  "wallets": 3438
+  "generated": "2026-09-20T02:40:37.000Z",
+  "wallets": 3437
  },
  "counts": {
   "collectors": 3678,
@@ -36,7 +36,7 @@
    },
    "first_collected": "2022-02-17T14:01:50.000000Z",
    "last_collected": "2026-08-21T05:06:23.000000Z",
-   "tao": 1518124,
+   "tao": 1524185,
    "tao_rate": 1162.2,
    "tao_rank": 1,
    "nudges": 2
@@ -57,7 +57,7 @@
    },
    "first_collected": "2022-06-20T08:33:17.000Z",
    "last_collected": "2025-09-08T08:30:59.000000Z",
-   "tao": 919404,
+   "tao": 923359,
    "tao_rate": 758.4,
    "tao_rank": 4,
    "nudges": 2
@@ -78,7 +78,7 @@
    },
    "first_collected": "2023-01-02T06:10:35.000000Z",
    "last_collected": "2026-08-23T01:47:11.000Z",
-   "tao": 391586,
+   "tao": 394086,
    "tao_rate": 479.4,
    "tao_rank": 15,
    "nudges": 2
@@ -99,7 +99,7 @@
    },
    "first_collected": "2022-12-07T02:43:59.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 285468,
+   "tao": 286563,
    "tao_rate": 210,
    "tao_rank": 35
   },
@@ -119,7 +119,7 @@
    },
    "first_collected": "2022-11-16T22:33:59.000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 382912,
+   "tao": 385365,
    "tao_rate": 470.4,
    "tao_rank": 16
   },
@@ -139,7 +139,7 @@
    },
    "first_collected": "2022-05-11T02:08:10.000000Z",
    "last_collected": "2025-10-18T22:16:11.000000Z",
-   "tao": 550523,
+   "tao": 554506,
    "tao_rate": 763.8,
    "tao_rank": 8
   },
@@ -159,7 +159,7 @@
    },
    "first_collected": "2022-05-12T00:09:49.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 355648,
+   "tao": 357156,
    "tao_rate": 289.2,
    "tao_rank": 20
   },
@@ -179,7 +179,7 @@
    },
    "first_collected": "2022-05-12T23:12:49.000000Z",
    "last_collected": "2026-08-21T05:19:23.000000Z",
-   "tao": 545231,
+   "tao": 548147,
    "tao_rate": 559.2,
    "tao_rank": 10,
    "nudges": 2
@@ -200,7 +200,7 @@
    },
    "first_collected": "2024-10-01T02:12:35.000000Z",
    "last_collected": "2024-10-01T02:12:35.000000Z",
-   "tao": 10647,
+   "tao": 10691,
    "tao_rate": 8.4,
    "tao_rank": 1252
   },
@@ -220,7 +220,7 @@
    },
    "first_collected": "2022-06-13T05:41:13.000000Z",
    "last_collected": "2025-06-14T23:10:35.000Z",
-   "tao": 556575,
+   "tao": 558675,
    "tao_rate": 402.6,
    "tao_rank": 7
   },
@@ -240,7 +240,7 @@
    },
    "first_collected": "2022-05-09T12:17:22.000000Z",
    "last_collected": "2023-01-16T00:17:11.000Z",
-   "tao": 367547,
+   "tao": 368871,
    "tao_rate": 253.8,
    "tao_rank": 19
   },
@@ -260,7 +260,7 @@
    },
    "first_collected": "2024-08-25T10:33:23.000000Z",
    "last_collected": "2025-04-02T02:00:47.000000Z",
-   "tao": 297559,
+   "tao": 299633,
    "tao_rate": 397.8,
    "tao_rank": 31
   },
@@ -280,7 +280,7 @@
    },
    "first_collected": "2022-05-10T05:25:59.000000Z",
    "last_collected": "2026-08-22T00:42:47.000000Z",
-   "tao": 952942,
+   "tao": 961459,
    "tao_rate": 1633.2,
    "tao_rank": 3
   },
@@ -300,7 +300,7 @@
    },
    "first_collected": "2022-08-23T01:28:09.000000Z",
    "last_collected": "2024-10-07T01:25:47.000000Z",
-   "tao": 248952,
+   "tao": 249881,
    "tao_rate": 178.2,
    "tao_rank": 42,
    "nudges": 1
@@ -321,7 +321,7 @@
    },
    "first_collected": "2022-07-13T12:04:55.000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 210624,
+   "tao": 211465,
    "tao_rate": 161.4,
    "tao_rank": 57
   },
@@ -341,9 +341,9 @@
    },
    "first_collected": "2025-08-01T20:55:23.000000Z",
    "last_collected": "2025-08-02T07:16:47.000000Z",
-   "tao": 100343,
+   "tao": 101623,
    "tao_rate": 245.4,
-   "tao_rank": 161
+   "tao_rank": 160
   },
   {
    "address": "0xc142dc5ceb96f73635d66b62bfde2a0eea4e4ce1",
@@ -361,7 +361,7 @@
    },
    "first_collected": "2022-04-22T04:36:21.000000Z",
    "last_collected": "2025-09-13T21:49:47.000000Z",
-   "tao": 297375,
+   "tao": 298436,
    "tao_rate": 203.4,
    "tao_rank": 32
   },
@@ -381,7 +381,7 @@
    },
    "first_collected": "2022-06-01T09:53:06.000000Z",
    "last_collected": "2022-12-24T04:24:59.000Z",
-   "tao": 380713,
+   "tao": 382068,
    "tao_rate": 259.8,
    "tao_rank": 17
   },
@@ -401,7 +401,7 @@
    },
    "first_collected": "2022-12-24T07:09:59.000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 299485,
+   "tao": 300677,
    "tao_rate": 228.6,
    "tao_rank": 30
   },
@@ -421,7 +421,7 @@
    },
    "first_collected": "2022-05-11T04:39:48.000000Z",
    "last_collected": "2025-04-15T21:03:11.000000Z",
-   "tao": 176941,
+   "tao": 178002,
    "tao_rate": 203.4,
    "tao_rank": 67,
    "nudges": 1
@@ -442,7 +442,7 @@
    },
    "first_collected": "2022-06-11T18:45:48.000Z",
    "last_collected": "2025-09-10T05:18:59.000000Z",
-   "tao": 548535,
+   "tao": 550732,
    "tao_rate": 421.2,
    "tao_rank": 9
   },
@@ -462,7 +462,7 @@
    },
    "first_collected": "2025-02-05T02:56:35.000000Z",
    "last_collected": "2025-02-05T02:56:35.000000Z",
-   "tao": 1012184,
+   "tao": 1021180,
    "tao_rate": 1725,
    "tao_rank": 2
   },
@@ -482,7 +482,7 @@
    },
    "first_collected": "2022-05-11T05:33:24.000000Z",
    "last_collected": "2023-04-17T06:25:11.000000Z",
-   "tao": 224915,
+   "tao": 225726,
    "tao_rate": 155.4,
    "tao_rank": 48
   },
@@ -502,7 +502,7 @@
    },
    "first_collected": "2022-05-11T03:56:30.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 529817,
+   "tao": 534354,
    "tao_rate": 870,
    "tao_rank": 12
   },
@@ -522,7 +522,7 @@
    },
    "first_collected": "2022-02-28T22:20:02.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 241878,
+   "tao": 242786,
    "tao_rate": 174,
    "tao_rank": 44
   },
@@ -542,7 +542,7 @@
    },
    "first_collected": "2022-12-25T07:09:11.000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 217125,
+   "tao": 218010,
    "tao_rate": 169.8,
    "tao_rank": 52
   },
@@ -562,7 +562,7 @@
    },
    "first_collected": "2025-09-28T10:34:35.000000Z",
    "last_collected": "2025-09-28T10:36:11.000000Z",
-   "tao": 58767,
+   "tao": 59631,
    "tao_rate": 165.6,
    "tao_rank": 261
   },
@@ -582,7 +582,7 @@
    },
    "first_collected": "2022-05-13T13:13:30.000000Z",
    "last_collected": "2023-03-19T16:32:59.000000Z",
-   "tao": 121104,
+   "tao": 121564,
    "tao_rate": 88.2,
    "tao_rank": 120
   },
@@ -602,9 +602,9 @@
    },
    "first_collected": "2025-07-21T01:21:35.000000Z",
    "last_collected": "2025-07-21T01:21:35.000Z",
-   "tao": 147967,
+   "tao": 149800,
    "tao_rate": 351.6,
-   "tao_rank": 84
+   "tao_rank": 83
   },
   {
    "address": "0xde58879de5ca41367a5093dee41f622c167b94b4",
@@ -622,7 +622,7 @@
    },
    "first_collected": "2025-07-09T00:48:47.000000Z",
    "last_collected": "2025-09-08T05:25:47.000000Z",
-   "tao": 201183,
+   "tao": 203627,
    "tao_rate": 468.6,
    "tao_rank": 61
   },
@@ -642,7 +642,7 @@
    },
    "first_collected": "2022-06-20T09:56:15.000Z",
    "last_collected": "2023-04-18T07:48:23.000000Z",
-   "tao": 332496,
+   "tao": 333675,
    "tao_rate": 226.2,
    "tao_rank": 23
   },
@@ -662,9 +662,9 @@
    },
    "first_collected": "2025-07-09T00:57:59.000000Z",
    "last_collected": "2025-09-08T05:24:23.000000Z",
-   "tao": 122946,
+   "tao": 124398,
    "tao_rate": 278.4,
-   "tao_rank": 118
+   "tao_rank": 115
   },
   {
    "address": "0xc6aef9394574777c237fc10bb122589d36d13dc7",
@@ -682,7 +682,7 @@
    },
    "first_collected": "2022-12-14T17:22:11.000Z",
    "last_collected": "2024-06-28T09:01:47.000000Z",
-   "tao": 214722,
+   "tao": 215576,
    "tao_rate": 163.8,
    "tao_rank": 54
   },
@@ -702,7 +702,7 @@
    },
    "first_collected": "2022-06-23T01:48:10.000Z",
    "last_collected": "2023-01-06T09:57:23.000000Z",
-   "tao": 253517,
+   "tao": 254458,
    "tao_rate": 180.6,
    "tao_rank": 40
   },
@@ -722,7 +722,7 @@
    },
    "first_collected": "2022-05-10T11:31:39.000000Z",
    "last_collected": "2024-06-27T08:39:59.000000Z",
-   "tao": 84599,
+   "tao": 84928,
    "tao_rate": 63,
    "tao_rank": 181
   },
@@ -742,7 +742,7 @@
    },
    "first_collected": "2022-11-24T05:09:35.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 90463,
+   "tao": 90814,
    "tao_rate": 67.2,
    "tao_rank": 178
   },
@@ -764,7 +764,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xa891fde42e982148b5f2f6b06f04be8e706a190e",
@@ -784,7 +784,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x33a34e27a81436ba9d79276406a285e89a8bd8a8",
@@ -802,7 +802,7 @@
    },
    "first_collected": "2022-12-14T19:15:11.000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 257572,
+   "tao": 259024,
    "tao_rate": 278.4,
    "tao_rank": 39
   },
@@ -822,9 +822,9 @@
    },
    "first_collected": "2023-10-29T17:22:11.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 69676,
+   "tao": 70027,
    "tao_rate": 67.2,
-   "tao_rank": 217
+   "tao_rank": 216
   },
   {
    "address": "0xeeaf3bd19ebe8823abcc994538a930ee37a6dd3b",
@@ -842,7 +842,7 @@
    },
    "first_collected": "2022-09-25T09:51:35.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 186400,
+   "tao": 187088,
    "tao_rate": 132,
    "tao_rank": 64
   },
@@ -862,7 +862,7 @@
    },
    "first_collected": "2022-05-09T12:42:58.000000Z",
    "last_collected": "2023-03-30T10:49:11.000000Z",
-   "tao": 126001,
+   "tao": 126461,
    "tao_rate": 88.2,
    "tao_rank": 113
   },
@@ -882,7 +882,7 @@
    },
    "first_collected": "2022-07-09T04:02:09.000Z",
    "last_collected": "2023-10-25T05:20:11.000000Z",
-   "tao": 131750,
+   "tao": 132231,
    "tao_rate": 92.4,
    "tao_rank": 105
   },
@@ -902,7 +902,7 @@
    },
    "first_collected": "2022-10-13T23:38:35.000Z",
    "last_collected": "2024-12-19T16:44:47.000000Z",
-   "tao": 83117,
+   "tao": 83445,
    "tao_rate": 63,
    "tao_rank": 186
   },
@@ -922,7 +922,7 @@
    },
    "first_collected": "2022-04-21T12:09:44.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 322112,
+   "tao": 323401,
    "tao_rate": 247.2,
    "tao_rank": 25
   },
@@ -942,7 +942,7 @@
    },
    "first_collected": "2022-08-11T08:39:26.000000Z",
    "last_collected": "2022-12-27T06:54:59.000000Z",
-   "tao": 215612,
+   "tao": 216388,
    "tao_rate": 148.8,
    "tao_rank": 53
   },
@@ -962,7 +962,7 @@
    },
    "first_collected": "2022-12-30T00:11:11.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 177860,
+   "tao": 178570,
    "tao_rate": 136.2,
    "tao_rank": 66
   },
@@ -984,7 +984,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xfcab2f0f8e64bbda95e1c65d368e6cb22bc5a808",
@@ -1002,7 +1002,7 @@
    },
    "first_collected": "2022-12-01T02:49:59.000Z",
    "last_collected": "2023-01-01T05:44:23.000000Z",
-   "tao": 92147,
+   "tao": 92498,
    "tao_rate": 67.2,
    "tao_rank": 176
   },
@@ -1022,7 +1022,7 @@
    },
    "first_collected": "2022-05-09T23:21:22.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 173489,
+   "tao": 174177,
    "tao_rate": 132,
    "tao_rank": 71
   },
@@ -1042,7 +1042,7 @@
    },
    "first_collected": "2022-05-28T05:36:57.000000Z",
    "last_collected": "2024-10-01T02:12:35.000000Z",
-   "tao": 144852,
+   "tao": 145400,
    "tao_rate": 105,
    "tao_rank": 88
   },
@@ -1062,7 +1062,7 @@
    },
    "first_collected": "2022-05-27T05:58:09.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 99084,
+   "tao": 99478,
    "tao_rate": 75.6,
    "tao_rank": 163
   },
@@ -1082,7 +1082,7 @@
    },
    "first_collected": "2022-08-03T00:24:09.000000Z",
    "last_collected": "2025-09-08T04:53:35.000Z",
-   "tao": 535539,
+   "tao": 537730,
    "tao_rate": 420,
    "tao_rank": 11
   },
@@ -1102,7 +1102,7 @@
    },
    "first_collected": "2023-01-21T18:18:35.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 273264,
+   "tao": 274356,
    "tao_rate": 209.4,
    "tao_rank": 36
   },
@@ -1122,7 +1122,7 @@
    },
    "first_collected": "2022-12-27T08:04:59.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 184323,
+   "tao": 185055,
    "tao_rate": 140.4,
    "tao_rank": 65
   },
@@ -1142,7 +1142,7 @@
    },
    "first_collected": "2022-02-21T04:10:08.000000Z",
    "last_collected": "2023-01-15T23:51:11.000000Z",
-   "tao": 212312,
+   "tao": 213022,
    "tao_rate": 136.2,
    "tao_rank": 55
   },
@@ -1162,7 +1162,7 @@
    },
    "first_collected": "2022-02-17T13:28:23.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 207613,
+   "tao": 208302,
    "tao_rate": 132,
    "tao_rank": 58
   },
@@ -1182,7 +1182,7 @@
    },
    "first_collected": "2025-01-25T13:32:35.000Z",
    "last_collected": "2025-02-17T00:19:11.000000Z",
-   "tao": 36883,
+   "tao": 37211,
    "tao_rate": 63,
    "tao_rank": 346
   },
@@ -1202,7 +1202,7 @@
    },
    "first_collected": "2022-09-26T09:38:35.000Z",
    "last_collected": "2025-04-26T14:07:23.000000Z",
-   "tao": 79638,
+   "tao": 79944,
    "tao_rate": 58.8,
    "tao_rank": 196
   },
@@ -1222,9 +1222,9 @@
    },
    "first_collected": "2023-08-13T18:49:11.000000Z",
    "last_collected": "2024-10-07T04:15:35.000000Z",
-   "tao": 25543,
+   "tao": 25675,
    "tao_rate": 25.2,
-   "tao_rank": 416
+   "tao_rank": 415
   },
   {
    "address": "0xa20377b058e3e7fddf5ec14e8f64b17b9c8e744f",
@@ -1242,7 +1242,7 @@
    },
    "first_collected": "2022-05-13T04:33:39.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 62491,
+   "tao": 62732,
    "tao_rate": 46.2,
    "tao_rank": 253
   },
@@ -1262,7 +1262,7 @@
    },
    "first_collected": "2023-01-01T08:10:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 108435,
+   "tao": 108873,
    "tao_rate": 84,
    "tao_rank": 141
   },
@@ -1282,7 +1282,7 @@
    },
    "first_collected": "2022-05-09T02:51:50.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 102453,
+   "tao": 102825,
    "tao_rate": 71.4,
    "tao_rank": 155
   },
@@ -1302,7 +1302,7 @@
    },
    "first_collected": "2023-01-21T10:19:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 469083,
+   "tao": 470939,
    "tao_rate": 355.8,
    "tao_rank": 14
   },
@@ -1322,9 +1322,9 @@
    },
    "first_collected": "2025-11-05T02:31:11.000000Z",
    "last_collected": "2025-11-05T02:35:59.000Z",
-   "tao": 109010,
+   "tao": 110821,
    "tao_rate": 347.4,
-   "tao_rank": 139
+   "tao_rank": 135
   },
   {
    "address": "0xf52a30142877e3b7d30f3f6bb2c6bc55b8888710",
@@ -1342,7 +1342,7 @@
    },
    "first_collected": "2022-12-24T04:24:59.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 150058,
+   "tao": 150659,
    "tao_rate": 115.2,
    "tao_rank": 81
   },
@@ -1362,9 +1362,9 @@
    },
    "first_collected": "2025-11-07T07:30:47.000Z",
    "last_collected": "2026-02-28T16:24:59.000Z",
-   "tao": 29664,
+   "tao": 30233,
    "tao_rate": 109.2,
-   "tao_rank": 388
+   "tao_rank": 385
   },
   {
    "address": "0x2777129e77c1ccf6c6987117bacfadcbd573f3a9",
@@ -1382,7 +1382,7 @@
    },
    "first_collected": "2023-01-13T08:48:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 69546,
+   "tao": 69831,
    "tao_rate": 54.6,
    "tao_rank": 218
   },
@@ -1402,7 +1402,7 @@
    },
    "first_collected": "2023-09-18T01:13:35.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 131818,
+   "tao": 132454,
    "tao_rate": 121.8,
    "tao_rank": 104
   },
@@ -1422,7 +1422,7 @@
    },
    "first_collected": "2022-12-14T19:19:23.000Z",
    "last_collected": "2025-06-07T18:28:11.000000Z",
-   "tao": 97191,
+   "tao": 97651,
    "tao_rate": 88.2,
    "tao_rank": 167
   },
@@ -1442,7 +1442,7 @@
    },
    "first_collected": "2022-06-18T05:36:49.000Z",
    "last_collected": "2023-01-04T15:46:35.000000Z",
-   "tao": 145780,
+   "tao": 146328,
    "tao_rate": 105,
    "tao_rank": 87
   },
@@ -1462,7 +1462,7 @@
    },
    "first_collected": "2022-06-18T11:32:29.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 126960,
+   "tao": 127420,
    "tao_rate": 88.2,
    "tao_rank": 112
   },
@@ -1482,7 +1482,7 @@
    },
    "first_collected": "2022-12-14T19:15:59.000Z",
    "last_collected": "2025-05-28T18:30:11.000000Z",
-   "tao": 351504,
+   "tao": 354787,
    "tao_rate": 629.4,
    "tao_rank": 21
   },
@@ -1502,7 +1502,7 @@
    },
    "first_collected": "2023-01-21T05:36:35.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 475326,
+   "tao": 477203,
    "tao_rate": 360,
    "tao_rank": 13
   },
@@ -1522,7 +1522,7 @@
    },
    "first_collected": "2022-04-30T22:40:44.000Z",
    "last_collected": "2025-03-21T04:10:11.000000Z",
-   "tao": 260667,
+   "tao": 261605,
    "tao_rate": 180,
    "tao_rank": 38
   },
@@ -1542,7 +1542,7 @@
    },
    "first_collected": "2023-01-03T06:41:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 154587,
+   "tao": 155200,
    "tao_rate": 117.6,
    "tao_rank": 79
   },
@@ -1562,9 +1562,9 @@
    },
    "first_collected": "2022-05-27T10:44:00.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 85923,
+   "tao": 86229,
    "tao_rate": 58.8,
-   "tao_rank": 179
+   "tao_rank": 180
   },
   {
    "address": "0xdf36b093cbc06522b68105c3d9141db188e980b6",
@@ -1582,7 +1582,7 @@
    },
    "first_collected": "2022-07-11T04:53:37.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 79387,
+   "tao": 79693,
    "tao_rate": 58.8,
    "tao_rank": 197
   },
@@ -1602,7 +1602,7 @@
    },
    "first_collected": "2022-05-10T06:17:09.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 61942,
+   "tao": 62161,
    "tao_rate": 42,
    "tao_rank": 256
   },
@@ -1622,7 +1622,7 @@
    },
    "first_collected": "2023-01-04T07:46:47.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 54916,
+   "tao": 55157,
    "tao_rate": 46.2,
    "tao_rank": 284
   },
@@ -1642,7 +1642,7 @@
    },
    "first_collected": "2022-05-10T20:15:24.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 53760,
+   "tao": 53957,
    "tao_rate": 37.8,
    "tao_rank": 285
   },
@@ -1662,9 +1662,9 @@
    },
    "first_collected": "2025-12-25T16:55:11.000000Z",
    "last_collected": "2026-02-12T03:58:59.000000Z",
-   "tao": 15272,
+   "tao": 15578,
    "tao_rate": 58.8,
-   "tao_rank": 595
+   "tao_rank": 592
   },
   {
    "address": "0x376e451f04863508a7dce0b993354520e9acee71",
@@ -1682,9 +1682,9 @@
    },
    "first_collected": "2022-07-09T01:46:35.000Z",
    "last_collected": "2022-12-28T12:00:23.000000Z",
-   "tao": 123874,
+   "tao": 124334,
    "tao_rate": 88.2,
-   "tao_rank": 115
+   "tao_rank": 116
   },
   {
    "address": "0x39cc9c86e67baf2129b80fe3414c397492ea8026",
@@ -1702,7 +1702,7 @@
    },
    "first_collected": "2022-06-12T01:19:48.000Z",
    "last_collected": "2025-07-09T00:21:59.000000Z",
-   "tao": 70826,
+   "tao": 71176,
    "tao_rate": 67.2,
    "tao_rank": 213
   },
@@ -1724,7 +1724,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x3d91ad906c3969f86c588c988f721d5a735c6f81",
@@ -1742,9 +1742,9 @@
    },
    "first_collected": "2024-04-20T21:20:35.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 174496,
+   "tao": 175795,
    "tao_rate": 249,
-   "tao_rank": 68
+   "tao_rank": 69
   },
   {
    "address": "0x91cb1ff4322559a5c5c67dba075ab081c255ba1f",
@@ -1762,7 +1762,7 @@
    },
    "first_collected": "2022-10-14T03:11:47.000Z",
    "last_collected": "2026-08-21T04:56:11.000000Z",
-   "tao": 155843,
+   "tao": 156804,
    "tao_rate": 184.2,
    "tao_rank": 78,
    "nudges": 1
@@ -1783,7 +1783,7 @@
    },
    "first_collected": "2022-02-19T02:39:41.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 265544,
+   "tao": 266439,
    "tao_rate": 171.6,
    "tao_rank": 37
   },
@@ -1803,7 +1803,7 @@
    },
    "first_collected": "2023-01-21T17:31:35.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 252470,
+   "tao": 253475,
    "tao_rate": 192.6,
    "tao_rank": 41
   },
@@ -1823,9 +1823,9 @@
    },
    "first_collected": "2022-09-25T10:45:59.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 148948,
+   "tao": 149505,
    "tao_rate": 106.8,
-   "tao_rank": 83
+   "tao_rank": 84
   },
   {
    "address": "0xe874ba46982d7cbab5931a50c2dc81a7aeb80344",
@@ -1843,7 +1843,7 @@
    },
    "first_collected": "2022-07-10T23:29:18.000Z",
    "last_collected": "2025-04-01T23:06:47.000000Z",
-   "tao": 112019,
+   "tao": 112554,
    "tao_rate": 102.6,
    "tao_rank": 134
   },
@@ -1863,7 +1863,7 @@
    },
    "first_collected": "2022-07-10T04:34:56.000Z",
    "last_collected": "2022-12-27T03:09:23.000000Z",
-   "tao": 157776,
+   "tao": 158367,
    "tao_rate": 113.4,
    "tao_rank": 76
   },
@@ -1883,7 +1883,7 @@
    },
    "first_collected": "2022-07-09T18:32:51.000Z",
    "last_collected": "2025-04-04T03:36:59.000000Z",
-   "tao": 82885,
+   "tao": 83213,
    "tao_rate": 63,
    "tao_rank": 187
   },
@@ -1903,7 +1903,7 @@
    },
    "first_collected": "2022-09-25T09:13:47.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 56174,
+   "tao": 56393,
    "tao_rate": 42,
    "tao_rank": 281
   },
@@ -1923,7 +1923,7 @@
    },
    "first_collected": "2022-11-18T19:05:35.000Z",
    "last_collected": "2022-11-18T19:05:35.000Z",
-   "tao": 5863,
+   "tao": 5885,
    "tao_rate": 4.2,
    "tao_rank": 2354
   },
@@ -1943,9 +1943,9 @@
    },
    "first_collected": "2025-08-06T05:11:47.000000Z",
    "last_collected": "2025-09-08T05:26:59.000000Z",
-   "tao": 174197,
+   "tao": 176444,
    "tao_rate": 430.8,
-   "tao_rank": 69
+   "tao_rank": 68
   },
   {
    "address": "0xfa977a0125c16a658a59ca1e59c7c48d58142226",
@@ -1963,7 +1963,7 @@
    },
    "first_collected": "2022-12-12T11:54:11.000Z",
    "last_collected": "2025-03-12T21:15:23.000Z",
-   "tao": 173630,
+   "tao": 174863,
    "tao_rate": 236.4,
    "tao_rank": 70
   },
@@ -1983,7 +1983,7 @@
    },
    "first_collected": "2022-02-17T18:52:56.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 295742,
+   "tao": 296931,
    "tao_rate": 228,
    "tao_rank": 34
   },
@@ -2003,7 +2003,7 @@
    },
    "first_collected": "2022-02-19T01:49:14.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 222958,
+   "tao": 223809,
    "tao_rate": 163.2,
    "tao_rank": 49
   },
@@ -2023,7 +2023,7 @@
    },
    "first_collected": "2022-05-20T03:28:49.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 128260,
+   "tao": 129177,
    "tao_rate": 175.8,
    "tao_rank": 109
   },
@@ -2043,7 +2043,7 @@
    },
    "first_collected": "2022-02-19T02:13:29.000000Z",
    "last_collected": "2022-11-02T12:52:11.000Z",
-   "tao": 198779,
+   "tao": 199424,
    "tao_rate": 123.6,
    "tao_rank": 62
   },
@@ -2063,7 +2063,7 @@
    },
    "first_collected": "2023-01-05T19:07:23.000Z",
    "last_collected": "2026-04-18T17:32:11.000000Z",
-   "tao": 20693,
+   "tao": 20890,
    "tao_rate": 37.8,
    "tao_rank": 482
   },
@@ -2083,7 +2083,7 @@
    },
    "first_collected": "2023-01-23T08:40:11.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 145862,
+   "tao": 146463,
    "tao_rate": 115.2,
    "tao_rank": 86
   },
@@ -2103,7 +2103,7 @@
    },
    "first_collected": "2022-05-09T10:13:16.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 55361,
+   "tao": 55558,
    "tao_rate": 37.8,
    "tao_rank": 283
   },
@@ -2123,7 +2123,7 @@
    },
    "first_collected": "2023-01-23T23:01:11.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 138292,
+   "tao": 138849,
    "tao_rate": 106.8,
    "tao_rank": 91
   },
@@ -2143,7 +2143,7 @@
    },
    "first_collected": "2022-05-28T08:21:12.000000Z",
    "last_collected": "2022-12-24T10:18:11.000Z",
-   "tao": 72514,
+   "tao": 72777,
    "tao_rate": 50.4,
    "tao_rank": 209
   },
@@ -2163,7 +2163,7 @@
    },
    "first_collected": "2022-11-29T09:18:35.000Z",
    "last_collected": "2022-12-24T07:19:47.000Z",
-   "tao": 74882,
+   "tao": 75167,
    "tao_rate": 54.6,
    "tao_rank": 203
   },
@@ -2183,9 +2183,9 @@
    },
    "first_collected": "2022-07-11T12:06:00.000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 102003,
+   "tao": 102375,
    "tao_rate": 71.4,
-   "tao_rank": 157
+   "tao_rank": 158
   },
   {
    "address": "0xc97958ff5370c56b7e0e6fb58437f00702714d49",
@@ -2203,7 +2203,7 @@
    },
    "first_collected": "2022-07-09T01:15:58.000Z",
    "last_collected": "2022-12-02T17:11:35.000Z",
-   "tao": 643863,
+   "tao": 646110,
    "tao_rate": 430.8,
    "tao_rank": 5
   },
@@ -2223,7 +2223,7 @@
    },
    "first_collected": "2025-08-01T01:24:23.000000Z",
    "last_collected": "2025-08-01T01:24:23.000Z",
-   "tao": 68606,
+   "tao": 69479,
    "tao_rate": 167.4,
    "tao_rank": 219
   },
@@ -2243,7 +2243,7 @@
    },
    "first_collected": "2023-01-21T11:10:35.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 132930,
+   "tao": 133465,
    "tao_rate": 102.6,
    "tao_rank": 99
   },
@@ -2263,7 +2263,7 @@
    },
    "first_collected": "2023-01-22T06:12:59.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 138425,
+   "tao": 138982,
    "tao_rate": 106.8,
    "tao_rank": 90
   },
@@ -2283,9 +2283,9 @@
    },
    "first_collected": "2026-08-23T05:21:23.000Z",
    "last_collected": "2026-08-23T05:25:47.000000Z",
-   "tao": 2326,
+   "tao": 2861,
    "tao_rate": 102.6,
-   "tao_rank": 2965
+   "tao_rank": 2806
   },
   {
    "address": "0x7b0546d5847f5d6b2f0702e9e71ac0c371d54dca",
@@ -2303,7 +2303,7 @@
    },
    "first_collected": "2023-01-21T07:24:59.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 132931,
+   "tao": 133466,
    "tao_rate": 102.6,
    "tao_rank": 98
   },
@@ -2323,7 +2323,7 @@
    },
    "first_collected": "2023-01-21T12:14:59.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 132930,
+   "tao": 133465,
    "tao_rate": 102.6,
    "tao_rank": 99
   },
@@ -2343,7 +2343,7 @@
    },
    "first_collected": "2022-12-30T11:20:11.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 52993,
+   "tao": 53212,
    "tao_rate": 42,
    "tao_rank": 286
   },
@@ -2363,7 +2363,7 @@
    },
    "first_collected": "2023-01-21T23:24:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 132926,
+   "tao": 133461,
    "tao_rate": 102.6,
    "tao_rank": 103
   },
@@ -2383,7 +2383,7 @@
    },
    "first_collected": "2023-01-21T11:39:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 132930,
+   "tao": 133465,
    "tao_rate": 102.6,
    "tao_rank": 99
   },
@@ -2403,7 +2403,7 @@
    },
    "first_collected": "2022-05-13T15:09:23.000000Z",
    "last_collected": "2025-04-01T23:16:23.000000Z",
-   "tao": 108089,
+   "tao": 108690,
    "tao_rate": 115.2,
    "tao_rank": 142
   },
@@ -2423,7 +2423,7 @@
    },
    "first_collected": "2023-01-21T21:34:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 132928,
+   "tao": 133463,
    "tao_rate": 102.6,
    "tao_rank": 102
   },
@@ -2443,7 +2443,7 @@
    },
    "first_collected": "2022-02-17T11:33:57.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 165253,
+   "tao": 165788,
    "tao_rate": 102.6,
    "tao_rank": 73
   },
@@ -2463,7 +2463,7 @@
    },
    "first_collected": "2022-02-17T11:52:55.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 151887,
+   "tao": 152378,
    "tao_rate": 94.2,
    "tao_rank": 80
   },
@@ -2483,9 +2483,9 @@
    },
    "first_collected": "2022-06-22T02:01:41.000Z",
    "last_collected": "2025-08-02T02:27:11.000000Z",
-   "tao": 49237,
+   "tao": 49434,
    "tao_rate": 37.8,
-   "tao_rank": 292
+   "tao_rank": 293
   },
   {
    "address": "0x6ecae358e99dfdd1abe900bebe5f775431c12324",
@@ -2503,7 +2503,7 @@
    },
    "first_collected": "2022-06-06T23:00:55.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 84232,
+   "tao": 84538,
    "tao_rate": 58.8,
    "tao_rank": 182
   },
@@ -2523,9 +2523,9 @@
    },
    "first_collected": "2022-05-12T20:16:16.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 76915,
+   "tao": 77178,
    "tao_rate": 50.4,
-   "tao_rank": 201
+   "tao_rank": 202
   },
   {
    "address": "0xaec3f7e735505c2b787b05d67f4adaefe3dfd678",
@@ -2543,7 +2543,7 @@
    },
    "first_collected": "2022-05-09T00:47:31.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 71616,
+   "tao": 71879,
    "tao_rate": 50.4,
    "tao_rank": 211
   },
@@ -2563,9 +2563,9 @@
    },
    "first_collected": "2022-07-09T01:43:06.000Z",
    "last_collected": "2026-05-15T22:31:23.000000Z",
-   "tao": 62172,
+   "tao": 62435,
    "tao_rate": 50.4,
-   "tao_rank": 255
+   "tao_rank": 254
   },
   {
    "address": "0x665654f2d2a151be2d0f8e3697e6ce780f732af2",
@@ -2583,7 +2583,7 @@
    },
    "first_collected": "2023-01-10T19:56:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 46601,
+   "tao": 46798,
    "tao_rate": 37.8,
    "tao_rank": 301
   },
@@ -2603,7 +2603,7 @@
    },
    "first_collected": "2022-09-26T00:08:23.000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 48916,
+   "tao": 49113,
    "tao_rate": 37.8,
    "tao_rank": 294
   },
@@ -2623,7 +2623,7 @@
    },
    "first_collected": "2022-12-27T06:46:35.000000Z",
    "last_collected": "2022-12-28T01:00:11.000000Z",
-   "tao": 296539,
+   "tao": 297678,
    "tao_rate": 218.4,
    "tao_rank": 33
   },
@@ -2643,7 +2643,7 @@
    },
    "first_collected": "2022-08-30T01:07:18.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 59496,
+   "tao": 59715,
    "tao_rate": 42,
    "tao_rank": 260
   },
@@ -2663,7 +2663,7 @@
    },
    "first_collected": "2022-06-17T19:02:04.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 97687,
+   "tao": 98037,
    "tao_rate": 67.2,
    "tao_rank": 166
   },
@@ -2683,9 +2683,9 @@
    },
    "first_collected": "2024-08-16T01:26:59.000000Z",
    "last_collected": "2025-10-11T07:23:11.000000Z",
-   "tao": 115442,
+   "tao": 117101,
    "tao_rate": 318,
-   "tao_rank": 126
+   "tao_rank": 125
   },
   {
    "address": "0xef5ab90a44b68d4f5e3f6be6af4bedb12cd2c66e",
@@ -2703,7 +2703,7 @@
    },
    "first_collected": "2022-02-21T04:08:23.000000Z",
    "last_collected": "2022-08-12T01:14:32.000000Z",
-   "tao": 350493,
+   "tao": 351682,
    "tao_rate": 228,
    "tao_rank": 22
   },
@@ -2723,7 +2723,7 @@
    },
    "first_collected": "2024-06-27T05:57:59.000000Z",
    "last_collected": "2025-05-10T08:20:11.000000Z",
-   "tao": 101300,
+   "tao": 102173,
    "tao_rate": 167.4,
    "tao_rank": 159
   },
@@ -2743,7 +2743,7 @@
    },
    "first_collected": "2022-08-29T03:11:07.000000Z",
    "last_collected": "2022-12-24T21:46:59.000Z",
-   "tao": 239114,
+   "tao": 239966,
    "tao_rate": 163.2,
    "tao_rank": 45
   },
@@ -2763,7 +2763,7 @@
    },
    "first_collected": "2022-05-28T20:04:44.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 48257,
+   "tao": 48433,
    "tao_rate": 33.6,
    "tao_rank": 295
   },
@@ -2783,7 +2783,7 @@
    },
    "first_collected": "2022-12-03T09:08:59.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 46305,
+   "tao": 46480,
    "tao_rate": 33.6,
    "tao_rank": 302
   },
@@ -2803,7 +2803,7 @@
    },
    "first_collected": "2022-10-14T02:48:11.000Z",
    "last_collected": "2022-12-27T11:37:23.000000Z",
-   "tao": 46192,
+   "tao": 46367,
    "tao_rate": 33.6,
    "tao_rank": 303
   },
@@ -2823,7 +2823,7 @@
    },
    "first_collected": "2023-01-01T16:37:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 41611,
+   "tao": 41786,
    "tao_rate": 33.6,
    "tao_rank": 321
   },
@@ -2843,9 +2843,9 @@
    },
    "first_collected": "2022-10-15T07:22:11.000Z",
    "last_collected": "2024-12-08T18:07:35.000000Z",
-   "tao": 29734,
+   "tao": 29866,
    "tao_rate": 25.2,
-   "tao_rank": 387
+   "tao_rank": 388
   },
   {
    "address": "0x82cab9c4cfddc6ac54c988743e713a81234d2399",
@@ -2863,9 +2863,9 @@
    },
    "first_collected": "2022-06-22T06:05:48.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 43144,
+   "tao": 43298,
    "tao_rate": 29.4,
-   "tao_rank": 312
+   "tao_rank": 313
   },
   {
    "address": "0xa16977865ab1e2eeab1068e71890b36de4bf95f3",
@@ -2883,7 +2883,7 @@
    },
    "first_collected": "2022-06-14T06:22:39.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 102443,
+   "tao": 102793,
    "tao_rate": 67.2,
    "tao_rank": 156
   },
@@ -2903,7 +2903,7 @@
    },
    "first_collected": "2022-04-23T03:04:13.000000Z",
    "last_collected": "2025-01-07T05:01:23.000000Z",
-   "tao": 40944,
+   "tao": 41141,
    "tao_rate": 37.8,
    "tao_rank": 329
   },
@@ -2923,9 +2923,9 @@
    },
    "first_collected": "2023-01-02T14:24:11.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 41244,
+   "tao": 41419,
    "tao_rate": 33.6,
-   "tao_rank": 326
+   "tao_rank": 325
   },
   {
    "address": "0xd5df3f5022572f461459fc62dbbfaa54191fc551",
@@ -2943,9 +2943,9 @@
    },
    "first_collected": "2022-05-13T21:18:42.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 41426,
+   "tao": 41579,
    "tao_rate": 29.4,
-   "tao_rank": 323
+   "tao_rank": 324
   },
   {
    "address": "0xa86d8add58edf1e77a20c6edea06de34465ec98e",
@@ -2963,7 +2963,7 @@
    },
    "first_collected": "2022-10-15T04:53:35.000Z",
    "last_collected": "2023-12-15T01:11:47.000000Z",
-   "tao": 45424,
+   "tao": 45599,
    "tao_rate": 33.6,
    "tao_rank": 306
   },
@@ -2983,7 +2983,7 @@
    },
    "first_collected": "2022-07-09T11:03:00.000Z",
    "last_collected": "2025-09-12T20:09:59.000000Z",
-   "tao": 31592,
+   "tao": 31724,
    "tao_rate": 25.2,
    "tao_rank": 374
   },
@@ -3003,7 +3003,7 @@
    },
    "first_collected": "2022-10-07T17:59:23.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 52174,
+   "tao": 52371,
    "tao_rate": 37.8,
    "tao_rank": 287
   },
@@ -3023,9 +3023,9 @@
    },
    "first_collected": "2022-08-18T03:09:22.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 36174,
+   "tao": 36306,
    "tao_rate": 25.2,
-   "tao_rank": 352
+   "tao_rank": 353
   },
   {
    "address": "0x91e8be20d0dfb2293b97317e906223c1fa833a48",
@@ -3043,9 +3043,9 @@
    },
    "first_collected": "2022-02-18T10:49:06.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 41257,
+   "tao": 41410,
    "tao_rate": 29.4,
-   "tao_rank": 325
+   "tao_rank": 326
   },
   {
    "address": "0xc85b3cbf81e63e0524717efc4e53dc12658b1fc5",
@@ -3063,7 +3063,7 @@
    },
    "first_collected": "2022-05-13T04:50:03.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 36153,
+   "tao": 36285,
    "tao_rate": 25.2,
    "tao_rank": 354
   },
@@ -3083,7 +3083,7 @@
    },
    "first_collected": "2022-07-13T04:44:51.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 67353,
+   "tao": 67594,
    "tao_rate": 46.2,
    "tao_rank": 247
   },
@@ -3103,9 +3103,9 @@
    },
    "first_collected": "2022-12-17T00:40:11.000Z",
    "last_collected": "2022-12-17T00:40:11.000Z",
-   "tao": 5745,
+   "tao": 5766,
    "tao_rate": 4.2,
-   "tao_rank": 2403
+   "tao_rank": 2404
   },
   {
    "address": "0x436a257ab8f9d8579594f493ffb81fa5245ada26",
@@ -3123,7 +3123,7 @@
    },
    "first_collected": "2022-02-17T03:43:40.000000Z",
    "last_collected": "2022-07-09T00:48:11.000Z",
-   "tao": 372709,
+   "tao": 373876,
    "tao_rate": 223.8,
    "tao_rank": 18
   },
@@ -3143,7 +3143,7 @@
    },
    "first_collected": "2022-02-17T10:28:51.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 243226,
+   "tao": 244033,
    "tao_rate": 154.8,
    "tao_rank": 43
   },
@@ -3163,7 +3163,7 @@
    },
    "first_collected": "2022-04-21T13:35:30.000000Z",
    "last_collected": "2022-08-31T22:21:06.000Z",
-   "tao": 156659,
+   "tao": 157172,
    "tao_rate": 98.4,
    "tao_rank": 77
   },
@@ -3183,9 +3183,9 @@
    },
    "first_collected": "2024-10-20T22:26:59.000000Z",
    "last_collected": "2025-12-02T22:31:35.000000Z",
-   "tao": 39260,
+   "tao": 39774,
    "tao_rate": 98.4,
-   "tao_rank": 341
+   "tao_rank": 340
   },
   {
    "address": "0xc99360f97475dcd02cbaa1940e0e6a2cb67186c8",
@@ -3203,7 +3203,7 @@
    },
    "first_collected": "2022-06-18T09:23:36.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 24027,
+   "tao": 24115,
    "tao_rate": 16.8,
    "tao_rank": 453
   },
@@ -3223,7 +3223,7 @@
    },
    "first_collected": "2022-02-17T11:37:18.000000Z",
    "last_collected": "2022-09-24T06:32:35.000Z",
-   "tao": 160122,
+   "tao": 160635,
    "tao_rate": 98.4,
    "tao_rank": 75
   },
@@ -3243,7 +3243,7 @@
    },
    "first_collected": "2022-08-23T03:34:39.000Z",
    "last_collected": "2023-01-02T02:52:59.000000Z",
-   "tao": 137075,
+   "tao": 137566,
    "tao_rate": 94.2,
    "tao_rank": 94
   },
@@ -3263,7 +3263,7 @@
    },
    "first_collected": "2022-05-13T11:57:38.000000Z",
    "last_collected": "2023-06-06T04:34:59.000000Z",
-   "tao": 140770,
+   "tao": 141349,
    "tao_rate": 111,
    "tao_rank": 89
   },
@@ -3283,7 +3283,7 @@
    },
    "first_collected": "2022-12-27T13:31:35.000000Z",
    "last_collected": "2023-01-02T00:37:47.000000Z",
-   "tao": 51245,
+   "tao": 51442,
    "tao_rate": 37.8,
    "tao_rank": 290
   },
@@ -3303,9 +3303,9 @@
    },
    "first_collected": "2025-11-29T01:22:59.000Z",
    "last_collected": "2026-02-11T22:35:59.000Z",
-   "tao": 7343,
+   "tao": 7496,
    "tao_rate": 29.4,
-   "tao_rank": 1304
+   "tao_rank": 1300
   },
   {
    "address": "0x32d53a21813debfcb33a2b1ff2a396bd3a06f818",
@@ -3323,7 +3323,7 @@
    },
    "first_collected": "2022-06-19T12:31:11.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 70987,
+   "tao": 71228,
    "tao_rate": 46.2,
    "tao_rank": 212
   },
@@ -3343,9 +3343,9 @@
    },
    "first_collected": "2025-07-24T19:05:35.000Z",
    "last_collected": "2025-10-16T10:45:47.000Z",
-   "tao": 17696,
+   "tao": 17937,
    "tao_rate": 46.2,
-   "tao_rank": 556
+   "tao_rank": 552
   },
   {
    "address": "0xb814f14996dd967a04e858ebe36120784ced4e36",
@@ -3363,9 +3363,9 @@
    },
    "first_collected": "2026-01-25T14:40:35.000Z",
    "last_collected": "2026-07-18T19:08:47.000Z",
-   "tao": 6133,
+   "tao": 6352,
    "tao_rate": 42,
-   "tao_rank": 2284
+   "tao_rank": 2249
   },
   {
    "address": "0xc0efdd2b7616b1a469d5fc05dcc90f29647f03b2",
@@ -3383,7 +3383,7 @@
    },
    "first_collected": "2022-06-07T03:41:32.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 60659,
+   "tao": 60878,
    "tao_rate": 42,
    "tao_rank": 259
   },
@@ -3403,7 +3403,7 @@
    },
    "first_collected": "2022-05-10T17:04:51.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 98654,
+   "tao": 99027,
    "tao_rate": 71.4,
    "tao_rank": 164
   },
@@ -3423,7 +3423,7 @@
    },
    "first_collected": "2022-02-26T06:23:17.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 38216,
+   "tao": 38347,
    "tao_rate": 25.2,
    "tao_rank": 342
   },
@@ -3443,7 +3443,7 @@
    },
    "first_collected": "2022-05-27T11:48:54.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 36525,
+   "tao": 36657,
    "tao_rate": 25.2,
    "tao_rank": 349
   },
@@ -3463,7 +3463,7 @@
    },
    "first_collected": "2022-05-13T06:29:23.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 31434,
+   "tao": 31544,
    "tao_rate": 21,
    "tao_rank": 376
   },
@@ -3483,9 +3483,9 @@
    },
    "first_collected": "2022-12-24T04:24:59.000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 22909,
+   "tao": 23019,
    "tao_rate": 21,
-   "tao_rank": 465
+   "tao_rank": 466
   },
   {
    "address": "0xa5dce742f3775059d9406342d2ecbb0ff8e3a3c2",
@@ -3503,9 +3503,9 @@
    },
    "first_collected": "2022-09-25T14:36:59.000Z",
    "last_collected": "2022-12-27T03:07:23.000000Z",
-   "tao": 109952,
+   "tao": 110368,
    "tao_rate": 79.8,
-   "tao_rank": 135
+   "tao_rank": 136
   },
   {
    "address": "0x46f655abf896301b72eb27b76f5e063899b9067c",
@@ -3523,7 +3523,7 @@
    },
    "first_collected": "2023-01-03T06:44:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 35931,
+   "tao": 36084,
    "tao_rate": 29.4,
    "tao_rank": 355
   },
@@ -3543,7 +3543,7 @@
    },
    "first_collected": "2022-08-04T11:43:44.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 149714,
+   "tao": 150262,
    "tao_rate": 105,
    "tao_rank": 82
   },
@@ -3563,7 +3563,7 @@
    },
    "first_collected": "2022-06-01T21:30:09.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 56199,
+   "tao": 56396,
    "tao_rate": 37.8,
    "tao_rank": 280
   },
@@ -3583,9 +3583,9 @@
    },
    "first_collected": "2022-06-06T01:54:25.000000Z",
    "last_collected": "2024-10-01T03:42:47.000000Z",
-   "tao": 40352,
+   "tao": 40505,
    "tao_rate": 29.4,
-   "tao_rank": 332
+   "tao_rank": 333
   },
   {
    "address": "0x4614865abd4748096b9aa924c4f8d2ed636b2df7",
@@ -3603,7 +3603,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 22732,
+   "tao": 22820,
    "tao_rate": 16.8,
    "tao_rank": 473
   },
@@ -3623,9 +3623,9 @@
    },
    "first_collected": "2022-02-22T01:14:29.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 32145,
+   "tao": 32255,
    "tao_rate": 21,
-   "tao_rank": 368
+   "tao_rank": 367
   },
   {
    "address": "0x587de9b9f765b056999fce807f310c58aea97c10",
@@ -3643,7 +3643,7 @@
    },
    "first_collected": "2022-09-25T18:44:11.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 83141,
+   "tao": 83447,
    "tao_rate": 58.8,
    "tao_rank": 185
   },
@@ -3663,9 +3663,9 @@
    },
    "first_collected": "2022-05-09T00:47:31.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 30872,
+   "tao": 30981,
    "tao_rate": 21,
-   "tao_rank": 380
+   "tao_rank": 381
   },
   {
    "address": "0x421ab72a939becf0ef6dc607960d877da6e7b0c7",
@@ -3685,7 +3685,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xd9c1780ff96a463d97cbb2f62e4dae0ccf8791e4",
@@ -3703,7 +3703,7 @@
    },
    "first_collected": "2022-08-11T07:39:59.000000Z",
    "last_collected": "2022-08-11T08:05:08.000000Z",
-   "tao": 619165,
+   "tao": 621324,
    "tao_rate": 414,
    "tao_rank": 6
   },
@@ -3723,7 +3723,7 @@
    },
    "first_collected": "2022-12-20T11:00:47.000Z",
    "last_collected": "2023-07-05T03:45:59.000000Z",
-   "tao": 97720,
+   "tao": 98146,
    "tao_rate": 81.6,
    "tao_rank": 165
   },
@@ -3743,7 +3743,7 @@
    },
    "first_collected": "2022-12-20T07:45:35.000Z",
    "last_collected": "2022-12-28T01:09:35.000000Z",
-   "tao": 51383,
+   "tao": 51580,
    "tao_rate": 37.8,
    "tao_rank": 288
   },
@@ -3763,7 +3763,7 @@
    },
    "first_collected": "2022-07-15T03:28:05.000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 92948,
+   "tao": 93373,
    "tao_rate": 81.6,
    "tao_rank": 174
   },
@@ -3783,7 +3783,7 @@
    },
    "first_collected": "2023-01-29T23:22:11.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 117835,
+   "tao": 118305,
    "tao_rate": 90,
    "tao_rank": 123
   },
@@ -3803,9 +3803,9 @@
    },
    "first_collected": "2025-05-30T02:07:23.000Z",
    "last_collected": "2026-02-15T02:13:23.000Z",
-   "tao": 12458,
+   "tao": 12655,
    "tao_rate": 37.8,
-   "tao_rank": 850
+   "tao_rank": 845
   },
   {
    "address": "0x259dffee3680a5d1822903536a549797a9e6a153",
@@ -3823,7 +3823,7 @@
    },
    "first_collected": "2022-12-27T18:54:11.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 108021,
+   "tao": 108447,
    "tao_rate": 81.6,
    "tao_rank": 143
   },
@@ -3843,7 +3843,7 @@
    },
    "first_collected": "2022-05-10T03:05:15.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 187090,
+   "tao": 187801,
    "tao_rate": 136.2,
    "tao_rank": 63
   },
@@ -3863,7 +3863,7 @@
    },
    "first_collected": "2022-09-28T16:20:35.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 24397,
+   "tao": 24529,
    "tao_rate": 25.2,
    "tao_rank": 451
   },
@@ -3883,7 +3883,7 @@
    },
    "first_collected": "2022-07-11T23:58:50.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18062,
+   "tao": 18128,
    "tao_rate": 12.6,
    "tao_rank": 547
   },
@@ -3903,7 +3903,7 @@
    },
    "first_collected": "2022-02-17T23:21:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 134199,
+   "tao": 134624,
    "tao_rate": 81.6,
    "tao_rank": 95
   },
@@ -3923,9 +3923,9 @@
    },
    "first_collected": "2022-06-28T06:23:12.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 131183,
+   "tao": 131631,
    "tao_rate": 85.8,
-   "tao_rank": 106
+   "tao_rank": 107
   },
   {
    "address": "0xee8df38386aa85be55fdf1460a61d656c51a5e3b",
@@ -3943,7 +3943,7 @@
    },
    "first_collected": "2022-12-24T04:41:47.000Z",
    "last_collected": "2023-01-17T12:09:59.000000Z",
-   "tao": 28539,
+   "tao": 28649,
    "tao_rate": 21,
    "tao_rank": 396
   },
@@ -3963,7 +3963,7 @@
    },
    "first_collected": "2022-08-03T07:28:31.000000Z",
    "last_collected": "2024-10-01T02:12:35.000000Z",
-   "tao": 30109,
+   "tao": 30262,
    "tao_rate": 29.4,
    "tao_rank": 384
   },
@@ -3983,7 +3983,7 @@
    },
    "first_collected": "2022-03-25T22:37:17.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 25092,
+   "tao": 25179,
    "tao_rate": 16.8,
    "tao_rank": 423
   },
@@ -4003,9 +4003,9 @@
    },
    "first_collected": "2026-06-17T01:08:23.000000Z",
    "last_collected": "2026-08-18T00:31:47.000000Z",
-   "tao": 1274,
+   "tao": 1406,
    "tao_rate": 25.2,
-   "tao_rank": 3174
+   "tao_rank": 3171
   },
   {
    "address": "0xe359ab04cec41ac8c62bc5016c10c749c7de5480",
@@ -4023,9 +4023,9 @@
    },
    "first_collected": "2022-05-09T23:03:17.000000Z",
    "last_collected": "2025-03-03T21:21:11.000000Z",
-   "tao": 36157,
+   "tao": 36310,
    "tao_rate": 29.4,
-   "tao_rank": 353
+   "tao_rank": 352
   },
   {
    "address": "0x822ec855cc9f41b592622108e6f3565e976430c6",
@@ -4043,7 +4043,7 @@
    },
    "first_collected": "2022-02-19T02:47:20.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 92592,
+   "tao": 92942,
    "tao_rate": 67.2,
    "tao_rank": 175
   },
@@ -4063,7 +4063,7 @@
    },
    "first_collected": "2022-03-15T01:14:30.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 38140,
+   "tao": 38271,
    "tao_rate": 25.2,
    "tao_rank": 343
   },
@@ -4083,7 +4083,7 @@
    },
    "first_collected": "2022-06-01T19:27:53.000000Z",
    "last_collected": "2022-12-16T12:10:11.000Z",
-   "tao": 32823,
+   "tao": 32955,
    "tao_rate": 25.2,
    "tao_rank": 363
   },
@@ -4103,7 +4103,7 @@
    },
    "first_collected": "2022-05-20T04:42:19.000000Z",
    "last_collected": "2023-03-19T18:37:11.000000Z",
-   "tao": 30472,
+   "tao": 30582,
    "tao_rate": 21,
    "tao_rank": 382
   },
@@ -4123,7 +4123,7 @@
    },
    "first_collected": "2022-09-29T05:12:59.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 20310,
+   "tao": 20397,
    "tao_rate": 16.8,
    "tao_rank": 485
   },
@@ -4143,7 +4143,7 @@
    },
    "first_collected": "2022-05-29T15:30:00.000000Z",
    "last_collected": "2022-12-28T08:04:23.000000Z",
-   "tao": 81215,
+   "tao": 81521,
    "tao_rate": 58.8,
    "tao_rank": 190
   },
@@ -4163,7 +4163,7 @@
    },
    "first_collected": "2022-03-06T02:07:29.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 25083,
+   "tao": 25171,
    "tao_rate": 16.8,
    "tao_rank": 424
   },
@@ -4183,7 +4183,7 @@
    },
    "first_collected": "2022-09-25T13:06:47.000Z",
    "last_collected": "2022-12-27T05:14:23.000000Z",
-   "tao": 80976,
+   "tao": 81283,
    "tao_rate": 58.8,
    "tao_rank": 191
   },
@@ -4203,7 +4203,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 21486,
+   "tao": 21573,
    "tao_rate": 16.8,
    "tao_rank": 479
   },
@@ -4223,7 +4223,7 @@
    },
    "first_collected": "2022-05-27T14:42:54.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 24833,
+   "tao": 24921,
    "tao_rate": 16.8,
    "tao_rank": 444
   },
@@ -4243,9 +4243,9 @@
    },
    "first_collected": "2022-05-09T00:47:31.000000Z",
    "last_collected": "2023-01-15T23:51:11.000000Z",
-   "tao": 30937,
+   "tao": 31047,
    "tao_rate": 21,
-   "tao_rank": 379
+   "tao_rank": 380
   },
   {
    "address": "0xa431d9ae84cce1c1c6d28f8258b5b95bab930210",
@@ -4263,7 +4263,7 @@
    },
    "first_collected": "2022-09-25T21:54:47.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 40997,
+   "tao": 41150,
    "tao_rate": 29.4,
    "tao_rank": 328
   },
@@ -4283,7 +4283,7 @@
    },
    "first_collected": "2022-05-12T22:40:12.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 31446,
+   "tao": 31556,
    "tao_rate": 21,
    "tao_rank": 375
   },
@@ -4303,9 +4303,9 @@
    },
    "first_collected": "2022-02-28T20:39:24.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 23354,
+   "tao": 23441,
    "tao_rate": 16.8,
-   "tao_rank": 462
+   "tao_rank": 463
   },
   {
    "address": "0xb70c3049982c09c18dcbf8596ccef6f5b3c239a3",
@@ -4323,9 +4323,9 @@
    },
    "first_collected": "2022-09-25T15:32:47.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 23485,
+   "tao": 23573,
    "tao_rate": 16.8,
-   "tao_rank": 461
+   "tao_rank": 462
   },
   {
    "address": "0x838a1c2f0cae94072332c346533acdc6c590971f",
@@ -4343,7 +4343,7 @@
    },
    "first_collected": "2022-05-30T12:30:02.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 56638,
+   "tao": 57195,
    "tao_rate": 106.8,
    "tao_rank": 279
   },
@@ -4363,7 +4363,7 @@
    },
    "first_collected": "2022-09-26T11:19:47.000Z",
    "last_collected": "2024-08-16T01:26:59.000000Z",
-   "tao": 61119,
+   "tao": 61360,
    "tao_rate": 46.2,
    "tao_rank": 258
   },
@@ -4383,7 +4383,7 @@
    },
    "first_collected": "2022-06-05T09:02:06.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 36670,
+   "tao": 36802,
    "tao_rate": 25.2,
    "tao_rank": 347
   },
@@ -4403,7 +4403,7 @@
    },
    "first_collected": "2022-05-13T21:17:00.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 25201,
+   "tao": 25289,
    "tao_rate": 16.8,
    "tao_rank": 420
   },
@@ -4423,7 +4423,7 @@
    },
    "first_collected": "2022-07-09T00:58:08.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18763,
+   "tao": 18829,
    "tao_rate": 12.6,
    "tao_rank": 523
   },
@@ -4443,7 +4443,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 22513,
+   "tao": 22601,
    "tao_rate": 16.8,
    "tao_rank": 476
   },
@@ -4463,9 +4463,9 @@
    },
    "first_collected": "2022-11-30T07:46:47.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 40648,
+   "tao": 40801,
    "tao_rate": 29.4,
-   "tao_rank": 330
+   "tao_rank": 331
   },
   {
    "address": "0x3d885cb987c00fe980c20e76e21c53313f43946a",
@@ -4483,7 +4483,7 @@
    },
    "first_collected": "2024-01-24T01:28:35.000000Z",
    "last_collected": "2025-05-10T02:39:11.000000Z",
-   "tao": 19656,
+   "tao": 19809,
    "tao_rate": 29.4,
    "tao_rank": 490
   },
@@ -4503,7 +4503,7 @@
    },
    "first_collected": "2022-09-25T09:48:47.000Z",
    "last_collected": "2026-08-22T00:01:23.000000Z",
-   "tao": 17606,
+   "tao": 17672,
    "tao_rate": 12.6,
    "tao_rank": 559
   },
@@ -4525,7 +4525,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xbd96ce810533583090b27afe327de711b401840e",
@@ -4545,7 +4545,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x20be2aff79b1f330a798983c78c0e056f8627623",
@@ -4565,7 +4565,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x360bd0e8ef21909115d520b924e72de923eff47e",
@@ -4583,7 +4583,7 @@
    },
    "first_collected": "2024-05-16T15:50:11.000000Z",
    "last_collected": "2024-08-24T08:08:35.000000Z",
-   "tao": 218115,
+   "tao": 219576,
    "tao_rate": 280.2,
    "tao_rank": 51
   },
@@ -4603,7 +4603,7 @@
    },
    "first_collected": "2022-08-11T06:55:10.000000Z",
    "last_collected": "2022-09-24T06:08:11.000Z",
-   "tao": 321936,
+   "tao": 323059,
    "tao_rate": 215.4,
    "tao_rank": 26
   },
@@ -4623,7 +4623,7 @@
    },
    "first_collected": "2025-07-13T21:02:35.000000Z",
    "last_collected": "2025-07-13T21:45:11.000000Z",
-   "tao": 93989,
+   "tao": 95135,
    "tao_rate": 219.6,
    "tao_rank": 172
   },
@@ -4643,7 +4643,7 @@
    },
    "first_collected": "2022-12-07T15:48:35.000Z",
    "last_collected": "2022-12-07T15:48:35.000Z",
-   "tao": 7826,
+   "tao": 7870,
    "tao_rate": 8.4,
    "tao_rank": 1292
   },
@@ -4663,9 +4663,9 @@
    },
    "first_collected": "2025-02-05T15:03:47.000000Z",
    "last_collected": "2025-05-20T22:39:47.000000Z",
-   "tao": 101589,
+   "tao": 102528,
    "tao_rate": 180,
-   "tao_rank": 158
+   "tao_rank": 157
   },
   {
    "address": "0x1e0486ee85dd758078d75c674f3d28efc4c899fc",
@@ -4683,9 +4683,9 @@
    },
    "first_collected": "2023-11-07T01:40:59.000000Z",
    "last_collected": "2025-09-01T00:17:59.000000Z",
-   "tao": 85498,
+   "tao": 86261,
    "tao_rate": 146.4,
-   "tao_rank": 180
+   "tao_rank": 179
   },
   {
    "address": "0xafaca46f253c85d4ba372f82a8a4f4b0dd5d7dfc",
@@ -4703,7 +4703,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -4723,7 +4723,7 @@
    },
    "first_collected": "2022-10-11T10:42:35.000Z",
    "last_collected": "2026-08-21T07:26:47.000000Z",
-   "tao": 138069,
+   "tao": 138539,
    "tao_rate": 90,
    "tao_rank": 92
   },
@@ -4743,7 +4743,7 @@
    },
    "first_collected": "2024-04-22T03:05:11.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 55734,
+   "tao": 56225,
    "tao_rate": 94.2,
    "tao_rank": 282
   },
@@ -4763,7 +4763,7 @@
    },
    "first_collected": "2022-10-14T21:27:47.000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 11756,
+   "tao": 11800,
    "tao_rate": 8.4,
    "tao_rank": 1177
   },
@@ -4783,9 +4783,9 @@
    },
    "first_collected": "2022-12-06T22:55:47.000Z",
    "last_collected": "2024-04-22T03:24:11.000000Z",
-   "tao": 100394,
+   "tao": 100820,
    "tao_rate": 81.6,
-   "tao_rank": 160
+   "tao_rank": 161
   },
   {
    "address": "0x87accabbdedce63379af9d246bb979a3a481534c",
@@ -4803,7 +4803,7 @@
    },
    "first_collected": "2022-04-21T11:35:04.000000Z",
    "last_collected": "2022-07-28T23:03:18.000000Z",
-   "tao": 137219,
+   "tao": 137666,
    "tao_rate": 85.8,
    "tao_rank": 93
   },
@@ -4823,7 +4823,7 @@
    },
    "first_collected": "2022-10-23T01:45:59.000Z",
    "last_collected": "2023-11-04T03:41:35.000000Z",
-   "tao": 17622,
+   "tao": 17688,
    "tao_rate": 12.6,
    "tao_rank": 558
   },
@@ -4843,9 +4843,9 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2026-08-22T00:15:35.000000Z",
-   "tao": 7350,
+   "tao": 7732,
    "tao_rate": 73.2,
-   "tao_rank": 1302
+   "tao_rank": 1295
   },
   {
    "address": "0x49f49396c23e4b976e375231a210b04b93569b1b",
@@ -4863,7 +4863,7 @@
    },
    "first_collected": "2022-02-17T09:30:05.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 133789,
+   "tao": 134214,
    "tao_rate": 81.6,
    "tao_rank": 96
   },
@@ -4883,7 +4883,7 @@
    },
    "first_collected": "2022-12-27T03:39:11.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 79930,
+   "tao": 80465,
    "tao_rate": 102.6,
    "tao_rank": 193
   },
@@ -4903,7 +4903,7 @@
    },
    "first_collected": "2022-02-17T23:39:29.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 127888,
+   "tao": 128292,
    "tao_rate": 77.4,
    "tao_rank": 110
   },
@@ -4923,9 +4923,9 @@
    },
    "first_collected": "2022-03-20T04:30:05.000000Z",
    "last_collected": "2026-08-21T05:31:47.000000Z",
-   "tao": 14291,
+   "tao": 14694,
    "tao_rate": 77.4,
-   "tao_rank": 599
+   "tao_rank": 598
   },
   {
    "address": "0xc68c7771ec6a6e5d67d62aa9c6f22df69865e401",
@@ -4943,7 +4943,7 @@
    },
    "first_collected": "2022-07-17T19:50:33.000Z",
    "last_collected": "2023-04-03T05:46:11.000000Z",
-   "tao": 41072,
+   "tao": 41226,
    "tao_rate": 29.4,
    "tao_rank": 327
   },
@@ -4963,7 +4963,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2026-08-22T00:07:47.000000Z",
-   "tao": 77961,
+   "tao": 78365,
    "tao_rate": 77.4,
    "tao_rank": 198
   },
@@ -4983,7 +4983,7 @@
    },
    "first_collected": "2022-12-16T11:49:47.000Z",
    "last_collected": "2023-02-07T05:06:47.000000Z",
-   "tao": 113616,
+   "tao": 114063,
    "tao_rate": 85.8,
    "tao_rank": 132
   },
@@ -5003,7 +5003,7 @@
    },
    "first_collected": "2022-02-24T06:24:07.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 127164,
+   "tao": 127568,
    "tao_rate": 77.4,
    "tao_rank": 111
   },
@@ -5023,7 +5023,7 @@
    },
    "first_collected": "2022-11-29T02:03:59.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 28875,
+   "tao": 28985,
    "tao_rate": 21,
    "tao_rank": 390
   },
@@ -5043,7 +5043,7 @@
    },
    "first_collected": "2022-11-24T06:16:47.000Z",
    "last_collected": "2022-12-28T03:55:23.000000Z",
-   "tao": 28730,
+   "tao": 28839,
    "tao_rate": 21,
    "tao_rank": 393
   },
@@ -5063,7 +5063,7 @@
    },
    "first_collected": "2022-07-17T09:08:10.000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 18474,
+   "tao": 18540,
    "tao_rate": 12.6,
    "tao_rank": 533
   },
@@ -5083,9 +5083,9 @@
    },
    "first_collected": "2022-03-12T03:47:00.000000Z",
    "last_collected": "2022-07-18T08:09:53.000Z",
-   "tao": 46695,
+   "tao": 46848,
    "tao_rate": 29.4,
-   "tao_rank": 298
+   "tao_rank": 300
   },
   {
    "address": "0x6fad91115dc942e27a2325bad5e03c3bf2bce5fb",
@@ -5103,7 +5103,7 @@
    },
    "first_collected": "2026-04-21T22:15:35.000000Z",
    "last_collected": "2026-05-06T02:42:23.000000Z",
-   "tao": 2827,
+   "tao": 2936,
    "tao_rate": 21,
    "tao_rank": 2805
   },
@@ -5123,9 +5123,9 @@
    },
    "first_collected": "2022-07-21T11:50:57.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 42908,
+   "tao": 43062,
    "tao_rate": 29.4,
-   "tao_rank": 314
+   "tao_rank": 317
   },
   {
    "address": "0xa9276b86e04058b70cd43916e8e666bc3ad5bc9a",
@@ -5143,7 +5143,7 @@
    },
    "first_collected": "2022-07-18T20:58:08.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 166855,
+   "tao": 167446,
    "tao_rate": 113.4,
    "tao_rank": 72
   },
@@ -5163,7 +5163,7 @@
    },
    "first_collected": "2022-12-03T05:52:23.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 34747,
+   "tao": 34878,
    "tao_rate": 25.2,
    "tao_rank": 359
   },
@@ -5183,7 +5183,7 @@
    },
    "first_collected": "2022-06-20T21:35:27.000000Z",
    "last_collected": "2022-09-24T06:16:11.000Z",
-   "tao": 31745,
+   "tao": 31855,
    "tao_rate": 21,
    "tao_rank": 373
   },
@@ -5203,7 +5203,7 @@
    },
    "first_collected": "2022-10-23T17:36:47.000Z",
    "last_collected": "2023-01-15T23:51:11.000000Z",
-   "tao": 23621,
+   "tao": 23708,
    "tao_rate": 16.8,
    "tao_rank": 459
   },
@@ -5223,7 +5223,7 @@
    },
    "first_collected": "2022-07-08T11:36:24.000Z",
    "last_collected": "2022-10-12T07:54:35.000Z",
-   "tao": 43770,
+   "tao": 43923,
    "tao_rate": 29.4,
    "tao_rank": 311
   },
@@ -5243,9 +5243,9 @@
    },
    "first_collected": "2023-01-30T12:16:11.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 41492,
+   "tao": 41667,
    "tao_rate": 33.6,
-   "tao_rank": 322
+   "tao_rank": 323
   },
   {
    "address": "0xb40e296d1eb1aa2ce72bf687fff1a77c9c42c9f1",
@@ -5263,9 +5263,9 @@
    },
    "first_collected": "2022-04-16T02:23:36.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 19044,
+   "tao": 19110,
    "tao_rate": 12.6,
-   "tao_rank": 518
+   "tao_rank": 519
   },
   {
    "address": "0x03ee832367e29a5cd001f65093283eabb5382b62",
@@ -5283,7 +5283,7 @@
    },
    "first_collected": "2022-03-06T08:48:24.000000Z",
    "last_collected": "2025-03-21T04:39:47.000000Z",
-   "tao": 21940,
+   "tao": 22050,
    "tao_rate": 21,
    "tao_rank": 478
   },
@@ -5303,9 +5303,9 @@
    },
    "first_collected": "2022-05-27T06:41:34.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18342,
+   "tao": 18408,
    "tao_rate": 12.6,
-   "tao_rank": 538
+   "tao_rank": 539
   },
   {
    "address": "0x6a6d2019ed5079f07e84d30b4d702a601eaaa5f6",
@@ -5323,7 +5323,7 @@
    },
    "first_collected": "2022-05-13T11:59:51.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18047,
+   "tao": 18113,
    "tao_rate": 12.6,
    "tao_rank": 548
   },
@@ -5343,7 +5343,7 @@
    },
    "first_collected": "2022-04-16T02:24:05.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 19879,
+   "tao": 19945,
    "tao_rate": 12.6,
    "tao_rank": 488
   },
@@ -5363,7 +5363,7 @@
    },
    "first_collected": "2022-03-06T07:02:26.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 23745,
+   "tao": 23832,
    "tao_rate": 16.8,
    "tao_rank": 456
   },
@@ -5383,9 +5383,9 @@
    },
    "first_collected": "2022-06-21T00:30:01.000Z",
    "last_collected": "2026-08-23T06:59:23.000000Z",
-   "tao": 12294,
+   "tao": 12360,
    "tao_rate": 12.6,
-   "tao_rank": 856
+   "tao_rank": 855
   },
   {
    "address": "0x11a22b262e505d355f975e1e48a365b5d4811ae0",
@@ -5403,7 +5403,7 @@
    },
    "first_collected": "2022-06-18T06:45:10.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18024,
+   "tao": 18090,
    "tao_rate": 12.6,
    "tao_rank": 549
   },
@@ -5423,7 +5423,7 @@
    },
    "first_collected": "2022-07-09T11:01:21.000Z",
    "last_collected": "2024-07-02T20:49:23.000000Z",
-   "tao": 36373,
+   "tao": 36526,
    "tao_rate": 29.4,
    "tao_rank": 350
   },
@@ -5443,7 +5443,7 @@
    },
    "first_collected": "2022-05-20T11:32:32.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18669,
+   "tao": 18735,
    "tao_rate": 12.6,
    "tao_rank": 525
   },
@@ -5463,7 +5463,7 @@
    },
    "first_collected": "2022-12-27T14:05:35.000000Z",
    "last_collected": "2024-04-20T21:20:35.000000Z",
-   "tao": 26542,
+   "tao": 26651,
    "tao_rate": 21,
    "tao_rank": 406
   },
@@ -5483,7 +5483,7 @@
    },
    "first_collected": "2022-08-13T20:56:38.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 16071,
+   "tao": 16136,
    "tao_rate": 12.6,
    "tao_rank": 588
   },
@@ -5503,7 +5503,7 @@
    },
    "first_collected": "2022-09-26T07:33:11.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 29139,
+   "tao": 29249,
    "tao_rate": 21,
    "tao_rank": 389
   },
@@ -5523,9 +5523,9 @@
    },
    "first_collected": "2022-09-27T03:45:23.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 17858,
+   "tao": 17923,
    "tao_rate": 12.6,
-   "tao_rank": 552
+   "tao_rank": 553
   },
   {
    "address": "0x171446b041c6683e5f138b8a3f263bbffb8ee74a",
@@ -5543,7 +5543,7 @@
    },
    "first_collected": "2022-06-18T07:51:37.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 31765,
+   "tao": 31874,
    "tao_rate": 21,
    "tao_rank": 370
   },
@@ -5563,7 +5563,7 @@
    },
    "first_collected": "2022-03-07T01:37:06.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 19206,
+   "tao": 19272,
    "tao_rate": 12.6,
    "tao_rank": 510
   },
@@ -5583,7 +5583,7 @@
    },
    "first_collected": "2022-05-09T01:54:50.000000Z",
    "last_collected": "2022-09-24T06:29:59.000Z",
-   "tao": 31978,
+   "tao": 32088,
    "tao_rate": 21,
    "tao_rank": 369
   },
@@ -5603,7 +5603,7 @@
    },
    "first_collected": "2022-05-13T16:02:12.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 25196,
+   "tao": 25284,
    "tao_rate": 16.8,
    "tao_rank": 421
   },
@@ -5623,7 +5623,7 @@
    },
    "first_collected": "2022-05-10T08:22:56.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 25148,
+   "tao": 25236,
    "tao_rate": 16.8,
    "tao_rank": 422
   },
@@ -5643,7 +5643,7 @@
    },
    "first_collected": "2022-03-24T21:53:20.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18520,
+   "tao": 18585,
    "tao_rate": 12.6,
    "tao_rank": 531
   },
@@ -5663,7 +5663,7 @@
    },
    "first_collected": "2022-03-24T22:28:36.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 19117,
+   "tao": 19183,
    "tao_rate": 12.6,
    "tao_rank": 515
   },
@@ -5683,7 +5683,7 @@
    },
    "first_collected": "2022-06-05T06:20:24.000000Z",
    "last_collected": "2022-11-30T19:42:35.000Z",
-   "tao": 37393,
+   "tao": 37524,
    "tao_rate": 25.2,
    "tao_rank": 344
   },
@@ -5703,7 +5703,7 @@
    },
    "first_collected": "2022-05-11T08:15:31.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 82435,
+   "tao": 83101,
    "tao_rate": 127.8,
    "tao_rank": 188
   },
@@ -5723,7 +5723,7 @@
    },
    "first_collected": "2022-08-13T07:11:16.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 17639,
+   "tao": 17705,
    "tao_rate": 12.6,
    "tao_rank": 557
   },
@@ -5743,9 +5743,9 @@
    },
    "first_collected": "2023-03-20T03:46:23.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 39316,
+   "tao": 39492,
    "tao_rate": 33.6,
-   "tao_rank": 340
+   "tao_rank": 341
   },
   {
    "address": "0xc07a67f50eb5bf18fd0c140c702a3032faa3681c",
@@ -5763,9 +5763,9 @@
    },
    "first_collected": "2022-12-16T17:49:59.000Z",
    "last_collected": "2025-05-28T03:43:35.000000Z",
-   "tao": 19017,
+   "tao": 19126,
    "tao_rate": 21,
-   "tao_rank": 519
+   "tao_rank": 518
   },
   {
    "address": "0x50e05fa93c604b02f7c4d4b0aa328287b1545650",
@@ -5783,7 +5783,7 @@
    },
    "first_collected": "2022-05-13T04:24:16.000000Z",
    "last_collected": "2022-07-12T21:32:33.000000Z",
-   "tao": 32586,
+   "tao": 32695,
    "tao_rate": 21,
    "tao_rank": 364
   },
@@ -5803,7 +5803,7 @@
    },
    "first_collected": "2022-07-09T16:37:26.000Z",
    "last_collected": "2023-01-02T00:27:23.000000Z",
-   "tao": 36526,
+   "tao": 36658,
    "tao_rate": 25.2,
    "tao_rank": 348
   },
@@ -5823,7 +5823,7 @@
    },
    "first_collected": "2022-12-28T00:33:11.000000Z",
    "last_collected": "2023-01-02T00:39:35.000000Z",
-   "tao": 113976,
+   "tao": 114414,
    "tao_rate": 84,
    "tao_rank": 131
   },
@@ -5843,7 +5843,7 @@
    },
    "first_collected": "2022-05-27T13:24:45.000000Z",
    "last_collected": "2022-07-28T23:03:18.000000Z",
-   "tao": 32295,
+   "tao": 32404,
    "tao_rate": 21,
    "tao_rank": 366
   },
@@ -5863,7 +5863,7 @@
    },
    "first_collected": "2022-05-12T23:03:48.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18178,
+   "tao": 18244,
    "tao_rate": 12.6,
    "tao_rank": 544
   },
@@ -5883,7 +5883,7 @@
    },
    "first_collected": "2022-07-10T11:21:49.000Z",
    "last_collected": "2022-11-14T23:08:23.000Z",
-   "tao": 37150,
+   "tao": 37281,
    "tao_rate": 25.2,
    "tao_rank": 345
   },
@@ -5905,7 +5905,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x24055d456255f02e5b6287efe2d4111900e69d39",
@@ -5925,7 +5925,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xbe8fe12b9eb1ca2a593e6c070c71c294b6fe9f00",
@@ -5943,7 +5943,7 @@
    },
    "first_collected": "2025-03-29T04:56:11.000000Z",
    "last_collected": "2025-03-29T04:56:11.000000Z",
-   "tao": 147606,
+   "tao": 149045,
    "tao_rate": 276,
    "tao_rank": 85
   },
@@ -5963,7 +5963,7 @@
    },
    "first_collected": "2022-05-09T23:11:47.000000Z",
    "last_collected": "2022-08-16T00:13:40.000000Z",
-   "tao": 315288,
+   "tao": 316389,
    "tao_rate": 211.2,
    "tao_rank": 27
   },
@@ -5983,7 +5983,7 @@
    },
    "first_collected": "2024-08-22T22:09:35.000000Z",
    "last_collected": "2024-09-05T06:02:35.000000Z",
-   "tao": 160781,
+   "tao": 161905,
    "tao_rate": 215.4,
    "tao_rank": 74
   },
@@ -6003,9 +6003,9 @@
    },
    "first_collected": "2022-06-06T03:44:04.000000Z",
    "last_collected": "2022-06-19T03:19:37.000Z",
-   "tao": 13064,
+   "tao": 13107,
    "tao_rate": 8.4,
-   "tao_rank": 622
+   "tao_rank": 623
   },
   {
    "address": "0x7d88f221e9ecef9eef118e0d0e8a47f81b37e0b6",
@@ -6023,9 +6023,9 @@
    },
    "first_collected": "2024-06-27T22:51:23.000000Z",
    "last_collected": "2026-03-08T21:06:11.000000Z",
-   "tao": 30591,
+   "tao": 31354,
    "tao_rate": 146.4,
-   "tao_rank": 381
+   "tao_rank": 378
   },
   {
    "address": "0x7e3cdbbc82edd873f1cb9aa0ed45062fc6a5dbf6",
@@ -6043,7 +6043,7 @@
    },
    "first_collected": "2023-01-15T23:51:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 80466,
+   "tao": 80826,
    "tao_rate": 69,
    "tao_rank": 192
   },
@@ -6063,7 +6063,7 @@
    },
    "first_collected": "2024-08-30T00:28:47.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 49591,
+   "tao": 50016,
    "tao_rate": 81.6,
    "tao_rank": 291
   },
@@ -6083,7 +6083,7 @@
    },
    "first_collected": "2024-10-01T02:12:35.000000Z",
    "last_collected": "2024-10-07T01:25:47.000000Z",
-   "tao": 57246,
+   "tao": 57672,
    "tao_rate": 81.6,
    "tao_rank": 263
   },
@@ -6103,9 +6103,9 @@
    },
    "first_collected": "2024-08-30T00:28:47.000000Z",
    "last_collected": "2025-07-02T07:24:47.000000Z",
-   "tao": 40484,
+   "tao": 40932,
    "tao_rate": 85.8,
-   "tao_rank": 331
+   "tao_rank": 330
   },
   {
    "address": "0x5563456491dd87cce83279816caedefd5e9f2d86",
@@ -6123,9 +6123,9 @@
    },
    "first_collected": "2023-01-15T23:51:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5664,
+   "tao": 5686,
    "tao_rate": 4.2,
-   "tao_rank": 2638
+   "tao_rank": 2636
   },
   {
    "address": "0x709e6c5abc1157986a3a9a236e1c94bca9e678c2",
@@ -6143,9 +6143,9 @@
    },
    "first_collected": "2022-10-28T01:06:35.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 11657,
+   "tao": 11701,
    "tao_rate": 8.4,
-   "tao_rank": 1182
+   "tao_rank": 1183
   },
   {
    "address": "0x9addd91874b08f6856bf6b4a2263665d2bc0d933",
@@ -6163,7 +6163,7 @@
    },
    "first_collected": "2022-08-11T08:32:44.000000Z",
    "last_collected": "2022-10-10T08:21:35.000Z",
-   "tao": 121342,
+   "tao": 121768,
    "tao_rate": 81.6,
    "tao_rank": 119
   },
@@ -6183,7 +6183,7 @@
    },
    "first_collected": "2022-12-11T01:41:59.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 129376,
+   "tao": 129868,
    "tao_rate": 94.2,
    "tao_rank": 108
   },
@@ -6203,9 +6203,9 @@
    },
    "first_collected": "2023-03-28T22:19:23.000000Z",
    "last_collected": "2026-08-21T05:08:23.000000Z",
-   "tao": 9372,
+   "tao": 9775,
    "tao_rate": 77.4,
-   "tao_rank": 1266
+   "tao_rank": 1262
   },
   {
    "address": "0x7cd29e0df7e442068e5751b638c9086fb62c50fa",
@@ -6223,7 +6223,7 @@
    },
    "first_collected": "2022-08-29T02:21:57.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 107670,
+   "tao": 108052,
    "tao_rate": 73.2,
    "tao_rank": 144
   },
@@ -6243,7 +6243,7 @@
    },
    "first_collected": "2022-10-14T01:36:11.000Z",
    "last_collected": "2022-12-13T06:59:59.000Z",
-   "tao": 17558,
+   "tao": 17624,
    "tao_rate": 12.6,
    "tao_rank": 560
   },
@@ -6263,7 +6263,7 @@
    },
    "first_collected": "2022-11-17T11:07:11.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 83759,
+   "tao": 84162,
    "tao_rate": 77.4,
    "tao_rank": 183
   },
@@ -6283,7 +6283,7 @@
    },
    "first_collected": "2022-12-24T08:27:35.000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5714,
+   "tao": 5736,
    "tao_rate": 4.2,
    "tao_rank": 2421
   },
@@ -6303,9 +6303,9 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2026-08-21T05:48:11.000000Z",
-   "tao": 40172,
+   "tao": 40554,
    "tao_rate": 73.2,
-   "tao_rank": 333,
+   "tao_rank": 332,
    "nudges": 1
   },
   {
@@ -6324,7 +6324,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 77862,
+   "tao": 78244,
    "tao_rate": 73.2,
    "tao_rank": 199
   },
@@ -6344,9 +6344,9 @@
    },
    "first_collected": "2022-03-15T01:19:28.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 6908,
+   "tao": 6930,
    "tao_rate": 4.2,
-   "tao_rank": 1316
+   "tao_rank": 1317
   },
   {
    "address": "0xa8811a290c1690c39732118331329373693d9e2a",
@@ -6364,7 +6364,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -6384,9 +6384,9 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2026-08-21T05:40:59.000000Z",
-   "tao": 7404,
+   "tao": 7785,
    "tao_rate": 73.2,
-   "tao_rank": 1299
+   "tao_rank": 1293
   },
   {
    "address": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
@@ -6404,7 +6404,7 @@
    },
    "first_collected": "2023-03-17T05:44:23.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 9758,
+   "tao": 9802,
    "tao_rate": 8.4,
    "tao_rank": 1261
   },
@@ -6424,7 +6424,7 @@
    },
    "first_collected": "2022-05-10T00:57:39.000000Z",
    "last_collected": "2024-01-01T12:47:35.000000Z",
-   "tao": 23653,
+   "tao": 23740,
    "tao_rate": 16.8,
    "tao_rank": 458
   },
@@ -6444,7 +6444,7 @@
    },
    "first_collected": "2022-11-29T02:53:59.000Z",
    "last_collected": "2023-01-06T00:05:35.000000Z",
-   "tao": 17183,
+   "tao": 17249,
    "tao_rate": 12.6,
    "tao_rank": 567
   },
@@ -6464,7 +6464,7 @@
    },
    "first_collected": "2023-01-02T04:20:59.000000Z",
    "last_collected": "2023-01-02T05:27:35.000000Z",
-   "tao": 17031,
+   "tao": 17096,
    "tao_rate": 12.6,
    "tao_rank": 578
   },
@@ -6484,9 +6484,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 12949,
+   "tao": 13081,
    "tao_rate": 25.2,
-   "tao_rank": 630
+   "tao_rank": 624
   },
   {
    "address": "0x1059c7e69c743ed1cdd10380fd3127536d5eafc3",
@@ -6504,9 +6504,9 @@
    },
    "first_collected": "2022-07-11T11:02:57.000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 12502,
+   "tao": 12546,
    "tao_rate": 8.4,
-   "tao_rank": 849
+   "tao_rank": 850
   },
   {
    "address": "0x1145b29b49f9b61d6178050b4b5e520255c2e565",
@@ -6524,7 +6524,7 @@
    },
    "first_collected": "2022-09-25T19:35:35.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 35677,
+   "tao": 35808,
    "tao_rate": 25.2,
    "tao_rank": 356
   },
@@ -6544,7 +6544,7 @@
    },
    "first_collected": "2022-06-07T06:57:23.000000Z",
    "last_collected": "2022-11-12T21:06:35.000Z",
-   "tao": 24730,
+   "tao": 24818,
    "tao_rate": 16.8,
    "tao_rank": 445
   },
@@ -6564,7 +6564,7 @@
    },
    "first_collected": "2022-05-18T08:30:54.000000Z",
    "last_collected": "2022-10-07T22:40:47.000Z",
-   "tao": 25604,
+   "tao": 25692,
    "tao_rate": 16.8,
    "tao_rank": 413
   },
@@ -6584,9 +6584,9 @@
    },
    "first_collected": "2025-06-06T23:57:35.000000Z",
    "last_collected": "2025-07-04T08:06:59.000Z",
-   "tao": 7558,
+   "tao": 7645,
    "tao_rate": 16.8,
-   "tao_rank": 1295
+   "tao_rank": 1298
   },
   {
    "address": "0x362cf4be53248d0872ccbfba570254c08e2f3d09",
@@ -6604,7 +6604,7 @@
    },
    "first_collected": "2022-05-09T00:47:31.000000Z",
    "last_collected": "2023-01-01T05:44:23.000000Z",
-   "tao": 23721,
+   "tao": 23809,
    "tao_rate": 16.8,
    "tao_rank": 457
   },
@@ -6624,7 +6624,7 @@
    },
    "first_collected": "2022-05-09T05:52:19.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12379,
+   "tao": 12422,
    "tao_rate": 8.4,
    "tao_rank": 852
   },
@@ -6644,9 +6644,9 @@
    },
    "first_collected": "2023-01-15T23:51:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5290,
+   "tao": 5312,
    "tao_rate": 4.2,
-   "tao_rank": 2693
+   "tao_rank": 2694
   },
   {
    "address": "0x53bd35217f5529eb8f9a5babe5bf833a6957d9d6",
@@ -6664,7 +6664,7 @@
    },
    "first_collected": "2022-10-15T05:15:23.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 35095,
+   "tao": 35226,
    "tao_rate": 25.2,
    "tao_rank": 357
   },
@@ -6684,9 +6684,9 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2025-01-07T21:33:47.000000Z",
-   "tao": 8285,
+   "tao": 8329,
    "tao_rate": 8.4,
-   "tao_rank": 1286
+   "tao_rank": 1287
   },
   {
    "address": "0x7078394f073615f3d37b4591347797e1119a882a",
@@ -6704,7 +6704,7 @@
    },
    "first_collected": "2022-09-24T07:08:11.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11799,
+   "tao": 11843,
    "tao_rate": 8.4,
    "tao_rank": 1174
   },
@@ -6724,7 +6724,7 @@
    },
    "first_collected": "2022-11-30T17:05:47.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 28801,
+   "tao": 28911,
    "tao_rate": 21,
    "tao_rank": 392
   },
@@ -6744,7 +6744,7 @@
    },
    "first_collected": "2022-06-12T23:41:13.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 19641,
+   "tao": 19685,
    "tao_rate": 8.4,
    "tao_rank": 491
   },
@@ -6764,7 +6764,7 @@
    },
    "first_collected": "2022-12-27T07:26:47.000000Z",
    "last_collected": "2022-12-27T08:46:23.000000Z",
-   "tao": 119743,
+   "tao": 120203,
    "tao_rate": 88.2,
    "tao_rank": 122
   },
@@ -6784,9 +6784,9 @@
    },
    "first_collected": "2024-04-11T02:30:35.000000Z",
    "last_collected": "2024-04-11T02:34:35.000000Z",
-   "tao": 18622,
+   "tao": 18732,
    "tao_rate": 21,
-   "tao_rank": 528
+   "tao_rank": 526
   },
   {
    "address": "0x7fabb88d9c81fa3e2b1177c9a085f47c2390b08e",
@@ -6804,7 +6804,7 @@
    },
    "first_collected": "2022-07-11T06:17:39.000Z",
    "last_collected": "2022-11-30T17:43:35.000Z",
-   "tao": 24710,
+   "tao": 24798,
    "tao_rate": 16.8,
    "tao_rank": 447
   },
@@ -6824,7 +6824,7 @@
    },
    "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 9257,
+   "tao": 9301,
    "tao_rate": 8.4,
    "tao_rank": 1269
   },
@@ -6844,9 +6844,9 @@
    },
    "first_collected": "2022-04-22T00:43:55.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 18624,
+   "tao": 18690,
    "tao_rate": 12.6,
-   "tao_rank": 527
+   "tao_rank": 528
   },
   {
    "address": "0xd20bf69b592b9176e46ec229f82d7f1bf65fc9b2",
@@ -6864,7 +6864,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 11366,
+   "tao": 11410,
    "tao_rate": 8.4,
    "tao_rank": 1234
   },
@@ -6884,9 +6884,9 @@
    },
    "first_collected": "2022-05-14T03:29:39.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 12695,
+   "tao": 12739,
    "tao_rate": 8.4,
-   "tao_rank": 837
+   "tao_rank": 838
   },
   {
    "address": "0x8bc303246b92b797cbd83e8527677402db2b2609",
@@ -6904,7 +6904,7 @@
    },
    "first_collected": "2022-07-09T07:55:31.000Z",
    "last_collected": "2022-10-01T03:28:59.000Z",
-   "tao": 31424,
+   "tao": 31533,
    "tao_rate": 21,
    "tao_rank": 377
   },
@@ -6924,7 +6924,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11367,
+   "tao": 11411,
    "tao_rate": 8.4,
    "tao_rank": 1232
   },
@@ -6944,9 +6944,9 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12117,
+   "tao": 12160,
    "tao_rate": 8.4,
-   "tao_rank": 1161
+   "tao_rank": 1162
   },
   {
    "address": "0x97ad7704d47b5827a5cc18c2e57f8643f1bdaad3",
@@ -6964,9 +6964,9 @@
    },
    "first_collected": "2022-05-27T08:48:10.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 12639,
+   "tao": 12683,
    "tao_rate": 8.4,
-   "tao_rank": 838
+   "tao_rank": 841
   },
   {
    "address": "0xe781fe7a6f65ee6b3efe66ed8f7f5c1e9f01cc55",
@@ -6984,9 +6984,9 @@
    },
    "first_collected": "2022-06-08T22:59:05.000000Z",
    "last_collected": "2022-09-29T10:39:11.000Z",
-   "tao": 25035,
+   "tao": 25122,
    "tao_rate": 16.8,
-   "tao_rank": 426
+   "tao_rank": 425
   },
   {
    "address": "0xfd849d8cf365fe98bc60025ff7fab45cef0f557b",
@@ -7004,9 +7004,9 @@
    },
    "first_collected": "2024-02-17T01:40:47.000000Z",
    "last_collected": "2025-04-01T23:00:11.000000Z",
-   "tao": 12212,
+   "tao": 12300,
    "tao_rate": 16.8,
-   "tao_rank": 859
+   "tao_rank": 858
   },
   {
    "address": "0x921887803bef20491fdd1ed3b0b3e0a102205131",
@@ -7024,7 +7024,7 @@
    },
    "first_collected": "2022-07-13T05:55:40.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12106,
+   "tao": 12149,
    "tao_rate": 8.4,
    "tao_rank": 1163
   },
@@ -7044,7 +7044,7 @@
    },
    "first_collected": "2022-06-12T01:31:12.000Z",
    "last_collected": "2022-07-10T03:00:52.000Z",
-   "tao": 32419,
+   "tao": 32529,
    "tao_rate": 21,
    "tao_rank": 365
   },
@@ -7064,7 +7064,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -7084,7 +7084,7 @@
    },
    "first_collected": "2022-10-22T11:19:59.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11680,
+   "tao": 11724,
    "tao_rate": 8.4,
    "tao_rank": 1181
   },
@@ -7104,7 +7104,7 @@
    },
    "first_collected": "2022-12-24T09:37:59.000Z",
    "last_collected": "2022-12-27T08:39:35.000000Z",
-   "tao": 51356,
+   "tao": 51553,
    "tao_rate": 37.8,
    "tao_rank": 289
   },
@@ -7124,7 +7124,7 @@
    },
    "first_collected": "2022-07-02T20:03:18.000Z",
    "last_collected": "2022-09-25T08:59:59.000Z",
-   "tao": 25401,
+   "tao": 25489,
    "tao_rate": 16.8,
    "tao_rank": 418
   },
@@ -7144,7 +7144,7 @@
    },
    "first_collected": "2022-12-24T10:47:47.000Z",
    "last_collected": "2022-12-27T09:19:59.000000Z",
-   "tao": 34238,
+   "tao": 34370,
    "tao_rate": 25.2,
    "tao_rank": 361
   },
@@ -7164,7 +7164,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -7184,9 +7184,9 @@
    },
    "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2024-12-02T19:49:11.000000Z",
-   "tao": 5728,
+   "tao": 5772,
    "tao_rate": 8.4,
-   "tao_rank": 2419
+   "tao_rank": 2402
   },
   {
    "address": "0xaaa9aca0d2aff48aab572de4d24088a80f2ae452",
@@ -7204,9 +7204,9 @@
    },
    "first_collected": "2022-07-09T03:44:06.000Z",
    "last_collected": "2022-09-30T08:59:47.000Z",
-   "tao": 31083,
+   "tao": 31193,
    "tao_rate": 21,
-   "tao_rank": 378
+   "tao_rank": 379
   },
   {
    "address": "0x6ebe7f9cda8619ab2c508ba6c8f6675836185e0c",
@@ -7224,7 +7224,7 @@
    },
    "first_collected": "2022-10-14T05:10:11.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11715,
+   "tao": 11759,
    "tao_rate": 8.4,
    "tao_rank": 1179
   },
@@ -7244,7 +7244,7 @@
    },
    "first_collected": "2022-05-13T20:25:08.000000Z",
    "last_collected": "2022-12-27T21:18:47.000000Z",
-   "tao": 25261,
+   "tao": 25348,
    "tao_rate": 16.8,
    "tao_rank": 419
   },
@@ -7264,7 +7264,7 @@
    },
    "first_collected": "2023-02-01T15:57:11.000Z",
    "last_collected": "2023-02-01T16:36:47.000Z",
-   "tao": 22196,
+   "tao": 22283,
    "tao_rate": 16.8,
    "tao_rank": 477
   },
@@ -7284,7 +7284,7 @@
    },
    "first_collected": "2022-05-09T10:13:16.000000Z",
    "last_collected": "2022-10-22T09:03:47.000Z",
-   "tao": 24723,
+   "tao": 24811,
    "tao_rate": 16.8,
    "tao_rank": 446
   },
@@ -7304,9 +7304,9 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11405,
+   "tao": 11448,
    "tao_rate": 8.4,
-   "tao_rank": 1219
+   "tao_rank": 1221
   },
   {
    "address": "0x777480ff6351d131e4999c9aaa2c1afabf0be76d",
@@ -7324,7 +7324,7 @@
    },
    "first_collected": "2022-06-19T05:02:36.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 31750,
+   "tao": 31859,
    "tao_rate": 21,
    "tao_rank": 372
   },
@@ -7344,9 +7344,9 @@
    },
    "first_collected": "2022-04-21T05:45:26.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 25063,
+   "tao": 25107,
    "tao_rate": 8.4,
-   "tao_rank": 425
+   "tao_rank": 440
   },
   {
    "address": "0x547322faf3b4d0e16c8dda880da2bbd40ebd6109",
@@ -7364,7 +7364,7 @@
    },
    "first_collected": "2022-05-09T09:20:00.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 25587,
+   "tao": 25675,
    "tao_rate": 16.8,
    "tao_rank": 415
   },
@@ -7384,7 +7384,7 @@
    },
    "first_collected": "2022-07-16T23:26:04.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12090,
+   "tao": 12134,
    "tao_rate": 8.4,
    "tao_rank": 1165
   },
@@ -7404,7 +7404,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 8893,
+   "tao": 8937,
    "tao_rate": 8.4,
    "tao_rank": 1271
   },
@@ -7424,7 +7424,7 @@
    },
    "first_collected": "2022-05-09T00:47:31.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 15647,
+   "tao": 15691,
    "tao_rate": 8.4,
    "tao_rank": 590
   },
@@ -7444,7 +7444,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 79692,
+   "tao": 79998,
    "tao_rate": 58.8,
    "tao_rank": 195
   },
@@ -7464,9 +7464,9 @@
    },
    "first_collected": "2022-03-15T01:11:15.000000Z",
    "last_collected": "2022-07-28T23:03:18.000000Z",
-   "tao": 26704,
+   "tao": 26792,
    "tao_rate": 16.8,
-   "tao_rank": 404
+   "tao_rank": 405
   },
   {
    "address": "0xc2aaec38c14b81332f6741f9fdc211c6bb6f894c",
@@ -7484,7 +7484,7 @@
    },
    "first_collected": "2022-03-05T05:17:52.000000Z",
    "last_collected": "2026-08-21T23:50:23.000000Z",
-   "tao": 20669,
+   "tao": 20757,
    "tao_rate": 16.8,
    "tao_rank": 483,
    "nudges": 1
@@ -7505,9 +7505,9 @@
    },
    "first_collected": "2024-04-20T10:59:59.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 18291,
+   "tao": 18466,
    "tao_rate": 33.6,
-   "tao_rank": 540
+   "tao_rank": 538
   },
   {
    "address": "0x37b930d5b953d9e9df8b5d53379a410d855fccf3",
@@ -7525,9 +7525,9 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 8700,
+   "tao": 8744,
    "tao_rate": 8.4,
-   "tao_rank": 1275
+   "tao_rank": 1276
   },
   {
    "address": "0xa04611ac0438bdada004680628704151c8db044f",
@@ -7545,7 +7545,7 @@
    },
    "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 7218,
+   "tao": 7262,
    "tao_rate": 8.4,
    "tao_rank": 1307
   },
@@ -7565,7 +7565,7 @@
    },
    "first_collected": "2023-04-02T01:21:59.000000Z",
    "last_collected": "2024-04-05T23:31:47.000000Z",
-   "tao": 69878,
+   "tao": 70163,
    "tao_rate": 54.6,
    "tao_rank": 215
   },
@@ -7585,7 +7585,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11492,
+   "tao": 11535,
    "tao_rate": 8.4,
    "tao_rank": 1200
   },
@@ -7605,7 +7605,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 15520,
+   "tao": 15585,
    "tao_rate": 12.6,
    "tao_rank": 591
   },
@@ -7625,7 +7625,7 @@
    },
    "first_collected": "2022-09-25T13:21:35.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 17885,
+   "tao": 17951,
    "tao_rate": 12.6,
    "tao_rank": 551
   },
@@ -7645,7 +7645,7 @@
    },
    "first_collected": "2022-04-22T23:32:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12447,
+   "tao": 12491,
    "tao_rate": 8.4,
    "tao_rank": 851
   },
@@ -7665,7 +7665,7 @@
    },
    "first_collected": "2022-05-09T11:17:44.000000Z",
    "last_collected": "2022-09-24T06:49:11.000Z",
-   "tao": 25611,
+   "tao": 25698,
    "tao_rate": 16.8,
    "tao_rank": 412
   },
@@ -7685,9 +7685,9 @@
    },
    "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 4908,
+   "tao": 4930,
    "tao_rate": 4.2,
-   "tao_rank": 2711
+   "tao_rank": 2713
   },
   {
    "address": "0xceae4ca7d082856d140f3672780029d6e90c3dcd",
@@ -7705,9 +7705,9 @@
    },
    "first_collected": "2022-07-23T00:39:52.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12065,
+   "tao": 12108,
    "tao_rate": 8.4,
-   "tao_rank": 1166
+   "tao_rank": 1167
   },
   {
    "address": "0x8611abf2e6fc4ba00e9e3d10cdb1e5382cde1f84",
@@ -7725,7 +7725,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 17211,
+   "tao": 17276,
    "tao_rate": 12.6,
    "tao_rank": 565
   },
@@ -7745,7 +7745,7 @@
    },
    "first_collected": "2022-12-24T08:14:35.000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 17131,
+   "tao": 17196,
    "tao_rate": 12.6,
    "tao_rank": 571
   },
@@ -7765,7 +7765,7 @@
    },
    "first_collected": "2022-07-15T06:06:32.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12097,
+   "tao": 12141,
    "tao_rate": 8.4,
    "tao_rank": 1164
   },
@@ -7785,7 +7785,7 @@
    },
    "first_collected": "2024-10-05T07:53:11.000000Z",
    "last_collected": "2025-09-11T22:14:11.000000Z",
-   "tao": 4636,
+   "tao": 4702,
    "tao_rate": 12.6,
    "tao_rank": 2722
   },
@@ -7805,9 +7805,9 @@
    },
    "first_collected": "2022-12-24T08:16:59.000Z",
    "last_collected": "2026-08-22T00:29:59.000000Z",
-   "tao": 11629,
+   "tao": 11716,
    "tao_rate": 16.8,
-   "tao_rank": 1184,
+   "tao_rank": 1182,
    "nudges": 1
   },
   {
@@ -7826,7 +7826,7 @@
    },
    "first_collected": "2022-09-26T06:16:11.000Z",
    "last_collected": "2022-10-13T23:48:11.000Z",
-   "tao": 30217,
+   "tao": 30327,
    "tao_rate": 21,
    "tao_rank": 383
   },
@@ -7846,7 +7846,7 @@
    },
    "first_collected": "2022-07-20T05:59:01.000000Z",
    "last_collected": "2022-10-12T02:39:59.000Z",
-   "tao": 24917,
+   "tao": 25005,
    "tao_rate": 16.8,
    "tao_rank": 443
   },
@@ -7866,9 +7866,9 @@
    },
    "first_collected": "2022-12-23T21:56:59.000Z",
    "last_collected": "2022-12-23T21:56:59.000Z",
-   "tao": 22864,
+   "tao": 22952,
    "tao_rate": 16.8,
-   "tao_rank": 467
+   "tao_rank": 468
   },
   {
    "address": "0x4fc21517878b88dbee76f93cff2a3eab0d6304a3",
@@ -7886,7 +7886,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -7906,9 +7906,9 @@
    },
    "first_collected": "2022-07-09T05:49:20.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12122,
+   "tao": 12166,
    "tao_rate": 8.4,
-   "tao_rank": 1160
+   "tao_rank": 1161
   },
   {
    "address": "0xdf85b9146d73a852d7b900d1abd974f2a8119f57",
@@ -7926,7 +7926,7 @@
    },
    "first_collected": "2022-12-27T03:30:11.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 22810,
+   "tao": 22897,
    "tao_rate": 16.8,
    "tao_rank": 471
   },
@@ -7946,9 +7946,9 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 13287,
+   "tao": 13691,
    "tao_rate": 77.4,
-   "tao_rank": 609
+   "tao_rank": 600
   },
   {
    "address": "0x391a3699f430a4563097aec735b3c242108350ca",
@@ -7966,9 +7966,9 @@
    },
    "first_collected": "2022-03-15T01:34:31.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12610,
+   "tao": 12654,
    "tao_rate": 8.4,
-   "tao_rank": 841
+   "tao_rank": 846
   },
   {
    "address": "0x5e051c9106071baf1e4c087e3e06fdd17396a433",
@@ -7986,7 +7986,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11367,
+   "tao": 11411,
    "tao_rate": 8.4,
    "tao_rank": 1232
   },
@@ -8006,9 +8006,9 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 8697,
+   "tao": 8740,
    "tao_rate": 8.4,
-   "tao_rank": 1277
+   "tao_rank": 1278
   },
   {
    "address": "0x2a462fb59a5b0885b60ad31c5fe473d5ba0d79fd",
@@ -8026,9 +8026,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-31T21:18:23.000000Z",
-   "tao": 12526,
+   "tao": 12657,
    "tao_rate": 25.2,
-   "tao_rank": 848
+   "tao_rank": 844
   },
   {
    "address": "0x8230a4cb486d9ae98710f4eff9d94bbc2f26e771",
@@ -8046,7 +8046,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -8066,7 +8066,7 @@
    },
    "first_collected": "2022-05-09T09:42:12.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 12763,
+   "tao": 12807,
    "tao_rate": 8.4,
    "tao_rank": 833
   },
@@ -8086,9 +8086,9 @@
    },
    "first_collected": "2022-05-09T09:41:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12378,
+   "tao": 12422,
    "tao_rate": 8.4,
-   "tao_rank": 853
+   "tao_rank": 852
   },
   {
    "address": "0x809dcc99c388767fb8bd9c25590f96c801aaebaf",
@@ -8106,9 +8106,9 @@
    },
    "first_collected": "2022-12-27T07:25:47.000000Z",
    "last_collected": "2022-12-27T07:39:23.000000Z",
-   "tao": 131143,
+   "tao": 131647,
    "tao_rate": 96.6,
-   "tao_rank": 107
+   "tao_rank": 106
   },
   {
    "address": "0x001b26186552e79a318df256830a485bdbca4677",
@@ -8126,7 +8126,7 @@
    },
    "first_collected": "2022-08-11T08:07:54.000000Z",
    "last_collected": "2022-08-11T08:09:54.000000Z",
-   "tao": 309580,
+   "tao": 310659,
    "tao_rate": 207,
    "tao_rank": 29
   },
@@ -8148,7 +8148,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xd5f20543784f105f93ec06e918ae2d5e195b4438",
@@ -8168,7 +8168,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x1b2ff803d6dbea011ef30938e2c22260d0774dca",
@@ -8188,7 +8188,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x49df36a77f819190a41368bc8aca8a54fb6d760d",
@@ -8206,7 +8206,7 @@
    },
    "first_collected": "2022-08-11T07:07:00.000000Z",
    "last_collected": "2022-08-11T07:07:00.000Z",
-   "tao": 309589,
+   "tao": 310668,
    "tao_rate": 207,
    "tao_rank": 28
   },
@@ -8228,7 +8228,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x10d503ffe3b10fc43285396de53d4df66a7a15e5",
@@ -8246,9 +8246,9 @@
    },
    "first_collected": "2025-02-05T15:11:59.000000Z",
    "last_collected": "2026-08-23",
-   "tao": 44464,
+   "tao": 45206,
    "tao_rate": 142.2,
-   "tao_rank": 310
+   "tao_rank": 309
   },
   {
    "address": "0x8c36654b71c52bf8bf2ca8c3ec19bd4e83da7d11",
@@ -8266,7 +8266,7 @@
    },
    "first_collected": "2022-02-17T09:59:13.000000Z",
    "last_collected": "2022-02-23T06:56:16.000000Z",
-   "tao": 237508,
+   "tao": 238249,
    "tao_rate": 142.2,
    "tao_rank": 46
   },
@@ -8286,7 +8286,7 @@
    },
    "first_collected": "2025-02-05T05:25:35.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 83408,
+   "tao": 84150,
    "tao_rate": 142.2,
    "tao_rank": 184
   },
@@ -8306,7 +8306,7 @@
    },
    "first_collected": "2022-11-18T19:05:59.000Z",
    "last_collected": "2022-11-18T19:05:59.000Z",
-   "tao": 5863,
+   "tao": 5885,
    "tao_rate": 4.2,
    "tao_rank": 2354
   },
@@ -8326,9 +8326,9 @@
    },
    "first_collected": "2022-12-27T05:58:47.000000Z",
    "last_collected": "2022-12-27T05:58:47.000000Z",
-   "tao": 11404,
+   "tao": 11448,
    "tao_rate": 8.4,
-   "tao_rank": 1228
+   "tao_rank": 1221
   },
   {
    "address": "0xba9941758893819c506b79906a02ebdaac0e337c",
@@ -8346,7 +8346,7 @@
    },
    "first_collected": "2022-08-22T01:58:15.000000Z",
    "last_collected": "2022-09-05T23:21:51.000000Z",
-   "tao": 211077,
+   "tao": 211819,
    "tao_rate": 142.2,
    "tao_rank": 56
   },
@@ -8366,7 +8366,7 @@
    },
    "first_collected": "2022-08-11T22:20:52.000000Z",
    "last_collected": "2022-09-24T06:19:47.000Z",
-   "tao": 115419,
+   "tao": 115822,
    "tao_rate": 77.4,
    "tao_rank": 127
   },
@@ -8386,7 +8386,7 @@
    },
    "first_collected": "2022-04-21T08:44:54.000000Z",
    "last_collected": "2022-05-09T09:28:11.000000Z",
-   "tao": 124340,
+   "tao": 124744,
    "tao_rate": 77.4,
    "tao_rank": 114
   },
@@ -8406,7 +8406,7 @@
    },
    "first_collected": "2025-01-11T04:05:35.000Z",
    "last_collected": "2025-01-11T04:06:35.000000Z",
-   "tao": 46821,
+   "tao": 47225,
    "tao_rate": 77.4,
    "tao_rank": 297
   },
@@ -8426,7 +8426,7 @@
    },
    "first_collected": "2023-10-21T09:03:11.000000Z",
    "last_collected": "2025-03-03T09:10:59.000000Z",
-   "tao": 79927,
+   "tao": 80309,
    "tao_rate": 73.2,
    "tao_rank": 194
   },
@@ -8446,9 +8446,9 @@
    },
    "first_collected": "2026-08-08T01:16:35.000Z",
    "last_collected": "2026-08-08T03:22:11.000Z",
-   "tao": 3285,
+   "tao": 3820,
    "tao_rate": 102.6,
-   "tao_rank": 2782
+   "tao_rank": 2752
   },
   {
    "address": "0xa32c8ac28ec0ac0a19497cb30884ce85d88894fe",
@@ -8466,7 +8466,7 @@
    },
    "first_collected": "2025-02-05T00:51:59.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 44978,
+   "tao": 45382,
    "tao_rate": 77.4,
    "tao_rank": 307
   },
@@ -8486,7 +8486,7 @@
    },
    "first_collected": "2025-02-05T00:50:59.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 44978,
+   "tao": 45382,
    "tao_rate": 77.4,
    "tao_rank": 307
   },
@@ -8506,9 +8506,9 @@
    },
    "first_collected": "2022-02-17T10:38:57.000000Z",
    "last_collected": "2025-08-10T10:54:11.000Z",
-   "tao": 123346,
+   "tao": 123750,
    "tao_rate": 77.4,
-   "tao_rank": 117
+   "tao_rank": 118
   },
   {
    "address": "0x56616a6dac6252fdbbacc8ef5e739f4b26119f92",
@@ -8526,7 +8526,7 @@
    },
    "first_collected": "2022-08-14T13:17:27.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 108674,
+   "tao": 109055,
    "tao_rate": 73.2,
    "tao_rank": 140
   },
@@ -8546,9 +8546,9 @@
    },
    "first_collected": "2024-10-05T07:49:11.000000Z",
    "last_collected": "2026-08-21T23:52:35.000Z",
-   "tao": 3692,
+   "tao": 4073,
    "tao_rate": 73.2,
-   "tao_rank": 2757
+   "tao_rank": 2749
   },
   {
    "address": "0xe39ad57a33244300c2e0acfca24292434e2b9bae",
@@ -8566,9 +8566,9 @@
    },
    "first_collected": "2024-04-21T22:51:59.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 46631,
+   "tao": 47035,
    "tao_rate": 77.4,
-   "tao_rank": 299
+   "tao_rank": 298
   },
   {
    "address": "0x452a9b6432cd228410f01a1da754449c8bafc85a",
@@ -8586,9 +8586,9 @@
    },
    "first_collected": "2023-11-14T05:07:23.000000Z",
    "last_collected": "2026-08-21T23:52:35.000Z",
-   "tao": 5998,
+   "tao": 6380,
    "tao_rate": 73.2,
-   "tao_rank": 2334
+   "tao_rank": 2245
   },
   {
    "address": "0xa55bae6554a08576d7cc77c05348f3cee97beb14",
@@ -8606,9 +8606,9 @@
    },
    "first_collected": "2022-07-09T04:45:53.000Z",
    "last_collected": "2024-10-01T22:06:35.000000Z",
-   "tao": 9415,
+   "tao": 9458,
    "tao_rate": 8.4,
-   "tao_rank": 1264
+   "tao_rank": 1265
   },
   {
    "address": "0x95164c11db60941e60a262bbfe183ace6a34363e",
@@ -8626,7 +8626,7 @@
    },
    "first_collected": "2021-12-11T08:39:11.000000Z",
    "last_collected": "2022-05-13T23:57:50.000000Z",
-   "tao": 133619,
+   "tao": 134022,
    "tao_rate": 77.4,
    "tao_rank": 97
   },
@@ -8646,9 +8646,9 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 7351,
+   "tao": 7732,
    "tao_rate": 73.2,
-   "tao_rank": 1301
+   "tao_rank": 1295
   },
   {
    "address": "0x51c92564137510602710f742250101669b1e6f83",
@@ -8666,7 +8666,7 @@
    },
    "first_collected": "2022-03-15T04:16:42.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 120393,
+   "tao": 120775,
    "tao_rate": 73.2,
    "tao_rank": 121
   },
@@ -8686,9 +8686,9 @@
    },
    "first_collected": "2024-04-21T22:03:11.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 46618,
+   "tao": 47021,
    "tao_rate": 77.4,
-   "tao_rank": 300
+   "tao_rank": 299
   },
   {
    "address": "0x855ae7f1e0ea6f754f4d30b92cdc43a7b045a0b8",
@@ -8706,7 +8706,7 @@
    },
    "first_collected": "2023-01-15T23:51:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 72161,
+   "tao": 72520,
    "tao_rate": 69,
    "tao_rank": 210
   },
@@ -8726,9 +8726,9 @@
    },
    "first_collected": "2023-07-04T02:21:59.000000Z",
    "last_collected": "2026-08-21T03:53:47.000000Z",
-   "tao": 6615,
+   "tao": 6997,
    "tao_rate": 73.2,
-   "tao_rank": 2118
+   "tao_rank": 1315
   },
   {
    "address": "0xf192fef5c9f90db31826e57e57a404e5be28f0e9",
@@ -8746,7 +8746,7 @@
    },
    "first_collected": "2022-11-15T01:48:47.000Z",
    "last_collected": "2022-11-18T19:08:59.000Z",
-   "tao": 11742,
+   "tao": 11786,
    "tao_rate": 8.4,
    "tao_rank": 1178
   },
@@ -8766,7 +8766,7 @@
    },
    "first_collected": "2022-06-12T23:07:17.000Z",
    "last_collected": "2022-06-14T23:00:02.000Z",
-   "tao": 19579,
+   "tao": 19645,
    "tao_rate": 12.6,
    "tao_rank": 492
   },
@@ -8786,9 +8786,9 @@
    },
    "first_collected": "2025-07-27T23:33:23.000000Z",
    "last_collected": "2025-07-28T04:22:11.000000Z",
-   "tao": 1738,
+   "tao": 1760,
    "tao_rate": 4.2,
-   "tao_rank": 3125
+   "tao_rank": 3151
   },
   {
    "address": "0x00ba0b79fbf0c18034b753d3e2eedaae7bdf2aa2",
@@ -8806,7 +8806,7 @@
    },
    "first_collected": "2022-11-19T23:51:59.000000Z",
    "last_collected": "2022-11-19T23:51:59.000Z",
-   "tao": 25792,
+   "tao": 25879,
    "tao_rate": 16.8,
    "tao_rank": 409
   },
@@ -8826,7 +8826,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -8846,7 +8846,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -8866,7 +8866,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -8886,9 +8886,9 @@
    },
    "first_collected": "2025-08-08T17:38:47.000000Z",
    "last_collected": "2025-10-18T09:53:35.000000Z",
-   "tao": 4644,
+   "tao": 4710,
    "tao_rate": 12.6,
-   "tao_rank": 2721
+   "tao_rank": 2720
   },
   {
    "address": "0x111f412586d750951a603aee897afaf154746985",
@@ -8906,7 +8906,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -8926,7 +8926,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -8946,9 +8946,9 @@
    },
    "first_collected": "2022-09-26T07:17:47.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 30044,
+   "tao": 30153,
    "tao_rate": 21,
-   "tao_rank": 386
+   "tao_rank": 387
   },
   {
    "address": "0x172c7f0626aaffdd9b95dbed0b38544ef3dddb00",
@@ -8966,7 +8966,7 @@
    },
    "first_collected": "2022-09-05T00:06:24.000Z",
    "last_collected": "2022-10-11T11:10:47.000Z",
-   "tao": 24385,
+   "tao": 24472,
    "tao_rate": 16.8,
    "tao_rank": 452
   },
@@ -8986,7 +8986,7 @@
    },
    "first_collected": "2022-09-26T07:13:59.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 24473,
+   "tao": 24560,
    "tao_rate": 16.8,
    "tao_rank": 449
   },
@@ -9006,7 +9006,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9026,9 +9026,9 @@
    },
    "first_collected": "2022-06-03T07:49:32.000000Z",
    "last_collected": "2023-03-05T19:30:35.000000Z",
-   "tao": 18322,
+   "tao": 18388,
    "tao_rate": 12.6,
-   "tao_rank": 539
+   "tao_rank": 540
   },
   {
    "address": "0x32dbfc39e6330ccae7505a87519bac616c45e3ad",
@@ -9046,9 +9046,9 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2023-01-15T23:51:11.000000Z",
-   "tao": 11405,
+   "tao": 11448,
    "tao_rate": 8.4,
-   "tao_rank": 1219
+   "tao_rank": 1221
   },
   {
    "address": "0x343aca08aa8459ab018a8f543402763e8aff4b7f",
@@ -9066,7 +9066,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9086,7 +9086,7 @@
    },
    "first_collected": "2022-12-27T05:59:59.000000Z",
    "last_collected": "2022-12-27T07:29:59.000000Z",
-   "tao": 28512,
+   "tao": 28621,
    "tao_rate": 21,
    "tao_rank": 400
   },
@@ -9106,7 +9106,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9126,7 +9126,7 @@
    },
    "first_collected": "2022-05-13T13:48:20.000000Z",
    "last_collected": "2022-07-12T21:20:28.000000Z",
-   "tao": 19475,
+   "tao": 19541,
    "tao_rate": 12.6,
    "tao_rank": 500
   },
@@ -9146,7 +9146,7 @@
    },
    "first_collected": "2022-05-31T02:57:34.000000Z",
    "last_collected": "2022-07-28T23:03:18.000000Z",
-   "tao": 19506,
+   "tao": 19572,
    "tao_rate": 12.6,
    "tao_rank": 499
   },
@@ -9166,9 +9166,9 @@
    },
    "first_collected": "2022-07-30T00:33:29.000000Z",
    "last_collected": "2024-04-21T22:17:47.000000Z",
-   "tao": 12055,
+   "tao": 12120,
    "tao_rate": 12.6,
-   "tao_rank": 1167
+   "tao_rank": 1166
   },
   {
    "address": "0x4863cf7f803ea37e780a4f2790aabb3e46968b27",
@@ -9186,7 +9186,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9206,7 +9206,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9226,7 +9226,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9248,7 +9248,7 @@
    "last_collected": "2025-04-24T00:52:23.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x5c5edb285b7451b2155ec13c5d2eaff2ec6779ca",
@@ -9266,9 +9266,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 8622,
+   "tao": 8710,
    "tao_rate": 16.8,
-   "tao_rank": 1278
+   "tao_rank": 1279
   },
   {
    "address": "0x5ea93bd269bfd21b9e19f73db5d51d189c35cdb3",
@@ -9286,7 +9286,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9306,7 +9306,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9326,7 +9326,7 @@
    },
    "first_collected": "2022-12-27T06:23:59.000000Z",
    "last_collected": "2023-01-02T23:38:23.000000Z",
-   "tao": 17051,
+   "tao": 17117,
    "tao_rate": 12.6,
    "tao_rank": 577
   },
@@ -9346,7 +9346,7 @@
    },
    "first_collected": "2022-12-27T05:13:11.000000Z",
    "last_collected": "2022-12-28T18:27:23.000000Z",
-   "tao": 39948,
+   "tao": 40101,
    "tao_rate": 29.4,
    "tao_rank": 335
   },
@@ -9366,7 +9366,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9386,7 +9386,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9406,7 +9406,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9426,9 +9426,9 @@
    },
    "first_collected": "2026-06-07T17:12:59.000000Z",
    "last_collected": "2026-06-07T17:42:47.000Z",
-   "tao": 1249,
+   "tao": 1315,
    "tao_rate": 12.6,
-   "tao_rank": 3175
+   "tao_rank": 3174
   },
   {
    "address": "0x75775181080b3684cc3be770ba070d1ecc1ec50d",
@@ -9446,7 +9446,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9466,9 +9466,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 12603,
+   "tao": 12734,
    "tao_rate": 25.2,
-   "tao_rank": 843
+   "tao_rank": 839
   },
   {
    "address": "0x7c008e93b10b1f5c659bcfca0f41838196a16a40",
@@ -9486,9 +9486,9 @@
    },
    "first_collected": "2022-03-07T02:32:56.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 13529,
+   "tao": 13573,
    "tao_rate": 8.4,
-   "tao_rank": 603
+   "tao_rank": 604
   },
   {
    "address": "0x87b895f37a93e76cf1c27ed68b38d77fee0f7867",
@@ -9506,7 +9506,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9526,7 +9526,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9546,7 +9546,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9566,7 +9566,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9586,7 +9586,7 @@
    },
    "first_collected": "2022-06-18T08:09:55.000Z",
    "last_collected": "2022-11-30T20:20:11.000Z",
-   "tao": 18410,
+   "tao": 18476,
    "tao_rate": 12.6,
    "tao_rank": 537
   },
@@ -9606,7 +9606,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9626,7 +9626,7 @@
    },
    "first_collected": "2022-06-18T11:03:59.000Z",
    "last_collected": "2022-10-05T05:09:59.000Z",
-   "tao": 24680,
+   "tao": 24767,
    "tao_rate": 16.8,
    "tao_rank": 448
   },
@@ -9646,7 +9646,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9666,7 +9666,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9686,9 +9686,9 @@
    },
    "first_collected": "2022-05-09T10:10:27.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 6675,
+   "tao": 6697,
    "tao_rate": 4.2,
-   "tao_rank": 2058
+   "tao_rank": 2059
   },
   {
    "address": "0xcbc8cd253bf8032aacdca794c1ea3cbd12114c6e",
@@ -9706,7 +9706,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9726,7 +9726,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9746,7 +9746,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9766,7 +9766,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9786,7 +9786,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9806,7 +9806,7 @@
    },
    "first_collected": "2022-09-06T20:48:23.000000Z",
    "last_collected": "2022-09-24T06:18:35.000Z",
-   "tao": 18436,
+   "tao": 18502,
    "tao_rate": 12.6,
    "tao_rank": 535
   },
@@ -9826,7 +9826,7 @@
    },
    "first_collected": "2022-12-07T12:34:11.000000Z",
    "last_collected": "2022-12-07T13:24:35.000000Z",
-   "tao": 17354,
+   "tao": 17420,
    "tao_rate": 12.6,
    "tao_rank": 563
   },
@@ -9846,9 +9846,9 @@
    },
    "first_collected": "2022-08-18T11:41:13.000Z",
    "last_collected": "2022-12-16T16:11:11.000Z",
-   "tao": 17744,
+   "tao": 17810,
    "tao_rate": 12.6,
-   "tao_rank": 554
+   "tao_rank": 555
   },
   {
    "address": "0xdc85bcd0f0e3f29f0637ebee04394988bdd06b83",
@@ -9866,9 +9866,9 @@
    },
    "first_collected": "2026-07-08T07:10:23.000Z",
    "last_collected": "2026-07-09T10:23:23.000000Z",
-   "tao": 1421,
+   "tao": 1531,
    "tao_rate": 21,
-   "tao_rank": 3171
+   "tao_rank": 3168
   },
   {
    "address": "0xe4335022d67b72e9a5505418652da64dacc278db",
@@ -9886,9 +9886,9 @@
    },
    "first_collected": "2025-07-07T06:35:59.000000Z",
    "last_collected": "2025-07-07T06:52:23.000000Z",
-   "tao": 1825,
+   "tao": 1847,
    "tao_rate": 4.2,
-   "tao_rank": 3121
+   "tao_rank": 3147
   },
   {
    "address": "0xe47b7432dd2cb6120bd8b08eac3dc50f766ff69a",
@@ -9906,7 +9906,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9926,7 +9926,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9946,7 +9946,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -9966,9 +9966,9 @@
    },
    "first_collected": "2025-06-29T21:21:11.000000Z",
    "last_collected": "2025-06-30T04:50:59.000000Z",
-   "tao": 5566,
+   "tao": 5632,
    "tao_rate": 12.6,
-   "tao_rank": 2660
+   "tao_rank": 2655
   },
   {
    "address": "0xfd16be417f7df067d7817e199124dcaa9c0847fd",
@@ -9986,7 +9986,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10006,7 +10006,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10026,7 +10026,7 @@
    },
    "first_collected": "2022-12-27T03:07:59.000000Z",
    "last_collected": "2022-12-28T00:45:23.000000Z",
-   "tao": 28535,
+   "tao": 28645,
    "tao_rate": 21,
    "tao_rank": 397
   },
@@ -10046,7 +10046,7 @@
    },
    "first_collected": "2022-05-10T12:30:13.000000Z",
    "last_collected": "2022-08-19T02:02:48.000Z",
-   "tao": 25700,
+   "tao": 25787,
    "tao_rate": 16.8,
    "tao_rank": 410
   },
@@ -10066,7 +10066,7 @@
    },
    "first_collected": "2022-05-09T10:18:34.000000Z",
    "last_collected": "2022-07-13T22:30:14.000000Z",
-   "tao": 19512,
+   "tao": 19578,
    "tao_rate": 12.6,
    "tao_rank": 495
   },
@@ -10086,7 +10086,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10106,9 +10106,9 @@
    },
    "first_collected": "2023-01-03T13:54:11.000000Z",
    "last_collected": "2023-01-03T13:54:11.000000Z",
-   "tao": 13385,
+   "tao": 13451,
    "tao_rate": 12.6,
-   "tao_rank": 605
+   "tao_rank": 607
   },
   {
    "address": "0x7bc7481751d7fcb76d08f596b03ba1e42378ea27",
@@ -10126,7 +10126,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10146,7 +10146,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10166,7 +10166,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10186,7 +10186,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10206,7 +10206,7 @@
    },
    "first_collected": "2022-11-18T19:47:23.000Z",
    "last_collected": "2024-06-27T18:26:47.000000Z",
-   "tao": 11304,
+   "tao": 11370,
    "tao_rate": 12.6,
    "tao_rank": 1240
   },
@@ -10226,7 +10226,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10246,7 +10246,7 @@
    },
    "first_collected": "2022-12-27T05:24:47.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 57157,
+   "tao": 57376,
    "tao_rate": 42,
    "tao_rank": 264
   },
@@ -10266,7 +10266,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2025-04-01T23:25:35.000000Z",
-   "tao": 7932,
+   "tao": 7976,
    "tao_rate": 8.4,
    "tao_rank": 1290
   },
@@ -10286,7 +10286,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10306,7 +10306,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10326,9 +10326,9 @@
    },
    "first_collected": "2022-07-09T08:28:33.000Z",
    "last_collected": "2022-10-12T07:52:47.000Z",
-   "tao": 18662,
+   "tao": 18728,
    "tao_rate": 12.6,
-   "tao_rank": 526
+   "tao_rank": 527
   },
   {
    "address": "0x3852471d266d9e2222ca9fdd922bafc904dc49e5",
@@ -10346,9 +10346,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 8622,
+   "tao": 8710,
    "tao_rate": 16.8,
-   "tao_rank": 1278
+   "tao_rank": 1279
   },
   {
    "address": "0x9d3f31110d4e440460b8e605c55a54a261ab8224",
@@ -10366,7 +10366,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10386,9 +10386,9 @@
    },
    "first_collected": "2022-05-09T23:16:19.000000Z",
    "last_collected": "2022-12-07T15:48:35.000Z",
-   "tao": 14501,
+   "tao": 14566,
    "tao_rate": 12.6,
-   "tao_rank": 598
+   "tao_rank": 599
   },
   {
    "address": "0x177adf0f661ce080da1fa3f491f18e768182c2bf",
@@ -10406,7 +10406,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10426,7 +10426,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10446,7 +10446,7 @@
    },
    "first_collected": "2022-03-12T04:56:36.000000Z",
    "last_collected": "2024-06-27T13:36:35.000000Z",
-   "tao": 16993,
+   "tao": 17058,
    "tao_rate": 12.6,
    "tao_rank": 580
   },
@@ -10466,7 +10466,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10486,7 +10486,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10506,7 +10506,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10526,7 +10526,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10546,7 +10546,7 @@
    },
    "first_collected": "2023-01-10T06:18:11.000000Z",
    "last_collected": "2023-11-04T02:16:35.000000Z",
-   "tao": 15678,
+   "tao": 15744,
    "tao_rate": 12.6,
    "tao_rank": 589
   },
@@ -10566,7 +10566,7 @@
    },
    "first_collected": "2022-05-13T12:22:03.000000Z",
    "last_collected": "2022-09-30T10:43:23.000Z",
-   "tao": 18804,
+   "tao": 18870,
    "tao_rate": 12.6,
    "tao_rank": 520
   },
@@ -10586,9 +10586,9 @@
    },
    "first_collected": "2022-12-16T19:02:35.000Z",
    "last_collected": "2025-06-28T22:00:23.000000Z",
-   "tao": 13352,
+   "tao": 13418,
    "tao_rate": 12.6,
-   "tao_rank": 606
+   "tao_rank": 608
   },
   {
    "address": "0x61315007451e00451305f63c93af8cdd866f6bc9",
@@ -10606,7 +10606,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10626,7 +10626,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10646,7 +10646,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10666,7 +10666,7 @@
    },
    "first_collected": "2022-12-02T18:18:47.000Z",
    "last_collected": "2022-12-16T14:12:35.000Z",
-   "tao": 17313,
+   "tao": 17379,
    "tao_rate": 12.6,
    "tao_rank": 564
   },
@@ -10686,7 +10686,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10706,7 +10706,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10726,7 +10726,7 @@
    },
    "first_collected": "2022-07-10T21:50:08.000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 6413,
+   "tao": 6435,
    "tao_rate": 4.2,
    "tao_rank": 2194
   },
@@ -10746,7 +10746,7 @@
    },
    "first_collected": "2022-12-24T06:38:59.000Z",
    "last_collected": "2023-01-02T04:44:47.000000Z",
-   "tao": 22783,
+   "tao": 22871,
    "tao_rate": 16.8,
    "tao_rank": 472
   },
@@ -10766,7 +10766,7 @@
    },
    "first_collected": "2022-08-27T04:16:59.000000Z",
    "last_collected": "2022-09-24T06:18:11.000Z",
-   "tao": 18475,
+   "tao": 18541,
    "tao_rate": 12.6,
    "tao_rank": 532
   },
@@ -10786,7 +10786,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10806,7 +10806,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10826,7 +10826,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10846,9 +10846,9 @@
    },
    "first_collected": "2022-09-25T17:19:11.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 30049,
+   "tao": 30158,
    "tao_rate": 21,
-   "tao_rank": 385
+   "tao_rank": 386
   },
   {
    "address": "0x27f551611f6ccfd868dda75afd2b0b89c38bc791",
@@ -10866,7 +10866,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10888,7 +10888,7 @@
    "last_collected": "2024-10-05T07:50:47.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x757a21fbd39cccaff681e1930e273b9add0008db",
@@ -10906,7 +10906,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10926,7 +10926,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10946,7 +10946,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10966,7 +10966,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -10986,7 +10986,7 @@
    },
    "first_collected": "2022-12-29T19:05:23.000000Z",
    "last_collected": "2022-12-29T19:05:59.000000Z",
-   "tao": 28469,
+   "tao": 28578,
    "tao_rate": 21,
    "tao_rank": 403
   },
@@ -11006,7 +11006,7 @@
    },
    "first_collected": "2022-07-14T10:34:06.000Z",
    "last_collected": "2022-12-27T07:25:35.000000Z",
-   "tao": 65552,
+   "tao": 65793,
    "tao_rate": 46.2,
    "tao_rank": 248
   },
@@ -11026,7 +11026,7 @@
    },
    "first_collected": "2022-07-12T04:42:36.000Z",
    "last_collected": "2024-11-27T04:10:47.000000Z",
-   "tao": 14797,
+   "tao": 14862,
    "tao_rate": 12.6,
    "tao_rank": 597
   },
@@ -11046,7 +11046,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11066,7 +11066,7 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 15330,
+   "tao": 15505,
    "tao_rate": 33.6,
    "tao_rank": 594
   },
@@ -11086,9 +11086,9 @@
    },
    "first_collected": "2022-05-09T03:35:58.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 6676,
+   "tao": 6698,
    "tao_rate": 4.2,
-   "tao_rank": 2053
+   "tao_rank": 2052
   },
   {
    "address": "0xf3e1f9230ef6bb5646dc04879e67a3005cb69b37",
@@ -11106,7 +11106,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11126,7 +11126,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11146,9 +11146,9 @@
    },
    "first_collected": "2022-03-07T03:37:43.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 13614,
+   "tao": 13658,
    "tao_rate": 8.4,
-   "tao_rank": 600
+   "tao_rank": 601
   },
   {
    "address": "0x330c73488e897f67830acfc558e5664ec9b91fb5",
@@ -11166,7 +11166,7 @@
    },
    "first_collected": "2022-12-27T05:38:35.000000Z",
    "last_collected": "2022-12-27T09:21:35.000000Z",
-   "tao": 28515,
+   "tao": 28624,
    "tao_rate": 21,
    "tao_rank": 398
   },
@@ -11186,9 +11186,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 8622,
+   "tao": 8710,
    "tao_rate": 16.8,
-   "tao_rank": 1278
+   "tao_rank": 1279
   },
   {
    "address": "0x7c2f06ab61a94fe9760cc8d9ad35a33c0472cb8e",
@@ -11206,7 +11206,7 @@
    },
    "first_collected": "2022-12-07T15:48:35.000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 11530,
+   "tao": 11574,
    "tao_rate": 8.4,
    "tao_rank": 1190
   },
@@ -11226,9 +11226,9 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 11405,
+   "tao": 11448,
    "tao_rate": 8.4,
-   "tao_rank": 1219
+   "tao_rank": 1221
   },
   {
    "address": "0xd6d8e393824aac8ecaf4e1f689717bc001064abc",
@@ -11246,7 +11246,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11266,9 +11266,9 @@
    },
    "first_collected": "2022-05-11T01:50:04.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 13032,
+   "tao": 13075,
    "tao_rate": 8.4,
-   "tao_rank": 623
+   "tao_rank": 625
   },
   {
    "address": "0xa376d46b4966ae192dcb1fbc73fa2c89bbcbbca8",
@@ -11286,7 +11286,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11306,9 +11306,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 26552,
+   "tao": 26836,
    "tao_rate": 54.6,
-   "tao_rank": 405
+   "tao_rank": 404
   },
   {
    "address": "0x7aba135f55e9b60d4c14275fde03e3a4d23fcada",
@@ -11326,9 +11326,9 @@
    },
    "first_collected": "2023-01-15T23:51:11.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5664,
+   "tao": 5686,
    "tao_rate": 4.2,
-   "tao_rank": 2638
+   "tao_rank": 2636
   },
   {
    "address": "0x2a5595f487a15c9cca39bcdc17d551169d2552c5",
@@ -11346,7 +11346,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11366,9 +11366,9 @@
    },
    "first_collected": "2022-05-09T23:25:25.000000Z",
    "last_collected": "2024-06-27T07:10:59.000000Z",
-   "tao": 12116,
+   "tao": 12182,
    "tao_rate": 12.6,
-   "tao_rank": 1162
+   "tao_rank": 1159
   },
   {
    "address": "0x08e0a3e752d1338c0f02b986b9504f1009a962ca",
@@ -11386,7 +11386,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11406,7 +11406,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11426,7 +11426,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11446,7 +11446,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11466,7 +11466,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2023-11-04T01:56:47.000000Z",
-   "tao": 10094,
+   "tao": 10138,
    "tao_rate": 8.4,
    "tao_rank": 1259
   },
@@ -11486,7 +11486,7 @@
    },
    "first_collected": "2022-06-06T01:48:37.000000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 42362,
+   "tao": 42515,
    "tao_rate": 29.4,
    "tao_rank": 319
   },
@@ -11506,7 +11506,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11526,7 +11526,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11546,7 +11546,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11566,7 +11566,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11586,7 +11586,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11606,9 +11606,9 @@
    },
    "first_collected": "2022-03-12T03:49:49.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 12623,
+   "tao": 12666,
    "tao_rate": 8.4,
-   "tao_rank": 840
+   "tao_rank": 843
   },
   {
    "address": "0xbddf499207d29e920c0500642567b43238b30fd3",
@@ -11626,7 +11626,7 @@
    },
    "first_collected": "2022-10-23T01:47:59.000Z",
    "last_collected": "2023-10-10T15:52:23.000000Z",
-   "tao": 10470,
+   "tao": 10514,
    "tao_rate": 8.4,
    "tao_rank": 1255
   },
@@ -11646,7 +11646,7 @@
    },
    "first_collected": "2022-09-25T13:40:59.000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 11793,
+   "tao": 11837,
    "tao_rate": 8.4,
    "tao_rank": 1175
   },
@@ -11666,7 +11666,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11686,7 +11686,7 @@
    },
    "first_collected": "2022-05-09T10:19:12.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 12772,
+   "tao": 12816,
    "tao_rate": 8.4,
    "tao_rank": 819
   },
@@ -11706,7 +11706,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11726,7 +11726,7 @@
    },
    "first_collected": "2022-12-31T03:47:23.000000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5685,
+   "tao": 5707,
    "tao_rate": 4.2,
    "tao_rank": 2604
   },
@@ -11746,9 +11746,9 @@
    },
    "first_collected": "2024-10-01T03:32:35.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 13019,
+   "tao": 13150,
    "tao_rate": 25.2,
-   "tao_rank": 624
+   "tao_rank": 618
   },
   {
    "address": "0xd04fff37bfefd4b2439322620262a25cc17d0b91",
@@ -11766,7 +11766,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11786,7 +11786,7 @@
    },
    "first_collected": "2024-04-20T10:59:59.000000Z",
    "last_collected": "2025-05-28T01:09:59.000000Z",
-   "tao": 8314,
+   "tao": 8380,
    "tao_rate": 12.6,
    "tao_rank": 1285
   },
@@ -11806,7 +11806,7 @@
    },
    "first_collected": "2023-01-15T19:24:47.000Z",
    "last_collected": "2024-08-16T01:26:59.000000Z",
-   "tao": 20051,
+   "tao": 20138,
    "tao_rate": 16.8,
    "tao_rank": 486
   },
@@ -11826,9 +11826,9 @@
    },
    "first_collected": "2024-09-01T19:21:23.000000Z",
    "last_collected": "2026-08-21T07:34:23.000000Z",
-   "tao": 5482,
+   "tao": 5548,
    "tao_rate": 12.6,
-   "tao_rank": 2674
+   "tao_rank": 2670
   },
   {
    "address": "0x7d93f170dfd65d14d58682678b7a0d171f287c93",
@@ -11846,7 +11846,7 @@
    },
    "first_collected": "2022-07-09T11:16:07.000Z",
    "last_collected": "2022-12-01T13:51:59.000Z",
-   "tao": 18450,
+   "tao": 18516,
    "tao_rate": 12.6,
    "tao_rank": 534
   },
@@ -11866,7 +11866,7 @@
    },
    "first_collected": "2022-05-09T10:12:40.000000Z",
    "last_collected": "2023-04-17T16:20:59.000000Z",
-   "tao": 11909,
+   "tao": 11953,
    "tao_rate": 8.4,
    "tao_rank": 1171
   },
@@ -11886,7 +11886,7 @@
    },
    "first_collected": "2022-05-12T21:23:23.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 19429,
+   "tao": 19495,
    "tao_rate": 12.6,
    "tao_rank": 502
   },
@@ -11906,7 +11906,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11926,7 +11926,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11946,7 +11946,7 @@
    },
    "first_collected": "2022-12-17T00:31:35.000Z",
    "last_collected": "2022-12-27T05:14:35.000000Z",
-   "tao": 91314,
+   "tao": 91665,
    "tao_rate": 67.2,
    "tao_rank": 177
   },
@@ -11966,7 +11966,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -11986,7 +11986,7 @@
    },
    "first_collected": "2022-05-11T06:52:49.000000Z",
    "last_collected": "2022-09-24T06:33:35.000Z",
-   "tao": 25604,
+   "tao": 25692,
    "tao_rate": 16.8,
    "tao_rank": 413
   },
@@ -12006,7 +12006,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12026,9 +12026,9 @@
    },
    "first_collected": "2024-07-11T12:11:23.000000Z",
    "last_collected": "2024-08-21T15:35:47.000000Z",
-   "tao": 8551,
+   "tao": 8617,
    "tao_rate": 12.6,
-   "tao_rank": 1282
+   "tao_rank": 1283
   },
   {
    "address": "0x8ef6130753404b73081021562aeea7df975eafeb",
@@ -12046,7 +12046,7 @@
    },
    "first_collected": "2022-12-24T04:36:11.000Z",
    "last_collected": "2023-01-02T04:56:23.000000Z",
-   "tao": 17069,
+   "tao": 17135,
    "tao_rate": 12.6,
    "tao_rank": 576
   },
@@ -12066,7 +12066,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12088,7 +12088,7 @@
    "last_collected": "2024-10-05T07:51:35.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x147fcaeada9baee1da242d8b823ee809aa93b691",
@@ -12106,7 +12106,7 @@
    },
    "first_collected": "2022-07-09T06:01:31.000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 12943,
+   "tao": 12987,
    "tao_rate": 8.4,
    "tao_rank": 632
   },
@@ -12126,7 +12126,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12146,9 +12146,9 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 11405,
+   "tao": 11448,
    "tao_rate": 8.4,
-   "tao_rank": 1219
+   "tao_rank": 1221
   },
   {
    "address": "0xf06bed3f0dad7932d8d00fe48c36751f5c10be23",
@@ -12166,7 +12166,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12186,7 +12186,7 @@
    },
    "first_collected": "2022-06-18T09:09:31.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 31764,
+   "tao": 31873,
    "tao_rate": 21,
    "tao_rank": 371
   },
@@ -12206,7 +12206,7 @@
    },
    "first_collected": "2022-05-13T21:24:30.000000Z",
    "last_collected": "2022-07-15T13:54:18.000Z",
-   "tao": 25877,
+   "tao": 25965,
    "tao_rate": 16.8,
    "tao_rank": 408
   },
@@ -12226,7 +12226,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12246,7 +12246,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12266,7 +12266,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12286,7 +12286,7 @@
    },
    "first_collected": "2022-09-25T17:54:59.000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 9281,
+   "tao": 9325,
    "tao_rate": 8.4,
    "tao_rank": 1268
   },
@@ -12306,7 +12306,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12326,7 +12326,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12346,7 +12346,7 @@
    },
    "first_collected": "2022-07-16T05:07:21.000Z",
    "last_collected": "2025-09-08T05:30:23.000000Z",
-   "tao": 7952,
+   "tao": 7995,
    "tao_rate": 8.4,
    "tao_rank": 1289
   },
@@ -12366,7 +12366,7 @@
    },
    "first_collected": "2022-06-03T13:33:08.000000Z",
    "last_collected": "2022-09-24T06:14:35.000Z",
-   "tao": 20826,
+   "tao": 20892,
    "tao_rate": 12.6,
    "tao_rank": 481
   },
@@ -12386,7 +12386,7 @@
    },
    "first_collected": "2022-06-14T07:17:43.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 12862,
+   "tao": 12906,
    "tao_rate": 8.4,
    "tao_rank": 637
   },
@@ -12406,7 +12406,7 @@
    },
    "first_collected": "2022-06-18T11:22:01.000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 19347,
+   "tao": 19413,
    "tao_rate": 12.6,
    "tao_rank": 506
   },
@@ -12426,7 +12426,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12446,9 +12446,9 @@
    },
    "first_collected": "2022-09-25T08:28:11.000Z",
    "last_collected": "2022-12-27T07:00:47.000000Z",
-   "tao": 69742,
+   "tao": 69851,
    "tao_rate": 21,
-   "tao_rank": 216
+   "tao_rank": 217
   },
   {
    "address": "0x3d21d71aaf37a1a96abb3a8e57e0199a9a942b8d",
@@ -12466,7 +12466,7 @@
    },
    "first_collected": "2022-11-29T07:59:35.000Z",
    "last_collected": "2022-12-13T06:54:11.000Z",
-   "tao": 17355,
+   "tao": 17421,
    "tao_rate": 12.6,
    "tao_rank": 562
   },
@@ -12486,7 +12486,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12506,7 +12506,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 17158,
+   "tao": 17224,
    "tao_rate": 12.6,
    "tao_rank": 568
   },
@@ -12526,7 +12526,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12546,7 +12546,7 @@
    },
    "first_collected": "2022-09-25T11:05:59.000Z",
    "last_collected": "2022-10-05T10:51:47.000Z",
-   "tao": 18233,
+   "tao": 18299,
    "tao_rate": 12.6,
    "tao_rank": 543
   },
@@ -12566,7 +12566,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12586,9 +12586,9 @@
    },
    "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 5665,
+   "tao": 5686,
    "tao_rate": 4.2,
-   "tao_rank": 2635
+   "tao_rank": 2636
   },
   {
    "address": "0x344a4c67ee8ae84b89bcde443f982c07ae5b1358",
@@ -12606,7 +12606,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12626,7 +12626,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12646,7 +12646,7 @@
    },
    "first_collected": "2022-09-25T09:46:35.000Z",
    "last_collected": "2026-08-22T03:28:11.000000Z",
-   "tao": 12283,
+   "tao": 12349,
    "tao_rate": 12.6,
    "tao_rank": 857
   },
@@ -12666,9 +12666,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 12610,
+   "tao": 12742,
    "tao_rate": 25.2,
-   "tao_rank": 841
+   "tao_rank": 837
   },
   {
    "address": "0xb6095324712ae350bd3bab367b151c4ab3ef6a9b",
@@ -12686,7 +12686,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12706,9 +12706,9 @@
    },
    "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2026-08-22T00:02:23.000Z",
-   "tao": 100,
+   "tao": 122,
    "tao_rate": 4.2,
-   "tao_rank": 3210
+   "tao_rank": 3209
   },
   {
    "address": "0x942dfb0c7e87fb5f07e25ec7ff805e7f973cf929",
@@ -12726,7 +12726,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12746,7 +12746,7 @@
    },
    "first_collected": "2022-09-24T18:37:23.000Z",
    "last_collected": "2022-10-12T11:47:47.000Z",
-   "tao": 36332,
+   "tao": 36464,
    "tao_rate": 25.2,
    "tao_rank": 351
   },
@@ -12766,7 +12766,7 @@
    },
    "first_collected": "2022-07-09T01:11:43.000Z",
    "last_collected": "2024-08-30T00:28:47.000000Z",
-   "tao": 34819,
+   "tao": 34972,
    "tao_rate": 29.4,
    "tao_rank": 358
   },
@@ -12786,7 +12786,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12806,9 +12806,9 @@
    },
    "first_collected": "2023-05-21T04:42:23.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 4908,
+   "tao": 4930,
    "tao_rate": 4.2,
-   "tao_rank": 2711
+   "tao_rank": 2713
   },
   {
    "address": "0x8081a75141dbc89f70d31eece08ff12cfe105e43",
@@ -12826,9 +12826,9 @@
    },
    "first_collected": "2024-10-05T07:53:11.000000Z",
    "last_collected": "2025-05-11T23:16:47.000000Z",
-   "tao": 4661,
+   "tao": 4704,
    "tao_rate": 8.4,
-   "tao_rank": 2720
+   "tao_rank": 2721
   },
   {
    "address": "0x2d913709fa6b87502af62b3b2f883cfb7024b655",
@@ -12846,7 +12846,7 @@
    },
    "first_collected": "2022-10-29T09:38:11.000Z",
    "last_collected": "2024-10-05T07:50:47.000000Z",
-   "tao": 5949,
+   "tao": 5971,
    "tao_rate": 4.2,
    "tao_rank": 2343
   },
@@ -12866,7 +12866,7 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12886,9 +12886,9 @@
    },
    "first_collected": "2022-10-31T00:16:11.000000Z",
    "last_collected": "2024-10-01T02:40:11.000000Z",
-   "tao": 8700,
+   "tao": 8744,
    "tao_rate": 8.4,
-   "tao_rank": 1275
+   "tao_rank": 1276
   },
   {
    "address": "0x90451243ad2d7da2229fcaa263f460dff2e375ce",
@@ -12906,7 +12906,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12926,7 +12926,7 @@
    },
    "first_collected": "2022-05-27T10:31:48.000000Z",
    "last_collected": "2022-09-24T06:48:59.000Z",
-   "tao": 19098,
+   "tao": 19164,
    "tao_rate": 12.6,
    "tao_rank": 516
   },
@@ -12946,7 +12946,7 @@
    },
    "first_collected": "2022-05-10T06:53:22.000000Z",
    "last_collected": "2022-07-12T22:34:24.000Z",
-   "tao": 26070,
+   "tao": 26157,
    "tao_rate": 16.8,
    "tao_rank": 407
   },
@@ -12966,7 +12966,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -12986,7 +12986,7 @@
    },
    "first_collected": "2022-06-06T03:34:29.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 18767,
+   "tao": 18833,
    "tao_rate": 12.6,
    "tao_rank": 522
   },
@@ -13006,7 +13006,7 @@
    },
    "first_collected": "2022-10-21T00:54:47.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -13026,7 +13026,7 @@
    },
    "first_collected": "2022-08-22T05:21:50.000Z",
    "last_collected": "2022-12-16T11:50:47.000Z",
-   "tao": 24454,
+   "tao": 24541,
    "tao_rate": 16.8,
    "tao_rank": 450
   },
@@ -13046,9 +13046,9 @@
    },
    "first_collected": "2025-01-06T03:48:11.000000Z",
    "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 8622,
+   "tao": 8710,
    "tao_rate": 16.8,
-   "tao_rank": 1278
+   "tao_rank": 1279
   },
   {
    "address": "0xc8f8e2f59dd95ff67c3d39109eca2e2a017d4c8a",
@@ -13066,9 +13066,9 @@
    },
    "first_collected": "2023-07-17T03:17:59.000000Z",
    "last_collected": "2024-10-05T07:51:35.000000Z",
-   "tao": 9708,
+   "tao": 9752,
    "tao_rate": 8.4,
-   "tao_rank": 1262
+   "tao_rank": 1264
   },
   {
    "address": "0x26fca9a99e95be90447a25a1da852d870417aac9",
@@ -13086,7 +13086,7 @@
    },
    "first_collected": "2022-12-27T06:46:59.000000Z",
    "last_collected": "2022-12-27T08:50:35.000000Z",
-   "tao": 17109,
+   "tao": 17175,
    "tao_rate": 12.6,
    "tao_rank": 573
   },
@@ -13106,7 +13106,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -13126,7 +13126,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 8823,
+   "tao": 8867,
    "tao_rate": 8.4,
    "tao_rank": 1272
   },
@@ -13146,7 +13146,7 @@
    },
    "first_collected": "2022-12-27T03:29:59.000000Z",
    "last_collected": "2024-10-05T07:49:59.000000Z",
-   "tao": 5702,
+   "tao": 5724,
    "tao_rate": 4.2,
    "tao_rank": 2445
   },
@@ -13168,7 +13168,7 @@
    "last_collected": "2022-11-29T12:46:23.000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x11c632014d1cc64f73bc84e4e9768bf0fb5ac7f6",
@@ -13188,7 +13188,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x2afc032aaf6d7ead33fb05f9d42d874874dfb9d1",
@@ -13208,7 +13208,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x3b33605a49803ce5bf936d61ec34a82dc9a8af67",
@@ -13226,7 +13226,7 @@
    },
    "first_collected": "2022-02-07T10:31:08.000000Z",
    "last_collected": "2022-03-02T09:06:25.000000Z",
-   "tao": 230320,
+   "tao": 231039,
    "tao_rate": 138,
    "tao_rank": 47
   },
@@ -13248,7 +13248,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x8c0ca6b72104dbb7095d8b349bccc2f60f24bf41",
@@ -13268,7 +13268,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xa7604f08cc11a23c42e5217ea17e9a70e9a43919",
@@ -13288,7 +13288,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xb681de23608f3b016abf32e7c9ac16e85c644c1d",
@@ -13308,7 +13308,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xbb261e9c522d826886cf9d03b200e268a7ca36cb",
@@ -13326,7 +13326,7 @@
    },
    "first_collected": "2022-08-26T22:34:50.000000Z",
    "last_collected": "2022-08-26T22:36:15.000000Z",
-   "tao": 204233,
+   "tao": 204953,
    "tao_rate": 138,
    "tao_rank": 60
   },
@@ -13348,7 +13348,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xf853294251a3213d23fdfed4efe54903caebc985",
@@ -13368,7 +13368,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xae291acb5941a8629f44b91c8edd3613401b03ab",
@@ -13386,7 +13386,7 @@
    },
    "first_collected": "2022-08-11T06:49:04.000000Z",
    "last_collected": "2022-08-11T06:50:30.000000Z",
-   "tao": 206394,
+   "tao": 207114,
    "tao_rate": 138,
    "tao_rank": 59
   },
@@ -13408,7 +13408,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xedc1a397589a0236c4810883b7d559288a5fe7e1",
@@ -13428,7 +13428,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x8fbe34a4a6c38d44fd7642440908ee44067c00e4",
@@ -13448,7 +13448,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x2d9cbc4ecfbd1b8f66aa798fd51585ae058daa8b",
@@ -13468,7 +13468,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xe5358cab95014e2306815743793f16c93a8a5c70",
@@ -13488,7 +13488,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x08db792f0dc2492c67ba901adbe136e76648341c",
@@ -13506,9 +13506,9 @@
    },
    "first_collected": "2025-02-05T22:47:23.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 42878,
+   "tao": 43260,
    "tao_rate": 73.2,
-   "tao_rank": 315
+   "tao_rank": 314
   },
   {
    "address": "0x102b68aa03c8098026fe944f013ec9ae4c49f1a1",
@@ -13526,9 +13526,9 @@
    },
    "first_collected": "2025-02-05T01:30:23.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 42939,
+   "tao": 43321,
    "tao_rate": 73.2,
-   "tao_rank": 313
+   "tao_rank": 312
   },
   {
    "address": "0x437e59a28d34f755eb1654db31a0249c27cd8c7c",
@@ -13546,9 +13546,9 @@
    },
    "first_collected": "2025-02-06T23:18:47.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 42807,
+   "tao": 43189,
    "tao_rate": 73.2,
-   "tao_rank": 317
+   "tao_rank": 316
   },
   {
    "address": "0x51ec8bb228af8aed84d935e0cbed0fdb3fc39114",
@@ -13566,7 +13566,7 @@
    },
    "first_collected": "2022-11-18T16:40:23.000000Z",
    "last_collected": "2023-01-22T17:23:59.000000Z",
-   "tao": 96337,
+   "tao": 96697,
    "tao_rate": 69,
    "tao_rank": 169
   },
@@ -13586,7 +13586,7 @@
    },
    "first_collected": "2022-11-16T23:21:23.000Z",
    "last_collected": "2022-11-18T19:06:59.000Z",
-   "tao": 5863,
+   "tao": 5885,
    "tao_rate": 4.2,
    "tao_rank": 2354
   },
@@ -13606,9 +13606,9 @@
    },
    "first_collected": "2022-08-16T13:09:26.000000Z",
    "last_collected": "2022-08-16T14:00:12.000Z",
-   "tao": 109093,
+   "tao": 109475,
    "tao_rate": 73.2,
-   "tao_rank": 138
+   "tao_rank": 139
   },
   {
    "address": "0x68aa2b9f883e9ed303251d2cb170cf4fb58dc882",
@@ -13626,7 +13626,7 @@
    },
    "first_collected": "2022-11-18T19:07:47.000Z",
    "last_collected": "2022-11-18T19:07:47.000Z",
-   "tao": 5863,
+   "tao": 5885,
    "tao_rate": 4.2,
    "tao_rank": 2354
   },
@@ -13646,7 +13646,7 @@
    },
    "first_collected": "2023-01-09T01:52:11.000000Z",
    "last_collected": "2023-01-09T01:52:11.000000Z",
-   "tao": 5648,
+   "tao": 5670,
    "tao_rate": 4.2,
    "tao_rank": 2649
   },
@@ -13666,9 +13666,9 @@
    },
    "first_collected": "2022-07-12T02:21:18.000Z",
    "last_collected": "2022-08-11T10:01:20.000000Z",
-   "tao": 116004,
+   "tao": 116408,
    "tao_rate": 77.4,
-   "tao_rank": 125
+   "tao_rank": 126
   },
   {
    "address": "0x94ff6a83a067cc9e6a4c0767792beda781a16375",
@@ -13686,7 +13686,7 @@
    },
    "first_collected": "2022-11-19T00:52:59.000Z",
    "last_collected": "2022-11-19T00:52:59.000Z",
-   "tao": 5862,
+   "tao": 5884,
    "tao_rate": 4.2,
    "tao_rank": 2360
   },
@@ -13706,7 +13706,7 @@
    },
    "first_collected": "2023-10-05T23:49:23.000000Z",
    "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 74168,
+   "tao": 74528,
    "tao_rate": 69,
    "tao_rank": 205
   },
@@ -13726,7 +13726,7 @@
    },
    "first_collected": "2022-04-21T05:52:21.000000Z",
    "last_collected": "2022-04-23T23:01:30.000000Z",
-   "tao": 117668,
+   "tao": 118050,
    "tao_rate": 73.2,
    "tao_rank": 124
   },
@@ -13746,7 +13746,7 @@
    },
    "first_collected": "2024-05-25T08:55:59.000000Z",
    "last_collected": "2024-05-28T03:25:11.000000Z",
-   "tao": 61481,
+   "tao": 61863,
    "tao_rate": 73.2,
    "tao_rank": 257
   },
@@ -13766,7 +13766,7 @@
    },
    "first_collected": "2023-08-19T06:38:11.000000Z",
    "last_collected": "2023-09-23T22:25:47.000000Z",
-   "tao": 82026,
+   "tao": 82407,
    "tao_rate": 73.2,
    "tao_rank": 189
   },
@@ -13786,9 +13786,9 @@
    },
    "first_collected": "2023-10-15T07:39:11.000000Z",
    "last_collected": "2024-07-21T07:07:11.000000Z",
-   "tao": 76824,
+   "tao": 77206,
    "tao_rate": 73.2,
-   "tao_rank": 202
+   "tao_rank": 201
   },
   {
    "address": "0xa5137500e1bedbcb99881b76d4daadd54f9088cf",
@@ -13806,9 +13806,9 @@
    },
    "first_collected": "2022-05-13T04:25:14.000000Z",
    "last_collected": "2022-08-22T03:52:13.000000Z",
-   "tao": 109106,
+   "tao": 109488,
    "tao_rate": 73.2,
-   "tao_rank": 137
+   "tao_rank": 138
   },
   {
    "address": "0x20f30d8db95e333fe674d161ad1539b3931fa2d0",
@@ -13826,9 +13826,9 @@
    },
    "first_collected": "2022-07-09T06:25:09.000Z",
    "last_collected": "2022-08-11T07:10:55.000000Z",
-   "tao": 109616,
+   "tao": 109998,
    "tao_rate": 73.2,
-   "tao_rank": 136
+   "tao_rank": 137
   },
   {
    "address": "0x41dd1c6338e5b3cdf9dc69e20dad9834ae36a6d3",
@@ -13846,9 +13846,9 @@
    },
    "first_collected": "2024-10-01T02:38:59.000000Z",
    "last_collected": "2026-08-21T03:32:59.000000Z",
-   "tao": 4705,
+   "tao": 5087,
    "tao_rate": 73.2,
-   "tao_rank": 2719
+   "tao_rank": 2709
   },
   {
    "address": "0xc9cc85d6a45ddc91ebca87c6ba86f5993821c5a8",
@@ -13866,7 +13866,7 @@
    },
    "first_collected": "2025-02-05T22:49:59.000000Z",
    "last_collected": "2025-02-09T00:42:47.000000Z",
-   "tao": 42878,
+   "tao": 43259,
    "tao_rate": 73.2,
    "tao_rank": 315
   },
@@ -13886,9 +13886,9 @@
    },
    "first_collected": "2023-10-14T04:04:59.000000Z",
    "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 73604,
+   "tao": 73963,
    "tao_rate": 69,
-   "tao_rank": 207
+   "tao_rank": 208
   },
   {
    "address": "0x8f791f061d7f36dc07de081ad88f87d71be1585e",
@@ -13906,9 +13906,9 @@
    },
    "first_collected": "2023-05-22T02:36:23.000000Z",
    "last_collected": "2026-08-21T04:04:47.000000Z",
-   "tao": 1706,
+   "tao": 2065,
    "tao_rate": 69,
-   "tao_rank": 3135
+   "tao_rank": 3004
   },
   {
    "address": "0x387a161c6b25aa854100abaed39274e51aaffffd",
@@ -13926,7 +13926,7 @@
    },
    "first_collected": "2022-07-12T05:54:16.000Z",
    "last_collected": "2022-07-12T05:54:16.000Z",
-   "tao": 6407,
+   "tao": 6429,
    "tao_rate": 4.2,
    "tao_rank": 2202
   },
@@ -13946,7 +13946,7 @@
    },
    "first_collected": "2022-10-14T05:28:47.000Z",
    "last_collected": "2022-10-14T05:31:47.000000Z",
-   "tao": 104797,
+   "tao": 105179,
    "tao_rate": 73.2,
    "tao_rank": 145
   },
@@ -13966,9 +13966,9 @@
    },
    "first_collected": "2025-04-01T23:17:59.000000Z",
    "last_collected": "2026-08-22T00:26:47.000000Z",
-   "tao": 3877,
+   "tao": 4259,
    "tao_rate": 73.2,
-   "tao_rank": 2750
+   "tao_rank": 2740
   },
   {
    "address": "0x61b04d2b5cb1f1f8505e7b4e1cb3d9e8a0b15bae",
@@ -13986,9 +13986,9 @@
    },
    "first_collected": "2024-08-30T00:28:47.000000Z",
    "last_collected": "2026-08-21T05:11:23.000000Z",
-   "tao": 7968,
+   "tao": 8371,
    "tao_rate": 77.4,
-   "tao_rank": 1288
+   "tao_rank": 1286
   },
   {
    "address": "0x6dbe7f53320da472f5be61012924f79079abd31c",
@@ -14006,9 +14006,9 @@
    },
    "first_collected": "2022-12-14T19:46:23.000Z",
    "last_collected": "2022-12-14T19:46:23.000Z",
-   "tao": 11508,
+   "tao": 11552,
    "tao_rate": 8.4,
-   "tao_rank": 1194
+   "tao_rank": 1191
   },
   {
    "address": "0xc4d0af96a1c580fbc9e967776a1666c27ab933e4",
@@ -14028,7 +14028,7 @@
    "last_collected": "2024-10-05T07:51:35.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xd35f84a9f82fbec2082b2b6c9afd20b4a8f7c959",
@@ -14046,9 +14046,9 @@
    },
    "first_collected": "2024-06-30T07:51:47.000000Z",
    "last_collected": "2026-08-21T04:53:59.000000Z",
-   "tao": 5091,
+   "tao": 5473,
    "tao_rate": 73.2,
-   "tao_rank": 2707
+   "tao_rank": 2682
   },
   {
    "address": "0x7b09322d09b723b5babffc149d0a6b26c00b77b4",
@@ -14066,7 +14066,7 @@
    },
    "first_collected": "2023-10-18T02:17:59.000000Z",
    "last_collected": "2023-10-25T03:22:11.000000Z",
-   "tao": 77767,
+   "tao": 78149,
    "tao_rate": 73.2,
    "tao_rank": 200
   },
@@ -14086,9 +14086,9 @@
    },
    "first_collected": "2024-10-05T07:53:11.000000Z",
    "last_collected": "2026-08-21T05:44:23.000000Z",
-   "tao": 1701,
+   "tao": 2061,
    "tao_rate": 69,
-   "tao_rank": 3152
+   "tao_rank": 3123
   },
   {
    "address": "0x047c4d7af709ae19d3bbbd5f9e10461d2554da00",
@@ -14106,7 +14106,7 @@
    },
    "first_collected": "2022-11-18T19:06:35.000Z",
    "last_collected": "2022-11-18T19:06:35.000Z",
-   "tao": 5863,
+   "tao": 5885,
    "tao_rate": 4.2,
    "tao_rank": 2354
   },
@@ -14126,9 +14126,9 @@
    },
    "first_collected": "2025-01-09T22:43:47.000000Z",
    "last_collected": "2025-01-14T21:19:47.000000Z",
-   "tao": 44526,
+   "tao": 44908,
    "tao_rate": 73.2,
-   "tao_rank": 309
+   "tao_rank": 310
   },
   {
    "address": "0x63f42bfc17b6ff3a7f487c406b8e006d0d4970c3",
@@ -14148,7 +14148,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x26874d5915fb831e4771d647a5048561da3c0874",
@@ -14168,7 +14168,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xfde5124db26916a8cd5f4d41d15deb50d68504dc",
@@ -14188,7 +14188,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x01d5aad69b4f303671abd48e5e3cd20c368c566f",
@@ -14206,9 +14206,9 @@
    },
    "first_collected": "2026-08-22T00:46:59.000000Z",
    "last_collected": "2026-08-22T00:46:59.000000Z",
-   "tao": 1646,
+   "tao": 2006,
    "tao_rate": 69,
-   "tao_rank": 3159
+   "tao_rank": 3134
   },
   {
    "address": "0x07123695bae8000b5bbc44c19c274470238b92a1",
@@ -14226,7 +14226,7 @@
    },
    "first_collected": "2023-10-12T23:14:35.000000Z",
    "last_collected": "2023-10-12T23:14:35.000000Z",
-   "tao": 73687,
+   "tao": 74046,
    "tao_rate": 69,
    "tao_rank": 206
   },
@@ -14246,7 +14246,7 @@
    },
    "first_collected": "2025-02-11T05:16:23.000000Z",
    "last_collected": "2025-02-11T05:16:23.000000Z",
-   "tao": 40066,
+   "tao": 40426,
    "tao_rate": 69,
    "tao_rank": 334
   },
@@ -14268,7 +14268,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x1b9c993f2962d8f0faea3387b368a011f2b9d0ee",
@@ -14286,9 +14286,9 @@
    },
    "first_collected": "2026-08-21T04:07:23.000000Z",
    "last_collected": "2026-08-21T04:07:23.000000Z",
-   "tao": 1706,
+   "tao": 2065,
    "tao_rate": 69,
-   "tao_rank": 3135
+   "tao_rank": 3004
   },
   {
    "address": "0x1ef15e6df74eb17470e6cfa8969fd23a5c23f4e7",
@@ -14308,7 +14308,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x2443e22cbf5b6607e9a2df68a35b5f18cf525a76",
@@ -14326,9 +14326,9 @@
    },
    "first_collected": "2026-03-08T21:31:47.000000Z",
    "last_collected": "2026-03-08T21:31:47.000000Z",
-   "tao": 13109,
+   "tao": 13469,
    "tao_rate": 69,
-   "tao_rank": 617
+   "tao_rank": 606
   },
   {
    "address": "0x2712d421570b562e3b33c9e0faae83198cf47892",
@@ -14348,7 +14348,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x2ac8ffa449827c507deea7072edf19edb6c4b1ba",
@@ -14366,7 +14366,7 @@
    },
    "first_collected": "2023-10-14T04:03:35.000Z",
    "last_collected": "2023-10-14T04:03:35.000Z",
-   "tao": 73604,
+   "tao": 73964,
    "tao_rate": 69,
    "tao_rank": 207
   },
@@ -14386,7 +14386,7 @@
    },
    "first_collected": "2022-08-11T06:44:54.000000Z",
    "last_collected": "2022-08-11T06:44:54.000000Z",
-   "tao": 103197,
+   "tao": 103557,
    "tao_rate": 69,
    "tao_rank": 148
   },
@@ -14406,9 +14406,9 @@
    },
    "first_collected": "2026-08-21T03:40:11.000000Z",
    "last_collected": "2026-08-21T03:40:11.000000Z",
-   "tao": 1707,
+   "tao": 2067,
    "tao_rate": 69,
-   "tao_rank": 3132
+   "tao_rank": 2998
   },
   {
    "address": "0x3b93799ff5cbc717e6d0924514e09e694a4e23d7",
@@ -14426,7 +14426,7 @@
    },
    "first_collected": "2022-02-17T11:09:08.000000Z",
    "last_collected": "2022-02-17T11:09:08.000000Z",
-   "tao": 115259,
+   "tao": 115619,
    "tao_rate": 69,
    "tao_rank": 129
   },
@@ -14446,7 +14446,7 @@
    },
    "first_collected": "2022-08-11T06:45:29.000000Z",
    "last_collected": "2022-08-11T06:45:29.000000Z",
-   "tao": 103197,
+   "tao": 103557,
    "tao_rate": 69,
    "tao_rank": 148
   },
@@ -14468,7 +14468,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x45515827641e2091a73f747486ee9629ebd2e902",
@@ -14488,7 +14488,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x45be0696852f129f42cbd772ab04b7c3c4a1e168",
@@ -14508,7 +14508,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x4745c1bf30a55d4903592206bb142003e884f8a4",
@@ -14526,9 +14526,9 @@
    },
    "first_collected": "2026-08-21T03:35:59.000000Z",
    "last_collected": "2026-08-21T03:35:59.000000Z",
-   "tao": 1707,
+   "tao": 2067,
    "tao_rate": 69,
-   "tao_rank": 3132
+   "tao_rank": 2998
   },
   {
    "address": "0x48c45b619c308b91ee1fa09a112bd4461d2c182c",
@@ -14548,7 +14548,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x4cbc4bac934f00c6b60b76dc63afd7d2e0c0ae7f",
@@ -14566,7 +14566,7 @@
    },
    "first_collected": "2025-02-17T00:34:23.000000Z",
    "last_collected": "2025-02-17T00:34:23.000000Z",
-   "tao": 39666,
+   "tao": 40026,
    "tao_rate": 69,
    "tao_rank": 339
   },
@@ -14588,7 +14588,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x62ebc6375df0ff1bfcaa81185c1b113c1fd5483c",
@@ -14606,9 +14606,9 @@
    },
    "first_collected": "2026-08-21T05:08:59.000000Z",
    "last_collected": "2026-08-21T05:08:59.000000Z",
-   "tao": 1703,
+   "tao": 2062,
    "tao_rate": 69,
-   "tao_rank": 3146
+   "tao_rank": 3120
   },
   {
    "address": "0x69c144d56e10f2012da6c6edb1a6fb72955e209a",
@@ -14626,9 +14626,9 @@
    },
    "first_collected": "2025-10-13T06:23:35.000000Z",
    "last_collected": "2025-10-13T06:23:35.000000Z",
-   "tao": 23227,
+   "tao": 23587,
    "tao_rate": 69,
-   "tao_rank": 463
+   "tao_rank": 461
   },
   {
    "address": "0x6ca9d147e2f64e45b0bb4f83962f179f66c883ab",
@@ -14646,7 +14646,7 @@
    },
    "first_collected": "2022-02-17T10:23:43.000000Z",
    "last_collected": "2022-02-17T10:23:43.000000Z",
-   "tao": 115261,
+   "tao": 115621,
    "tao_rate": 69,
    "tao_rank": 128
   },
@@ -14668,7 +14668,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x72703b554a7089f93ff1fc6cc6c0e623900a7b80",
@@ -14686,9 +14686,9 @@
    },
    "first_collected": "2026-08-21T04:14:47.000000Z",
    "last_collected": "2026-08-21T04:14:47.000000Z",
-   "tao": 1705,
+   "tao": 2065,
    "tao_rate": 69,
-   "tao_rank": 3140
+   "tao_rank": 3004
   },
   {
    "address": "0x73924aa28f23256d994e20803a6c63d9dd056d7d",
@@ -14708,7 +14708,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x73dfe934241963cd96118c6dce3fb950a4170c3e",
@@ -14728,7 +14728,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x80b89390028cc3856e371cf4c35d0182c83c811d",
@@ -14746,9 +14746,9 @@
    },
    "first_collected": "2026-08-21T04:02:23.000000Z",
    "last_collected": "2026-08-21T04:02:23.000000Z",
-   "tao": 1706,
+   "tao": 2066,
    "tao_rate": 69,
-   "tao_rank": 3135
+   "tao_rank": 3001
   },
   {
    "address": "0x845f97e61d7e868b49cf3b980557de0860b11a79",
@@ -14768,7 +14768,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x908c6a54dd6d892ab6cb48dbc892baf713224382",
@@ -14788,7 +14788,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x93e318478f731c8ba93f2d2b64f722319151e9fd",
@@ -14808,7 +14808,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x999b5b1c6998a974a3684d89a995122304d11b2b",
@@ -14826,9 +14826,9 @@
    },
    "first_collected": "2026-08-21T04:50:47.000000Z",
    "last_collected": "2026-08-21T04:50:47.000000Z",
-   "tao": 1703,
+   "tao": 2063,
    "tao_rate": 69,
-   "tao_rank": 3146
+   "tao_rank": 3111
   },
   {
    "address": "0x9aaddc5040d2093dc0dafc0803cbfca822341bca",
@@ -14846,7 +14846,7 @@
    },
    "first_collected": "2022-08-09T05:04:50.000000Z",
    "last_collected": "2022-08-09T05:04:50.000000Z",
-   "tao": 103340,
+   "tao": 103700,
    "tao_rate": 69,
    "tao_rank": 146
   },
@@ -14866,9 +14866,9 @@
    },
    "first_collected": "2026-08-21T04:34:47.000000Z",
    "last_collected": "2026-08-21T04:34:47.000000Z",
-   "tao": 1704,
+   "tao": 2064,
    "tao_rate": 69,
-   "tao_rank": 3142
+   "tao_rank": 3067
   },
   {
    "address": "0xa1ec8651e11a00cf36f49d4541d6d3fd082fef2e",
@@ -14886,7 +14886,7 @@
    },
    "first_collected": "2022-08-11T12:56:42.000000Z",
    "last_collected": "2022-08-11T12:56:42.000000Z",
-   "tao": 103179,
+   "tao": 103539,
    "tao_rate": 69,
    "tao_rank": 151
   },
@@ -14908,7 +14908,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xaf9cbe42d3fd186b5d0d04b0a1d424e6562fd7ba",
@@ -14926,9 +14926,9 @@
    },
    "first_collected": "2025-01-24T04:14:35.000000Z",
    "last_collected": "2025-01-24T04:14:35.000000Z",
-   "tao": 41311,
+   "tao": 41671,
    "tao_rate": 69,
-   "tao_rank": 324
+   "tao_rank": 322
   },
   {
    "address": "0xb1058c959987e3513600eb5b4fd82aeee2a0e4f9",
@@ -14946,9 +14946,9 @@
    },
    "first_collected": "2026-08-21T23:52:35.000Z",
    "last_collected": "2026-08-21T23:52:35.000Z",
-   "tao": 1649,
+   "tao": 2008,
    "tao_rate": 69,
-   "tao_rank": 3157
+   "tao_rank": 3132
   },
   {
    "address": "0xb6b6e5b78c05b77babbe418f4ce78a7e5ddaaf20",
@@ -14968,7 +14968,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xbc15ac912c4af743eed5c0f033824de9de95cd4f",
@@ -14988,7 +14988,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xc4d4125c83d1108df969dda998227fca80fd82dc",
@@ -15006,9 +15006,9 @@
    },
    "first_collected": "2026-08-21T04:56:11.000000Z",
    "last_collected": "2026-08-21T04:56:11.000000Z",
-   "tao": 1703,
+   "tao": 2063,
    "tao_rate": 69,
-   "tao_rank": 3146
+   "tao_rank": 3111
   },
   {
    "address": "0xc7270454a203d13a2b3ee27348ee9f4aac450539",
@@ -15026,7 +15026,7 @@
    },
    "first_collected": "2022-08-11T06:43:24.000000Z",
    "last_collected": "2022-08-11T06:43:24.000000Z",
-   "tao": 103197,
+   "tao": 103557,
    "tao_rate": 69,
    "tao_rank": 148
   },
@@ -15048,7 +15048,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xd67527ee8aef11f4264c54effd5dbb8e9a4c3800",
@@ -15066,7 +15066,7 @@
    },
    "first_collected": "2022-12-01T08:28:59.000000Z",
    "last_collected": "2022-12-01T08:28:59.000000Z",
-   "tao": 95464,
+   "tao": 95824,
    "tao_rate": 69,
    "tao_rank": 170
   },
@@ -15086,7 +15086,7 @@
    },
    "first_collected": "2022-03-22T03:06:29.000000Z",
    "last_collected": "2022-03-22T03:06:29.000000Z",
-   "tao": 113005,
+   "tao": 113365,
    "tao_rate": 69,
    "tao_rank": 133
   },
@@ -15108,7 +15108,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xe175336c11b3e6ba4177084342644ed920f48189",
@@ -15126,7 +15126,7 @@
    },
    "first_collected": "2023-11-28T22:30:11.000000Z",
    "last_collected": "2023-11-28T22:30:11.000000Z",
-   "tao": 70446,
+   "tao": 70805,
    "tao_rate": 69,
    "tao_rank": 214
   },
@@ -15148,7 +15148,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xf6e9c766cad8b6ecf06accf64b57f92995be6e50",
@@ -15166,9 +15166,9 @@
    },
    "first_collected": "2026-08-21T05:14:11.000000Z",
    "last_collected": "2026-08-21T05:14:11.000000Z",
-   "tao": 1702,
+   "tao": 2062,
    "tao_rate": 69,
-   "tao_rank": 3149
+   "tao_rank": 3120
   },
   {
    "address": "0xf794530e92d99690c70ce66c85d8b603c092e6ab",
@@ -15186,7 +15186,7 @@
    },
    "first_collected": "2022-10-08T09:21:11.000000Z",
    "last_collected": "2022-10-08T09:21:11.000000Z",
-   "tao": 99187,
+   "tao": 99547,
    "tao_rate": 69,
    "tao_rank": 162
   },
@@ -15208,7 +15208,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xb43d184ec7d4d2acb4ebc8db53f4031bca9319a4",
@@ -15228,7 +15228,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x22f057b5189d796e9b56159774a701b563280b2c",
@@ -15246,9 +15246,9 @@
    },
    "first_collected": "2026-08-21T03:37:35.000000Z",
    "last_collected": "2026-08-21T03:37:35.000000Z",
-   "tao": 1707,
+   "tao": 2067,
    "tao_rate": 69,
-   "tao_rank": 3132
+   "tao_rank": 2998
   },
   {
    "address": "0xd262254416d48fdb26e98335ad3b82225d9a6b71",
@@ -15268,7 +15268,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x140d199e098d59b807566c4004233b34ed254121",
@@ -15286,7 +15286,7 @@
    },
    "first_collected": "2022-11-07T23:40:23.000000Z",
    "last_collected": "2022-11-07T23:40:23.000000Z",
-   "tao": 97076,
+   "tao": 97436,
    "tao_rate": 69,
    "tao_rank": 168
   },
@@ -15306,9 +15306,9 @@
    },
    "first_collected": "2026-08-21T04:39:11.000000Z",
    "last_collected": "2026-08-21T04:39:11.000000Z",
-   "tao": 1704,
+   "tao": 2064,
    "tao_rate": 69,
-   "tao_rank": 3142
+   "tao_rank": 3067
   },
   {
    "address": "0xf9d71b5fb8345f2508c1302a74d4362deab7d104",
@@ -15328,7 +15328,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x997953c94ac188051a8cf4318e6cd90ec48fb795",
@@ -15348,7 +15348,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xd42d52b709829926531c64a32f2713b4dc8ea6f6",
@@ -15366,9 +15366,9 @@
    },
    "first_collected": "2026-08-21T05:21:11.000000Z",
    "last_collected": "2026-08-21T05:21:11.000000Z",
-   "tao": 1702,
+   "tao": 2062,
    "tao_rate": 69,
-   "tao_rank": 3149
+   "tao_rank": 3120
   },
   {
    "address": "0xaf8c481eb42defb31ae67319382624a68e28f5e8",
@@ -15386,9 +15386,9 @@
    },
    "first_collected": "2026-08-22T00:43:35.000000Z",
    "last_collected": "2026-08-22T00:43:35.000000Z",
-   "tao": 1646,
+   "tao": 2006,
    "tao_rate": 69,
-   "tao_rank": 3159
+   "tao_rank": 3134
   },
   {
    "address": "0x44c3cf2d964d7b2f9be5fa612b0cc436720f6ead",
@@ -15406,9 +15406,9 @@
    },
    "first_collected": "2026-08-21T05:28:35.000000Z",
    "last_collected": "2026-08-21T05:28:35.000000Z",
-   "tao": 1702,
+   "tao": 2061,
    "tao_rate": 69,
-   "tao_rank": 3149
+   "tao_rank": 3123
   },
   {
    "address": "0x607502216cfe3bfe8407ee5ef62e9a4cfefcb66c",
@@ -15426,9 +15426,9 @@
    },
    "first_collected": "2026-08-21T04:18:11.000000Z",
    "last_collected": "2026-08-21T04:18:11.000000Z",
-   "tao": 1705,
+   "tao": 2065,
    "tao_rate": 69,
-   "tao_rank": 3140
+   "tao_rank": 3004
   },
   {
    "address": "0x78b68c09de611b5bad844bff74cf7bfe15f30ad8",
@@ -15448,7 +15448,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x000ab07b26c48ef3caf9ec23520d86794c9fd74a",
@@ -15468,7 +15468,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xcfc9336910420e2fb7b9c19f62a38bbac34dc352",
@@ -15486,7 +15486,7 @@
    },
    "first_collected": "2025-08-31T21:43:23.000000Z",
    "last_collected": "2025-08-31T21:43:23.000000Z",
-   "tao": 32936,
+   "tao": 33295,
    "tao_rate": 69,
    "tao_rank": 362
   },
@@ -15506,9 +15506,9 @@
    },
    "first_collected": null,
    "last_collected": null,
-   "tao": 1560,
+   "tao": 1919,
    "tao_rate": 69,
-   "tao_rank": 3165
+   "tao_rank": 3142
   },
   {
    "address": "0x66298837aa0079c0d1a4ff7549f2aac8a79c383e",
@@ -15528,7 +15528,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xa00e4ba46907fcbf84b3ba22c7b5689e6db827a0",
@@ -15548,7 +15548,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x657c1f8421ae93e88fb3171f019779e87b0263ca",
@@ -15566,9 +15566,9 @@
    },
    "first_collected": "2026-08-21T03:54:35.000000Z",
    "last_collected": "2026-08-21T03:54:35.000000Z",
-   "tao": 1706,
+   "tao": 2066,
    "tao_rate": 69,
-   "tao_rank": 3135
+   "tao_rank": 3001
   },
   {
    "address": "0xf42884e0a175a07b82354325d59be7d7d295e52a",
@@ -15588,7 +15588,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xd38919a385cf9bbade3249dad91b8d880b42bee0",
@@ -15606,9 +15606,9 @@
    },
    "first_collected": "2021-10-19T22:44:43.000000Z",
    "last_collected": "2021-10-19T22:44:43.000000Z",
-   "tao": 123575,
+   "tao": 123935,
    "tao_rate": 69,
-   "tao_rank": 116
+   "tao_rank": 117
   },
   {
    "address": "0xe39bd9e3af2054dd193b0d0217cfbd460f104902",
@@ -15628,7 +15628,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x30734d5ae63a2f368acfb3d3a15e180169254b8a",
@@ -15648,7 +15648,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xf1f476f144df01480297dca47efca565e8b0c9f1",
@@ -15666,9 +15666,9 @@
    },
    "first_collected": "2025-10-19T02:51:35.000000Z",
    "last_collected": "2025-10-19T02:51:35.000000Z",
-   "tao": 22823,
+   "tao": 23183,
    "tao_rate": 69,
-   "tao_rank": 469
+   "tao_rank": 464
   },
   {
    "address": "0x15c42c60620f55181348c2f5f4298eba70b0cbef",
@@ -15688,7 +15688,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x38545d73e9f15e92d21f1ddc71a109e8a67f6291",
@@ -15708,7 +15708,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x3b3136d269480017d8b7a050deb0d7ed979b8075",
@@ -15728,7 +15728,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x8f6504b48c66eea4e9fbf64fe220e02f1cc4934e",
@@ -15746,7 +15746,7 @@
    },
    "first_collected": "2022-08-19T16:11:07.000000Z",
    "last_collected": "2022-08-19T16:11:07.000000Z",
-   "tao": 102618,
+   "tao": 102978,
    "tao_rate": 69,
    "tao_rank": 153
   },
@@ -15766,7 +15766,7 @@
    },
    "first_collected": "2022-08-10T01:17:43.000000Z",
    "last_collected": "2022-08-10T01:17:43.000000Z",
-   "tao": 103282,
+   "tao": 103641,
    "tao_rate": 69,
    "tao_rank": 147
   },
@@ -15786,9 +15786,9 @@
    },
    "first_collected": "2026-08-21T04:47:11.000000Z",
    "last_collected": "2026-08-21T04:47:11.000000Z",
-   "tao": 1704,
+   "tao": 2063,
    "tao_rate": 69,
-   "tao_rank": 3142
+   "tao_rank": 3111
   },
   {
    "address": "0x6519f68ca26c7f59deeabce7194da4d14e1f2847",
@@ -15806,7 +15806,7 @@
    },
    "first_collected": "2022-12-24T10:55:35.000000Z",
    "last_collected": "2022-12-24T10:55:35.000000Z",
-   "tao": 93870,
+   "tao": 94230,
    "tao_rate": 69,
    "tao_rank": 173
   },
@@ -15826,9 +15826,9 @@
    },
    "first_collected": "2026-08-22T00:14:23.000000Z",
    "last_collected": "2026-08-22T00:14:23.000000Z",
-   "tao": 1648,
+   "tao": 2008,
    "tao_rate": 69,
-   "tao_rank": 3158
+   "tao_rank": 3132
   },
   {
    "address": "0xbc3e746c622a4b8b3f70fcf43c0ff0d4c66452fe",
@@ -15848,7 +15848,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x5091081516c8695dfa1bfde3d7b33480c2cb2fca",
@@ -15866,9 +15866,9 @@
    },
    "first_collected": "2026-08-21T04:43:47.000000Z",
    "last_collected": "2026-08-21T04:43:47.000000Z",
-   "tao": 1704,
+   "tao": 2064,
    "tao_rate": 69,
-   "tao_rank": 3142
+   "tao_rank": 3067
   },
   {
    "address": "0x3eeb0543b4e0c0b6b7734d3e34a4fa884f71a7b0",
@@ -15888,7 +15888,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x0f9c4213c040a39db2ba6f833472f739e61710b4",
@@ -15906,7 +15906,7 @@
    },
    "first_collected": "2022-12-10T22:09:23.000000Z",
    "last_collected": "2022-12-10T22:09:23.000000Z",
-   "tao": 94804,
+   "tao": 95163,
    "tao_rate": 69,
    "tao_rank": 171
   },
@@ -15928,7 +15928,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x610d72c32e3ed5ba381851d25a6c1b543622e4d8",
@@ -15946,9 +15946,9 @@
    },
    "first_collected": "2026-08-23T07:10:23.000Z",
    "last_collected": "2026-08-23T07:10:23.000Z",
-   "tao": 1559,
+   "tao": 1919,
    "tao_rate": 69,
-   "tao_rank": 3166
+   "tao_rank": 3142
   },
   {
    "address": "0x2d52f7bae61912f7217351443ea8a226996a3def",
@@ -15968,7 +15968,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x5efdb6d8c798c2c2bea5b1961982a5944f92a5c1",
@@ -15986,7 +15986,7 @@
    },
    "first_collected": "2025-01-15T00:56:59.000000Z",
    "last_collected": "2025-01-15T00:56:59.000000Z",
-   "tao": 41942,
+   "tao": 42301,
    "tao_rate": 69,
    "tao_rank": 320
   },
@@ -16008,7 +16008,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x32eb30cae36e1c2e9271ca1c02da64e5c27cb465",
@@ -16028,7 +16028,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0xff7609cc6c9743b6299f86df1e966da5c664401d",
@@ -16048,7 +16048,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x0f81bcfd6de8145d1cc6097622b07f23f1221648",
@@ -16066,7 +16066,7 @@
    },
    "first_collected": "2022-08-21T13:39:52.000000Z",
    "last_collected": "2022-08-21T13:39:52.000000Z",
-   "tao": 102487,
+   "tao": 102847,
    "tao_rate": 69,
    "tao_rank": 154
   },
@@ -16088,7 +16088,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3227
   },
   {
    "address": "0x87d9c2d9990a9f3a18f1377ff20d9945f9eb3792",
@@ -16106,7 +16106,7 @@
    },
    "first_collected": "2022-08-16T00:15:52.000000Z",
    "last_collected": "2022-08-16T00:15:52.000000Z",
-   "tao": 102871,
+   "tao": 103230,
    "tao_rate": 69,
    "tao_rank": 152
   },
@@ -16126,9 +16126,9 @@
    },
    "first_collected": "2026-08-21T03:59:11.000000Z",
    "last_collected": "2026-08-21T03:59:11.000000Z",
-   "tao": 1706,
+   "tao": 2066,
    "tao_rate": 69,
-   "tao_rank": 3135
+   "tao_rank": 3001
   },
   {
    "address": "0xf3fbb2c0a711529ef9b81fe59a5ef5b8f1e0eb27",
@@ -16146,7 +16146,7 @@
    },
    "first_collected": "2022-02-17T23:21:47.000000Z",
    "last_collected": "2022-02-17T23:21:47.000000Z",
-   "tao": 115224,
+   "tao": 115584,
    "tao_rate": 69,
    "tao_rank": 130
   }
