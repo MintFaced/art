@@ -1,0 +1,29 @@
+{
+ "_note": "One record per activity pass, newest first, sixty kept. Two signals: the chain (Etherscan, tiered and rotating) and the room (our own stores, recomputed whole). See docs/ACTIVITY.md.",
+ "keep": 60,
+ "runs": [
+  {
+   "run_id": "amu9d2l0q",
+   "at": "2026-09-20T05:13:51.338Z",
+   "ok": true,
+   "ms": 236606,
+   "chain": {
+    "asked": 684,
+    "moved": 650,
+    "unknown": 34,
+    "refused": 781,
+    "rate": 5,
+    "due": 3677,
+    "due_left": 2993,
+    "paged": 807,
+    "of": 3677,
+    "covered": 650
+   },
+   "studio": {
+    "lit": 14,
+    "window_days": 30,
+    "store": true
+   }
+  }
+ ]
+}
