@@ -19,8 +19,9 @@
  * Three and a half thousand addresses at five calls a second is twelve
  * minutes, and this function has five. So the sweep is tiered rather than
  * whole: everybody with a page is refreshed every night, because those are the
- * wallets anybody actually opens, and the rest rotate through on a cursor.
- * The column shows a month. A tail three days behind cannot be seen in it.
+ * wallets anybody actually opens are asked about daily, and a wallet that last
+ * moved in 2021 is asked about every three weeks, because that is how often its
+ * answer changes. The column shows a month; none of that lag can be seen in it.
  *
  * txlist and not tokentx, deliberately. txlist is what a wallet *sent*, and
  * being sent something is not evidence that anybody is home ... an airdrop
@@ -43,13 +44,60 @@ const RUNS = 'data/active-runs.json';
 const WINDOW_DAYS = Number(process.env.STUDIO_WINDOW_DAYS || 30);
 // leave the budget before the writes, which are what make a run provable
 const SWEEP_BY = Number(process.env.ACTIVE_SWEEP_MS || 235000);
-// pacing between Etherscan calls; five a second is the free tier's ceiling
-const PACE_MS = Number(process.env.ACTIVE_PACE_MS || 205);
+// five a second is the free tier's ceiling, and the pool is what reaches it
+const PER_SECOND = Number(process.env.ACTIVE_PER_SECOND || 5);
+const WIDTH = Number(process.env.ACTIVE_CONCURRENCY || 6);
+
+/* How often a wallet is worth asking about again.
+ *
+ * A cursor rotates everybody at one speed, which spends the same effort on a
+ * wallet that trades every morning and one that last moved in 2021 ... and the
+ * second is both the larger group and the one whose answer will not have
+ * changed. So the interval is the wallet's own: recently active wallets are
+ * asked about often because they are the ones whose answer moves, and the long
+ * dormant are asked rarely because theirs does not. A dormant wallet waking up
+ * is caught within the fortnight, which a column showing a month cannot show.
+ */
+const RECENT_DAYS = 90;
+function dueDays(paged, lastTx, now) {
+  const active = lastTx && (now / 1000 - lastTx) < RECENT_DAYS * 86400;
+  if (paged) return active ? 1 : 4;
+  return active ? 7 : 21;
+}
 // a daily schedule with a run missing
 const MAX_GAP_HOURS = Number(process.env.ACTIVE_MAX_GAP_HOURS || 36);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const lower = (a) => String(a || '').toLowerCase();
+
+/* Five a second is Etherscan's ceiling, and a single sequential caller never
+   gets near it: a round trip is most of a second, so asking one at a time
+   spends the night waiting rather than asking. The governor holds the rate at
+   the ceiling and the pool keeps that many questions in the air at once, which
+   is the difference between three hundred addresses in a run and twelve
+   hundred. */
+function governor(perSecond) {
+  const gap = 1000 / perSecond;
+  let next = 0;
+  return async () => {
+    const now = Date.now();
+    const at = Math.max(now, next);
+    next = at + gap;
+    if (at > now) await sleep(at - now);
+  };
+}
+
+async function pool(items, width, worker) {
+  let i = 0;
+  const runners = Array.from({ length: Math.min(width, items.length) }, async () => {
+    for (;;) {
+      const n = i++;
+      if (n >= items.length) return;
+      await worker(items[n], n);
+    }
+  });
+  await Promise.all(runners);
+}
 
 async function es(params, key) {
   const url = `${ETHERSCAN}?${new URLSearchParams({ chainid: '1', apikey: key, ...params })}`;
@@ -201,7 +249,7 @@ export async function GET(request) {
       const to = process.env.EMAIL_TO_OPS || process.env.EMAIL_TO_ARTIST;
       if (to) {
         await send({ to, subject: 'Activity: the nightly pass failed',
-          text: `The activity pass stopped with:\n\n  ${why}\n\nLast active and the Studio dots are yesterday's. Nothing was lost; the cursor did not move, so the next run covers the same ground.\n\nMintFace`,
+          text: `The activity pass stopped with:\n\n  ${why}\n\nLast active and the Studio dots are yesterday's. Nothing was lost; nothing was marked as asked, so the next run covers the same ground.\n\nMintFace`,
         }).catch(() => {});
       }
     }
@@ -245,46 +293,42 @@ async function run({ key, dry, started, prior, url }) {
      to be on the value, not on the exception. This is the first run's path. */
   let chain = null;
   try { chain = JSON.parse((await readFile(CHAIN)).text); } catch (e) { /* first run */ }
-  if (!chain || typeof chain !== 'object') chain = { wallets: {}, cursor: 0 };
+  if (!chain || typeof chain !== 'object') chain = { wallets: {} };
   const wallets = { ...(chain.wallets || {}) };
-  const tail = everyone.filter((p) => !p.paged).map((p) => p.address);
-  const paged = everyone.filter((p) => p.paged).map((p) => p.address);
+  const pagedCount = everyone.filter((p) => p.paged).length;
 
-  let cursor = Number(chain.cursor) || 0;
-  if (cursor >= tail.length) cursor = 0;
+  /* Ordered by how overdue each wallet is against its own interval, so the run
+     spends its night on the answers most likely to have changed. A wallet
+     never asked about is infinitely overdue and goes first, which is how a
+     cold start fills in. Nothing not yet due is asked at all: a short queue is
+     a night the register was already current, not a night that failed. */
+  const queue = everyone.map((p) => {
+    const had = wallets[p.address];
+    const lastTx = Array.isArray(had) ? had[0] || 0 : 0;
+    const checked = Array.isArray(had) && had[2] ? had[2] : 0;
+    const interval = dueDays(p.paged, lastTx, started) * 86400;
+    const overdue = checked ? (started / 1000 - checked) / interval : Infinity;
+    return { address: p.address, overdue };
+  }).filter((r) => r.overdue >= 1).sort((a, b) => b.overdue - a.overdue);
 
-  /* Everyone with a page, then as much of the tail as the clock allows,
-     resuming where the last run stopped. */
-  const queue = [...paged];
-  const rotated = [];
-  for (let i = 0; i < tail.length; i++) rotated.push(tail[(cursor + i) % tail.length]);
-  queue.push(...rotated);
-
-  let asked = 0, moved = 0, unknown = 0, reachedIn = 0;
-  for (const a of queue) {
-    if (Date.now() - started > SWEEP_BY) break;
-    const t = await latestTx(a, key);
+  const wait = governor(PER_SECOND);
+  let asked = 0, moved = 0, unknown = 0, stopped = false;
+  await pool(queue, WIDTH, async (r) => {
+    if (stopped || Date.now() - started > SWEEP_BY) { stopped = true; return; }
+    await wait();
+    const t = await latestTx(r.address, key);
     asked++;
-    reachedIn = queue.indexOf(a);
-    if (t === undefined) { unknown++; }
-    else {
-      const had = wallets[a] && wallets[a][0];
-      if (had !== t) moved++;
-      wallets[a] = t ? [t, monthOf(t)] : [0, null];
-    }
-    await sleep(PACE_MS);
-  }
-  /* How far into the tail this run got, so the next one starts there. Only the
-     rotated part moves the cursor; the paged tier is swept whole every night
-     and has no position to keep. */
-  const intoTail = Math.max(0, asked - paged.length);
-  const nextCursor = tail.length ? (cursor + intoTail) % tail.length : 0;
+    if (t === undefined) { unknown++; return; }   // asked and never answered: keep what we had
+    const had = wallets[r.address] && wallets[r.address][0];
+    if (had !== t) moved++;
+    wallets[r.address] = t ? [t, monthOf(t), Math.round(Date.now() / 1000)] : [0, null, Math.round(Date.now() / 1000)];
+  });
+  const due = queue.length;
 
   const chainFile = {
-    _note: 'The most recent transaction each wallet has sent, as a unix second and the month it falls in. Etherscan txlist, one lookup per address: everybody with a page every night, the rest rotating on the cursor below. Sent rather than received on purpose ... an airdrop lands on the dead as easily as on the living, so aliveness is built from a wallet\'s own acts. See docs/ACTIVITY.md.',
+    _note: 'The most recent transaction each wallet has sent: [unix second, month, when we last asked]. Etherscan txlist, one lookup per address, ordered each night by how overdue each wallet is against an interval of its own ... daily for an active wallet with a page, three weeks for a long dormant one without. Sent rather than received on purpose ... an airdrop lands on the dead as easily as on the living, so aliveness is built from a wallet\'s own acts. See docs/ACTIVITY.md.',
     generated: new Date(started).toISOString(),
-    cursor: nextCursor,
-    tail: tail.length,
+    due_left: Math.max(0, due - asked),
     wallets,
   };
 
@@ -293,8 +337,8 @@ async function run({ key, dry, started, prior, url }) {
     at: new Date(started).toISOString(),
     ok: true,
     ms: Date.now() - started,
-    chain: { asked, moved, unknown, paged: paged.length, tail: tail.length, cursor: nextCursor,
-      covered: Object.keys(wallets).length },
+    chain: { asked, moved, unknown, due, due_left: Math.max(0, due - asked),
+      paged: pagedCount, of: everyone.length, covered: Object.keys(wallets).length },
     studio: { lit: Object.keys(studioFile.wallets).length, window_days: WINDOW_DAYS, store: reached },
   };
 
@@ -303,7 +347,7 @@ async function run({ key, dry, started, prior, url }) {
   if (gapHours != null && Number.isFinite(gapHours) && gapHours > MAX_GAP_HOURS) {
     flagged.push({ id: 'gap', slug: 'activity',
       why: `the previous pass finished ${Math.round(gapHours)} hours ago on a daily schedule ... at least one run did not happen`,
-      action: 'the cursor did not move, so nothing is lost ... what is worth knowing is what killed the run that is missing' });
+      action: 'nothing was marked as asked, so nothing is lost ... what is worth knowing is what killed the run that is missing' });
   }
   if (!reached) {
     flagged.push({ id: 'store', slug: 'studio',
@@ -323,8 +367,9 @@ async function run({ key, dry, started, prior, url }) {
   }
 
   return {
-    summary: `active: ${asked} wallets asked (${paged.length} paged, ${intoTail} of ${tail.length} tail), `
-      + `${moved} moved, ${entry.studio.lit} lit in the room, ${Math.round((Date.now() - started) / 1000)}s`,
+    summary: `active: ${asked} of ${due} due asked, ${moved} moved, `
+      + `${Object.keys(wallets).length} of ${everyone.length} covered, `
+      + `${entry.studio.lit} lit in the room, ${Math.round((Date.now() - started) / 1000)}s`,
     dry,
     ...entry,
   };
