@@ -1,6 +1,6 @@
 {
  "_note": "Every exit, with the verdict that decided whether its TAO was taken back.",
- "generated": "2026-09-06T21:30:47.000Z",
+ "generated": "2026-09-20T02:40:37.000Z",
  "exits": [
   {
    "address": "0xcf79b7ba24c70341e3fd5409381e1f00aab275d9",
@@ -22914,6 +22914,17 @@
    "verdict": "sale",
    "tao": 1497,
    "work": "seize-and-share-certificate-of-mint-1918"
+  },
+  {
+   "address": "0xe14748c7476ad44d92e8c86a17af2922803356aa",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "56",
+   "qty": 1,
+   "at": 1789745039,
+   "tx": "0xf87643942072d2b6b17c48e4c7000dc0f57c285cc5e5740b42280a9f1ac127e7",
+   "verdict": "sale",
+   "tao": 2752,
+   "work": "xlife-56"
   }
  ]
 }
