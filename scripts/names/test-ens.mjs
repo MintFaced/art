@@ -208,14 +208,26 @@ head('Everything that writes the register writes the same register');
     ok(!writes || derives.length > 0,
       `${w} hands deriveCollectors the fourth tier`,
       calls.map((c) => `${c.split(',').length} args`).join(' | '));
+    /* And the tier above it, for the same reason and against the same fault:
+       a writer not handed the names Ryan wrote down rebuilds the register with
+       the column empty, which is the 21:02/21:31 failure wearing a new hat. */
+    const overlaid = calls.filter((c) => c.split(',').length >= 7);
+    ok(!writes || overlaid.length > 0,
+      `${w} hands deriveCollectors the overlay`,
+      calls.map((c) => `${c.split(',').length} args`).join(' | '));
   }
   /* The one exception, stated rather than assumed: the ownership sweep derives
      once with five arguments to find out who to ask about, then again with
      six. A five-argument call there is the question, not the answer. */
   const owners = fs.readFileSync(path.join(ROOT, 'api/cron/owners.js'), 'utf8');
-  ok(/const first = deriveCollectors\(cols, titleOf, priv, tao, nudges\);/.test(owners)
-    && /const d = deriveCollectors\(cols, titleOf, priv, tao, nudges, forward\);/.test(owners),
+  ok(/const first = deriveCollectors\(cols, titleOf, priv, tao, nudges, null, names\);/.test(owners)
+    && /const d = deriveCollectors\(cols, titleOf, priv, tao, nudges, forward, names\);/.test(owners),
     'and the sweep that asks derives twice on purpose: once to know who to ask about, once with the answer');
+  /* The question is asked without `forward` and with `names`, which is not an
+     inconsistency: the overlay is already on file and decides who need not be
+     asked at all, while forward is the answer that call exists to go and get. */
+  ok(/const first = deriveCollectors\([^)]*, null, names\);/.test(owners),
+    'and it asks holding the overlay, so a wallet already named is not asked about');
 }
 
 console.log(`\n${'='.repeat(74)}`);

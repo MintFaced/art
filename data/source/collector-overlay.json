@@ -1,0 +1,14 @@
+{
+ "_note": "Names MintFace wrote down beside an address, and the handle each collector goes by. This is the top of the precedence order: it outranks a self-set name and outranks ENS. See docs/NAMES.md and api/_lib/names.js. Not to be confused with collector-names.json, which is the ENS forward-resolution seed list ... that one records a name the chain knows only from the other end, this one records a name the chain does not know at all. Address-keyed, because a name and a handle are properties of a person rather than of a work: the old path wrote display_name onto every record somebody held, which said one fact as many times as they owned things and lost it on any record a sweep rebuilt. Names lowercase per the register convention; handles keep the case their owner writes them in. The slug never follows the name ... URLs stay address-canonical.",
+ "curated": "2026-09-20",
+ "collectors": {
+  "0x18e0f9aadde970d74430cc8636a381ccfcd1f559": { "name": "implantsanta", "x": "implantsanta" },
+  "0x93c4b4334f77d56a84a13077d7fc6f38e3ff833f": { "name": "sfancy", "x": "SFancy08" },
+  "0x2debdf4427ccbcfdbc7f29d63964499a0ec184f6": { "name": "krybharat" },
+  "0x0a1c6f1638adbe3873c7e8dad6c0e3b08285ba07": { "name": "the commodore" },
+  "0xaab85567766043f4108d486b1c27535d0d57678e": { "name": "rcsa69", "x": "RCSA69" },
+  "0x8c36654b71c52bf8bf2ca8c3ec19bd4e83da7d11": { "name": "helocjay" },
+  "0x3b33605a49803ce5bf936d61ec34a82dc9a8af67": { "name": "justicechrist" },
+  "0xc25461af5e224b7aceeaf0eff443a239fd5040e6": { "name": "z777" }
+ }
+}

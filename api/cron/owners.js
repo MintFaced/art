@@ -792,12 +792,19 @@ async function handle(request, started, dry) {
        * If the subgraph will not answer, the pass is skipped and the register
        * keeps yesterday's fourth-tier names rather than losing a hundred and
        * fifty names to somebody else's outage. */
+      let names = null;
+      try { names = JSON.parse((await readFile('data/source/collector-overlay.json')).text); }
+      catch (e) { /* none written down yet */ }
+
       let forward = null;
       try {
         if (Date.now() - started > REBUILD_BY) {
           throw new Error(`the pass was not started: ${Math.round((Date.now() - started) / 1000)}s of the budget was already gone`);
         }
-        const first = deriveCollectors(cols, titleOf, priv, tao, nudges);
+        /* Handed the written names too, so a wallet Ryan has already named is
+           in `skip` and the subgraph is not asked a question whose answer
+           could not outrank what is on file anyway. */
+        const first = deriveCollectors(cols, titleOf, priv, tao, nudges, null, names);
         const skip = new Set(first.all.filter((p) => p.ens || p.display_name || p.private).map((p) => p.address));
         forward = await forwardPass(first.all.map((p) => p.address), { skip });
       } catch (e) {
@@ -813,7 +820,7 @@ async function handle(request, started, dry) {
         (await readFile('data/ens-forward.json').catch(() => ({ sha: null }))).sha || undefined).catch(() => {});
       }
 
-      const d = deriveCollectors(cols, titleOf, priv, tao, nudges, forward);
+      const d = deriveCollectors(cols, titleOf, priv, tao, nudges, forward, names);
       const put = async (path, body, msg) => {
         const cur = await readFile(path).catch(() => ({ sha: null }));
         await writeFile(path, JSON.stringify(body, null, 1) + '\n', msg, cur.sha || undefined);

@@ -175,6 +175,9 @@ export function registerIndex(register) {
          one and the ENS otherwise. Splitting them again here is what lets a
          self-set name know whether it is outranked. */
       overlay: name && name !== ens ? name : null,
+      /* The handle the collector goes by, carried beside the name because it
+         arrived with it. Only their own page draws it. */
+      x: col.x == null ? null : (r[col.x] || null),
       slug: r[col.slug] || null,
       private: Boolean(r[col.private]),
       tao: Number(r[col.tao]) || 0,
@@ -235,6 +238,7 @@ export function naming(rows, self = {}, special = {}) {
          name, and facts about names are what this file is for. */
       fwd: fwd || null,
       overlay: overlay || null,
+      x: (r && r.x) || null,
       self: s,
       private: false,
       source: sourceOf({ overlay, self: s, ens, fwd }),

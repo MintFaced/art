@@ -61,6 +61,9 @@ const card = (who) => ({
   fwd: who.fwd || null,
   url: who.url || (who.slug ? `https://collectors.mintface.art/${encodeURIComponent(who.slug)}` : null),
   source: who.source,
+  /* Drawn only on the collector's own page, under the name. Bare here; the @
+     and the link belong to the rendering. */
+  x: who.x || null,
   private: Boolean(who.private),
   tao: who.tao || 0,
 });

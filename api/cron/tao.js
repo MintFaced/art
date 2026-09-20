@@ -489,7 +489,13 @@ async function run({ key, dry, started, prior, url }) {
       let forward = null;
       try { forward = await get('data/ens-forward.json'); } catch (e) { /* no pass has run yet */ }
 
-      const d = deriveCollectors(all, titleOf, priv, tao, nudges, forward);
+      /* Read from the repo rather than the site: this is a curated file, and
+         the deployed copy is a build behind whatever was last committed. */
+      let names = null;
+      try { names = JSON.parse((await readFile('data/source/collector-overlay.json')).text); }
+      catch (e) { /* none written down yet */ }
+
+      const d = deriveCollectors(all, titleOf, priv, tao, nudges, forward, names);
       registerCounts = d.index.counts;
       await put('data/collectors.json', d.index, `Collectors: TAO to ${tao.generated.slice(0, 10)}`);
       /* Through registerFile rather than put, as in api/cron/owners.js: the

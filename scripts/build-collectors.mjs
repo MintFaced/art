@@ -47,7 +47,12 @@ let forward = null;
 try { forward = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/ens-forward.json'), 'utf8')); }
 catch (e) { /* no pass has run yet */ }
 
-const d = deriveCollectors(collections, titleOf, privateList, tao, nudges, forward);
+/* The names Ryan wrote down. Same reasoning as `forward` above: this script
+   writes the register the crons write, so it has to read the same sources or a
+   hand-run rebuild would quietly strip eight curated names. */
+const names = load('data/source/collector-overlay.json', null);
+
+const d = deriveCollectors(collections, titleOf, privateList, tao, nudges, forward, names);
 
 if (DRY) {
   console.log(JSON.stringify(d.index.counts, null, 1));
