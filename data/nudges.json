@@ -1,6 +1,6 @@
 {
  "_note": "Nudges: artist-authored questions the collectors weigh TAO behind. Authored in the studio, banked by api/cron/nudges.js. A nudge steers, it never commands ... except where the studio says otherwise on the nudge itself, which is what `promise` is for. A nudge with kind: candidates has no sides: collectors propose the answers and weigh on them, and one locks only if the leader carries `lock.voters` collectors AND `lock.tao` TAO at close. `series` is the arc a nudge belongs to and `slot` is the colour it fills; the series block below is also the maker's community palette, so when the last slot locks the palette is simply complete. See docs/AVS-NUDGES.md.",
- "next_number": 3,
+ "next_number": 4,
  "nudges": [
   {
    "id": "nudge-1",
@@ -643,6 +643,24 @@
     ],
     "banked_at": "2026-09-20T05:56:23.733Z"
    }
+  },
+  {
+   "id": "nudge-3",
+   "number": 3,
+   "question": "Weigh in on the third colour.",
+   "kind": "candidates",
+   "series": "strip-palette",
+   "slot": 3,
+   "lock": {
+    "voters": 5,
+    "tao": 500000
+   },
+   "promise": "MintFace will paint the colour this locks. A nudge steers; this one decides.",
+   "note": "The colours already locked sit beside every candidate here: #0E5890, #80E080. This one has to stand clear of all of them ... the picker will not take a colour that does not. Propose one, or put your TAO behind one already on the board. Weighed TAO is never spent and never moves.",
+   "image": null,
+   "opens": "2026-09-20T05:58:30.756Z",
+   "closes": "2026-09-28T00:00:00.000Z",
+   "published": true
   }
  ],
  "series": {
