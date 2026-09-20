@@ -1,0 +1,63 @@
+{
+ "_note": "Collectors active in the MintFace Studio inside the last 30 days, and what they last did. Recomputed whole every night from the nudge ledger, the room and the notes ... no chain lookup is involved and none is needed. A wallet drops off this list by going quiet, not by being removed. See docs/ACTIVITY.md.",
+ "generated": "2026-09-20T05:13:51.338Z",
+ "window_days": 30,
+ "wallets": {
+  "0x13c942e3f8be4faf966ef03e6038b33d000db22f": [
+   1789855045,
+   "reacted"
+  ],
+  "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7": [
+   1789694520,
+   "said something"
+  ],
+  "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488": [
+   1789635169,
+   "reacted"
+  ],
+  "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5": [
+   1789615237,
+   "said something"
+  ],
+  "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2": [
+   1789482888,
+   "reacted"
+  ],
+  "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37": [
+   1789216650,
+   "said something"
+  ],
+  "0x6140f00e4ff3936702e68744f2b5978885464cbb": [
+   1789157753,
+   "said something"
+  ],
+  "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180": [
+   1789113920,
+   "said something"
+  ],
+  "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8": [
+   1789032456,
+   "weighed"
+  ],
+  "0x91cb1ff4322559a5c5c67dba075ab081c255ba1f": [
+   1788993307,
+   "said something"
+  ],
+  "0x795e430765a79cfa80b11c61af2d30597d29361f": [
+   1788887470,
+   "weighed"
+  ],
+  "0xc2aaec38c14b81332f6741f9fdc211c6bb6f894c": [
+   1788698066,
+   "weighed"
+  ],
+  "0xa88fe6fa01fcc112bb2164c6e37d63395b923e5f": [
+   1788687550,
+   "weighed"
+  ],
+  "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889": [
+   1788339091,
+   "said something"
+  ]
+ }
+}
