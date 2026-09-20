@@ -966,12 +966,37 @@ export const bankingRows = (all, n) =>
 
 /** The line a work carries once a nudge shaped it. Permanent, and phrased the
  *  way the register phrases everything else. */
-export const provenanceLine = (banked) =>
-  (banked && banked.locked
-    /* A locked colour names itself. The line is what a work carries forever,
-       and "steered by" is not the whole truth where the studio undertook to
-       paint the answer ... it was chosen. */
-    ? `Colour chosen by ${Math.round(banked.total).toLocaleString('en-NZ')} TAO across `
-      + `${banked.collectors} collector${banked.collectors === 1 ? '' : 's'} · ${banked.locked.hex} · Nudge #${banked.number}`
-    : `Steered by ${Math.round(banked.total).toLocaleString('en-NZ')} TAO across `
-      + `${banked.collectors} collector${banked.collectors === 1 ? '' : 's'} · Nudge #${banked.number}`);
+export const provenanceLine = (banked) => {
+  if (!banked) return '';
+  if (!banked.locked) {
+    return `Steered by ${Math.round(banked.total).toLocaleString('en-NZ')} TAO across `
+      + `${banked.collectors} collector${banked.collectors === 1 ? '' : 's'} · Nudge #${banked.number}`;
+  }
+  /* A locked colour names itself. The line is what a work carries forever, and
+     "steered by" is not the whole truth where the studio undertook to paint the
+     answer ... it was chosen.
+
+     The colour's own figures, as on the banked card: a work carrying a line
+     that counted the whole board would be crediting people who backed a
+     different colour with having chosen this one. */
+  /* Falling back to the board where a record predates the colour carrying its
+     own figures. Every record banked since does carry them. */
+  const tao = Number(banked.locked.total);
+  const who = Number(banked.locked.voters);
+  const t = Math.round(Number.isFinite(tao) ? tao : Number(banked.total) || 0);
+  const c = Number.isFinite(who) ? who : Number(banked.collectors) || 0;
+  const line = `Colour chosen by ${t.toLocaleString('en-NZ')} TAO across `
+    + `${c} collector${c === 1 ? '' : 's'} · ${banked.locked.hex} · Nudge #${banked.number}`;
+  if (banked.locked_by !== 'artist') return line;
+  /* AND WHERE THE ARTIST LOCKED IT, THAT TRAVELS TOO.
+     This is the line a painting carries for as long as the painting exists. A
+     colour the studio chose over the thresholds is a different fact about that
+     painting from one the collectors carried outright, and the work is exactly
+     where that difference matters most. */
+  const rule = banked.rule || {};
+  const met = banked.met || {};
+  const short = [];
+  if (!met.voters) short.push(`${banked.locked.voters} of ${rule.voters} voters`);
+  if (!met.tao) short.push(`${Math.round(banked.locked.total).toLocaleString('en-NZ')} of ${Math.round(Number(rule.tao) || 0).toLocaleString('en-NZ')} TAO`);
+  return `${line} · locked by the artist${short.length ? ` at ${short.join(' and ')}` : ''}`;
+};

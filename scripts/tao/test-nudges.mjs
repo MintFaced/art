@@ -8,7 +8,7 @@
  *   node scripts/tao/test-nudges.mjs
  */
 import { createRequire } from 'node:module';
-import { tally, latest, isOpen, provenanceLine, palette, standing, allocations, changed, checkChange, spread, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive, bankCandidates, bankTally, bankingRows } from '../../api/_lib/nudges.js';
+import { tally, latest, isOpen, provenanceLine, palette, standing, allocations, changed, checkChange, spread, checkHex, lockRule, kindOf, proposeMessage, weighMessage, withLive, bankCandidates, bankTally, bankingRows, lockLine } from '../../api/_lib/nudges.js';
 const require2 = createRequire(import.meta.url);
 
 let pass = 0, fail = 0;
@@ -574,6 +574,30 @@ const holds = (x) => five[x] || 0;
   const fs4 = require2('node:fs');
   const route = fs4.readFileSync(new URL('../../api/nudge.js', import.meta.url), 'utf8');
   is('and the route reads wallets off a banked candidate', /wallets: \(c\.wallets \|\| \[\]\)/.test(route), true);
+  /* The artist's own lock, and the honesty that is the price of it. */
+  {
+    const N2 = { number: 2, lock: { voters: 5, tao: 500000 } };
+    const p2 = { rule: { voters: 5, tao: 500000 }, total: 1547561, collectors: 7,
+      candidates: [{ hex: '#80E080', total: 627000, voters: 4, wallets: [] },
+        { hex: '#BCE1DD', total: 461561, voters: 3, wallets: [] }],
+      leader: { hex: '#80E080', total: 627000, voters: 4 }, locked: null,
+      why: 'short', progress: { voters: { at: 4, of: 5 }, tao: { at: 627000, of: 500000 } }, ledger: [] };
+    const plain = bankCandidates(p2, N2);
+    is('the thresholds alone do not lock a colour four collectors carried', plain.locked, null);
+    const art = bankCandidates(p2, N2, { by: 'artist', hex: '#80E080' });
+    is('the artist can lock it anyway', art.locked.hex, '#80E080');
+    is('and the record says who did', art.locked_by, 'artist');
+    is('and which half held', art.met.tao, true);
+    is('and which half did not', art.met.voters, false);
+    is('the card counts the colour, not the board', lockLine(art).includes('627,000 TAO \u00b7 4 collectors'), true);
+    is('and says the shortfall out loud',
+      lockLine(art), 'Locked \u00b7 #80E080 \u00b7 627,000 TAO \u00b7 4 collectors \u00b7 TAO threshold met \u00b7 Locked by the artist at 4 of 5 voters');
+    is('a threshold lock says none of that',
+      lockLine(bankCandidates({ ...p2, locked: { hex: '#80E080', total: 627000, voters: 4 }, why: null }, N2)).includes('artist'), false);
+    is('and the work carries it forever',
+      provenanceLine(art).includes('locked by the artist at 4 of 5 voters'), true);
+  }
+
   const cron = fs4.readFileSync(new URL('../../api/cron/nudges.js', import.meta.url), 'utf8');
   const bank = fs4.readFileSync(new URL('../../api/_lib/banking.js', import.meta.url), 'utf8');
   /* The close moved into api/_lib/banking.js when the console gained a CLOSE &
