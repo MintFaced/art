@@ -2738,6 +2738,7 @@ MF.palette = {
     const n = String(v.slot).padStart(2, '0');
     const hex = v.hex ? String(v.hex).toUpperCase() : null;
     const nm = hex ? MF.colour.name(hex) : null;
+    const byArtist = v.state === 'locked' && v.locked_by === 'artist';
     /* A slot says its number first and the nudge that answered it second. The
        number is the part that was going missing: it is what makes the twelve
        a sequence rather than a row, and the reason the red could pass for the
@@ -2749,11 +2750,19 @@ MF.palette = {
       : `<span class="pal-band"${hex ? ` style="background:${e(hex)}"` : ''}></span>
         <span class="pal-lab">${n} &middot; Nudge #${e(v.number)}</span>
         <span class="pal-hex">${hex ? e(hex) : 'Open'}</span>
-        ${nm ? `<span class="pal-name">${e(nm.short)}</span>` : ''}`;
-    /* Settled, being asked, or waiting. */
-    const cls = `pal-slot ${{ locked: 'filled', open: 'live' }[v.state] || 'empty'}`;
+        ${nm ? `<span class="pal-name">${e(nm.short)}</span>` : ''}
+        ${byArtist ? '<span class="pal-by">Artist\u2019s call</span>' : ''}`;
+    /* Settled, being asked, or waiting ... and, where it was settled, by whom.
+       A colour the thresholds carried and a colour the studio locked over them
+       are different facts about the same pottle, and the palette is where
+       somebody looks to see what the collectors chose. Leaving the second one
+       looking like the first would make this strip quietly overstate them. */
+    const cls = `pal-slot ${{ locked: 'filled', open: 'live' }[v.state] || 'empty'}${byArtist ? ' by-artist' : ''}`;
     const href = this.href(v, opts);
-    const title = hex ? ` title="Slot ${n} &middot; ${e(hex)}${nm ? ` &middot; ${e(nm.label)}` : ''}"` : '';
+    const title = hex
+      ? ` title="Slot ${n} &middot; ${e(hex)}${nm ? ` &middot; ${e(nm.label)}` : ''}`
+        + `${byArtist ? ' &middot; locked by the artist, not by the thresholds' : ''}"`
+      : '';
     return href
       ? `<a class="${cls}" href="${e(href)}"${title}>${inner}</a>`
       : `<span class="${cls}"${title}>${inner}</span>`;
