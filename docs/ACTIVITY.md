@@ -30,24 +30,50 @@ dormant, or are lost — and that one has no other way to be asked. A wallet wit
 no transaction at all sorts to whichever end is the quiet one, because `0` is
 not a date, it is the absence of one.
 
-### Why it is tiered rather than nightly
+### Why it is paced, and how it decides who to ask
 
-Three and a half thousand addresses, one lookup each, against a free tier that
-allows five calls a second, is twelve minutes. The function has five. So:
+Three and a half thousand addresses, one lookup each, is more than one run can
+do. The published ceiling is five calls a second; the measured reality is that
+a round trip takes most of a second, so a single sequential caller uses about
+a fifth of the allowance and spends the night waiting. A pool of six behind a
+rate governor is what actually reaches the ceiling.
 
-| tier | who | how often |
+The governor tunes itself, and it is deliberately set to lean towards asking.
+Measured three ways over the same register in one night:
+
+| approach | asked | refused | **useful answers** |
+|---|---|---|---|
+| sequential, 205ms pacing | 325 | — | 325 |
+| pooled, flat 5/sec | 548 | 72 | 476 |
+| pooled, hard backoff on refusal | 322 | 0 | 322 |
+| **pooled, gentle backoff** | **684** | 781 | **650** |
+
+Backing off hard produces the tidiest number and the worst night. A refusal
+costs one retry; over-correcting costs the rest of the hour, and a wallet not
+asked about tonight is asked about tomorrow either way.
+
+**Each wallet has its own interval.** A cursor rotates everybody at one speed,
+which spends the same effort on a wallet that trades every morning and one that
+last moved in 2021 — and the second is both the larger group and the one whose
+answer will not have changed. So:
+
+| | active in the last 90 days | long dormant |
 |---|---|---|
-| 1 | the ~800 collectors with a page | every night |
-| 2 | everyone else | rotating on a cursor, ~3 days round |
+| **has a page** | every day | every 4 days |
+| **no page** | every 7 days | every 3 weeks |
 
-The wallets anybody actually opens are never more than a day old. The tail is
-well inside the month the column displays, so the lag cannot be seen in it.
-`cursor` in the file is where tier 2 resumes; it only advances by what the run
-actually got through, so a short night costs nothing but time.
+Each night asks whatever is most overdue against its own interval, most overdue
+first. A wallet never asked about is infinitely overdue, which is how a cold
+start fills itself in — about six nights for the whole register from empty.
+Nothing not yet due is asked at all, so a short queue is a night that was
+already current rather than one that failed.
+
+A dormant wallet waking up is caught within the fortnight, which a column
+showing a month cannot show.
 
 If the sweep is ever given a longer budget — `ACTIVE_SWEEP_MS`, bounded by the
-function's `maxDuration` — it covers more of the tail per run with no other
-change. Nothing else needs to know.
+function's `maxDuration` — it simply gets further down the same queue. Nothing
+else needs to know.
 
 A wallet the sweep has not reached yet is written as nothing, never as never.
 An empty column and a dead wallet are different facts and must not read alike.
@@ -96,7 +122,8 @@ know who to ask about, so it has to go last.
 |---|---|---|
 | `STUDIO_WINDOW_DAYS` | 30 | how long somebody stays lit |
 | `ACTIVE_SWEEP_MS` | 235000 | budget before the writes |
-| `ACTIVE_PACE_MS` | 205 | between Etherscan calls |
+| `ACTIVE_PER_SECOND` | 5 | the governor's floor, which it widens from under refusal |
+| `ACTIVE_CONCURRENCY` | 6 | questions in the air at once |
 | `ACTIVE_MAX_GAP_HOURS` | 36 | a daily schedule with a run missing |
 
 Run records are in `data/active-runs.json`, sixty kept, failures included.
