@@ -42,13 +42,45 @@ Every state change is a commit to `data/state.json`, which triggers a deploy. Th
    vercel env add GITHUB_BRANCH production     # main, or rebuild while testing
    ```
 
+   ### The expiry date matters more than it looks
+
+   **Current token expires: Friday 18 December 2026.** Minted 2026-09-20 on a 90 day
+   life, replacing one that was minted 2026-08-16 on the 30 day default and expired
+   2026-09-15 unnoticed.
+
+   Write the date down every time you rotate, because a fine grained token dies
+   quietly and takes the evidence with it. Every cron records its night's work by
+   committing to this repo, so when the token goes, the record of the token going
+   cannot be written either. `data/tao/runs.json` does not gain a failure entry ...
+   it simply stops gaining entries, and a file that stopped looks exactly like a
+   run of quiet nights. That is how the September token expired on the 15th and was
+   noticed on the 20th: five nights of totals frozen, no failed run recorded, no
+   commit in the history to point at.
+
+   Two things now cover that gap, both in `api/_lib/credentials.js`:
+
+   - **A 401 or 403 from GitHub, in any cron, emails `EMAIL_TO_OPS`** (falling back
+     to `EMAIL_TO_ARTIST`) out of band through Resend, which needs no repo. It is
+     deduped through the store, so a token that dies on a Sunday sends one alarm
+     rather than one per cron per night. The three cases are told apart in the
+     subject line, because they have different fixes: **401** is a dead token,
+     mint a new one; **403 with allowance left** is a live token missing a
+     permission, edit the scopes; **403 with allowance spent** is a rate limit,
+     wait.
+   - **The expiry itself is watched.** GitHub returns
+     `github-authentication-token-expiration` on every authenticated request, so
+     the last ten days before expiry send a warning once a day. An alarm after the
+     fact is a postmortem; a week's notice is a maintenance task.
+
+   Neither path can throw, and neither changes the error the caller sees.
+
 2. **Finish verifying mintface.art in Resend** so `art@mintface.art` can send. Underway. Until it clears, Resend only delivers to your own address.
 
 3. **Test mode to live** when you are ready: claim the Stripe sandbox, swap the keys, and register the webhook again against the live account.
 
 Already set: `EMAIL_FROM`, `BTC_RECEIVE_ADDRESS`, `CRON_SECRET`, `RESEND_API_KEY`, the Stripe test keys and `STRIPE_WEBHOOK_SECRET`.
 
-Optional: `EMAIL_TO_ARTIST`, `ETH_RECEIVE_ADDRESS` (defaults to mintface.eth), `RESERVE_DAYS` (defaults to 14).
+Optional: `EMAIL_TO_ARTIST`, `ETH_RECEIVE_ADDRESS` (defaults to mintface.eth), `RESERVE_DAYS` (defaults to 14), `EMAIL_TO_OPS` (machinery alarms; falls back to `EMAIL_TO_ARTIST`), `CREDENTIAL_WARN_DAYS` (defaults to 10), `CREDENTIAL_ALARM_HOURS` (defaults to 12).
 
 ## Quotes
 

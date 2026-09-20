@@ -1,23 +1,33 @@
 // Reading and writing any file in the repo. Sale state has its own module with
 // compare-and-set logic because two buyers can race; this is for the studio,
 // where the only writer is Ryan on a phone.
+import { credentialAlarm, isAuthFailure, noteTokenExpiry } from './credentials.js';
+
 const REPO = process.env.GITHUB_REPO || 'MintFaced/art';
 const BRANCH = process.env.GITHUB_BRANCH || 'main';
 const TOKEN = process.env.GITHUB_TOKEN;
 const API = process.env.GITHUB_API_BASE || 'https://api.github.com';
+const WHERE = 'repo';
 
 export const repoConfigured = () => Boolean(TOKEN);
 
-const api = (path, init = {}) => fetch(`${API}${path}`, {
-  ...init,
-  headers: {
-    accept: 'application/vnd.github+json',
-    authorization: `Bearer ${TOKEN}`,
-    'content-type': 'application/json',
-    'x-github-api-version': '2022-11-28',
-    ...(init.headers || {}),
-  },
-});
+const api = async (path, init = {}) => {
+  const r = await fetch(`${API}${path}`, {
+    ...init,
+    headers: {
+      accept: 'application/vnd.github+json',
+      authorization: `Bearer ${TOKEN}`,
+      'content-type': 'application/json',
+      'x-github-api-version': '2022-11-28',
+      ...(init.headers || {}),
+    },
+  });
+  /* Out of band, because the usual way of reporting a failure is the repo, and
+     the repo is what just refused us. Neither call throws or alters `r`. */
+  if (isAuthFailure(r.status)) await credentialAlarm({ response: r, where: WHERE });
+  else await noteTokenExpiry(r, WHERE);
+  return r;
+};
 
 export async function readFile(path) {
   if (!TOKEN) throw new Error('GITHUB_TOKEN is not set');

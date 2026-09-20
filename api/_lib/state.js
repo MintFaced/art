@@ -1,23 +1,33 @@
 // Sale and reserve state is committed back to the repo, so catalog.json stays the
 // single source of truth and every state change has an author, a time and a diff.
 // A commit triggers a Vercel deploy, so the site catches up in about a minute.
+import { credentialAlarm, isAuthFailure, noteTokenExpiry } from './credentials.js';
+
 const REPO = process.env.GITHUB_REPO || 'MintFaced/art';
 const BRANCH = process.env.GITHUB_BRANCH || 'main';
 const PATH = 'data/state.json';
 const TOKEN = process.env.GITHUB_TOKEN;
 
 const API = process.env.GITHUB_API_BASE || 'https://api.github.com';
+const WHERE = 'sale state';
 
-const api = (path, init = {}) => fetch(`${API}${path}`, {
-  ...init,
-  headers: {
-    accept: 'application/vnd.github+json',
-    authorization: `Bearer ${TOKEN}`,
-    'content-type': 'application/json',
-    'x-github-api-version': '2022-11-28',
-    ...(init.headers || {}),
-  },
-});
+const api = async (path, init = {}) => {
+  const r = await fetch(`${API}${path}`, {
+    ...init,
+    headers: {
+      accept: 'application/vnd.github+json',
+      authorization: `Bearer ${TOKEN}`,
+      'content-type': 'application/json',
+      'x-github-api-version': '2022-11-28',
+      ...(init.headers || {}),
+    },
+  });
+  /* Out of band, because the usual way of reporting a failure is the repo, and
+     the repo is what just refused us. Neither call throws or alters `r`. */
+  if (isAuthFailure(r.status)) await credentialAlarm({ response: r, where: WHERE });
+  else await noteTokenExpiry(r, WHERE);
+  return r;
+};
 
 export function stateConfigured() {
   return Boolean(TOKEN);
