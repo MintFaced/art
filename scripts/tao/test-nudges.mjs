@@ -598,6 +598,24 @@ const holds = (x) => five[x] || 0;
       provenanceLine(art).includes('locked by the artist at 4 of 5 voters'), true);
   }
 
+  /* THE CONSOLE IS ONE TEMPLATE LITERAL AND A BACKTICK IN IT ENDS THE PAGE.
+   *
+   * api/studio.js serves its whole HTML from a template literal, so a backtick
+   * anywhere inside ... including in a comment ... closes the string and the
+   * module stops parsing. `node --check` did not catch it and the route
+   * answered 500 for every path, the secret one and the 404s alike, because
+   * the failure is at import rather than in the handler. Importing it is the
+   * check that would have. */
+  {
+    const consoleSrc = fs4.readFileSync(new URL('../../api/studio.js', import.meta.url), 'utf8');
+    const body = consoleSrc.slice(consoleSrc.indexOf('const HTML = '));
+    /* Two backticks are legitimate: the one that opens the literal on the
+       first line, and the one that closes it on the last. Anything else is
+       the bug. */
+    const stray = body.split('\n').filter((l, i) => i > 0 && /(^|[^\\])`/.test(l) && !/^<\/html>`;$/.test(l.trim()));
+    is('nothing in the console page opens a backtick it does not escape', stray.length, 0, stray.slice(0, 3));
+  }
+
   const cron = fs4.readFileSync(new URL('../../api/cron/nudges.js', import.meta.url), 'utf8');
   const bank = fs4.readFileSync(new URL('../../api/_lib/banking.js', import.meta.url), 'utf8');
   /* The close moved into api/_lib/banking.js when the console gained a CLOSE &

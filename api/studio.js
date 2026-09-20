@@ -300,8 +300,9 @@ $('nudgeOpen').addEventListener('click', async (ev) => {
 function prefill() {
   const s = NUDGES && NUDGES.series;
   if (!s) { $('nqPrefill').textContent = ''; return; }
-  /* seriesState: `slots` is the count, `board` is the twelve, `locked` is what
-     has settled. */
+  /* seriesState: 'slots' is the count, 'board' is the twelve, 'locked' is what
+     has settled. No backticks in here: this whole page is a template literal
+     and one in a comment ends it. */
   const board = s.board || [];
   const count = Number(s.slots) || 12;
   const filled = s.locked || [];
