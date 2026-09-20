@@ -254,8 +254,15 @@ export function filledSlots(store, seriesId) {
     if (!prev || String(n.banked.banked_at || '') > String(prev.banked_at || '')) {
       by.set(slot, {
         slot, hex: locked.hex, nudge: n.id, number: n.number,
-        tao: Math.round(Number(n.banked.total) || 0),
-        collectors: Number(n.banked.collectors) || 0,
+        /* THE COLOUR'S OWN FIGURES, as the banked card counts them. A pottle
+           labelled with the whole board's TAO beside a card saying the
+           colour's is the same fact wearing two numbers, and a reader is
+           right to trust neither. Older records that kept no per-colour
+           figures fall back to the board. */
+        tao: Math.round(Number(locked.total) || Number(n.banked.total) || 0),
+        collectors: Number(locked.voters) || Number(n.banked.collectors) || 0,
+        /* Who settled it, so the maker can say so beside the pottle. */
+        locked_by: n.banked.locked_by || null,
         closed: n.closes || null,
         banked_at: n.banked.banked_at || null,
       });
