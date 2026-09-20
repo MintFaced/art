@@ -575,7 +575,19 @@ const holds = (x) => five[x] || 0;
   const route = fs4.readFileSync(new URL('../../api/nudge.js', import.meta.url), 'utf8');
   is('and the route reads wallets off a banked candidate', /wallets: \(c\.wallets \|\| \[\]\)/.test(route), true);
   const cron = fs4.readFileSync(new URL('../../api/cron/nudges.js', import.meta.url), 'utf8');
-  is('the cron banks through the tested projection', /bankCandidates\(p, n\)/.test(cron), true);
+  const bank = fs4.readFileSync(new URL('../../api/_lib/banking.js', import.meta.url), 'utf8');
+  /* The close moved into api/_lib/banking.js when the console gained a CLOSE &
+     LOCK button, so that the artist's close and the cron's are the same close.
+     The guard follows it: the cron must bank through that module, and that
+     module must bank through the tested projection. Two implementations of a
+     record that is never rewritten is the fault being guarded against, and
+     that fault got closer rather than further away. */
+  is('the cron banks through the shared close', /bankNudge\(n, ctx/.test(cron), true);
+  is('and the shared close banks through the tested projection',
+    /bankCandidates\(p, n, decision\)/.test(bank), true);
+  const api = fs4.readFileSync(new URL('../../api/studio-api.js', import.meta.url), 'utf8');
+  is('and the console closes through it too, never its own',
+    /bankNudge\(/.test(api) && !/bankCandidates\(/.test(api), true);
   is('and never takes the latest row on a board of colours', /latest\(weighings/.test(cron), false);
 }
 

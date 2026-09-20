@@ -1,6 +1,9 @@
 import { readFile, writeFile, repoConfigured } from './_lib/repo.js';
 import { putObject, r2Configured } from './_lib/r2.js';
 import { passwordOk, issueSession, sessionOk, sessionFrom, cookieHeader, studioConfigured, tooManyAttempts, noteAttempt } from './_lib/studio.js';
+import { bankingContext, bankNudge } from './_lib/banking.js';
+import { kindOf, lockRule, lockLine, checkHex, CANDIDATES } from './_lib/nudges.js';
+import { seriesState } from './_lib/palette.js';
 
 const SOURCE = 'data/source/recent-work.json';
 const json = (b, s = 200, headers = {}) =>
@@ -117,6 +120,88 @@ export async function POST(request) {
     store.next_number = number + 1;
     await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n', `Nudge ${number}: ${question.slice(0, 60)}`, file.sha);
     return json({ ok: true, id, number });
+  }
+
+  /* ------------------------------------------------------------- nudges
+   *
+   * The close and open cycle used to be a directive each round: somebody ran
+   * the numbers, somebody edited a file. Ten nudges remain in the series and
+   * the artist should be able to run them from a phone, so the console gets
+   * what the round actually needs ... what is open and how far it is, a close
+   * that says exactly what it will write before it writes it, and a form for
+   * the next one that fills in its own constraint and numbering.
+   */
+  if (action === 'nudge-state') {
+    const site = process.env.SITE_ORIGIN || 'https://mintface.art';
+    const at = async (path) => (await fetch(`${site}/${path}`, { headers: { accept: 'application/json' } })).json();
+    const file = await readFile('data/nudges.json');
+    const store = JSON.parse(file.text);
+    const arc = seriesState(store) || null;
+    const ctx = await bankingContext(at);
+
+    /* Every published nudge that has not banked, with its board read live, so
+       the console shows the same figures the public card does rather than a
+       summary written for it. */
+    const open = [];
+    for (const n of store.nudges || []) {
+      if (n.banked || n.published === false) continue;
+      const { banked } = await bankNudge(n, ctx, null);
+      open.push({
+        id: n.id, number: n.number, question: n.question, kind: kindOf(n),
+        closes: n.closes, series: n.series || null, slot: n.slot || null,
+        rule: lockRule(n),
+        total: banked.total, collectors: banked.collectors,
+        leader: banked.leader || null,
+        progress: banked.progress || null,
+        /* What it would bank if it closed now on the thresholds alone. This is
+           the honest default the button offers, before the artist overrides. */
+        would: lockLine(banked),
+        would_lock: Boolean(banked.locked),
+        candidates: (banked.candidates || []).map((c) => ({ hex: c.hex, total: c.total, voters: c.voters })),
+      });
+    }
+    return json({ ok: true, open, series: arc, next_number: store.next_number || null });
+  }
+
+  /* The close. `preview` writes nothing and returns the sentence the card will
+     carry, which is the sentence the confirm step shows ... the same function
+     composes both, so what the artist approves is what the record says. */
+  if (action === 'nudge-close') {
+    const site = process.env.SITE_ORIGIN || 'https://mintface.art';
+    const at = async (path) => (await fetch(`${site}/${path}`, { headers: { accept: 'application/json' } })).json();
+    const file = await readFile('data/nudges.json');
+    const store = JSON.parse(file.text);
+    const n = (store.nudges || []).find((x) => x.id === String(body.id));
+    if (!n) return json({ error: 'no such nudge' }, 404);
+    if (n.banked) return json({ error: `nudge #${n.number} is already banked` }, 409);
+
+    /* An artist lock names its colour. Absent, the thresholds decide, which is
+       simply the cron's close run early. */
+    let decision = null;
+    if (body.lock) {
+      const h = checkHex(body.hex || '');
+      if (h.error) return json({ error: h.error }, 400);
+      if (kindOf(n) !== CANDIDATES) return json({ error: 'only a board of colours locks a colour' }, 400);
+      decision = { by: 'artist', hex: h.hex };
+    }
+
+    const dropped = [];
+    const ctx = await bankingContext(at);
+    const { banked } = await bankNudge(n, ctx, decision, dropped);
+    const line = lockLine(banked);
+
+    if (body.preview) {
+      return json({ ok: true, preview: true, line, dropped,
+        locked: banked.locked || null, locked_by: banked.locked_by || null,
+        met: banked.met || null, rule: banked.rule || null,
+        progress: banked.progress || null,
+        closed_early: banked.closed_early || null });
+    }
+
+    n.banked = banked;
+    await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n',
+      `Nudge ${n.number}: ${banked.locked ? `locked ${banked.locked.hex}` : 'banked, nothing locked'}`, file.sha);
+    return json({ ok: true, line, dropped, locked: banked.locked || null, locked_by: banked.locked_by || null });
   }
 
   // what happened after a nudge banked, written on the record

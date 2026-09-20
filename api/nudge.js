@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
-import { tally, latest, isOpen, weighMessage, proposeMessage, replaceMessage, withdrawMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, comboReader, comboOf, mayEdit, CANDIDATES, SIDES } from './_lib/nudges.js';
+import { tally, latest, isOpen, weighMessage, proposeMessage, replaceMessage, withdrawMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, comboReader, comboOf, mayEdit, CANDIDATES, SIDES, lockLine } from './_lib/nudges.js';
 import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 import { seriesState, constraintFor, checkCandidate, slotLine, seriesProvenanceLine } from './_lib/palette.js';
 import { loadRegister } from './_lib/register.js';
@@ -158,6 +158,15 @@ export async function GET(request) {
         rule: p.rule || lockRule(n),
         total: p.total, collectors: p.collectors,
         leader: p.leader || null, locked: p.locked || null, why: p.why || null,
+        /* Who decided, and which halves held. Present only on a banked nudge:
+           while it is open nothing has decided anything. */
+        locked_by: n.banked ? n.banked.locked_by || null : null,
+        met: n.banked ? n.banked.met || null : null,
+        /* The banked sentence, composed here rather than in the page.
+           /studio is static and the console is server-rendered, and the one
+           thing that must not drift between them is what the card says ... so
+           it is said once, in the library, and both are handed the result. */
+        line: n.banked ? lockLine(n.banked) : null,
         progress: p.progress || null,
         /* The public record: every allocation change, newest first. A single
            signature can produce two entries where a row from before the

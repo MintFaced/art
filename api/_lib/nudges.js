@@ -833,11 +833,48 @@ export const isOpen = (n, now = new Date()) =>
 
 /** What a candidate nudge banks: the board, the lock or the reason there is
  *  none, and who stood where when it closed. */
-export function bankCandidates(p, n) {
+/**
+ * The artist's own lock.
+ *
+ * The thresholds decide on their own at the close date and that is the normal
+ * path. This is the other one: the studio closing a nudge early and locking a
+ * colour that has not carried both halves. It is allowed because the standing
+ * rule has always run one way ... a nudge steers, it never commands, and the
+ * studio may act with, against or without the result ... and a steer the
+ * artist may not override was never a steer.
+ *
+ * What it must not do is look like a threshold lock. So the shortfall is
+ * carried in the record and said on the card, in public, for as long as the
+ * card exists: `LOCKED BY THE ARTIST AT 4 OF 5 VOTERS`. The honesty is the
+ * price of the power, and it is the same sentence in the console's confirm
+ * step and on the public card, because they are the same function.
+ */
+export function bankCandidates(p, n, decision = null) {
+  const rule = p.rule;
+  const wanted = decision && decision.hex ? checkHex(decision.hex).hex : null;
+  const pick = wanted ? (p.candidates || []).find((c) => c.hex === wanted) : p.leader;
+  const byArtist = Boolean(decision && decision.by === 'artist' && pick);
+  const locked = byArtist
+    ? { hex: pick.hex, total: pick.total, voters: pick.voters }
+    : p.locked;
+  /* Which halves actually held, recorded rather than recomputed later: the
+     register moves, and a card read in two years must say what was true at
+     close rather than what is true at reading. */
+  const met = locked
+    ? { voters: locked.voters >= rule.voters, tao: locked.total >= rule.tao }
+    : null;
   return {
-    number: n.number, kind: CANDIDATES, rule: p.rule,
+    number: n.number, kind: CANDIDATES, rule,
     total: p.total, collectors: p.collectors,
-    leader: p.leader, locked: p.locked, why: p.why, progress: p.progress,
+    leader: p.leader,
+    locked,
+    /* 'threshold' where the numbers decided, 'artist' where the studio did.
+       Absent on a nudge that locked nothing. */
+    locked_by: locked ? (byArtist ? 'artist' : 'threshold') : null,
+    met,
+    closed_early: byArtist && new Date(n.closes).getTime() > Date.now() ? n.closes : null,
+    why: locked ? null : p.why,
+    progress: p.progress,
     /* Frozen with everything else. The card keeps showing who stood where at
        close, whatever anybody does with their TAO afterwards. */
     ledger: (p.ledger || []).map((r) => ({ address: r.address, name: r.name || null,
@@ -855,6 +892,48 @@ export function bankCandidates(p, n) {
     })),
     banked_at: new Date().toISOString(),
   };
+}
+
+/**
+ * What the banked card says, in one place.
+ *
+ * The console's confirm step shows this before anything is written and the
+ * public card shows it afterwards. One function, so an artist pressing CLOSE &
+ * LOCK is looking at the sentence that will exist, not at a description of it.
+ * Sentence case: the card's own CSS is what puts it in capitals.
+ */
+export function lockLine(b) {
+  if (!b) return '';
+  const board = `${Math.round(Number(b.total) || 0).toLocaleString('en-NZ')} TAO`;
+  const all = `${b.collectors} collector${b.collectors === 1 ? '' : 's'}`;
+  if (!b.locked) return `No colour locked · ${board} across ${all}`;
+  /* THE COLOUR'S OWN FIGURES, not the board's.
+   *
+   * A locked card is a record of what carried the colour, so it counts what
+   * stood behind that colour rather than what stood on the board. On a card
+   * that also has to say `4 of 5 voters` the board's seven would contradict it
+   * in the same sentence, and a reader would be right to trust neither. */
+  const tao = `${Math.round(Number(b.locked.total) || 0).toLocaleString('en-NZ')} TAO`;
+  const who = `${b.locked.voters} collector${b.locked.voters === 1 ? '' : 's'}`;
+  const bits = [`Locked · ${b.locked.hex} · ${tao} · ${who}`];
+  const rule = b.rule || {};
+  const met = b.met || {};
+  if (b.locked_by === 'artist') {
+    /* Name the half that held before the half that did not. An artist lock on
+       a colour that had the weight and not the spread is a different act from
+       one on a colour that had neither, and the card should not flatten them. */
+    if (met.tao && !met.voters) bits.push('TAO threshold met');
+    else if (met.voters && !met.tao) bits.push('Collector threshold met');
+    else if (met.tao && met.voters) bits.push('Both thresholds met');
+    else bits.push('Neither threshold met');
+    const short = [];
+    if (!met.voters) short.push(`${b.locked.voters} of ${rule.voters} voters`);
+    if (!met.tao) short.push(`${Math.round(b.locked.total).toLocaleString('en-NZ')} of ${Math.round(Number(rule.tao) || 0).toLocaleString('en-NZ')} TAO`);
+    bits.push(short.length
+      ? `Locked by the artist at ${short.join(' and ')}`
+      : 'Locked by the artist');
+  }
+  return bits.join(' · ');
 }
 
 /** What a yes-or-no nudge banks. */

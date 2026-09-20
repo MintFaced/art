@@ -3333,9 +3333,14 @@ function candidateCard(x) {
       : `<p class="said">${MF.session.current()
         ? 'Reading where you stand ...'
         : 'Sign in to propose or weigh.'}</p>`)}
-    ${x.open ? '' : `<p class="banked">${x.locked
-      ? `Locked &middot; ${saidLine(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
-      : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`}</p>`}
+    ${x.open ? '' : `<p class="banked">${x.line
+      /* Composed by the server so this and the console's confirm step cannot
+         drift apart. The swatch mark stays here, because it is a thing this
+         page draws rather than a thing the sentence says. */
+      ? (x.locked ? x.line.replace(x.locked.hex, saidLine(x.locked.hex)) : e(x.line))
+      : (x.locked
+        ? `Locked &middot; ${saidLine(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
+        : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`)}</p>`}
     ${x.open || x.locked || !x.why ? '' : `<p class="said">${e(x.why)}</p>`}
     ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
     ${x.open ? '' : RULE}`;

@@ -41,6 +41,27 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:30px;letter-spacing:-.
 label{display:block;margin:18px 0 0}
 .lab{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
 input,select,textarea,button{font-family:var(--font-sans);font-size:16px;color:var(--ink)}
+.sec{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:38px 0 14px;padding-top:26px;border-top:1px solid var(--rule)}
+.nudge{border-bottom:1px solid var(--rule);padding:0 0 18px;margin-bottom:18px}
+.nudge h3{font-family:var(--font-sans);font-weight:400;font-size:17px;letter-spacing:-.01em;margin:0 0 6px}
+.nudge .meta,.nudge .bar-l{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint)}
+.nudge .meter{height:1px;background:var(--rule);margin:5px 0 11px;position:relative}
+.nudge .meter i{position:absolute;left:0;top:0;height:1px;background:var(--ink);display:block}
+.nudge .meter.met i{background:var(--dot-available)}
+.swatches{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.sw{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;
+  background:none;border:1px solid var(--rule);border-radius:0;padding:6px 9px;width:auto;cursor:pointer}
+.sw[aria-pressed="true"]{border-color:var(--ink)}
+.sw b{width:13px;height:13px;display:inline-block;border:1px solid rgba(0,0,0,.14)}
+.confirm{border:1px solid var(--ink);padding:14px;margin:14px 0}
+.confirm .willsay{font-family:var(--font-mono);font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;line-height:1.55;color:var(--ink)}
+.confirm .cap{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+details summary{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:8px}
 input,select,textarea{
   width:100%;background:none;border:0;border-bottom:1px solid var(--rule);
   padding:9px 0;border-radius:0;-webkit-appearance:none;
@@ -133,6 +154,24 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
   <p class="note" id="say"></p>
 
   <div class="list" id="list"></div>
+
+  <!-- The round, run from the phone. Ten of these remain in the series and
+       each one used to be a directive: numbers read by hand, a file edited by
+       somebody else. -->
+  <section id="nudges" class="nudges-admin">
+    <h2 class="sec">Nudges</h2>
+    <div id="nudgeOpen" class="note">Loading</div>
+
+    <details id="newNudge">
+      <summary>New nudge</summary>
+      <label><span class="lab">Question</span><input id="nqQ" enterkeyhint="next"></label>
+      <label><span class="lab">Note</span><textarea id="nqNote" rows="3"></textarea></label>
+      <label><span class="lab">Closes</span><input type="date" id="nqCloses"></label>
+      <p class="note" id="nqPrefill"></p>
+      <button class="btn" id="nqGo">Open nudge</button>
+      <p class="note" id="nqSay"></p>
+    </details>
+  </section>
 </div>
 
 </div>
@@ -153,8 +192,157 @@ $('in').addEventListener('click', async () => {
   $('app').classList.remove('hidden');
   $('year').value = String(new Date().getFullYear());
   loadList();
+  loadNudges();
 });
 $('pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('in').click(); });
+
+/* ------------------------------------------------------------ the round
+ *
+ * What is open and how far it is, a close that shows exactly what it will
+ * write, and a form for the next one. The confirm step is the point of this:
+ * an artist locking a colour against the thresholds is making a public
+ * statement about their own power, and they should read the sentence that
+ * statement will be before it exists, not a description of it.
+ */
+let NUDGES = null;
+let PICKED = {};
+
+const esc2 = (t) => String(t == null ? '' : t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const nnum = (n) => Math.round(Number(n) || 0).toLocaleString('en-NZ');
+const dayOf = (d) => { const x = new Date(d); return x.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: '2-digit' }).toUpperCase(); };
+
+async function loadNudges() {
+  $('nudgeOpen').textContent = 'Loading';
+  const r = await api('nudge-state', {});
+  if (!r.ok) { $('nudgeOpen').textContent = r.body.error || 'Could not read the nudges.'; return; }
+  NUDGES = r.body;
+  drawNudges();
+  prefill();
+}
+
+function meter(label, at, of) {
+  const met = at >= of;
+  const pct = Math.max(0, Math.min(100, of ? (at / of) * 100 : 0));
+  return '<div class="bar-l">' + esc2(label) + ' ' + nnum(at) + ' of ' + nnum(of) + (met ? ' &middot; met' : '') + '</div>'
+    + '<div class="meter' + (met ? ' met' : '') + '"><i style="width:' + pct.toFixed(1) + '%"></i></div>';
+}
+
+function drawNudges() {
+  const open = (NUDGES && NUDGES.open) || [];
+  if (!open.length) { $('nudgeOpen').textContent = 'Nothing open.'; return; }
+  $('nudgeOpen').className = '';
+  $('nudgeOpen').innerHTML = open.map((n) => {
+    const p = n.progress || { voters: { at: 0, of: 0 }, tao: { at: 0, of: 0 } };
+    const picked = PICKED[n.id] || (n.leader ? n.leader.hex : null);
+    const sw = (n.candidates || []).map((c) =>
+      '<button type="button" class="sw" data-pick="' + esc2(n.id) + '" data-hex="' + esc2(c.hex) + '"'
+      + ' aria-pressed="' + String(c.hex === picked) + '">'
+      + '<b style="background:' + esc2(c.hex) + '"></b>' + esc2(c.hex) + ' &middot; ' + nnum(c.total) + ' &middot; ' + c.voters + '</button>').join('');
+    return '<div class="nudge" data-n="' + esc2(n.id) + '">'
+      + '<div class="meta">Nudge #' + n.number + ' &middot; closes ' + dayOf(n.closes)
+      + (n.slot ? ' &middot; colour ' + n.slot + ' of ' + ((NUDGES.series && Number(NUDGES.series.slots)) || 12) : '') + '</div>'
+      + '<h3>' + esc2(n.question) + '</h3>'
+      + '<div class="meta">' + n.collectors + ' collectors &middot; ' + nnum(n.total) + ' TAO weighed</div>'
+      + meter('Voters on the leader', p.voters.at, p.voters.of)
+      + meter('TAO on the leader', p.tao.at, p.tao.of)
+      + '<div class="swatches">' + sw + '</div>'
+      + '<button class="btn" data-close="' + esc2(n.id) + '">Close &amp; lock</button>'
+      + '<div data-confirm="' + esc2(n.id) + '"></div>'
+      + '</div>';
+  }).join('');
+}
+
+/* One delegated listener: the list is redrawn whole after every act, and
+   handlers bound to the old nodes would be handlers bound to nothing. */
+$('nudgeOpen').addEventListener('click', async (ev) => {
+  const pick = ev.target.closest('[data-pick]');
+  if (pick) { PICKED[pick.dataset.pick] = pick.dataset.hex; drawNudges(); return; }
+
+  const close = ev.target.closest('[data-close]');
+  if (close) {
+    const id = close.dataset.close;
+    const n = (NUDGES.open || []).find((x) => x.id === id);
+    const hex = PICKED[id] || (n && n.leader ? n.leader.hex : null);
+    if (!hex) { alert('Nothing on the board to lock.'); return; }
+    const slot = $('nudgeOpen').querySelector('[data-confirm="' + id + '"]');
+    slot.innerHTML = '<p class="note">Reading the board&hellip;</p>';
+    const r = await api('nudge-close', { id, lock: true, hex, preview: true });
+    if (!r.ok) { slot.innerHTML = '<p class="note bad">' + esc2(r.body.error || 'No.') + '</p>'; return; }
+    /* The sentence, not a summary of it. This is the card. */
+    slot.innerHTML = '<div class="confirm">'
+      + '<p class="cap">The banked card will say</p>'
+      + '<p class="willsay">' + esc2(r.body.line) + '</p>'
+      + (r.body.closed_early ? '<p class="note">Closing early &mdash; it was due ' + dayOf(r.body.closed_early) + '.</p>' : '')
+      + (r.body.locked_by === 'artist' && r.body.met && !(r.body.met.voters && r.body.met.tao)
+        ? '<p class="note">This is your lock, not the thresholds’. The shortfall stays on the card.</p>' : '')
+      + ((r.body.dropped || []).length ? '<p class="note">' + esc2(r.body.dropped.join('; ')) + '</p>' : '')
+      + '<button class="btn" data-do="' + esc2(id) + '" data-hex="' + esc2(hex) + '">Yes, bank it</button> '
+      + '<button class="btn quiet" data-cancel="' + esc2(id) + '">Not yet</button>'
+      + '</div>';
+    return;
+  }
+
+  const cancel = ev.target.closest('[data-cancel]');
+  if (cancel) { $('nudgeOpen').querySelector('[data-confirm="' + cancel.dataset.cancel + '"]').innerHTML = ''; return; }
+
+  const go = ev.target.closest('[data-do]');
+  if (go) {
+    go.disabled = true;
+    const r = await api('nudge-close', { id: go.dataset.do, lock: true, hex: go.dataset.hex });
+    if (!r.ok) { go.disabled = false; alert(r.body.error || 'No.'); return; }
+    await loadNudges();
+  }
+});
+
+/* The next nudge fills in its own constraint and numbering. A colour nudge in
+   a series is the same question every time with one number changed, and a
+   number typed by hand is a number that will one day be typed wrong. */
+function prefill() {
+  const s = NUDGES && NUDGES.series;
+  if (!s) { $('nqPrefill').textContent = ''; return; }
+  /* seriesState: `slots` is the count, `board` is the twelve, `locked` is what
+     has settled. */
+  const board = s.board || [];
+  const count = Number(s.slots) || 12;
+  const filled = s.locked || [];
+  const open = board.filter((x) => x && x.state === 'open');
+  const slot = (board.find((x) => x && x.state === 'empty') || {}).slot || null;
+  const nth = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth'][slot] || ('colour ' + slot);
+  if (!slot) { $('nqPrefill').textContent = 'The palette is full.'; return; }
+  if (open.length) { $('nqPrefill').textContent = 'Nudge #' + open[0].number + ' is still asking for colour ' + open[0].slot + '.'; }
+  $('nqQ').value = 'Weigh in on the ' + nth + ' colour.';
+  const hexes = filled.map((f) => f.hex);
+  $('nqNote').value = hexes.length === 1
+    ? 'Colour one is locked and sits beside every candidate here. This one has to stand clear of it ... the picker will not take a colour that does not. Propose one, or put your TAO behind one already on the board. Weighed TAO is never spent and never moves.'
+    : 'The colours already locked sit beside every candidate here: ' + hexes.join(', ')
+      + '. This one has to stand clear of all of them ... the picker will not take a colour that does not. Propose one, or put your TAO behind one already on the board. Weighed TAO is never spent and never moves.';
+  const d = new Date(Date.now() + 8 * 86400000);
+  $('nqCloses').value = d.toISOString().slice(0, 10);
+  $('nqPrefill').textContent = 'Slot ' + slot + ' of ' + (s.count || 12) + ' · nudge #' + (NUDGES.next_number || '?')
+    + ' · clear of ' + (hexes.length ? hexes.join(', ') : 'nothing yet')
+    + ' · thresholds carried from the series.';
+  $('nqGo').dataset.slot = String(slot);
+  $('nqGo').dataset.series = s.id || '';
+}
+
+$('nqGo').addEventListener('click', async () => {
+  $('nqSay').textContent = 'Opening...';
+  const r = await api('nudge', {
+    question: $('nqQ').value,
+    note: $('nqNote').value,
+    closes: new Date($('nqCloses').value + 'T00:00:00Z').toISOString(),
+    kind: 'candidates',
+    series: $('nqGo').dataset.series || null,
+    slot: Number($('nqGo').dataset.slot) || null,
+    promise: 'MintFace will paint the colour this locks. A nudge steers; this one decides.',
+    publish: true,
+  });
+  if (!r.ok) { $('nqSay').textContent = r.body.error || 'No.'; $('nqSay').className = 'note bad'; return; }
+  $('nqSay').textContent = 'Nudge #' + r.body.number + ' is open.';
+  $('nqSay').className = 'note';
+  await loadNudges();
+});
+
 
 $('editionKind').addEventListener('change', () => {
   const k = $('editionKind').value;
