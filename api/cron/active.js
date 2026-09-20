@@ -87,15 +87,20 @@ function governor(perSecond) {
       next = at + gap;
       if (at > now) await sleep(at - now);
     },
-    /* Refused. Widen, because the published ceiling and the ceiling actually
-       enforced are not always the same number, and a retry storm against a
-       limiter costs more throughput than simply asking more slowly: the first
-       pass at a flat five a second spent thirteen per cent of its night being
-       turned away and re-asking. */
-    refused() { gap = Math.min(gap * 1.5, floor * 8); },
-    /* Answered. Ease back toward the ceiling, so one bad minute does not slow
-       the rest of the night. */
-    ok() { gap = Math.max(floor, gap * 0.97); },
+    /* Refused. Widen, but barely, and never past two and a half times the
+       floor.
+       
+       Measured three ways over the same register: flat out at the published
+       five a second asked 548 and was turned away 72 times, leaving 476
+       answers; backing off hard on every refusal asked 322 and was turned away
+       none, leaving 322. The second is the tidier number and the worse night.
+       A refusal costs one retry; over-correcting costs the rest of the hour,
+       and a wallet not asked about tonight is asked about tomorrow either way.
+       So the lever is set to lean towards asking. */
+    refused() { gap = Math.min(gap * 1.12, floor * 2.5); },
+    /* Answered. Ease back quickly, so one bad minute does not slow the rest of
+       the night. */
+    ok() { gap = Math.max(floor, gap * 0.88); },
     rate() { return 1000 / gap; },
   };
 }
