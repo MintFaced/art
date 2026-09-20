@@ -217,6 +217,7 @@ async function run({ key, dry, started, prior, url }) {
   const site = process.env.SITE_ORIGIN || 'https://mintface.art';
 
   const register = JSON.parse((await readFile('data/collectors-register.json')).text);
+  if (!register || !Array.isArray(register.rows)) throw new Error('the register could not be read, so there is nobody to ask about');
   const F = register.fields;
   const iA = F.indexOf('address'), iS = F.indexOf('slug'), iP = F.indexOf('private');
   const everyone = register.rows.map((r) => ({ address: lower(r[iA]), paged: Boolean(r[iS]), private: Boolean(r[iP]) }));
@@ -225,6 +226,7 @@ async function run({ key, dry, started, prior, url }) {
      skipped if the chain half runs out of clock. ---- */
   let weighings = null;
   try { weighings = JSON.parse((await readFile('data/nudge-weighings.json')).text); } catch (e) { /* none yet */ }
+  if (!weighings || typeof weighings !== 'object') weighings = null;
   const since = started - WINDOW_DAYS * 86400000;
   const { seen: studio, reached } = await studioActivity(weighings, since, everyone.map((p) => p.address));
 
@@ -238,8 +240,12 @@ async function run({ key, dry, started, prior, url }) {
   };
 
   /* ---- the chain ---- */
-  let chain = { wallets: {}, cursor: 0 };
+  /* readFile answers a missing file with text:null, and JSON.parse(null) is
+     null rather than a throw ... so the catch never fires and the fallback has
+     to be on the value, not on the exception. This is the first run's path. */
+  let chain = null;
   try { chain = JSON.parse((await readFile(CHAIN)).text); } catch (e) { /* first run */ }
+  if (!chain || typeof chain !== 'object') chain = { wallets: {}, cursor: 0 };
   const wallets = { ...(chain.wallets || {}) };
   const tail = everyone.filter((p) => !p.paged).map((p) => p.address);
   const paged = everyone.filter((p) => p.paged).map((p) => p.address);
