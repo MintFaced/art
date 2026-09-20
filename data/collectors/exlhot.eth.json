@@ -1,6 +1,7 @@
 {
  "address": "0x14ddb398ce7a516c399a95b5d5c9a41326ec93de",
  "ens": "exlhot.eth",
+ "fwd": null,
  "display_name": null,
  "slug": "exlhot.eth",
  "private": false,
@@ -13,9 +14,9 @@
  },
  "first_collected": "2022-12-27T03:39:11.000000Z",
  "last_collected": "2025-02-09T00:42:47.000000Z",
- "tao": 78084,
+ "tao": 80465,
  "tao_rate": 102.6,
- "tao_rank": 197,
+ "tao_rank": 193,
  "collections": [
   {
    "slug": "roads-and-rivers",
@@ -23,13 +24,13 @@
    "works": 2
   },
   {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
+   "slug": "patrimora",
+   "title": "Patrimora",
    "works": 1
   },
   {
-   "slug": "patrimora",
-   "title": "Patrimora",
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 1
   },
   {
@@ -49,7 +50,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null,
-   "tao": 2372
+   "tao": 2469
   },
   {
    "id": "patrimora-2",
@@ -61,19 +62,7 @@
    "unique": true,
    "image": "patrimora/patrimora-2-image.png",
    "orientation": null,
-   "tao": 39266
-  },
-  {
-   "id": "xlife-56",
-   "title": "Late Stage Memeism",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2024-12-02T04:55:59.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-56-image.gif",
-   "orientation": null,
-   "tao": 2661
+   "tao": 40867
   },
   {
    "id": "roads-or-rivers-up-only",
@@ -85,7 +74,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-up-only-image.jpg",
    "orientation": null,
-   "tao": 5623
+   "tao": 5720
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -97,7 +86,19 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 28161
+   "tao": 28648
+  },
+  {
+   "id": "xlife-56",
+   "title": "Late Stage Memeism",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-56-image.gif",
+   "orientation": null,
+   "tao": 2759
   }
  ]
 }
