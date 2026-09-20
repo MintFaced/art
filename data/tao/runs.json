@@ -3,6 +3,84 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmu97kleu",
+   "at": "2026-09-20T02:39:53.958Z",
+   "ok": true,
+   "ms": 52568,
+   "blocks": {
+    "from": 25820496,
+    "to": 26015791,
+    "scanned": 195296
+   },
+   "chain_events": 1,
+   "changed_hands": {
+    "works": 1,
+    "sales": 1,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 2,
+   "tao": {
+    "live": 73507350,
+    "was": 73170242,
+    "delta": 337108,
+    "lost_to_sales": 279567,
+    "wallets": 3437
+   },
+   "register": {
+    "collectors": 3678,
+    "with_page": 806,
+    "private": 0,
+    "named": 1152
+   },
+   "classified": 1,
+   "unclassified": 0,
+   "events": 13095,
+   "owners_cursor_age_hours": 125.7,
+   "owners_cursor_blocks_behind": 37501,
+   "files": 8,
+   "pages": 0,
+   "movements": [
+    {
+     "work": "xlife-56",
+     "title": "Late Stage Memeism",
+     "token": "56",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-09-18T15:23:59.000Z",
+     "block": 26005261,
+     "tx": "0xf87643942072d2b6b17c48e4c7000dc0f57c285cc5e5740b42280a9f1ac127e7",
+     "from": "0xe14748c7476ad44d92e8c86a17af2922803356aa",
+     "to": "0xe6da4a4930e896c7e1ff590779b4046d7587b802",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0xe14748c7476ad44d92e8c86a17af2922803356aa",
+     "before": 2735,
+     "after": 0,
+     "delta": -2735,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0xe6da4a4930e896c7e1ff590779b4046d7587b802",
+     "before": 570,
+     "after": 620,
+     "delta": 50,
+     "gained": 1
+    }
+   ],
+   "alarms": [
+    "the ownership sweep has not finished for 126 hours ... its cursor is on block 25978290, 37,501 behind tonight's head of 26015791, so who holds what is that old. TAO is unaffected: it reads its own event history, not the register.",
+    "the previous run was 125 hours ago, on a daily schedule ... at least one run did not happen"
+   ]
+  },
+  {
    "run_id": "rmu1rb64k",
    "at": "2026-09-14T21:30:17.156Z",
    "ok": true,
