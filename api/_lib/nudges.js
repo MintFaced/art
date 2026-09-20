@@ -853,10 +853,19 @@ export function bankCandidates(p, n, decision = null) {
   const rule = p.rule;
   const wanted = decision && decision.hex ? checkHex(decision.hex).hex : null;
   const pick = wanted ? (p.candidates || []).find((c) => c.hex === wanted) : p.leader;
-  const byArtist = Boolean(decision && decision.by === 'artist' && pick);
-  const locked = byArtist
+  const asked = Boolean(decision && decision.by === 'artist' && pick);
+  const locked = asked
     ? { hex: pick.hex, total: pick.total, voters: pick.voters }
     : p.locked;
+  /* AN ARTIST LOCK ON A COLOUR THAT CARRIED BOTH HALVES IS NOT AN ARTIST LOCK.
+   *
+   * Pressing the button early on a colour the collectors had already carried
+   * would otherwise bank it as the studio's decision, which understates them
+   * exactly as badly as a silent override would overstate them. The thresholds
+   * decided; the artist only decided not to wait, and `closed_early` is where
+   * that is recorded. The credit goes where the weight was. */
+  const carried = Boolean(locked && locked.voters >= rule.voters && locked.total >= rule.tao);
+  const byArtist = asked && !carried;
   /* Which halves actually held, recorded rather than recomputed later: the
      register moves, and a card read in two years must say what was true at
      close rather than what is true at reading. */
@@ -872,7 +881,7 @@ export function bankCandidates(p, n, decision = null) {
        Absent on a nudge that locked nothing. */
     locked_by: locked ? (byArtist ? 'artist' : 'threshold') : null,
     met,
-    closed_early: byArtist && new Date(n.closes).getTime() > Date.now() ? n.closes : null,
+    closed_early: asked && new Date(n.closes).getTime() > Date.now() ? n.closes : null,
     why: locked ? null : p.why,
     progress: p.progress,
     /* Frozen with everything else. The card keeps showing who stood where at

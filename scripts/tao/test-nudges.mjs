@@ -596,6 +596,19 @@ const holds = (x) => five[x] || 0;
       lockLine(bankCandidates({ ...p2, locked: { hex: '#80E080', total: 627000, voters: 4 }, why: null }, N2)).includes('artist'), false);
     is('and the work carries it forever',
       provenanceLine(art).includes('locked by the artist at 4 of 5 voters'), true);
+    /* And the other way round: pressing the button on a colour the collectors
+       had already carried understates them exactly as badly as a silent
+       override would overstate them. The thresholds decided; the artist only
+       decided not to wait. */
+    const carried = { ...p2,
+      candidates: [{ hex: '#80E080', total: 627000, voters: 6, wallets: [] }],
+      leader: { hex: '#80E080', total: 627000, voters: 6 },
+      locked: { hex: '#80E080', total: 627000, voters: 6 },
+      progress: { voters: { at: 6, of: 5 }, tao: { at: 627000, of: 500000 } }, why: null };
+    const early = bankCandidates(carried, { ...N2, closes: '2099-01-01T00:00:00.000Z' }, { by: 'artist', hex: '#80E080' });
+    is('a colour that carried both halves banks to the thresholds, not the artist', early.locked_by, 'threshold');
+    is('and the card claims nothing for him', lockLine(early).includes('artist'), false);
+    is('though the record still says it closed early', Boolean(early.closed_early), true);
   }
 
   /* THE CONSOLE IS ONE TEMPLATE LITERAL AND A BACKTICK IN IT ENDS THE PAGE.
