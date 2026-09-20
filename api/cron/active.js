@@ -77,13 +77,26 @@ const lower = (a) => String(a || '').toLowerCase();
    is the difference between three hundred addresses in a run and twelve
    hundred. */
 function governor(perSecond) {
-  const gap = 1000 / perSecond;
+  const floor = 1000 / perSecond;
+  let gap = floor;
   let next = 0;
-  return async () => {
-    const now = Date.now();
-    const at = Math.max(now, next);
-    next = at + gap;
-    if (at > now) await sleep(at - now);
+  return {
+    async wait() {
+      const now = Date.now();
+      const at = Math.max(now, next);
+      next = at + gap;
+      if (at > now) await sleep(at - now);
+    },
+    /* Refused. Widen, because the published ceiling and the ceiling actually
+       enforced are not always the same number, and a retry storm against a
+       limiter costs more throughput than simply asking more slowly: the first
+       pass at a flat five a second spent thirteen per cent of its night being
+       turned away and re-asking. */
+    refused() { gap = Math.min(gap * 1.5, floor * 8); },
+    /* Answered. Ease back toward the ceiling, so one bad minute does not slow
+       the rest of the night. */
+    ok() { gap = Math.max(floor, gap * 0.97); },
+    rate() { return 1000 / gap; },
   };
 }
 
@@ -99,14 +112,14 @@ async function pool(items, width, worker) {
   await Promise.all(runners);
 }
 
-async function es(params, key) {
+async function es(params, key, onRefused = null) {
   const url = `${ETHERSCAN}?${new URLSearchParams({ chainid: '1', apikey: key, ...params })}`;
   for (let i = 0; i < 4; i++) {
     try {
       const j = await (await fetch(url)).json();
       if (j.status === '1') return j.result;
       if (j.message === 'No records found' || /no records/i.test(String(j.result))) return [];
-      if (/rate limit|max calls/i.test(String(j.result))) { await sleep(1300); continue; }
+      if (/rate limit|max calls/i.test(String(j.result))) { if (onRefused) onRefused(); await sleep(1300); continue; }
       return [];
     } catch (e) { await sleep(600 * (i + 1)); }
   }
@@ -114,9 +127,9 @@ async function es(params, key) {
 }
 
 /** The newest transaction this wallet sent, as a unix second, or null. */
-async function latestTx(address, key) {
+async function latestTx(address, key, onRefused = null) {
   const r = await es({ module: 'account', action: 'txlist', address,
-    startblock: '0', endblock: '99999999', page: '1', offset: '1', sort: 'desc' }, key);
+    startblock: '0', endblock: '99999999', page: '1', offset: '1', sort: 'desc' }, key, onRefused);
   if (r === null) return undefined;              // undefined: unknown, keep what we had
   if (!Array.isArray(r) || !r.length) return null;
   const t = Number(r[0].timeStamp);
@@ -311,12 +324,13 @@ async function run({ key, dry, started, prior, url }) {
     return { address: p.address, overdue };
   }).filter((r) => r.overdue >= 1).sort((a, b) => b.overdue - a.overdue);
 
-  const wait = governor(PER_SECOND);
-  let asked = 0, moved = 0, unknown = 0, stopped = false;
+  const gov = governor(PER_SECOND);
+  let asked = 0, moved = 0, unknown = 0, refused = 0, stopped = false;
   await pool(queue, WIDTH, async (r) => {
     if (stopped || Date.now() - started > SWEEP_BY) { stopped = true; return; }
-    await wait();
-    const t = await latestTx(r.address, key);
+    await gov.wait();
+    const t = await latestTx(r.address, key, () => { refused++; gov.refused(); });
+    gov.ok();
     asked++;
     if (t === undefined) { unknown++; return; }   // asked and never answered: keep what we had
     const had = wallets[r.address] && wallets[r.address][0];
@@ -337,7 +351,7 @@ async function run({ key, dry, started, prior, url }) {
     at: new Date(started).toISOString(),
     ok: true,
     ms: Date.now() - started,
-    chain: { asked, moved, unknown, due, due_left: Math.max(0, due - asked),
+    chain: { asked, moved, unknown, refused, rate: Number(gov.rate().toFixed(2)), due, due_left: Math.max(0, due - asked),
       paged: pagedCount, of: everyone.length, covered: Object.keys(wallets).length },
     studio: { lit: Object.keys(studioFile.wallets).length, window_days: WINDOW_DAYS, store: reached },
   };
