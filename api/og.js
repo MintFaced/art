@@ -277,14 +277,14 @@ function WireCard(c) {
   const big = c.hex || null;
   return div({ width: '1200px', height: '675px', background: PAPER, fontFamily: 'Geist',
     flexDirection: 'column', padding: '54px 56px', justifyContent: 'space-between' }, [
-    div({ flexDirection: 'column' }, [
+    div({ flexDirection: 'column', flexShrink: 0 }, [
       div({ fontSize: '19px', letterSpacing: '0.16em', color: MUTED, fontFamily: 'GeistMono',
         textTransform: 'uppercase' }, [c.eyebrow || 'MINTFACE']),
       div({ fontSize: c.caption && c.caption.length > 46 ? '46px' : '58px', color: INK, marginTop: '16px',
         letterSpacing: '-0.02em', lineHeight: 1.12, maxWidth: '1000px' }, [c.caption || '']),
     ]),
     /* The colour itself, as large as the card allows. */
-    big ? div({ alignItems: 'flex-end', marginTop: '18px' }, [
+    big ? div({ alignItems: 'flex-end', marginTop: '18px', flexGrow: 1 }, [
       div({ width: '300px', height: '300px', background: big, border: `1px solid rgba(0,0,0,0.12)` }, []),
       div({ flexDirection: 'column', marginLeft: '30px', paddingBottom: '6px' }, [
         div({ fontSize: '34px', color: INK, fontFamily: 'GeistMono', letterSpacing: '0.02em' }, [big]),
@@ -298,12 +298,16 @@ function WireCard(c) {
       /* The twelve, in order, so a reader who has never seen this before can
          tell at a glance how far along it is. An empty slot is a hairline
          rather than a grey box: nothing has been decided there yet. */
+      /* Where there is no hero swatch the row IS the picture, so it takes the
+         height the swatch would have had rather than leaving a hole above it. */
       slots.length ? div({ marginBottom: '20px' }, slots.map((v) => div({
-        width: `${Math.floor(1088 / slots.length)}px`, height: '54px', marginRight: '2px',
+        width: `${Math.floor(1088 / slots.length) - 2}px`, height: big ? '54px' : '210px', marginRight: '2px',
         background: v.hex || 'transparent',
         border: v.hex ? '1px solid rgba(0,0,0,0.12)' : `1px solid ${RULE}`,
-        borderBottom: v.open ? `4px solid ${INK}` : (v.hex ? '1px solid rgba(0,0,0,0.12)' : `1px solid ${RULE}`),
-      }, []))) : null,
+        borderBottom: v.open ? `6px solid ${INK}` : (v.hex ? '1px solid rgba(0,0,0,0.12)' : `1px solid ${RULE}`),
+        alignItems: 'flex-end', justifyContent: 'center', paddingBottom: '10px',
+      }, v.open && !big ? [div({ fontSize: '15px', color: INK, fontFamily: 'GeistMono',
+        letterSpacing: '0.12em' }, ['OPEN'])] : []))) : null,
       div({ justifyContent: 'space-between', alignItems: 'center' }, [
         div({ fontSize: '17px', color: MUTED, fontFamily: 'GeistMono', letterSpacing: '0.14em',
           textTransform: 'uppercase' }, [c.foot || 'MINTFACE.ART']),
@@ -321,10 +325,14 @@ export async function GET(request) {
      ... the worker has already worked out what it wants drawn ... so rendering
      one costs no reads and a queue draining fast cannot stampede the register. */
   if (q('wire')) {
-    const slots = String(q('slots') || '').split(',').filter(Boolean).map((t) => {
+    /* NOT filtered. An empty slot is the whole point of the row ... it is how
+       a reader sees there are nine still to come ... and dropping the blanks
+       turned twelve pottles into three. */
+    const raw = String(q('slots') || '');
+    const slots = raw ? raw.split(',').map((t) => {
       const [hex, state] = t.split(':');
       return { hex: /^#[0-9A-Fa-f]{6}$/.test(hex) ? hex : null, open: state === 'o' };
-    });
+    }) : [];
     return new ImageResponse(WireCard({
       eyebrow: q('eyebrow'), caption: q('caption'), hex: /^#[0-9A-Fa-f]{6}$/.test(q('hex') || '') ? q('hex') : null,
       name: q('name'), figure: q('figure'), foot: q('foot'), slots,
