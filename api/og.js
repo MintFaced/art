@@ -284,7 +284,7 @@ function WireCard(c) {
         letterSpacing: '-0.02em', lineHeight: 1.12, maxWidth: '1000px' }, [c.caption || '']),
     ]),
     /* The colour itself, as large as the card allows. */
-    big ? div({ alignItems: 'flex-end', marginTop: '18px', flexGrow: 1 }, [
+    big ? div({ alignItems: 'flex-end', marginTop: '18px', marginBottom: '26px', flexGrow: 1 }, [
       div({ width: '300px', height: '300px', background: big, border: `1px solid rgba(0,0,0,0.12)` }, []),
       div({ flexDirection: 'column', marginLeft: '30px', paddingBottom: '6px' }, [
         div({ fontSize: '34px', color: INK, fontFamily: 'GeistMono', letterSpacing: '0.02em' }, [big]),
