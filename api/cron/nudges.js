@@ -1,6 +1,8 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { kindOf, CANDIDATES } from '../_lib/nudges.js';
 import { bankingContext, bankNudge } from '../_lib/banking.js';
+import { enqueue, slotsRow } from '../_lib/wire.js';
+import { seriesState } from '../_lib/palette.js';
 
 /* Banking a nudge.
  *
@@ -57,6 +59,19 @@ export async function GET(request) {
        same function, and says so on the card. */
     const out = await bankNudge(n, ctx, null, dropped);
     n.banked = out.banked;
+    /* The same event the console raises when it closes one early, from the
+       other path that closes them. One kind of thing happened, so one kind of
+       event goes out, and the feed cannot tell which hand did it ... which is
+       right, because the card already says. */
+    if (out.banked.locked) {
+      const arc = seriesState(store);
+      await enqueue('nudge-lock', {
+        number: n.number, hex: out.banked.locked.hex, total: out.banked.locked.total,
+        voters: out.banked.locked.voters, slot: n.slot || null, slots: (arc && arc.slots) || 12,
+        locked_by: out.banked.locked_by, met: out.banked.met, rule: out.banked.rule,
+        slots_row: slotsRow(arc),
+      });
+    }
     if (kindOf(n) === CANDIDATES) {
       banked.push(`#${n.number} ${out.p.locked ? `locked ${out.p.locked.hex}` : 'no colour locked'}`
         + ` ... ${Math.round(out.p.total)} TAO across ${out.p.collectors}`);

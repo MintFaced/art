@@ -3,6 +3,7 @@ import { computeTao } from '../_lib/tao.js';
 import { deriveCollectors, registerFile } from '../_lib/collectors.js';
 import { loadRuns, saveRuns, hoursSince } from '../_lib/runs.js';
 import { send } from '../_lib/email.js';
+import { enqueue as wire } from '../_lib/wire.js';
 
 /* TAO, nightly, in three phases.
  *
@@ -280,8 +281,15 @@ async function run({ key, dry, started, prior, url }) {
     const batch = list.slice(i, i + 12);
     let recs = [];
     try {
+      /* The transaction as well as the receipt, because the receipt says a
+         sale happened and only the transaction says what was paid. The wire
+         needs a figure ... a sale tweeted without one is a rumour ... and
+         asking for it here costs one more entry in a batch we already send. */
       const r = await fetch(RPC, { method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(batch.map((h, n) => ({ jsonrpc: '2.0', id: n, method: 'eth_getTransactionReceipt', params: [h] }))) });
+        body: JSON.stringify(batch.flatMap((h, n) => ([
+          { jsonrpc: '2.0', id: n, method: 'eth_getTransactionReceipt', params: [h] },
+          { jsonrpc: '2.0', id: 1000 + n, method: 'eth_getTransactionByHash', params: [h] },
+        ]))) });
       recs = await r.json();
     } catch (e) { recs = []; }
     const byId = new Map((Array.isArray(recs) ? recs : []).map((r) => [r.id, r.result]));
@@ -297,6 +305,28 @@ async function run({ key, dry, started, prior, url }) {
           && l.topics[0] === T721 && l.topics.length >= 3 && sellers.has(addrOf(l.topics[2])))) {
           v = { sale: true, why: 'WETH paid to the seller' };
         }
+      }
+      /* What it went for. Native ETH is the value on the transaction; a WETH
+         sale moved no ether at all, so the figure is what reached the seller.
+         Either can be absent, and absent is written as null rather than nought
+         ... a sale for nothing and a sale we could not price are different
+         facts, and the wire declines to tweet the second. */
+      if (v.sale) {
+        const tx = byId.get(1000 + n);
+        let wei = 0n;
+        try {
+          const native = tx && tx.value ? BigInt(tx.value) : 0n;
+          if (native > 0n) wei = native;
+          else if (rec && Array.isArray(rec.logs)) {
+            for (const l of rec.logs) {
+              if (String(l.address || '').toLowerCase() !== weth) continue;
+              if (!l.topics || l.topics[0] !== T721 || l.topics.length < 3) continue;
+              if (!sellers.has(addrOf(l.topics[2]))) continue;
+              wei += BigInt(l.data || '0x0');
+            }
+          }
+        } catch (e) { wei = 0n; }
+        v.eth = wei > 0n ? Number(wei) / 1e18 : null;
       }
       sales.tx[batch[n]] = v;
       classified++;
@@ -327,6 +357,31 @@ async function run({ key, dry, started, prior, url }) {
           : 'the sender keeps what it banked and stops accruing; the receiver starts from zero',
       why: sales.tx[e.tx] ? sales.tx[e.tx].why : 'not yet read ... treated as a transfer until it is',
     });
+    /* ON THE WIRE: ON-CHAIN SALES ONLY.
+     *
+     * An OpenSea fill, the site's own ETH path, and the agent rail when it
+     * lands ... all of them arrive here as a transfer the classifier called a
+     * sale, which is why this is the one place the bot needs to watch. Stripe
+     * and the other fiat paths never reach this loop at all, so "no fiat on
+     * the timeline" is a property of where this sits rather than a filter that
+     * could be got wrong.
+     *
+     * A sale we could not price is not tweeted. `always price` is the rule and
+     * a figure invented to satisfy it would be the worst way to keep it. */
+    if (how === 'sale' && !dry) {
+      const paid = sales.tx[e.tx] ? sales.tx[e.tx].eth : null;
+      if (paid) {
+        await wire('sale', {
+          id: meta.work, title: meta.title, collection: meta.collection,
+          price: `${Number(paid.toFixed(4))} ETH`, address: e.to || null,
+          url: `${site}/w/${encodeURIComponent(meta.work)}`,
+          image: `${site}/api/og?work=${encodeURIComponent(meta.work)}`,
+          tx: e.tx,
+        }, { at: e.ts * 1000 });
+      } else {
+        console.warn('wire: sale not priced, not tweeted', e.tx);
+      }
+    }
     if (e.to && !nobody.has(e.to)) gained.set(e.to, (gained.get(e.to) || 0) + 1);
     if (!minted) {
       const l = lost.get(e.from) || { sales: 0, transfers: 0 };

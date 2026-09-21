@@ -2,6 +2,7 @@ import { verifyMessage } from 'viem';
 import { readFile, writeFile } from './_lib/repo.js';
 import { siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { tally, latest, isOpen, weighMessage, proposeMessage, replaceMessage, withdrawMessage, palette, standing, allocations, checkChange, spread, checkHex, kindOf, lockRule, nudgeStore, withLive, comboReader, comboOf, mayEdit, CANDIDATES, SIDES, lockLine } from './_lib/nudges.js';
+import { enqueue as wire, slotsRow } from './_lib/wire.js';
 import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 import { seriesState, constraintFor, checkCandidate, slotLine, seriesProvenanceLine } from './_lib/palette.js';
 import { loadRegister } from './_lib/register.js';
@@ -492,6 +493,10 @@ export async function POST(request) {
     if (storeConfigured()) await nudgeStore(pipe).add(row).catch(() => {});
     await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
       `Nudge ${n.number}: ${(w0 && w0.name) || address.slice(0, 10)} proposes ${colour.hex}`, file.sha);
+    /* On the wire once the record has it. A proposal with nothing behind it is
+       still the studio's life happening ... it is the moment a colour first
+       exists ... so it is tweeted like everything else. */
+    await wire('propose', { number: n.number, hex: colour.hex, address, slot: n.slot || null });
     return json({ ok: true, hex: colour.hex,
       palette: palette(latest(store.weighings || [], n.id), (store.proposals || []).filter((x) => x.nudge === n.id), taoReader(data.tao), n) });
   }
@@ -585,6 +590,15 @@ export async function POST(request) {
     from
       ? `Nudge ${n.number}: ${name || address.slice(0, 10)} moves ${amount} to ${candidate} from ${from}`
       : `Nudge ${n.number}: ${name || address.slice(0, 10)} weighs ${amount} on ${candidate || side}`, file.sha);
+
+  /* Every weigh-in, including the changes. A collector moving weight from one
+     colour to another is the board's most interesting moment and the one a
+     summary would throw away first, so `moved` is carried and the copy says
+     so rather than reporting it as a fresh arrival. */
+  await wire('weigh', {
+    number: n.number, hex: candidate || null, side: side || null, address,
+    amount: Number(amount) || 0, moved: Boolean(from), from: from || null, slot: n.slot || null,
+  });
 
   const rows = latest(store.weighings, n.id);
   if (candidates) {

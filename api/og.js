@@ -259,9 +259,83 @@ async function pageCard(key) {
   return { image, title: p.title, lines: [upper(p.line || ''), p.sub ? upper(p.sub) : null], dot: null, tall: (p.title || '').length > 24 };
 }
 
+
+/* ---------------------------------------------------------- the wire card
+ *
+ * 1200x675 rather than 1200x630: X crops a 1.91:1 card and does not crop 16:9,
+ * and a swatch with its edge shaved off is a lie about the colour.
+ *
+ * The swatches are the picture. Locked hexes render flat and exact ... no
+ * gradient, no shadow, no rounding ... because this image is the closest most
+ * people will come to seeing the paint, and a rendered colour that flatters
+ * itself is the one thing a palette card must never do.
+ */
+const div = (style, children) => ({ type: 'div', props: { style: { display: 'flex', ...style }, children } });
+
+function WireCard(c) {
+  const slots = c.slots || [];
+  const big = c.hex || null;
+  return div({ width: '1200px', height: '675px', background: PAPER, fontFamily: 'Geist',
+    flexDirection: 'column', padding: '54px 56px', justifyContent: 'space-between' }, [
+    div({ flexDirection: 'column' }, [
+      div({ fontSize: '19px', letterSpacing: '0.16em', color: MUTED, fontFamily: 'GeistMono',
+        textTransform: 'uppercase' }, [c.eyebrow || 'MINTFACE']),
+      div({ fontSize: c.caption && c.caption.length > 46 ? '46px' : '58px', color: INK, marginTop: '16px',
+        letterSpacing: '-0.02em', lineHeight: 1.12, maxWidth: '1000px' }, [c.caption || '']),
+    ]),
+    /* The colour itself, as large as the card allows. */
+    big ? div({ alignItems: 'flex-end', marginTop: '18px' }, [
+      div({ width: '300px', height: '300px', background: big, border: `1px solid rgba(0,0,0,0.12)` }, []),
+      div({ flexDirection: 'column', marginLeft: '30px', paddingBottom: '6px' }, [
+        div({ fontSize: '34px', color: INK, fontFamily: 'GeistMono', letterSpacing: '0.02em' }, [big]),
+        c.name ? div({ fontSize: '22px', color: MUTED, marginTop: '10px', fontFamily: 'GeistMono',
+          textTransform: 'uppercase', letterSpacing: '0.1em' }, [c.name]) : null,
+        c.figure ? div({ fontSize: '22px', color: INK, marginTop: '14px', fontFamily: 'GeistMono',
+          letterSpacing: '0.06em' }, [c.figure]) : null,
+      ].filter(Boolean)),
+    ]) : null,
+    div({ flexDirection: 'column' }, [
+      /* The twelve, in order, so a reader who has never seen this before can
+         tell at a glance how far along it is. An empty slot is a hairline
+         rather than a grey box: nothing has been decided there yet. */
+      slots.length ? div({ marginBottom: '20px' }, slots.map((v) => div({
+        width: `${Math.floor(1088 / slots.length)}px`, height: '54px', marginRight: '2px',
+        background: v.hex || 'transparent',
+        border: v.hex ? '1px solid rgba(0,0,0,0.12)' : `1px solid ${RULE}`,
+        borderBottom: v.open ? `4px solid ${INK}` : (v.hex ? '1px solid rgba(0,0,0,0.12)' : `1px solid ${RULE}`),
+      }, []))) : null,
+      div({ justifyContent: 'space-between', alignItems: 'center' }, [
+        div({ fontSize: '17px', color: MUTED, fontFamily: 'GeistMono', letterSpacing: '0.14em',
+          textTransform: 'uppercase' }, [c.foot || 'MINTFACE.ART']),
+        div({ fontSize: '17px', color: MUTED, fontFamily: 'GeistMono', letterSpacing: '0.14em' },
+          ['39.64\u00b0S 176.85\u00b0E']),
+      ]),
+    ].filter(Boolean)),
+  ].filter(Boolean));
+}
+
 export async function GET(request) {
   const url = new URL(request.url);
   const q = (k) => url.searchParams.get(k);
+  /* The wire's own card, on its own geometry. It answers from the query alone
+     ... the worker has already worked out what it wants drawn ... so rendering
+     one costs no reads and a queue draining fast cannot stampede the register. */
+  if (q('wire')) {
+    const slots = String(q('slots') || '').split(',').filter(Boolean).map((t) => {
+      const [hex, state] = t.split(':');
+      return { hex: /^#[0-9A-Fa-f]{6}$/.test(hex) ? hex : null, open: state === 'o' };
+    });
+    return new ImageResponse(WireCard({
+      eyebrow: q('eyebrow'), caption: q('caption'), hex: /^#[0-9A-Fa-f]{6}$/.test(q('hex') || '') ? q('hex') : null,
+      name: q('name'), figure: q('figure'), foot: q('foot'), slots,
+    }), {
+      width: 1200,
+      height: 675,
+      fonts: fonts(),
+      headers: { 'cache-control': 'public, max-age=86400, s-maxage=86400' },
+    });
+  }
+
   let card = null;
   try {
     if (q('work')) card = await workCard(q('work'));

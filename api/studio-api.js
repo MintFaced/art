@@ -4,6 +4,7 @@ import { passwordOk, issueSession, sessionOk, sessionFrom, cookieHeader, studioC
 import { bankingContext, bankNudge } from './_lib/banking.js';
 import { kindOf, lockRule, lockLine, checkHex, CANDIDATES } from './_lib/nudges.js';
 import { seriesState } from './_lib/palette.js';
+import { enqueue, slotsRow } from './_lib/wire.js';
 
 const SOURCE = 'data/source/recent-work.json';
 const json = (b, s = 200, headers = {}) =>
@@ -119,6 +120,14 @@ export async function POST(request) {
     });
     store.next_number = number + 1;
     await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n', `Nudge ${number}: ${question.slice(0, 60)}`, file.sha);
+    /* On the wire, after the write. Never before: a tweet about a nudge that
+       failed to save is a tweet about something that did not happen, and the
+       repo is the record the timeline reports on rather than the other way
+       round. enqueue never throws, so the round cannot fail on the bot. */
+    await enqueue('nudge-open', {
+      number, question, closes: new Date(closes).toISOString(), slot,
+      slots_row: slotsRow(seriesState(store), slot),
+    });
     return json({ ok: true, id, number });
   }
 
@@ -201,6 +210,15 @@ export async function POST(request) {
     n.banked = banked;
     await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n',
       `Nudge ${n.number}: ${banked.locked ? `locked ${banked.locked.hex}` : 'banked, nothing locked'}`, file.sha);
+    if (banked.locked) {
+      const arc = seriesState(store);
+      await enqueue('nudge-lock', {
+        number: n.number, hex: banked.locked.hex, total: banked.locked.total, voters: banked.locked.voters,
+        slot: n.slot || null, slots: (arc && arc.slots) || 12,
+        locked_by: banked.locked_by, met: banked.met, rule: banked.rule,
+        slots_row: slotsRow(arc),
+      });
+    }
     return json({ ok: true, line, dropped, locked: banked.locked || null, locked_by: banked.locked_by || null });
   }
 

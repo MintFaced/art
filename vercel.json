@@ -28,6 +28,9 @@
     },
     "api/cron/active.js": {
       "maxDuration": 300
+    },
+    "api/cron/wire.js": {
+      "maxDuration": 60
     }
   },
   "redirects": [
@@ -125,6 +128,10 @@
     {
       "path": "/api/cron/active",
       "schedule": "30 22 * * *"
+    },
+    {
+      "path": "/api/cron/wire",
+      "schedule": "* * * * *"
     }
   ],
   "headers": [
