@@ -2,6 +2,7 @@ import { findWork, priceNZD, priceETH, useRequestOrigin } from './_lib/data.js';
 import { writeWorkState, workState, stateConfigured } from './_lib/state.js';
 import { send } from './_lib/email.js';
 import { readQuote } from './_lib/quote.js';
+import * as wire from './_lib/tweet-events.js';
 
 // The buyer pays mintface.eth from their own wallet and hands us the transaction
 // hash. We verify it on chain: right recipient, enough value, actually mined.
@@ -116,6 +117,20 @@ export async function POST(request) {
     collector: { address: (tx.from || address || '').toLowerCase(), ens: null, display_name: null, note: null, acquired: new Date().toISOString() },
     token_transfer: 'pending',
   }, `Sold for ETH: ${hit.work.title || workId} (${paidEth.toFixed(4)} ETH)`);
+
+  /* Tweet the sale. This handler is the on-chain ETH path only — Stripe/fiat
+     settle through api/webhook.js, which never touches the wire — so enqueuing
+     here excludes fiat structurally, and the buyer's txHash makes each unique.
+     A fresh buyer usually has no register entry yet, so the tweet leads with the
+     work and the price; the collector is named when the overlay knows them. */
+  await wire.sale({
+    txHash,
+    workId,
+    collection: hit.work.collection || hit.collection || null,
+    title: hit.work.title || null,
+    priceEth: paidEth,
+    who: {},
+  }).catch(() => {});
 
   await send({
     to: process.env.EMAIL_TO_ARTIST || 'ryan@mintface.art',

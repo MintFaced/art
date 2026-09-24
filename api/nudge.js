@@ -7,6 +7,11 @@ import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 import { chatStore, SCOPE_WEIGH } from './_lib/chat.js';
 import { cookieFrom, TOKEN_COOKIE } from './_lib/session.js';
+import * as wire from './_lib/tweet-events.js';
+
+// A collector as the tweet-bot names them: their name unless private/opted out,
+// their X handle if the overlay carries one, and a silent opt-out flag.
+const tagFor = (w) => (w ? { name: w.private ? null : w.name, handle: w.handle || null, optOut: !!(w.private || w.optout) } : {});
 
 /* Weighing TAO behind a Yes or a No.
  *
@@ -314,6 +319,7 @@ export async function POST(request) {
        than a colour that appears now but better than one that was refused after
        being signed for. */
     if (storeConfigured()) await nudgeStore(pipe).add(row).catch(() => {});
+    await wire.propose({ n, row, who: tagFor(w0) }).catch(() => {});
     await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
       `Nudge ${n.number}: ${(w0 && w0.name) || address.slice(0, 10)} proposes ${colour.hex}`, file.sha);
     return json({ ok: true, hex: colour.hex,
@@ -398,6 +404,7 @@ export async function POST(request) {
   };
   store.weighings = [...(store.weighings || []), row];
   if (storeConfigured()) await nudgeStore(pipe).add(row).catch(() => {});
+  await wire.weigh({ n, row, who: tagFor(whoNow) }).catch(() => {});
   await writeFile('data/nudge-weighings.json', JSON.stringify(store, null, 1) + '\n',
     from
       ? `Nudge ${n.number}: ${name || address.slice(0, 10)} moves ${amount} to ${candidate} from ${from}`

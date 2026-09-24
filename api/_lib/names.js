@@ -177,6 +177,11 @@ export function registerIndex(register) {
       overlay: name && name !== ens ? name : null,
       slug: r[col.slug] || null,
       private: Boolean(r[col.private]),
+      /* The X handle the studio wire tags them by, and their silent opt-out
+         from being named there at all. Both are overlay columns Ryan keeps;
+         absent columns simply read as no-handle / not-opted-out. */
+      handle: (col.handle != null ? r[col.handle] : (col.x_handle != null ? r[col.x_handle] : null)) || null,
+      optout: Boolean(col.tweet_optout != null ? r[col.tweet_optout] : (col.optout != null ? r[col.optout] : false)),
       tao: Number(r[col.tao]) || 0,
       works: Number(r[col.works]) || 0,
     });
@@ -217,7 +222,7 @@ export function naming(rows, self = {}, special = {}) {
        this register says out loud. */
     if (r && r.private) {
       return { address: a, name: 'Private collector', slug: null, ens: null, overlay: null,
-        self: null, private: true, source: 'private', tao: r.tao, known: true };
+        self: null, private: true, handle: null, optout: true, source: 'private', tao: r.tao, known: true };
     }
     return {
       address: a,
@@ -237,6 +242,8 @@ export function naming(rows, self = {}, special = {}) {
       overlay: overlay || null,
       self: s,
       private: false,
+      handle: r ? r.handle || null : null,
+      optout: r ? !!r.optout : false,
       source: sourceOf({ overlay, self: s, ens, fwd }),
       tao: r ? r.tao : 0,
     };

@@ -259,9 +259,61 @@ async function pageCard(key) {
   return { image, title: p.title, lines: [upper(p.line || ''), p.sub ? upper(p.sub) : null], dot: null, tall: (p.title || '').length > 24 };
 }
 
+/* The tweet card, 1200×675, for the studio wire. Warm white, one focal swatch
+   large, the locked-palette strip beneath, a mono caption, the coordinates
+   footer. Locked hexes render flat and exact — no gradients, ever. Data-driven
+   from the query so the tweet worker composes it without re-deriving the board. */
+function TweetCard({ kind, hex, name, locked = [], open = false, cap = '', total = '' }) {
+  const chip = (h, i) => ({ type: 'div', props: { key: String(i),
+    style: { width: '76px', height: '76px', background: h, border: `1px solid ${RULE}`, marginRight: '12px', display: 'flex' } } });
+  return { type: 'div', props: {
+    style: { width: '1200px', height: '675px', display: 'flex', flexDirection: 'column',
+      justifyContent: 'space-between', background: PAPER, fontFamily: 'Geist', padding: '66px 74px' },
+    children: [
+      // header: the wire's name, and the wordmark
+      { type: 'div', props: { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }, children: [
+        { type: 'div', props: { style: { fontFamily: 'Geist Mono', fontSize: '21px', letterSpacing: '0.16em', color: MUTED, display: 'flex' }, children: upper(kind === 'sale' ? 'COLLECTED' : 'STUDIO WIRE') } },
+        { type: 'div', props: { style: { fontSize: '27px', letterSpacing: '-0.02em', color: INK, display: 'flex' }, children: 'MintFace' } },
+      ] } },
+      // focal swatch + its name / running total
+      { type: 'div', props: { style: { display: 'flex', alignItems: 'center' }, children: [
+        hex ? { type: 'div', props: { style: { width: '224px', height: '224px', background: hex, border: `1px solid ${RULE}`, marginRight: '44px', display: 'flex', flexShrink: 0 } } } : null,
+        { type: 'div', props: { style: { display: 'flex', flexDirection: 'column' }, children: [
+          name ? { type: 'div', props: { style: { fontSize: '68px', lineHeight: 1.02, letterSpacing: '-0.03em', color: INK, display: 'flex' }, children: upper(name) } } : null,
+          total ? { type: 'div', props: { style: { fontFamily: 'Geist Mono', fontSize: '25px', letterSpacing: '0.1em', color: MUTED, marginTop: '16px', display: 'flex' }, children: total } } : null,
+        ].filter(Boolean) } },
+      ].filter(Boolean) } },
+      // the locked-palette strip, with an OPEN slot marked where a nudge is live
+      { type: 'div', props: { style: { display: 'flex', alignItems: 'center' }, children: [
+        ...locked.map(chip),
+        open ? { type: 'div', props: { style: { width: '76px', height: '76px', border: `2px dashed ${FAINT}`, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+          children: { type: 'div', props: { style: { fontFamily: 'Geist Mono', fontSize: '13px', letterSpacing: '0.1em', color: MUTED, display: 'flex' }, children: 'OPEN' } } } } : null,
+      ].filter(Boolean) } },
+      // caption + coordinates
+      { type: 'div', props: { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }, children: [
+        { type: 'div', props: { style: { fontFamily: 'Geist Mono', fontSize: '23px', letterSpacing: '0.09em', color: INK, display: 'flex', maxWidth: '880px' }, children: cap } },
+        { type: 'div', props: { style: { fontFamily: 'Geist Mono', fontSize: '14px', letterSpacing: '0.13em', color: FAINT, display: 'flex' }, children: '39.64°S 176.85°E' } },
+      ] } },
+    ],
+  } };
+}
+
+const asHex = (h) => (h ? (String(h).startsWith('#') ? String(h) : `#${h}`) : null);
+
 export async function GET(request) {
   const url = new URL(request.url);
   const q = (k) => url.searchParams.get(k);
+
+  // The studio-wire tweet card takes its own size and shape.
+  if (q('tweet')) {
+    const locked = (q('locked') || '').split(',').map((s) => s.trim()).filter(Boolean).map(asHex);
+    const data = { kind: q('tweet'), hex: asHex(q('hex')), name: q('name') || '', locked, open: q('open') === '1', cap: q('cap') || '', total: q('total') || '' };
+    return new ImageResponse(TweetCard(data), {
+      width: 1200, height: 675, fonts: fonts(),
+      headers: { 'cache-control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400' },
+    });
+  }
+
   let card = null;
   try {
     if (q('work')) card = await workCard(q('work'));

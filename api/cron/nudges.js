@@ -1,5 +1,6 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { tally, palette, kindOf, nudgeStore, withLive, bankCandidates, bankTally, bankingRows, CANDIDATES } from '../_lib/nudges.js';
+import * as wire from '../_lib/tweet-events.js';
 import { storeConfigured, pipe } from '../_lib/kv.js';
 
 /* Banking a nudge.
@@ -60,6 +61,16 @@ export async function GET(request) {
     if (kindOf(n) === CANDIDATES) {
       const p = palette(rows, proposals.filter((x) => x.nudge === n.id), readTao, n);
       n.banked = bankCandidates(p, n);
+      // A locked colour is a tweet; a nudge that locked nothing is not. slot is
+      // the nudge number for the one-nudge-one-colour series (adjust if that
+      // mapping ever changes). Real-run only — a dry pass must not tweet.
+      if (p.locked && !dry) {
+        await wire.lock({
+          n, hex: p.locked.hex, total: Math.round(p.locked.total),
+          collectors: p.collectors, slot: n.number, of: 12,
+          locked: [p.locked.hex],
+        }).catch(() => {});
+      }
       banked.push(`#${n.number} ${p.locked ? `locked ${p.locked.hex}` : 'no colour locked'}`
         + ` ... ${Math.round(p.total)} TAO across ${p.collectors}`);
       continue;
