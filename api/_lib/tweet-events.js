@@ -11,6 +11,7 @@
  */
 import { enqueue } from './tweetq.js';
 import * as copy from './tweet-copy.js';
+import { nameFor } from './colour-names.js';
 
 const qs = (o) => Object.entries(o)
   .filter(([, v]) => v != null && v !== '')
@@ -36,32 +37,35 @@ async function push(job) {
 /** A colour proposed onto the board. */
 export async function propose({ n, row, who, locked = [] }) {
   const hex = clean(row.hex);
+  const name = row.colourName || nameFor(hex);
   await push({
     id: rowId('propose', row),
     kind: 'propose',
-    text: copy.proposeTweet({ number: n.number, name: row.colourName, hex, who }),
-    image: { og: qs({ tweet: 'propose', hex, name: row.colourName || '', locked: locked.map(clean).join(','), cap: `PROPOSED · NUDGE #${n.number}` }) },
+    text: copy.proposeTweet({ number: n.number, name, hex, who }),
+    image: { og: qs({ tweet: 'propose', hex, name: name || '', locked: locked.map(clean).join(','), cap: `PROPOSED · NUDGE #${n.number}` }) },
   });
 }
 
 /** A weigh-in or a move. `standingText` is the optional running total on the candidate. */
 export async function weigh({ n, row, who, standingText = '', locked = [] }) {
   const hex = clean(row.candidate);
+  const name = row.colourName || nameFor(hex);
   await push({
     id: rowId('weigh', row),
     kind: 'weigh',
-    text: copy.weighTweet({ who, amount: row.amount, name: row.colourName, hex, move: !!row.from }),
-    image: { og: qs({ tweet: 'weigh', hex, name: row.colourName || '', locked: locked.map(clean).join(','), total: standingText, cap: `NUDGE #${n.number}` }) },
+    text: copy.weighTweet({ who, amount: row.amount, name, hex, move: !!row.from }),
+    image: { og: qs({ tweet: 'weigh', hex, name: name || '', locked: locked.map(clean).join(','), total: standingText, cap: `NUDGE #${n.number}` }) },
   });
 }
 
 /** A nudge locking on its winning colour. `slot` is 1-based, `of` the total colours. */
 export async function lock({ n, hex, name, total, collectors, slot, of = 12, locked = [] }) {
+  const label = name || nameFor(hex);
   await push({
     id: `lock:${n.id}`,
     kind: 'lock',
-    text: copy.lockTweet({ name, hex: clean(hex), total, collectors, slot, of }),
-    image: { og: qs({ tweet: 'lock', hex: clean(hex), name: name || '', locked: locked.map(clean).join(','), total: `${copy.tao(total)} TAO · ${collectors} COLLECTOR${collectors === 1 ? '' : 'S'}`, cap: `LOCKED · COLOUR ${slot} OF ${of}` }) },
+    text: copy.lockTweet({ name: label, hex: clean(hex), total, collectors, slot, of }),
+    image: { og: qs({ tweet: 'lock', hex: clean(hex), name: label || '', locked: locked.map(clean).join(','), total: `${copy.tao(total)} TAO · ${collectors} COLLECTOR${collectors === 1 ? '' : 'S'}`, cap: `LOCKED · COLOUR ${slot} OF ${of}` }) },
   });
 }
 
