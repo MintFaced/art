@@ -3,20 +3,21 @@
  "ens": "100series.eth",
  "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "100series.eth",
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 13,
+  "works": 12,
   "one_of_ones": 0,
-  "editions": 13,
-  "collections": 3
+  "editions": 12,
+  "collections": 2
  },
  "first_collected": "2022-12-14T19:19:23.000Z",
  "last_collected": "2025-06-07T18:28:11.000000Z",
- "tao": 95692,
- "tao_rate": 88.2,
- "tao_rank": 168,
+ "tao": 98156,
+ "tao_rate": 75.6,
+ "tao_rank": 167,
  "collections": [
   {
    "slug": "xlife",
@@ -27,11 +28,6 @@
    "slug": "seize-and-share",
    "title": "Seize And Share",
    "works": 2
-  },
-  {
-   "slug": "id-please",
-   "title": "ID Please",
-   "works": 1
   }
  ],
  "works": [
@@ -45,7 +41,7 @@
    "unique": false,
    "image": "xlife/xlife-66-image.gif",
    "orientation": null,
-   "tao": 1877
+   "tao": 1995
   },
   {
    "id": "xlife-49",
@@ -57,7 +53,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 3322
+   "tao": 3440
   },
   {
    "id": "xlife-46",
@@ -69,7 +65,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3674
+   "tao": 3792
   },
   {
    "id": "xlife-44",
@@ -81,7 +77,7 @@
    "unique": false,
    "image": "xlife/xlife-44-image.gif",
    "orientation": null,
-   "tao": 3980
+   "tao": 4098
   },
   {
    "id": "xlife-43",
@@ -93,7 +89,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4072
+   "tao": 4190
   },
   {
    "id": "xlife-23",
@@ -105,7 +101,7 @@
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 5228
+   "tao": 5345
   },
   {
    "id": "xlife-22",
@@ -117,7 +113,7 @@
    "unique": false,
    "image": "xlife/xlife-22-image.gif",
    "orientation": null,
-   "tao": 5248
+   "tao": 5366
   },
   {
    "id": "xlife-5",
@@ -129,7 +125,7 @@
    "unique": false,
    "image": "xlife/xlife-5-image.gif",
    "orientation": null,
-   "tao": 5605
+   "tao": 5723
   },
   {
    "id": "xlife-4",
@@ -141,7 +137,7 @@
    "unique": false,
    "image": "xlife/xlife-4-image.gif",
    "orientation": null,
-   "tao": 11212
+   "tao": 11447
   },
   {
    "id": "xlife-3",
@@ -153,7 +149,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 11219
+   "tao": 11454
   },
   {
    "id": "seize-and-share-anxn-3250",
@@ -165,7 +161,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 22574
+   "tao": 23045
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -177,19 +173,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11365
-  },
-  {
-   "id": "id-please-362",
-   "title": "ID Please",
-   "collection": "id-please",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "id-please/id-please-362-display.webp",
-   "orientation": null,
-   "tao": 5913
+   "tao": 11601
   }
  ]
 }
