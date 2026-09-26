@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-09-25T21:31:15.773Z",
+ "generated": "2026-09-26T21:00:59.069Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -444,7 +444,7 @@
    "tao": 179179,
    "tao_rate": 203.4,
    "tao_rank": 67,
-   "nudges": 1
+   "nudges": 2
   },
   {
    "address": "0xee2c055f7706b9dfcd98cd5a23d5629d6316c0bd",
@@ -1644,27 +1644,6 @@
    "tao_rank": 167
   },
   {
-   "address": "0xdf36b093cbc06522b68105c3d9141db188e980b6",
-   "ens": "gmmoney.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "gmmoney.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 12,
-    "one_of_ones": 0,
-    "editions": 12,
-    "collections": 5
-   },
-   "first_collected": "2022-07-11T04:53:37.000Z",
-   "last_collected": "2024-10-05T07:49:11.000000Z",
-   "tao": 80034,
-   "tao_rate": 58.8,
-   "tao_rank": 197
-  },
-  {
    "address": "0x832834fc5b0b35ffd4cf697c4ec08815ad8d6a52",
    "ens": "jassioberai.eth",
    "fwd": null,
@@ -1979,6 +1958,27 @@
    "tao": 83578,
    "tao_rate": 63,
    "tao_rank": 188
+  },
+  {
+   "address": "0xdf36b093cbc06522b68105c3d9141db188e980b6",
+   "ens": "gmmoney.eth",
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "gmmoney.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 11,
+    "one_of_ones": 0,
+    "editions": 11,
+    "collections": 4
+   },
+   "first_collected": "2022-07-11T04:53:37.000Z",
+   "last_collected": "2024-10-05T07:49:11.000000Z",
+   "tao": 80034,
+   "tao_rate": 58.8,
+   "tao_rank": 197
   },
   {
    "address": "0x4f99d481981f464d824592604f58bcee9cb8abf6",
@@ -7694,6 +7694,27 @@
    "tao_rank": 373
   },
   {
+   "address": "0x19e7a132bd4b42f580f546197f42e19c42cdfe6c",
+   "ens": "intrepid.eth",
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "intrepid.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 4,
+    "one_of_ones": 0,
+    "editions": 4,
+    "collections": 4
+   },
+   "first_collected": "2022-05-11T01:50:04.000000Z",
+   "last_collected": "2024-10-05T07:53:11.000000Z",
+   "tao": 13124,
+   "tao_rate": 8.4,
+   "tao_rank": 626
+  },
+  {
    "address": "0x86646054f1d16749b7832d0f111df44cf4a0d33f",
    "ens": "ivaavi.eth",
    "fwd": null,
@@ -11831,27 +11852,6 @@
    "tao": 5748,
    "tao_rate": 4.2,
    "tao_rank": 2446
-  },
-  {
-   "address": "0x19e7a132bd4b42f580f546197f42e19c42cdfe6c",
-   "ens": "intrepid.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "intrepid.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 3
-   },
-   "first_collected": "2022-05-11T01:50:04.000000Z",
-   "last_collected": "2024-10-05T07:53:11.000000Z",
-   "tao": 13124,
-   "tao_rate": 8.4,
-   "tao_rank": 626
   },
   {
    "address": "0xa376d46b4966ae192dcb1fbc73fa2c89bbcbbca8",
