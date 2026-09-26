@@ -19,6 +19,7 @@ const BYX = 'acct:byx';                  // hash  x_id   -> account_id
 const BYWALLET = 'acct:bywallet';        // hash  wallet -> account_id
 const WALLETS = (id) => `acct:${id}:w`;  // set   of linked wallet addresses
 const LOG = 'acct:log';                  // append-only trail
+const HANDLES = 'acct:handle';           // hash  wallet -> verified X handle (denormalised)
 
 export const accountsReady = storeConfigured;
 const lower = (a) => String(a || '').toLowerCase();
@@ -95,6 +96,11 @@ export async function linkWallet(account_id, address) {
     return { ok: false, collision: true, owner };
   }
   await one('SADD', WALLETS(account_id), a);
+  /* If the account already has a verified X, this new wallet inherits it in the
+     denormalised handle index, so the register resolves it without a per-wallet
+     walk to the account. */
+  const acct = await get(account_id);
+  if (acct && acct.x_handle) await one('HSET', HANDLES, a, acct.x_handle);
   await note('link-wallet', account_id, { wallet: a });
   return { ok: true };
 }
@@ -128,6 +134,12 @@ export async function linkX(account_id, { x_id, x_handle, x_avatar }) {
     return { ok: false, collision: true, owner };
   }
   await one('HSET', A(account_id), 'x_id', String(x_id), 'x_handle', x_handle || '', 'x_avatar', x_avatar || '');
+  /* Stamp the verified handle onto every wallet on the account, so the register
+     and the tweet-bot resolve verified > overlay > typed with one hash read. */
+  const wallets = await one('SMEMBERS', WALLETS(account_id));
+  if (x_handle && wallets && wallets.length) {
+    await pipe([['HSET', HANDLES, ...wallets.flatMap((w) => [w, x_handle])]]);
+  }
   await note('link-x', account_id, { x_id: String(x_id) });
   return { ok: true };
 }
@@ -136,7 +148,20 @@ export async function linkX(account_id, { x_id, x_handle, x_avatar }) {
 export async function unlinkX(account_id) {
   const acct = await get(account_id);
   if (acct && acct.x_id) await one('HDEL', BYX, String(acct.x_id));
+  if (acct && acct.wallets && acct.wallets.length) await one('HDEL', HANDLES, ...acct.wallets);
   await one('HDEL', A(account_id), 'x_id', 'x_handle', 'x_avatar');
   await note('unlink-x', account_id, {});
   return { ok: true };
+}
+
+/** Every wallet with a verified X handle, wallet -> handle. For the register. */
+export async function verifiedHandles() {
+  if (!storeConfigured()) return {};
+  return asMap(await one('HGETALL', HANDLES));
+}
+
+/** The verified X handle for one wallet, or null. */
+export async function verifiedHandle(address) {
+  if (!storeConfigured() || !address) return null;
+  return (await one('HGET', HANDLES, lower(address))) || null;
 }
