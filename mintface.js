@@ -1081,6 +1081,13 @@ const MF = {
     return a ? a.slice(0, 6) + '...' + a.slice(-4) : null;
   },
 
+  /* A phone or a tablet, for the one line that only makes sense there: the
+     wallet is easiest linked on a computer, and then X is all you need here. */
+  isMobile() {
+    try { return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent || ''); }
+    catch (e) { return false; }
+  },
+
   date(ts, opts) {
     if (!ts) return null;
     const d = new Date(ts);
@@ -2865,10 +2872,18 @@ MF.session = {
     const v = this.cookie(this.WHO);
     if (!v) return null;
     const cut = v.lastIndexOf('|');
-    const address = (cut < 0 ? v : v.slice(0, cut)).toLowerCase();
+    const head = cut < 0 ? v : v.slice(0, cut);
     const until = cut < 0 ? null : v.slice(cut + 1);
-    if (!/^0x[0-9a-f]{40}$/.test(address)) return null;
     if (until && Date.parse(until) < Date.now()) return null;
+    /* An X-only sign-in reads as `x:<handle>` where a wallet reads as its
+       address. A spectator can be here, and can act on nothing, until a wallet
+       is linked ... so it carries no address, and the pages that gate on one
+       keep gating exactly as they did. */
+    if (head.startsWith('x:')) {
+      return { address: null, handle: head.slice(2), spectator: true, until };
+    }
+    const address = head.toLowerCase();
+    if (!/^0x[0-9a-f]{40}$/.test(address)) return null;
     return { address, until };
   },
   /* Signing out is the server's to do: it holds the token and it is the only
@@ -3363,7 +3378,8 @@ MF.nav = {
     /* Only while the cached answer is about the wallet that is actually signed
        in. Otherwise the address, which is always true of whoever this is. */
     const mine = s && this.me && this.meFor === s.address ? this.me : null;
-    const name = mine && mine.name ? mine.name : (s ? MF.shortAddress(s.address) : null);
+    const name = mine && mine.name ? mine.name
+      : (s ? (s.spectator ? `@${s.handle}` : MF.shortAddress(s.address)) : null);
     const url = mine && mine.url ? mine.url : null;
 
     let right;
@@ -3379,8 +3395,12 @@ MF.nav = {
         ? `<span class="me"><button type="button" class="you" disabled>${e(name)}</button></span>`
         : '<button type="button" data-nav="wait" disabled>Connect</button>';
     } else if (this.busy) right = `<button type="button" data-nav="wait" disabled>${e(this.busy)}</button>`;
-    else if (!s) right = '<button type="button" data-nav="connect">Connect</button>';
-    else {
+    else if (!s) {
+      /* SIGNED OUT — two ways in, X first. The choice opens inline in the panel
+         beneath (the same note the wallet flow already uses), never a modal.
+         "X to sign in · wallet to prove your art." */
+      right = '<button type="button" data-nav="signin">Sign in</button>';
+    } else {
       /* THE NAME IS A DOOR, not a link. It was a link to the collector's own
          page, which meant a signed-in reader had nowhere at all to sign out
          from except the room ... and switching wallets, which is the first
@@ -3390,7 +3410,10 @@ MF.nav = {
         <button type="button" class="you" data-nav="menu"
           aria-haspopup="true" aria-expanded="${this.menu ? 'true' : 'false'}">${e(name)}</button>
         ${this.menu ? `<span class="menu" role="menu">
-          ${url ? `<a role="menuitem" href="${e(url)}">Your page</a>` : ''}
+          ${s.spectator
+            ? '<button type="button" role="menuitem" data-nav="linkwallet">Link a wallet to weigh in</button>'
+            : `${url ? `<a role="menuitem" href="${e(url)}">Your page</a>` : ''}
+               <button type="button" role="menuitem" data-nav="linkx">Link X</button>`}
           <button type="button" role="menuitem" data-nav="signout">Sign out</button>
         </span>` : ''}
       </span>`;
@@ -3415,11 +3438,16 @@ MF.nav = {
       <a href="${MF.PEOPLE || '/'}"${AT_PEOPLE && here === '' ? ' aria-current="page"' : ''}>Collectors</a>
       <a href="${MF.ART}/studio"${on('/studio')}>Studio</a>
       <span class="right">${this.brightness()}${this.cherry()}
-        <span class="me">${right}${this.note ? `<span class="menu note" role="status">
-          <span class="say">${e(this.note.text)}</span>
+        <span class="me">${right}${this.note ? `<span class="menu note${this.note.signin ? ' signin' : ''}" role="${this.note.signin ? 'group' : 'status'}">
+          ${this.note.signin ? `
+            <button type="button" class="x" data-nav="x"><span class="xg" aria-hidden="true">𝕏</span> Continue with X</button>
+            <button type="button" class="wallet" data-nav="connect">Connect wallet</button>
+            <span class="under">X to sign in · wallet to prove your art</span>
+            ${MF.isMobile() ? '<span class="hint">Easiest on a computer — then X is all you need here.</span>' : ''}
+          ` : `<span class="say">${e(this.note.text)}</span>
           ${(this.note.links || []).map((w) => `<a href="${e(w.url)}" data-wallet="${e(w.name)}">${e(w.name)}</a>`).join('')}
           ${(this.note.wallets || []).map((w) => `<button type="button" data-nav="pick"
-            data-uuid="${e(w.uuid)}">${e(w.name)}</button>`).join('')}
+            data-uuid="${e(w.uuid)}">${e(w.name)}</button>`).join('')}`}
         </span>` : ''}</span></span>`;
   },
 
@@ -3486,6 +3514,17 @@ MF.nav = {
       if (act === 'signout') { ev.preventDefault(); void this.signOut(); return; }
       if (shut) { this.menu = false; this.draw(); }
       if (!mine) return;
+      /* SIGN IN opens the two-way choice inline; X (and Link X) hand off to the
+         OAuth start, always on mintface.art, carrying where to come back to;
+         Link a wallet runs the same wallet flow, which the sign-in route links
+         to the current account. */
+      if (act === 'signin') { ev.preventDefault(); this.note = { signin: true }; this.draw(); return; }
+      if (act === 'x' || act === 'linkx') {
+        ev.preventDefault();
+        location.href = `${MF.ART}/api/auth/x?return=${encodeURIComponent(location.href)}`;
+        return;
+      }
+      if (act === 'linkwallet') { ev.preventDefault(); this.menu = false; this.startConnect(); return; }
       if (act === 'connect') { ev.preventDefault(); this.startConnect(); }
       if (act === 'pick') { ev.preventDefault(); this.startConnect(b.dataset.uuid); }
       if (act === 'cherry') { ev.preventDefault(); this.toMention(); }

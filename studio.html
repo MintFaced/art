@@ -1667,6 +1667,19 @@ function composer() {
      The middle one used to be a dead end: a wallet connected, `me` absent
      because the request that would have fetched it never completed, and a
      sentence with nothing to press. */
+  /* SIGNED IN WITH X, NO WALLET YET. A spectator reads everything and acts on
+     nothing until a wallet with TAO is linked. The connect button runs the same
+     wallet flow; the sign-in route links it to this X account (one signature,
+     once) and the spectator becomes a collector. */
+  const sess = MF.session.current();
+  if (!ROOM.wallet && sess && sess.spectator) {
+    return `<div class="box">
+      <div class="say">Signed in as @${e(sess.handle)}. You can read everything here; weighing in needs a wallet.</div>
+      <div class="row" style="justify-content:flex-start;gap:20px;align-items:center">
+        <button class="go" data-act="connect"${ROOM.asking ? ' disabled' : ''}>${ROOM.asking ? 'Asking your wallet ...' : 'Link a wallet to weigh in'}</button>
+        <span class="say" style="margin:0">one signature, once</span>
+      </div></div>`;
+  }
   if (!ROOM.wallet) {
     return `<div class="box"><div class="row" style="justify-content:flex-start;gap:20px">
       <button class="go" data-act="connect"${ROOM.asking ? ' disabled' : ''}>${ROOM.asking ? 'Asking your wallet ...' : 'Connect a wallet to speak'}</button>
