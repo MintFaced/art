@@ -99,6 +99,26 @@ export async function linkWallet(account_id, address) {
   return { ok: true };
 }
 
+/**
+ * The account for a wallet, made if it does not exist yet. Everyone is
+ * wallet-first today and has no account until the first link; this creates one
+ * lazily so an X identity has something to attach to. Race-safe via HSETNX.
+ */
+export async function ensureForWallet(address) {
+  const a = lower(address);
+  const existing = await byWallet(a);
+  if (existing) return existing;
+  const id = newId();
+  const claimed = await one('HSETNX', BYWALLET, a, id);   // 1 = we made it
+  if (claimed !== 1) return await one('HGET', BYWALLET, a);  // lost the race, take theirs
+  await pipe([
+    ['SADD', WALLETS(id), a],
+    ['HSET', A(id), 'created', new Date().toISOString(), 'login_method', 'wallet'],
+  ]);
+  await note('wallet-account', id, { wallet: a });
+  return id;
+}
+
 /** Attach an X identity to an existing (wallet-first) account. Collision-safe. */
 export async function linkX(account_id, { x_id, x_handle, x_avatar }) {
   const claimed = await one('HSETNX', BYX, String(x_id), account_id);

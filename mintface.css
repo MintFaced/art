@@ -232,6 +232,21 @@ img{max-width:100%;display:block}
   border-bottom:1px solid var(--rule)}
 .nav .menu.note .say:last-child{border-bottom:0}
 .nav .menu.note a{white-space:normal}
+/* The two ways in, X first. The primary is the one filled button the bar ever
+   shows; the wallet reads as an outline beneath it. Same panel, no modal.
+   "X to sign in - wallet to prove your art." */
+.nav .menu.note.signin{padding:12px}
+.nav .menu.note.signin button{border-bottom:0;text-transform:none;font-family:var(--font-sans);
+  font-size:12.5px;letter-spacing:.02em;padding:11px 14px;text-align:center;display:block;width:100%}
+.nav .menu.note.signin .x{background:var(--ink);color:var(--paper);border:1px solid var(--ink)}
+.nav .menu.note.signin .x:hover{color:var(--paper);background:var(--ink);opacity:.88}
+.nav .menu.note.signin .x .xg{margin-right:4px}
+.nav .menu.note.signin .wallet{background:none;border:1px solid var(--rule);color:var(--muted);margin-top:8px}
+.nav .menu.note.signin .wallet:hover{border-color:var(--ink);color:var(--ink);background:none}
+.nav .menu.note.signin .under{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint);text-align:center;padding:12px 4px 2px}
+.nav .menu.note.signin .hint{display:block;font-family:var(--font-sans);font-size:11.5px;line-height:1.5;
+  color:var(--muted);text-align:center;padding:8px 4px 2px}
 /* The request as it went out, folded under a refusal that named nothing.
    Closed by default: the ordinary case is somebody who pressed cancel and
    wants one line about it. Open, it is screenshot sized on a phone. */
