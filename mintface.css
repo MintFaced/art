@@ -221,6 +221,11 @@ img{max-width:100%;display:block}
   padding:12px 14px;text-align:left;text-decoration:none;cursor:pointer;white-space:nowrap;display:block}
 .nav .menu a:last-child,.nav .menu button:last-child{border-bottom:0}
 .nav .menu a:hover,.nav .menu button:hover{color:var(--ink);background:var(--sunk)}
+/* The verified handle is a door to the X profile ... names are doors ... and
+   Unlink X sits quietly behind it, the way a thing you rarely want should. */
+.nav .menu .xrow{color:var(--ink)}
+.nav .menu .unlinkx{color:var(--faint);font-size:9px;letter-spacing:.16em}
+.nav .menu .unlinkx:hover{color:var(--muted);background:none}
 .nav .menu a:focus-visible,.nav .menu button:focus-visible{outline:1px solid var(--ink);outline-offset:-1px}
 /* A notice under the control that raised it: wider than the menu because it
    carries a sentence rather than two labels, and capped so a long one wraps

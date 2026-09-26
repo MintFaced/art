@@ -500,6 +500,7 @@ export async function POST(request) {
        wallet that already has an account simply carries it, so the nav and
        handle resolution know its linked X without another lookup. */
     let extra = {};
+    let handle = null;   // the linked verified X handle, for the mf_who the nav draws
     const priorTok = cookieFrom(request, TOKEN_COOKIE);
     const prior = priorTok ? await db.session(priorTok).catch(() => null) : null;
     if (prior && prior.account && !prior.address) {
@@ -507,12 +508,15 @@ export async function POST(request) {
       if (!r.ok && r.collision) {
         return respond(request, { error: 'That wallet is already linked to another account. Sign out first, or use a different wallet.' }, 409);
       }
-      extra = { acct: prior.account, ...(prior.x_id ? { x: prior.x_id } : {}) };
+      const a = await accountOf(prior.account).catch(() => null);
+      handle = a && a.x_handle ? a.x_handle : null;
+      extra = { acct: prior.account, ...(prior.x_id ? { x: prior.x_id } : {}), ...(handle ? { xh: handle } : {}) };
     } else {
       const acctId = await byWallet(address).catch(() => null);
       if (acctId) {
         const a = await accountOf(acctId).catch(() => null);
-        extra = { acct: acctId, ...(a && a.x_id ? { x: a.x_id } : {}) };
+        handle = a && a.x_handle ? a.x_handle : null;
+        extra = { acct: acctId, ...(a && a.x_id ? { x: a.x_id } : {}), ...(handle ? { xh: handle } : {}) };
       }
     }
     /* The signature is written down rather than verified and discarded, now
@@ -524,7 +528,8 @@ export async function POST(request) {
        on the register. Same registrable domain, so Lax is enough and nothing
        here is a third-party cookie. */
     return respond(request, { ok: true, token: fresh, until, address }, 200,
-      openCookies({ token: fresh, address, until, host: hostOf(request), seconds }));
+      openCookies({ token: fresh, address, until, host: hostOf(request), seconds,
+        who: handle ? `${address}|${until}|${handle}` : undefined }));
   }
   if (action === 'sign out') {
     await db.closeSession(token);

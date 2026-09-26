@@ -80,7 +80,19 @@ export async function GET(request) {
   if (current && current.address) {
     const account_id = await ensureForWallet(current.address);
     const r = await linkX(account_id, idFields);
-    return back(retWith(stash.ret, r.ok ? 'linked' : (r.collision ? 'x-taken' : 'link-failed')));
+    if (!r.ok) return back(retWith(stash.ret, r.collision ? 'x-taken' : 'link-failed'));
+    /* Re-issue the wallet session so it carries the linked handle. The page the
+       browser lands on after the redirect renders from this fresh claim, not
+       the stale one it left with ... which still said no X, and is why the menu
+       kept offering CONNECT X after a link that had already succeeded. */
+    const seconds = days * 86400;
+    const issued = new Date().toISOString();
+    const until = sessionUntil(issued, days);
+    const token = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
+    await db.openSession(token, current.address, seconds, SCOPE, null, { acct: account_id, x: ident.id, xh: ident.username });
+    const who = `${current.address}|${until}|${ident.username}`;
+    const cookies = openCookies({ token, address: current.address, until, host: hostOf(request), seconds, who });
+    return back(retWith(stash.ret, 'linked'), cookies);
   }
 
   /* X-FIRST (or a fresh visit) — find or create the X identity's own account and
