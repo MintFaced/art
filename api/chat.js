@@ -250,8 +250,26 @@ export async function GET(request) {
     if (url.searchParams.get('me') != null) {
       const days = Number(cfg.session_days || 7);
       const fmt = signFormat(cfg);
-      if (!/^0x[0-9a-f]{40}$/.test(viewer)) return respond(request, { me: null, session_days: days, sign_format: fmt, store: true });
-      return respond(request, { me: await standing(db, origin, viewer, cfg, await register(), isArtist), session_days: days, sign_format: fmt, store: true });
+      /* ROLLING. A visit inside the window re-extends the session to a full
+         term ... the KV key's TTL is reset and the cookies re-issued with a
+         fresh expiry ... so a collector who comes back within it never signs in
+         again: one signature (or one X login) a season, not one a session. Both
+         wallet and spectator sessions roll. Only a real cookie session does; a
+         page that named a ?viewer without one is just reading. */
+      const rolled = [];
+      const held = cookieFrom(request, TOKEN_COOKIE);
+      const sess = held ? await db.session(held).catch(() => null) : null;
+      if (sess) {
+        const seconds = days * 86400;
+        const until = new Date(Date.now() + seconds * 1000).toISOString();
+        await db.touchSession(held, seconds).catch(() => {});
+        const who = sess.address
+          ? (sess.xh ? `${sess.address}|${until}|${sess.xh}` : `${sess.address}|${until}`)
+          : (sess.xh ? `x:${sess.xh}|${until}` : null);
+        if (who) rolled.push(...openCookies({ token: held, address: sess.address || '', until, host: hostOf(request), seconds, who }));
+      }
+      if (!/^0x[0-9a-f]{40}$/.test(viewer)) return respond(request, { me: null, session_days: days, sign_format: fmt, store: true }, 200, rolled);
+      return respond(request, { me: await standing(db, origin, viewer, cfg, await register(), isArtist), session_days: days, sign_format: fmt, store: true }, 200, rolled);
     }
 
     /* ---- what is under a message now ----
