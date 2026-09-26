@@ -2871,9 +2871,13 @@ MF.session = {
     catch (err) { /* storage switched off, nothing to clear */ }
     const v = this.cookie(this.WHO);
     if (!v) return null;
-    const cut = v.lastIndexOf('|');
-    const head = cut < 0 ? v : v.slice(0, cut);
-    const until = cut < 0 ? null : v.slice(cut + 1);
+    /* Three fields, pipe-separated: the subject, the expiry, and ... on a wallet
+       that has linked X ... the verified handle. An ISO date carries no pipe and
+       a handle carries none, so a plain split is unambiguous. */
+    const parts = v.split('|');
+    const head = parts[0];
+    const until = parts[1] || null;
+    const linked = parts[2] || null;
     if (until && Date.parse(until) < Date.now()) return null;
     /* An X-only sign-in reads as `x:<handle>` where a wallet reads as its
        address. A spectator can be here, and can act on nothing, until a wallet
@@ -2884,7 +2888,7 @@ MF.session = {
     }
     const address = head.toLowerCase();
     if (!/^0x[0-9a-f]{40}$/.test(address)) return null;
-    return { address, until };
+    return { address, until, handle: linked || null };
   },
   /* Signing out is the server's to do: it holds the token and it is the only
      thing that can unset an HttpOnly cookie. This is only for a browser that
@@ -3417,7 +3421,10 @@ MF.nav = {
           ${s.spectator
             ? '<button type="button" role="menuitem" data-nav="linkwallet">Connect a wallet to weigh in</button>'
             : `${url ? `<a role="menuitem" href="${e(url)}">Your page</a>` : ''}
-               <button type="button" role="menuitem" data-nav="linkx">Connect X</button>`}
+               ${s.handle
+                 ? `<a role="menuitem" class="xrow" href="https://x.com/${e(s.handle)}" target="_blank" rel="noopener">@${e(s.handle)}</a>
+                    <button type="button" role="menuitem" class="unlinkx" data-nav="unlinkx">Unlink X</button>`
+                 : '<button type="button" role="menuitem" data-nav="linkx">Connect X</button>'}`}
           <button type="button" role="menuitem" data-nav="signout">Sign out</button>
         </span>` : ''}
       </span>`;
@@ -3529,6 +3536,18 @@ MF.nav = {
         return;
       }
       if (act === 'linkwallet') { ev.preventDefault(); this.menu = false; this.startConnect(); return; }
+      if (act === 'unlinkx') {
+        ev.preventDefault();
+        this.menu = false; this.busy = true; this.draw();
+        (async () => {
+          try { await fetch(`${MF.ART}/api/auth/x/unlink`, { method: 'POST', credentials: 'include' }); }
+          catch (err) { /* the cookie is the truth; a failed call just leaves it */ }
+          this.busy = false;
+          this.draw();            // re-reads mf_who, now without the handle -> CONNECT X returns
+          void this.refresh();
+        })();
+        return;
+      }
       if (act === 'connect') { ev.preventDefault(); this.startConnect(); }
       if (act === 'pick') { ev.preventDefault(); this.startConnect(b.dataset.uuid); }
       if (act === 'cherry') { ev.preventDefault(); this.toMention(); }
