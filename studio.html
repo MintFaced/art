@@ -1676,7 +1676,7 @@ function composer() {
     return `<div class="box">
       <div class="say">Signed in as @${e(sess.handle)}. You can read everything here; weighing in needs a wallet.</div>
       <div class="row" style="justify-content:flex-start;gap:20px;align-items:center">
-        <button class="go" data-act="connect"${ROOM.asking ? ' disabled' : ''}>${ROOM.asking ? 'Asking your wallet ...' : 'Link a wallet to weigh in'}</button>
+        <button class="go" data-act="connect"${ROOM.asking ? ' disabled' : ''}>${ROOM.asking ? 'Asking your wallet ...' : 'Connect a wallet to weigh in'}</button>
         <span class="say" style="margin:0">one signature, once</span>
       </div></div>`;
   }

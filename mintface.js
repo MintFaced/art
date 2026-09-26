@@ -3411,9 +3411,9 @@ MF.nav = {
           aria-haspopup="true" aria-expanded="${this.menu ? 'true' : 'false'}">${e(name)}</button>
         ${this.menu ? `<span class="menu" role="menu">
           ${s.spectator
-            ? '<button type="button" role="menuitem" data-nav="linkwallet">Link a wallet to weigh in</button>'
+            ? '<button type="button" role="menuitem" data-nav="linkwallet">Connect a wallet to weigh in</button>'
             : `${url ? `<a role="menuitem" href="${e(url)}">Your page</a>` : ''}
-               <button type="button" role="menuitem" data-nav="linkx">Link X</button>`}
+               <button type="button" role="menuitem" data-nav="linkx">Connect X</button>`}
           <button type="button" role="menuitem" data-nav="signout">Sign out</button>
         </span>` : ''}
       </span>`;
@@ -3514,10 +3514,10 @@ MF.nav = {
       if (act === 'signout') { ev.preventDefault(); void this.signOut(); return; }
       if (shut) { this.menu = false; this.draw(); }
       if (!mine) return;
-      /* SIGN IN opens the two-way choice inline; X (and Link X) hand off to the
-         OAuth start, always on mintface.art, carrying where to come back to;
-         Link a wallet runs the same wallet flow, which the sign-in route links
-         to the current account. */
+      /* SIGN IN opens the two-way choice inline; X (and Connect X) hand off to
+         the OAuth start, always on mintface.art, carrying where to come back to;
+         Connect a wallet runs the same wallet flow, which the sign-in route
+         links to the current account. */
       if (act === 'signin') { ev.preventDefault(); this.note = { signin: true }; this.draw(); return; }
       if (act === 'x' || act === 'linkx') {
         ev.preventDefault();
