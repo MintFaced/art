@@ -199,9 +199,13 @@ export function registerIndex(register) {
  *                 name pointing at nothing. He is named here and linked to the
  *                 front door rather than to a collector page he cannot have.
  */
-export function naming(rows, self = {}, special = {}) {
+export function naming(rows, self = {}, special = {}, verified = {}) {
   const chosen = new Map(Object.entries(self || {}).map(([a, n]) => [lower(a), n]));
   const named = new Map(Object.entries(special || {}).map(([a, v]) => [lower(a), v]));
+  /* A wallet whose collector has verified their X handle via OAuth. It outranks
+     the typed/overlay handle wherever the register says `x`: verified > overlay
+     > typed. Plumbing, not decoration ... the register draws it no differently. */
+  const vhandles = new Map(Object.entries(verified || {}).map(([a, h]) => [lower(a), h]));
 
   const who = (address) => {
     const a = lower(address);
@@ -238,7 +242,7 @@ export function naming(rows, self = {}, special = {}) {
          name, and facts about names are what this file is for. */
       fwd: fwd || null,
       overlay: overlay || null,
-      x: (r && r.x) || null,
+      x: vhandles.get(a) || (r && r.x) || null,
       self: s,
       private: false,
       source: sourceOf({ overlay, self: s, ens, fwd }),

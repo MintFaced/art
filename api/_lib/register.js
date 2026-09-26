@@ -13,6 +13,7 @@
 import { registerIndex, naming, namesStore } from './names.js';
 import { loadArtist, ARTIST_NAME } from './artist.js';
 import { storeConfigured } from './kv.js';
+import { verifiedHandles } from './accounts.js';
 
 /* The nightly half of it, held for a minute.
  *
@@ -52,9 +53,12 @@ async function nightly(at, origin) {
  * @param pipe  the store, or null where a route has none configured
  */
 export async function loadRegister(at, origin, pipe = null) {
-  const [{ rows, artist }, self] = await Promise.all([
+  const [{ rows, artist }, self, verified] = await Promise.all([
     nightly(at, origin),
     pipe && storeConfigured() ? namesStore(pipe).all().catch(() => ({})) : Promise.resolve({}),
+    /* The verified X handles, wallet -> handle, folded in beside the self-set
+       names so who().x resolves verified > overlay > typed everywhere at once. */
+    pipe && storeConfigured() ? verifiedHandles().catch(() => ({})) : Promise.resolve({}),
   ]);
   /* The artist's wallets, named and pointed at the front door. He is kept out
      of the register on purpose ... TAO measures patronage and he is not his own
@@ -62,5 +66,5 @@ export async function loadRegister(at, origin, pipe = null) {
      no name and no link. */
   const special = Object.fromEntries(Object.keys(artist || {})
     .map((a) => [a, { name: ARTIST_NAME, url: 'https://mintface.art/' }]));
-  return { ...naming(rows, self, special), artist, self };
+  return { ...naming(rows, self, special, verified), artist, self };
 }

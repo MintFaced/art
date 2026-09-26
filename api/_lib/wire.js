@@ -60,8 +60,13 @@ export function who(address, overlay, register) {
   const a = String(address || '').toLowerCase();
   const o = ((overlay && overlay.collectors) || {})[a] || null;
   if (o && o.quiet) return { quiet: true, label: null, handle: null };
-  if (o && o.x) return { quiet: false, label: `@${o.x}`, handle: o.x };
   const r = register && register.who ? register.who(a) : null;
+  /* Verified > overlay > typed. The register's `x` folds the verified OAuth
+     handle over the overlay column, so reading it here makes the bot's tags
+     more accurate for free; `o.x` is the fallback for a wallet the register no
+     longer holds. */
+  const handle = (r && r.x) || (o && o.x) || null;
+  if (handle) return { quiet: false, label: `@${handle}`, handle };
   /* A private collector on the register is not named here either. The register
      already decided that about them and this is the same fact in public. */
   if (r && r.private) return { quiet: true, label: null, handle: null };
