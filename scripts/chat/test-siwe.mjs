@@ -157,34 +157,32 @@ ok('a lowercase address becomes exactly the line the message carries',
 ok('and the route computes the same line from the same lowercase address',
   getAddress(FIELDS.address.toLowerCase()) === FIELDS.address);
 
-console.log('\nthe copy is the same copy');
+console.log('\nthe route no longer keeps its own copy of the sentence');
 const routeSrc = readFileSync(join(here, '../../api/chat.js'), 'utf8');
-/* The expression is read out of each file and evaluated, not compared as
-   source: the two are indented differently and that is not a difference in
-   what the wallet shows. What is compared is the string it comes to. */
+/* The page builds the message; the route no longer rebuilds it. It verifies the
+   exact bytes the wallet posted and reads the fields out with parse(), so there
+   is no second copy of the statement or resource to drift, and no field a
+   rebuild can drop (the WalletConnect Chain ID bug). The invariant is stronger
+   than "the two copies match": there is only one copy. */
 const statementOf = (src) => {
-  /* The 4361 statement, which is a template literal in both files. Matched on
-     its own opening rather than on `Signing opens Studio`, which is the house
-     sentence mintface.js also holds ... matching that would compare the wrong
-     pair and pass while the real pair drifted. */
   const m = /`Sign in to MintFace for \$\{[^}]*\} days\.`/.exec(src);
   // eslint-disable-next-line no-new-func
   return m ? new Function('days', `return ${m[0].replace(/\$\{[^}]*\}/, '${days}')}`)(30) : null;
 };
-const pageStatement = statementOf(js);
-const routeStatement = statementOf(routeSrc);
-ok('the statement is found in both files', Boolean(pageStatement && routeStatement));
-ok('and it is the same statement', pageStatement === routeStatement,
-  `page: ${pageStatement}\n       route: ${routeStatement}`);
 const resourceOf = (src) => {
   const m = /resources: \[('[^']*')\]/.exec(src);
   return m ? m[1] : null;
 };
-ok('the resource is found in both files', Boolean(resourceOf(js) && resourceOf(routeSrc)));
-ok('and it is the same resource', resourceOf(js) === resourceOf(routeSrc),
-  `page: ${resourceOf(js)}  route: ${resourceOf(routeSrc)}`);
-ok('and it is an absolute URI, not a path the grammar would refuse',
+ok('the page still holds the 4361 statement', Boolean(statementOf(js)));
+ok('and an absolute-URI resource, not a path the grammar would refuse',
   /^'https:\/\//.test(String(resourceOf(js))));
+ok('the route does not rebuild the sentence from wire fields',
+  !/siweSentence|siweStrict/.test(routeSrc));
+ok('the route verifies the exact message the wallet posted',
+  /const message = String\(body\.message/.test(routeSrc)
+    && /verifyMessage\(\{ address, message, signature \}\)/.test(routeSrc));
+ok('and reads the sign-in fields out of it with parse(), not off the wire',
+  /siweParse\(message\)/.test(routeSrc) && !/body\.chainId|body\.nonce|body\.uri/.test(routeSrc));
 
 /* THE ROUND TRIP THAT ACTUALLY MATTERS. A real key signs what the page builds,
    and the route rebuilds it from the fields on the wire and verifies. If those

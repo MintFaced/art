@@ -1,7 +1,7 @@
-import { verifyMessage, getAddress } from 'viem';
+import { verifyMessage } from 'viem';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
-import { chatStore, chatMessage, checkMessage, checkReaction, marksOf, reactionSet, render, sessionUntil, SCOPE } from './_lib/chat.js';
+import { chatStore, chatMessage, checkMessage, checkReaction, marksOf, reactionSet, render, SCOPE } from './_lib/chat.js';
 import { loadArtist, isArtist as artistIs, taoGate, ARTIST_NAME } from './_lib/artist.js';
 import { loadRegister } from './_lib/register.js';
 import { parseTags, tagIndex } from './_lib/names.js';
@@ -12,7 +12,7 @@ import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 import { linkWallet, byWallet, get as accountOf } from './_lib/accounts.js';
 import { checkImage, imageKey, imageFingerprint } from './_lib/images.js';
 import { putObject, r2Configured } from './_lib/r2.js';
-import { strict as siweStrict, authorityOf } from './_lib/siwe.js';
+import { authorityOf, parse as siweParse } from './_lib/siwe.js';
 
 /* The room.
  *
@@ -52,31 +52,10 @@ const lower = (a) => String(a || '').toLowerCase();
  * domain with the same expiry, and the 4361 one additionally burns a nonce. */
 const signFormat = (cfg) => (String(cfg && cfg.sign_format) === '4361' ? '4361' : 'house');
 
-/* The 4361 sentence, built the one way it is built. Character for character
-   what mintface.js puts in front of the wallet ... this rebuilds it from the
-   fields the page sent and the signature is checked against the rebuild, so a
-   page that sent something other than what it showed verifies as a mismatch
-   rather than as a sign-in. */
-function siweSentence({ domain, address, uri, issued, until, nonce, chainId, days }) {
-  return siweStrict({
-    domain,
-    /* The address in the 4361 line is the wallet's own spelling, which is what
-       the page put in front of the signer. Verification lowercases it back. */
-    address,
-    statement: `Sign in to MintFace for ${Number(days)} days.`,
-    uri,
-    /* The chain the wallet said it was on, not one we chose for it. A wallet
-       that parses 4361 checks this line against where it actually is. */
-    chainId,
-    nonce,
-    issuedAt: issued,
-    expirationTime: until,
-    /* The literal, not siteOrigin(), which moves with the request and would
-       make a preview deploy build a different message from the page it served.
-       mintface.js says the same characters. */
-    resources: ['https://mintface.art/studio'],
-  });
-}
+/* The 4361 and house sentences are no longer rebuilt server-side. The wallet's
+   exact signed bytes are posted whole and verified against directly, and the
+   fields are read out of them with siwe.js parse() ... which is what closes the
+   WalletConnect "Chain ID: undefined" mismatch a rebuild could introduce. */
 
 /* A nonce is spent once. Without this the 4361 message is exactly as replayable
    as the house one inside its fifteen minute window, and the whole point of
@@ -438,9 +417,13 @@ export async function POST(request) {
     address = lower(body.address);
     if (!/^0x[0-9a-f]{40}$/.test(address)) return respond(request, { error: 'that is not a wallet address' }, 400);
     if (!signature.startsWith('0x')) return respond(request, { error: 'a signature is required' }, 400);
-    const age = Date.now() - Date.parse(issued);
-    if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
-      return respond(request, { error: 'that signature has gone stale, please sign again' }, 400);
+    /* Freshness for the per-message rig (say/react sign each one). A sign-in is
+       checked from the timestamp inside the message it signed, not this field. */
+    if (action !== 'sign in') {
+      const age = Date.now() - Date.parse(issued);
+      if (!Number.isFinite(age) || age < -60000 || age > 15 * 60 * 1000) {
+        return respond(request, { error: 'that signature has gone stale, please sign again' }, 400);
+      }
     }
   }
 
@@ -453,65 +436,63 @@ export async function POST(request) {
 
   /* ---- opening and closing the week ---- */
   if (action === 'sign in') {
-    const days = Number(cfg.session_days || 7);
-    const until = sessionUntil(issued, days);
-    if (!until) return respond(request, { error: 'bad request' }, 400);
-    /* Where this was signed, named in the sentence the wallet showed.
-       It is not what lets the session cross the two hosts ... one API mints it
-       and one API validates it, and it would cross without this. What it buys
-       is that a signature collected on some other site cannot be spent here. */
-    const domain = String(body.domain || '');
-    if (!domainOk(domain, request)) {
-      return respond(request, { error: 'that signature was not signed for this site' }, 400);
-    }
-    /* Which of the two sentences this page signed. Declared rather than
-       sniffed: a route that guessed the format from the bytes would be a route
-       that can be talked into checking the wrong thing. */
-    const format = String(body.format || 'house');
+    /* VERIFY THE EXACT MESSAGE THE WALLET SIGNED, AND READ EVERY CHECK OUT OF
+       IT. The sentence is never rebuilt from fields here: a rebuild that
+       dropped one field (the WalletConnect Chain ID) is the bug this closes.
+       Both rails post the same shape ... { message, signature, address } ... so
+       the signature is checked against the very bytes that were shown, and the
+       domain, nonce and expiry are the ones inside them, not ones on the wire. */
+    const message = String(body.message || '');
+    if (!message) return respond(request, { error: 'a signature is required' }, 400);
+    let signed = false;
+    try { signed = await verifyMessage({ address, message, signature }); } catch (e) { signed = false; }
+    if (!signed) return respond(request, { error: 'that signature does not match the wallet' }, 401);
+
+    let domain; let until; let issuedAt; let nonce = null;
+    const format = /^[^\n]+ wants you to sign in with your Ethereum account:$/m.test(message) ? '4361' : 'house';
     if (format === '4361') {
-      const nonce = String(body.nonce || '');
-      const uri = String(body.uri || '');
-      const chainId = String(body.chainId || '1');
-      if (!/^[0-9]{1,10}$/.test(chainId)) {
-        return respond(request, { error: 'that sign-in names a chain that is not a chain' }, 400);
-      }
-      /* EIP-55, computed here rather than taken off the wire. The page computes
-         the same line from the same address, so there is nothing for the two
-         of them to disagree about and nothing for a caller to get wrong ...
-         the spelling in the sentence is not a fact about the request, it is
-         a fact about the address, and the spec says which one. */
-      const spelled = getAddress(address);
-      /* The two fields a phone actually checks, checked here too. A message
-         whose URI is on a different host from the domain above it is the
-         confusing thing 4361 exists to stop, and it is not something a page of
-         ours would ever send ... so a request carrying one is not one of ours. */
-      if (lower(authorityOf(uri)) !== lower(domain)) {
-        return respond(request, { error: 'that sign-in names one site and points at another' }, 400);
-      }
-      let message;
-      try {
-        message = siweSentence({ domain, address: spelled, uri, issued, until, nonce, days });
-      } catch (e) {
-        /* The grammar refused our own rebuild, which means the page sent a
-           field that is not a 4361 field. Said plainly, with the line that was
-           wrong, because a sign-in that fails silently is the bug this whole
-           pass is about. */
+      let f;
+      try { f = siweParse(message); } catch (e) {
         return respond(request, { error: `that sign-in was not a valid EIP-4361 message: ${e.message}` }, 400);
       }
-      if (!(await burnNonce(nonce, 15 * 60))) {
-        return respond(request, { error: 'that sign-in has already been used, please sign again' }, 400);
+      if (lower(f.address) !== address) return respond(request, { error: 'that signature is for a different wallet' }, 401);
+      /* URI and domain must name the same host ... the confusing thing 4361
+         exists to stop, and never something a page of ours sends. */
+      if (lower(authorityOf(f.uri)) !== lower(f.domain)) {
+        return respond(request, { error: 'that sign-in names one site and points at another' }, 400);
       }
-      let ok = false;
-      try { ok = await verifyMessage({ address, message, signature }); } catch (e) { ok = false; }
-      if (!ok) return respond(request, { error: 'that signature does not match the wallet' }, 401);
-    } else if (!(await verify({ action: 'sign in', until, domain }))) {
-      return respond(request, { error: 'that signature does not match the wallet' }, 401);
+      domain = f.domain; nonce = f.nonce; until = f.expirationTime; issuedAt = f.issuedAt;
+    } else {
+      const line = (name) => { const m = new RegExp(`^${name}: (.+)$`, 'm').exec(message); return m ? m[1] : null; };
+      if (line('Action') !== 'sign in') return respond(request, { error: 'that sign-in did not ask to sign in' }, 400);
+      if (lower(line('Wallet') || '') !== address) return respond(request, { error: 'that signature is for a different wallet' }, 401);
+      domain = line('Domain'); until = line('Until'); issuedAt = line('Issued');
+    }
+
+    /* Where it was signed, when, and that it has not been spent: a signature
+       collected on some other site, or an hour ago, or already used, cannot be
+       turned into a session here. */
+    if (!domain || !domainOk(domain, request)) {
+      return respond(request, { error: 'that signature was not signed for this site' }, 400);
+    }
+    const ageMs = Date.now() - Date.parse(issuedAt || '');
+    if (!Number.isFinite(ageMs) || ageMs < -60000 || ageMs > 15 * 60 * 1000) {
+      return respond(request, { error: 'that signature has gone stale, please sign again' }, 400);
+    }
+    if (!until || !(Date.parse(until) > Date.now())) {
+      return respond(request, { error: 'that sign-in has expired, please sign again' }, 400);
+    }
+    if (nonce && !(await burnNonce(nonce, 15 * 60))) {
+      return respond(request, { error: 'that sign-in has already been used, please sign again' }, 400);
     }
     if (await db.isMuted(address)) {
       return respond(request, { error: 'This wallet is muted in Studio. You can still read.' }, 403);
     }
     const fresh = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
-    const seconds = days * 86400;
+    /* The session lasts exactly as long as the expiry the wallet signed, capped
+       so a hand-built message cannot mint a decade. */
+    const MAX_SECONDS = 100 * 86400;
+    const seconds = Math.max(60, Math.min(MAX_SECONDS, Math.floor((Date.parse(until) - Date.now()) / 1000)));
     /* Whether this sign-in also links. If a spectator X session is already
        open, this wallet is being linked to that account and the session is
        upgraded from spectator to acting; a wallet already claimed by another
@@ -538,7 +519,7 @@ export async function POST(request) {
        that one of them stands behind a month of acts. It is what makes the
        audit chain real: this signature opened this session, and these
        weighings came from it. */
-    await db.openSession(fresh, address, seconds, SCOPE, { signature, issued, until, domain, format }, extra);
+    await db.openSession(fresh, address, seconds, SCOPE, { signature, issued: issuedAt, until, domain, format }, extra);
     /* Scoped to the parent domain, so signing in on the catalogue signs you in
        on the register. Same registrable domain, so Lax is enough and nothing
        here is a third-party cookie. */
