@@ -48,10 +48,14 @@ const one = (name, value, host, seconds) =>
   `${name}=${encodeURIComponent(value)}${scope(host)}; Path=/; Secure; SameSite=Lax; Max-Age=${Math.floor(seconds)}`;
 
 /** Two Set-Cookie lines: the credential, and what the bar draws. */
-export function openCookies({ token, address, until, host, seconds }) {
+export function openCookies({ token, address, until, host, seconds, who }) {
+  /* `who` overrides what the bar reads (the mf_who companion). A wallet session
+     leaves it as `address|until`, unchanged; an X-only (spectator) session
+     passes `x:<handle>|until` so the nav can draw the X identity where an
+     address would be. The credential cookie is identical either way. */
   return [
     `${one(TOKEN_COOKIE, token, host, seconds)}; HttpOnly`,
-    one(WHO_COOKIE, `${address}|${until}`, host, seconds),
+    one(WHO_COOKIE, who != null ? who : `${address}|${until}`, host, seconds),
   ];
 }
 
