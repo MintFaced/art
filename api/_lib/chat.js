@@ -612,7 +612,7 @@ export function chatStore(pipe, cfg = {}) {
         const j = JSON.parse(v);
         return {
           address: String(j.a || '').toLowerCase(), scope: Number(j.s) || 1, id: sessionId(token),
-          account: j.acct || null, x_id: j.x || null,
+          account: j.acct || null, x_id: j.x || null, xh: j.xh || null,
         };
       } catch (e) { return null; }
     },
@@ -628,6 +628,13 @@ export function chatStore(pipe, cfg = {}) {
     async closeSession(token) {
       if (!token) return;
       await pipe([['DEL', keys.session(token)]]);
+    },
+    /* Rolling: a visit inside the window resets the session's TTL to a full
+       term without a new signature. The value is untouched, so who it is and
+       what they may do carry over exactly; only the clock moves. */
+    async touchSession(token, seconds) {
+      if (!token) return;
+      await pipe([['EXPIRE', keys.session(token), String(Math.floor(seconds))]]);
     },
 
     /* ---- how often ----

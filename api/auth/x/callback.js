@@ -105,7 +105,7 @@ export async function GET(request) {
   const issued = new Date().toISOString();
   const until = sessionUntil(issued, days);
   const token = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
-  await db.openSession(token, address, seconds, SCOPE, null, { x: ident.id, acct: account_id });
+  await db.openSession(token, address, seconds, SCOPE, null, { x: ident.id, acct: account_id, xh: ident.username });
 
   const who = address ? `${address}|${until}` : `x:${ident.username || ident.id}|${until}`;
   const cookies = openCookies({ token, address, until, host: hostOf(request), seconds, who });
