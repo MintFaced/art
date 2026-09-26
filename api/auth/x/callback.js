@@ -10,9 +10,9 @@
 import crypto from 'node:crypto';
 import { exchangeCode, me } from '../../_lib/x-oauth.js';
 import { one, pipe, storeConfigured } from '../../_lib/kv.js';
-import { upsertX, get as getAccount } from '../../_lib/accounts.js';
+import { upsertX, get as getAccount, ensureForWallet, linkX } from '../../_lib/accounts.js';
 import { chatStore, sessionUntil, SCOPE } from '../../_lib/chat.js';
-import { openCookies, hostOf, cookieFrom } from '../../_lib/session.js';
+import { openCookies, hostOf, cookieFrom, TOKEN_COOKIE } from '../../_lib/session.js';
 import { XKEY } from '../x.js';
 
 const CALLBACK = process.env.X_OAUTH_CALLBACK || 'https://mintface.art/api/auth/x/callback';
@@ -26,6 +26,10 @@ const back = (dest, cookies = []) => {
   return new Response(null, { status: 302, headers });
 };
 const fail = (why) => back(`${HOME}?x=${encodeURIComponent(why)}`);
+const retWith = (ret, tag) => {
+  const base = ret || HOME;
+  return base + (base.includes('?') ? '&' : '?') + 'x=' + encodeURIComponent(tag);
+};
 
 async function sessionDays(origin) {
   try {
@@ -63,22 +67,34 @@ export async function GET(request) {
   }
   if (!ident.id) return fail('no-identity');
 
-  // Account: find or create by the stable X id; refresh handle/avatar.
-  const { account_id } = await upsertX({ x_id: ident.id, x_handle: ident.username, x_avatar: ident.avatar });
-  const acct = await getAccount(account_id);
-  const address = acct && acct.wallets && acct.wallets.length ? acct.wallets[0] : '';   // Phase 2 links wallets
-
-  // Mint the session, the same shape SIWE mints, plus the X identity in extra.
   const { cfg, days } = await sessionDays(url.origin);
+  const db = chatStore(pipe, cfg);
+  const idFields = { x_id: ident.id, x_handle: ident.username, x_avatar: ident.avatar };
+
+  /* WALLET-FIRST — a wallet session is already open, so this is "link X to my
+     account": attach the X identity to the wallet's account and keep the wallet
+     session as it is. A collision (this X id already on another account) is
+     refused with a plain sentence rather than merged; v1 has no merge. */
+  const currentTok = cookieFrom(request, TOKEN_COOKIE);
+  const current = currentTok ? await db.session(currentTok).catch(() => null) : null;
+  if (current && current.address) {
+    const account_id = await ensureForWallet(current.address);
+    const r = await linkX(account_id, idFields);
+    return back(retWith(stash.ret, r.ok ? 'linked' : (r.collision ? 'x-taken' : 'link-failed')));
+  }
+
+  /* X-FIRST (or a fresh visit) — find or create the X identity's own account and
+     mint a session. If a wallet is already linked to it, act as that wallet;
+     otherwise a spectator session, its identity in the extra and mf_who. */
+  const { account_id } = await upsertX(idFields);
+  const acct = await getAccount(account_id);
+  const address = acct && acct.wallets && acct.wallets.length ? acct.wallets[0] : '';
   const seconds = days * 86400;
   const issued = new Date().toISOString();
   const until = sessionUntil(issued, days);
   const token = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
-  const db = chatStore(pipe, cfg);
   await db.openSession(token, address, seconds, SCOPE, null, { x: ident.id, acct: account_id });
 
-  // A wallet-linked account reads as its wallet; an X-only account reads as its
-  // handle, so the nav can draw the X identity where an address would be.
   const who = address ? `${address}|${until}` : `x:${ident.username || ident.id}|${until}`;
   const cookies = openCookies({ token, address, until, host: hostOf(request), seconds, who });
   return back(stash.ret || HOME, cookies);

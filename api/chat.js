@@ -9,6 +9,7 @@ import { linksIn } from './_lib/text.js';
 import { cardStore, familyKind, fetchCard, ourCard } from './_lib/cards.js';
 import { corsFor, cookieFrom, openCookies, clearCookies, domainOk, hostOf, TOKEN_COOKIE, WHO_COOKIE } from './_lib/session.js';
 import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
+import { linkWallet, byWallet, get as accountOf } from './_lib/accounts.js';
 import { checkImage, imageKey, imageFingerprint } from './_lib/images.js';
 import { putObject, r2Configured } from './_lib/r2.js';
 import { strict as siweStrict, authorityOf } from './_lib/siwe.js';
@@ -511,11 +512,33 @@ export async function POST(request) {
     }
     const fresh = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, '');
     const seconds = days * 86400;
+    /* Whether this sign-in also links. If a spectator X session is already
+       open, this wallet is being linked to that account and the session is
+       upgraded from spectator to acting; a wallet already claimed by another
+       account is refused with a plain sentence rather than merged. Otherwise a
+       wallet that already has an account simply carries it, so the nav and
+       handle resolution know its linked X without another lookup. */
+    let extra = {};
+    const priorTok = cookieFrom(request, TOKEN_COOKIE);
+    const prior = priorTok ? await db.session(priorTok).catch(() => null) : null;
+    if (prior && prior.account && !prior.address) {
+      const r = await linkWallet(prior.account, address);
+      if (!r.ok && r.collision) {
+        return respond(request, { error: 'That wallet is already linked to another account. Sign out first, or use a different wallet.' }, 409);
+      }
+      extra = { acct: prior.account, ...(prior.x_id ? { x: prior.x_id } : {}) };
+    } else {
+      const acctId = await byWallet(address).catch(() => null);
+      if (acctId) {
+        const a = await accountOf(acctId).catch(() => null);
+        extra = { acct: acctId, ...(a && a.x_id ? { x: a.x_id } : {}) };
+      }
+    }
     /* The signature is written down rather than verified and discarded, now
        that one of them stands behind a month of acts. It is what makes the
        audit chain real: this signature opened this session, and these
        weighings came from it. */
-    await db.openSession(fresh, address, seconds, SCOPE, { signature, issued, until, domain, format });
+    await db.openSession(fresh, address, seconds, SCOPE, { signature, issued, until, domain, format }, extra);
     /* Scoped to the parent domain, so signing in on the catalogue signs you in
        on the register. Same registrable domain, so Lax is enough and nothing
        here is a third-party cookie. */
