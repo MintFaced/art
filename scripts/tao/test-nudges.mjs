@@ -817,8 +817,12 @@ const holds = (x) => five[x] || 0;
   is('every part of the row is placed', parts.filter((k) => !wide.has(k)), []);
   is('and nothing shares a cell with anything else', collisions(wide), []);
   is('nor at the narrow width, where the name drops beneath the hex', collisions(narrow), []);
-  is('the name is the part that moves, and it moves under the hex',
-    [narrow.get('cname')[0] > narrow.get('hex')[0], narrow.get('w')[0] === narrow.get('hex')[0]],
+  /* The narrow layout was redesigned: the name keeps the top line and the HEX
+     is the part that drops beneath it (studio.html's @container comment says so
+     ... seven characters are the colour's identity and belong on top). The
+     figure stays on the name's row either way. */
+  is('the hex is the part that moves, and it moves under the name',
+    [narrow.get('hex')[0] > narrow.get('cname')[0], narrow.get('w')[0] === narrow.get('cname')[0]],
     [true, true]);
   is('the figure keeps its column at both widths',
     [wide.get('w')[0], narrow.get('w')[0]], [1, 1]);
@@ -831,8 +835,7 @@ const holds = (x) => five[x] || 0;
     /text-overflow/.test(rule('w', base)), false);
   is('the name truncates instead', /text-overflow:ellipsis/.test(rule('cname', base)), true);
   is('and the hex is not inside the name\'s box',
-    /<span class="hex">\$\{e\(c\.hex\)\}/.test(page)
-      && /<\/span>\s*\n\s*\$\{nameOf\(c\.hex\)\}/.test(page), true);
+    /<span class="cname">[^]*?<\/span>\s*\n?\s*<span class="hex">/.test(page), true);
   is('the chip no longer claims a cell the pair already has',
     /\.nudges \.crow \.chip\{grid-area/.test(base), false);
   is('the row asks the panel how wide it is, not the window',
