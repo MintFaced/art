@@ -1,6 +1,6 @@
 {
  "_note": "Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.",
- "generated": "2026-09-25T21:31:15.769Z",
+ "generated": "2026-09-26T21:00:59.065Z",
  "fields": ["address","name","ens","slug","private","works","unique","tao","rate","last","rank","fwd","x"],
  "rows": [
   ["0x8be5a2df6488b0937299d27f092716f4a9ab2fd8","visco.eth","visco.eth","visco.eth",0,83,11,1530908,1162.2,"2026-08-21",1,"",""],
@@ -199,7 +199,7 @@
   ["0xb6ea381cac9da2de47c6a760445bbeab2b1db480","","","0xb6ea381c",0,3,1,80732,73.2,"2025-03-03",194,"",""],
   ["0x3a5e247429201d70fae0ff28e41fd8a1ca50af5a","mattwalch.eth","mattwalch.eth","mattwalch.eth",0,4,0,80338,58.8,"2024-10-05",195,"",""],
   ["0x96f123700044e61445dcae6df2de78dc754504f3","sirkrahe.eth","sirkrahe.eth","sirkrahe.eth",0,15,0,80285,58.8,"2025-04-26",196,"",""],
-  ["0xdf36b093cbc06522b68105c3d9141db188e980b6","gmmoney.eth","gmmoney.eth","gmmoney.eth",0,12,0,80034,58.8,"2024-10-05",197,"",""],
+  ["0xdf36b093cbc06522b68105c3d9141db188e980b6","gmmoney.eth","gmmoney.eth","gmmoney.eth",0,11,0,80034,58.8,"2024-10-05",197,"",""],
   ["0xaed8e151086a85d39166b80bb4b4cec2f6328a7a","parradesys.eth","parradesys.eth","parradesys.eth",0,5,1,78813,77.4,"2026-08-22",198,"",""],
   ["0x1712bf0c459dc5c85b78eee46642d169be0ae1bd","heathernstout.eth","heathernstout.eth","heathernstout.eth",0,4,1,78667,73.2,"2024-10-05",199,"",""],
   ["0x7b09322d09b723b5babffc149d0a6b26c00b77b4","spyguy.eth","spyguy.eth","spyguy.eth",0,2,1,78572,73.2,"2023-10-25",200,"",""],
@@ -628,7 +628,7 @@
   ["0xe8050bb4811d73ce52141d8fc9306a2c17636b36","","","",0,2,0,13161,8.4,"2022-07-11",623,"",""],
   ["0x6a886cbe6e1a062c1f4b179c8c8ede4847a04a70","deemonie.eth","deemonie.eth","deemonie.eth",0,4,2,13156,8.4,"2022-06-19",624,"",""],
   ["0x1bb7b4f7d98a9d204186b36d3852e28f3286f577","diewiththemostlikes.eth","diewiththemostlikes.eth","",0,1,0,13141,12.6,"2023-11-17",625,"",""],
-  ["0x19e7a132bd4b42f580f546197f42e19c42cdfe6c","intrepid.eth","intrepid.eth","intrepid.eth",0,3,0,13124,8.4,"2024-10-05",626,"",""],
+  ["0x19e7a132bd4b42f580f546197f42e19c42cdfe6c","intrepid.eth","intrepid.eth","intrepid.eth",0,4,0,13124,8.4,"2024-10-05",626,"",""],
   ["0x10e332891e38ac2d40860120754192705c5896d8","ahcorarare.eth","ahcorarare.eth","",0,2,0,13109,8.4,"2022-06-18",627,"",""],
   ["0xcea16609b4781a54cbcebd22bdcab1bd7981b9b8","","","",0,2,0,13098,8.4,"2022-10-07",628,"",""],
   ["0xdf38a8b16f9bb88083c1f1edad41c5323d60f8a8","w1nn1e.eth","w1nn1e.eth","",0,2,0,13085,8.4,"2022-07-28",629,"",""],
