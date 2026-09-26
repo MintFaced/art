@@ -3067,12 +3067,16 @@ MF.session = {
          line. It computes that line itself now, from the address, the way the
          spec defines it ... so the field is gone rather than left on the wire
          as something a route might one day be tempted to trust. */
-      return this.post({ action: 'sign in', format: '4361', address, issued, until, domain, nonce, uri, chainId, signature });
+      /* The exact bytes the wallet signed, posted whole. The route verifies
+         the signature against this string and reads domain/nonce/expiry out of
+         it ... it never rebuilds the sentence from fields, which is where a
+         WalletConnect sign-in used to die on a Chain ID the rebuild dropped. */
+      return this.post({ action: 'sign in', format: '4361', address, message, signature });
     }
-    const signature = await MF.sign(
-      this.sentence({ action: 'sign in', address, issued, until, domain }), address, onState);
-    // the cookies come back on this answer; nothing is kept here
-    return this.post({ action: 'sign in', address, issued, until, domain, signature });
+    const houseMessage = this.sentence({ action: 'sign in', address, issued, until, domain });
+    const signature = await MF.sign(houseMessage, address, onState);
+    // Same shape as the 4361 rail: the exact signed message, verified whole.
+    return this.post({ action: 'sign in', format: 'house', address, message: houseMessage, signature });
   },
 
   async close() {
