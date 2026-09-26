@@ -584,8 +584,12 @@ export function chatStore(pipe, cfg = {}) {
      * a hash of the token, which is a stable name for the session that cannot
      * be used as one, and it outlives the session by a good margin: an audit
      * of who authorised what is asked long after the month is up. */
-    async openSession(token, address, seconds, scope = SCOPE, proof = null) {
-      const value = JSON.stringify({ a: lower(address), s: Math.floor(scope) });
+    async openSession(token, address, seconds, scope = SCOPE, proof = null, extra = {}) {
+      /* `extra` carries an X-first session's identity (x id, account id) beside
+         the address. A wallet session passes nothing and is byte-for-byte what
+         it always was; a spectator passes an empty address and its identity in
+         extra. session() reads both back. */
+      const value = JSON.stringify({ a: lower(address), s: Math.floor(scope), ...extra });
       const cmds = [['SET', keys.session(token), value, 'EX', String(Math.floor(seconds))]];
       if (proof) {
         cmds.push(['SET', keys.proof(sessionId(token)), JSON.stringify({
@@ -606,7 +610,10 @@ export function chatStore(pipe, cfg = {}) {
       if (v.startsWith('0x')) return { address: v.toLowerCase(), scope: 1, id: sessionId(token) };
       try {
         const j = JSON.parse(v);
-        return { address: String(j.a).toLowerCase(), scope: Number(j.s) || 1, id: sessionId(token) };
+        return {
+          address: String(j.a || '').toLowerCase(), scope: Number(j.s) || 1, id: sessionId(token),
+          account: j.acct || null, x_id: j.x || null,
+        };
       } catch (e) { return null; }
     },
     async whoseSession(token) {
