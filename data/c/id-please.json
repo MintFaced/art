@@ -213,7 +213,7 @@
    "edition": {
     "type": "edition",
     "minted": 328,
-    "holders": 232,
+    "holders": 233,
     "artist_held": 0,
     "vaulted": 0
    },
@@ -507,14 +507,6 @@
      "status": "acquired"
     },
     {
-     "address": "0x1234248d4b9525F42434e20D46Abbff2686f56B3",
-     "ens": null,
-     "display_name": null,
-     "qty": 3,
-     "acquired": null,
-     "status": "acquired"
-    },
-    {
      "address": "0xf88e357F20f5a05f43F43A5d697e245f9E3a2698",
      "ens": null,
      "display_name": null,
@@ -580,6 +572,14 @@
     },
     {
      "address": "0x2A8299aA3A8b4e615Eb32D99fCC0c196f6f0983f",
+     "ens": null,
+     "display_name": null,
+     "qty": 2,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x1234248d4b9525F42434e20D46Abbff2686f56B3",
      "ens": null,
      "display_name": null,
      "qty": 2,
@@ -1189,6 +1189,14 @@
     {
      "address": "0xB109581a2a1198c918E7548282659c1F5f1D394f",
      "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xB099A3c3043B262518d9b6CD4D5c9f589b15e2aD",
+     "ens": "100series.eth",
      "display_name": null,
      "qty": 1,
      "acquired": null,
