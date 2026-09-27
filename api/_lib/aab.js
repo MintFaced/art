@@ -176,14 +176,24 @@ export async function draft({ ids = null } = {}) {
   const c = await config();
   const holder = getAddress(c.holder);
   const all = (await railWorks()).filter((w) => !ids || ids.includes(w.id));
+  /* ONE LIVE ORDER PER WORK. Drafting everything leaves out a work that
+     already has an order with more than the renewal window left, because
+     signing it again would put a second live order for it on Seaport, and
+     every extra order is one more thing a cancel has to name. A work named
+     outright (a renewal) is drafted whatever it has. */
+  const live = new Map((await records()).map((r) => [r.id, r]));
+  const soon = Date.now() + Number(c.renew_within_days || 7) * 86400 * 1000;
   const skipped = [];
   const candidates = [];
+  let onRail = 0;
   for (const w of all) {
     if (w.status !== 'available') continue;
+    const has = live.get(w.id);
+    if (!ids && has && Date.parse(has.expires) > soon) { onRail += 1; continue; }
     if (!w.rail_wei) { skipped.push({ id: w.id, title: w.title, why: 'no list price' }); continue; }
     candidates.push(w);
   }
-  if (!candidates.length) return { orders: [], skipped, needs_approval: [] };
+  if (!candidates.length) return { orders: [], skipped, needs_approval: [], on_rail: onRail };
 
   const client = chain();
   const operator = S.OPENSEA_CONDUIT;
@@ -215,7 +225,7 @@ export async function draft({ ids = null } = {}) {
     collection: candidates.find((w) => w.contract === a).collection_title,
     tx: { to: a, data: approvalData(operator), value: '0' },
   }));
-  if (!included.length) return { orders: [], skipped, needs_approval: needs };
+  if (!included.length) return { orders: [], skipped, needs_approval: needs, on_rail: onRail };
 
   const now = Math.floor(Date.now() / 1000);
   const start = now - 60;
@@ -241,6 +251,7 @@ export async function draft({ ids = null } = {}) {
       list_eth: eth(w.list_wei), rail_eth: eth(w.rail_wei) })),
     skipped,
     needs_approval: needs,
+    on_rail: onRail,
   };
 }
 
@@ -304,12 +315,10 @@ export async function keepSigned({ draft: id, signature }) {
   d.works.forEach((w, i) => {
     const old = parse(before[i]);
     /* An order this one replaces is still good on Seaport until it expires or
-       is cancelled. Where the price moved it is kept aside, so /mintwork can
-       offer to cancel it; where it did not, two orders at one price for one
-       token is only a spare door, closing on its own within the week, and a
-       cancel would spend gas to shut it early. */
-    if (old && old.hash !== S.orderHash(orders[i]) && String(old.rail_wei) !== String(w.rail_wei)
-      && Date.parse(old.expires) > Date.now()) {
+       is cancelled, and whoever was served it can still fill it. So it is
+       kept, price changed or not: "cancel everything" has to be able to name
+       every order that was ever handed out and has not yet run out. */
+    if (old && old.hash !== S.orderHash(orders[i]) && Date.parse(old.expires) > Date.now()) {
       cmds.push(['RPUSH', K.retired, JSON.stringify({ id: old.id, hash: old.hash, order: old.order,
         rail_wei: old.rail_wei, expires: old.expires, retired: new Date().toISOString() })]);
       retired += 1;
@@ -740,9 +749,8 @@ export async function ledger() {
  * which is offered separately and says what it costs.
  */
 export async function cancelPlan(scope = 'all') {
-  const list = scope === 'retired'
-    ? ((await one('LRANGE', K.retired, '0', '-1')) || []).map(parse).filter(Boolean)
-    : await records();
+  const retired = ((await one('LRANGE', K.retired, '0', '-1')) || []).map(parse).filter(Boolean);
+  const list = scope === 'retired' ? retired : [...(await records()), ...retired];
   const live = list.filter((r) => Date.parse(r.expires) > Date.now());
   if (!live.length) return { count: 0 };
   return {

@@ -172,6 +172,9 @@ try {
   is('a batch signed by anybody else is refused', [kept.status, /not by test holder/.test(kept.body.error)], [403, true]);
   kept = await post({ action: 'keep', draft: dr.body.draft, signature });
   is('the holder\'s one signature puts five orders on the rail', kept.body.kept, 5);
+  KV.delete('aab:lock:draft');
+  const again = await post({ action: 'draft' });
+  is('drafting everything again signs nothing twice', [again.body.orders.length, again.body.on_rail], [0, 5]);
 
   console.log('\n— a fresh agent, with nothing but ETH —');
   const agentKey = generatePrivateKey();
@@ -235,10 +238,20 @@ try {
   is('a work that left the wallet answers 410', [moved.status, moved.body.error], [410, 'This work has left the holding wallet.']);
   is('and comes off the rail', KV.has(`aab:o:${c.id}`), false);
 
-  /* Cancelled: one transaction, only the rail's orders. */
+  /* Renewed: the old order is still good on Seaport, so it stays on file. */
+  const oldHash = KV.get(`aab:o:${d.id}`) && JSON.parse(KV.get(`aab:o:${d.id}`)).hash;
+  KV.delete('aab:lock:draft');
+  const rn = await post({ action: 'draft', ids: [d.id] });
+  const rs = await pub.request({ method: 'eth_signTypedData_v4', params: [HOLDER, JSON.stringify(rn.body.typed)] });
+  const rk = await post({ action: 'keep', draft: rn.body.draft, signature: rs });
+  is('a renewal at the same price still keeps the order it replaced', rk.body.retired, 1);
+
+  /* Cancelled: one transaction, every order the rail ever handed out. */
   const plan = await post({ action: 'cancel', scope: 'all' });
-  is('cancel names the two orders still on the rail', plan.body.count, 2);
+  is('cancel names the two on the rail and the one a renewal replaced', plan.body.count, 3);
   await send(HOLDER, plan.body.tx);
+  const [, oldCancelled] = await pub.readContract({ address: S.SEAPORT, abi: S.SEAPORT_ABI, functionName: 'getOrderStatus', args: [oldHash] });
+  is('and the replaced one is cancelled on chain too', oldCancelled, true);
   is('a cancelled order answers 410', (await get(`/ai/buy/${d.id}`)).status, 410);
   KV.delete('aab:lock:sweep');
   const sw = await post({ action: 'sweep' });

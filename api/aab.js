@@ -61,6 +61,10 @@ export async function GET(request) {
   }
 }
 
+/* A HEAD is a GET without the body, which the platform strips; an agent
+   checking the door before it knocks gets the same status. */
+export const HEAD = GET;
+
 export async function POST(request) {
   useRequestOrigin(request);
   if (!storeConfigured()) return unready();
@@ -84,6 +88,8 @@ export async function POST(request) {
     if (action === 'cancel') {
       return json(await R.cancelPlan(body.scope === 'retired' ? 'retired' : 'all'));
     }
+    /* After a cancel of everything is mined: the superseded list named in it
+       is cleared too. The page calls this; the chain is the proof. */
     /* The nuclear option, said as what it is: every Seaport order this wallet
        has ever signed, OpenSea listings included. The page asks twice. */
     if (action === 'void') {

@@ -160,7 +160,9 @@ const connect = () => run(async () => { W.who = await MF.connect(); say(null); }
 const draftBatch = (ids) => run(async () => {
   say('Reading the chain for every work on the rail ...');
   W.draft = await api({ action: 'draft', ids });
-  say(W.draft.count ? `${W.draft.count} orders drafted. Check the prices, then sign once.` : 'Nothing to sign.');
+  const kept = W.draft.on_rail ? ` ${W.draft.on_rail} already on the rail are left as they are.` : '';
+  say(W.draft.count ? `${W.draft.count} orders drafted.${kept} Check the prices, then sign once.`
+    : `Nothing new to sign.${kept}`);
 });
 
 const signBatch = () => run(async () => {
@@ -187,7 +189,7 @@ const cancelOrders = (scope) => run(async () => {
   if (!plan.count) { say('Nothing to cancel.'); return; }
   if (!confirm(`Cancel ${plan.count} rail order${plan.count === 1 ? '' : 's'} on Seaport? Only these orders stop; OpenSea listings are not touched. One transaction.`)) return;
   await send(plan.tx, `Cancelling ${plan.count} orders`);
-  if (scope === 'retired') await api({ action: 'cleared' });
+  await api({ action: 'cleared' });
   await api({ action: 'sweep' }).catch(() => null);
   await load();
 });
@@ -272,9 +274,9 @@ function draw() {
 
     <section>
       <h2>Stop</h2>
-      <p>Cancelling names the rail's orders to Seaport and stops exactly those. Your OpenSea listings carry on.</p>
+      <p>Cancelling names the rail's orders to Seaport, including any a re-sign replaced, and stops exactly those. Your OpenSea listings carry on.</p>
       <div class="row">
-        <button data-do="cancel" ${W.busy || !isHolder() || !L.orders.length ? 'disabled' : ''}>Cancel all ${L.orders.length} rail orders</button>
+        <button data-do="cancel" ${W.busy || !isHolder() || !(L.orders.length + L.retired) ? 'disabled' : ''}>Cancel all ${L.orders.length + L.retired} rail orders</button>
         ${L.retired ? `<button data-do="cancel-retired" ${W.busy || !isHolder() ? 'disabled' : ''}>Cancel ${L.retired} superseded</button>` : ''}
       </div>
       <p class="quiet">The last resort voids every Seaport order ${e(L.holder_name || 'this wallet')} has ever signed, OpenSea listings included, by raising its counter. Nothing signed before it can be filled again.</p>
