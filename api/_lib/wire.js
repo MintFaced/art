@@ -149,11 +149,26 @@ export function compose(ev, { overlay = null, register = null } = {}) {
        the order came through the rail. Anybody who asks the rail for an order
        can fill it, so who filled it is not the rail's to claim. */
     const lead = p.via === 'agent-rail' ? 'COLLECTED ON THE AGENT RAIL' : 'COLLECTED';
+    /* In a rebate campaign: what was rebated, and who sent the buyer where the
+       scout has a handle to be tagged by. A scout with no handle is still paid;
+       they are simply not named on the timeline. */
+    const scout = p.scout ? tag(p.scout) : null;
     return {
-      text: speak([lead, up(p.collection), up(p.title), up(p.price), w.label])
+      text: speak([lead, up(p.collection), up(p.title), up(p.price), w.label,
+        p.rebate_pct ? `🧧 REBATED ${p.rebate_pct}%` : null,
+        scout && scout.handle ? `SENT BY @${scout.handle}` : null])
         + (p.url ? `\n\n${p.url}` : ''),
       card: { kind: 'work', id: p.id },
     };
+  }
+
+  if (ev.kind === 'rebate-close') {
+    return { text: speak([`${up(p.campaign)} CLOSED`, `${Number(p.rebated_eth).toFixed(2)} ETH REBATED`,
+      `${p.collectors} COLLECTORS`, `${p.scouts} SCOUT${p.scouts === 1 ? '' : 'S'}`]) + '\n\nhttps://mintface.art/ai', card: null };
+  }
+
+  if (ev.kind === 'rebate-paid') {
+    return { text: speak(['REBATES PAID', `${Number(p.paid_eth).toFixed(2)} ETH`]) + '\n\nhttps://mintface.art/ai', card: null };
   }
 
   return null;

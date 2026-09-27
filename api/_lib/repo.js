@@ -38,6 +38,28 @@ export async function readFile(path) {
   return { sha: j.sha, text: Buffer.from(j.content, 'base64').toString('utf8') };
 }
 
+/**
+ * A file as it stood at a commit, raw. Raw rather than the JSON form, which
+ * stops returning content at a megabyte, and the TAO table is past half that.
+ */
+export async function readFileAt(path, ref) {
+  if (!TOKEN) throw new Error('GITHUB_TOKEN is not set');
+  const r = await api(`/repos/${REPO}/contents/${encodeURI(path)}?ref=${encodeURIComponent(ref)}`,
+    { headers: { accept: 'application/vnd.github.raw' } });
+  if (!r.ok) throw new Error(`github read ${path}@${String(ref).slice(0, 7)} ${r.status}`);
+  return r.text();
+}
+
+/** The last commit to a path at or before a moment, on the branch the site deploys. */
+export async function lastCommitBefore(path, until) {
+  if (!TOKEN) throw new Error('GITHUB_TOKEN is not set');
+  const r = await api(`/repos/${REPO}/commits?sha=${encodeURIComponent(BRANCH)}&path=${encodeURIComponent(path)}`
+    + `&until=${encodeURIComponent(until)}&per_page=1`);
+  if (!r.ok) throw new Error(`github commits ${r.status}`);
+  const j = await r.json();
+  return j && j[0] ? { sha: j[0].sha, at: j[0].commit.committer.date } : null;
+}
+
 export async function writeFile(path, text, message, sha) {
   if (!TOKEN) throw new Error('GITHUB_TOKEN is not set');
   const r = await api(`/repos/${REPO}/contents/${encodeURI(path)}`, {

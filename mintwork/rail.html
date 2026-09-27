@@ -62,6 +62,14 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 .mw .say{font-size:15px;line-height:1.6;margin:14px 0 0;min-height:1.6em}
 .mw .who{font-family:var(--font-mono);font-size:13px;color:var(--ink);word-break:break-all}
 .mw ul{margin:8px 0 0;padding-left:18px}
+.mw label{font-family:var(--font-mono);font-size:13px;color:var(--muted);display:inline-flex;gap:8px;align-items:center}
+.mw input.num{width:96px;padding:9px 10px;border:1px solid var(--rule);background:transparent;color:var(--ink);
+  font-family:var(--font-mono);font-size:15px}
+.mw input.num:focus{outline:none;border-color:var(--ink)}
+.mw pre.msg{white-space:pre-wrap;font-family:var(--font-mono);font-size:13px;line-height:1.6;color:var(--ink);
+  border:1px solid var(--rule);padding:12px 14px;margin:14px 0 0}
+.mw label.tick{font-family:var(--font-sans);font-size:15px;color:var(--ink);margin:14px 0 0;display:flex}
+.mw label.tick input{width:18px;height:18px}
 .mw li{font-size:15px;line-height:1.6;color:var(--ink-3)}
 @media(max-width:640px),(pointer:coarse){
   .mw{padding:36px 20px 80px}
@@ -86,7 +94,9 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
  * the server checks the signature before it keeps anything. Everything else
  * here is a transaction the wallet is asked to send, and says what it does
  * before it asks. */
-const W = { who: null, ledger: null, draft: null, busy: false, say: null };
+const W = { who: null, ledger: null, draft: null, busy: false, say: null,
+  rebates: null, rdraft: null, adviser: false, payout: null,
+  terms: { holder_pct: '40', scout_pct: '10', min_tao: '5000', cap_pct: '5', min_payout_eth: '0.001' } };
 const e = MF.escape;
 const $ = (id) => document.getElementById(id);
 const eth = (n) => (n == null ? '' : `${Number(n).toLocaleString('en-NZ', { maximumFractionDigits: 5 })}`);
@@ -110,10 +120,17 @@ async function api(body) {
 
 async function load() {
   try {
-    W.ledger = await fetch('/api/aab?view=ledger', { cache: 'no-store' }).then((r) => r.json());
+    [W.ledger, W.rebates] = await Promise.all([
+      fetch('/api/aab?view=ledger', { cache: 'no-store' }).then((r) => r.json()),
+      fetch('/api/aab?view=rebates', { cache: 'no-store' }).then((r) => r.json()).catch(() => null),
+    ]);
   } catch (err) { W.say = { text: 'The rail did not answer. Try again in a minute.', bad: true }; }
   draw();
 }
+
+/* A message, as personal_sign wants it: the UTF-8 bytes in hex. */
+const hexOf = (s) => `0x${[...new TextEncoder().encode(s)].map((b) => b.toString(16).padStart(2, '0')).join('')}`;
+const personalSign = (message) => provider().request({ method: 'personal_sign', params: [hexOf(message), W.who] });
 
 function say(text, bad = false) { W.say = text ? { text, bad } : null; const el = $('say'); if (el) { el.textContent = text || ''; el.className = `say${bad ? ' bad' : ''}`; } }
 
@@ -203,6 +220,93 @@ const voidAll = () => run(async () => {
   await load();
 });
 
+/* ---------- 🧧 the rebate ---------- */
+
+const termsFrom = () => ({ ...W.terms });
+const FIELD = { 'r-holder': 'holder_pct', 'r-scout': 'scout_pct', 'r-min': 'min_tao', 'r-cap': 'cap_pct', 'r-payout': 'min_payout_eth' };
+
+const rebateDraft = () => run(async () => {
+  W.rdraft = await api({ action: 'rebate-draft', terms: termsFrom() });
+  say('Read the message below. It is what you sign, and every term is in it.');
+});
+
+const rebateStart = () => run(async () => {
+  if (!W.adviser) { say('Tick the adviser box first. REBATE.md says not to go live before that check.', true); return; }
+  say('Sign the campaign in your wallet.');
+  const signature = await personalSign(W.rdraft.message);
+  const out = await api({ action: 'rebate-start', terms: W.rdraft.terms, issued: W.rdraft.issued, signature });
+  W.rdraft = null;
+  say(`${out.campaign.name} is open until ${new Date(out.campaign.ends_at).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long' })}.`);
+  await load();
+});
+
+const rebateClose = (id) => run(async () => {
+  if (!confirm('Close this campaign now? Sales from here on are not rebated. What is already owed stands.')) return;
+  const m = await api({ action: 'rebate-close', id });
+  say('Sign the close in your wallet.');
+  const signature = await personalSign(m.message);
+  await api({ action: 'rebate-close', id, issued: m.issued, signature });
+  say('Closed. Prepare the payout when you are ready.');
+  await load();
+});
+
+const payoutPrepare = (id) => run(async () => {
+  W.payout = await api({ action: 'rebate-payout', id });
+  say(W.payout.recipients ? `${W.payout.recipients} to pay, in ${W.payout.chunks.length} transaction${W.payout.chunks.length === 1 ? '' : 's'}.` : 'Nobody is owed the minimum yet.');
+});
+
+const payoutSend = (i) => run(async () => {
+  const ch = W.payout.chunks[i];
+  const hash = await send(ch.tx, `Paying ${ch.count} rebates (${eth(ch.value_eth)} ETH)`);
+  await api({ action: 'rebate-paid', tx: hash });
+  ch.sent = hash;
+  say(`Paid ${ch.count}. The ledger has it.`);
+  await load();
+});
+
+function rebatePanel() {
+  const R = W.rebates || { campaigns: [] };
+  const last = R.campaigns[R.campaigns.length - 1] || null;
+  const holder = isHolder();
+  const off = W.busy || !holder ? 'disabled' : '';
+  if (last && last.status === 'open') {
+    return `<p>${e(last.name)} is open until ${e(new Date(last.ends_at).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long' }))}:
+        ${last.holder_pct}% to holders of ${last.min_tao} TAO or more, ${last.scout_pct}% to scouts.</p>
+      <div class="figs">
+        <div class="fig"><b>${last.sales}</b><span>Sales in it</span></div>
+        <div class="fig"><b>${eth(last.rebated_eth)}</b><span>ETH rebated</span></div>
+        <div class="fig"><b>${last.holders}</b><span>Holders owed</span></div>
+        <div class="fig"><b>${last.scouts}</b><span>Scouts owed</span></div>
+      </div>
+      <div class="row"><button data-do="r-close" data-id="${e(last.id)}" ${off}>Close ${e(last.name)} early</button></div>`;
+  }
+  if (last && last.status === 'closed') {
+    const p = W.payout && W.payout.campaign === last.id ? W.payout : null;
+    return `<p>${e(last.name)} closed ${e(new Date(last.closed_at).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long' }))}
+        (${e(last.closed_why)}), with ${eth(last.rebated_eth)} ETH rebated. Nothing is sent until you sign it.</p>
+      ${p ? `<p>${p.recipients} owed ${last.min_payout_eth} ETH or more, ${eth(p.total_eth)} ETH in all.
+          ${p.below.count ? `${p.below.count} are owed less (${eth(p.below.total_eth)} ETH together) and roll forward.` : ''}</p>
+        ${p.chunks.map((ch, i) => `<div class="row"><span>${ch.count} recipients &middot; ${eth(ch.value_eth)} ETH</span>
+          ${ch.sent ? '<span class="quiet">Sent</span>' : `<button class="go" data-do="p-send" data-i="${i}" ${off}>Send</button>`}</div>`).join('')}`
+        : `<div class="row"><button class="go" data-do="p-prep" data-id="${e(last.id)}" ${W.busy ? 'disabled' : ''}>Prepare payout</button></div>`}`;
+  }
+  const next = (R.campaigns.length || 0) + 1;
+  const d = W.rdraft;
+  return `${last ? `<p class="quiet">${e(last.name)} is paid.</p>` : ''}
+    <p>A campaign rebates part of every sale on the agent rail: a share to TAO holders by holdings, a share to the scout who sent the buying AI. It runs until the orders it covers expire or you close it. Nothing is sent until you sign the payout.</p>
+    <div class="row">
+      <label>Holders % <input id="r-holder" class="num" value="${e(W.terms.holder_pct)}" inputmode="numeric"></label>
+      <label>Scouts % <input id="r-scout" class="num" value="${e(W.terms.scout_pct)}" inputmode="numeric"></label>
+      <label>Minimum TAO <input id="r-min" class="num" value="${e(W.terms.min_tao)}" inputmode="numeric"></label>
+      <label>Cap % <input id="r-cap" class="num" value="${e(W.terms.cap_pct)}" inputmode="numeric"></label>
+      <label>Pay out from ETH <input id="r-payout" class="num" value="${e(W.terms.min_payout_eth)}" inputmode="decimal"></label>
+    </div>
+    <div class="row"><button data-do="r-draft" ${W.busy ? 'disabled' : ''}>Draft Campaign ${next}</button></div>
+    ${d ? `<pre class="msg">${e(d.message)}</pre>
+      <label class="tick"><input type="checkbox" id="r-adviser" ${W.adviser ? 'checked' : ''}> An NZ adviser has reviewed the rebate framing</label>
+      <div class="row"><button class="go" data-do="r-start" ${off || (W.adviser ? '' : 'disabled')}>Sign and start</button></div>` : ''}`;
+}
+
 /* ---------- the page ---------- */
 
 function draftPanel() {
@@ -273,6 +377,11 @@ function draw() {
     </section>` : ''}
 
     <section>
+      <h2>🧧 Rebates</h2>
+      ${rebatePanel()}
+    </section>
+
+    <section>
       <h2>Stop</h2>
       <p>Cancelling names the rail's orders to Seaport, including any a re-sign replaced, and stops exactly those. Your OpenSea listings carry on.</p>
       <div class="row">
@@ -300,6 +409,26 @@ document.addEventListener('click', (ev) => {
   if (act === 'cancel') cancelOrders('all');
   if (act === 'cancel-retired') cancelOrders('retired');
   if (act === 'void') voidAll();
+  if (act === 'r-draft') rebateDraft();
+  if (act === 'r-start') rebateStart();
+  if (act === 'r-close') rebateClose(b.dataset.id);
+  if (act === 'p-prep') payoutPrepare(b.dataset.id);
+  if (act === 'p-send') payoutSend(Number(b.dataset.i));
+});
+document.addEventListener('change', (ev) => {
+  if (ev.target && ev.target.id === 'r-adviser') { W.adviser = ev.target.checked; draw(); }
+});
+/* A term changed after drafting is a different campaign from the one drafted,
+   so the draft is put away rather than signed with the old terms in it. */
+document.addEventListener('input', (ev) => {
+  const k = ev.target && FIELD[ev.target.id];
+  if (!k) return;
+  W.terms[k] = ev.target.value;
+  if (W.rdraft) {
+    const id = ev.target.id;
+    W.rdraft = null; W.adviser = false; say('Terms changed. Draft again to sign them.'); draw();
+    const el = $(id); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+  }
 });
 
 load();

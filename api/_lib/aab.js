@@ -510,13 +510,24 @@ export async function recordFill(rec, { tx, buyer, block }) {
       }, `Collected on the agent rail: ${rec.title} (${fill.price_eth} ETH)`);
     } catch (e) { console.error('aab: sale state not written', rec.id, String(e.message || e)); }
   }
+  /* The rebate, where a campaign is open and this work is in it, weighed
+     before the tweet so the tweet can say so. A rebate that cannot be worked
+     out now is not lost: the sale is recorded, and the allocation can be run
+     for it again. */
+  let rebate = null;
+  try {
+    const R = await import('./rebate.js');
+    rebate = await R.onRailFill(rec, { tx, buyer, block });
+    await R.checkClose();
+  } catch (e) { console.error('aab: rebate not weighed', rec.id, String(e.message || e)); }
   await enqueue('sale', {
     id: rec.id, title: rec.title, collection: rec.collection_title,
     price: `${fill.price_eth} ETH`, address: buyer, url: rec.url,
     image: `${site()}/api/og?work=${encodeURIComponent(rec.id)}`,
     tx, via: 'agent-rail',
+    ...(rebate ? { rebate_pct: rebate.pct, scout: rebate.scout && rebate.scout.wallet } : {}),
   });
-  return { fill, fresh: true };
+  return { fill, fresh: true, rebate };
 }
 
 /**
@@ -563,9 +574,12 @@ export function welcome(fill) {
 }
 
 /** The 402: the order, the transaction that fills it, and what to do after. */
-export function paymentRequired(rec, c) {
+export function paymentRequired(rec, c, scout = null) {
   const components = S.orderFromJSON(rec.order);
   const tx = S.fulfillTransaction(components, rec.signature);
+  /* The scout rides at the end of the calldata, where Seaport never reads it,
+     so it is the buyer's own transaction that says who sent them. */
+  if (scout && scout.wallet) tx.data = `${tx.data}4d465231${String(scout.wallet).toLowerCase().slice(2)}`;
   const url = `${site()}/ai/buy/${encodeURIComponent(rec.id)}`;
   return {
     x402Version: 1,
@@ -591,6 +605,9 @@ export function paymentRequired(rec, c) {
         seaport: { address: S.SEAPORT, version: S.VERSION },
         order: JSON.parse(JSON.stringify(S.asOrder(components, rec.signature), (k, v) => (typeof v === 'bigint' ? v.toString() : v))),
         transaction: { chainId: tx.chainId, to: tx.to, value: tx.value.toString(), data: tx.data },
+        ...(scout ? { scout: scout.wallet
+          ? { ref: scout.ref, wallet: scout.wallet, note: 'Named in the transaction above, after the Seaport call. Send it unchanged.' }
+          : { ref: scout.ref, wallet: null, note: 'That ref names nobody we know. The transaction is unchanged and the purchase goes ahead.' } } : {}),
         then: {
           how: 'Request this URL again with the transaction hash, either as the X-PAYMENT header or as ?tx=0x...',
           example: `curl -H "X-PAYMENT: 0xYOUR_TX_HASH" ${url}`,
@@ -644,7 +661,7 @@ export async function gate(c, id, headers) {
  *   409  a hash was sent that does not fill it;
  *   410  it was on the rail and is not any more.
  */
-export async function buy(id, { txHash = null, headers = new Headers() } = {}) {
+export async function buy(id, { txHash = null, headers = new Headers(), ref = null } = {}) {
   const c = await config();
   const done = parse(await one('GET', K.fill(id)));
   if (done) return { status: 200, body: welcome(done) };
@@ -676,7 +693,12 @@ export async function buy(id, { txHash = null, headers = new Headers() } = {}) {
   }
   const refused = await gate(c, id, headers);
   if (refused) return refused;
-  return { status: 402, body: paymentRequired(rec, c) };
+  let scout = null;
+  if (ref) {
+    try { scout = await (await import('./rebate.js')).resolveRef(ref); }
+    catch (e) { scout = { ref: String(ref).slice(0, 96), wallet: null }; }
+  }
+  return { status: 402, body: paymentRequired(rec, c, scout) };
 }
 
 /** Off the rail, with the reason kept where /mintwork/rail can read it. */
@@ -712,6 +734,7 @@ export async function sweep() {
     await retire(rec, s.state);
     out.retired += 1;
   }
+  try { await (await import('./rebate.js')).checkClose(); } catch (e) { out.rebate = String(e.message || e).slice(0, 120); }
   return out;
 }
 

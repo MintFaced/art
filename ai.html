@@ -104,6 +104,32 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
 .later{max-width:660px;margin:0 auto;padding:0 28px}
 .later p{font-family:var(--font-sans);font-weight:400;font-size:14px;line-height:1.7;color:var(--muted);margin:18px 0 0}
 
+/* 🧧 The rebate ledger. Drawn only while there is a campaign to show, in the
+   Studio's type: 13px at the least, mono caps for labels and figures only,
+   sentences in the sans. */
+.rebates{max-width:660px;margin:0 auto;padding:0 28px}
+.rebates[hidden]{display:none}
+.rebates h2{font-family:var(--font-mono);font-weight:400;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:56px 0 0;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.rebates .big{font-family:var(--font-sans);font-weight:400;font-size:clamp(24px,3.4vw,32px);line-height:1.2;letter-spacing:-.02em;color:var(--ink);margin:22px 0 0}
+.rebates p{font-family:var(--font-sans);font-size:17px;line-height:1.65;color:var(--ink-2);margin:14px 0 0}
+.rebates .state{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:18px 0 0;font-variant-numeric:tabular-nums}
+.rebates .you{border-left:2px solid var(--ink);padding:10px 14px;margin:18px 0 0;font-family:var(--font-sans);font-size:17px}
+.rebates .you b{font-family:var(--font-mono);font-weight:400;font-variant-numeric:tabular-nums}
+.rebates table{width:100%;border-collapse:collapse;margin:16px 0 0;font-variant-numeric:tabular-nums}
+.rebates th{text-align:left;font-family:var(--font-mono);font-weight:400;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:0 0 8px;border-bottom:1px solid var(--rule)}
+.rebates td{padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.rebates th + th,.rebates td + td{padding-left:16px}
+.rebates td.n{max-width:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rebates td.n a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.rebates td.k{font-family:var(--font-mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.rebates td.w,.rebates th.w{text-align:right;font-family:var(--font-mono);font-size:13px;white-space:nowrap}
+.rebates details{margin:14px 0 0}
+.rebates summary{cursor:pointer;font-family:var(--font-mono);font-size:13px;color:var(--muted);padding:6px 0}
+.rebates summary:hover{color:var(--ink)}
+.rebates .sale{font-size:15px;line-height:1.6;color:var(--ink-3);margin:10px 0 0}
+.rebates .small{font-family:var(--font-sans);font-size:13px;line-height:1.6;color:var(--muted);margin:22px 0 0}
+.rebates code{font-family:var(--font-mono);font-size:13px}
+
 @media(max-width:1200px){.cards{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:820px){.cards{grid-template-columns:repeat(2,1fr);gap:22px}}
 </style>
@@ -135,6 +161,8 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
     </ol>
     <p>Orders carry a thirty day expiry and can be revoked in one transaction, so a price that has gone stale cannot be filled against.</p>
   </section>
+
+  <section class="rebates" id="rebates" hidden></section>
 
   <section class="machine">
     <h2 style="font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:56px auto 0;max-width:660px;padding-bottom:12px;border-bottom:1px solid var(--rule)">For machines</h2>
@@ -188,6 +216,46 @@ document.getElementById('curl').textContent =
 document.getElementById('registry').textContent =
   'Requests are checked against the ERC-8004 registry and the result is logged with each fill. '
   + 'It is not a gate today. The record is what would make it one.';
+
+/* 🧧 The rebate ledger, when there is one. Nothing is drawn until a campaign
+   has been started, so the page promises nothing before the studio does. */
+(async function () {
+  const el = document.getElementById('rebates');
+  const me = MF.session && MF.session.current ? MF.session.current() : null;
+  let R;
+  try {
+    R = await fetch(`/api/aab?view=rebates${me && me.address ? `&wallet=${encodeURIComponent(me.address)}` : ''}`)
+      .then((r) => (r.ok ? r.json() : null));
+  } catch (err) { R = null; }
+  if (!R || !R.campaigns || !R.campaigns.length) return;
+  const e = MF.escape;
+  const n5 = (x) => Number(x || 0).toLocaleString('en-NZ', { minimumFractionDigits: 6, maximumFractionDigits: 6 });
+  const day = (d) => new Date(d).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long' });
+  const c = R.campaigns[R.campaigns.length - 1];
+  const artistPct = 100 - c.holder_pct - c.scout_pct;
+  const artist = artistPct === 50 ? 'half to the artist' : `${artistPct}% to the artist`;
+  const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
+  const who = (r) => (r.url ? `<a href="${e(r.url)}">${e(r.name || short(r.wallet))}</a>` : e(r.name || short(r.wallet)));
+  const status = c.status === 'open' ? `open until ${day(c.ends_at)}` : c.status === 'paid' ? 'closed and paid' : `closed ${day(c.closed_at)}`;
+  el.innerHTML = `
+    <h2>🧧 Rebates</h2>
+    ${c.status === 'open' ? `<p class="big">Send an AI to look. If it buys, you get ${c.scout_pct}%.</p>` : ''}
+    <p>Every AI sale in this campaign: ${artist}, ${c.holder_pct}% rebated to 🧧 TAO holders by holdings, ${c.scout_pct}% to whoever sent the AI.</p>
+    <p class="state">${e(c.name)} &middot; ${e(status)} &middot; ${c.sales} sale${c.sales === 1 ? '' : 's'} &middot; ${n5(c.rebated_eth)} ETH rebated</p>
+    ${R.you ? `<p class="you">Owed to you: <b>${n5(R.you.owed_eth - R.you.paid_eth)} ETH</b>${R.you.paid_eth ? ` &middot; ${n5(R.you.paid_eth)} paid` : ''}</p>` : ''}
+    ${R.owed.length ? `<table><thead><tr><th>Name</th><th>For</th><th class="w">Owed</th></tr></thead><tbody>
+      ${R.owed.map((r) => `<tr><td class="n">${who(r)}</td><td class="k">${e(r.kind)}</td><td class="w">${n5(r.owed_eth)}</td></tr>`).join('')}
+    </tbody></table>${R.count > R.owed.length ? `<p class="state">and ${R.count - R.owed.length} more</p>` : ''}` : ''}
+    ${c.sale_rows.length ? `<details><summary>Each sale (${c.sale_rows.length})</summary>
+      ${c.sale_rows.map((s) => `<p class="sale"><a href="/w/${encodeURIComponent(s.work.id)}">${e(s.work.title)}</a> &middot;
+        ${n5(s.price_eth)} ETH &middot; ${s.scout ? `sent by ${who(s.scout)}` : 'no scout'} &middot;
+        ${n5(s.holder_pool_eth)} ETH to ${s.holders} holders.
+        Largest: ${s.top.map((t) => `${who(t)} ${n5(t.eth)}`).join(', ')}.</p>`).join('')}
+    </details>` : ''}
+    ${c.status === 'open' ? `<p>To send an AI: add <code>?ref=</code> with your wallet, ENS name or @handle to the buy link it uses, or the header <code>X-MintFace-Ref</code>. The ref is written into the buyer's own transaction. A scout needs ${c.min_tao.toLocaleString('en-NZ')} TAO or more, and cannot be the buyer.</p>` : ''}
+    <p class="small">Rebates are discretionary and one-off. Nothing here promises future rebates or returns. Holding MintFace art is collecting, not investing.</p>`;
+  el.hidden = false;
+})();
 
 (async function () {
   try {

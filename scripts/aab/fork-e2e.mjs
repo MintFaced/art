@@ -18,7 +18,7 @@
  */
 import { spawn } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
-import { createPublicClient, createTestClient, createWalletClient, http, parseAbi, parseEther } from 'viem';
+import { createPublicClient, createTestClient, createWalletClient, http, parseAbi, parseEther, toHex } from 'viem';
 import { mainnet } from 'viem/chains';
 import { english, generateMnemonic, generatePrivateKey, mnemonicToAccount, privateKeyToAccount } from 'viem/accounts';
 
@@ -131,13 +131,13 @@ const post = async (body) => {
 };
 
 try {
-  /* ---- five works move to the test holder, as if it were mintface.eth ---- */
+  /* ---- eight works move to the test holder, as if it were mintface.eth ---- */
   const col = (slug) => JSON.parse(readFileSync(new URL(`data/c/${slug}.json`, ROOT))).works;
   const held = async (w) => String(await pub.readContract({ address: w.digital.contract, abi: NFT, functionName: 'ownerOf',
     args: [BigInt(w.digital.token_id)] })).toLowerCase() === MINTFACE;
   const pick = [];
-  for (const w of col('geodetic-world').filter((x) => x.status === 'available')) { if (pick.length < 4 && await held(w)) pick.push(w); }
-  for (const w of col('wallet').filter((x) => x.status === 'available')) { if (pick.length < 5 && await held(w)) pick.push(w); }
+  for (const w of col('geodetic-world').filter((x) => x.status === 'available')) { if (pick.length < 7 && await held(w)) pick.push(w); }
+  for (const w of col('wallet').filter((x) => x.status === 'available')) { if (pick.length < 8 && await held(w)) pick.push(w); }
   await test.impersonateAccount({ address: MINTFACE });
   await test.setBalance({ address: MINTFACE, value: parseEther('1') });
   for (const w of pick) {
@@ -147,7 +147,7 @@ try {
   await test.stopImpersonatingAccount({ address: MINTFACE });
   console.log(`moved ${pick.map((w) => w.id).join(', ')} to the test holder\n`);
   is('the test holder is a plain wallet, with no code of its own', await pub.getCode({ address: HOLDER }) || null, null);
-  const [a, b, c, d, wal] = pick;
+  const [a, b, c, d, e, f, g, wal] = pick;
 
   console.log('— the holder, at /mintwork/rail —');
   let dr = await post({ action: 'draft' });
@@ -158,7 +158,7 @@ try {
   for (const n of dr.body.needs_approval) await send(HOLDER, n.tx);
   KV.delete('aab:lock:draft');
   dr = await post({ action: 'draft' });
-  is('approved, the batch is the five works it holds', dr.body.orders.map((o) => o.id).sort(), pick.map((w) => w.id).sort());
+  is('approved, the batch is the eight works it holds', dr.body.orders.map((o) => o.id).sort(), pick.map((w) => w.id).sort());
   const gw = dr.body.orders.find((o) => o.id === a.id);
   is('a Geodetic World is drafted at 25% under its list', [gw.list_eth, gw.rail_eth], [0.05, 0.0375]);
   const wo = dr.body.orders.find((o) => o.id === wal.id);
@@ -171,10 +171,39 @@ try {
   let kept = await post({ action: 'keep', draft: dr.body.draft, signature: forged });
   is('a batch signed by anybody else is refused', [kept.status, /not by test holder/.test(kept.body.error)], [403, true]);
   kept = await post({ action: 'keep', draft: dr.body.draft, signature });
-  is('the holder\'s one signature puts five orders on the rail', kept.body.kept, 5);
+  is('the holder\'s one signature puts eight orders on the rail', kept.body.kept, 8);
   KV.delete('aab:lock:draft');
   const again = await post({ action: 'draft' });
-  is('drafting everything again signs nothing twice', [again.body.orders.length, again.body.on_rail], [0, 5]);
+  is('drafting everything again signs nothing twice', [again.body.orders.length, again.body.on_rail], [0, 8]);
+
+  console.log('\n— 🧧 a rebate campaign, started by the holder —');
+  const B = await import('../../api/_lib/rebate.js');
+  const fresh = () => privateKeyToAccount(generatePrivateKey()).address.toLowerCase();
+  const [H1, H2, H3, SCOUT, POOR] = [fresh(), fresh(), fresh(), fresh(), fresh()];
+  /* The TAO table as a recompute would have left it: three holders, a scout
+     who is also a holder, one wallet under the line, and the holding wallet,
+     which must never be paid its own rebate. */
+  B.useSnapshot(() => ({ id: 'fixture-1', generated: '2026-09-26T21:31:24.000Z', wallets: {
+    [H1]: { tao: 400000 }, [H2]: { tao: 200000 }, [H3]: { tao: 60000 }, [SCOUT]: { tao: 20000 },
+    [POOR]: { tao: 1200 }, [HOLDER.toLowerCase()]: { tao: 900000 } } }));
+  B.useRegister({ named: [], rows: new Map([[SCOUT, {}]]), chosen: new Map(), urlOf: () => null,
+    who: (x) => (x === SCOUT ? { name: 'scout-one', x: 'scoutone', private: false } : { name: null, private: false }) });
+  const cd = await post({ action: 'rebate-draft', terms: {} });
+  is('the draft names every work on the rail as in scope', cd.body.scope.works.length, 8);
+  is('with the spec\'s terms', [cd.body.terms.holder_pct, cd.body.terms.scout_pct, cd.body.terms.min_tao, cd.body.terms.cap_pct],
+    [40, 10, 5000, 5]);
+  const notHolder = await privateKeyToAccount(generatePrivateKey()).signMessage({ message: cd.body.message });
+  is('nobody but the holder can start one', (await post({ action: 'rebate-start', terms: {}, issued: cd.body.issued, signature: notHolder })).status, 403);
+  const csig = await pub.request({ method: 'personal_sign', params: [toHex(cd.body.message), HOLDER] });
+  const started = await post({ action: 'rebate-start', terms: {}, issued: cd.body.issued, signature: csig });
+  is('the holder starts it with one signature', started.body.campaign && started.body.campaign.status, 'open');
+  /* A fork's clock starts from the forked block, seconds behind the wall. On
+     mainnet a block is stamped with its slot, so this is the fork catching up
+     with the world rather than the test bending a rule: a sale counts from the
+     moment the campaign opens, by the block's own time. */
+  await test.setNextBlockTimestamp({ timestamp: BigInt(Math.floor(Date.now() / 1000) + 2) });
+  await test.mine({ blocks: 1 });
+  is('and a second cannot open beside it', (await post({ action: 'rebate-draft', terms: {} })).status, 409);
 
   console.log('\n— a fresh agent, with nothing but ETH —');
   const agentKey = generatePrivateKey();
@@ -183,7 +212,7 @@ try {
   const wallet = createWalletClient({ account: agent, chain: mainnet, transport: http(RPC) });
 
   const feed = await get('/ai/catalog.json');
-  is('the feed lists the five', feed.body.works.map((w) => w.id).sort(), pick.map((w) => w.id).sort());
+  is('the feed lists all eight', feed.body.works.map((w) => w.id).sort(), pick.map((w) => w.id).sort());
   const row = feed.body.works.find((w) => w.id === a.id);
   is('each row carries what the spec asks for',
     ['id', 'title', 'collection', 'contract', 'token_id', 'standard', 'edition', 'image', 'list_price_eth', 'ai_price_eth', 'order_expires', 'url', 'buy']
@@ -230,6 +259,63 @@ try {
   is('a sale by another seller is not the rail\'s', await R.railSale(h2, { seller: MINTFACE }), null);
   const tweets = [...KV.entries()].filter(([k]) => k.startsWith('wire:e:')).length;
   is('so there are two tweets for two sales, not three', tweets, 2);
+  const saleOf = (h) => JSON.parse(KV.get(`rebate:sale:${String(h).toLowerCase()}`) || 'null');
+  const total = (s) => s.rows.reduce((t, r) => t + BigInt(r.amount_wei), 0n);
+  const HALF = parseEther('0.0375') / 2n;
+  is('both sales are in the campaign, with no scout: the holders take 50%',
+    [saleOf(hash).scout.wallet, total(saleOf(hash)), saleOf(h2).scout.wallet, total(saleOf(h2))], [null, HALF, null, HALF]);
+
+  console.log('\n— 🧧 scouts —');
+  const buyWith = async (w, ref) => {
+    const q = await get(`/ai/buy/${w.id}${ref ? `?ref=${encodeURIComponent(ref)}` : ''}`);
+    const t = q.body.accepts[0].extra.transaction;
+    const h = await wallet.sendTransaction({ to: t.to, data: t.data, value: BigInt(t.value) });
+    const r = await pub.waitForTransactionReceipt({ hash: h });
+    const back = await get(`/ai/buy/${w.id}`, { 'X-PAYMENT': h });
+    return { q, h, ok: r.status === 'success' && back.status === 200, sale: saleOf(h) };
+  };
+  const s1 = await buyWith(e, 'scout-one');
+  is('a ref by name resolves to the scout\'s wallet', s1.q.body.accepts[0].extra.scout.wallet, SCOUT);
+  is('and the fill carrying it lands on Seaport like any other', s1.ok, true);
+  const scoutRow = s1.sale.rows.find((r) => r.kind === 'scout');
+  is('the scout gets exactly 10%', [scoutRow.wallet, scoutRow.amount_wei], [SCOUT, String(parseEther('0.0375') / 10n)]);
+  is('and the rows add to exactly 50% in wei', total(s1.sale), HALF);
+  is('the holding wallet is never paid its own rebate', s1.sale.rows.some((r) => r.wallet === HOLDER.toLowerCase()), false);
+  is('nor is a wallet under 5,000 TAO', s1.sale.rows.some((r) => r.wallet === POOR), false);
+  is('a rerun from what was recorded gives the same rows', JSON.stringify((await B.reallocate(s1.h)).rows), JSON.stringify(s1.sale.rows));
+  const tw = [...KV.entries()].filter(([k]) => k.startsWith('wire:e:')).map(([, v]) => JSON.parse(v)).find((x) => x.payload.tx === s1.h);
+  is('its tweet carries the rebate and the scout', [tw.payload.rebate_pct, tw.payload.scout], [50, SCOUT]);
+  const s2 = await buyWith(f, agent.address);
+  is('the buyer as its own scout rolls into the holders', [s2.sale.scout.wallet, s2.sale.scout.why, total(s2.sale)],
+    [null, 'the scout is the buyer', HALF]);
+  const s3 = await buyWith(g, POOR);
+  is('a scout under 5,000 TAO rolls into the holders', [s3.sale.scout.why, total(s3.sale)], ['the scout held 1200 TAO, under 5000', HALF]);
+
+  console.log('\n— 🧧 close, and pay —');
+  const cl = await post({ action: 'rebate-close', id: 'c1' });
+  const clsig = await pub.request({ method: 'personal_sign', params: [toHex(cl.body.message), HOLDER] });
+  const closed = await post({ action: 'rebate-close', id: 'c1', issued: cl.body.issued, signature: clsig });
+  is('the holder closes it', closed.body.campaign && closed.body.campaign.status, 'closed');
+  const closeTweet = [...KV.entries()].filter(([k]) => k.startsWith('wire:e:')).map(([, v]) => JSON.parse(v)).find((x) => x.kind === 'rebate-close');
+  is('the close is tweeted with what it rebated', [closeTweet.payload.rebated_eth, closeTweet.payload.scouts], [0.09375, 1]);
+  const pub1 = await get('/api/aab?view=rebates');
+  const owedAll = pub1.body.owed.reduce((t, r) => t + BigInt(r.owed_wei), 0n);
+  is('the public ledger owes exactly half of every sale', owedAll, HALF * 5n);
+  is('a signed-in reader finds their own row', (await get(`/api/aab?view=rebates&wallet=${SCOUT}`)).body.you.kind, 'holder + scout');
+  const payout = await post({ action: 'rebate-payout', id: 'c1' });
+  is('the payout reconciles to the ledger to the wei', BigInt(payout.body.total_wei) + BigInt(payout.body.below.total_wei), owedAll);
+  const paidTo = pub1.body.owed.map((r) => r.wallet);
+  const was = await Promise.all(paidTo.map((x) => pub.getBalance({ address: x })));
+  for (const ch of payout.body.chunks) {
+    const ph = await send(HOLDER, ch.tx);
+    const rec = await post({ action: 'rebate-paid', tx: ph });
+    is(`the payout of ${ch.count} is read back from the chain`, rec.body.ok, true);
+  }
+  const after = await Promise.all(paidTo.map((x) => pub.getBalance({ address: x })));
+  is('every holder and scout received exactly what they were owed',
+    paidTo.map((x, i) => String(after[i] - was[i])), pub1.body.owed.map((r) => r.owed_wei));
+  const done = await get('/api/aab?view=rebates');
+  is('and the campaign is paid', done.body.campaigns[0].status, 'paid');
 
   /* Moved: the holder sends one away. */
   await send(HOLDER, { to: GW, data: (await import('viem')).encodeFunctionData({ abi: NFT, functionName: 'transferFrom',
@@ -270,7 +356,7 @@ try {
 
   const led = await get('/api/aab?view=ledger');
   is('the ledger never carries a signature', JSON.stringify(led.body).includes('"signature"'), false);
-  is('and records both fills', led.body.fills.length, 2);
+  is('and records every fill', led.body.fills.length, 5);
 } catch (err) {
   console.error('\nERROR', err);
   fail += 1;

@@ -13,13 +13,14 @@ import { useRequestOrigin } from './_lib/data.js';
 import { storeConfigured } from './_lib/kv.js';
 import * as R from './_lib/aab.js';
 import * as S from './_lib/seaport.js';
+import * as B from './_lib/rebate.js';
 
 const json = (body, status = 200, extra = {}) => new Response(JSON.stringify(body, null, 1), {
   status,
   headers: {
     'content-type': 'application/json; charset=utf-8',
     'access-control-allow-origin': '*',
-    'access-control-allow-headers': 'X-PAYMENT, X-Agent-Address, X-Agent-Signature, X-Agent-Issued, content-type',
+    'access-control-allow-headers': 'X-PAYMENT, X-MintFace-Ref, X-Agent-Address, X-Agent-Signature, X-Agent-Issued, content-type',
     'access-control-expose-headers': 'X-PAYMENT-RESPONSE',
     ...extra,
   },
@@ -44,7 +45,8 @@ export async function GET(request) {
     const id = m ? decodeURIComponent(m[1]) : url.searchParams.get('buy');
     if (id) {
       const txHash = R.paymentHash(request.headers.get('x-payment'), url.searchParams.get('tx'));
-      const out = await R.buy(id, { txHash, headers: request.headers });
+      const ref = request.headers.get('x-mintface-ref') || url.searchParams.get('ref');
+      const out = await R.buy(id, { txHash, headers: request.headers, ref });
       const extra = { 'cache-control': 'no-store' };
       /* x402 hands the settlement back in a header as well as the body. */
       if (out.status === 200 && out.body && out.body.tx) {
@@ -54,6 +56,14 @@ export async function GET(request) {
       return json(out.body, out.status, extra);
     }
     if (url.searchParams.get('view') === 'ledger') return json(await R.ledger(), 200, { 'cache-control': 'no-store' });
+    /* 🧧 The rebate ledger, public: every campaign and who is owed what. A
+       wallet asked for is found wherever it falls, which is how /ai pins a
+       signed-in reader's own row. */
+    if (url.searchParams.get('view') === 'rebates') {
+      const w = url.searchParams.get('wallet');
+      return json(await B.view({ wallet: /^0x[0-9a-fA-F]{40}$/.test(w || '') ? w : null }), 200,
+        { 'cache-control': w ? 'no-store' : 'public, max-age=60' });
+    }
     return json({ error: 'Nothing here. The rail is at /ai/catalog.json and /ai/buy/{id}.' }, 404);
   } catch (e) {
     console.error('aab GET', path, e);
@@ -99,6 +109,37 @@ export async function POST(request) {
     if (action === 'cleared') {
       await R.clearRetired();
       return json({ ok: true });
+    }
+    /* ---- 🧧 the rebate ----
+       Starting and closing take the holding wallet's signature over a message
+       the server writes, so every term is in what was signed. A payout is
+       prepared here and sent by the holder; it is written down from the chain,
+       and only a Disperse call from the holding wallet counts. */
+    if (action === 'rebate-draft') {
+      const d = await B.draftCampaign(body.terms || {});
+      return json(d, d.status || 200);
+    }
+    if (action === 'rebate-start') {
+      const out = await B.startCampaign({ terms: body.terms || {}, issued: String(body.issued || ''), signature: String(body.signature || '') });
+      return json(out, out.status || 200);
+    }
+    if (action === 'rebate-close') {
+      const id = String(body.id || '');
+      if (!body.signature) {
+        const issued = new Date().toISOString();
+        return json({ issued, message: B.campaignMessage({ action: 'close', id, issued }) });
+      }
+      const out = await B.closeCampaign(id, 'closed by the artist', { issued: String(body.issued || ''), signature: String(body.signature) });
+      return json(out, out.status || 200);
+    }
+    if (action === 'rebate-payout') {
+      const out = await B.payoutPlan(String(body.id || ''));
+      return json(out, out.status || 200);
+    }
+    if (action === 'rebate-paid') {
+      if (!/^0x[0-9a-fA-F]{64}$/.test(String(body.tx || ''))) return json({ error: 'Which transaction?' }, 400);
+      const out = await B.recordPayout(String(body.tx));
+      return json(out, out.status || 200);
     }
     if (action === 'sweep') {
       if (!(await R.fence('sweep', 30))) return json({ error: 'Swept a moment ago. Try again in half a minute.' }, 429);

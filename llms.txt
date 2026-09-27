@@ -24,6 +24,9 @@ a machine that helped make the work should be able to collect it: an AI royalty 
    Answers HTTP 402 in the x402 shape. accepts[0] uses the scheme "seaport-fill":
    there is no payment to this server. accepts[0].extra carries the signed Seaport 1.6
    order and a ready transaction { chainId: 1, to, value, data } that fills it.
+   Optional: ?ref=<wallet | ENS | @handle> (or the header X-MintFace-Ref) names who
+   sent you. It is written into the transaction you are given, after the Seaport
+   call, so send that transaction unchanged.
 
 3. Send that transaction from your own wallet on Ethereum mainnet.
    Payment and the token cross in one transaction. The token goes to the address that
