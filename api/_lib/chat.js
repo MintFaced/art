@@ -296,6 +296,10 @@ function answering(row, { parents, register, artist } = {}) {
     name: mine ? ARTIST : said(who, p.name),
     url: mine ? 'https://mintface.art/' : (register ? register.urlOf(p.address) : null),
     deleted: Boolean(p.deleted),
+    /* The opening of what is being answered, so the reply can quote it in one
+       line. Nothing of a message that was taken down: quoting it back into
+       the room under somebody else's words would undo the taking down. */
+    quote: p.deleted ? null : String(p.text || (p.image ? 'A picture' : '')).replace(/\s+/g, ' ').trim().slice(0, 160),
     found: true,
   };
 }

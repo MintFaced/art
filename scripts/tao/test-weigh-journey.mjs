@@ -74,7 +74,7 @@ const payloadFor = (who, rows) => {
 
 /* ---- the card, run as the browser runs it ---- */
 const page = readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
-const slice = page.slice(page.indexOf('function pair(x, hex)'), page.indexOf('/* Open at the bottom.'));
+const slice = page.slice(page.indexOf('/* WHERE THE TAO CAME FROM'), page.indexOf('/* ---------- the split between the columns'));
 
 function studio(state, session) {
   const said = [];
@@ -87,7 +87,7 @@ function studio(state, session) {
     const dateOf = (d) => String(d).slice(0, 10);
     const ROOM = { days: 30 };
     const NUDGE = { state: STATE, tao: STATE.tao || 0, who: STATE.viewer, tried: null,
-      loading: false, picked: {}, putting: new Set(), moving: new Set() };
+      loading: false, picked: {}, putting: new Set(), moving: new Set(), proposing: new Set(), swapping: new Set() };
     const MF = {
       palette: { slivers: () => '', against: () => [] },
       colour: { name: () => ({ label: '\\u2248 PANTONE 359 C', short: '359 C' }),
@@ -96,6 +96,8 @@ function studio(state, session) {
     };
     const viewer = () => (SESSION && NUDGE.who && NUDGE.who === SESSION.address ? SESSION : null);
     const loadNudges = async () => {};
+    const window = { addEventListener() {} };
+    const location = { hash: '' };
     const localStorage = { getItem: () => null, setItem() {} };
     /* nudgeSay() is the page's own, out of the slice: it writes into the one
        line under the board, and this is that line, remembering what it was
@@ -112,7 +114,7 @@ function studio(state, session) {
     const fetch = async (url, opts) => { SENT.push(JSON.parse(opts.body)); return { ok: true, json: async () => ({ ok: true }) }; };
   `;
   const fn = new Function('STATE', 'SESSION', 'SAID', 'SENT',
-    stubs + slice + '\nreturn { candidateCard, colourRow, colourRows, position, proposer, changeCalc, changeLine, weigh, mayWeigh };');
+    stubs + slice + '\nreturn { candidateCard, colourRow, colourRows, proposer, changeCalc, changeLine, weigh, mayWeigh };');
   return { ...fn(state, session, said, sent), said, sent };
 }
 
@@ -155,7 +157,8 @@ const mine = () => studio(payloadFor(KEYRUN, weighings), { address: KEYRUN });
   is('the button reads WEIGH, not move and not propose', />Weigh</.test(row), true);
   is('WEIGH opens an amount field', /class="amt"/.test(row), true);
   is('with a label saying what it wants', /TAO to weigh/.test(row), true);
-  is('and their spare TAO beside it', /13,749 spare/.test(row), true);
+  is('and their available TAO beside it', /13,749 TAO available/.test(row), true);
+  is('the field defaults to all of it', /value="13749"/.test(row), true);
   is('there is no colour picker anywhere in the weigh form', /type="color"/.test(row), false);
   /* And for a collector who has not proposed, the two forms are two forms:
      the weigh field on the row, the picker under its own heading further
@@ -166,10 +169,10 @@ const mine = () => studio(payloadFor(KEYRUN, weighings), { address: KEYRUN });
   is('a collector who has not proposed still gets an amount field to weigh in',
     /class="amt"/.test(nrow) && !/type="color"/.test(nrow), true);
   is('and the picker is somewhere else, under its own heading',
-    /Propose a new colour/.test(N.proposer(nx)) && /type="color"/.test(N.proposer(nx)), true);
-  is('the banner says they stand nowhere yet, with their TAO',
-    /Nothing on the board yet/.test(S.position(x)) && /13,749 TAO to weigh/.test(S.position(x)), true);
-  is('and never mentions moving anything', /Move/.test(S.position(x)), false);
+    /Propose a colour/.test(N.proposer(nx)) && /type="color"/.test(N.proposer(nx)), true);
+  const board = S.candidateCard(x);
+  is('no tile claims them yet', /class="tile[^"]*mine/.test(board), false);
+  is('and nothing on the card mentions moving anything', /Move|From /.test(board), false);
 }
 
 console.log('\n— weighing all 13,749 on a colour —');
@@ -211,9 +214,13 @@ console.log('\n— the ledger shows it, and it can be changed —');
   is('their standing is one row at the amount they weighed',
     x.mine.allocations, [{ hex: GRN, amount: 13749, weight: 13749 }]);
   is('with nothing left spare', x.mine.available, 0);
-  const banner = S.position(x);
-  is('the banner shows the position plainly', /13,749 TAO on #80E080/.test(banner), true);
-  is('with CHANGE beside it', /data-change="n\|#80E080"/.test(banner), true);
+  const tile = S.colourRow(x, x.candidates.find((c) => c.hex === GRN), true);
+  is('their tile shows the position plainly', /Yours &middot; 13,749 TAO/.test(tile), true);
+  is('and is marked as theirs', /class="tile[^"]* mine/.test(tile), true);
+  is('with CHANGE on it, opening the field on that tile', /data-put="n\|#80E080"[^>]*>Change</.test(tile), true);
+  const other = S.colourRow(x, x.candidates.find((c) => c.hex === TEAL), true);
+  is('another tile offers one button, WEIGH', />Weigh</.test(other) && !/>Change</.test(other), true);
+  is('and names where the TAO comes off, since none is spare', /<option value="#80E080">From /.test(other), true);
 }
 
 console.log('\n— moving all of it to another colour —');

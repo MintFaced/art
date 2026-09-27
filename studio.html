@@ -34,6 +34,13 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
 <style>
+/* 4.5:1 FOR ANYTHING THAT IS READ. The house --faint is about 2.4:1 on the
+   warm paper, and on this page it was carrying names, dates, figures and whole
+   sentences. Here it is the muted grey (about 5:1, and redefined for night by
+   the stylesheet), which leaves size, weight and space to say what is quiet.
+   Placeholders are the one thing allowed lighter. */
+#main,#picker,.totop{--faint:var(--muted)}
+#main ::placeholder,#picker ::placeholder{color:var(--mark);opacity:1}
 .mast{max-width:720px;margin:0 auto;padding:60px 28px 0}
 h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);line-height:.96;margin:0;letter-spacing:-.035em}
 /* One paragraph under the name, and that is the whole door.
@@ -51,370 +58,247 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .room{max-width:720px;margin:0 auto;padding:24px 28px 40px}
 
 /* ---------- what the studio is asking ----------
-   The nudges, on the same measure as the room and in the same voice. Every
-   rule here hangs off .nudges: this page carries two components that were
-   written apart, and a bar or a go or an empty meaning one thing at the top
-   and another at the bottom is how a merge goes quietly wrong. */
+   The nudges, on the same measure as the room. Every rule here hangs off
+   .nudges: this page carries two components that were written apart, and a
+   bar or a go or an empty meaning one thing at the top and another at the
+   bottom is how a merge goes quietly wrong.
+
+   THREE TIERS, and every rule below is in one of them. COLOUR is the hero:
+   big, first, unmistakable. NUMBERS AND ACTIONS are second: tabular, one
+   button per decision. METADATA is quiet ... 13px at the least, 4.5:1 at the
+   least, and much of it only on demand. Mono caps are for data and short
+   labels; anything read as a sentence is the sans, in sentence case. */
 .nudges{max-width:720px;margin:0 auto;padding:0 28px}
 #open:not(:empty){padding-bottom:8px}
-.nudges .sec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;
+.nudges .sec{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:400;
   margin:0 0 20px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
-.nudges .nudge{border-bottom:1px solid var(--rule);padding:26px 0}
+.nudges .nudge{border-bottom:1px solid var(--rule);padding:24px 0;container-type:inline-size}
 .nudges .nudge:last-child{border-bottom:0}
 /* An open nudge sits at the foot of the room, so it is framed rather than ruled
    off: it is a thing being asked, not another row of the log. */
-#open .nudge{border:1px solid var(--rule);border-left:2px solid var(--ink);padding:24px 22px;margin-bottom:14px}
-.nudges .q{font-family:var(--font-sans);font-weight:400;font-size:clamp(19px,2.2vw,24px);line-height:1.28;
+#open .nudge{border:1px solid var(--rule);padding:24px 20px;margin-bottom:16px}
+.nudges .q{font-family:var(--font-sans);font-weight:400;font-size:clamp(20px,2.2vw,24px);line-height:1.25;
   letter-spacing:-.02em;margin:0;max-width:22em}
-.nudges .when{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);margin-top:10px}
-.nudges .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:14px 0 0;max-width:34em}
-.nudges .shot{margin:18px 0 0;max-width:520px}
+.nudges .when{font-family:var(--font-mono);font-size:13px;letter-spacing:.02em;color:var(--muted);margin-top:8px}
+.nudges .head{display:flex;align-items:flex-start;gap:12px;margin:0}
+.nudges .head .q{flex:1 1 auto;min-width:0}
+.nudges .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:16px 0 0;max-width:34em}
+.nudges .shot{margin:16px 0 0;max-width:520px}
 .nudges .shot img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
-/* two hairline meters, the way every other measure on this site reads. On a
-   candidate nudge they carry the two thresholds rather than two sides, which
-   is the same job: a fraction of something, drawn to scale. */
-.nudges .bars{margin:22px 0 0;max-width:520px}
+
+/* The terms, behind a (?) beside the question. */
+.nudges .help{position:relative;flex:none}
+.nudges .help>summary{list-style:none;cursor:pointer;width:28px;height:28px;border:1px solid var(--rule);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:13px;color:var(--muted)}
+.nudges .help>summary::-webkit-details-marker{display:none}
+.nudges .help>summary:hover,.nudges .help[open]>summary{border-color:var(--ink);color:var(--ink)}
+.nudges .help>summary:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.nudges .help .tip{position:absolute;right:0;top:calc(100% + 8px);z-index:5;width:min(300px,80vw);
+  background:var(--paper);border:1px solid var(--ink);padding:12px 14px}
+.nudges .help .tip p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-3)}
+.nudges .help .tip p + p{margin-top:8px;color:var(--muted)}
+
+/* ---------- the strip ----------
+   The twelve as one band, first thing under the question. Filled where
+   locked, outlined and numbered where this nudge is asking, empty after. */
+.nudges .strip{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px;height:48px;margin:20px 0 0}
+.nudges .strip .seg{position:relative;display:block;min-width:0;height:100%;padding:0;margin:0;
+  border:1px solid var(--rule);background:none;font:inherit;color:inherit}
+.nudges .strip button.seg{cursor:pointer}
+.nudges .strip .seg.on{border-color:transparent}
+.nudges .strip .seg.live{border:2px solid var(--ink)}
+.nudges .strip .seg .pv{position:absolute;inset:0;opacity:.35}
+.nudges .strip .seg .n{position:relative;display:flex;height:100%;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:13px;color:var(--ink)}
+/* Hex and name, on a hover or a tap. Below the band rather than above it,
+   so it never runs into the question; anchored from whichever side has room. */
+.nudges .strip .seg[data-tip]:hover::after,.nudges .strip .seg[data-tip]:focus-visible::after,
+.nudges .strip .seg[data-tip]:focus::after{content:attr(data-tip);position:absolute;top:calc(100% + 6px);left:0;
+  z-index:4;white-space:nowrap;background:var(--paper);border:1px solid var(--ink);padding:5px 8px;
+  font-family:var(--font-mono);font-size:13px;color:var(--ink);pointer-events:none}
+.nudges .strip .seg:nth-child(n+7)[data-tip]::after{left:auto;right:0}
+.nudges .strip .seg:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+
+/* ---------- the tiles ----------
+   One card per candidate, led by its swatch. Two across where the panel has
+   the room for two, one where it does not ... asked of the card, not of the
+   window, because the same card is a sidebar on a desktop and the whole width
+   on a phone. */
+.nudges .tiles{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin:16px 0 0}
+@container (min-width:330px){
+  .nudges .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.nudges .tile{display:flex;flex-direction:column;min-width:0;border:1px solid var(--rule)}
+/* Yours, marked the way the ink marks everything that is the reader's. */
+.nudges .tile.mine{outline:2px solid var(--ink);outline-offset:-1px}
+.nudges .tile .sw{position:relative;display:block;width:100%;height:120px;padding:0;margin:0;border:0;
+  cursor:pointer;border-bottom:1px solid var(--rule)}
+.nudges .tile .sw:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+/* The locked colours down the swatch's left edge: this tile is the palette
+   as it would be if this colour won. */
+.nudges .tile .locks{position:absolute;left:0;top:0;bottom:0;display:flex;padding:0;margin:0}
+.nudges .tile .locks .lk{display:block;width:8px;height:100%;border:0}
+.nudges .tile .tb{display:flex;flex-direction:column;gap:8px;padding:12px 12px 12px}
+.nudges .tile .top{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.nudges .tile .cn{flex:1 1 7em;min-width:0;margin:0;font-family:var(--font-sans);font-size:18px;line-height:1.3;
+  color:var(--ink);overflow-wrap:anywhere}
+/* The hex is the fine print, and waits to be asked for. */
+.nudges .tile .hex{display:none;font-family:var(--font-mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.nudges .tile:hover .hex,.nudges .tile.reveal .hex,.nudges .tile:focus-within .hex{display:inline}
+/* The figure is the data: it never truncates, and it lines up right on
+   tabular figures so two tiles can be compared at a glance. */
+.nudges .tile .w{margin-left:auto;font-family:var(--font-mono);font-size:20px;color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.nudges .tile .w small{font-size:13px;color:var(--muted)}
+/* Its share of the leader's TAO. The race, drawn. */
+.nudges .tile .share{display:block;height:3px;background:var(--rule);position:relative}
+.nudges .tile .share i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.nudges .tile .by{margin:0;font-family:var(--font-sans);font-size:13px;color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nudges .tile .by a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.nudges .tile .by a:hover{border-color:var(--ink);color:var(--ink)}
+.nudges .tile .own{font-family:var(--font-sans);font-size:13px;background:none;border:0;
+  padding:0 0 0 10px;cursor:pointer;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.nudges .tile .own:hover{color:var(--ink)}
+.nudges .tile .yours{display:flex;flex-direction:column;gap:8px;
+  font-family:var(--font-sans);font-size:15px;color:var(--ink)}
+.nudges .tile .yours .go{width:100%}
+.nudges .tile .cl{font-family:var(--font-mono);font-size:13px;color:var(--muted)}
+/* One button per decision, the width of the tile where it stands alone. */
+.nudges .tile .go{padding:9px 14px;background:none;color:var(--ink);border:1px solid var(--ink);cursor:pointer;
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.nudges .tile .tb > .go{width:100%}
+.nudges .tile .go:hover,.nudges .tile.putting .go{background:var(--ink);color:var(--paper)}
+.nudges .tile .go:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+/* The field, on the tile, only once it is asked for. */
+.nudges .tile .put{display:none;flex-direction:column;gap:8px}
+.nudges .tile.putting .put{display:flex}
+.nudges .tile .put .amt{width:100%;padding:9px 10px;font-size:15px}
+.nudges .tile .put .weigh{width:100%}
+.nudges .tile .swap{display:none;flex-wrap:wrap;gap:8px;align-items:center}
+.nudges .tile.swapping .swap{display:flex}
+.nudges .tile .swap input[type="color"]{width:46px;height:40px;padding:0;border:1px solid var(--rule);
+  background:none;cursor:pointer}
+.nudges .tile .swap .go{padding:9px 12px}
+.nudges .have{margin:0;font-family:var(--font-sans);font-size:13px;line-height:1.5;color:var(--muted);font-variant-numeric:tabular-nums}
+.nudges .src{width:100%;min-width:0;padding:9px 8px;background:var(--paper);color:var(--ink);
+  border:1px solid var(--rule);font-family:var(--font-sans);font-size:15px}
+.nudges .res{margin:0;font-family:var(--font-sans);font-size:13px;line-height:1.5;color:var(--muted)}
+.nudges .res:empty{display:none}
+.nudges .res.bad{color:var(--alert)}
+
+/* Proposing: one line across the foot of the board until it is asked for. */
+.nudges .propose{grid-column:1/-1}
+.nudges .propose .add{width:100%;padding:12px;background:none;border:1px dashed var(--muted);cursor:pointer;
+  font-family:var(--font-sans);font-size:15px;color:var(--muted);text-align:center}
+.nudges .propose .add:hover,.nudges .propose.on .add{border-color:var(--ink);color:var(--ink)}
+.nudges .propose .pform{display:none;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 0 0}
+.nudges .propose.on .pform{display:flex}
+.nudges .propose input[type="color"]{width:56px;height:44px;padding:0;border:1px solid var(--rule);
+  background:none;cursor:pointer}
+.nudges .verdict{font-family:var(--font-sans);font-size:13px;line-height:1.5;color:var(--muted);
+  font-variant-numeric:tabular-nums;flex:1 1 100%;min-width:0}
+.nudges .verdict.no{color:var(--alert)}
+
+/* ---------- to lock ----------
+   Both thresholds, one row, one label. */
+.nudges .tolock{display:flex;align-items:center;gap:12px;margin:20px 0 0;flex-wrap:wrap}
+.nudges .tolock .lab{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted)}
+.nudges .tolock .dots{display:flex;gap:5px;font-family:var(--font-mono);font-size:13px}
+.nudges .tolock .dots i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink);display:block}
+.nudges .tolock .dots i.on{background:var(--ink)}
+.nudges .tolock .lockbar{position:relative;flex:1 1 80px;min-width:60px;height:4px;background:var(--rule)}
+.nudges .tolock .lockbar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.nudges .tolock .lockbar b{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--ink)}
+.nudges .tolock .fig{font-family:var(--font-mono);font-size:13px;color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Two meters, the way every other measure on this site reads. A banked
+   board and a yes-or-no carry them. */
+.nudges .bars{margin:20px 0 0;max-width:520px}
 .nudges .meter{margin-bottom:12px}
-.nudges .meter .lab{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10.5px;
-  letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.nudges .meter .lab{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:13px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .nudges .meter .lab b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
 .nudges .meter .track{height:3px;background:var(--rule);position:relative}
 .nudges .meter .fill{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
-.nudges .act{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 0;align-items:center}
+.nudges .act{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;align-items:center}
 .nudges .side{padding:10px 18px;border:1px solid var(--rule);background:transparent;cursor:pointer;
-  font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+  font-family:var(--font-sans);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
 .nudges .side[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .nudges .amt{width:180px;padding:10px 12px;border:1px solid var(--rule);background:transparent;
-  font-family:var(--font-mono);font-size:14px;color:var(--ink);border-radius:0}
+  font-family:var(--font-mono);font-size:15px;color:var(--ink);border-radius:0}
 .nudges .amt:focus{outline:none;border-color:var(--ink)}
 .nudges .weigh{padding:10px 20px;background:var(--ink);color:var(--paper);border:0;cursor:pointer;
-  font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
 .nudges .weigh[disabled]{opacity:.5;cursor:default}
-.nudges .said{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);margin:12px 0 0}
-.nudges .said.bad{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
+/* What the card says back, in the sans, because it is a sentence. */
+.nudges .said{font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--muted);margin:16px 0 0}
+.nudges .said.bad{color:var(--alert)}
 /* A change in the record, up or down. */
 .nudges .ledger .up{color:var(--ink)}
 .nudges .ledger .down{color:var(--muted)}
 .nudges .ledger tr.moved td{opacity:.72}
-/* what the studio undertook, which is what makes this one more than a steer */
-.nudges .promise{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--ink);border-left:2px solid var(--ink);padding-left:14px;margin:16px 0 0;line-height:1.8}
-/* And what it undertakes on every one of them, which is the opposite promise:
-   that the result does not bind it. It used to stand in the masthead in the
-   studio's loudest quiet voice, two rules up the page from the nearest vote.
-   It is quieter here and it is in the right place ... a hairline under the
-   board, on the card, where the TAO goes on. Not .promise: that is what this
-   particular nudge undertook, and reading the standing terms in the same
-   weight as a specific undertaking is how the two of them stop being read. */
-.nudges .rule{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--faint);border-left:1px solid var(--rule);padding-left:13px;margin:20px 0 0;line-height:1.85}
-/* A block at the top of the panel now rather than a line at the foot of a
-   fold, so it takes the air a block gets rather than the none it needed. */
-.nudges .propose{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.nudges .nudge > .propose{margin:20px 0 0}
-.nudges .propose input[type="color"]{width:46px;height:36px;padding:0;border:1px solid var(--rule);
-  background:none;cursor:pointer}
-.nudges .weigh.ghosted{background:none;color:var(--muted);border:1px solid var(--rule)}
-.nudges .weigh.ghosted:hover{border-color:var(--ink);color:var(--ink)}
+/* What the studio undertook, on the banked record. */
+.nudges .promise{font-family:var(--font-sans);font-size:15px;line-height:1.55;
+  color:var(--ink);border-left:2px solid var(--ink);padding-left:14px;margin:16px 0 0}
+/* And what it undertakes on every one of them, that the result does not
+   bind it. On an open card it is behind the (?); the record carries it. */
+.nudges .rule{font-family:var(--font-sans);font-size:13px;line-height:1.6;
+  color:var(--muted);border-left:1px solid var(--rule);padding-left:13px;margin:20px 0 0}
 
 /* The summary above the record. Two facts and nothing else: how many people,
    and how much between them. */
-.nudges .tally{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink);margin:26px 0 0;font-variant-numeric:tabular-nums}
+.nudges .tally{font-family:var(--font-mono);font-size:13px;letter-spacing:.02em;
+  color:var(--ink);margin:24px 0 0;font-variant-numeric:tabular-nums}
 
-/* A colour in a ledger row. Small enough to be a mark rather than a swatch:
-   the board above is where a colour is judged, and here it is only saying
-   which one. */
+/* A colour in a ledger row: a mark rather than a swatch. Not .dot: that is
+   the availability mark, the one place this site uses colour to mean
+   something. A standings row can carry two of them, side by side. */
 .nudges .ledger .c{width:18px;padding-left:0;white-space:nowrap}
-/* Not .dot: that is the availability mark, the one place this site uses
-   colour to mean something, and it is round and translated up two pixels for
-   sitting in a line of type. This is a square of paint. */
-/* A standings row can carry two of them, where a wallet split its TAO across
-   two colours, so they sit in a line rather than stacking. */
 .nudges .ledger .hexdot{display:inline-block;vertical-align:middle;width:12px;height:12px;
   border:1px solid var(--rule);border-radius:0}
 .nudges .ledger .hexdot + .hexdot{margin-left:3px}
-.nudges .ledger .t{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--faint);white-space:nowrap;text-align:right}
-/* A weighing that shrank because its wallet did. Said quietly beside the
-   figure rather than in a column of its own, because it is a fact about that
-   number rather than a fact about that collector. */
-.nudges .ledger .cl{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--faint);margin-left:6px}
-/* A COMBO said in the register's own dialect: the same mono, the same faint,
-   the same size as `clamped` and `moved`. One collector steering one decision
-   is what the row already says; this only says what it was made of, and an
-   exotic provenance gets no more prominence than a clamp does. */
+.nudges .ledger .t{font-family:var(--font-mono);font-size:13px;color:var(--muted);white-space:nowrap;text-align:right}
+.nudges .ledger .cl{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin-left:6px}
 .combolink{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
 .combolink:hover{border-color:var(--ink)}
-/* A private collector: named as the register names them, and going nowhere.
-   Not .quiet ... that is the room's hover affordance and sits at opacity nought
-   until the pointer is over a message, which made these names invisible. */
+/* A private collector: named as the register names them, and going nowhere. */
 .nudges .ledger .anon{color:var(--muted)}
 
 .nudges .ledger{margin:16px 0 0;max-width:640px}
 .nudges .ledger table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-.nudges .ledger th{text-align:left;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--muted);font-weight:400;padding:0 0 9px;border-bottom:1px solid var(--rule)}
-.nudges .ledger td{padding:10px 0;border-bottom:1px solid var(--rule);font-size:13.5px}
-.nudges .ledger th + th,.nudges .ledger td + td{padding-left:22px}
-.nudges .ledger .w{font-family:var(--font-mono);font-size:12.5px;text-align:right;white-space:nowrap}
+.nudges .ledger th{text-align:left;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--muted);font-weight:400;padding:0 0 8px;border-bottom:1px solid var(--rule)}
+.nudges .ledger td{padding:10px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.nudges .ledger th + th,.nudges .ledger td + td{padding-left:20px}
+.nudges .ledger .w{font-family:var(--font-mono);font-size:13px;text-align:right;white-space:nowrap}
 /* The collector's name takes what is left and is cut when there is not enough
-   of it. `max-width:0` with `width:100%` is how a table cell is told to do
-   that: without it a long .eth name widens the table until the figure beside
-   it is off the edge of a 352px panel, which is the same bug the board row
-   had, wearing a table for a hat. */
+   of it; the figure beside it never is. */
 .nudges .ledger .n{max-width:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nudges .ledger .s{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.nudges .ledger .s{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .nudges .ledger tr:last-child td{border-bottom:0}
 .nudges .ledger td a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
 .nudges .ledger td a:hover{border-color:var(--ink)}
-.nudges .banked{font-family:var(--font-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--ink);margin:18px 0 0}
+.nudges .banked{font-family:var(--font-mono);font-size:13px;letter-spacing:.02em;color:var(--ink);margin:16px 0 0}
 .nudges .outcome{font-size:15px;line-height:1.65;color:var(--ink-4);margin:12px 0 0;max-width:34em}
-.nudges .none{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);padding:2px 0 0}
+.nudges .none{font-family:var(--font-sans);font-size:15px;color:var(--muted);padding:2px 0 0}
 
-/* ---------- the nudge, folded ----------
-   At rest the card carries three things and no more: what is being asked and
-   when it closes on one line, a row for every colour on the board, and the
-   line that opens the rest. Everything else ... the record, the propose box,
-   the thresholds, what this wallet has spread and where ... waits behind
-   Details.
-
-   The rows are the card. A colour row carries what somebody needs to weigh on
-   it without opening anything: the colour, its hex, who put it up, what is on
-   it, and the way to add to it. Weighing from a row opens the field on that
-   row alone ... not the card ... because expanding the whole board to type one
-   number was the thing that made a two-click act feel like leaving the page.
-
-   The fold is remembered per browser, and it opens closed, including the first
-   time. Somebody arriving at this page arrived for the room. */
-
-/* Title and date on one line. The date is the quiet half and gives way first:
-   under the sidebar's measure it drops beneath rather than pushing the
-   question out. */
-.nudges .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0}
-.nudges .head .q{margin:0;flex:1 1 14em;min-width:0}
-/* IT WRAPS BEFORE IT EVER TRUNCATES. The line is three facts separated by
-   spaced middots, so wrapping happens between them and never inside a word;
-   what it must not do is sit in a box narrow enough to cut COLOUR 2 OF 12 in
-   half. It may take a line of its own where it needs one. */
-.nudges .head .when{margin:0;flex:1 1 auto;min-width:0;white-space:normal;overflow-wrap:normal}
-
-.nudges .crows{margin:20px 0 0;max-width:560px}
-/* ---------- the candidate row ----------
- *
- * FIVE COLUMNS, ONE THING IN EACH. The swatch pair, the hex, the name it goes
- * by, what is on it, and the way in. Nothing shares a cell with anything else,
- * which is the whole of the fix: the hex and its name were one box with two
- * nowrap strings in it, that box was the column allowed to shrink, and what
- * came out the end of it was drawn straight over the total and the button.
- *
- * WHO YIELDS IS THE DESIGN. The name is the decoration and gives up its space
- * first, truncating; the figure is the data and never truncates, right-aligned
- * on tabular figures so a column of them can be compared down the page; the
- * hex is the identity and is never abbreviated either. Who proposed it sits
- * under the hex where it can be cut without moving anything above it, and the
- * field, when it is asked for, is a row of its own across the whole width. */
-.nudges .crow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;
-  column-gap:11px;row-gap:2px;align-items:center;padding:11px 0;
-  border-bottom:1px solid var(--rule)}
-.nudges .crows .crow:last-child{border-bottom:0}
-/* No placement: the chip is drawn inside the pair, which is the grid item.
-   It carried a `grid-area` of its own from before the slivers existed, which
-   is a second element claiming a cell that something else already has ... the
-   shape of exactly the bug this row had. */
-.nudges .crow .chip{width:24px;height:24px;border:1px solid var(--rule);display:block}
-/* The swatch and its slivers, which are one item standing beside both rows. */
-.nudges .crow .pair{grid-area:1/1/3/2;align-self:stretch}
-/* AND NEVER TRUNCATED, which this said and then did not do. It carried
-   `min-width:0` and `overflow:hidden`, and an item with hidden overflow has an
-   automatic minimum size of nought ... so the auto track it sits in was free
-   to collapse under it, and in the 352px panel beside the room it did: #80E080
-   came out as #80E... beside a total with every digit of 625,000 intact. Seven
-   characters is the identity of the colour and the whole of what somebody
-   reads back to a decorator. It takes its content's width, and the name beside
-   it goes on being the one that yields. */
-/* THE NAME LEADS AND THE HEX IS THE FINE PRINT. What a collector says out
-   loud is LIGHT GREEN; #80E080 is what they write down afterwards. The board
-   led with the machine's name for the colour, in the reader's size, and put
-   the human one in grey beside it.
-
-   Which of the two yields has not changed, and it still cannot be the hex:
-   seven characters are the identity and are what somebody reads back to a
-   decorator. So the NAME sits in the flexible track and truncates if a very
-   long one ever turns up, and the hex sits in an auto track with no hidden
-   overflow, which is what keeps its automatic minimum size honest. */
-.nudges .crow .cname{grid-area:1/2/2/3;min-width:0;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.1em;
-  color:var(--ink);text-transform:uppercase}
-.nudges .crow .hex{grid-area:1/3/2/4;font-family:var(--font-mono);font-size:9.5px;
-  letter-spacing:.1em;color:var(--faint);white-space:nowrap}
-.nudges .crow .w{grid-area:1/4/2/5;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;
-  white-space:nowrap;text-align:right}
-.nudges .crow .by{grid-area:2/2/3/6;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nudges .crow .by a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
-.nudges .crow .by a:hover{border-color:var(--ink);color:var(--muted)}
-/* The affordance, at the weight of a row rather than of a card. */
-.nudges .crow .go{grid-area:1/5/2/6;padding:6px 11px;background:none;color:var(--muted);
-  border:1px solid var(--rule);cursor:pointer;font-family:var(--font-mono);font-size:9.5px;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-.nudges .crow .go:hover{border-color:var(--ink);color:var(--ink)}
-.nudges .crow .go:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
-/* A colour this wallet is already on is marked the way the board marks it. */
-.nudges .crow.mine .chip{box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--rule)}
-.nudges .crow.chosen .hex{text-transform:uppercase;letter-spacing:.14em}
-/* The field, on the row, and only once it is asked for. It wraps: on a phone
-   the amount, the colour it comes off and the button do not fit on one line,
-   and a row that overflows is the bug this card already had once. */
-.nudges .crow .put{grid-area:3/1/4/6;display:none;flex-wrap:wrap;gap:7px;align-items:center;padding:9px 0 2px}
-.nudges .crow.putting .put{display:flex}
-.nudges .crow.putting .go{border-color:var(--ink);color:var(--ink)}
-/* ---------- a proposer's own colour ----------
-   Two quiet words beside `proposed by`, set in the same 9.5px mono as the line
-   they sit in: they are powers over a suggestion rather than a second pair of
-   buttons competing with WEIGH. They are drawn only while the colour is still
-   only this wallet's, so their absence IS the rule, enforced rather than
-   explained. */
-.nudges .crow .own{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;
-  text-transform:uppercase;background:none;border:0;padding:0 0 0 10px;cursor:pointer;color:var(--faint)}
-.nudges .crow .own:hover{color:var(--ink)}
-/* A row of its own, under the weigh field rather than on top of it: both can
-   be open at once, and two grid items sharing a cell is two panels drawn over
-   each other. */
-.nudges .crow .swap{grid-area:4/1/5/6;display:none;flex-wrap:wrap;gap:8px;align-items:center;padding:9px 0 2px}
-.nudges .crow.swapping .swap{display:flex}
-.nudges .crow .swap input[type="color"]{width:46px;height:34px;padding:0;border:1px solid var(--rule);
-  background:none;cursor:pointer}
-.nudges .crow .put .amt{flex:1 1 90px;min-width:0;width:auto;padding:8px 10px;font-size:13px}
-.nudges .crow .put .weigh{flex:none;padding:8px 14px;font-size:10px;letter-spacing:.14em}
-/* The field says what it is asking for and what there is to give it. An empty
-   box with a placeholder of nought, on a card that also carries a colour
-   picker, is a box a reader has to guess at ... and one of them guessed
-   wrong. */
-.nudges .plab,.nudges .have{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--faint);flex:0 0 auto}
-.nudges .have{font-variant-numeric:tabular-nums}
-/* Where the TAO comes off, when the wallet has none spare. Named on the row
-   that is taking it, because "move it here" is a sentence with two ends. */
-.nudges .src{flex:1 1 128px;min-width:0;max-width:100%;padding:7px 8px;background:var(--paper);
-  color:var(--ink);border:1px solid var(--rule);font-family:var(--font-mono);
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.nudges .from{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--faint)}
-
-/* ---------- your weigh-in ----------
- *
- * A collector's own position, on the card rather than inside the fold. It was
- * one line of a folded panel, which meant the answer to "where do I stand" was
- * behind a click and the answer to "how do I change it" was not on the page at
- * all. Changing your mind is the act this surface is for.
- */
-.nudges .stand{margin:18px 0 0;padding:12px 0 0;border-top:1px solid var(--rule);max-width:560px}
-.nudges .slab{display:block;margin:0 0 7px;font-family:var(--font-mono);font-size:9.5px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
-/* Proposing is a different act and is drawn as one: its own rule above it, so
-   that the only other field on this card cannot be read as part of a weigh. */
-.nudges .propose{border-top:1px solid var(--rule);padding-top:13px;margin-top:18px}
-.nudges .propose .slab{flex:1 0 100%}
-/* The same discipline as the board row, in a line that wraps rather than a
-   grid: the figure and the hex are what this sentence is, and they hold their
-   own width; the Pantone is the one thing allowed to be cut. */
-.nudges .pos{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:2px 0}
-.nudges .pos .chip{width:16px;height:16px;flex:none;border:1px solid var(--rule);display:block}
-.nudges .pos .pw{flex:0 0 auto;font-family:var(--font-mono);font-size:11px;
-  letter-spacing:.11em;text-transform:uppercase;color:var(--ink);
-  font-variant-numeric:tabular-nums;white-space:nowrap}
-.nudges .pos .cname{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--faint)}
-.nudges .pos .cl{flex:none;font-size:9.5px;letter-spacing:.1em;color:var(--faint)}
-.nudges .pos .go{flex:none;margin-left:auto;padding:6px 11px;background:none;color:var(--muted);
-  border:1px solid var(--rule);cursor:pointer;font-family:var(--font-mono);font-size:9.5px;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-.nudges .pos .go:hover{border-color:var(--ink);color:var(--ink)}
-.nudges .pos .go:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
-.nudges .pos.changing .go{border-color:var(--ink);color:var(--ink)}
-.nudges .stand .spare{margin:8px 0 0;font-family:var(--font-mono);font-size:10px;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-/* Amount and colour together, because they are one decision: this much, here.
-   Asking for them apart is what made moving read as proposing all over again. */
-.nudges .chg{display:none;flex-wrap:wrap;gap:7px;align-items:center;width:100%;padding:9px 0 4px}
-.nudges .pos.changing .chg{display:flex}
-.nudges .chg .amt{flex:1 1 90px;min-width:0;width:auto;padding:8px 10px;font-size:13px}
-.nudges .chg .lab{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--faint)}
-.nudges .chg .to{flex:1 1 150px;min-width:0;padding:7px 8px;background:var(--paper);color:var(--ink);
-  border:1px solid var(--rule);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em}
-.nudges .chg .weigh{flex:none;padding:8px 14px;font-size:10px;letter-spacing:.14em}
-.nudges .res{flex:1 0 100%;margin:2px 0 0;font-family:var(--font-mono);font-size:9.5px;
-  letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
-.nudges .res.bad{color:var(--ink)}
-
-/* The board where the panel is narrow ... the studio sidebar at 352px, a
-   phone, anywhere the five columns stop breathing. THE NAME DROPS BENEATH THE
-   HEX; the figure keeps its place on the first line. It is the decoration and
-   the other is the data, and a row that has to give something up gives up the
-   decoration.
- *
- * Asked of the panel rather than of the window, because the same card is a
-   sidebar on a desktop and the whole width on a phone, and it is the panel it
-   sits in that decides whether four things fit. Where a browser cannot ask
-   that question the five columns stand and the name truncates, which is the
-   thing this row is for. */
-.nudges .nudge{container-type:inline-size}
-@container (max-width:460px){
-  /* Narrow enough that the name takes the top line to itself and the hex drops
-     under it. The flexible track is the name's, which is the one that may
-     give; the hex is never in it, at any width, because seven characters are
-     the identity of the colour and `#80E...` is not. */
-  .nudges .crow{grid-template-columns:auto minmax(0,1fr) auto auto}
-  .nudges .crow .pair{grid-area:1/1/4/2}
-  .nudges .crow .cname{grid-area:1/2/2/3}
-  .nudges .crow .hex{grid-area:2/2/3/5}
-  .nudges .crow .w{grid-area:1/3/2/4}
-  .nudges .crow .go{grid-area:1/4/2/5}
-  .nudges .crow .by{grid-area:3/2/4/5}
-  .nudges .crow .put{grid-area:4/1/5/5}
-  .nudges .crow .swap{grid-area:5/1/6/5}
-}
-/* The colours past the fifth. The same chevron line as Details, one step in. */
-.nudges .rest{border-top:1px solid var(--rule)}
-.nudges .rest>summary{list-style:none;cursor:pointer;padding:11px 0 0;
-  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.nudges .rest>summary::-webkit-details-marker{display:none}
-.nudges .rest>summary:hover{color:var(--ink)}
-.nudges .rest>summary:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
-.nudges .rest>summary .chev{display:inline-block;margin-left:6px;transition:transform .18s ease}
-.nudges .rest[open]>summary .chev{transform:rotate(180deg)}
-.nudges .yours,.nudges .lock{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;margin:14px 0 0;line-height:1.7}
-.nudges .yours{color:var(--muted)}
-.nudges .lock{color:var(--faint)}
-/* Promising more than they hold is said folded as well as open: a wallet the
-   board is counting down should not have to open anything to find that out. */
-.nudges .yours.over{color:var(--alert);text-transform:none;letter-spacing:0;
-  font-family:var(--font-sans);font-size:13.5px;line-height:1.6}
-/* One line in and one line out, in the measuring voice, with the site's own
-   chevron rather than the browser's triangle. */
-.nudges .more{margin:18px 0 0;border-top:1px solid var(--rule)}
-.nudges .more>summary{list-style:none;cursor:pointer;padding:13px 0 0;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.nudges .more>summary::-webkit-details-marker{display:none}
-.nudges .more>summary:hover{color:var(--ink)}
-.nudges .more>summary:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
-.nudges .more>summary .chev{display:inline-block;margin-left:7px;transition:transform .18s ease}
-.nudges .more[open]>summary .chev{transform:rotate(180deg)}
-/* The first thing inside the fold already carries its own top margin. */
-.nudges .more .inner>*:first-child{margin-top:14px}
-/* An open nudge needs no pointer to itself: it is drawn between the last
-   message and the composer, which is exactly where this page opens. Something
-   saying "a question is waiting" directly under the question would be the page
-   talking about what it is already showing. */
+/* The colours past the fifth, and the record: one chevron line each. */
+.nudges .rest{margin:12px 0 0}
+.nudges .rest>summary,.nudges .more>summary{list-style:none;cursor:pointer;padding:12px 0 0;
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.02em;color:var(--muted);font-variant-numeric:tabular-nums}
+.nudges .rest>summary::-webkit-details-marker,.nudges .more>summary::-webkit-details-marker{display:none}
+.nudges .rest>summary:hover,.nudges .more>summary:hover{color:var(--ink)}
+.nudges .rest>summary:focus-visible,.nudges .more>summary:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.nudges .rest>summary .chev,.nudges .more>summary .chev{display:inline-block;margin-left:6px;transition:transform .18s ease}
+.nudges .rest[open]>summary .chev,.nudges .more[open]>summary .chev{transform:rotate(180deg)}
+.nudges .more{margin:20px 0 0;border-top:1px solid var(--rule)}
+.nudges .more .inner>*:first-child{margin-top:12px}
+/* A yes-or-no card's one line of where this wallet stands. */
+.nudges .yours{font-family:var(--font-sans);font-size:15px;color:var(--muted);margin:12px 0 0}
 
 /* ---------- the shelf ----------
  *
@@ -437,11 +321,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
  * pot here would say they had. It is the standing rule and it stays.
  */
 .pots{max-width:720px;margin:0 auto;padding:46px 28px 0}
-.pots .sec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400;
+.pots .sec{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:400;
   margin:0;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
 .pots .sec .count{color:var(--faint);font-family:var(--font-mono);font-variant-numeric:tabular-nums}
 .pots .note{font-size:14.5px;line-height:1.6;color:var(--ink-4);margin:12px 0 0;max-width:34em}
-.pots .done{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+.pots .done{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--ink);margin:22px 0 0;padding-left:12px;border-left:2px solid var(--ink);
   font-variant-numeric:tabular-nums}
 
@@ -463,13 +347,13 @@ button.pot,a.pot{cursor:pointer}
    quietly become two rules. */
 .pot .ln{fill:none;stroke:var(--rule);stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .pot .paint{stroke:none}
-.pot .cap{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;color:var(--faint);
+.pot .cap{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;color:var(--faint);
   font-variant-numeric:tabular-nums;line-height:1.55;min-width:0;max-width:100%}
 .pot .cap b{display:block;font-weight:400}
 /* The hex under the ones that have one, and the word under the one that does
    not. Cut rather than wrapped: a caption that goes to two lines under one pot
    and one under the next takes the row's baseline with it. */
-.pot .hx{display:block;font-size:8px;letter-spacing:.03em;overflow:hidden;
+.pot .hx{display:none;font-size:13px;letter-spacing:.03em;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
 
 /* Settled. The number goes to ink because a slot with a colour in it is a
@@ -504,10 +388,10 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 #record{scroll-margin-top:92px}
 .pots .rechead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
   gap:6px 16px;margin:18px 0 16px}
-.pots .reclab{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+.pots .reclab{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--muted)}
 .pots .recx{background:none;border:0;padding:0;cursor:pointer;color:var(--faint);
-  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
 .pots .recx:hover{color:var(--ink)}
 
 @media(max-width:560px){
@@ -519,48 +403,6 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
      record behind the pot, which is one tap away. */
   .pot .hx{display:none}
 }
-
-/* ---------- a constrained board ----------
- *
- * What this colour has to stand clear of, drawn at the top of the card and
- * again beside every candidate. Both, deliberately: the header says what the
- * rule is, and the sliver on each row is so a voter weighs the PAIR rather
- * than a colour on its own ... which is the only way to judge contrast, and
- * the thing a board of loose swatches quietly stops you doing.
- */
-.nudges .against{margin:18px 0 0;padding:14px 0 0;border-top:1px solid var(--rule)}
-.nudges .against .alab{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--faint);display:block}
-.nudges .against .row{display:flex;flex-wrap:wrap;gap:18px;margin:11px 0 0}
-.nudges .against .ac{display:flex;gap:9px;align-items:center;min-width:0}
-.nudges .against .ac .chip{width:34px;height:34px;flex:none;border:1px solid var(--rule);display:block}
-.nudges .against .ac .al{display:flex;flex-direction:column;gap:2px;min-width:0}
-/* THE COLOUR LEADS, and where it came from is the note under it. It was the
-   other way round: LOCKED · 01 · NUDGE #1 in ink with the colour itself in
-   grey underneath, which is the provenance shouting over the thing it is the
-   provenance of. */
-.nudges .against .ac .al b{font-weight:400;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ink);display:flex;align-items:baseline;gap:6px;min-width:0}
-.nudges .against .ac .al span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;color:var(--faint)}
-/* The hex and the name it goes by, on one line and in that order of
-   importance ... the same contract the board row keeps. They were one string
-   in one span, which is the shape the collision came in: the identity and the
-   decoration sharing a box, and the box being the part that has to give. */
-.nudges .against .ac .l2{display:flex;align-items:baseline;gap:5px;min-width:0}
-.nudges .against .ac .ahex{flex:0 0 auto;white-space:nowrap;color:var(--ink)}
-.nudges .against .ac .cname{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap}
-.nudges .against .anote{font-size:13.5px;line-height:1.62;color:var(--muted);margin:13px 0 0;max-width:36em}
-/* The pair, on a row and on a full swatch. The locked colours are slivers
-   rather than squares: they are the thing being compared against, not another
-   candidate, and drawing them the same size would put twelve equals on a row
-   that has one. */
-.nudges .pair{display:flex;align-items:stretch;gap:3px}
-.nudges .pair .lk{width:9px;flex:none;border:1px solid var(--rule);display:block}
-.nudges .verdict{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);font-variant-numeric:tabular-nums;flex:1 1 14em;min-width:0}
-.nudges .verdict.no{color:var(--alert);text-transform:none;letter-spacing:0;font-family:var(--font-sans);
-  font-size:13.5px;line-height:1.55}
 
 /* ---------- back to the top ----------
    This page opens at the foot of a log kept forever, which puts the shelf,
@@ -575,53 +417,62 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
    so at the very foot of the page it is beside the SAY IT button rather than
    on top of it. */
 .totop{position:fixed;right:20px;bottom:20px;z-index:40;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--muted);background:var(--paper);border:1px solid var(--rule);border-radius:0;
   padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:8px}
 .totop:hover{color:var(--ink);border-color:var(--ink)}
 .totop:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
-.totop .arw{font-size:12px;line-height:1}
+.totop .arw{font-size:13px;line-height:1}
 /* The author display wins over the UA's, so hidden has to be said here or the
    button is never away. */
 .totop[hidden]{display:none}
 
-.earlier{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+.earlier{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--faint);background:none;border:0;padding:14px 0;cursor:pointer;display:block;width:100%;text-align:left;
   border-bottom:1px solid var(--rule)}
 .earlier:hover{color:var(--ink)}
 .earlier:disabled{cursor:default}
 
-.m{padding:16px 0;border-bottom:1px solid var(--rule)}
-.m:last-child{border-bottom:0}
-.m .who{font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
-.m .who .tao{color:var(--faint);font-variant-numeric:tabular-nums}
-.m .who .at{color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums}
+.m{position:relative;margin-top:24px}
+.m:first-child,.earlier + .m{margin-top:8px}
+/* A run is one voice, so it is set as one: the next message from the same
+   person in the same ten minutes sits close under the last, with no name. */
+.m.cont{margin-top:6px}
+.m.cont > p:first-of-type{margin-top:0}
+/* No hairline between messages. Space separates them: a room with a rule under
+   every remark reads as a form, and the rules were the loudest thing in it. */
+.m .who{display:flex;gap:10px;flex-wrap:nowrap;align-items:baseline;min-width:0}
+.m .who .nm{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--ink);
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m .who .tao,.m .who .role{font-family:var(--font-mono);font-size:13px;color:var(--muted);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.m .who .at{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin-left:auto;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
 /* A name goes to the page that holds it. No rule at rest: forty messages with
    a hairline under every name reads as a form rather than as a conversation.
    The rule arrives under the pointer, which is the house link worn quietly. */
 .m .who a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
 .m .who a:hover{border-color:var(--ink)}
-.m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font-size:15px;line-height:1.68;color:var(--ink-3)}
-.m .gone{margin:8px 0 0;font-family:var(--font-mono);font-size:11.5px;color:var(--faint)}
-/* What a message is answering, said above it in the house dialect. One line,
-   the arrow and a name, and it goes where the message it answers is. */
-.m .re{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--faint);margin:0 0 7px}
-.m .re a,.m .re button{color:inherit;background:none;border:0;padding:0;cursor:pointer;
-  font:inherit;letter-spacing:inherit;text-transform:inherit;text-decoration:none;
-  border-bottom:1px solid transparent}
-.m .re a:hover,.m .re button:hover{color:var(--muted);border-bottom-color:var(--rule)}
-/* the arrow is the control that goes to the message; the name beside it is a
-   name, and goes where every other name on this site goes */
-.m .re .jump{margin-right:5px;border-bottom:0}
-.m .re .jump:hover{color:var(--ink)}
+/* SIXTY-FIVE CHARACTERS. A line longer than that is the biggest tax on
+   reading this column, and the column was wider than that. */
+.m p{white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0 0;font-size:17px;line-height:1.6;
+  color:var(--ink-3);max-width:65ch}
+.m .gone{margin:4px 0 0;font-family:var(--font-sans);font-size:15px;color:var(--muted)}
+/* What a message is answering: one line of it, quoted under a grey rule and
+   cut where it runs out of room. The whole line goes to the message. */
+.m .re{margin:6px 0 2px;max-width:65ch}
+.m .re button{display:flex;gap:8px;align-items:baseline;width:100%;min-width:0;text-align:left;
+  background:none;border:0;border-left:2px solid var(--rule);padding:2px 0 2px 10px;cursor:pointer;
+  font-family:var(--font-sans);font-size:14px;line-height:1.5;color:var(--muted)}
+.m .re button:hover{border-left-color:var(--ink)}
+.m .re .rn{font-weight:600;white-space:nowrap;flex:none}
+.m .re .rq{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m > .re:first-child{margin-top:0}
 /* Arriving at a message somebody pointed you to. A ground that fades rather
    than a highlight that stays: it says here, and then it stops saying it. */
 .m.found{background:var(--wash);box-shadow:0 0 0 8px var(--wash)}
 .m{transition:background-color 1.1s ease,box-shadow 1.1s ease}
 .m.mine{border-left:1px solid var(--rule);margin-left:-13px;padding-left:12px}
-.m .who .artist{color:var(--ink);letter-spacing:.18em}
 /* A tag inside a sentence. It sits in the prose, so it takes the prose's rule
    rather than the small-caps line's: visible at rest, because a name in the
    middle of a paragraph has to be findable without hovering over it. */
@@ -652,7 +503,7 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
    the camera data has already gone. */
 .attached{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .attached img{width:56px;height:56px;object-fit:cover;border:1px solid var(--rule);flex:none;background:var(--sunk)}
-.attached .what{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+.attached .what{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--faint);min-width:0;overflow:hidden;text-overflow:ellipsis}
 .attached button{background:none;border:0;padding:0 2px;cursor:pointer;color:var(--faint);
   font-family:var(--font-mono);font-size:13px;line-height:1;margin-left:auto}
@@ -669,23 +520,18 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .card:hover,.card:focus-visible{border-color:var(--ink)}
 .cthumb{width:44px;height:44px;flex:none;object-fit:cover;background:var(--sunk)}
 .cbody{display:flex;flex-direction:column;gap:3px;min-width:0}
-.cdom{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+.cdom{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ctitle{font-family:var(--font-sans);font-weight:500;font-size:13px;line-height:1.42;color:var(--ink);
   overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.cdesc{font-size:12.5px;line-height:1.5;color:var(--muted);
+.cdesc{font-size:13px;line-height:1.5;color:var(--muted);
   overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.cnote{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cnote{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 
 /* Being spoken to. The hairline, not a colour ... the single green on this
    site is for availability and nothing else, and a room that shouted in colour
    every time somebody said your name would be a room you stopped opening. */
 .m.at{border-left:1px solid var(--ink);margin-left:-13px;padding-left:12px}
-.m .mod{margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  display:flex;gap:16px;color:var(--faint)}
-.m .mod button{background:none;border:0;padding:0 2px;font-family:var(--font-mono);font-size:13px;line-height:1;
-  color:var(--faint);cursor:pointer}
-.m .mod button:hover{color:var(--ink)}
 
 /* Under a message: what people made of it. The marks are always there because
    they are part of the record; the two ways in are up in the measuring line,
@@ -693,8 +539,8 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .acts{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px}
 .rxn{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--rule);
   padding:2px 8px;cursor:pointer;line-height:1.5;transition:border-color .18s ease}
-.rxn .e{font-size:12.5px;line-height:1}
-.rxn .c{font-family:var(--font-mono);font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.rxn .e{font-size:15px;line-height:1}
+.rxn .c{font-family:var(--font-mono);font-size:13px;color:var(--faint);font-variant-numeric:tabular-nums}
 .rxn:hover{border-color:var(--muted)}
 .rxn.mine{border-color:var(--mark)}
 .rxn.mine .c{color:var(--ink)}
@@ -702,13 +548,17 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
    own. A row of their own has to be there whether or not anybody is looking at
    it, or the message grows a line taller under the pointer; this line is there
    anyway, and they simply arrive in it. */
-.quiet{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  background:none;border:0;padding:0 1px;color:var(--faint);cursor:pointer;
-  opacity:0;transition:opacity .18s ease}
-.m .who .quiet{margin-left:2px}
-.m:hover .quiet,.m:focus-within .quiet,.m.open .quiet{opacity:1}
+/* The message's controls, over its top right corner. Drawn always and shown
+   under the pointer, on focus, or on a tap, so nothing moves when they arrive
+   and nothing sits on screen that nobody is using. */
+.m .ctl{position:absolute;top:-8px;right:0;display:flex;align-items:center;gap:2px;padding:2px;
+  background:var(--paper);border:1px solid var(--rule);opacity:0;visibility:hidden;
+  transition:opacity .15s ease,visibility .15s}
+.m:hover .ctl,.m:focus-within .ctl,.m.show .ctl{opacity:1;visibility:visible}
+.quiet{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  background:none;border:0;padding:5px 8px;color:var(--muted);cursor:pointer;line-height:1.2}
+.quiet.glyph{font-size:16px;text-transform:none;padding:3px 9px}
 .quiet:hover{color:var(--ink)}
-@media(hover:none){.quiet{opacity:.65}}
 .pal{display:inline-flex;gap:1px;border:1px solid var(--rule);padding:2px;align-items:center}
 .pal button{background:none;border:0;padding:3px 6px;font-size:15px;line-height:1;cursor:pointer;opacity:.7}
 .pal button:hover,.pal button:focus-visible{opacity:1;background:var(--sunk);outline:none}
@@ -737,23 +587,23 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .picker[hidden]{display:none}
 .pk-head{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--rule);flex:none}
 .pk-q{flex:1 1 auto;min-width:0;background:none;border:0;padding:4px 2px;color:var(--ink);
-  font-family:var(--font-mono);font-size:12px;border-radius:0;-webkit-appearance:none}
+  font-family:var(--font-mono);font-size:13px;border-radius:0;-webkit-appearance:none}
 .pk-q::placeholder{color:var(--faint)}
 .pk-q:focus{outline:none}
 .pk-x{background:none;border:0;padding:2px;cursor:pointer;flex:none;color:var(--faint);
-  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase}
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
 .pk-x:hover{color:var(--ink)}
 .pk-body{overflow-y:auto;overscroll-behavior:contain;padding:4px 10px 10px;flex:1 1 auto}
 /* Nineteen hundred buttons is a lot to lay out at once, and the reader sees
    thirty of them. The ones off screen are measured and not drawn. */
 .pk-g{content-visibility:auto;contain-intrinsic-size:auto 220px}
-.pk-lab{font-family:var(--font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+.pk-lab{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--faint);font-weight:400;margin:12px 0 6px;position:sticky;top:0;background:var(--paper);
   padding:4px 0 3px}
 .pk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:1px}
 .pk-e{background:none;border:0;padding:4px 0;font-size:19px;line-height:1.25;cursor:pointer;border-radius:0}
 .pk-e:hover,.pk-e:focus-visible{background:var(--sunk);outline:none}
-.pk-say{font-family:var(--font-mono);font-size:10.5px;color:var(--faint);padding:14px 0;margin:0}
+.pk-say{font-family:var(--font-mono);font-size:13px;color:var(--faint);padding:14px 0;margin:0}
 
 /* The sheet. Full width at the foot, and taller, because a thumb needs the
    room a pointer does not. */
@@ -782,18 +632,18 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .at-list button:last-child{border-bottom:0}
 .at-list button[aria-selected="true"]{background:var(--sunk)}
 .at-list .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.at-list .sub{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+.at-list .sub{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--faint);margin-left:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
-.at-none{padding:10px 12px;font-family:var(--font-mono);font-size:11px;color:var(--faint)}
+.at-none{padding:10px 12px;font-family:var(--font-mono);font-size:13px;color:var(--faint)}
 .speak .box{border-top:1px solid var(--rule);padding-top:18px}
 /* Who you are answering, above the box you are answering them in. */
-.replying{display:flex;align-items:baseline;gap:12px;margin-bottom:9px;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.replying button{background:none;border:0;padding:0 2px;cursor:pointer;color:var(--faint);
-  font-family:var(--font-mono);font-size:13px;line-height:1}
+.replying{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-left:10px;
+  border-left:2px solid var(--rule);font-family:var(--font-sans);font-size:14px;color:var(--muted)}
+.replying .rn{font-weight:600;white-space:nowrap}
+.replying button{background:none;border:0;padding:0 4px;cursor:pointer;color:var(--muted);
+  font-family:var(--font-mono);font-size:16px;line-height:1;margin-left:auto}
 .replying button:hover{color:var(--ink)}
-.replying .quote{color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  text-transform:none;letter-spacing:.04em;min-width:0}
+.replying .quote{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 /* The list hangs off the box it is filling in, not off the composer: anchored
    to the whole composer it opened below the buttons, half a screen from the
    caret that summoned it. */
@@ -802,18 +652,18 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   color:var(--ink);padding:11px 12px;font-family:var(--font-sans);font-size:15px;line-height:1.6}
 .speak textarea:focus{outline:none;border-color:var(--mark)}
 .speak .row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
 .speak .count{font-variant-numeric:tabular-nums}
 .speak .count.over{color:var(--alert)}
 .speak .go{background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;padding:8px 15px;
-  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
 .speak .go:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
 .speak a.go{text-decoration:none;display:inline-block}
-.openin-lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+.openin-lab{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--faint);margin:0 0 12px}
 .openin-note{font-size:13px;line-height:1.6;color:var(--muted);margin:14px 0 0;max-width:34em}
 .speak .go:disabled{opacity:.45;cursor:default}
-.say{font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--muted);margin-top:10px}
+.say{font-family:var(--font-sans);font-size:15px;line-height:1.6;color:var(--muted);margin-top:10px}
 .say.bad{color:var(--alert)}
 /* The request as it went out, folded under a refusal. Closed by default,
    because the ordinary case is a person who pressed cancel and wants one line
@@ -822,9 +672,9 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
 .say .sent{margin-top:8px;color:var(--muted)}
 .say .sent summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .say .sent pre{margin:6px 0 0;padding:8px;border:1px solid var(--rule);border-radius:4px;
-  white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:10px;
+  white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:13px;
   line-height:1.6;max-height:40vh;overflow:auto;-webkit-user-select:text;user-select:text}
-.quiet-log{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding:34px 0}
+.quiet-log{font-family:var(--font-sans);font-size:15px;color:var(--muted);padding:34px 0}
 
 @media(max-width:640px){
   .mast{padding:34px 20px 0}
@@ -834,7 +684,6 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   .room{padding:18px 20px 30px}
   .speak{padding:0 20px 80px}
   .totop{right:14px;bottom:14px;padding:9px 12px}
-  .m .who .at{margin-left:0;width:100%}
   /* The line of what you are answering keeps the name and drops the quote:
      a nowrap sentence in a flex row is the one thing on this page that would
      push the measure out on a phone. */
@@ -913,16 +762,24 @@ body.resizing{user-select:none;-webkit-user-select:none;cursor:col-resize}
   #main.asking #open .nudge{padding:20px 18px;margin-bottom:0}
   /* The question is a panel heading here rather than a masthead line, so it
      stops taking the viewport width for its size. */
-  #main.asking #open .q{font-size:19px}
-  /* A column this narrow sets its own furniture: the fields go full width and
-     the record scrolls sideways inside the panel rather than widening it. */
-  #main.asking #open .amt,#main.asking #open .propose input[type="color"]{width:100%}
-  /* The row itself is not written here: it asks the panel how wide it is, and
-     this panel is 352px, so it gets the narrow layout without being told. */
-  #main.asking #open .chg .amt,#main.asking #open .put .amt{flex:1 1 100%}
-  #main.asking #open .chg .to,#main.asking #open .src{flex:1 1 100%}
+  #main.asking #open .q{font-size:20px}
+  /* The record scrolls sideways inside the panel rather than widening it. */
   #main.asking #open .ledger{overflow-x:auto}
   #main.asking #open .ledger table{min-width:280px}
+}
+
+/* 44px TO A FINGER. Every button, toggle and field on this page is at least
+   that tall wherever the pointer is a thumb or the screen is a phone's. Links
+   inside a sentence are words, and stay the height of the words. */
+@media(max-width:640px),(pointer:coarse){
+  #main button,#main summary,#main select,#main input:not([type="color"]),#main a.go,
+  #picker button,.totop{min-height:44px}
+  #main .quiet.glyph,#main .nudges .help>summary{min-width:44px}
+  .nudges .help>summary{width:44px;height:44px}
+  .nudges .strip{height:44px}
+  .nudges .tile .sw{height:96px}
+  .nudges .tile .own{padding:0 0 0 12px}
+  .m .re button{align-items:center}
 }
 </style>
 </head>
@@ -1130,12 +987,25 @@ function topButton() {
 }
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
+/* When, as a reader says it: `2h` for today, `26 Sep` before that, and the
+   year only once it is not this one. The exact minute is in the title, for
+   the reader who wants it rather than on every line for the ones who do not. */
 const stamp = (s) => {
   const d = new Date(s);
   if (isNaN(d)) return '';
-  const day = d.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
-  const time = d.toLocaleTimeString('en-NZ', { hour: '2-digit', minute: '2-digit', hour12: false });
-  return `${day} ${time}`;
+  const now = new Date();
+  if (d.toDateString() === now.toDateString()) {
+    const min = Math.max(0, Math.floor((now - d) / 60000));
+    if (min < 1) return 'now';
+    return min < 60 ? `${min}m` : `${Math.floor(min / 60)}h`;
+  }
+  return d.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short',
+    ...(d.getFullYear() === now.getFullYear() ? {} : { year: 'numeric' }) });
+};
+const stampFull = (s) => {
+  const d = new Date(s);
+  return isNaN(d) ? '' : d.toLocaleString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', hour12: false });
 };
 
 // the same sentence api/_lib/chat.js builds, to the character, written once
@@ -1384,13 +1254,21 @@ const rowAt = (n) => ROOM.rows.find((m) => m.n === Number(n)) || null;
 function repaint(n) {
   const m = rowAt(n);
   const el = document.getElementById(`m-${n}`);
-  if (m && el) el.outerHTML = card(m);
+  if (m && el) el.outerHTML = card(m, ROOM.rows[ROOM.rows.indexOf(m) - 1]);
 }
+
+/* A RUN IS ONE VOICE. Consecutive messages from one wallet inside ten minutes
+   share the author line of the first: the name said once, and the run read as
+   what it is, somebody still talking. */
+const RUN_MS = 10 * 60 * 1000;
+const continues = (m, prev) => Boolean(prev && m && prev.address && prev.address === m.address
+  && prev.role === m.role && Math.abs(new Date(m.at) - new Date(prev.at)) < RUN_MS);
 
 const namesMe = (m) => Boolean(ROOM.wallet && (m.mentions || []).some((t) => t.address === ROOM.wallet));
 
-function card(m) {
+function card(m, prev) {
   const mine = ROOM.wallet && m.address === ROOM.wallet;
+  const cont = continues(m, prev);
   /* The artist is named and unnumbered. A TAO figure beside him would read as
      nought, which says the opposite of the truth ... the wallets are excluded
      from accrual because he is the one being patronised, not the patron. */
@@ -1398,13 +1276,11 @@ function card(m) {
   /* One character each. The artist is the only person who ever sees these and
      he knows what they are; spelling them out put moderation furniture under
      every message in Studio. */
-  const mod = ROOM.me && ROOM.me.artist ? `<div class="mod">
-      <button data-act="${m.deleted ? 'restore' : 'delete'}" data-n="${m.n}"
+  const mod = ROOM.me && ROOM.me.artist ? `<button class="quiet glyph" data-act="${m.deleted ? 'restore' : 'delete'}" data-n="${m.n}"
         title="${m.deleted ? 'Put this message back' : 'Take this message down'}"
         aria-label="${m.deleted ? 'Restore this message' : 'Delete this message'}">${m.deleted ? '&#8635;' : '&times;'}</button>
-      <button data-act="mute" data-who="${e(m.address)}"
-        title="Mute this wallet" aria-label="Mute this wallet">&minus;</button>
-    </div>` : '';
+      <button class="quiet glyph" data-act="mute" data-who="${e(m.address)}"
+        title="Mute this wallet" aria-label="Mute this wallet">&minus;</button>` : '';
   /* The name goes where the person is. A collector to their page on the
      register, the artist to the front door ... it is one register across two
      deploys, so it opens in this tab like any other page of it. Anybody with
@@ -1427,19 +1303,23 @@ function card(m) {
         data-act="shot" data-src="${e(m.image.url)}" tabindex="0" role="button"
         aria-label="Open this picture">`
     : '';
-  return `<article class="m${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}${ROOM.palette === m.n ? ' open' : ''}" id="m-${m.n}">
+  /* CONTROLS ON DEMAND. Reply, react and the artist's two marks sit in one
+     strip over the top right of the message, drawn always and shown under the
+     pointer or a tap ... never resting on screen, and never moving the words
+     when they arrive. */
+  const ctl = ways || mod ? `<div class="ctl">${ways}${mod}</div>` : '';
+  return `<article class="m${cont ? ' cont' : ''}${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}${ROOM.palette === m.n ? ' open' : ''}" id="m-${m.n}">
+    ${cont ? '' : `<div class="who">
+      <span class="nm${isArtist ? ' artist' : ''}">${who}</span>
+      ${isArtist ? '<span class="role">the artist</span>' : `<span class="tao">${e(m.worn)} TAO</span>`}
+      <span class="at" title="${e(stampFull(m.at))}">${e(stamp(m.at))}</span>
+    </div>`}
+    ${ctl}
     ${answering}
-    <div class="who">
-      <span${isArtist ? ' class="artist"' : ''}>${who}</span>
-      ${isArtist ? '<span class="tao">&middot; the artist</span>' : `<span class="tao">&middot; ${e(m.worn)} TAO</span>`}
-      ${ways}
-      <span class="at">${e(stamp(m.at))}</span>
-    </div>
     ${words(m)}
     ${shot}
     ${cards}
     ${acts}
-    ${mod}
   </article>`;
 }
 
@@ -1454,17 +1334,22 @@ function card(m) {
 function replyLine(m) {
   const r = m.reply;
   if (!r) return '';
-  if (!r.found) return '<div class="re">&#8627; replying to a message that is no longer here</div>';
-  /* Two things in this line and two things it can do, one each.
-     The arrow goes to the message. The name goes to the person, because that
-     is what a name does everywhere else on this site, and a name that did
-     something else here would be the one exception nobody could predict. It
-     was a single control doing both, and a collector reported exactly that. */
+  if (!r.found) return '<div class="re"><span class="rq">A message that is no longer here</span></div>';
+  /* THE PARENT, QUOTED. One line of what is being answered, under a grey rule,
+     cut where it runs out of room ... the thing a reader actually needs to
+     follow a reply, where the old line gave them a name in caps and an arrow.
+     The whole line is one control and it goes to the message; the name in it
+     is part of the quote rather than a second door, which was the confusion a
+     collector reported when one line did two things. The words come from the
+     route, or from the room where the route is older than this page. */
   const label = e(r.name || short(r.address));
-  const name = r.url ? `<a href="${e(r.url)}">${label}</a>` : `<span>${label}</span>`;
-  return `<div class="re"><button type="button" class="jump" data-act="goto" data-n="${r.n}"
-      title="Go to the message this answers" aria-label="Go to the message this answers">&#8627;</button>
-    replying to ${name}${r.deleted ? ' <span>&middot; taken down</span>' : ''}</div>`;
+  const parent = rowAt(r.n);
+  const said = r.deleted ? 'Taken down'
+    : (r.quote != null ? r.quote : (parent && parent.text) || (parent && parent.image ? 'A picture' : ''));
+  const quote = String(said || '').replace(/\s+/g, ' ').slice(0, 160);
+  return `<div class="re"><button type="button" data-act="goto" data-n="${r.n}"
+      title="Go to the message this answers"><span class="rn">${label}</span>${
+      quote ? ` <span class="rq">${e(quote)}</span>` : ''}</button></div>`;
 }
 
 /* Under a message: what people made of it.
@@ -1762,7 +1647,7 @@ function replyingTo() {
   const name = m ? (m.role === 'artist' ? 'MintFace' : (m.name || short(m.address))) : `message ${ROOM.replyTo}`;
   const quote = m && m.text ? m.text.replace(/\s+/g, ' ').slice(0, 90) : '';
   return `<div class="replying">
-    <span>&#8627; Replying to ${e(name)}</span>
+    <span class="rn">Replying to ${e(name)}</span>
     ${quote ? `<span class="quote">${e(quote)}</span>` : ''}
     <button type="button" data-act="unreply" title="Not a reply (or press escape)"
       aria-label="Cancel the reply">&times;</button>
@@ -1914,7 +1799,7 @@ function draw({ keep = false, toEnd = false, toBottom = false } = {}) {
      rebuild every time somebody says something. */
   document.getElementById('log').innerHTML = `
     ${ROOM.more ? '<button class="earlier" id="earlier" data-act="earlier">&#8593; Earlier</button>' : ''}
-    ${ROOM.rows.length ? ROOM.rows.map(card).join('') : '<div class="quiet-log">Nobody has said anything yet.</div>'}`;
+    ${ROOM.rows.length ? ROOM.rows.map((m, i) => card(m, ROOM.rows[i - 1])).join('') : '<div class="quiet-log">Nobody has said anything yet.</div>'}`;
   document.getElementById('speak').innerHTML = `${composer()}${say}`;
 
   if (keep) window.scrollBy(0, document.documentElement.scrollHeight - before);
@@ -2460,6 +2345,17 @@ async function mark(b, n, emoji) {
   }, { redraw: false });     // the work redrew the one article this ran from
 }
 
+/* A tap on a message is how a touch screen hovers. It shows that message's
+   controls and puts away any other's; a tap on a link, a button or a picture
+   in it is that thing's tap rather than this one. */
+document.addEventListener('click', (ev) => {
+  if (!TOUCH) return;
+  const m = ev.target.closest('#log .m');
+  if (m && ev.target.closest('a, button, img, input, textarea')) return;
+  document.querySelectorAll('#log .m.show').forEach((x) => { if (x !== m) x.classList.remove('show'); });
+  if (m) m.classList.toggle('show');
+});
+
 document.addEventListener('click', async (ev) => {
   /* A picture is an <img> rather than a button ... it is a picture, and
      wrapping it in a control to make one delegated selector happy would put a
@@ -2579,7 +2475,7 @@ const sent = (location.hash.match(/^#m-(\d+)$/) || [])[1];
    whenever the board comes back and a panel somebody is typing into should not
    close under them. */
 const NUDGE = { state: null, tao: 0, who: null, tried: null, loading: false,
-  picked: {}, putting: new Set(), moving: new Set(),
+  picked: {}, putting: new Set(), moving: new Set(), proposing: new Set(),
   /* Which candidate row has its replace picker open, keyed nudge|hex, exactly
      as the weigh field is: a card is rebuilt whenever the board comes back,
      and a panel somebody is choosing a colour in should not close under them. */
@@ -2699,44 +2595,6 @@ function ledger(x) {
  * proposed. And the threshold is on the card the whole time, because a nudge
  * that can decline to decide has to say so before it does.
  */
-/* ---------- the constraint, drawn ----------
- *
- * A colour after the first has to stand clear of everything already locked.
- * The card says that twice, on purpose: once at the top, as the rule, and
- * again as a sliver beside every candidate, so a voter is always looking at
- * the pair rather than at a swatch on its own. Contrast is a relation, and a
- * board that shows only one side of it is asking people to hold the other
- * side in their heads.
- */
-/* The locked colours beside a candidate. Slivers, not squares: they are what
-   is being compared against rather than another thing to choose. The
-   community's colours only ... the red line holds the floor in the arithmetic
-   and is never drawn here, because a sliver of it beside a candidate reads as
-   one more thing the collectors picked. */
-function pair(x, hex) {
-  return `<span class="pair">${MF.palette.slivers(x.constraint)}<span class="chip" style="background:${e(hex)}"></span></span>`;
-}
-
-/* WHAT THE COLLECTORS HAVE CHOSEN, and what the next colour has to live
-   beside. The arithmetic of the rule ... how far clear, how much of the range
-   is left ... used to be spelled out underneath. It is gone: the picker
-   refuses a clashing colour while it is being dragged and says by how much, so
-   the rule was being stated twice and obeyed once. */
-function againstBlock(x) {
-  const list = MF.palette.against(x.constraint);
-  if (!list.length) return '';
-  return `<div class="against">
-    <span class="alab">Collector chosen</span>
-    <div class="row">${list.map((a) => `<span class="ac">
-      <span class="chip" style="background:${e(a.hex)}"></span>
-      <span class="al">
-        <b><span class="ahex">${e(a.hex)}</span>${
-          a.name ? ` <span class="cname">${e(a.name.label)}</span>` : ''}</b>
-        <span class="l2">Locked &middot; ${e(a.caption)}</span></span>
-    </span>`).join('')}</div>
-  </div>`;
-}
-
 /* WHERE THE TAO CAME FROM, where it came from more than one wallet.
  *
  * A collector whose number grew because a vault delegated to them should be
@@ -2756,13 +2614,6 @@ function comboLine() {
   return ' &middot; <a class="combolink" href="/combo">Art in a vault?</a>';
 }
 
-/* A colour, said so it can be spoken about. A board of hexes is a board
-   nobody can discuss out loud, and these are being chosen for a wall. */
-const nameOf = (hex) => {
-  const n = MF.colour.name(hex);
-  return n ? ` <span class="cname">${e(n.label)}</span>` : '';
-};
-
 /* NAMES FIRST, HEX AS THE FINE PRINT.
  *
  * LIGHT GREEN is what somebody says out loud to a decorator on a scaffold;
@@ -2778,16 +2629,6 @@ const said = (hex) => {
   const h = String(hex || '').toUpperCase();
   const n = MF.colour.name(h);
   return { lead: n ? n.label : h, fine: n ? h : '', named: Boolean(n) };
-};
-/* The two cells a candidate row keeps for it, in that order. `chosen` rides
-   with the fine print, or with the lead where there is no fine print to ride
-   with: it is a state of the colour rather than part of its name, and it must
-   not sit in the cell that truncates. */
-const colourCells = (hex, chosen) => {
-  const c = said(hex);
-  const mark = chosen ? ' \u00b7 chosen' : '';
-  return `<span class="cname">${e(c.lead)}${c.fine ? '' : e(mark)}</span>
-    <span class="hex">${c.fine ? e(c.fine + mark) : ''}</span>`;
 };
 /* And in a line of running text, where there is only one slot. */
 const saidLine = (hex) => {
@@ -2900,24 +2741,25 @@ function changeLine(x, { candidate, amount, source }) {
    One colour per wallet, and final: other people weigh on it, and a proposal
    that could be changed would move their TAO onto a colour they never saw. */
 function proposer(x) {
-  if (!x.open || !mayWeigh()) return '';
-  if (x.proposed) return '<p class="said">Colour proposed. Weigh TAO behind any on the board.</p>';
+  if (!x.open || !mayWeigh() || x.proposed) return '';
   /* Somewhere in the field to start from, rather than a colour that is going
      to be refused the moment the picker opens. Not the leader, which is on the
      board already and would be refused for that instead. */
   const start = x.constraint ? openingColour(x) : '#C0392B';
-  /* Under its own heading and its own rule. It is the only other thing on this
-     card with a field in it, and a reader who came to weigh should never be
-     able to mistake a colour picker for the amount box ... which is exactly
-     what happened when the board stopped knowing who they were and drew this
-     to a collector who had already proposed. */
-  return `<div class="propose"><span class="slab">Propose a new colour</span>
-    <input type="color" id="hex-${e(x.id)}" value="${e(start)}" data-colourfield="${e(x.id)}"
-      aria-label="A colour to propose">
-    <button type="button" class="weigh ghosted" data-propose="${e(x.id)}">Propose this colour</button>
-    <span class="${x.constraint ? 'verdict' : 'said'}" id="verdict-${e(x.id)}">${x.constraint
-      ? e(verdictLine(x, start))
-      : 'One colour per wallet, and final.'}</span>
+  /* One line across the foot of the board until it is asked for. It is the
+     only other thing on this card with a field in it, and a reader who came to
+     weigh should never be able to mistake a colour picker for the amount box. */
+  const open = NUDGE.proposing.has(x.id);
+  return `<div class="propose${open ? ' on' : ''}">
+    <button type="button" class="add" data-proposing="${e(x.id)}" aria-expanded="${open}">+ Propose a colour</button>
+    <div class="pform">
+      <input type="color" id="hex-${e(x.id)}" value="${e(start)}" data-colourfield="${e(x.id)}"
+        aria-label="A colour to propose">
+      <button type="button" class="weigh" data-propose="${e(x.id)}">Propose it</button>
+      <span class="${x.constraint ? 'verdict' : 'said'}" id="verdict-${e(x.id)}">${x.constraint
+        ? e(verdictLine(x, start))
+        : 'One colour per wallet, and final.'}</span>
+    </div>
   </div>`;
 }
 
@@ -3063,9 +2905,11 @@ function standingsRows(x) {
   </table></div>`;
 }
 
-function ledgerRows(x) {
+function ledgerRows(x, { tally = true } = {}) {
   const rows = x.ledger || [];
-  const summary = `<p class="tally">${x.collectors} collector${x.collectors === 1 ? '' : 's'}
+  /* On an open card the tally is the line that opens the record, so it is
+     not said again inside it. */
+  const summary = !tally ? '' : `<p class="tally">${x.collectors} collector${x.collectors === 1 ? '' : 's'}
     &middot; ${num(x.total)} TAO weighed</p>`;
   if (!rows.length) return `${summary}<p class="none">Nobody has weighed in yet.</p>`;
   /* Standings first, because what stands is the question; the log of every
@@ -3124,29 +2968,36 @@ const FOLD = {
   },
 };
 
-/* The board, folded ... which is to say the board, with one row per colour and
-   nothing between the reader and putting TAO on one.
+/* ---------- the board, as colour tiles ----------
  *
- * A row carries everything needed to weigh on it: the colour, its hex, who put
- * it up, and what is on it. It used to carry a hairline showing its share of
- * the leader instead of who proposed it, on the reasoning that three totals
- * read faster as three lengths. They do, but the length answers a question
- * nobody was asking at rest, and the name it displaced is the one thing on a
- * row that a collector recognises. The lengths are still in the fold, on the
- * meters, where a reader who wants to compare has gone looking.
+ * COLOUR IS THE HERO. Every candidate is a card led by its own swatch, big,
+ * with the locked colours as thin bands down its left edge so the tile is a
+ * preview of the palette as it would be. Under it, the name as somebody would
+ * say it, the TAO behind it with a bar for its share of the leader's (so the
+ * race is visible without reading a figure), who put it up, and one button.
  *
- * Every colour is here, not the top three: the board grows by proposal, and a
+ * ONE BUTTON PER DECISION. WEIGH on a colour this wallet is not on; CHANGE,
+ * inside the card's own "Yours" line, on one it is. Either opens the field on
+ * that card and nowhere else: the amount, defaulting to everything that could
+ * go there, where it comes off if it has to come off something, and the TAO
+ * available ... said here, at the moment it matters, and nowhere else.
+ *
+ * The hex is the fine print and waits for a hover or a tap on the swatch. The
+ * name leads, and where no name is near enough the hex takes its place.
+ *
+ * Every colour is here, not the top few: the board grows by proposal, and a
  * card that hid the newest one behind a fold would hide the thing that just
  * happened. Past five it grows a line of its own rather than the card.
- *
- * The total is exact here, where everywhere else on the card wears it down to
- * 100K. Worn figures were readable while a hairline underneath showed each
- * colour's share, and that hairline is gone. Without it the number is the only
- * thing telling two colours apart, and the two on the board tonight are
- * 100,001 and 100,000 ... which both wear down to 100K, so a collector would
- * read a tie where there is a leader.
  */
 const CROW_SHOWN = 5;
+
+/* The name a tile leads with: the nearest one, said plainly. How near it is
+   travels with the hex, in the swatch's label and title, for the reader who
+   asks. */
+const tileName = (hex) => {
+  const n = MF.colour.name(hex);
+  return n ? n.name : String(hex || '').toUpperCase();
+};
 
 function colourRow(x, c, editable) {
   const locked = x.locked || null;
@@ -3155,155 +3006,175 @@ function colourRow(x, c, editable) {
   const by = c.proposed_name || (c.proposed_by ? short(c.proposed_by) : null);
   const who = by && c.proposed_url ? `<a href="${e(c.proposed_url)}">${e(by)}</a>` : (by ? e(by) : null);
   const key = `${x.id}|${c.hex}`;
-  /* Rebuilt cards forget what the DOM knew, so the row that was open for
-     typing is remembered the same way the fold is ... in the state, read at
-     draw. A weighing redraws this card, and it should come back where it was
-     rather than closing under the person who just used it. */
+  const hex = String(c.hex).toUpperCase();
+  const nm = MF.colour.name(hex);
+  /* Rebuilt cards forget what the DOM knew, so the tile that was open for
+     typing is remembered in the state and read at draw. A weighing redraws
+     this card, and it should come back where it was rather than closing under
+     the person who just used it. */
   const putting = editable && NUDGE.putting.has(key);
   /* Yours to change, while it is only yours. */
   const mine = editable && mayEditColour(x, c);
-  /* WEIGH, CHANGE, MOVE HERE. A collector already standing somewhere reads
-     WEIGH on another colour as "propose another one" ... which is a different
-     act with a different button ... and then finds their TAO refused for being
-     in two places. The button says which of the three this is, and the banner
-     above says where they are standing while they read it. */
+  /* Where it comes off, named on the tile taking it, where the wallet already
+     stands somewhere else. Spare first, because somebody who has TAO lying
+     spare and presses WEIGH means that TAO. */
   const elsewhere = editable ? myPositions(x).filter((a) => a.hex !== c.hex) : [];
-  const label = on ? 'Change' : (elsewhere.length && !mySpare(x) ? 'Move here' : 'Weigh');
-  /* Where it comes off, named on the row taking it, and only where the wallet
-     has nothing spare to weigh with. */
+  const spare = editable ? mySpare(x) : 0;
   const needsSource = editable && elsewhere.length > 0;
-  const src = needsSource ? `<span class="from">from</span>
-      <select class="src" aria-label="Where the TAO comes from">
-        ${mySpare(x) > 0 ? `<option value="">Spare &middot; ${num(mySpare(x))} TAO</option>` : ''}
-        ${elsewhere.map((a) => `<option value="${e(a.hex)}">${e(said(a.hex).lead)} &middot; ${num(a.amount)} TAO</option>`).join('')}
+  const src = needsSource ? `<select class="src" aria-label="Where the TAO comes from">
+        ${spare > 0 ? `<option value="">From spare &middot; ${num(spare)}</option>` : ''}
+        ${elsewhere.map((a) => `<option value="${e(a.hex)}">From ${e(tileName(a.hex))} &middot; ${num(a.amount)}</option>`).join('')}
       </select>` : '';
-  return `<div class="crow${chosen ? ' chosen' : ''}${on ? ' mine' : ''}${putting ? ' putting' : ''}${
+  /* DEFAULTS TO EVERYTHING AVAILABLE. What is on it already, for a change;
+     otherwise what is spare; otherwise, for a wallet with nothing spare, the
+     whole of the position the source list offers first ... "move it here". */
+  const start = on || spare || (elsewhere[0] ? elsewhere[0].amount : 0);
+  const lead = Number((x.leader && x.leader.total) || 0);
+  const share = lead > 0 ? Math.min(1, Number(c.total || 0) / lead) : 0;
+  const alloc = on ? myPositions(x).find((a) => a.hex === c.hex) : null;
+  const counts = alloc && Number(alloc.weight) < Number(alloc.amount)
+    ? ` <span class="cl">counts ${worn(alloc.weight)}</span>` : '';
+  const bands = MF.palette.slivers(x.constraint);
+  const go = (label) => `<button type="button" class="go" data-put="${e(key)}"
+      aria-expanded="${putting}">${label}</button>`;
+  return `<div class="tile${chosen ? ' chosen' : ''}${on ? ' mine' : ''}${putting ? ' putting' : ''}${
     mine && NUDGE.swapping.has(key) ? ' swapping' : ''}">
-    ${pair(x, c.hex)}
-    ${colourCells(c.hex, chosen)}
-    <span class="w">${num(c.total)} TAO</span>
-    ${editable
-      ? `<button type="button" class="go" data-put="${e(key)}"
-           aria-expanded="${putting}">${label}</button>`
-      : ''}
-    ${who ? `<span class="by">proposed by ${who}${mine ? `
-      <button type="button" class="own" data-swap="${e(key)}"
-        aria-expanded="${editable && NUDGE.swapping.has(key)}">Replace</button>
-      <button type="button" class="own" data-drop="${e(key)}">Remove</button>` : ''}</span>`
-      : '<span class="by"></span>'}
-    ${mine ? swapPanel(x, c) : ''}
-    ${editable ? `<span class="put">
-      <label class="plab" for="ramt-${e(x.id)}-${e(c.hex.slice(1))}">TAO to weigh</label>
-      <input class="amt" id="ramt-${e(x.id)}-${e(c.hex.slice(1))}" type="text" inputmode="numeric"
-        value="${on || ''}" placeholder="0" aria-label="TAO to weigh on ${e(c.hex)}">
-      ${src}
-      <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">${on ? 'Save' : (needsSource ? 'Move it here' : 'Weigh it')}</button>
-      <span class="have">${num(mySpare(x))} spare${on ? ` &middot; ${num(on)} here` : ''}</span>
-      <p class="res" aria-live="polite"></p>
-    </span>` : ''}
+    <button type="button" class="sw" style="background:${e(hex)}" data-reveal
+      title="${e(nm ? `${hex} · ${nm.label}` : hex)}"
+      aria-label="${e(nm ? `${nm.label}, ${hex}` : hex)}">${bands ? `<span class="locks">${bands}</span>` : ''}</button>
+    <div class="tb">
+      <div class="top">
+        <p class="cn">${e(tileName(hex))}${nm ? ` <span class="hex">${e(hex)}</span>` : ''}</p>
+        <span class="w">${num(c.total)} <small>TAO</small></span>
+      </div>
+      <span class="share" aria-hidden="true"><i style="width:${(share * 100).toFixed(1)}%"></i></span>
+      ${who ? `<p class="by">by ${who}${mine ? `
+        <button type="button" class="own" data-swap="${e(key)}"
+          aria-expanded="${editable && NUDGE.swapping.has(key)}">Replace</button>
+        <button type="button" class="own" data-drop="${e(key)}">Remove</button>` : ''}</p>` : ''}
+      ${on
+        ? `<div class="yours"><span>Yours &middot; ${num(on)} TAO${counts}</span>${editable ? go('Change') : ''}</div>`
+        : (editable ? go('Weigh') : '')}
+      ${mine ? swapPanel(x, c) : ''}
+      ${editable ? `<div class="put">
+        <input class="amt" id="ramt-${e(x.id)}-${e(c.hex.slice(1))}" type="text" inputmode="numeric"
+          value="${start || ''}" placeholder="0" aria-label="TAO to weigh on ${e(hex)}">
+        ${src}
+        <button class="weigh" data-weigh="${e(x.id)}" data-hex="${e(c.hex)}">${on ? 'Save' : 'Weigh in'}</button>
+        <p class="have">${num(spare)} TAO available${on ? ` &middot; ${num(on)} on this` : ''}${comboLine()}</p>
+        <p class="res" aria-live="polite"></p>
+      </div>` : ''}
+    </div>
   </div>`;
 }
 
 function colourRows(x) {
   const cs = (x.candidates || []).slice()
     .sort((a, b) => Number(b.total || 0) - Number(a.total || 0));
-  if (!cs.length) return '<p class="none">No colour has been proposed yet.</p>';
+  const add = proposer(x);
+  if (!cs.length) return `<div class="tiles">${add}</div><p class="none">No colour has been proposed yet.</p>`;
   const editable = Boolean(x.open && mayWeigh());
   const shown = cs.slice(0, CROW_SHOWN);
   const rest = cs.slice(CROW_SHOWN);
   const draw = (list) => list.map((c) => colourRow(x, c, editable)).join('');
-  return `<div class="crows">${draw(shown)}</div>${rest.length
+  return `<div class="tiles">${draw(shown)}${rest.length ? '' : add}</div>${rest.length
     ? `<details class="rest" data-fold="rest-${e(x.id)}"${FOLD.open(`rest-${x.id}`) ? ' open' : ''}>
         <summary>${rest.length} more <span class="chev" aria-hidden="true">&#709;</span></summary>
-        <div class="crows">${draw(rest)}</div>
+        <div class="tiles">${draw(rest)}${add}</div>
       </details>`
     : ''}`;
 }
 
-/* ---------- your weigh-in ----------
+/* ---------- the palette, as a strip ----------
  *
- * A collector's own position, plainly, on the card rather than folded away:
- * what they have on which colour, and CHANGE beside it. It was a line inside
- * Details, which made the two questions a collector actually has ... where do
- * I stand, and how do I change it ... a click away and unanswered
- * respectively.
- *
- * CHANGE opens the amount and the colour together, because they are one
- * decision: this much, here. Move all of it or part of it to any colour on the
- * board, adjust the number, save. Proposing is a different act and keeps its
- * own button, further down, where it always was.
+ * The pottle row, flattened: the same twelve in the same order, at the top of
+ * the panel, as one band. Locked colours are solid. The slot this nudge fills
+ * is outlined and numbered, with the colour in front showing faintly through
+ * it ... a live preview of where the board is leaning. The rest are empty.
+ * Hex and name are on a hover or a tap of a segment, not printed on it.
  */
-function positionPanel(x, a) {
-  const cs = (x.candidates || []).slice().sort((p, q) => Number(q.total || 0) - Number(p.total || 0));
-  const line = changeLine(x, { candidate: a.hex, amount: a.amount, source: a.hex });
-  return `<div class="chg" data-src="${e(a.hex)}">
-    <input class="amt" type="text" inputmode="numeric" value="${a.amount}"
-      aria-label="TAO to weigh">
-    <span class="lab">TAO on</span>
-    <select class="to" aria-label="Which colour">
-      ${cs.map((c) => `<option value="${e(c.hex)}"${c.hex === a.hex ? ' selected' : ''}>${
-        e(said(c.hex).lead)}${said(c.hex).fine ? ` \u00b7 ${e(said(c.hex).fine)}` : ''}</option>`).join('')}
-    </select>
-    <button class="weigh" data-weigh="${e(x.id)}" data-src="${e(a.hex)}">Save</button>
-    <p class="res${line.bad ? ' bad' : ''}" aria-live="polite">${e(line.text)}</p>
-  </div>`;
+function stripOf(x) {
+  const s = NUDGE.state && NUDGE.state.series;
+  if (!s || !s.board || (x.series && s.id && x.series !== s.id)) return '';
+  const lead = x.leader && x.leader.hex ? String(x.leader.hex).toUpperCase() : null;
+  return `<div class="strip" aria-label="The palette so far">${MF.palette.slots(s).map((v) => {
+    const nn = String(v.slot).padStart(2, '0');
+    const hex = v.hex ? String(v.hex).toUpperCase() : null;
+    if (hex) {
+      const nm = MF.colour.name(hex);
+      const tip = `${nn} · ${hex}${nm ? ` · ${nm.label}` : ''}`;
+      return `<button type="button" class="seg on" style="background:${e(hex)}"
+        data-tip="${e(tip)}" aria-label="${e(tip)}"></button>`;
+    }
+    if (v.nudge === x.id) {
+      const tip = lead ? `${nn} · being chosen · ${tileName(lead)} leads` : `${nn} · being chosen`;
+      return `<button type="button" class="seg live" data-tip="${e(tip)}" aria-label="${e(tip)}">${
+        lead ? `<span class="pv" style="background:${e(lead)}"></span>` : ''}<span class="n">${e(v.slot)}</span></button>`;
+    }
+    return `<span class="seg" title="${nn} · not asked yet"></span>`;
+  }).join('')}</div>`;
 }
 
-function positionRow(x, a) {
-  const key = `${x.id}|${a.hex}`;
-  const open = NUDGE.moving.has(key);
-  const clamped = Number(a.weight) < Number(a.amount)
-    ? `<span class="cl">counts ${worn(a.weight)}</span>` : '';
-  return `<div class="pos${open ? ' changing' : ''}">
-    <span class="chip" style="background:${e(a.hex)}"></span>
-    <span class="pw">${num(a.amount)} TAO on ${saidLine(a.hex)}</span>
-    ${clamped}
-    <button type="button" class="go" data-change="${e(key)}" aria-expanded="${open}">Change</button>
-    ${positionPanel(x, a)}
-  </div>`;
-}
-
-function position(x) {
-  if (!x.open || x.kind !== 'candidates' || !mayWeigh()) return '';
-  const m = x.mine;
-  const held = m ? m.held : NUDGE.tao;
-  const on = myPositions(x);
-  if (!on.length) {
-    return `<div class="stand"><p class="slab">Your weigh-in</p>
-      <p class="spare">Nothing on the board yet &middot; ${num(held)} TAO to weigh${comboLine()}</p></div>`;
-  }
-  /* Over-allocated, which selling down does without anybody weighing. Said
-     here, where the position it is about is, rather than in the fold. */
-  const over = m && m.over > 0
-    ? `<p class="spare">You have ${num(m.asked)} TAO spread and hold ${num(m.held)}.
-       The board counts ${num(m.held)} of it, in proportion, until you bring it down.</p>`
-    : `<p class="spare">${num(mySpare(x))} available &middot; your TAO ${num(held)}${comboLine()}</p>`;
-  return `<div class="stand">
-    <p class="slab">Your weigh-in</p>
-    ${on.map((a) => positionRow(x, a)).join('')}
-    ${over}
-  </div>`;
-}
-
-/* Where this wallet stands, in one line, and only where there is a wallet:
-   a reader who has not signed in is told that once, inside, rather than told
-   they have nothing every time they open the page. */
-function yours(x) {
-  if (!x.open || !mayWeigh()) return '';
-  const m = x.mine;
-  /* A yes or a no only. A board of colours says this in `position()`, on the
-     card and outside the fold, where it can also be changed. */
-  return `<p class="yours">You: ${m ? `${worn(m.amount)} on ${e(m.side)}` : 'nothing weighed yet'}</p>`;
-}
-
-/* How far the lock is, folded to one line. Both thresholds stay on it, because
-   a nudge that has met one of them has met neither, and a folded card that
-   showed the nearer half would be a card saying it is nearly decided. */
-function lockLine(x) {
+/* ---------- to lock ----------
+ *
+ * Both thresholds on one row, labelled once. Collectors as dots that fill,
+ * because five is few enough to count at a glance; TAO on the leader as one
+ * bar with a tick where the threshold is, so a leader past it is seen to be
+ * past it. Both stay, because a nudge that has met one of them has met
+ * neither.
+ */
+function toLock(x) {
   const p = x.open && x.progress;
   if (!p) return '';
-  return `<p class="lock">Lock &middot; ${p.voters.at} of ${p.voters.of} collectors
-    &middot; ${worn(p.tao.at)} of ${worn(p.tao.of)} TAO on the leader</p>`;
+  const v = p.voters, t = p.tao;
+  const dots = v.of <= 12
+    ? Array.from({ length: v.of }, (_, i) => `<i${i < v.at ? ' class="on"' : ''}></i>`).join('')
+    : `${v.at}/${v.of}`;
+  const scale = Math.max(t.of * 1.2, t.at) || 1;
+  return `<div class="tolock">
+    <span class="lab">To lock</span>
+    <span class="dots" role="img" title="${v.at} of ${v.of} collectors"
+      aria-label="${v.at} of ${v.of} collectors">${dots}</span>
+    <span class="lockbar" role="img" title="${num(t.at)} of ${num(t.of)} TAO on the leader"
+      aria-label="${num(t.at)} of ${num(t.of)} TAO on the leader"><i style="width:${
+      Math.min(100, (t.at / scale) * 100).toFixed(1)}%"></i><b style="left:${((t.of / scale) * 100).toFixed(1)}%"></b></span>
+    <span class="fig">${worn(t.at)} / ${worn(t.of)}</span>
+  </div>`;
+}
+
+/* Promising more than they hold, which selling down does without anybody
+   weighing. Said on the card, because the board is counting them down now. */
+function overLine(x) {
+  const m = x.mine;
+  if (!x.open || !mayWeigh() || !m || !(m.over > 0)) return '';
+  return `<p class="said bad">You have ${num(m.asked)} TAO spread and hold ${num(m.held)}.
+    The board counts ${num(m.held)} of it, in proportion, until you bring it down.</p>`;
+}
+
+/* When it closes, as somebody says it: today, tomorrow, in four days, and the
+   date once it is a week or more off. The date is in the title either way. */
+function closesSaid(x) {
+  const t = new Date(x.closes);
+  if (!x.closes || isNaN(t)) return '';
+  if (!x.open) return `closed ${whenOf(x.closes)}`;
+  const now = new Date();
+  if (t <= now) return 'closing now';
+  const day = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const days = Math.round((day(t) - day(now)) / 864e5);
+  if (days === 0) return 'closes today';
+  if (days === 1) return 'closes tomorrow';
+  if (days < 7) return `closes in ${days} days`;
+  return `closes ${whenOf(x.closes)}`;
+}
+
+/* The terms, one tap away rather than standing on the card. A collector
+   weighing needs them available; one reading the board does not need them
+   in the way. */
+function helpFor(x) {
+  return `<details class="help"><summary aria-label="How this nudge works" title="How this nudge works">?</summary>
+    <div class="tip">${x.promise ? `<p>${e(x.promise)}</p>` : ''}<p>A nudge steers. It never commands.
+      The studio may act with, against, or without the result.</p></div>
+  </details>`;
 }
 
 /* The line itself. A banked card is not folded: it is the record, it is up
@@ -3317,70 +3188,70 @@ function folded(x, label, inner) {
   </details>`;
 }
 
-function candidateCard(x) {
-  /* Everything that is not a colour row. What this wallet has spread and where,
-     and how far the lock is, moved in here: both are the reader's own second
-     question, asked after they have seen what is in front. */
-  /* NO EXPLANATION IN THE FOLD OF AN OPEN NUDGE. The note explained that a
-     colour has to stand clear of what is locked, and the constraint line under
-     STANDING CLEAR OF says the same thing three inches higher and says it
-     about the actual numbers; the picker refuses a clash as it is dragged; and
-     the board teaches the rest of itself now that a row carries WEIGH, CHANGE
-     and MOVE HERE with the source named on it. Prose that repeats working
-     furniture is prose nobody reads twice.
+/* A yes-or-no card's own one line of where this wallet stands. */
+function yours(x) {
+  if (!x.open || !mayWeigh()) return '';
+  const m = x.mine;
+  return `<p class="yours">You: ${m ? `${worn(m.amount)} on ${e(m.side)}` : 'nothing weighed yet'}</p>`;
+}
 
-     A BANKED CARD KEEPS BOTH. It has no fold and no live picker to explain
-     itself with, and the promise is a thing the studio undertook ... a record
-     read in two years should carry what was said at the time rather than
-     having to guess at it. */
-  const inner = `${x.open ? '' : `${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
-    ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}`}
-    ${x.open ? lockLine(x) : ''}
+/* ---------- the open card ----------
+ *
+ * THREE TIERS. The colours first and biggest: the palette strip, then the
+ * candidates as tiles. The numbers and the actions second: TAO on each tile,
+ * one button each, and one row saying how far the lock is. The metadata last
+ * and mostly out of sight: the record folds behind a line that is its own
+ * summary, and the terms sit behind a (?) by the question.
+ */
+function candidateCard(x) {
+  if (!x.open) return bankedCandidate(x);
+  const tally = `${x.collectors} collector${x.collectors === 1 ? '' : 's'} &middot; ${num(x.total)} TAO`;
+  return `<div class="nudge" id="nudge-${e(x.id)}">
+    <div class="head">
+      <p class="q">${e(x.question)}</p>
+      ${helpFor(x)}
+    </div>
+    <div class="when" title="${e(dateOf(x.closes))}">Nudge #${x.number} &middot; ${e(closesSaid(x))}</div>
+    ${stripOf(x)}
+    ${colourRows(x)}
+    ${overLine(x)}
+    ${toLock(x)}
+    ${mayWeigh() ? '' : `<p class="said">${MF.session.current()
+      /* Signed in, but this board was fetched before that and is being
+         fetched again. Telling somebody who just signed in to sign in is how
+         a page loses their trust in one line. */
+      ? 'Reading where you stand ...'
+      : 'Sign in below to weigh.'}</p>`}
+    <p class="said" id="say-${e(x.id)}" hidden></p>
+    ${x.ledger && x.ledger.length ? folded(x, tally, ledgerRows(x, { tally: false })) : ''}
+  </div>`;
+}
+
+/* A banked board, as the record keeps it: the question, when it closed and
+   where it sat in the arc, what it undertook, the tally, who weighed what,
+   and the terms it was made under. Not folded ... it is the record. */
+function bankedCandidate(x) {
+  return `<div class="nudge" id="nudge-${e(x.id)}">
+    <div class="head">
+      <p class="q">${e(x.question)}</p>
+      <div class="when">Nudge #${x.number} &middot; ${e(closesSaid(x))}${
+        x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
+    </div>
+    ${x.note ? `<p class="note">${e(x.note)}</p>` : ''}
+    ${x.promise ? `<p class="promise">${e(x.promise)}</p>` : ''}
     ${thresholdBars(x)}
     ${ledgerRows(x)}
-    ${!x.open ? '' : (mayWeigh()
-      ? ''
-      /* Signed in, but this board was fetched before that and is being fetched
-         again. Not the same sentence as "sign in": telling somebody who just
-         signed in to sign in is how a page loses their trust in one line. */
-      : `<p class="said">${MF.session.current()
-        ? 'Reading where you stand ...'
-        : 'Sign in to propose or weigh.'}</p>`)}
-    ${x.open ? '' : `<p class="banked">${x.line
+    <p class="banked">${x.line
       /* Composed by the server so this and the console's confirm step cannot
          drift apart. The swatch mark stays here, because it is a thing this
          page draws rather than a thing the sentence says. */
       ? (x.locked ? x.line.replace(x.locked.hex, saidLine(x.locked.hex)) : e(x.line))
       : (x.locked
         ? `Locked &middot; ${saidLine(x.locked.hex)} &middot; ${num(x.total)} TAO &middot; ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`
-        : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`)}</p>`}
-    ${x.open || x.locked || !x.why ? '' : `<p class="said">${e(x.why)}</p>`}
+        : `No colour locked &middot; ${num(x.total)} TAO across ${x.collectors} collector${x.collectors === 1 ? '' : 's'}`)}</p>
+    ${x.locked || !x.why ? '' : `<p class="said">${e(x.why)}</p>`}
     ${x.outcome ? `<p class="outcome">${e(x.outcome)}</p>` : ''}
-    ${x.open ? '' : RULE}`;
-  /* The refusal line stays outside the fold. Weighing can now be done from a
-     collapsed card, so anything it has to say back has to be sayable there. */
-  return `<div class="nudge" id="nudge-${e(x.id)}">
-    <div class="head">
-      <p class="q">${e(x.question)}</p>
-      <div class="when">Nudge #${x.number} &middot; ${x.open ? 'closes' : 'closed'} ${e(whenOf(x.closes))}${
-        /* Where this colour sits in the arc. A banked card that says only what
-           it chose reads as a one-off, and this one never was. */
-        x.slot_line ? ` &middot; ${e(x.slot_line)}` : ''}</div>
-    </div>
-    ${/* ACTION FIRST, RULES BENEATH, CANDIDATES LAST.
-          Proposing was at the foot of a fold, under the board and under the
-          record ... a long walk to do the thing the nudge is actually asking
-          for. It leads now, and STANDING CLEAR OF reads as the explanation
-          under it rather than as a preamble before it: the picker refuses a
-          clashing colour while it is being dragged, so the rule does not have
-          to be read first in order to be obeyed. */''}
-    ${proposer(x)}
-    ${x.open ? againstBlock(x) : ''}
-    ${x.open ? colourRows(x) : ''}
-    ${position(x)}
-    ${x.open ? RULE : ''}
-    <p class="said" id="say-${e(x.id)}" hidden></p>
-    ${folded(x, 'Details', inner)}
+    ${RULE}
   </div>`;
 }
 
@@ -3634,7 +3505,7 @@ document.addEventListener('click', (ev) => {
   const swap = ev.target.closest('[data-swap]');
   if (swap) {
     const key = swap.dataset.swap;
-    const row = swap.closest('.crow');
+    const row = swap.closest('.tile');
     const on = !NUDGE.swapping.has(key);
     if (on) NUDGE.swapping.add(key); else NUDGE.swapping.delete(key);
     if (row) {
@@ -3648,7 +3519,7 @@ document.addEventListener('click', (ev) => {
   const unswap = ev.target.closest('[data-unswap]');
   if (unswap) {
     NUDGE.swapping.delete(unswap.dataset.unswap);
-    const row = unswap.closest('.crow');
+    const row = unswap.closest('.tile');
     if (row) {
       row.classList.remove('swapping');
       const b = row.querySelector('[data-swap]');
@@ -3675,7 +3546,7 @@ document.addEventListener('click', (ev) => {
   const put = ev.target.closest('[data-put]');
   if (put) {
     const key = put.dataset.put;
-    const row = put.closest('.crow');
+    const row = put.closest('.tile');
     const on = !NUDGE.putting.has(key);
     if (on) NUDGE.putting.add(key); else NUDGE.putting.delete(key);
     if (row) {
@@ -3686,21 +3557,24 @@ document.addEventListener('click', (ev) => {
     }
     return;
   }
-  /* A position, opened for changing. The amount and the colour come up
-     together, because moving is one decision rather than a take-back followed
-     by a weighing. */
-  const chg = ev.target.closest('[data-change]');
-  if (chg) {
-    const key = chg.dataset.change;
-    const row = chg.closest('.pos');
-    const on = !NUDGE.moving.has(key);
-    if (on) NUDGE.moving.add(key); else NUDGE.moving.delete(key);
-    if (row) {
-      row.classList.toggle('changing', on);
-      chg.setAttribute('aria-expanded', String(on));
-      const box = row.querySelector('.chg .amt');
-      if (on && box) { box.focus(); box.select(); }
-    }
+  /* Proposing, opened and shut as a class on the card: the same reason the
+     weigh field opens the way it does. */
+  const pro = ev.target.closest('[data-proposing]');
+  if (pro) {
+    const id = pro.dataset.proposing;
+    const box = pro.closest('.propose');
+    const on = !NUDGE.proposing.has(id);
+    if (on) NUDGE.proposing.add(id); else NUDGE.proposing.delete(id);
+    if (box) box.classList.toggle('on', on);
+    pro.setAttribute('aria-expanded', String(on));
+    return;
+  }
+  /* The hex is the fine print. A tap on the swatch is how a touch screen
+     asks for it; a pointer gets it on hover. */
+  const sw = ev.target.closest('[data-reveal]');
+  if (sw) {
+    const tile = sw.closest('.tile');
+    if (tile) tile.classList.toggle('reveal');
     return;
   }
   const go = ev.target.closest('[data-weigh]');
@@ -3738,11 +3612,11 @@ function showChange(panel) {
 }
 
 document.addEventListener('input', (ev) => {
-  const panel = ev.target.closest ? ev.target.closest('.chg, .crow .put') : null;
+  const panel = ev.target.closest ? ev.target.closest('.tile .put') : null;
   if (panel) showChange(panel);
 });
 document.addEventListener('change', (ev) => {
-  const panel = ev.target.closest ? ev.target.closest('.chg, .crow .put') : null;
+  const panel = ev.target.closest ? ev.target.closest('.tile .put') : null;
   if (panel) showChange(panel);
 });
 
@@ -3750,10 +3624,10 @@ document.addEventListener('change', (ev) => {
    closed by another is a form, and this is one number on one row. */
 document.addEventListener('keydown', (ev) => {
   if (ev.key !== 'Enter') return;
-  const box = ev.target.closest('.crow .put .amt, .pos .chg .amt');
+  const box = ev.target.closest('.tile .put .amt');
   if (!box) return;
   ev.preventDefault();
-  const panel = box.closest('.put, .chg');
+  const panel = box.closest('.put');
   const btn = panel ? panel.querySelector('[data-weigh]') : null;
   if (btn) weigh(btn.dataset.weigh, btn.dataset.hex || null, btn);
 });
@@ -3776,7 +3650,7 @@ document.addEventListener('toggle', (ev) => {
  * a refusal nobody reads, and the button has failed mutely as far as they are
  * concerned. The row's own line says it where they are looking. */
 function nudgeSay(id, text, bad, near) {
-  const row = near && near.closest ? near.closest('.crow, .pos') : null;
+  const row = near && near.closest ? near.closest('.tile') : null;
   const res = row ? row.querySelector('.res') : null;
   if (res) {
     res.textContent = text || '';
@@ -3916,7 +3790,7 @@ async function weigh(id, hex, from) {
      row, and on the full board inside the fold ... and reading them by id would
      always have read the row, including when the board was the one being
      typed into. */
-  const near = from && from.closest ? from.closest('.crow, .pos') : null;
+  const near = from && from.closest ? from.closest('.tile') : null;
   const box = (panel && panel.querySelector('.amt')) || (near && near.querySelector('.amt'))
     || document.getElementById(colours ? `amt-${id}-${candidate.slice(1)}` : `amt-${id}`);
   const typed = String((box || {}).value || '').replace(/[^0-9]/g, '');

@@ -250,11 +250,12 @@ const holds = (x) => five[x] || 0;
   const sw = page.slice(page.indexOf('function colourRow'), page.indexOf('function colourRows'));
   is('a field per colour, not one box and a chosen colour',
     /id="ramt-\$\{e\(x\.id\)\}-\$\{e\(c\.hex\.slice\(1\)\)\}"/.test(sw), true);
-  is('pre-filled with what this wallet has on that colour', /value="\$\{on \|\| ''\}"/.test(sw), true);
+  is('pre-filled with what is on it, else everything available',
+    /const start = on \|\| spare/.test(sw) && /value="\$\{start \|\| ''\}"/.test(sw), true);
   is('and nothing that picks one colour to the exclusion of the others',
     /data-pick/.test(page), false);
-  const purse = page.slice(page.indexOf('function position(x)'), page.indexOf('function yours'));
-  is('what is left to spread is shown', /available/.test(purse), true);
+  const purse = page.slice(page.indexOf('function overLine'), page.indexOf('function closesSaid'));
+  is('what is left to spread is shown, on the tile being weighed', /TAO available/.test(sw), true);
   is('and an over-weight wallet is told rather than corrected',
     /m\.over > 0/.test(purse) && /in proportion/.test(purse), true);
   is('the record is a change log', /class="w"><span class="\$\{d < 0/.test(led), true);
@@ -749,97 +750,57 @@ const holds = (x) => five[x] || 0;
   /* And the card says where the collector stands, on the card. */
   const page2 = fs5.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
   const card = page2.slice(page2.indexOf('function candidateCard'), page2.indexOf('function openCard'));
-  is('the position is drawn outside the fold', /\$\{position\(x\)\}/.test(card), true);
+  is('the position is on the board, outside the fold',
+    /\$\{colourRows\(x\)\}/.test(card) && /\$\{overLine\(x\)\}/.test(card), true);
   is('and the fold no longer carries it', /yours\(x\)/.test(card), false);
-  const stand2 = page2.slice(page2.indexOf('function positionPanel'), page2.indexOf('function yours'));
-  is('a position is editable where it is shown', /data-change=/.test(stand2), true);
-  is('and the amount and the colour are asked for together',
-    /class="amt"/.test(stand2) && /select class="to"/.test(stand2), true);
   const row2 = page2.slice(page2.indexOf('function colourRow'), page2.indexOf('function colourRows'));
-  is('a collector already standing somewhere is offered a move, not a weigh',
-    /'Move here'/.test(row2), true);
+  is('a position is changed on its own tile', /go\('Change'\)/.test(row2) && /Yours &middot;/.test(row2), true);
+  is('a collector already standing somewhere is told where the TAO comes off',
+    /select class="src"/.test(row2) && /From \$\{e\(tileName/.test(row2), true);
 }
 
-/* ================= the candidate row, as columns =================
+/* ================= the board, legible (LEGIBILITY.md) =================
  *
- * The row shipped with two things placed in one cell, and what came out of it
- * was the Pantone approximation drawn over the TAO figure. So the template is
- * checked as geometry rather than by eye: every part of the row is placed, no
- * two parts are placed on top of each other, and the parts that may be cut
- * when it is tight are the ones that are decoration.
- *
- * Both layouts, because there are two ... the five columns a wide panel gets
- * and the four a narrow one does ... and a row is only as good as its worst
- * width.
+ * Colour first, numbers and actions second, metadata quiet. What can be
+ * checked in the source is checked here: the tile's figure never truncates,
+ * the hex waits to be asked for, nothing on the page is set under 13px or
+ * tracked wider than +0.04em, the house faint grey is not used for anything
+ * read, and a thumb gets 44px.
  */
 {
   const fs6 = require2('node:fs');
   const page = fs6.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
   const css = page.slice(page.indexOf('<style>'), page.indexOf('</style>'));
-  /* The narrow block, taken by counting braces rather than to the end of the
-     stylesheet: a rule written after it is not an override of it. */
-  const at = css.indexOf('@container (max-width:460px)');
-  let depth = 0, end = at;
-  for (let i = css.indexOf('{', at); i < css.length; i += 1) {
-    if (css[i] === '{') depth += 1;
-    if (css[i] === '}') { depth -= 1; if (!depth) { end = i + 1; break; } }
-  }
-  const cq = css.slice(at, end);
-  const base = css.slice(0, at) + css.slice(end);
+  const rule = (sel) => (new RegExp(`${sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\{([^}]*)\\}`).exec(css) || [, ''])[1];
 
-  /* Every `.crow .thing{grid-area:a/b/c/d}` in a block, as rectangles. */
-  const placed = (text) => {
-    const out = new Map();
-    const re = /\.nudges \.crow \.([a-z]+)\s*\{([^}]*)\}/g;
-    let m;
-    while ((m = re.exec(text))) {
-      const g = /grid-area:\s*(\d+)\/(\d+)\/(\d+)\/(\d+)/.exec(m[2]);
-      if (g) out.set(m[1], g.slice(1, 5).map(Number));
-    }
-    return out;
-  };
-  /* Two rectangles sharing any cell at all. */
-  const clash = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
-  const collisions = (map) => {
-    const rows = [...map];
-    const bad = [];
-    for (let i = 0; i < rows.length; i += 1) {
-      for (let j = i + 1; j < rows.length; j += 1) {
-        if (clash(rows[i][1], rows[j][1])) bad.push(`${rows[i][0]}/${rows[j][0]}`);
-      }
-    }
-    return bad;
-  };
-
-  const wide = placed(base);
-  const narrow = new Map([...wide, ...placed(cq)]);
-  const parts = ['pair', 'hex', 'cname', 'w', 'by', 'go', 'put'];
-  is('every part of the row is placed', parts.filter((k) => !wide.has(k)), []);
-  is('and nothing shares a cell with anything else', collisions(wide), []);
-  is('nor at the narrow width, where the name drops beneath the hex', collisions(narrow), []);
-  /* The narrow layout was redesigned: the name keeps the top line and the HEX
-     is the part that drops beneath it (studio.html's @container comment says so
-     ... seven characters are the colour's identity and belong on top). The
-     figure stays on the name's row either way. */
-  is('the hex is the part that moves, and it moves under the name',
-    [narrow.get('hex')[0] > narrow.get('cname')[0], narrow.get('w')[0] === narrow.get('cname')[0]],
-    [true, true]);
-  is('the figure keeps its column at both widths',
-    [wide.get('w')[0], narrow.get('w')[0]], [1, 1]);
-
-  const rule = (name, text) => (new RegExp(`\\.nudges \\.crow \\.${name}\\s*\\{([^}]*)\\}`).exec(text) || [, ''])[1];
   is('the figure never truncates and is right-aligned on tabular figures',
-    /white-space:nowrap/.test(rule('w', base)) && /text-align:right/.test(rule('w', base))
-      && /font-variant-numeric:tabular-nums/.test(rule('w', base)), true);
-  is('and the figure is never given an ellipsis to hide behind',
-    /text-overflow/.test(rule('w', base)), false);
-  is('the name truncates instead', /text-overflow:ellipsis/.test(rule('cname', base)), true);
-  is('and the hex is not inside the name\'s box',
-    /<span class="cname">[^]*?<\/span>\s*\n?\s*<span class="hex">/.test(page), true);
-  is('the chip no longer claims a cell the pair already has',
-    /\.nudges \.crow \.chip\{grid-area/.test(base), false);
-  is('the row asks the panel how wide it is, not the window',
-    /container-type:inline-size/.test(base), true);
+    /white-space:nowrap/.test(rule('.nudges .tile .w')) && /text-align:right/.test(rule('.nudges .tile .w'))
+      && /tabular-nums/.test(rule('.nudges .tile .w')) && !/text-overflow/.test(rule('.nudges .tile .w')), true);
+  is('the figure is set at 20px mono', /font-size:20px/.test(rule('.nudges .tile .w')), true);
+  is('the name leads in the sans at 18px', /font-family:var\(--font-sans\);font-size:18px/.test(rule('.nudges .tile .cn')), true);
+  is('the hex waits for a hover or a tap', /display:none/.test(rule('.nudges .tile .hex'))
+    && /\.tile\.reveal \.hex/.test(css), true);
+  is('two tiles across where the card has room, asked of the card',
+    /container-type:inline-size/.test(css) && /@container \(min-width:\d+px\)\{\s*\.nudges \.tiles\{grid-template-columns:repeat\(2/.test(css), true);
+  is('the swatch leads, 120px, 96px on a phone',
+    /height:120px/.test(rule('.nudges .tile .sw')) && /\.nudges \.tile \.sw\{height:96px\}/.test(css), true);
+  is('the strip is twelve equal segments', /repeat\(12,minmax\(0,1fr\)\)/.test(rule('.nudges .strip')), true);
+
+  const small = [...css.matchAll(/font-size:([\d.]+)px/g)].map((m) => Number(m[1])).filter((n) => n < 13);
+  is('nothing on the page is set under 13px', small, []);
+  const wide = [...css.matchAll(/letter-spacing:\.(\d+)em/g)].map((m) => Number(`.${m[1]}`)).filter((n) => n > 0.04);
+  is('and nothing is tracked wider than +0.04em', wide, []);
+  is('the faint grey is the muted one wherever it is read', /#main,#picker,\.totop\{--faint:var\(--muted\)\}/.test(css), true);
+  is('a thumb gets 44px', /@media\(max-width:640px\),\(pointer:coarse\)\{[^]*?min-height:44px/.test(css), true);
+
+  /* The panel's words: the standing terms went behind the (?), the prompts
+     the buttons already make went altogether. */
+  const card = page.slice(page.indexOf('function candidateCard'), page.indexOf('function bankedCandidate'));
+  is('the terms are behind the (?) on an open card', /\$\{helpFor\(x\)\}/.test(card) && !/\$\{RULE\}/.test(card), true);
+  is('the banked record still carries them', /\$\{RULE\}/.test(page.slice(page.indexOf('function bankedCandidate'), page.indexOf('function openCard'))), true);
+  is('no "colour proposed" prompt', /Colour proposed\. Weigh TAO/.test(page), false);
+  is('no separate weigh-in block', /class="stand"/.test(page), false);
+  is('the record is folded behind its own tally', /folded\(x, tally,/.test(card), true);
 
   /* The same template, on the page that draws a banked board. */
   const cpage = fs6.readFileSync(new URL('../../c.html', import.meta.url), 'utf8');
@@ -852,23 +813,37 @@ const holds = (x) => five[x] || 0;
 
   /* And the record, which is the same contract in a table. */
   is('a ledger name is cut before a ledger figure is',
-    /\.nudges \.ledger \.n\{[^}]*text-overflow:ellipsis/.test(base), true);
+    /\.nudges \.ledger \.n\{[^}]*text-overflow:ellipsis/.test(css), true);
   is('the ledger figure stays on one line, right, tabular',
-    /\.nudges \.ledger \.w\{[^}]*text-align:right;white-space:nowrap/.test(base)
-      && /\.nudges \.ledger table\{[^}]*tabular-nums/.test(base), true);
+    /\.nudges \.ledger \.w\{[^}]*text-align:right;white-space:nowrap/.test(css)
+      && /\.nudges \.ledger table\{[^}]*tabular-nums/.test(css), true);
   is('and every record on the page names that column so it can be',
     (page.match(/<td class="n">/g) || []).length, 3);
-  /* Where a collector split their TAO the standings row draws two chips, so
-     they sit in a line rather than stacking one on the other. */
   is('two colour marks in one cell sit beside each other',
-    /\.nudges \.ledger \.hexdot \+ \.hexdot\{margin-left/.test(base), true);
+    /\.nudges \.ledger \.hexdot \+ \.hexdot\{margin-left/.test(css), true);
+}
 
-  /* The position banner is the same sentence in a wrapping line. */
-  const stand3 = page.slice(page.indexOf('function positionRow'), page.indexOf('function position(x)'));
-  is('a position says its figure without truncating it',
-    /class="pw"/.test(stand3) && /\.nudges \.pos \.pw\{[^}]*white-space:nowrap/.test(base), true);
-  is('and the Pantone beside it is the part that gives way',
-    /\.nudges \.pos \.cname\{[^}]*text-overflow:ellipsis/.test(base), true);
+/* ================= the room, legible ================= */
+{
+  const fs7 = require2('node:fs');
+  const page = fs7.readFileSync(new URL('../../studio.html', import.meta.url), 'utf8');
+  const css = page.slice(page.indexOf('<style>'), page.indexOf('</style>'));
+  is('no hairline between messages', /\.m\{[^}]*border-bottom/.test(css), false);
+  is('24px between authors, 6px inside a run',
+    /\.m\{position:relative;margin-top:24px\}/.test(css) && /\.m\.cont\{margin-top:6px\}/.test(css), true);
+  is('a run is ten minutes of one wallet', /RUN_MS = 10 \* 60 \* 1000/.test(page), true);
+  is('and a run draws no second author line', /\$\{cont \? '' : `<div class="who">/.test(page), true);
+  is('the author is named in the sans, semibold, 15px',
+    /\.m \.who \.nm\{font-family:var\(--font-sans\);font-weight:600;font-size:15px/.test(css), true);
+  is('the words keep a 65-character measure', /max-width:65ch/.test(css), true);
+  is('the controls are hidden at rest and shown on hover, focus or tap',
+    /\.m \.ctl\{[^}]*opacity:0;visibility:hidden/.test(css)
+      && /\.m:hover \.ctl,\.m:focus-within \.ctl,\.m\.show \.ctl\{opacity:1;visibility:visible\}/.test(css), true);
+  is('a reply quotes its parent, one line, under a grey rule',
+    /class="rq"/.test(page) && /\.m \.re button\{[^}]*border-left:2px solid var\(--rule\)/.test(css), true);
+  const chat = fs7.readFileSync(new URL('../../api/_lib/chat.js', import.meta.url), 'utf8');
+  is('the route sends the opening of the parent, and nothing of one taken down',
+    /quote: p\.deleted \? null :/.test(chat), true);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);
