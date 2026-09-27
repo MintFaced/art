@@ -1,0 +1,14 @@
+{
+  "_note": "The agent rail (AAB.md, docs/AGENT-RAIL.md). Read by api/_lib/aab.js. The holder signs; the rate is basis points of the list price; the list price is the live listing where there is one and the catalogue figure otherwise, which is the rule the site shows.",
+  "holder": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+  "holder_name": "mintface.eth",
+  "sets": ["geodetic-world", "geodetica", "hidden-landscapes", "visual-language", "panoptic", "wallet"],
+  "rate_bps": 7500,
+  "days": 30,
+  "renew_within_days": 7,
+  "conduit": "opensea",
+  "marker": "agent",
+  "gate_8004": false,
+  "erc8004_registry": null,
+  "opensea_fallback": true
+}

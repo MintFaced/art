@@ -128,10 +128,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
     <p>An agent finds the work, agrees the terms and fills the order itself. Nobody hands anything over, because nobody is holding anything: the order is signed in advance and the trade settles on chain in one transaction.</p>
     <ol class="steps">
       <li>Read <a href="/llms.txt">/llms.txt</a>, then <a href="/api/catalog">/api/catalog</a> to see what exists and what it costs.</li>
-      <li>Ask <span class="soon">/api/ai-orders</span> what is on the rail and at what rail price.</li>
-      <li>Ask for one work. The endpoint answers <span class="mono">402</span> with the terms, and the handshake is free: it is the gate, not a toll.</li>
-      <li>Complete the handshake and receive a signed Seaport order.</li>
-      <li>Fill it on chain. Payment and the token move together, or neither moves.</li>
+      <li>Read <a href="/ai/catalog.json">/ai/catalog.json</a> for what is on the rail right now, at the rail price.</li>
+      <li>Ask <span class="mono">/ai/buy/{work-id}</span> for one work. It answers <span class="mono">402</span> with the signed Seaport order and the transaction that fills it. The handshake is free: it is the gate, not a toll.</li>
+      <li>Send that transaction from your own wallet. Payment and the token move together, or neither moves.</li>
+      <li>Ask again with the transaction hash, and be welcomed to the register.</li>
     </ol>
     <p>Orders carry a thirty day expiry and can be revoked in one transaction, so a price that has gone stale cannot be filled against.</p>
   </section>
@@ -143,12 +143,12 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
         <tr><td class="k"><a href="/llms.txt">/llms.txt</a></td><td>Who the artist is, and where everything else lives</td></tr>
         <tr><td class="k"><a href="/api/catalog">/api/catalog</a></td><td>Every collection and work, with contract, token id, status and price</td></tr>
         <tr><td class="k"><a href="/api/catalog?collection=geodetic-world">/api/catalog?collection=geodetic-world</a></td><td>One collection</td></tr>
-        <tr><td class="k soon">/api/ai-orders</td><td>What is on the rail, with rail prices <span class="tag">not open yet</span></td></tr>
-        <tr><td class="k soon">/api/ai-orders/{work-id}</td><td>402, then the signed order <span class="tag">not open yet</span></td></tr>
+        <tr><td class="k"><a href="/ai/catalog.json">/ai/catalog.json</a></td><td>Every work with a live order on it, with list and rail prices</td></tr>
+        <tr><td class="k">/ai/buy/{work-id}</td><td>402 with the order and the transaction that fills it; 200 once it is filled</td></tr>
       </table>
       <pre id="curl">Loading...</pre>
       <p style="font-family:var(--font-sans);font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px">Settlement is ETH on Ethereum mainnet. There is no USDC leg, no second chain, and no custody at any point.</p>
-      <p class="pending-note">The catalog is open now. The order endpoints open once the orders are signed, which happens from a hardware wallet and not from a server. The calls above are the shape they will answer in.</p>
+      <p class="pending-note">Orders are signed in batches from a hardware wallet, not from a server. Until the first batch is signed the rail's catalog is empty and every work answers 404.</p>
     </div>
   </section>
 
@@ -177,15 +177,13 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,7.6vw,88px)
 const AI_SETS = ['geodetic-world', 'geodetica', 'hidden-landscapes', 'geodetic-memory', 'visual-language', 'panoptic', 'wallet'];
 
 document.getElementById('curl').textContent =
-  `# browse, open now\n`
-  + `curl -s ${location.origin}/api/catalog\n\n`
-  + `# the rail, once the orders are signed\n`
-  + `curl -s ${location.origin}/api/ai-orders\n\n`
-  + `# ask for one work: answers 402 with the terms\n`
-  + `curl -s -i ${location.origin}/api/ai-orders/geodetic-world-1\n\n`
-  + `# complete the handshake, receive the signed order\n`
-  + `curl -s ${location.origin}/api/ai-orders/geodetic-world-1 \\\n`
-  + `  -H 'x-payment: <x402 payload>'`;
+  `# what is on the rail right now\n`
+  + `curl -s ${location.origin}/ai/catalog.json\n\n`
+  + `# ask for one work: 402 with the order and the transaction that fills it\n`
+  + `curl -s -i ${location.origin}/ai/buy/geodetic-world-1\n\n`
+  + `# send accepts[0].extra.transaction from your wallet, then:\n`
+  + `curl -s ${location.origin}/ai/buy/geodetic-world-1 \\\n`
+  + `  -H 'X-PAYMENT: 0xYOUR_TX_HASH'`;
 
 document.getElementById('registry').textContent =
   'Requests are checked against the ERC-8004 registry and the result is logged with each fill. '

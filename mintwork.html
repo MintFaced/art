@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mintwork ... MintFace</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="The agent rail, from the holding wallet: sign orders, renew them, stop them.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* The artist's side of the agent rail. The Studio's rules: 13px at the least,
+   the muted grey for anything read, mono caps only for labels and figures,
+   sentences in the sans, one button per decision, 44px to a thumb. */
+#main{--faint:var(--muted)}
+.mw{max-width:760px;margin:0 auto;padding:56px 28px 96px}
+.mw h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(36px,6vw,56px);line-height:1;letter-spacing:-.03em;margin:0}
+.mw .lede{font-size:17px;line-height:1.6;color:var(--ink-4);max-width:34em;margin:16px 0 0}
+.mw section{margin:40px 0 0}
+.mw h2{font-family:var(--font-mono);font-weight:400;font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.mw p{font-size:15px;line-height:1.6;color:var(--ink-3);margin:10px 0 0;max-width:40em}
+.mw .quiet{color:var(--muted)}
+.mw .bad{color:var(--alert)}
+.mw .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 0}
+.mw button{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  padding:10px 16px;background:none;color:var(--ink);border:1px solid var(--ink);cursor:pointer}
+.mw button.go{background:var(--ink);color:var(--paper)}
+.mw button.danger{border-color:var(--alert);color:var(--alert)}
+.mw button:disabled{opacity:.45;cursor:default}
+.mw button:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.mw .figs{display:flex;flex-wrap:wrap;gap:28px;margin:4px 0 0}
+.mw .fig b{display:block;font-family:var(--font-mono);font-weight:400;font-size:28px;color:var(--ink);font-variant-numeric:tabular-nums}
+.mw .fig span{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.mw table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin:8px 0 0}
+.mw th{text-align:left;font-family:var(--font-mono);font-weight:400;font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);padding:0 0 8px;border-bottom:1px solid var(--rule)}
+.mw td{padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px;vertical-align:baseline}
+.mw th + th,.mw td + td{padding-left:16px}
+.mw td.n{font-family:var(--font-mono);font-size:13px;text-align:right;white-space:nowrap}
+.mw th.n{text-align:right}
+.mw td.t{max-width:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mw td .c{display:block;font-size:13px;color:var(--muted)}
+.mw .soon{color:var(--alert)}
+.mw details{margin:12px 0 0}
+.mw summary{cursor:pointer;font-family:var(--font-mono);font-size:13px;color:var(--muted);padding:8px 0}
+.mw summary:hover{color:var(--ink)}
+.mw .panel{border:1px solid var(--ink);padding:18px 18px 20px;margin:16px 0 0}
+.mw .say{font-size:15px;line-height:1.6;margin:14px 0 0;min-height:1.6em}
+.mw .who{font-family:var(--font-mono);font-size:13px;color:var(--ink);word-break:break-all}
+.mw ul{margin:8px 0 0;padding-left:18px}
+.mw li{font-size:15px;line-height:1.6;color:var(--ink-3)}
+@media(max-width:640px),(pointer:coarse){
+  .mw{padding:36px 20px 80px}
+  .mw button,.mw summary{min-height:44px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav"></header>
+
+<main id="main">
+  <div class="mw" id="mw"><p class="quiet">Loading</p></div>
+</main>
+
+<script src="/mintface.js"></script>
+<script>
+/* Mintwork: the agent rail, from the holding wallet.
+ *
+ * Nothing on this page is secret and nothing on it is powerful without the
+ * holding wallet: a batch only goes on the rail when that wallet signs it, and
+ * the server checks the signature before it keeps anything. Everything else
+ * here is a transaction the wallet is asked to send, and says what it does
+ * before it asks. */
+const W = { who: null, ledger: null, draft: null, busy: false, say: null };
+const e = MF.escape;
+const $ = (id) => document.getElementById(id);
+const eth = (n) => (n == null ? '' : `${Number(n).toLocaleString('en-NZ', { maximumFractionDigits: 5 })}`);
+const days = (iso) => Math.max(0, Math.ceil((Date.parse(iso) - Date.now()) / 864e5));
+const holder = () => W.ledger && String(W.ledger.holder).toLowerCase();
+const isHolder = () => Boolean(W.who && holder() && W.who.toLowerCase() === holder());
+const provider = () => (MF._wallet && MF._wallet.provider) || window.ethereum;
+
+async function api(body) {
+  /* The rail drafts one batch at a time, a few seconds apart. Drafting again
+     straight after an approval is the ordinary path here, so a busy answer is
+     waited out rather than shown. */
+  for (let tries = 0; ; tries += 1) {
+    const r = await fetch('/api/aab', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 429 && tries < 4) { await new Promise((ok) => setTimeout(ok, 2500)); continue; }
+    if (!r.ok) throw new Error(j.error || `The rail said ${r.status}.`);
+    return j;
+  }
+}
+
+async function load() {
+  try {
+    W.ledger = await fetch('/api/aab?view=ledger', { cache: 'no-store' }).then((r) => r.json());
+  } catch (err) { W.say = { text: 'The rail did not answer. Try again in a minute.', bad: true }; }
+  draw();
+}
+
+function say(text, bad = false) { W.say = text ? { text, bad } : null; const el = $('say'); if (el) { el.textContent = text || ''; el.className = `say${bad ? ' bad' : ''}`; } }
+
+async function run(fn) {
+  if (W.busy) return;
+  W.busy = true; draw();
+  try { await fn(); } catch (err) {
+    const code = err && err.code;
+    say(code === 4001 ? 'Declined in the wallet. Nothing changed.' : String((err && err.message) || err), true);
+  }
+  W.busy = false; draw();
+}
+
+async function onMainnet() {
+  const p = provider();
+  const id = await p.request({ method: 'eth_chainId' });
+  if (id !== '0x1') await p.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x1' }] });
+}
+
+async function mined(hash) {
+  for (let i = 0; i < 200; i += 1) {
+    const r = await provider().request({ method: 'eth_getTransactionReceipt', params: [hash] });
+    if (r) { if (r.status !== '0x1') throw new Error(`That transaction failed on chain: ${hash}`); return r; }
+    await new Promise((ok) => setTimeout(ok, 3000));
+  }
+  throw new Error(`Still not mined after ten minutes: ${hash}. It may yet land.`);
+}
+
+async function send(tx, what) {
+  await onMainnet();
+  say(`${what}: confirm in your wallet.`);
+  const hash = await provider().request({ method: 'eth_sendTransaction', params: [{
+    from: W.who, to: tx.to, data: tx.data, value: `0x${BigInt(tx.value || 0).toString(16)}` }] });
+  say(`${what}: sent, waiting for it to be mined.`);
+  await mined(hash);
+  say(`${what}: done.`);
+  return hash;
+}
+
+/* ---------- the acts ---------- */
+
+const connect = () => run(async () => { W.who = await MF.connect(); say(null); });
+
+const draftBatch = (ids) => run(async () => {
+  say('Reading the chain for every work on the rail ...');
+  W.draft = await api({ action: 'draft', ids });
+  say(W.draft.count ? `${W.draft.count} orders drafted. Check the prices, then sign once.` : 'Nothing to sign.');
+});
+
+const signBatch = () => run(async () => {
+  if (!W.draft || !W.draft.draft) return;
+  await onMainnet();
+  say(`Sign once for ${W.draft.count} orders. On a Ledger this is one EIP-712 message; if it refuses, turn on blind signing in the Ethereum app.`);
+  const signature = await provider().request({ method: 'eth_signTypedData_v4', params: [W.who, JSON.stringify(W.draft.typed)] });
+  say('Checking the signature with Seaport ...');
+  const out = await api({ action: 'keep', draft: W.draft.draft, signature });
+  W.draft = null;
+  say(`${out.kept} orders are on the rail until ${new Date(out.expires).toLocaleDateString('en-NZ', { day: 'numeric', month: 'long' })}.${
+    out.retired ? ` ${out.retired} older orders at a different price are still live; cancel them below.` : ''}`);
+  await load();
+});
+
+const approve = (i) => run(async () => {
+  const a = W.draft.needs_approval[i];
+  await send(a.tx, `Approving the conduit on ${a.collection}`);
+  say(`${a.collection} approved. Draft the batch again to include it.`);
+});
+
+const cancelOrders = (scope) => run(async () => {
+  const plan = await api({ action: 'cancel', scope });
+  if (!plan.count) { say('Nothing to cancel.'); return; }
+  if (!confirm(`Cancel ${plan.count} rail order${plan.count === 1 ? '' : 's'} on Seaport? Only these orders stop; OpenSea listings are not touched. One transaction.`)) return;
+  await send(plan.tx, `Cancelling ${plan.count} orders`);
+  if (scope === 'retired') await api({ action: 'cleared' });
+  await api({ action: 'sweep' }).catch(() => null);
+  await load();
+});
+
+const voidAll = () => run(async () => {
+  const plan = await api({ action: 'void' });
+  if (!confirm(`${plan.warning}\n\nEvery order this wallet has signed on Seaport stops, here and on OpenSea. Continue?`)) return;
+  if (!confirm('Once more: this includes your OpenSea listings. Void them all?')) return;
+  await send(plan.tx, 'Voiding every Seaport order');
+  await api({ action: 'sweep' }).catch(() => null);
+  await load();
+});
+
+/* ---------- the page ---------- */
+
+function draftPanel() {
+  const d = W.draft;
+  if (!d) return '';
+  const reasons = {};
+  for (const s of d.skipped || []) (reasons[s.why.replace(/\(held by .*\)/, '').trim()] ||= []).push(s);
+  return `<div class="panel">
+    <h2>The batch</h2>
+    ${d.count ? `<p>${d.count} orders, one signature, live for ${W.ledger.days} days from signing, at ${100 - W.ledger.rate_bps / 100}% under list.</p>
+      <div class="row"><button class="go" data-do="sign" ${W.busy || !isHolder() ? 'disabled' : ''}>Sign ${d.count} orders</button>
+        <button data-do="undraft" ${W.busy ? 'disabled' : ''}>Put it away</button></div>
+      <details open><summary>Prices (${d.count})</summary>
+      <table><thead><tr><th>Work</th><th class="n">List</th><th class="n">Rail</th></tr></thead><tbody>
+        ${d.orders.map((o) => `<tr><td class="t">${e(o.title)}<span class="c">${e(o.collection)}</span></td>
+          <td class="n">${eth(o.list_eth)}</td><td class="n">${eth(o.rail_eth)}</td></tr>`).join('')}
+      </tbody></table></details>`
+      : '<p>No work can be signed right now.</p>'}
+    ${(d.needs_approval || []).length ? `<h2 style="margin-top:22px">Needs an approval first</h2>
+      <p>These contracts have not approved the OpenSea conduit, which moves the token when an order is filled. One transaction each, once.</p>
+      ${d.needs_approval.map((a, i) => `<div class="row"><span>${e(a.collection)}</span>
+        <button data-do="approve" data-i="${i}" ${W.busy || !isHolder() ? 'disabled' : ''}>Approve</button></div>`).join('')}` : ''}
+    ${Object.keys(reasons).length ? `<details><summary>Left out (${(d.skipped || []).length})</summary>
+      ${Object.entries(reasons).map(([why, list]) => `<p><b style="font-weight:600">${e(why)}</b> &middot; ${list.length}</p>
+        <ul>${list.slice(0, 40).map((s) => `<li>${e(s.title)}</li>`).join('')}${list.length > 40 ? `<li>and ${list.length - 40} more</li>` : ''}</ul>`).join('')}
+    </details>` : ''}
+  </div>`;
+}
+
+function draw() {
+  const L = W.ledger;
+  const el = $('mw');
+  if (!L || L.error) {
+    el.innerHTML = `<h1>Mintwork</h1><p class="say bad" id="say">${e((L && L.error) || (W.say && W.say.text) || 'Loading')}</p>`;
+    return;
+  }
+  const renew = L.orders.filter((o) => o.renew);
+  const who = W.who
+    ? `<p>Connected as <span class="who">${e(W.who)}</span>${isHolder() ? '' : `. <span class="bad">Orders only count when ${e(L.holder_name || 'the holding wallet')} signs them. Switch account in the wallet.</span>`}</p>`
+    : `<div class="row"><button class="go" data-do="connect" ${W.busy ? 'disabled' : ''}>Connect the holding wallet</button></div>`;
+  el.innerHTML = `
+    <h1>Mintwork</h1>
+    <p class="lede">The agent rail, from ${e(L.holder_name || 'the holding wallet')}: sign the orders, renew them, stop them.</p>
+    <section>${who}<p class="${W.say && W.say.bad ? 'say bad' : 'say'}" id="say">${e(W.say ? W.say.text : '')}</p></section>
+
+    <section>
+      <h2>On the rail</h2>
+      <div class="figs">
+        <div class="fig"><b>${L.orders.length}</b><span>Live orders</span></div>
+        <div class="fig"><b${renew.length ? ' class="soon"' : ''}>${renew.length}</b><span>Expire within 7 days</span></div>
+        <div class="fig"><b>${L.fills.length}</b><span>Collected by agents</span></div>
+      </div>
+      <div class="row">
+        ${renew.length ? `<button class="go" data-do="renew" ${W.busy || !isHolder() ? 'disabled' : ''}>Re-sign ${renew.length} expiring</button>` : ''}
+        <button ${renew.length ? '' : 'class="go"'} data-do="draft" ${W.busy || !W.who ? 'disabled' : ''}>Draft every available work</button>
+      </div>
+      ${draftPanel()}
+      ${L.orders.length ? `<details><summary>Every order (${L.orders.length})</summary>
+        <table><thead><tr><th>Work</th><th class="n">Rail</th><th class="n">Days left</th></tr></thead><tbody>
+          ${L.orders.map((o) => `<tr><td class="t">${e(o.title)}<span class="c">${e(o.collection)}</span></td>
+            <td class="n">${eth(o.rail_eth)}</td><td class="n${o.renew ? ' soon' : ''}">${days(o.expires)}</td></tr>`).join('')}
+        </tbody></table></details>` : (W.draft ? '' : '<p class="quiet">No orders yet. Draft a batch and sign it once.</p>')}
+    </section>
+
+    ${L.fills.length ? `<section><h2>Collected on the rail</h2>
+      <table><tbody>${L.fills.map((f) => `<tr><td class="t">${e(f.title)}<span class="c">${e(f.collection_title)} &middot; ${e(f.buyer)}</span></td>
+        <td class="n">${eth(f.price_eth)} ETH</td><td class="n"><a href="https://etherscan.io/tx/${e(f.tx)}">tx</a></td></tr>`).join('')}</tbody></table>
+    </section>` : ''}
+
+    <section>
+      <h2>Stop</h2>
+      <p>Cancelling names the rail's orders to Seaport and stops exactly those. Your OpenSea listings carry on.</p>
+      <div class="row">
+        <button data-do="cancel" ${W.busy || !isHolder() || !L.orders.length ? 'disabled' : ''}>Cancel all ${L.orders.length} rail orders</button>
+        ${L.retired ? `<button data-do="cancel-retired" ${W.busy || !isHolder() ? 'disabled' : ''}>Cancel ${L.retired} superseded</button>` : ''}
+      </div>
+      <p class="quiet">The last resort voids every Seaport order ${e(L.holder_name || 'this wallet')} has ever signed, OpenSea listings included, by raising its counter. Nothing signed before it can be filled again.</p>
+      <div class="row"><button class="danger" data-do="void" ${W.busy || !isHolder() ? 'disabled' : ''}>Void every Seaport order</button></div>
+    </section>
+
+    ${L.gone.length ? `<section><h2>Off the rail</h2><details><summary>Recent (${L.gone.length})</summary><ul>
+      ${L.gone.map((g) => `<li>${e(g.title)} <span class="quiet">&middot; ${e(g.why)}</span></li>`).join('')}</ul></details></section>` : ''}`;
+}
+
+document.addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-do]');
+  if (!b || b.disabled) return;
+  const act = b.dataset.do;
+  if (act === 'connect') connect();
+  if (act === 'draft') draftBatch(null);
+  if (act === 'renew') draftBatch(W.ledger.orders.filter((o) => o.renew).map((o) => o.id));
+  if (act === 'sign') signBatch();
+  if (act === 'undraft') { W.draft = null; say(null); draw(); }
+  if (act === 'approve') approve(Number(b.dataset.i));
+  if (act === 'cancel') cancelOrders('all');
+  if (act === 'cancel-retired') cancelOrders('retired');
+  if (act === 'void') voidAll();
+});
+
+load();
+</script>
+</body>
+</html>

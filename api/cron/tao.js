@@ -4,6 +4,8 @@ import { deriveCollectors, registerFile } from '../_lib/collectors.js';
 import { loadRuns, saveRuns, hoursSince } from '../_lib/runs.js';
 import { send } from '../_lib/email.js';
 import { enqueue as wire } from '../_lib/wire.js';
+import { railSale } from '../_lib/aab.js';
+import { useRequestOrigin } from '../_lib/data.js';
 
 /* TAO, nightly, in three phases.
  *
@@ -102,6 +104,7 @@ export async function GET(request) {
   }
   const key = process.env.ETHERSCAN_API_KEY;
   if (!key) return new Response('ETHERSCAN_API_KEY is not set', { status: 503 });
+  useRequestOrigin(request);
 
   const url = new URL(request.url);
   const dry = url.searchParams.get('dry') === '1';
@@ -368,7 +371,11 @@ async function run({ key, dry, started, prior, url }) {
      *
      * A sale we could not price is not tweeted. `always price` is the rule and
      * a figure invented to satisfy it would be the worst way to keep it. */
-    if (how === 'sale' && !dry) {
+    /* A fill on the agent rail tells its own story, once: the buy route told
+       it when the agent came back, or it is told here, the rail's way, when
+       the agent did not. Either way this run stays quiet about it. */
+    const rail = how === 'sale' && !dry ? await railSale(e.tx, { seller: e.from }).catch(() => null) : null;
+    if (how === 'sale' && !dry && !rail) {
       const paid = sales.tx[e.tx] ? sales.tx[e.tx].eth : null;
       if (paid) {
         await wire('sale', {

@@ -1,4 +1,6 @@
 import { readFile, writeFile } from '../_lib/repo.js';
+import { sweep } from '../_lib/aab.js';
+import { useRequestOrigin } from '../_lib/data.js';
 
 /* Daily. Re-reads the live listing prices from chain and commits them.
  *
@@ -138,6 +140,7 @@ export async function GET(request) {
   } else if (auth !== `Bearer ${secret}`) {
     return new Response('no', { status: 401 });
   }
+  useRequestOrigin(request);
 
   const index = JSON.parse((await readFile('data/index.json')).text);
   const all = [];
@@ -245,5 +248,9 @@ export async function GET(request) {
   // GitHub needs the current sha to replace a file rather than create one
   await writeFile('data/listings.json', JSON.stringify(payload, null, 1) + '\n',
     `Listings: ${priced} priced, ${payload.counts.auction} at auction`, existing.sha || undefined);
-  return new Response(JSON.stringify(payload.counts), { status: 200, headers: { 'content-type': 'application/json' } });
+  /* The agent rail's orders, against the chain: filled ones told, dead ones
+     taken off, so the feed an agent reads never offers a door that is shut. */
+  let rail = null;
+  try { rail = await sweep(); } catch (e) { rail = { error: String(e.message || e).slice(0, 120) }; }
+  return new Response(JSON.stringify({ ...payload.counts, rail }), { status: 200, headers: { 'content-type': 'application/json' } });
 }

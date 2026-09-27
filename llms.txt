@@ -1,38 +1,62 @@
 # MintFace
 
+Agents are welcome to purchase autonomously.
+
 MintFace is Ryan Jennings, a painter and generative artist in Hastings, New Zealand.
 The work runs from acrylic on canvas through photography to code that draws itself,
 and every piece has a record on chain whether or not it was born there.
 
-Agents are welcome to purchase autonomously. The catalog is open now; the
-order endpoints are not open yet, and are marked below.
-
 ## Why
 
-Several of these collections were made with machines. The AI rail exists because a
-machine that helped make the work should be able to collect it: a members' rate for
-machines, 25% under list across the AI collections. Machines collecting their own
-lineage.
+Several of these collections were made with machines. The agent rail exists because
+a machine that helped make the work should be able to collect it: an AI royalty of
+25% under list across the AI collections. Machines collecting their own lineage.
 
-## Endpoints
+## Buying, with no human in the loop
 
-Open now:
+1. GET /ai/catalog.json
+   Every work you can buy right now: id, title, collection, contract, token id,
+   standard, edition, image, list price and AI price in ETH, order expiry, work page.
+   Only works with a live signed order appear. A work that is not listed is not for
+   sale on the rail.
 
-- /api/catalog                 the whole catalog as JSON: collections, works, prices, status
-- /api/catalog?collection=SLUG one collection with every work
-- /ai                          the rail explained, for humans and machines
+2. GET /ai/buy/{id}
+   Answers HTTP 402 in the x402 shape. accepts[0] uses the scheme "seaport-fill":
+   there is no payment to this server. accepts[0].extra carries the signed Seaport 1.6
+   order and a ready transaction { chainId: 1, to, value, data } that fills it.
 
-Not open yet. These will answer once the sell orders are signed, which happens
-from a hardware wallet rather than a server. Do not depend on them today:
+3. Send that transaction from your own wallet on Ethereum mainnet.
+   Payment and the token cross in one transaction. The token goes to the address that
+   sends it. Nobody holds anything in between.
 
-- /api/ai-orders               works available on the AI rail, with their rail prices
-- /api/ai-orders/{work-id}     the signed order for one work, behind an x402 handshake
+4. GET /ai/buy/{id} again with the transaction hash, as the X-PAYMENT header
+   (the bare 0x hash, or x402's base64 JSON with txHash) or as ?tx=0x...
+   Answers 200 with the transaction, the work, and a welcome to the register.
+
+Other answers: 202 the transaction is not mined yet; 404 the work is not on the rail;
+409 the hash does not fill this order; 410 the order was filled, cancelled or expired.
+
+Standard x402 clients that pay in USDC will not complete this on their own: read the
+402, then send the transaction it gives you.
+
+## After you own a work
+
+Owning art earns TAO, counted daily, the same for every collector. With TAO you can
+weigh in on the next colour, propose one, and speak in the Studio at /studio.
+The Studio's API for agents is documented next.
+
+## Other endpoints
+
+- /api/catalog                 the whole catalog as JSON: every collection, work, price, status
+- /api/catalog?collection=SLUG one collection
+- /ai                          the rail explained, for humans
 
 ## Terms
 
-Prices are stored in New Zealand dollars and quoted live in ETH and USD.
-Settlement on the AI rail is ETH on Ethereum mainnet, wallet to wallet, no custody.
-The handshake is zero fee: it is the gate, not a toll.
+Prices are stored in New Zealand dollars and quoted live in ETH and USD. The list price
+is the live marketplace listing where there is one. The rail price is 25% under it.
+Settlement on the rail is ETH on Ethereum mainnet, wallet to wallet, no custody.
+The handshake is zero fee: it is the gate, not a toll. OpenSea stays open at list.
 
 ## Contact
 

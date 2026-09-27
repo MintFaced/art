@@ -13,6 +13,9 @@
     "api/cron/listings.js": {
       "maxDuration": 300
     },
+    "api/aab.js": {
+      "maxDuration": 120
+    },
     "api/cron/owners.js": {
       "maxDuration": 300
     },
@@ -66,6 +69,14 @@
     {
       "source": "/w/:id",
       "destination": "/api/w"
+    },
+    {
+      "source": "/ai/catalog.json",
+      "destination": "/api/aab"
+    },
+    {
+      "source": "/ai/buy/:id",
+      "destination": "/api/aab"
     },
     {
       "source": "/c/frogdna",

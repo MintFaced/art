@@ -18,6 +18,13 @@ export function useRequestOrigin(request) {
   return BASE;
 }
 
+/** Any file the deployment serves, as JSON, or null where there is none. */
+export async function siteJSON(path, { fresh = false } = {}) {
+  const r = await fetch(`${BASE}/${String(path).replace(/^\//, '')}`, fresh ? { cache: 'no-store' } : undefined);
+  if (!r.ok) return null;
+  return r.json();
+}
+
 let indexCache = null;
 let indexAt = 0;
 const TTL = 60 * 1000;

@@ -145,8 +145,12 @@ export function compose(ev, { overlay = null, register = null } = {}) {
 
   if (ev.kind === 'sale') {
     const w = tag(p.address);
+    /* A fill on the agent rail says so, and says only what is always true:
+       the order came through the rail. Anybody who asks the rail for an order
+       can fill it, so who filled it is not the rail's to claim. */
+    const lead = p.via === 'agent-rail' ? 'COLLECTED ON THE AGENT RAIL' : 'COLLECTED';
     return {
-      text: speak(['COLLECTED', up(p.collection), up(p.title), up(p.price), w.label])
+      text: speak([lead, up(p.collection), up(p.title), up(p.price), w.label])
         + (p.url ? `\n\n${p.url}` : ''),
       card: { kind: 'work', id: p.id },
     };
