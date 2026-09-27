@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-09-26T21:00:58.218Z",
+ "generated": "2026-09-27T21:00:45.414Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -57,7 +57,6 @@
   "0xc777a7bbf87be1b765f3af26f833111316178121": "nasacrypto.eth",
   "0x41205d22c7152ab6db642d789d471f6b888c45b7": "andginja.eth",
   "0x02d61cc47cc9a19b2a023c33c094269d9af07862": "dolcepaganne.eth",
-  "0x511077d1505d3e5ae2a5aa4d7188f316a1228cad": "vittoriosgarbi.eth",
   "0x35365ae5c8557ea978a63b35a6459f2560e809b9": "bacca.eth",
   "0x1ff9e804ce80a701c8ddb3a2d645caf326af603b": "joseramos.eth",
   "0x17e31bf839acb700e0f584797574a2c1fde46d0b": "cryptomover.9dcc.eth",
@@ -637,7 +636,7 @@
  },
  "counts": {
   "asked": 2459,
-  "named": 159,
+  "named": 158,
   "ambiguous": 75
  }
 }
