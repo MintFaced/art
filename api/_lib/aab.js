@@ -2,7 +2,7 @@
  * what happens when it does (AAB.md, docs/AGENT-RAIL.md).
  *
  * THE SHAPE OF IT. The holding wallet signs a batch of Seaport sell orders at
- * the rail price, once, from a hardware wallet (/mintwork). The orders live in
+ * the rail price, once, from a hardware wallet (/mintwork/rail). The orders live in
  * the store, never in the repo. An agent asks /ai/buy/{id}, is answered with a
  * 402 carrying the order and the transaction that fills it, sends that
  * transaction from its own wallet, and comes back with the hash. Payment and
@@ -679,7 +679,7 @@ export async function buy(id, { txHash = null, headers = new Headers() } = {}) {
   return { status: 402, body: paymentRequired(rec, c) };
 }
 
-/** Off the rail, with the reason kept where /mintwork can read it. */
+/** Off the rail, with the reason kept where /mintwork/rail can read it. */
 export async function retire(rec, why) {
   await pipe([
     ['SREM', K.ids, rec.id],
@@ -694,7 +694,7 @@ export async function retire(rec, why) {
 
 /**
  * Every order against the chain, at once: filled ones are told, dead ones are
- * taken off. Run by the nightly listings cron and by /mintwork after a cancel.
+ * taken off. Run by the nightly listings cron and by /mintwork/rail after a cancel.
  */
 export async function sweep() {
   const recs = await records();
@@ -715,7 +715,7 @@ export async function sweep() {
   return out;
 }
 
-/** What /mintwork shows: every order, without its signature. */
+/** What /mintwork/rail shows: every order, without its signature. */
 export async function ledger() {
   const c = await config();
   const [recs, retiredRaw, goneRaw, fillsRaw] = await Promise.all([

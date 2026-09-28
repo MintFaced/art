@@ -158,6 +158,14 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
   <!-- The round, run from the phone. Ten of these remain in the series and
        each one used to be a directive: numbers read by hand, a file edited by
        somebody else. -->
+  <!-- The agent rail and the rebate: signing, renewing and stopping orders,
+       and running a campaign. They sign from the holding wallet rather than
+       behind this password, so they live on their own page. -->
+  <section class="nudges-admin">
+    <h2 class="sec">Agent rail</h2>
+    <p class="note"><a href="/mintwork/rail">Orders and rebates</a> ... signed from the holding wallet.</p>
+  </section>
+
   <section id="nudges" class="nudges-admin">
     <h2 class="sec">Nudges</h2>
     <div id="nudgeOpen" class="note">Loading</div>

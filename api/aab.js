@@ -3,8 +3,8 @@
  *   GET  /ai/catalog.json      what an agent can buy right now
  *   GET  /ai/buy/{id}          402 with the order and the transaction that
  *                              fills it; 200 once it is filled
- *   GET  /api/aab?view=ledger  what /mintwork shows: every order, no signatures
- *   POST /api/aab              /mintwork's hands: draft, keep, cancel, sweep
+ *   GET  /api/aab?view=ledger  what /mintwork/rail shows: every order, no signatures
+ *   POST /api/aab              /mintwork/rail's hands: draft, keep, cancel, sweep
  *
  * The two /ai paths arrive here by rewrite with their own URL intact, so the
  * path says which door was knocked on.

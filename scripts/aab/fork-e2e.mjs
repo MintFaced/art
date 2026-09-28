@@ -4,7 +4,7 @@
  * Real Seaport 1.6, the real OpenSea conduit, real Geodetic World and WALLET
  * tokens. A test holder stands in for mintface.eth (the fork cannot sign for
  * a hardware wallet), receives a handful of works from it by impersonation,
- * and does exactly what /mintwork asks of the real one: approves the conduit,
+ * and does exactly what /mintwork/rail asks of the real one: approves the conduit,
  * signs a batch once through eth_signTypedData_v4, and hands the signature to
  * the route. A fresh agent wallet with nothing but ETH then reads the feed,
  * takes a 402, sends the transaction it was given, and comes back with the
@@ -149,7 +149,7 @@ try {
   is('the test holder is a plain wallet, with no code of its own', await pub.getCode({ address: HOLDER }) || null, null);
   const [a, b, c, d, wal] = pick;
 
-  console.log('— the holder, at /mintwork —');
+  console.log('— the holder, at /mintwork/rail —');
   let dr = await post({ action: 'draft' });
   is('a fresh holder is told both contracts need the conduit approved', dr.body.needs_approval.length, 2);
   is('and nothing can be signed yet', dr.body.orders.length, 0);
