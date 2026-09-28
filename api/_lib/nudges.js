@@ -432,20 +432,43 @@ export function palette(weighings, proposals, taoOf, n = null) {
     c.share = total ? c.total / total : 0;
     c.wallets.sort((a, b) => (b.weight - a.weight) || String(a.address).localeCompare(String(b.address)));
   }
-  /* Sorted by weight, so the palette reads as it stands. Ties fall back to
-     whichever was proposed first, which is the only tiebreak that is not
-     arbitrary and does not move under anybody. */
-  candidates.sort((a, b) => (b.total - a.total)
-    || (b.voters - a.voters)
+  /* When each colour first stood at the total it closes on: the change log
+     replayed in time order, the moment its running total reached its final
+     one. The second half of the tie-break, and a fact nobody can move after
+     the event, because the log is signed. */
+  const running = new Map();
+  const reached = new Map();
+  const finals = new Map(candidates.map((c) => [c.hex, c.wallets.reduce((a, w) => a + (Number(w.amount) || 0), 0)]));
+  for (const h of [...history].sort((a, b) => String(a.at || '').localeCompare(String(b.at || '')))) {
+    const now = (running.get(h.candidate) || 0) + (Number(h.delta) || 0);
+    running.set(h.candidate, now);
+    if (now >= (finals.get(h.candidate) || 0) && finals.get(h.candidate) > 0 && !reached.has(h.candidate)) reached.set(h.candidate, h.at || null);
+    if (now < (finals.get(h.candidate) || 0)) reached.delete(h.candidate);
+  }
+  for (const c of candidates) c.reached_at = reached.get(c.hex) || null;
+
+  /* Sorted by weight, so the palette reads as it stands.
+   *
+   * THE TIE-BREAK, as the (?) on the card says it: level on TAO, the colour
+   * with more collectors; level on those too, the one that reached its total
+   * first; level on that, nobody ... the artist decides, and the card says
+   * the lock was the artist's and that it was tied at close. */
+  const byTie = (a, b) => (b.voters - a.voters)
+    || String(a.reached_at || '9').localeCompare(String(b.reached_at || '9'));
+  candidates.sort((a, b) => (b.total - a.total) || byTie(a, b)
     || String(a.proposed_at || '').localeCompare(String(b.proposed_at || '')));
 
   const rule = lockRule(n);
   const leader = candidates[0] || null;
+  const second = candidates[1] || null;
+  /* A tie the rule could not break. The order above still has to put one of
+     them first so the board can be drawn, but neither of them locks by itself. */
+  const tied = Boolean(leader && second && leader.total > 0 && leader.total === second.total && byTie(leader, second) === 0);
   /* Enough weight on the leading colour AND enough distinct wallets carrying
      some of it. Either alone is a way to be decided by one wallet or by a
      crowd holding nothing. A wallet that split across three colours counts
      towards this one only for the part it put here. */
-  const holds = Boolean(leader && leader.voters >= rule.voters && leader.total >= rule.tao);
+  const holds = Boolean(leader && !tied && leader.voters >= rule.voters && leader.total >= rule.tao);
   return {
     kind: CANDIDATES,
     candidates,
@@ -467,9 +490,12 @@ export function palette(weighings, proposals, taoOf, n = null) {
     },
     leader: leader ? { hex: leader.hex, total: leader.total, voters: leader.voters } : null,
     locked: holds ? { hex: leader.hex, total: leader.total, voters: leader.voters } : null,
+    tied,
     /* Said in the same breath as the numbers, so a card never has to work out
        why nothing locked. */
-    why: holds ? null : (!leader
+    why: holds ? null : tied
+      ? `${leader.hex} and ${second.hex} are tied on TAO, collectors and time. The artist decides.`
+      : (!leader
       ? 'Nobody proposed a colour.'
       : leader.voters < rule.voters && leader.total < rule.tao
         ? `The leading colour needs ${rule.voters} collectors and ${rule.tao.toLocaleString('en-NZ')} TAO. It has ${leader.voters} and ${Math.round(leader.total).toLocaleString('en-NZ')}.`
@@ -865,7 +891,10 @@ export function bankCandidates(p, n, decision = null) {
    * decided; the artist only decided not to wait, and `closed_early` is where
    * that is recorded. The credit goes where the weight was. */
   const carried = Boolean(locked && locked.voters >= rule.voters && locked.total >= rule.tao);
-  const byArtist = asked && !carried;
+  /* Except on a tie: there the thresholds could not choose between two
+     colours that both carried them, and the artist did. */
+  const tiedAtClose = Boolean(p.tied && asked);
+  const byArtist = asked && (!carried || tiedAtClose);
   /* Which halves actually held, recorded rather than recomputed later: the
      register moves, and a card read in two years must say what was true at
      close rather than what is true at reading. */
@@ -882,6 +911,7 @@ export function bankCandidates(p, n, decision = null) {
     locked_by: locked ? (byArtist ? 'artist' : 'threshold') : null,
     met,
     closed_early: asked && new Date(n.closes).getTime() > Date.now() ? n.closes : null,
+    ...(tiedAtClose ? { tied_at_close: true } : {}),
     why: locked ? null : p.why,
     progress: p.progress,
     /* Frozen with everything else. The card keeps showing who stood where at
@@ -941,6 +971,7 @@ export function lockLine(b) {
     bits.push(short.length
       ? `Locked by the artist at ${short.join(' and ')}`
       : 'Locked by the artist');
+    if (b.tied_at_close) bits.push('Tied at close');
   }
   return bits.join(' · ');
 }
@@ -1007,5 +1038,5 @@ export const provenanceLine = (banked) => {
   const short = [];
   if (!met.voters) short.push(`${banked.locked.voters} of ${rule.voters} voters`);
   if (!met.tao) short.push(`${Math.round(banked.locked.total).toLocaleString('en-NZ')} of ${Math.round(Number(rule.tao) || 0).toLocaleString('en-NZ')} TAO`);
-  return `${line} · locked by the artist${short.length ? ` at ${short.join(' and ')}` : ''}`;
+  return `${line} · locked by the artist${short.length ? ` at ${short.join(' and ')}` : ''}${banked.tied_at_close ? ' · tied at close' : ''}`;
 };

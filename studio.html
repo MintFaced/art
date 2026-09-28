@@ -3173,7 +3173,9 @@ function closesSaid(x) {
 function helpFor(x) {
   return `<details class="help"><summary aria-label="How this nudge works" title="How this nudge works">?</summary>
     <div class="tip">${x.promise ? `<p>${e(x.promise)}</p>` : ''}<p>A nudge steers. It never commands.
-      The studio may act with, against, or without the result.</p></div>
+      The studio may act with, against, or without the result.</p>
+      <p>A tie on TAO goes to the colour with more collectors, then to the one that reached its total first.
+      If it is still tied, the artist decides.</p></div>
   </details>`;
 }
 

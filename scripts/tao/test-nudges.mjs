@@ -846,5 +846,38 @@ const holds = (x) => five[x] || 0;
     /quote: p\.deleted \? null :/.test(chat), true);
 }
 
+/* ================= the tie-break (Nudge #3's close) =================
+ *
+ * Level on TAO: more collectors wins. Level on those: the colour that reached
+ * its total first. Level on that too: nobody, and the artist decides ... and
+ * the card says it was the artist's lock and that it was tied at close.
+ */
+{
+  const N = { id: 't', number: 9, kind: 'candidates', lock: { voters: 2, tao: 100 } };
+  const A = '#E080E0', G = '#9C9C9C';
+  const w = (address, candidate, amount, at) => ({ nudge: 't', address, candidate, amount, alloc: true, at });
+  const props = [{ nudge: 't', hex: A, address: '0x01', at: '2026-01-01' }, { nudge: 't', hex: G, address: '0x02', at: '2026-01-02' }];
+  const held = () => 1_000_000;
+
+  const moreVoters = palette([w('0xa', A, 100, '1'), w('0xb', A, 100, '2'), w('0xc', G, 200, '3')], props, held, N);
+  is('level on TAO, the colour with more collectors leads', [moreVoters.leader.hex, moreVoters.tied], [A, false]);
+  is('and locks, if it carries the thresholds', moreVoters.locked && moreVoters.locked.hex, A);
+
+  const earlier = palette([w('0xa', G, 100, '1'), w('0xb', G, 100, '2'), w('0xc', A, 100, '3'), w('0xd', A, 100, '4')], props, held, N);
+  is('level on TAO and collectors, the one that reached its total first leads', [earlier.leader.hex, earlier.tied], [G, false]);
+
+  const level = palette([w('0xa', A, 100, '1'), w('0xb', G, 100, '1'), w('0xc', A, 100, '2'), w('0xd', G, 100, '2')], props, held, N);
+  is('level on everything, it is a tie and nothing locks', [level.tied, level.locked], [true, null]);
+  is('and the card says the artist decides', /tied on TAO, collectors and time\. The artist decides\./.test(level.why), true);
+  const art = bankCandidates(level, N, { by: 'artist', hex: G });
+  is('the artist\'s lock on a tie is recorded as the artist\'s, though the colour carried both halves',
+    [art.locked.hex, art.locked_by, art.tied_at_close], [G, 'artist', true]);
+  is('and says so on the card', /Locked by the artist · Tied at close$/.test(lockLine(art)), true);
+  is('and on the work it shapes', provenanceLine(art).endsWith('locked by the artist · tied at close'), true);
+
+  const clear = palette([w('0xa', A, 500, '1'), w('0xb', A, 400, '2'), w('0xc', G, 169, '3')], props, held, N);
+  is('a clear winner is untouched by any of it', [clear.leader.hex, clear.tied, Boolean(clear.locked)], [A, false, true]);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
