@@ -130,14 +130,16 @@
       "gallery": true,
       "tokenized": false,
       "status": "not_tokenized",
-      "image": "/assets/strip-paintings/strip-painting-5-illustrated.jpg",
       "details": [
         {
-          "image": "/assets/strip-paintings/strip-painting-5-detail.jpg",
           "caption": "DETAIL",
-          "alt": "Site 5, the gloss surface in raking light"
+          "alt": "Site 5, the gloss surface in raking light",
+          "asset": "strip-paintings/strip-painting-5-detail.jpg"
         }
-      ]
+      ],
+      "assets": {
+        "image": "strip-paintings/strip-painting-5-illustrated.jpg"
+      }
     },
     {
       "id": "strip-paintings-the-line-frontage",
@@ -235,7 +237,9 @@
       "gallery": true,
       "tokenized": false,
       "status": "not_tokenized",
-      "image": "/assets/strip-paintings/strip-paintings-2.jpg"
+      "assets": {
+        "image": "strip-paintings/strip-paintings-2.jpg"
+      }
     }
   ]
 }
