@@ -3,6 +3,29 @@
  "keep": 60,
  "runs": [
   {
+   "run_id": "amultm7s2",
+   "at": "2026-09-28T22:30:15.266Z",
+   "ok": true,
+   "ms": 131322,
+   "chain": {
+    "asked": 372,
+    "moved": 93,
+    "unknown": 23,
+    "refused": 422,
+    "rate": 4.3,
+    "due": 372,
+    "due_left": 0,
+    "paged": 807,
+    "of": 3677,
+    "covered": 3678
+   },
+   "studio": {
+    "lit": 14,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
    "run_id": "amuke6d6a",
    "at": "2026-09-27T22:30:15.346Z",
    "ok": true,
