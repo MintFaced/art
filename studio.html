@@ -2877,6 +2877,8 @@ function standingsRows(x) {
       r.on.push({ hex: c.hex, weight: Number(w.weight) || 0 });
       r.total += Number(w.weight) || 0;
       r.clamped = r.clamped || Boolean(w.clamped);
+      /* The artist's own weighing: on the board, in the record, not in the count. */
+      r.artist = r.artist || Boolean(w.artist);
       /* One collector, several wallets. A fact about the weigher rather than
          about the colour, so it is kept on the standings row.
          MARKED ONCE. The route dresses these rows and hands the marker over
@@ -2899,7 +2901,7 @@ function standingsRows(x) {
         <td class="n">${who}${r.combo ? `<span class="cl">${e(r.combo)}</span>` : ''}</td>
         <td class="w">${num(r.total)} TAO${r.on.length > 1
           ? `<span class="cl"> across ${r.on.length}</span>` : ''}</td>
-        <td class="t">${r.clamped ? '<span class="cl">clamped</span>' : ''}</td>
+        <td class="t">${r.artist ? '<span class="cl">artist · not counted</span>' : r.clamped ? '<span class="cl">clamped</span>' : ''}</td>
       </tr>`;
     }).join('')}</tbody>
   </table></div>`;

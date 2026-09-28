@@ -879,5 +879,23 @@ const holds = (x) => five[x] || 0;
   is('a clear winner is untouched by any of it', [clear.leader.hex, clear.tied, Boolean(clear.locked)], [A, false, true]);
 }
 
+/* ================= the artist is in the room, not in the count ================= */
+{
+  const N = { id: 'a', number: 10, kind: 'candidates', lock: { voters: 5, tao: 500000 } };
+  const V = '#E080E0';
+  const w = (address, amount, at) => ({ nudge: 'a', address, candidate: V, amount, alloc: true, at });
+  const ARTIST = '0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7';        // ryanj.eth, in data/source/artist.json
+  const rows = [w('0x1', 500000, '1'), w('0x2', 150000, '2'), w('0x3', 100000, '3'), w('0x4', 69000, '4'), w(ARTIST, 42000, '5')];
+  const p = palette(rows, [{ nudge: 'a', hex: V, address: '0x1', at: '0' }], () => 1_000_000, N);
+  const c = p.candidates[0];
+  is('the artist\'s weighing is on the board, marked', c.wallets.find((x) => x.address === ARTIST).artist, true);
+  is('and adds nothing to the colour\'s total or its collectors', [c.total, c.voters, p.collectors], [819000, 4, 4]);
+  is('so four collectors and the artist do not carry a five-collector threshold', p.locked, null);
+  const art = bankCandidates(p, N, { by: 'artist', hex: V });
+  is('the artist can lock it, and the card says it was the artist\'s lock', lockLine(art),
+    'Locked · #E080E0 · 819,000 TAO · 4 collectors · TAO threshold met · Locked by the artist at 4 of 5 voters');
+  is('the banked record keeps the artist\'s row, still marked', art.candidates[0].wallets.some((x) => x.artist && x.weight === 42000), true);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

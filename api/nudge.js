@@ -111,6 +111,8 @@ export async function GET(request) {
       url: register ? register.urlOf(r.address) : null,
       side: r.side || null, candidate: r.candidate || null,
       weight: r.weight, at: r.at, clamped: Boolean(r.clamped),
+      /* In the room and not in the count: the artist's weighing, marked. */
+      ...(r.artist ? { artist: true } : {}),
     };
   };
 

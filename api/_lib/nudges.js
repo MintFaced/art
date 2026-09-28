@@ -374,6 +374,17 @@ export function spread(alloc, held) {
  * is still on the board with nothing behind it, because the palette forming in
  * public is the point and an empty swatch is part of that picture.
  */
+/* THE ARTIST WEIGHS IN THE ROOM AND NOT IN THE COUNT.
+ *
+ * A lock is the collectors choosing: the thresholds are "enough collectors"
+ * and "enough of their TAO", and the artist is not his own patron. So his
+ * weighings stay on the board and in the record, marked, and add nothing to a
+ * colour's total, its collectors, or either threshold. Nudge #3 is where this
+ * first mattered: the fifth collector on the violet was the artist. The list
+ * is the one chat and notes ask, data/source/artist.json. */
+import artistFile from '../../data/source/artist.json' with { type: 'json' };
+export const ARTIST_WALLETS = new Set(Object.keys(artistFile.wallets || {}).map((a) => a.toLowerCase()));
+
 export function palette(weighings, proposals, taoOf, n = null) {
   const by = new Map();
   const put = (hex) => {
@@ -412,12 +423,14 @@ export function palette(weighings, proposals, taoOf, n = null) {
     const held = Math.max(0, Math.floor(taoOf(address) || 0));
     const fit = spread(mine, held);
     if (fit.over > 0) over.push({ address, name: names.get(address) || null, asked: fit.asked, held, over: fit.over });
+    const byArtist = ARTIST_WALLETS.has(lower(address));
     for (const [hex, weight] of fit.weights) {
       const c = put(hex);
       c.wallets.push({ address, name: names.get(address) || null, amount: mine.get(hex) || 0, weight,
         clamped: weight < (mine.get(hex) || 0),
-        combo: carries.has(address) ? carries.get(address) + 1 : null });
-      if (weight <= 0) continue;
+        combo: carries.has(address) ? carries.get(address) + 1 : null,
+        ...(byArtist ? { artist: true } : {}) });
+      if (weight <= 0 || byArtist) continue;
       c.total += weight;
       /* A wallet counts once on a colour, however it got there ... and once on
          the nudge, however many colours it split across. */
@@ -438,8 +451,8 @@ export function palette(weighings, proposals, taoOf, n = null) {
      the event, because the log is signed. */
   const running = new Map();
   const reached = new Map();
-  const finals = new Map(candidates.map((c) => [c.hex, c.wallets.reduce((a, w) => a + (Number(w.amount) || 0), 0)]));
-  for (const h of [...history].sort((a, b) => String(a.at || '').localeCompare(String(b.at || '')))) {
+  const finals = new Map(candidates.map((c) => [c.hex, c.wallets.filter((w) => !w.artist).reduce((a, w) => a + (Number(w.amount) || 0), 0)]));
+  for (const h of [...history].filter((x) => !ARTIST_WALLETS.has(lower(x.address))).sort((a, b) => String(a.at || '').localeCompare(String(b.at || '')))) {
     const now = (running.get(h.candidate) || 0) + (Number(h.delta) || 0);
     running.set(h.candidate, now);
     if (now >= (finals.get(h.candidate) || 0) && finals.get(h.candidate) > 0 && !reached.has(h.candidate)) reached.set(h.candidate, h.at || null);
@@ -927,7 +940,7 @@ export function bankCandidates(p, n, decision = null) {
          closed ... which is exactly the kind of code path that is only ever
          run when it matters. */
       wallets: (c.wallets || []).map((r) => ({ address: r.address, name: r.name || null,
-        amount: r.amount, weight: r.weight, clamped: Boolean(r.clamped) })),
+        amount: r.amount, weight: r.weight, clamped: Boolean(r.clamped), ...(r.artist ? { artist: true } : {}) })),
     })),
     banked_at: new Date().toISOString(),
   };
