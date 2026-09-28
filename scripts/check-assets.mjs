@@ -19,7 +19,7 @@ const resolve = (w) => {
   };
 };
 
-const bad = [], mixed = [], missing = [], local = [];
+const bad = [], mixed = [], missing = [], local = [], inline = [];
 let checked = 0, works = 0;
 
 async function head(url) {
@@ -40,11 +40,15 @@ for (const slug of slugs) {
     if (w.status === 'burned') continue;
     works++;
     const r = resolve(w);
-    // what the grid asks for first, and what a work page shows
-    const urls = [r.display, r.master].filter(Boolean);
+    // what the grid asks for first, what a work page shows, and the close-ups
+    // it shows under the work
+    const extra = (w.details || []).map((d) => (d.asset ? `${ASSETS}/${d.asset}` : d.image)).filter(Boolean);
+    const urls = [r.display, r.master, ...extra].filter(Boolean);
     if (!urls.length && !r.animation) { missing.push(`${slug}/${w.id}`); continue; }
     for (const u of urls) {
       if (u.startsWith('http://')) mixed.push({ id: w.id, url: u });
+      // an image written into the page itself: never fetched, never cached
+      if (u.startsWith('data:')) { inline.push({ id: w.id }); continue; }
       // a site relative path is a file in this repo, not something to fetch
       if (u.startsWith('/')) { local.push({ id: w.id, url: u }); continue; }
       queue.push({ slug, id: w.id, url: u });
@@ -66,6 +70,7 @@ await Promise.all(Array.from({ length: 16 }, lane));
 console.log(`${works} works, ${checked} urls checked`);
 console.log(`served from the mirror: ${queue.filter((q) => q.url.startsWith(ASSETS)).length}`);
 console.log(`plain http (mixed content): ${mixed.length}`);
+console.log(`data URIs: ${inline.length}${inline.length ? ` (${inline.slice(0, 6).map((x) => x.id).join(', ')})` : ''}`);
 console.log(`served from this repo: ${local.length}${local.length ? ` (${local.map((l) => l.url).join(', ')})` : ''}`);
 console.log(`no image at all: ${missing.length}${missing.length ? ` (${missing.slice(0, 6).join(', ')})` : ''}`);
 console.log(`did not answer 200: ${bad.length}`);

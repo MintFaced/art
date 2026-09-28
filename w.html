@@ -46,6 +46,18 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 .stage object.live{
   display:block;width:100%;aspect-ratio:2/1;margin:0 auto;
 }
+/* A work's further pictures: a close-up, a detail. The same measure as the
+   main image, under it, each with its one word of caption. */
+.stage .detail{max-width:var(--measure);margin:28px auto 0}
+.stage .detail figcaption{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);margin-top:10px}
+/* Site to site, for the strip paintings' site designs: the one before and the
+   one after, and nothing past either end. */
+.walk{display:flex;justify-content:space-between;gap:16px;margin:14px 0 0;
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.walk a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);padding:6px 0}
+.walk a:hover{color:var(--ink);border-color:var(--ink)}
+.walk .next{margin-left:auto}
 .motion{margin-top:16px}
 .ghost{
   background:none;border:1px solid var(--rule);color:var(--muted);cursor:pointer;
@@ -763,7 +775,36 @@ function stage(work) {
           : `<button class="ghost" id="play">${kind === 'video' ? 'Play' : 'Open the living version'}</button>`}
       </div>` : ''}
     </div>
+    ${detailFigures(work)}
   </div>`;
+}
+
+/* The close-ups, under the work. Each is drawn through MF.img like the work
+   itself, so it comes off the mirror when it is there and off the repo path it
+   was drafted with until it is. */
+function detailFigures(work) {
+  return (work.details || []).map((d) => {
+    const shot = { title: work.title, assets: d.asset ? { image: d.asset } : null, image: d.image || null };
+    return `<figure class="detail">
+      ${MF.img(shot, 1600, { alt: d.alt || `${work.title || 'Work'}, detail` })}
+      <figcaption>${e(d.caption || 'Detail')}</figcaption>
+    </figure>`;
+  }).join('');
+}
+
+/* Site 1 to the last site, for the strip paintings' site designs. */
+function siteWalk(work, collection) {
+  if (work.group !== 'site-design') return '';
+  const sites = ((collection && collection.works) || [])
+    .filter((w) => w.group === 'site-design')
+    .sort((a, b) => (a.site || 0) - (b.site || 0));
+  const i = sites.findIndex((w) => w.id === work.id);
+  if (i < 0 || sites.length < 2) return '';
+  const link = (w, cls, label) => (w ? `<a class="${cls}" href="/w/${encodeURIComponent(w.id)}">${label}</a>` : '');
+  return `<nav class="walk" aria-label="The site designs">
+    ${link(sites[i - 1], 'prev', `&larr; ${e(sites[i - 1] ? sites[i - 1].title : '')}`)}
+    ${link(sites[i + 1], 'next', `${e(sites[i + 1] ? sites[i + 1].title : '')} &rarr;`)}
+  </nav>`;
 }
 
 function wireMotion() {
@@ -833,6 +874,7 @@ function render(work, collection, meta) {
     <div class="col">
       <h1>${e(shown)}</h1>
       <div class="byline">${collectionLine(work, collection)}</div>
+      ${siteWalk(work, collection)}
       ${collectedLine(work)}
 
       <div class="tabs" role="tablist">

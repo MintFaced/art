@@ -112,6 +112,17 @@ if (!dry) {
     delete w.image;
     moved++;
   }
+  /* A work's further pictures (a close-up, a detail) move the same way: the
+     repo path they were drafted with becomes the key they are served from. */
+  for (const w of src.works || []) {
+    for (const d of w.details || []) {
+      const file = String(d.image || '').split('/').pop();
+      if (!d.image || !String(d.image).startsWith('/assets/') || !files.includes(file)) continue;
+      d.asset = `strip-paintings/${file}`;
+      delete d.image;
+      moved++;
+    }
+  }
   writeFileSync(ROOT + SOURCE, JSON.stringify(src, null, 2) + '\n');
   execFileSync('node', [`${ROOT}scripts/build-strip-paintings.mjs`], { stdio: 'inherit' });
   console.log(`${up} uploaded, ${already} already there, ${moved} record(s) now read from R2`);

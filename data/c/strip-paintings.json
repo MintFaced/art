@@ -15,8 +15,8 @@
  "nudge": "nudge-1",
  "series": "strip-palette",
  "counts": {
-  "works": 9,
-  "not_tokenized": 9
+  "works": 10,
+  "not_tokenized": 10
  },
  "works": [
   {
@@ -118,6 +118,47 @@
    "assets": {
     "image": "strip-paintings/site4-panel-240cm.jpg"
    },
+   "collection": "strip-paintings",
+   "edition": {
+    "type": "1/1"
+   },
+   "collector": null
+  },
+  {
+   "id": "strip-painting-site-5",
+   "title": "Site 5",
+   "group": "site-design",
+   "site": 5,
+   "caption": "SITE 5",
+   "year": "2026",
+   "medium": "Gloss enamel on board",
+   "statement": "The colourway for site 5, sampled from the neighbouring signage. The red line sits sixteen strips from the base, as it does on every one.",
+   "palette": [
+    "sky blue",
+    "black",
+    "blush",
+    "grey",
+    "navy",
+    "cream",
+    "white"
+   ],
+   "aspect": 1.6667,
+   "orientation": "landscape",
+   "physical": {
+    "exists": true
+   },
+   "location": null,
+   "gallery": true,
+   "tokenized": false,
+   "status": "not_tokenized",
+   "image": "/assets/strip-paintings/strip-painting-5-illustrated.jpg",
+   "details": [
+    {
+     "image": "/assets/strip-paintings/strip-painting-5-detail.jpg",
+     "caption": "DETAIL",
+     "alt": "Site 5, the gloss surface in raking light"
+    }
+   ],
    "collection": "strip-paintings",
    "edition": {
     "type": "1/1"
@@ -250,8 +291,12 @@
  ],
  "genre": "Painting",
  "facets": {
+  "medium": {
+   "Acrylic and resin on panel": 9,
+   "Gloss enamel on board": 1
+  },
   "orientation": {
-   "landscape": 5,
+   "landscape": 6,
    "square": 1,
    "portrait": 3
   }
