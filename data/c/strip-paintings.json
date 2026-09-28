@@ -131,7 +131,7 @@
    "site": 5,
    "caption": "SITE 5",
    "year": "2026",
-   "medium": "Gloss enamel on board",
+   "medium": "Acrylic and resin on panel",
    "statement": "The colourway for site 5, sampled from the neighbouring signage. The red line sits sixteen strips from the base, as it does on every one.",
    "palette": [
     "sky blue",
@@ -142,12 +142,14 @@
     "cream",
     "white"
    ],
-   "aspect": 1.6667,
+   "aspect": 2.2636,
    "orientation": "landscape",
    "physical": {
-    "exists": true
+    "exists": true,
+    "width_cm": 124.5,
+    "height_cm": 55
    },
-   "location": null,
+   "location": "227 West, Hastings CBD",
    "gallery": true,
    "tokenized": false,
    "status": "not_tokenized",
@@ -159,7 +161,7 @@
     }
    ],
    "assets": {
-    "image": "strip-paintings/strip-painting-5-illustrated.jpg"
+    "image": "strip-paintings/strip-painting-5-wide.jpg"
    },
    "collection": "strip-paintings",
    "edition": {
@@ -295,10 +297,6 @@
  ],
  "genre": "Painting",
  "facets": {
-  "medium": {
-   "Acrylic and resin on panel": 9,
-   "Gloss enamel on board": 1
-  },
   "orientation": {
    "landscape": 6,
    "square": 1,

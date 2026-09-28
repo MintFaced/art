@@ -414,6 +414,9 @@ function detailRows(work, collection) {
   } else if (collection.physical && p.exists !== false) {
     rows.push(['Dimensions', '<span class="pending">Listed on request</span>']);
   }
+  /* Where it stands, for a work that belongs to a place: a strip painting is
+     made for one wall and its colours are sampled from the street around it. */
+  if (work.location) rows.push(['Location', e(work.location)]);
   // one row for the painting: where it is, and how it comes
   if (collection.physical && !isGallery(work)) {
     if (p.exists === false) {
