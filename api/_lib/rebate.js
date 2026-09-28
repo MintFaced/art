@@ -3,7 +3,7 @@
  * A campaign rebates part of each eligible rail sale: a share to TAO holders
  * by holdings, a share to the scout who sent the buying AI. It is off until
  * the holding wallet starts it with a signature, and it never moves a wei by
- * itself: it writes down who is owed what, and at the close /mintwork hands
+ * itself: it writes down who is owed what, and at the close /mintwork/rail hands
  * the holder a Disperse batch to sign.
  *
  * THE SCOUT IS IN THE BUYER'S OWN TRANSACTION. An agent that asks /ai/buy with
