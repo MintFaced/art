@@ -1,7 +1,9 @@
 {
  "address": "0x665654f2d2a151be2d0f8e3697e6ce780f732af2",
  "ens": "artpleb.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "artpleb.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2023-01-10T19:56:23.000000Z",
  "last_collected": "2024-04-05T23:31:47.000000Z",
- "tao": 45921,
+ "tao": 47130,
  "tao_rate": 37.8,
- "tao_rank": 298,
+ "tao_rank": 300,
  "collections": [
   {
    "slug": "xlife",
@@ -34,7 +36,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3670
+   "tao": 3804
   },
   {
    "id": "xlife-43",
@@ -46,7 +48,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4068
+   "tao": 4203
   },
   {
    "id": "xlife-28",
@@ -58,19 +60,7 @@
    "unique": false,
    "image": "xlife/xlife-28-image.gif",
    "orientation": null,
-   "tao": 5077
-  },
-  {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-03-20T02:25:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 5278
+   "tao": 5211
   },
   {
    "id": "xlife-5",
@@ -82,7 +72,7 @@
    "unique": false,
    "image": "xlife/xlife-5-image.gif",
    "orientation": null,
-   "tao": 5565
+   "tao": 5699
   },
   {
    "id": "xlife-4",
@@ -94,7 +84,7 @@
    "unique": false,
    "image": "xlife/xlife-4-image.gif",
    "orientation": null,
-   "tao": 5565
+   "tao": 5699
   },
   {
    "id": "xlife-3",
@@ -106,7 +96,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 5565
+   "tao": 5699
   },
   {
    "id": "xlife-2",
@@ -118,7 +108,19 @@
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 5565
+   "tao": 5699
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 5412
   },
   {
    "id": "xlife-1",
@@ -126,11 +128,11 @@
    "collection": "xlife",
    "group": "archive",
    "genre": null,
-   "acquired": "2023-01-10T19:56:23.000000Z",
+   "acquired": null,
    "unique": false,
    "image": "xlife/xlife-1-image.gif",
    "orientation": null,
-   "tao": 5565
+   "tao": 5699
   }
  ]
 }
