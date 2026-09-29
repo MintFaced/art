@@ -1,7 +1,9 @@
 {
  "address": "0x03477e844a5eaab2a03e225d5d32826d1007105e",
  "ens": null,
+ "fwd": "fishradich.eth",
  "display_name": null,
+ "x": null,
  "slug": "0x03477e84",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2025-08-01T01:24:23.000000Z",
  "last_collected": "2025-08-01T01:24:23.000Z",
- "tao": 65595,
+ "tao": 70950,
  "tao_rate": 167.4,
- "tao_rank": 247,
+ "tao_rank": 215,
  "collections": [
   {
    "slug": "xlife",
@@ -23,13 +25,13 @@
    "works": 7
   },
   {
-   "slug": "geodetic-world",
-   "title": "Geodetic World",
+   "slug": "patrimora",
+   "title": "Patrimora",
    "works": 1
   },
   {
-   "slug": "patrimora",
-   "title": "Patrimora",
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
    "works": 1
   }
  ],
@@ -44,7 +46,7 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-62-display.webp",
    "orientation": "square",
-   "tao": 27037
+   "tao": 29244
   },
   {
    "id": "patrimora-89",
@@ -56,7 +58,7 @@
    "unique": true,
    "image": "patrimora/patrimora-89-image.png",
    "orientation": null,
-   "tao": 27037
+   "tao": 29244
   },
   {
    "id": "xlife-68",
@@ -68,19 +70,7 @@
    "unique": false,
    "image": "xlife/xlife-68-image.gif",
    "orientation": null,
-   "tao": 1645
-  },
-  {
-   "id": "xlife-63",
-   "title": "Metadata Wars",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-08-01T01:24:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-63-image.png",
-   "orientation": null,
-   "tao": 1645
+   "tao": 1780
   },
   {
    "id": "xlife-52",
@@ -92,7 +82,7 @@
    "unique": false,
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
-   "tao": 1645
+   "tao": 1780
   },
   {
    "id": "xlife-51",
@@ -104,7 +94,7 @@
    "unique": false,
    "image": "xlife/xlife-51-image.gif",
    "orientation": null,
-   "tao": 1645
+   "tao": 1780
   },
   {
    "id": "xlife-50",
@@ -116,7 +106,7 @@
    "unique": false,
    "image": "xlife/xlife-50-image.gif",
    "orientation": null,
-   "tao": 1645
+   "tao": 1780
   },
   {
    "id": "xlife-45",
@@ -128,7 +118,7 @@
    "unique": false,
    "image": "xlife/xlife-45-image.gif",
    "orientation": null,
-   "tao": 1645
+   "tao": 1780
   },
   {
    "id": "xlife-43",
@@ -140,7 +130,19 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 1645
+   "tao": 1780
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-63-image.png",
+   "orientation": null,
+   "tao": 1780
   }
  ]
 }
