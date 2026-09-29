@@ -68,7 +68,11 @@ async function burnNonce(nonce, seconds) {
   } catch (e) { return true; }   // a store that will not answer never locks anybody out
 }
 
-const ACTIONS = ['sign in', 'sign out', 'say', 'react', 'seen', 'delete', 'restore', 'mute', 'unmute', 'note'];
+const ACTIONS = ['sign in', 'sign out', 'say', 'edit', 'react', 'seen', 'delete', 'restore', 'mute', 'unmute', 'note'];
+
+/* How long a message stays its author's to change. The server holds the line;
+   the page only stops offering the button. */
+export const EDIT_MS = 60 * 60 * 1000;
 
 /* What one request for link previews may cost. A page is fifty messages, and
    a message may carry three links, so the caps are what keeps a page of the log
@@ -359,8 +363,25 @@ export async function POST(request) {
   const origin = useRequestOrigin(request) || siteOrigin();
   if (!storeConfigured()) return respond(request, { error: 'Studio is not open yet' }, 503);
 
+  /* A message with a picture comes as multipart: the words and the rest of the
+     payload as one JSON field, the picture as the file itself. Base64 inside
+     JSON puts a third on top of every picture, and a function takes 4.5MB at
+     most, so the file travels as bytes. A message without one is plain JSON,
+     as it always was. */
   let body;
-  try { body = await request.json(); } catch { return respond(request, { error: 'bad request' }, 400); }
+  let upload = null;
+  try {
+    if (/^multipart\/form-data/i.test(request.headers.get('content-type') || '')) {
+      const form = await request.formData();
+      body = JSON.parse(String(form.get('payload') || '{}'));
+      const file = form.get('image');
+      if (file && typeof file === 'object' && typeof file.arrayBuffer === 'function') {
+        upload = { bytes: Buffer.from(await file.arrayBuffer()), type: String(file.type || ''), name: String(file.name || '') };
+      }
+    } else {
+      body = await request.json();
+    }
+  } catch { return respond(request, { error: 'bad request' }, 400); }
 
   const action = String(body.action || 'say');
 
@@ -609,8 +630,9 @@ export async function POST(request) {
       reactions: marksOf(held[n], address, cfg), rx: await db.marksVersion().catch(() => 0) });
   }
 
-  /* ---- the whole moderation toolset ---- */
-  if (action !== 'say') {
+  /* ---- the whole moderation toolset ----
+     Everything but saying and editing your own words is the artist's. */
+  if (action !== 'say' && action !== 'edit') {
     if (!isArtist) return respond(request, { error: 'Studio is moderated by the artist' }, 403);
 
     if (action === 'mute' || action === 'unmute') {
@@ -641,6 +663,65 @@ export async function POST(request) {
     const dress = await dressing(db, [row],
       { isArtist: true, artist: cfg.artist, register, viewer: address, cfg });
     return respond(request, { ok: true, n, deleted: row.deleted, message: render(row, dress) });
+  }
+
+  /* ---- changing something you said ----
+   *
+   * Your own message, for the first hour, from your own signed-in session. The
+   * page offers the button for that hour; this is what holds the line, so a
+   * button forced back onto the page an hour later gets a refusal.
+   *
+   * The words and the tags change; the number, the time, the reply, the marks
+   * under it and anything answering it do not ... they hang off the number. A
+   * picture can be taken off but not put on or swapped, because the picture is
+   * the part of a message people react to first. What it said before is kept,
+   * out of sight, for moderation.
+   *
+   * Only a tag the edit adds tells anybody. Somebody already named in it was
+   * told when it was first said, and correcting a typo is not a second ping. */
+  if (action === 'edit') {
+    if (!bySession) return respond(request, { error: 'Sign in to edit your messages.' }, 401);
+    const n = Number(body.n);
+    if (!Number.isInteger(n) || n < 0) return respond(request, { error: 'edit which message?' }, 400);
+    const row = await db.get(n);
+    if (!row) return respond(request, { error: 'no such message' }, 404);
+    if (lower(row.address) !== address) return respond(request, { error: 'Only the person who said it can edit a message.' }, 403);
+    if (row.deleted) return respond(request, { error: 'that message was taken down' }, 400);
+    const age = Date.now() - Date.parse(row.at);
+    if (!(age >= 0 && age <= EDIT_MS)) {
+      return respond(request, { error: 'A message can be edited for an hour after it is posted.', window: true }, 403);
+    }
+    if (await db.isMuted(address)) return respond(request, { error: 'This wallet is muted in Studio. You can still read.' }, 403);
+    const edited = checkMessage(body.text, cfg);
+    if (edited.error) return respond(request, { error: edited.error }, 400);
+    const register = await loadRegister(at, origin, pipe).catch(() => null);
+    const found = register ? parseTags(edited.text, tagIndex(register)) : [];
+    const mentions = found.map((m) => ({ start: m.start, len: m.len, address: m.address }));
+    const distinct = [...new Set(mentions.map((m) => m.address))];
+    const maxTags = Number(cfg.max_tags || 5);
+    if (distinct.length > maxTags) {
+      return respond(request, { error: `${distinct.length} names in one message, and Studio's limit is ${maxTags}.` }, 400);
+    }
+    const before = new Set((row.mentions || []).map((m) => lower(m.address)));
+    const fresh = distinct.filter((a) => !before.has(lower(a)) && lower(a) !== address);
+    if (fresh.length) {
+      const spentTags = await db.spendTags(address, fresh.length, cfg);
+      if (spentTags.error) return respond(request, { error: spentTags.error }, 429);
+    }
+    const dropImage = body.remove_image === true && Boolean(row.image);
+    if (edited.text === row.text && !dropImage) {
+      const dress0 = await dressing(db, [row], { isArtist, artist: cfg.artist, register, viewer: address, cfg });
+      return respond(request, { ok: true, unchanged: true, message: render(row, dress0) });
+    }
+    const now = new Date().toISOString();
+    await db.keepEdit(n, { text: row.text, mentions: row.mentions || [], image: row.image || null,
+      was_at: row.edited_at || row.at, replaced_at: now });
+    const next = { ...row, text: edited.text, mentions, edited_at: now, edits: (row.edits || 0) + 1,
+      ...(dropImage ? { image: null } : {}) };
+    await db.save(next);
+    if (fresh.length) await db.mention(fresh, n);
+    const dress = await dressing(db, [next], { isArtist, artist: cfg.artist, register, viewer: address, cfg });
+    return respond(request, { ok: true, told: fresh.length, message: render(next, dress) });
   }
 
   /* ---- saying something ---- */
@@ -678,7 +759,7 @@ export async function POST(request) {
      the fingerprint the sentence carries has to be of bytes this side has
      actually looked at. Nothing is spent and nothing is stored until it has
      passed everything a message has to pass. */
-  const shot = checkImage(body.image, cfg);
+  const shot = await checkImage(body.image, cfg, upload);
   if (shot.error) return respond(request, { error: shot.error }, 400);
   if (!shot.none && !r2Configured()) {
     return respond(request, { error: 'Studio cannot take pictures just now' }, 503);
@@ -714,7 +795,7 @@ export async function POST(request) {
   if (!(await verify({
     action: 'say', text: text.text,
     reply: reply == null ? null : String(reply),
-    image: shot.none ? null : imageFingerprint(shot.bytes),
+    image: shot.none ? null : imageFingerprint(shot.original),
   }))) {
     return respond(request, { error: 'that signature does not match the wallet' }, 401);
   }

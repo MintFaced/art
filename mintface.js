@@ -2930,14 +2930,26 @@ MF.session = {
   },
 
   async post(body) {
+    /* A picture travels as the file itself, beside the rest as one JSON field:
+       base64 would add a third to it, and the room takes 4.5MB a request. */
+    const { upload, ...rest } = body || {};
+    let init;
+    if (upload) {
+      const form = new FormData();
+      form.set('payload', JSON.stringify(rest));
+      form.set('image', upload.blob, upload.name || 'picture');
+      init = { body: form };
+    } else {
+      init = { headers: { 'content-type': 'application/json' }, body: JSON.stringify(rest) };
+    }
     const r = await fetch(this.api(), {
-      method: 'POST', headers: { 'content-type': 'application/json' },
+      method: 'POST',
       /* The cookie rides along, which on the register means a cross-origin
          request that is not a cross-site one. The room answers those with its
          own origin echoed rather than a wildcard, because a wildcard and
          credentials are not allowed together and should not be. */
       credentials: 'include',
-      body: JSON.stringify(body),
+      ...init,
     });
     const j = await r.json().catch(() => ({}));
     if (!r.ok) { const err = new Error(j.error || 'that did not go through'); err.expired = Boolean(j.expired); throw err; }
@@ -3109,44 +3121,52 @@ MF.session = {
  */
 MF.picture = {
   LONG_EDGE: 2000,
-  TYPES: ['image/webp', 'image/jpeg'],
-
-  /** A file from a phone or a desktop, as the room will take it. */
-  async ready(file, { longEdge = this.LONG_EDGE, maxBytes = 1200 * 1024 } = {}) {
-    if (!file || !/^image\//.test(file.type || '')) throw new Error('that is not an image');
-    const bitmap = await this.decode(file);
-    const scale = Math.min(1, longEdge / Math.max(bitmap.width, bitmap.height));
+  /* What goes up, and how big it may be.
+   *
+   * THE SERVER STRIPS NOW. Every picture is decoded, turned upright, resized
+   * and written out without metadata on the server before it is kept
+   * (api/_lib/images.js), so the page no longer strips anything and no longer
+   * says it has. It sends the file as it is ... HEIC straight off an iPhone
+   * included ... and only makes it smaller when it is too big to send at all:
+   * a function takes 4.5MB, so a bigger photograph is drawn down to 2000 on
+   * its long edge first. That is a size step, not a privacy step. */
+  SEND_MAX: 4.2 * 1024 * 1024,
+  IN_MAX: 12 * 1024 * 1024,
+  KINDS: /^image\/(jpeg|png|webp|heic|heif)$/i,
+  async prepare(file) {
+    if (!file) throw new Error('that is not an image');
+    const heic = /\.(heic|heif)$/i.test(file.name || '') || /^image\/hei[cf]$/i.test(file.type || '');
+    if (!this.KINDS.test(file.type || '') && !heic) throw new Error('Studio takes JPEG, PNG, WebP and HEIC pictures');
+    if (file.size > this.IN_MAX) throw new Error(`${(file.size / 1048576).toFixed(1)}MB, and Studio takes pictures up to 12MB`);
+    /* Its size, where this browser can read it. A HEIC in a browser that
+       cannot decode one still goes up whole; it simply has no size to show. */
+    let bitmap = null;
+    try { bitmap = await this.decode(file); } catch (err) { bitmap = null; }
+    const dims = bitmap ? { w: bitmap.width, h: bitmap.height } : { w: null, h: null };
+    if (file.size <= this.SEND_MAX) {
+      if (bitmap && bitmap.close) bitmap.close();
+      return { blob: file, name: file.name || 'picture', ...dims, bytes: file.size, shown: Boolean(bitmap) };
+    }
+    if (!bitmap) {
+      throw new Error(`${(file.size / 1048576).toFixed(1)}MB, which is more than this browser can send, and it cannot open this picture to make it smaller. Choose a smaller one, or share it as a JPEG.`);
+    }
+    const scale = Math.min(1, this.LONG_EDGE / Math.max(bitmap.width, bitmap.height));
     const w = Math.max(1, Math.round(bitmap.width * scale));
     const h = Math.max(1, Math.round(bitmap.height * scale));
     const canvas = document.createElement('canvas');
     canvas.width = w; canvas.height = h;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(bitmap, 0, 0, w, h);
+    canvas.getContext('2d').drawImage(bitmap, 0, 0, w, h);
     if (bitmap.close) bitmap.close();
-
-    /* WebP where the browser has it and JPEG where it does not, and then down
-       the quality rather than down the size: a photograph that has already
-       been made small should lose a little sharpness before it loses its
-       shape. Five steps, and if the fifth is still too big the picture is
-       genuinely too big and is said to be. */
-    let type = (await this.encodesWebp()) ? 'image/webp' : 'image/jpeg';
-    for (const q of [0.84, 0.76, 0.68, 0.58, 0.46]) {
-      let blob = await this.encode(canvas, type, q);
-      /* A browser that says it can encode WebP and then does not.
-         The feature test is a single pixel, which some engines answer from a
-         trivial path they never take for a real image ... and a composer that
-         sits on "Reading the picture" forever because an encoder never called
-         back is worse than a slightly larger JPEG. So the first one that does
-         not come back settles the format for the rest of this picture. */
-      if (blob === null && type === 'image/webp') {
-        this._webp = false;
-        type = 'image/jpeg';
-        blob = await this.encode(canvas, type, q);
-      }
-      if (blob === null) throw new Error('this browser would not encode that picture');
-      if (blob.size <= maxBytes) return { blob, type, w, h, data: await this.base64(blob) };
+    for (const q of [0.9, 0.84, 0.76]) {
+      const blob = await this.encode(canvas, 'image/jpeg', q);
+      if (blob && blob.size <= this.SEND_MAX) return { blob, name: 'picture.jpg', w, h, bytes: blob.size, shown: true };
     }
-    throw new Error('that picture will not come down to a size the room can keep');
+    throw new Error('that picture will not come down to a size the room can send');
+  },
+  /** "1500×2000 · 652KB", or just the size where the browser could not read it. */
+  said(p) {
+    const size = p.bytes >= 1048576 ? `${(p.bytes / 1048576).toFixed(1)}MB` : `${Math.max(1, Math.round(p.bytes / 1024))}KB`;
+    return p.w && p.h ? `${p.w}\u00d7${p.h} \u00b7 ${size}` : size;
   },
 
   /* Decoded with the rotation applied. createImageBitmap does it properly and
@@ -3182,30 +3202,6 @@ MF.picture = {
       try { canvas.toBlob((b) => finish(b || null), type, quality); }
       catch (err) { finish(null); }
     });
-  },
-
-  /* Asked of a single pixel, and asked once.
-     This used to encode the whole resized photograph just to find out whether
-     the browser could encode it, which is two full encodes of a two-thousand
-     pixel image to produce one ... on a phone, which is where the pictures
-     come from, that is the difference between a moment and a wait. */
-  _webp: null,
-  async encodesWebp() {
-    if (this._webp !== null) return this._webp;
-    try {
-      const c = document.createElement('canvas');
-      c.width = 1; c.height = 1;
-      const blob = await new Promise((res) => c.toBlob(res, 'image/webp', 0.8));
-      this._webp = Boolean(blob && blob.type === 'image/webp');
-    } catch (err) { this._webp = false; }
-    return this._webp;
-  },
-
-  async base64(blob) {
-    const buf = new Uint8Array(await blob.arrayBuffer());
-    let s = '';
-    for (let i = 0; i < buf.length; i += 0x8000) s += String.fromCharCode.apply(null, buf.subarray(i, i + 0x8000));
-    return btoa(s);
   },
 
   /* The same fingerprint api/_lib/images.js computes, so a wallet signing

@@ -498,11 +498,31 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   border:1px solid var(--rule);cursor:zoom-in;background:var(--sunk)}
 .m .shot:focus-visible{outline:none;border-color:var(--ink)}
 
-/* What is about to go up with a message. Shown at the size it will be sent,
-   so nothing about what arrives is a surprise ... including the line saying
-   the camera data has already gone. */
+/* What is about to go up with a message: the picture and what it is. The
+   server strips every picture before it is kept, so nothing here promises it. */
 .attached{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.attached img{width:56px;height:56px;object-fit:cover;border:1px solid var(--rule);flex:none;background:var(--sunk)}
+.attached img,.attached .noimg{width:56px;height:56px;object-fit:cover;border:1px solid var(--rule);flex:none;background:var(--sunk)}
+.attached .noimg{display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:13px;color:var(--muted)}
+
+/* Editing your own message, in place: the words become the box. */
+.m .ed{font-family:var(--font-mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.m .who .ed{margin-left:auto}
+.m .who .ed + .at{margin-left:10px}
+.m .ed-line{max-width:65ch;text-align:right;margin-top:2px}
+.m .editbox{margin-top:6px;max-width:65ch}
+.m .editbox textarea{width:100%;min-height:84px;resize:vertical;background:transparent;border:1px solid var(--ink);
+  color:var(--ink);padding:10px 12px;font-family:var(--font-sans);font-size:17px;line-height:1.6;display:block}
+.m .editbox textarea:focus{outline:none}
+.m .edit-shot{display:flex;gap:12px;align-items:center;margin-top:8px}
+.m .edit-shot img{width:56px;height:56px;object-fit:cover;border:1px solid var(--rule)}
+.m .edit-shot .off{font-family:var(--font-sans);font-size:15px;color:var(--muted)}
+.m .edit-row{display:flex;gap:10px;align-items:center;margin-top:8px}
+.m .edit-row .count{margin-right:auto;font-family:var(--font-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.m .edit-row .count.over{color:var(--alert)}
+.m .edit-row .go{background:none;border:1px solid var(--rule);color:var(--ink);cursor:pointer;padding:8px 15px;
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.m .edit-row .go.save{border-color:var(--ink)}
+.m .edit-row .go:disabled{opacity:.45;cursor:default}
 .attached .what{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--faint);min-width:0;overflow:hidden;text-overflow:ellipsis}
 .attached button{background:none;border:0;padding:0 2px;cursor:pointer;color:var(--faint);
@@ -883,10 +903,14 @@ const ROOM = {
   /* Who you are answering, as a message number, and which message has its
      palette open. Both are about the page rather than about the log. */
   replyTo: null, palette: null,
-  /* One picture per message, held here until it is said. `shot` is what the
-     browser made of the file ... resized, re-encoded, stripped ... and it is
-     cleared by sending exactly as the reply chip is. */
+  /* One picture per message, held here until it is said. `shot` is the file
+     as it will be sent ... the server does the stripping ... and it is cleared
+     by sending exactly as the reply chip is. */
   shot: null, shooting: false,
+  /* The message being edited, if any: its number, the words as they are being
+     rewritten, whether its picture is coming off, and where the caret is. A
+     redraw rebuilds the box, so all of it lives here rather than in the DOM. */
+  editing: null,
   /* Studio's marks, and where they are up to. The poll carries the number; the
      page goes and asks what the marks actually are only when it has moved,
      so a room where nobody has reacted since you loaded costs one digit. */
@@ -1312,12 +1336,14 @@ function card(m, prev) {
     ${cont ? '' : `<div class="who">
       <span class="nm${isArtist ? ' artist' : ''}">${who}</span>
       ${isArtist ? '<span class="role">the artist</span>' : `<span class="tao">${e(m.worn)} TAO</span>`}
+      ${m.edited ? '<span class="ed">edited</span>' : ''}
       <span class="at" title="${e(stampFull(m.at))}">${e(stamp(m.at))}</span>
     </div>`}
     ${ctl}
     ${answering}
-    ${words(m)}
-    ${shot}
+    ${ROOM.editing && ROOM.editing.n === m.n ? editor(m) : `${words(m)}
+    ${cont && m.edited ? '<div class="ed-line"><span class="ed">edited</span></div>' : ''}
+    ${shot}`}
     ${cards}
     ${acts}
   </article>`;
@@ -1503,6 +1529,39 @@ function closePicker() {
    should do. Signing in is one signature and then neither asks again. */
 const mayAct = () => Boolean(ROOM.me && ROOM.me.can_speak && mySession());
 
+/* Your own message, for the hour after you said it. The server holds the same
+   line; this only stops offering the button once it has passed. */
+const EDIT_MS = 60 * 60 * 1000;
+const mayEdit = (m) => Boolean(m && !m.deleted && ROOM.wallet && m.address === ROOM.wallet
+  && Date.now() - Date.parse(m.at) < EDIT_MS);
+
+/* The box a message becomes while it is being edited. */
+function editor(m) {
+  const ed = ROOM.editing;
+  const over = ed.text.length > ROOM.max;
+  return `<div class="editbox">
+    <textarea id="edit-text" rows="3" aria-label="Edit your message">${e(ed.text)}</textarea>
+    ${m.image ? `<div class="edit-shot">${ed.dropImage
+      ? '<span class="off">The picture comes off when you save.</span>'
+      : `<img src="${e(m.image.url)}" alt="">`}
+      <button type="button" class="quiet" data-act="edit-pic">${ed.dropImage ? 'Keep the picture' : 'Remove the picture'}</button></div>` : ''}
+    <div class="edit-row">
+      <span class="count${over ? ' over' : ''}" id="edit-count">${ed.text.length}/${ROOM.max}</span>
+      <button type="button" class="go" data-act="edit-cancel">Cancel</button>
+      <button type="button" class="go save" data-act="edit-save"${over || !ed.text.trim() ? ' disabled' : ''}>Save</button>
+    </div>
+  </div>`;
+}
+
+/* The EDIT button goes when its hour does. One timer, set for whichever of
+   your messages runs out next, and set again on every draw. */
+let editClock = null;
+function watchEdits() {
+  if (editClock) { clearTimeout(editClock); editClock = null; }
+  const next = ROOM.rows.filter(mayEdit).map((m) => Date.parse(m.at) + EDIT_MS).sort((a, b) => a - b)[0];
+  if (next) editClock = setTimeout(() => { if (!ROOM.editing) draw({ keep: true }); else watchEdits(); }, Math.max(1000, next - Date.now() + 500));
+}
+
 /* The two quiet ways in, in the measuring line above the words. Always in the
    page and invisible until the pointer is over the message, so nothing moves
    when they arrive and forty messages do not each carry two buttons nobody is
@@ -1510,8 +1569,10 @@ const mayAct = () => Boolean(ROOM.me && ROOM.me.can_speak && mySession());
    simply sit there, faintly. */
 function waysIn(m) {
   if (m.deleted || !mayAct() || ROOM.palette === m.n) return '';
+  if (ROOM.editing && ROOM.editing.n === m.n) return '';
   return `<button class="quiet" data-act="reply" data-n="${m.n}">Reply</button>
-    <button class="quiet" data-act="palette" data-n="${m.n}" aria-label="React to this message">React</button>`;
+    <button class="quiet" data-act="palette" data-n="${m.n}" aria-label="React to this message">React</button>
+    ${mayEdit(m) ? `<button class="quiet" data-act="edit" data-n="${m.n}" aria-label="Edit your message">Edit</button>` : ''}`;
 }
 
 function composer() {
@@ -1632,8 +1693,8 @@ function attached() {
   if (!ROOM.shot) return '';
   const s = ROOM.shot;
   return `<div class="attached">
-    <img src="${e(s.preview)}" alt="">
-    <span class="what">${s.w}&times;${s.h} &middot; ${Math.round(s.blob.size / 1024)}KB &middot; camera data stripped</span>
+    ${s.preview ? `<img src="${e(s.preview)}" alt="">` : '<span class="noimg" aria-hidden="true">HEIC</span>'}
+    <span class="what">${e(MF.picture.said(s))}</span>
     <button type="button" data-act="unattach" title="Send without it" aria-label="Take the picture off">&times;</button>
   </div>`;
 }
@@ -1818,6 +1879,36 @@ function draw({ keep = false, toEnd = false, toBottom = false } = {}) {
     const at = ROOM.caret == null ? t.value.length : Math.min(ROOM.caret, t.value.length);
     t.setSelectionRange(at, at);
   }
+  if (ROOM.editing) focusEditor();
+  watchEdits();
+}
+
+function focusEditor() {
+  const box = document.getElementById('edit-text');
+  if (!box || !ROOM.editing) return;
+  box.focus();
+  const at = Math.min(ROOM.editing.caret == null ? box.value.length : ROOM.editing.caret, box.value.length);
+  box.setSelectionRange(at, at);
+}
+
+/* Saving an edit. The server says whether the hour is up, whoever's button it
+   was; a refusal closes the box and says why. */
+async function saveEdit(b) {
+  const ed = ROOM.editing;
+  if (!ed || !ed.text.trim() || ed.text.length > ROOM.max) return;
+  return run(b, async () => {
+    try {
+      const r = await post({ action: 'edit', n: ed.n, text: ed.text, remove_image: ed.dropImage });
+      const i = ROOM.rows.findIndex((x) => x.n === ed.n);
+      if (i >= 0 && r.message) ROOM.rows[i] = r.message;
+      ROOM.editing = null;
+      repaint(ed.n);
+      status(null);
+    } catch (err) {
+      if (/an hour after it is posted/.test(String(err && err.message))) { ROOM.editing = null; repaint(ed.n); }
+      throw err;
+    }
+  }, { redraw: false });
 }
 
 /* History arrives upward, on its own, when a reader goes looking for it.
@@ -2019,7 +2110,8 @@ async function send(payload) {
      of the payload part company here rather than anywhere the caller has to
      think about. */
   const { fingerprint, ...body } = payload;
-  const payloadForSigning = { ...body, image: fingerprint || null };
+  const { upload, ...words } = body;
+  const payloadForSigning = { ...words, image: fingerprint || null };
   const s = mySession();
   if (s) {
     try {
@@ -2045,6 +2137,16 @@ document.addEventListener('input', (ev) => {
   /* Only the grid is redrawn. Rebuilding the panel would rebuild the field
      being typed into, and a search box that loses the caret every keystroke is
      a search box nobody finishes a word in. */
+  if (ev.target.id === 'edit-text' && ROOM.editing) {
+    ROOM.editing.text = String(ev.target.value || '');
+    ROOM.editing.caret = ev.target.selectionStart;
+    const over = ROOM.editing.text.length > ROOM.max;
+    const c = document.getElementById('edit-count');
+    if (c) { c.textContent = `${ROOM.editing.text.length}/${ROOM.max}`; c.classList.toggle('over', over); }
+    const save = document.querySelector('[data-act="edit-save"]');
+    if (save) save.disabled = over || !ROOM.editing.text.trim();
+    return;
+  }
   if (ev.target.id === 'pk-q') {
     PICK.q = String(ev.target.value || '');
     const body = document.getElementById('pk-body');
@@ -2122,6 +2224,10 @@ document.addEventListener('keydown', (ev) => {
      once would take the quick row down with it while somebody was still
      looking at it. */
   if (ev.key === 'Escape' && PICK.n != null && !ROOM.tag.open) { closePicker(); return; }
+  if (ROOM.editing && ev.target && ev.target.id === 'edit-text') {
+    if (ev.key === 'Escape') { const n = ROOM.editing.n; ROOM.editing = null; repaint(n); return; }
+    if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) { ev.preventDefault(); saveEdit(null); return; }
+  }
   if (ev.key === 'Escape' && ROOM.palette != null && !ROOM.tag.open) {
     const was = ROOM.palette;
     ROOM.palette = null;
@@ -2247,10 +2353,11 @@ async function run(b, fn, { redraw = true } = {}) {
 
 /* Choosing a picture.
  *
- * The file never goes anywhere as a file. It is decoded, drawn down to two
- * thousand on the long edge and re-encoded off a canvas, which is what strips
- * the camera data ... see MF.picture. What is held here is the result, and the
- * composer shows it at the size it will actually be sent.
+ * The file goes up as it is ... a HEIC off an iPhone included ... and the
+ * server turns it upright, resizes it and strips it before it is kept (see
+ * api/_lib/images.js). The page only makes it smaller where it is too big to
+ * send at all. The input asks for image/* and nothing more, so a phone offers
+ * the library and the camera both.
  */
 let picker = null;
 function askForPicture() {
@@ -2274,8 +2381,8 @@ async function takePicture(file) {
   ROOM.focus = true;
   draw();
   try {
-    const ready = await MF.picture.ready(file, { maxBytes: (ROOM.maxImageKb || 1200) * 1024 });
-    ROOM.shot = { ...ready, preview: URL.createObjectURL(ready.blob) };
+    const ready = await MF.picture.prepare(file);
+    ROOM.shot = { ...ready, preview: ready.shown ? URL.createObjectURL(ready.blob) : null };
     status(null);
   } catch (err) {
     status(String((err && err.message) || err), true);
@@ -2305,7 +2412,7 @@ async function sayIt(b) {
     await send({
       action: 'say', text,
       reply: reply == null ? null : String(reply),
-      image: shot ? { data: shot.data, type: shot.type, w: shot.w, h: shot.h } : null,
+      upload: shot ? { blob: shot.blob, name: shot.name } : null,
       /* What goes in the sentence is the fingerprint, never the bytes. */
       fingerprint: shot ? await MF.picture.fingerprint(shot.blob) : null,
     });
@@ -2400,6 +2507,22 @@ document.addEventListener('click', async (ev) => {
     return;
   }
   if (act === 'unreply') { ROOM.replyTo = null; ROOM.focus = true; draw(); return; }
+  /* Editing your own message, in place. */
+  if (act === 'edit') {
+    const n = Number(b.dataset.n);
+    const m = rowAt(n);
+    if (!m || !mayEdit(m)) { status('A message can be edited for an hour after it is posted.', true); draw({ keep: true }); return; }
+    const was = ROOM.editing && ROOM.editing.n;
+    ROOM.editing = { n, text: m.text || '', dropImage: false, caret: (m.text || '').length };
+    ROOM.palette = null;
+    if (was != null && was !== n) repaint(was);
+    repaint(n);
+    focusEditor();
+    return;
+  }
+  if (act === 'edit-cancel') { const n = ROOM.editing && ROOM.editing.n; ROOM.editing = null; if (n != null) repaint(n); return; }
+  if (act === 'edit-pic') { if (ROOM.editing) { ROOM.editing.dropImage = !ROOM.editing.dropImage; repaint(ROOM.editing.n); focusEditor(); } return; }
+  if (act === 'edit-save') { return saveEdit(b); }
   if (act === 'attach') { askForPicture(); return; }
   if (act === 'shot') { MF.zoom.show(b.dataset.src, 'A picture from Studio'); return; }
   if (act === 'unattach') { dropPicture(); ROOM.focus = true; draw(); return; }

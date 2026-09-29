@@ -229,6 +229,9 @@ export function render(row, dress = {}) {
         url, at: row.at, deleted: Boolean(row.deleted) }
     : { n: row.n, address: row.address, name: said(who, row.name), role: 'collector',
         tao: row.tao || 0, worn: wearTao(row.tao), url, at: row.at, deleted: Boolean(row.deleted) };
+  /* That it was edited, and nothing about how: the old words stay out of the
+     room, and the mark is all the room is owed. */
+  if (row.edited_at) base.edited = true;
   /* What this message was answering, said as it reads now. The row keeps a
      message number and nothing else, so a reply survives its author renaming
      ... and survives that author being renamed by somebody else's hand. */
@@ -343,6 +346,8 @@ export function marksOf(held, viewer, cfg) {
 
 export const keys = {
   msg: (n) => `chat:m:${n}`,
+  /* A message's earlier words, one entry per edit. Moderation only. */
+  edits: (n) => `chat:e:${n}`,
   log: 'chat:log',
   muted: 'chat:muted',
   floor: (a) => `chat:floor:${lower(a)}`,
@@ -437,6 +442,16 @@ export function chatStore(pipe, cfg = {}) {
     async save(row) {
       await pipe([['SET', keys.msg(row.n), JSON.stringify(row)]]);
       return row;
+    },
+
+    /* What a message said before an edit, kept for moderation and never
+       served: the log shows what is said now, and says that it was edited. */
+    async keepEdit(n, was) {
+      await pipe([['RPUSH', keys.edits(n), JSON.stringify(was)]]);
+    },
+    async edits(n) {
+      const [rows] = await pipe([['LRANGE', keys.edits(n), '0', '-1']]);
+      return (rows || []).map((r) => { try { return JSON.parse(r); } catch (e) { return null; } }).filter(Boolean);
     },
 
     /* ---- being spoken to ----

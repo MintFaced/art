@@ -1,19 +1,26 @@
 /* Pictures in a log that is kept forever.
  *
- * The browser resizes and re-encodes through a canvas before anything is sent,
- * which is also what strips the metadata: canvas output carries no EXIF at
- * all, so the GPS coordinates a phone writes into every photograph never leave
- * the phone. That is the strip. What is here is the check ... an image that
- * still has EXIF in it did not come through that canvas, and a room whose log
- * is public and permanent should refuse it rather than wonder.
+ * THE SERVER STRIPS, EVERY TIME. A picture arrives as whatever the phone made
+ * of it ... a HEIC straight off an iPhone, a JPEG with the street it was taken
+ * on written into it, a PNG ... and every one of them is decoded here, turned
+ * the right way up from its own orientation tag, resized to a long edge of
+ * 2000, and written out as a fresh JPEG with no metadata at all, before a byte
+ * of it reaches the bucket. Whatever the browser did or did not do, what the
+ * log keeps carries no EXIF, no GPS and no camera.
  *
- * Nothing here decodes an image. It reads the container ... the handful of
- * bytes that say what a file claims to be and what is chunked inside it ...
- * which is enough to answer both questions worth asking: is this the kind of
- * file it says it is, and is anybody's street address in it.
+ * It used to be the other way round: the browser stripped through a canvas and
+ * this file refused anything still carrying metadata. That refused real photos
+ * from phones whose browsers could not decode them, which is the one case the
+ * strip exists for.
+ *
+ * HEIC is decoded by libheif compiled to WebAssembly (heic-decode), because the
+ * libvips sharp ships reads HEIF's AVIF flavour and not the HEVC one iPhones
+ * write. libheif applies the file's own rotation as it decodes.
  */
 
 import { createHash } from 'node:crypto';
+import sharp from 'sharp';
+import heicDecode from 'heic-decode';
 
 /* What a wallet signs when it signs a picture.
  *
@@ -29,7 +36,15 @@ export const imageFingerprint = (bytes) =>
 export const TYPES = {
   'image/webp': 'webp',
   'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/heic': 'heic',
 };
+
+/* What a picture may be on the way in: the four kinds a phone or a screenshot
+   produces. What it is on the way out is always a JPEG. */
+export const IN_MAX_BYTES = 12 * 1024 * 1024;
+export const LONG_EDGE = 2000;
+const HEIF_BRANDS = new Set(['heic', 'heix', 'hevc', 'hevx', 'heim', 'heis', 'hevm', 'hevs', 'mif1', 'msf1']);
 
 /** What the first bytes say the file actually is, whatever it claims. */
 export function sniff(bytes) {
@@ -38,7 +53,50 @@ export function sniff(bytes) {
   if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return 'image/jpeg';
   if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46
     && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return 'image/webp';
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return 'image/png';
+  /* ISO base media: a size, then 'ftyp', then the brand. HEIC and its
+     relatives are HEIF, decoded by libheif rather than by sharp. */
+  if (b[4] === 0x66 && b[5] === 0x74 && b[6] === 0x79 && b[7] === 0x70) {
+    const brand = String.fromCharCode(b[8], b[9], b[10], b[11]);
+    if (HEIF_BRANDS.has(brand)) return 'image/heic';
+  }
   return null;
+}
+
+/**
+ * Any picture, as the log keeps it: upright, at most 2000 on its long edge,
+ * sRGB, JPEG, and nothing in it but the picture.
+ *
+ * sharp writes no metadata unless it is asked to, and it is never asked here.
+ * Transparency is laid on white, because a JPEG has none and a black ground
+ * under a screenshot's corners is not what anybody sent.
+ */
+export async function processImage(bytes) {
+  const b = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
+  if (!b.length) return { error: 'that image did not arrive whole' };
+  if (b.length > IN_MAX_BYTES) {
+    return { error: `${(b.length / 1048576).toFixed(1)}MB, and Studio takes pictures up to ${IN_MAX_BYTES / 1048576}MB` };
+  }
+  const kind = sniff(b);
+  if (!kind) return { error: 'Studio takes JPEG, PNG, WebP and HEIC pictures' };
+  let img;
+  try {
+    if (kind === 'image/heic') {
+      const { width, height, data } = await heicDecode({ buffer: b });
+      img = sharp(Buffer.from(data.buffer, data.byteOffset, data.byteLength), { raw: { width, height, channels: 4 } });
+    } else {
+      img = sharp(b, { failOn: 'error' }).rotate();
+    }
+    const out = await img
+      .resize({ width: LONG_EDGE, height: LONG_EDGE, fit: 'inside', withoutEnlargement: true })
+      .flatten({ background: '#ffffff' })
+      .toColourspace('srgb')
+      .jpeg({ quality: 84, mozjpeg: true })
+      .toBuffer({ resolveWithObject: true });
+    return { bytes: out.data, type: 'image/jpeg', ext: 'jpg', w: out.info.width, h: out.info.height, from: kind, in_bytes: b.length };
+  } catch (e) {
+    return { error: 'that picture would not open. Try another, or a screenshot of it.' };
+  }
 }
 
 const ascii = (b, at, s) => {
@@ -93,43 +151,27 @@ export function hasMetadata(bytes) {
  * @param cfg    the room's own config
  * @returns { bytes, type, ext, w, h } or { error }
  */
-export function checkImage(image, cfg = {}) {
-  if (image == null) return { none: true };
-  if (typeof image !== 'object') return { error: 'that is not an image' };
-  const claimed = String(image.type || '');
-  if (!TYPES[claimed]) return { error: 'Studio takes JPEG and WebP' };
-
-  let bytes;
-  try { bytes = Buffer.from(String(image.data || ''), 'base64'); }
-  catch (e) { return { error: 'that image did not arrive whole' }; }
-  if (!bytes.length) return { error: 'that image did not arrive whole' };
-
-  const cap = Math.floor(Number(cfg.max_image_kb || 1200)) * 1024;
-  if (bytes.length > cap) {
-    return { error: `${Math.round(bytes.length / 1024)}KB, and Studio's limit is ${Math.round(cap / 1024)}KB` };
+/**
+ * The picture a message carries, from either way it can arrive: the file
+ * itself (a multipart upload, the way the page sends it now) or base64 in the
+ * JSON body (the older way, and the one a script can use). Either is decoded,
+ * stripped and re-encoded by processImage before anything else sees it.
+ *
+ * `original` is the bytes as they came, which is what a signed message's
+ * fingerprint is taken over: the sender can only fingerprint what they have.
+ */
+export async function checkImage(image, cfg = {}, upload = null) {
+  let original = null;
+  if (upload && upload.bytes && upload.bytes.length) original = upload.bytes;
+  else if (image != null) {
+    if (typeof image !== 'object') return { error: 'that is not an image' };
+    try { original = Buffer.from(String(image.data || ''), 'base64'); }
+    catch (e) { return { error: 'that image did not arrive whole' }; }
   }
-
-  /* What it says it is, against what it is. A log kept forever does not take
-     anybody's word for a content type. */
-  const real = sniff(bytes);
-  if (!real) return { error: 'that file is not a JPEG or a WebP' };
-  if (real !== claimed) return { error: 'that file is not the kind of image it says it is' };
-
-  /* The browser re-encodes through a canvas, which drops every scrap of this.
-     Anything still carrying it came from somewhere else, and the somewhere
-     else is exactly the case worth refusing: people post from phones, and a
-     phone writes where it was standing into the file. */
-  if (hasMetadata(bytes)) {
-    return { error: 'that image still carries its camera data. Studio strips it before sending, so this one did not come through the page.' };
-  }
-
-  const w = Math.floor(Number(image.w) || 0);
-  const h = Math.floor(Number(image.h) || 0);
-  const side = Math.floor(Number(cfg.max_image_px || 2400));
-  if (w > 0 && h > 0 && (w > side || h > side)) {
-    return { error: `that image is ${w}×${h}, and Studio resizes to ${side} before sending` };
-  }
-  return { bytes, type: real, ext: TYPES[real], w: w || null, h: h || null };
+  if (!original) return { none: true };
+  const out = await processImage(original);
+  if (out.error) return out;
+  return { ...out, original };
 }
 
 /* Where it lives. A key nobody can guess and nothing can collide with, under
