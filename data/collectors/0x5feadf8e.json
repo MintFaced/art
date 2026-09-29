@@ -3,6 +3,7 @@
  "ens": null,
  "fwd": "bitcoinbond.eth",
  "display_name": null,
+ "x": null,
  "slug": "0x5feadf8e",
  "private": false,
  "has_page": true,
@@ -14,9 +15,9 @@
  },
  "first_collected": "2022-10-13T23:38:35.000Z",
  "last_collected": "2024-12-19T16:44:47.000000Z",
- "tao": 82550,
+ "tao": 83999,
  "tao_rate": 63,
- "tao_rank": 185,
+ "tao_rank": 186,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -45,7 +46,7 @@
    "unique": false,
    "image": "xlife/xlife-57-image.png",
    "orientation": null,
-   "tao": 2625
+   "tao": 2722
   },
   {
    "id": "xlife-46",
@@ -57,7 +58,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3708
+   "tao": 3804
   },
   {
    "id": "xlife-43",
@@ -69,7 +70,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4106
+   "tao": 4203
   },
   {
    "id": "xlife-18",
@@ -81,7 +82,7 @@
    "unique": false,
    "image": "xlife/xlife-18-image.gif",
    "orientation": null,
-   "tao": 5344
+   "tao": 5440
   },
   {
    "id": "xlife-3",
@@ -93,7 +94,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 5643
+   "tao": 5739
   },
   {
    "id": "xlife-2",
@@ -105,19 +106,7 @@
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 5644
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2022-12-30T01:47:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5652
+   "tao": 5741
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -129,7 +118,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5694
+   "tao": 5791
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -141,7 +130,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5707
+   "tao": 5804
   },
   {
    "id": "seize-and-share-griftercity-2687",
@@ -153,7 +142,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2687-display.webp",
    "orientation": null,
-   "tao": 5716
+   "tao": 5813
   },
   {
    "id": "seize-and-share-xdecal-2590",
@@ -165,7 +154,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
    "orientation": null,
-   "tao": 5716
+   "tao": 5813
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -177,7 +166,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11433
+   "tao": 11627
   },
   {
    "id": "seize-and-share-vibe-2617",
@@ -189,7 +178,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-vibe-2617-display.webp",
    "orientation": null,
-   "tao": 5737
+   "tao": 5833
   },
   {
    "id": "seize-and-share-certificate-of-mint-1918",
@@ -201,7 +190,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
    "orientation": null,
-   "tao": 5976
+   "tao": 6072
   },
   {
    "id": "xnouns-139",
@@ -235,6 +224,18 @@
    "unique": true,
    "image": "xnouns/xnouns-79-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5749
   }
  ]
 }
