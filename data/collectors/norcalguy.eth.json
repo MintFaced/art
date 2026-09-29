@@ -3,6 +3,7 @@
  "ens": "norcalguy.eth",
  "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "norcalguy.eth",
  "private": false,
  "has_page": true,
@@ -13,8 +14,8 @@
   "collections": 7
  },
  "first_collected": "2022-04-30T22:40:44.000Z",
- "last_collected": "2025-03-21T04:10:11.000000Z",
- "tao": 258147,
+ "last_collected": "2024-10-05T07:49:11.000000Z",
+ "tao": 263187,
  "tao_rate": 180,
  "tao_rank": 38,
  "collections": [
@@ -56,18 +57,6 @@
  ],
  "works": [
   {
-   "id": "xlife-63",
-   "title": "Metadata Wars",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-03-21T04:10:11.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-63-image.png",
-   "orientation": null,
-   "tao": 2220
-  },
-  {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
    "collection": "we-are-the-line",
@@ -88,7 +77,7 @@
    "unique": true,
    "image": "genesis/foundation-91077-display.webp",
    "orientation": null,
-   "tao": 89808
+   "tao": 91740
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -100,7 +89,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5643
+   "tao": 5761
   },
   {
    "id": "we-are-the-line-4",
@@ -123,7 +112,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-4-display.webp",
    "orientation": null,
-   "tao": 6278
+   "tao": 6396
   },
   {
    "id": "seize-and-share-it-s-meme-szn-388",
@@ -135,7 +124,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-it-s-meme-szn-388-image.gif",
    "orientation": null,
-   "tao": 6307
+   "tao": 6425
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -147,7 +136,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 19044
+   "tao": 19397
   },
   {
    "id": "2022-10k-3",
@@ -159,7 +148,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-3-display.webp",
    "orientation": null,
-   "tao": 6466
+   "tao": 6584
   },
   {
    "id": "2022-10k-1",
@@ -171,7 +160,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6466
+   "tao": 6584
   },
   {
    "id": "2022-10k-2",
@@ -183,7 +172,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6617
+   "tao": 6735
   },
   {
    "id": "foundation-91070",
@@ -195,7 +184,19 @@
    "unique": true,
    "image": "genesis/foundation-91070-display.webp",
    "orientation": null,
-   "tao": 109292
+   "tao": 111224
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-63-image.png",
+   "orientation": null,
+   "tao": 2338
   }
  ]
 }
