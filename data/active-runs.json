@@ -3,6 +3,29 @@
  "keep": 60,
  "runs": [
   {
+   "run_id": "amun922ki",
+   "at": "2026-09-29T22:30:15.426Z",
+   "ok": true,
+   "ms": 70531,
+   "chain": {
+    "asked": 196,
+    "moved": 42,
+    "unknown": 11,
+    "refused": 219,
+    "rate": 4.88,
+    "due": 196,
+    "due_left": 0,
+    "paged": 808,
+    "of": 3677,
+    "covered": 3678
+   },
+   "studio": {
+    "lit": 14,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
    "run_id": "amultm7s2",
    "at": "2026-09-28T22:30:15.266Z",
    "ok": true,
