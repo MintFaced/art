@@ -1,7 +1,9 @@
 {
  "address": "0x7a79944ac7e770cfd13ec024a4b31b8c5efee60d",
  "ens": "alpinelifer.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "alpinelifer.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-05-09T23:21:22.000000Z",
  "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 171115,
+ "tao": 175337,
  "tao_rate": 132,
- "tao_rank": 68,
+ "tao_rank": 71,
  "collections": [
   {
    "slug": "xlife",
@@ -65,7 +67,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3670
+   "tao": 3804
   },
   {
    "id": "xlife-43",
@@ -77,19 +79,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4068
-  },
-  {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-03-20T02:25:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 5278
+   "tao": 4203
   },
   {
    "id": "xlife-14",
@@ -101,7 +91,7 @@
    "unique": false,
    "image": "xlife/xlife-14-image.gif",
    "orientation": null,
-   "tao": 5438
+   "tao": 5572
   },
   {
    "id": "xlife-13",
@@ -113,7 +103,7 @@
    "unique": false,
    "image": "xlife/xlife-13-image.gif",
    "orientation": null,
-   "tao": 5450
+   "tao": 5584
   },
   {
    "id": "xlife-12",
@@ -125,7 +115,7 @@
    "unique": false,
    "image": "xlife/xlife-12-image.gif",
    "orientation": null,
-   "tao": 5468
+   "tao": 5602
   },
   {
    "id": "xlife-11",
@@ -137,7 +127,7 @@
    "unique": false,
    "image": "xlife/xlife-11-image.gif",
    "orientation": null,
-   "tao": 5480
+   "tao": 5614
   },
   {
    "id": "xlife-10",
@@ -149,19 +139,7 @@
    "unique": false,
    "image": "xlife/xlife-10-image.gif",
    "orientation": null,
-   "tao": 5484
-  },
-  {
-   "id": "xlife-9",
-   "title": "First Selfie",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-21T15:04:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-9-image.gif",
-   "orientation": null,
-   "tao": 5519
+   "tao": 5619
   },
   {
    "id": "xlife-8",
@@ -173,7 +151,7 @@
    "unique": false,
    "image": "xlife/xlife-8-image.gif",
    "orientation": null,
-   "tao": 5572
+   "tao": 5706
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -185,7 +163,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 16903
+   "tao": 17306
   },
   {
    "id": "we-are-the-line-1",
@@ -208,7 +186,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6597
+   "tao": 6732
   },
   {
    "id": "first-selfie-95",
@@ -220,7 +198,31 @@
    "unique": true,
    "image": "first-selfie/first-selfie-95-image.gif",
    "orientation": null,
-   "tao": 90662
+   "tao": 92869
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 5412
+  },
+  {
+   "id": "xlife-9",
+   "title": "First Selfie",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-9-image.gif",
+   "orientation": null,
+   "tao": 5654
   },
   {
    "id": "xlife-6",
@@ -232,7 +234,7 @@
    "unique": false,
    "image": "xlife/xlife-6-image.gif",
    "orientation": null,
-   "tao": 5476
+   "tao": 5610
   }
  ]
 }
