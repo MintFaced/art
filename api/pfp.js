@@ -60,12 +60,12 @@ export async function GET(request) {
     }
     /* Short: a face somebody has just saved should reach the register and
        their page within about a minute and a half, not seven. */
-    return out(request, { base: `${P.PUBLIC}/pfp`, small: P.SMALL, map }, 200, 'public, max-age=30, s-maxage=60');
+    return out(request, { base: `${P.PUBLIC}/pfp`, small: P.SMALL, map, alias: P.aliases() }, 200, 'public, max-age=30, s-maxage=60');
   }
   const address = lower(url.searchParams.get('address'));
   if (!isAddr(address)) return out(request, { error: 'Which wallet?' }, 400);
   if (priv.has(address)) return out(request, P.said(null, address));
-  return out(request, P.said(await P.record(address), address), 200, 'public, max-age=30, s-maxage=60');
+  return out(request, P.said(await P.record(address), P.canonical(address)), 200, 'public, max-age=30, s-maxage=60');
 }
 
 export async function POST(request) {
@@ -82,8 +82,10 @@ export async function POST(request) {
     } else body = await request.json();
   } catch (e) { return out(request, { error: 'bad request' }, 400); }
 
-  /* Who, and whose. */
-  const artist = sessionOk(sessionFrom(request));
+  /* Who, and whose. The console says whose with an address; without one, a
+     request is somebody changing their own, even from a browser that is also
+     signed into the console ... Ryan's, on his own page. */
+  const artist = Boolean(body.address) && sessionOk(sessionFrom(request));
   let address;
   if (artist) {
     address = lower(body.address);
@@ -92,10 +94,12 @@ export async function POST(request) {
     const token = cookieFrom(request, TOKEN_COOKIE) || String(body.token || '');
     address = token ? await chatStore(pipe, {}).whoseSession(token) : null;
     if (!address) return out(request, { error: 'Sign in with your wallet to change your picture.', signin: true }, 401);
-    if (body.address && lower(body.address) !== lower(address)) {
+    if (body.address && P.canonical(body.address) !== P.canonical(address)) {
       return out(request, { error: 'You can only change your own picture.' }, 403);
     }
   }
+  /* Any artist wallet changes the one MintFace face. */
+  address = P.canonical(address);
   const by = artist ? 'artist' : 'self';
   if (!artist && !(await P.spend(address))) return out(request, { error: 'That is a lot of changes in an hour. Try again later.' }, 429);
 

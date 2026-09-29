@@ -20,6 +20,12 @@ const lower = (a) => String(a || '').toLowerCase();
    nought, and a nought there says the opposite of the truth. */
 export const ARTIST_NAME = 'MintFace';
 
+/* His page on the register. He is not on the register ... nothing he holds
+   earns TAO ... but a name in the room that leads nowhere, or back to the
+   front door, is the one name there you cannot look up. */
+export const ARTIST_SLUG = 'mintface.eth';
+export const ARTIST_URL = `https://collectors.mintface.art/${ARTIST_SLUG}`;
+
 export async function loadArtist(at, origin) {
   const file = await at(origin, 'data/source/artist.json');
   return Object.fromEntries(Object.entries(file.wallets || {}).filter(([k]) => k.startsWith('0x')));

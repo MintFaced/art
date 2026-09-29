@@ -48,6 +48,55 @@ const shortOf = (a, n) => a.slice(0, 2 + n);
  * that actually changed cannot be found. Both callers write it through here so
  * the file does not change shape depending on which of them ran last.
  */
+/**
+ * The artist's own page on the register (collectors.mintface.art/mintface.eth).
+ *
+ * He is not a collector ... TAO measures patronage and he is not his own
+ * patron ... so this is not a collector's page with his wallets on it. It is
+ * what he has made: every collection with its count, and on the wall the works
+ * that are still his to sell. Built beside the register by the same two
+ * callers, and kept out of data/collectors/ so the hand-run build, which
+ * clears pages it did not write, cannot take it down.
+ *
+ * @param collections  the data/c/*.json records
+ * @param opts.collectors  how many people hold a work: the register's length
+ * @param opts.wallets     data/source/artist.json's wallets, address -> name
+ */
+export function artistPage(collections, { collectors = 0, wallets = {} } = {}) {
+  const works = [];
+  const cols = [];
+  let made = 0;
+  for (const col of collections) {
+    if (!col || col.slug === 'the-vault') continue;           // a holdings mirror, not a body of work
+    const all = [...(col.works || []), ...(col.children || []).flatMap((x) => x.works || [])];
+    if (!all.length) continue;
+    made += all.length;
+    cols.push({ slug: col.slug, title: col.title || col.slug, works: all.length, year: col.year ? String(col.year) : null });
+    for (const w of all) {
+      if (w.status !== 'available') continue;
+      const unique = !((w.edition || {}).type && w.edition.type !== '1/1');
+      const image = (w.assets && (w.assets.display || w.assets.image)) || (w.digital && w.digital.image) || null;
+      works.push({ id: w.id, title: w.title || w.id, collection: col.slug, group: col.group || null,
+        genre: col.genre || null, unique, image, orientation: w.orientation || null });
+    }
+  }
+  cols.sort((a, b) => String(b.year || '').localeCompare(String(a.year || '')) || b.works - a.works);
+  /* The wall in the same order as the table: newest collection first, each
+     collection's works in the catalogue's own order. */
+  const place = new Map(cols.map((c, i) => [c.slug, i]));
+  works.sort((a, b) => place.get(a.collection) - place.get(b.collection));
+  const named = Object.entries(wallets).filter(([k]) => k.startsWith('0x')).map(([address, ens]) => ({ address: address.toLowerCase(), ens }));
+  const home = named.find((w) => w.ens === 'mintface.eth') || named[0] || { address: null, ens: 'mintface.eth' };
+  const since = cols.map((c) => c.year).filter(Boolean).sort()[0] || null;
+  return {
+    _note: 'The artist\'s page on the register: what he has made, and what is still available. Built with the register ... see artistPage in api/_lib/collectors.js.',
+    artist: true, slug: 'mintface.eth', name: 'MintFace', address: home.address, ens: home.ens,
+    wallets: [home, ...named.filter((w) => w !== home)],
+    counts: { works: made, collections: cols.length, available: works.length, collectors },
+    since, works, collections: cols,
+  };
+}
+
 /** The held works, one collector per line: wallet -> [work, label, image, since]. */
 export function heldFile(held) {
   const rows = Object.entries(held || {}).sort(([a], [b]) => a.localeCompare(b));

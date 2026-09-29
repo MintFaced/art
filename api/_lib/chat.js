@@ -16,7 +16,7 @@
 
 import { createHash } from 'node:crypto';
 import { dressTags } from './names.js';
-import { ARTIST_NAME as ARTIST } from './artist.js';
+import { ARTIST_NAME as ARTIST, ARTIST_URL } from './artist.js';
 import { renderProse, linksIn } from './text.js';
 
 const lower = (a) => String(a || '').toLowerCase();
@@ -223,7 +223,7 @@ export function render(row, dress = {}) {
      register will not name in public ... a private collector, or a wallet below
      the threshold that has never been given a page ... is drawn unlinked, which
      is the same restraint the register table already shows. */
-  const url = mine ? 'https://mintface.art/' : (register ? register.urlOf(row.address) : null);
+  const url = mine ? ARTIST_URL : (register ? register.urlOf(row.address) : null);
   const base = mine
     ? { n: row.n, address: row.address, name: ARTIST, role: 'artist', tao: null, worn: null,
         url, at: row.at, deleted: Boolean(row.deleted) }
@@ -297,7 +297,7 @@ function answering(row, { parents, register, artist } = {}) {
     n,
     address: p.address,
     name: mine ? ARTIST : said(who, p.name),
-    url: mine ? 'https://mintface.art/' : (register ? register.urlOf(p.address) : null),
+    url: mine ? ARTIST_URL : (register ? register.urlOf(p.address) : null),
     deleted: Boolean(p.deleted),
     /* The opening of what is being answered, so the reply can quote it in one
        line. Nothing of a message that was taken down: quoting it back into

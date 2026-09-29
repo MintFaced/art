@@ -1,7 +1,7 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { mintsSince, readToken, buildRecord } from '../_lib/discover.js';
 import { send } from '../_lib/email.js';
-import { deriveCollectors, registerFile, heldFile } from '../_lib/collectors.js';
+import { deriveCollectors, registerFile, heldFile, artistPage } from '../_lib/collectors.js';
 import { forwardPass } from '../_lib/ens.js';
 
 /* Daily ownership reconciliation.
@@ -845,6 +845,14 @@ async function handle(request, started, dry) {
         if (cur.text !== text) await writeFile('data/collectors-held.json', text, 'Register: held longest', cur.sha || undefined);
       }
       await put('data/collector-slugs.json', d.slugMap, 'Collectors: slug map');
+      /* The artist's page: what is still available changes with every sale. */
+      {
+        let wallets = {};
+        try { wallets = JSON.parse((await readFile('data/source/artist.json')).text).wallets || {}; } catch (e) { /* none */ }
+        const cur = await readFile('data/artist-page.json').catch(() => ({ sha: null }));
+        const text = JSON.stringify(artistPage(cols, { collectors: d.register.rows.length, wallets }), null, 1) + '\n';
+        if (cur.text !== text) await writeFile('data/artist-page.json', text, 'Collectors: the artist\'s page', cur.sha || undefined);
+      }
       let pagesSkipped = 0;
       for (const p of d.all) {
         if (!p.has_page || !p.works.some((w) => changedWorks.has(w.id))) continue;

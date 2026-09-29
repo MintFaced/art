@@ -23,7 +23,7 @@
  * acceptance cases in scripts/notes/test-notes.mjs can run the real thing.
  */
 
-import { isArtist, ARTIST_NAME } from './artist.js';
+import { isArtist, ARTIST_NAME, ARTIST_URL } from './artist.js';
 
 export const ROLES = ['artist', 'collector', 'senior'];
 
@@ -156,9 +156,9 @@ export function render(note, { holders, viewer, isArtist, currentAcquired, regis
   };
 
   if (note.role === 'artist') {
-    // his page is the front door; he has no collector page and never will
+    // his own page on the register, which is not a collector's page
     return { ...base, kind: 'artist', label: "Artist's note", byline: note.name || ARTIST_NAME,
-      url: 'https://mintface.art/' };
+      url: ARTIST_URL };
   }
 
   if (stillHolds) {

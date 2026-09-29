@@ -17,7 +17,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { deriveCollectors, registerFile, heldFile } from '../api/_lib/collectors.js';
+import { deriveCollectors, registerFile, heldFile, artistPage } from '../api/_lib/collectors.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const DRY = process.argv.includes('--dry');
@@ -54,10 +54,14 @@ const names = load('data/source/collector-overlay.json', null);
 
 const d = deriveCollectors(collections, titleOf, privateList, tao, nudges, forward, names);
 
-/* Just the held-longest file, leaving everything else as it is. */
+const artist = () => artistPage(collections, { collectors: d.register.rows.length,
+  wallets: load('data/source/artist.json', { wallets: {} }).wallets });
+
+/* Just the held-longest file and the artist's page, leaving everything else as it is. */
 if (process.argv.includes('--held-only')) {
   fs.writeFileSync(path.join(ROOT, 'data/collectors-held.json'), heldFile(d.held));
-  console.log(`wrote data/collectors-held.json (${Object.keys(d.held).length} collectors)`);
+  fs.writeFileSync(path.join(ROOT, 'data/artist-page.json'), JSON.stringify(artist(), null, 1) + '\n');
+  console.log(`wrote data/collectors-held.json (${Object.keys(d.held).length} collectors) and data/artist-page.json`);
   process.exit(0);
 }
 
@@ -76,6 +80,7 @@ if (DRY) {
   fs.writeFileSync(path.join(ROOT, 'data/collectors-register.json'), registerFile(d.register));
   fs.writeFileSync(path.join(ROOT, 'data/collectors-held.json'), heldFile(d.held));
   fs.writeFileSync(path.join(ROOT, 'data/collector-slugs.json'), JSON.stringify(d.slugMap, null, 1) + '\n');
+  fs.writeFileSync(path.join(ROOT, 'data/artist-page.json'), JSON.stringify(artist(), null, 1) + '\n');
 
   const dir = path.join(ROOT, 'data/collectors');
   fs.mkdirSync(dir, { recursive: true });

@@ -3249,6 +3249,7 @@ MF.pfp = {
         this.map = (p && p.map) || {};
         if (p && p.base) this.base = p.base;
         if (p && p.small) this.small = p.small;
+        if (p && p.alias) this.alias = p.alias;
         this.held = (h && h.held) || {};
         this.fill(document);
       });
@@ -3256,9 +3257,14 @@ MF.pfp = {
   },
   ready() { return Boolean(this.map && this.held); },
 
+  /* MintFace is one face: every artist wallet draws the one kept under
+     mintface.eth, which the service names here. */
+  alias: {},
+  whose(address) { return (this.alias && this.alias[address]) || address; },
   urlOf(address, small) {
-    const h = this.map && this.map[address];
-    return h ? `${this.base}/${address}/${h}${small ? `-${this.small}` : ''}.webp` : null;
+    const a = this.whose(address);
+    const h = this.map && this.map[a];
+    return h ? `${this.base}/${a}/${h}${small ? `-${this.small}` : ''}.webp` : null;
   },
 
   /* What they have held longest, and for how long. */
@@ -3346,12 +3352,14 @@ MF.pfp = {
 
   /** A new picture, or none, everywhere it is drawn on this page, faded in. */
   set(address, pfp) {
-    const a = String(address || '').toLowerCase();
+    /* Kept under whoever the service says it belongs to, and redrawn on every
+       face that is theirs: an artist wallet's change is MintFace's. */
+    const a = String((pfp && pfp.address) || this.whose(String(address || '').toLowerCase())).toLowerCase();
     if (!this.map) this.map = {};
     const m = pfp && pfp.url ? /\/([0-9a-f]+)\.webp$/.exec(pfp.url) : null;
     if (m) this.map[a] = m[1]; else delete this.map[a];
     if (!this.ready()) return;
-    document.querySelectorAll(`.pfp[data-pfp="${a}"]`).forEach((el) => {
+    [...document.querySelectorAll('.pfp[data-pfp]')].filter((el) => this.whose(el.dataset.pfp) === a).forEach((el) => {
       el.innerHTML = this.inner(a, Number(el.dataset.s) || 32, this.optsOf(el));
       el.dataset.on = '1';
       const img = el.querySelector('.face img');
@@ -3378,7 +3386,7 @@ MF.pfp = {
   },
   reveal(el) {
     if (!el || !this.ready()) return;
-    const a = el.dataset.pfp;
+    const a = this.whose(el.dataset.pfp);
     const hash = this.map[a];
     if (!hash) return;
     const was = this.seen(a, hash);
@@ -3388,7 +3396,7 @@ MF.pfp = {
   },
 
   canHold(el) {
-    return Boolean(el && el.dataset.hold && this.ready() && this.map[el.dataset.pfp] && this.heldOf(el.dataset.pfp));
+    return Boolean(el && el.dataset.hold && this.ready() && this.map[this.whose(el.dataset.pfp)] && this.heldOf(el.dataset.pfp));
   },
   /* The held work goes in when it is first wanted, not with the page: a
      register of three thousand faces is not three thousand more pictures. */

@@ -23,6 +23,7 @@ import { one, pipe, storeConfigured } from './kv.js';
 import { putObject, r2Configured } from './r2.js';
 import { decodeImage, processImage } from './images.js';
 import { byWallet, get as getAccount } from './accounts.js';
+import artistFile from '../../data/source/artist.json' with { type: 'json' };
 
 export const SIZE = 512;
 export const AUTO = ['opensea', 'ens', 'x'];
@@ -30,6 +31,16 @@ export const PUBLIC = process.env.ASSETS_PUBLIC_BASE || 'https://assets.mintface
 const lower = (a) => String(a || '').toLowerCase();
 const isAddr = (a) => /^0x[0-9a-f]{40}$/.test(lower(a));
 const parse = (v) => { try { return typeof v === 'string' ? JSON.parse(v) : v; } catch (e) { return null; } };
+
+/* MintFace is one face. The artist speaks from more than one wallet, and a
+   picture set on any of them is the picture on all of them: kept once, under
+   mintface.eth, and drawn for every artist wallet. */
+const ARTIST_WALLETS = Object.entries(artistFile.wallets || {}).filter(([k]) => k.startsWith('0x'))
+  .map(([k, v]) => [k.toLowerCase(), v]);
+export const ARTIST_FACE = (ARTIST_WALLETS.find(([, v]) => v === 'mintface.eth') || ARTIST_WALLETS[0] || [null])[0];
+export const canonical = (address) => (ARTIST_WALLETS.some(([k]) => k === lower(address)) && ARTIST_FACE ? ARTIST_FACE : lower(address));
+/** The other artist wallets, each pointed at the one face. */
+export const aliases = () => Object.fromEntries(ARTIST_WALLETS.filter(([k]) => k !== ARTIST_FACE).map(([k]) => [k, ARTIST_FACE]));
 
 export const K = {
   rec: (a) => `pfp:${lower(a)}`,
@@ -43,7 +54,7 @@ export const K = {
 /* ---------------------------------------------------------------- reading */
 
 export async function record(address) {
-  return isAddr(address) ? parse(await one('GET', K.rec(address))) : null;
+  return isAddr(address) ? parse(await one('GET', K.rec(canonical(address)))) : null;
 }
 
 /** What anybody may know: the picture, where it came from, when. */

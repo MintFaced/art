@@ -11,7 +11,7 @@
  * speaks, it speaks with the same voice.
  */
 import { registerIndex, naming, namesStore } from './names.js';
-import { loadArtist, ARTIST_NAME } from './artist.js';
+import { loadArtist, ARTIST_NAME, ARTIST_URL } from './artist.js';
 import { storeConfigured } from './kv.js';
 import { verifiedHandles } from './accounts.js';
 
@@ -60,11 +60,11 @@ export async function loadRegister(at, origin, pipe = null) {
        names so who().x resolves verified > overlay > typed everywhere at once. */
     pipe && storeConfigured() ? verifiedHandles().catch(() => ({})) : Promise.resolve({}),
   ]);
-  /* The artist's wallets, named and pointed at the front door. He is kept out
+  /* The artist's wallets, named and pointed at his own page. He is kept out
      of the register on purpose ... TAO measures patronage and he is not his own
      patron ... which would otherwise leave him the one person in the room with
      no name and no link. */
   const special = Object.fromEntries(Object.keys(artist || {})
-    .map((a) => [a, { name: ARTIST_NAME, url: 'https://mintface.art/' }]));
+    .map((a) => [a, { name: ARTIST_NAME, url: ARTIST_URL }]));
   return { ...naming(rows, self, special, verified), artist, self };
 }

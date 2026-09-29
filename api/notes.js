@@ -6,6 +6,7 @@ import {
   arrange, holdersOf, heldSince,
 } from './_lib/notes.js';
 import { loadRegister } from './_lib/register.js';
+import { ARTIST_URL } from './_lib/artist.js';
 import { comboFor, soloOnly, comboMark } from './_lib/combo.js';
 
 /* The notes layer.
@@ -136,7 +137,7 @@ const rowOf = (r, register) => {
     // named and linked as the register reads today, not as the row was written,
     // and as the row was written for an author the register no longer holds
     name: (who && who.known ? who.name : null) || r.name || (who ? who.name : null) || null,
-    url: r.role === 'artist' ? 'https://mintface.art/' : (register ? register.urlOf(r.address) : null),
+    url: r.role === 'artist' ? ARTIST_URL : (register ? register.urlOf(r.address) : null),
     address: r.address, text: r.text,
     visibility: r.visibility, edited: Boolean(r.edited_at),
   };

@@ -178,7 +178,7 @@ is('a new picture is a new key, so no cache serves the old one', left.body.pfp.u
 
 console.log('\n— the artist —');
 const noWho = await call({ action: 'remove' }, { artist: true });
-is('the artist says whose picture', noWho.status, 400);
+is('the console without an address is somebody changing their own: sign in', noWho.status, 401);
 const ah = await call({ action: 'stage', address: C }, { artist: true, file: { bytes: jpg, type: 'image/jpeg', name: 'c.jpg' } });
 const as = await call({ action: 'save', address: C, tmp: ah.body.tmp }, { artist: true });
 is('can set a top collector\'s picture', [as.status, as.body.pfp.source], [200, 'upload']);
@@ -189,6 +189,19 @@ await call({ action: 'save', tmp: ch.body.tmp }, { as: 'c'.repeat(64) });
 is('and the collector\'s own later upload replaces it', JSON.parse(KV.get(`pfp:${C}`)).uploaded_by, 'self');
 const lost = await call({ action: 'save', tmp: st.body.tmp, address: C }, { artist: true });
 is('nobody can save somebody else\'s staged picture', lost.status, 410);
+
+console.log('\n— MintFace is one face —');
+const MINTFACE = '0xd40b63bf04a44e43fbfe5784bcf22acaab34a180';
+const RYANJ = '0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7';
+await db.openSession('r'.repeat(64), RYANJ, 3600);
+const rs = await call({ action: 'stage' }, { as: 'r'.repeat(64), artist: true, file: { bytes: jpg, type: 'image/jpeg', name: 'mf.jpg' } });
+const rv = await call({ action: 'save', tmp: rs.body.tmp }, { as: 'r'.repeat(64), artist: true });
+is('Ryan on ryanj.eth, console cookie and all, changes his own face', [rs.status, rv.status], [200, 200]);
+is('kept once, under mintface.eth', [rv.body.pfp.address, KV.has(`pfp:${RYANJ}`), JSON.parse(KV.get(`pfp:${MINTFACE}`)).source], [MINTFACE, false, 'upload']);
+const viaR = await get(`address=${RYANJ}`);
+is('and ryanj.eth is drawn with it', viaR.body.url, rv.body.pfp.url);
+const allA = await get('all=1');
+is('the register\'s map names the one face for every artist wallet', [allA.body.alias[RYANJ], Boolean(allA.body.map[MINTFACE])], [MINTFACE, true]);
 
 console.log('\n— sources —');
 OPENSEA.set(VISCO, { url: 'https://pics.example/os-visco.png' });
