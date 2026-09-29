@@ -1,7 +1,9 @@
 {
  "address": "0x757210acc4cca94568ab4c698cb14aed3f490224",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x757210ac",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2026-06-07T17:12:59.000000Z",
  "last_collected": "2026-06-07T17:42:47.000Z",
- "tao": 1022,
+ "tao": 1425,
  "tao_rate": 12.6,
- "tao_rank": 3155,
+ "tao_rank": 3173,
  "collections": [
   {
    "slug": "xlife",
@@ -39,19 +41,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null,
-   "tao": 340
-  },
-  {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2026-06-07T17:25:35.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 340
+   "tao": 475
   },
   {
    "id": "xlife-31",
@@ -63,7 +53,19 @@
    "unique": false,
    "image": "xlife/xlife-31-image.gif",
    "orientation": null,
-   "tao": 341
+   "tao": 475
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 475
   }
  ]
 }
