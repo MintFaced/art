@@ -1,41 +1,31 @@
 {
  "address": "0x6fad91115dc942e27a2325bad5e03c3bf2bce5fb",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x6fad9111",
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 5,
+  "works": 3,
   "one_of_ones": 0,
-  "editions": 5,
+  "editions": 3,
   "collections": 1
  },
  "first_collected": "2026-04-21T22:15:35.000000Z",
  "last_collected": "2026-05-06T02:42:23.000000Z",
- "tao": 2449,
- "tao_rate": 21,
- "tao_rank": 2963,
+ "tao": 1909,
+ "tao_rate": 12.6,
+ "tao_rank": 3146,
  "collections": [
   {
    "slug": "xlife",
    "title": "XLIFE",
-   "works": 5
+   "works": 3
   }
  ],
  "works": [
-  {
-   "id": "xlife-33",
-   "title": "CC0 King",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2026-05-06T02:42:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-33-image.gif",
-   "orientation": null,
-   "tao": 477
-  },
   {
    "id": "xlife-11",
    "title": "Resurrection of X",
@@ -46,7 +36,7 @@
    "unique": false,
    "image": "xlife/xlife-11-image.gif",
    "orientation": null,
-   "tao": 477
+   "tao": 616
   },
   {
    "id": "xlife-10",
@@ -58,19 +48,7 @@
    "unique": false,
    "image": "xlife/xlife-10-image.gif",
    "orientation": null,
-   "tao": 477
-  },
-  {
-   "id": "xlife-9",
-   "title": "First Selfie",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2026-05-06T02:42:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-9-image.gif",
-   "orientation": null,
-   "tao": 477
+   "tao": 616
   },
   {
    "id": "xlife-44",
@@ -82,7 +60,7 @@
    "unique": false,
    "image": "xlife/xlife-44-image.gif",
    "orientation": null,
-   "tao": 537
+   "tao": 676
   }
  ]
 }
