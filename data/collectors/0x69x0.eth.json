@@ -1,7 +1,9 @@
 {
  "address": "0xeeda4e9a5ca757e3a2dd9ab5d91e99c4a1ff0423",
  "ens": "0x69x0.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x69x0.eth",
  "private": false,
  "has_page": true,
@@ -13,7 +15,7 @@
  },
  "first_collected": "2023-01-03T06:41:23.000000Z",
  "last_collected": "2024-04-05T23:31:47.000000Z",
- "tao": 152472,
+ "tao": 156233,
  "tao_rate": 117.6,
  "tao_rank": 79,
  "collections": [
@@ -34,7 +36,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3670
+   "tao": 3804
   },
   {
    "id": "xlife-43",
@@ -46,7 +48,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4068
+   "tao": 4203
   },
   {
    "id": "xlife-23",
@@ -58,19 +60,7 @@
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 5224
-  },
-  {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-03-20T02:25:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 5278
+   "tao": 5358
   },
   {
    "id": "xlife-8",
@@ -82,7 +72,7 @@
    "unique": false,
    "image": "xlife/xlife-8-image.gif",
    "orientation": null,
-   "tao": 16716
+   "tao": 17119
   },
   {
    "id": "xlife-7",
@@ -94,7 +84,7 @@
    "unique": false,
    "image": "xlife/xlife-7-image.gif",
    "orientation": null,
-   "tao": 5580
+   "tao": 5714
   },
   {
    "id": "xlife-5",
@@ -106,7 +96,7 @@
    "unique": false,
    "image": "xlife/xlife-5-image.gif",
    "orientation": null,
-   "tao": 16791
+   "tao": 17194
   },
   {
    "id": "xlife-2",
@@ -118,19 +108,7 @@
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 16791
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-03T06:51:35.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 11194
+   "tao": 17194
   },
   {
    "id": "xlife-4",
@@ -142,7 +120,7 @@
    "unique": false,
    "image": "xlife/xlife-4-image.gif",
    "orientation": null,
-   "tao": 44776
+   "tao": 45851
   },
   {
    "id": "xlife-3",
@@ -154,7 +132,19 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 11194
+   "tao": 11462
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 5412
   },
   {
    "id": "xlife-6",
@@ -166,7 +156,19 @@
    "unique": false,
    "image": "xlife/xlife-6-image.gif",
    "orientation": null,
-   "tao": 11186
+   "tao": 11455
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 11462
   }
  ]
 }
