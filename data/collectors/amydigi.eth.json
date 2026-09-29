@@ -1,7 +1,9 @@
 {
  "address": "0x7021fcd14815f00b0e89841c458829739c05b00d",
  "ens": "amydigi.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "amydigi.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-10-21T00:54:47.000000Z",
  "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 11966,
+ "tao": 12234,
  "tao_rate": 8.4,
- "tao_rank": 1155,
+ "tao_rank": 1162,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -46,18 +48,6 @@
    "orientation": null
   },
   {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-01T15:16:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5603
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -67,7 +57,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5761
   },
   {
    "id": "we-are-the-line-1",
@@ -79,6 +69,18 @@
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-1-image.png",
    "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5738
   }
  ]
 }
