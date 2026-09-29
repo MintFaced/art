@@ -258,7 +258,8 @@ async function loadFaces(q) {
   const hits = j && j.hits ? Object.keys(j.hits).map((k) => k + ' ' + j.hits[k]).join(' &middot; ') : '';
   $('pfpJob').innerHTML = (r.body.pictures || 0) + ' pictures &middot; ' + (r.body.chose_none || 0) + ' chose none'
     + (j ? '<br>Backfill: ' + esc2(j.phase) + (j.phase === 'idle' ? ', next refresh ' + dayOf(j.next_refresh)
-      : ', at ' + nnum(j.cursor)) + (hits ? ' &middot; ' + hits : '') : '<br>Backfill has not run yet.');
+      : ', at ' + nnum(j.cursor)) + (hits ? ' &middot; ' + hits : '') : '<br>Backfill has not run yet.')
+    + (j && j.unreadable && j.unreadable.length ? '<br>Could not read: ' + j.unreadable.map((u) => esc2([u.host, u.type, u.why].filter(Boolean).join(' '))).join(' &middot; ') : '');
   if (!q) return;
   if (!r.ok) { $('pfpOne').innerHTML = '<p class="note bad">' + esc2(r.body.error || 'No.') + '</p>'; return; }
   const f = r.body.found;

@@ -68,7 +68,7 @@ export async function all() {
  * one, the centre.
  */
 export async function render(bytes, crop = null) {
-  const d = await decodeImage(bytes);
+  const d = await decodeImage(bytes, { wide: true });
   if (d.error) return d;
   const { width: w, height: h } = d;
   const zoom = Math.max(1, Math.min(8, Number(crop && crop.zoom) || 1));
@@ -126,7 +126,7 @@ export async function fetchPicture(url) {
     if (len > 12 * 1024 * 1024) return { error: 'too large' };
     const bytes = Buffer.from(await r.arrayBuffer());
     if (bytes.length > 12 * 1024 * 1024) return { error: 'too large' };
-    return { bytes };
+    return { bytes, type: r.headers.get('content-type') || null };
   } catch (e) { return { error: String(e.name === 'TimeoutError' ? 'timed out' : e.message).slice(0, 80) }; }
 }
 
@@ -253,11 +253,17 @@ export async function spend(who) {
  * source now says something different. An upload is never replaced, and a
  * collector who chose none is never filled.
  */
+/* Raised when the round learns to read something it could not before, so a
+   backfill that went past people it failed on goes round again from rank 1.
+   2: OpenSea's AVIFs, which the first run could not open. */
+export const ROUND_V = 2;
+
 export async function round({ rows, batch = 40, pause = 300, now = Date.now(), budget = 0 } = {}) {
   /* A batch that runs slow stops where it is and saves its place, rather than
      being cut off by the platform halfway through a write. */
   const deadline = budget ? Date.now() + budget : 0;
-  const job = parse(await one('GET', K.job)) || { phase: 'backfill', cursor: 0, hits: {}, started: new Date(now).toISOString() };
+  let job = parse(await one('GET', K.job));
+  if (!job || job.v !== ROUND_V) job = { v: ROUND_V, phase: 'backfill', cursor: 0, hits: {}, started: new Date(now).toISOString() };
   if (job.phase === 'idle') {
     if (now < Date.parse(job.next_refresh || 0)) return { ...job, did: 0 };
     Object.assign(job, { phase: 'refresh', cursor: 0, hits: {}, started: new Date(now).toISOString() });
@@ -292,7 +298,15 @@ export async function round({ rows, batch = 40, pause = 300, now = Date.now(), b
       if (made && made.bytes) {
         await keep(r.address, made.bytes, { source: hit.source, src_url: hit.url, uploaded_by: null });
         job.hits[hit.source] = (job.hits[hit.source] || 0) + 1;
-      } else job.hits.unreadable = (job.hits.unreadable || 0) + 1;
+      } else {
+        /* Found and not readable: counted, and the last few kept with why, so
+           a kind of picture this cannot open says what it is. */
+        job.hits.unreadable = (job.hits.unreadable || 0) + 1;
+        let host = null;
+        try { host = new URL(hit.url).host; } catch (e) { /* said as it was */ }
+        job.unreadable = [...(job.unreadable || []), { address: r.address, source: hit.source, host,
+          type: got.type || null, why: String(got.error || (made && made.error) || 'unknown').slice(0, 80) }].slice(-8);
+      }
     } else if (!hit && !was) {
       await one('SET', K.rec(r.address), JSON.stringify({ address: lower(r.address), source: 'none', url: null, updated: new Date(now).toISOString() }));
       job.hits.none = (job.hits.none || 0) + 1;

@@ -54,7 +54,9 @@ const halves = await sharp({ create: { width: 400, height: 200, channels: 3, bac
 
 const PUT = new Map();
 const PICS = new Map([
-  ['https://pics.example/os-visco.png', await png('#11aa44')],
+  /* OpenSea's image host answers in AVIF whatever it is asked for. */
+  ['https://pics.example/os-visco.png', await sharp({ create: { width: 300, height: 300, channels: 3, background: '#11aa44' } }).avif().toBuffer()],
+  ['https://pics.example/anim.gif', await sharp({ create: { width: 200, height: 200, channels: 3, background: '#aa7711' } }).gif().toBuffer()],
   ['https://pics.example/os-visco-2.png', await png('#22bb55')],
   ['https://pics.example/ens-b.png', await png('#aa1144')],
   ['https://pbs.example/x-c.jpg', await png('#4411aa')],
@@ -235,6 +237,14 @@ const late = await P.round({ rows, batch: 8, pause: 0, now: Date.now() + 90 * 86
 is('a batch out of time stops where it is and keeps its place', [late.phase, late.cursor, late.did], ['refresh', 0, 0]);
 KV.set('pfp:job', JSON.stringify({ ...late, phase: 'idle', cursor: 0, next_refresh: new Date(Date.now() + 30 * 86400000).toISOString() }));
 
+{
+  const avif = await P.render(PICS.get('https://pics.example/os-visco.png'));
+  const gif = await P.render(PICS.get('https://pics.example/anim.gif'));
+  is('an AVIF or a GIF from a source renders to a face', [Boolean(avif.bytes), Boolean(gif.bytes)], [true, true]);
+  const { processImage } = await import('../../api/_lib/images.js');
+  is('while the Studio still takes only its four kinds', Boolean((await processImage(PICS.get('https://pics.example/os-visco.png'))).error), true);
+}
+
 console.log('\n— the monthly refresh —');
 OPENSEA.set(VISCO, { url: 'https://pics.example/os-visco-2.png' });
 OPENSEA.set(B, { url: 'https://pics.example/os-visco-2.png' });
@@ -248,7 +258,14 @@ is('REMOVE survives the refresh', JSON.parse(KV.get(`pfp:${VISCO}`)).source, 'no
 is('a source somebody picked is kept, though OpenSea comes first', JSON.parse(KV.get(`pfp:${B}`)).source, 'x');
 is('an upload is never overwritten', JSON.parse(KV.get(`pfp:${C}`)).source, 'upload');
 is('an unchanged source is not fetched again', KV.get(`pfp:${D}`), beforeD);
-is('somebody with nothing who has since set an OpenSea picture gets it', JSON.parse(KV.get(`pfp:${E}`)).source, 'opensea');
+is('somebody with nothing who has since set an OpenSea picture gets it (AVIF)', JSON.parse(KV.get(`pfp:${E}`)).source, 'opensea');
+is('and nothing was unreadable', out.hits.unreadable || 0, 0);
+{
+  /* A round from before AVIF was read starts again from rank 1. */
+  KV.set('pfp:job', JSON.stringify({ phase: 'backfill', cursor: 80, hits: { unreadable: 55 } }));
+  const again = await P.round({ rows, batch: 8, pause: 0 });
+  is('a round from an older version goes round again from rank 1', [again.v, again.phase, again.hits.unreadable || 0], [P.ROUND_V, 'idle', 0]);
+}
 
 console.log('\n— reading —');
 const all = await get('all=1');

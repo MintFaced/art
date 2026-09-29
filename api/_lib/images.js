@@ -59,9 +59,17 @@ export function sniff(bytes) {
   if (b[4] === 0x66 && b[5] === 0x74 && b[6] === 0x79 && b[7] === 0x70) {
     const brand = String.fromCharCode(b[8], b[9], b[10], b[11]);
     if (HEIF_BRANDS.has(brand)) return 'image/heic';
+    if (brand === 'avif' || brand === 'avis') return 'image/avif';
   }
+  if (b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x38) return 'image/gif';
   return null;
 }
+
+/* Kinds nobody uploads from a phone but the pictures a face is fetched from
+   come in: OpenSea's image host answers in AVIF whatever it is asked for, and
+   a profile picture can be a GIF. Decoded by sharp, first frame only, and only
+   where the caller says so ... the Studio still takes the four it always has. */
+const WIDE = new Set(['image/avif', 'image/gif']);
 
 /**
  * Any picture, as the log keeps it: upright, at most 2000 on its long edge,
@@ -77,14 +85,14 @@ export function sniff(bytes) {
  * through libvips with its orientation applied. Nothing about the source
  * survives into whatever is written from it.
  */
-export async function decodeImage(bytes) {
+export async function decodeImage(bytes, { wide = false } = {}) {
   const b = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
   if (!b.length) return { error: 'that image did not arrive whole' };
   if (b.length > IN_MAX_BYTES) {
     return { error: `${(b.length / 1048576).toFixed(1)}MB, and the limit is ${IN_MAX_BYTES / 1048576}MB` };
   }
   const kind = sniff(b);
-  if (!kind) return { error: 'That is not a JPEG, PNG, WebP or HEIC picture' };
+  if (!kind || (WIDE.has(kind) && !wide)) return { error: 'That is not a JPEG, PNG, WebP or HEIC picture' };
   try {
     if (kind === 'image/heic') {
       const { width, height, data } = await heicDecode({ buffer: b });
