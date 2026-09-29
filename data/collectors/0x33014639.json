@@ -1,7 +1,9 @@
 {
  "address": "0x3301463999f9882cb6285f97aa62b39a0dadaeec",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x33014639",
  "private": false,
  "has_page": true,
@@ -13,7 +15,7 @@
  },
  "first_collected": "2025-06-06T23:57:35.000000Z",
  "last_collected": "2025-07-04T08:06:59.000Z",
- "tao": 7256,
+ "tao": 7793,
  "tao_rate": 16.8,
  "tao_rank": 1297,
  "collections": [
@@ -39,19 +41,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 1762
-  },
-  {
-   "id": "xlife-19",
-   "title": "The Damage",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-07-02T06:05:59.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-19-image.gif",
-   "orientation": null,
-   "tao": 1770
+   "tao": 1896
   },
   {
    "id": "seize-and-share-xdecal-2590",
@@ -63,7 +53,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
    "orientation": null,
-   "tao": 1845
+   "tao": 1980
   },
   {
    "id": "xlife-46",
@@ -75,7 +65,19 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 1877
+   "tao": 2011
+  },
+  {
+   "id": "xlife-19",
+   "title": "The Damage",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-19-image.gif",
+   "orientation": null,
+   "tao": 1905
   }
  ]
 }
