@@ -1,7 +1,9 @@
 {
  "address": "0x33de5f7c0dcffbbc399b603ff539250a2c132e3c",
  "ens": "clownphunk.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "clownphunk.eth",
  "private": false,
  "has_page": true,
@@ -12,8 +14,8 @@
   "collections": 1
  },
  "first_collected": "2023-01-10T06:18:11.000000Z",
- "last_collected": "2023-11-04T02:16:35.000000Z",
- "tao": 15452,
+ "last_collected": "2023-01-10T06:24:35.000000Z",
+ "tao": 15855,
  "tao_rate": 12.6,
  "tao_rank": 590,
  "collections": [
@@ -25,18 +27,6 @@
  ],
  "works": [
   {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-11-04T02:16:35.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 4316
-  },
-  {
    "id": "xlife-8",
    "title": "Gen X",
    "collection": "xlife",
@@ -46,7 +36,7 @@
    "unique": false,
    "image": "xlife/xlife-8-image.gif",
    "orientation": null,
-   "tao": 5567
+   "tao": 5702
   },
   {
    "id": "xlife-7",
@@ -58,7 +48,19 @@
    "unique": false,
    "image": "xlife/xlife-7-image.gif",
    "orientation": null,
-   "tao": 5567
+   "tao": 5702
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 4451
   }
  ]
 }
