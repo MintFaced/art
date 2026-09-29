@@ -58,12 +58,14 @@ export async function GET(request) {
       const m = /\/pfp\/0x[0-9a-f]{40}\/([0-9a-f]+)\.webp$/.exec(u);
       if (m) map[a] = m[1];
     }
-    return out(request, { base: `${P.PUBLIC}/pfp`, small: P.SMALL, map }, 200, 'public, max-age=120, s-maxage=300');
+    /* Short: a face somebody has just saved should reach the register and
+       their page within about a minute and a half, not seven. */
+    return out(request, { base: `${P.PUBLIC}/pfp`, small: P.SMALL, map }, 200, 'public, max-age=30, s-maxage=60');
   }
   const address = lower(url.searchParams.get('address'));
   if (!isAddr(address)) return out(request, { error: 'Which wallet?' }, 400);
   if (priv.has(address)) return out(request, P.said(null, address));
-  return out(request, P.said(await P.record(address), address), 200, 'public, max-age=60');
+  return out(request, P.said(await P.record(address), address), 200, 'public, max-age=30, s-maxage=60');
 }
 
 export async function POST(request) {
