@@ -1,7 +1,9 @@
 {
  "address": "0x03ee832367e29a5cd001f65093283eabb5382b62",
  "ens": "alphacentaurikid.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "alphacentaurikid.eth",
  "private": false,
  "has_page": true,
@@ -12,8 +14,8 @@
   "collections": 3
  },
  "first_collected": "2022-03-06T08:48:24.000000Z",
- "last_collected": "2025-03-21T04:39:47.000000Z",
- "tao": 21562,
+ "last_collected": "2025-01-06T22:08:11.000000Z",
+ "tao": 22234,
  "tao_rate": 21,
  "tao_rank": 478,
  "collections": [
@@ -35,18 +37,6 @@
  ],
  "works": [
   {
-   "id": "xlife-63",
-   "title": "Metadata Wars",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2025-03-21T04:39:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-63-image.png",
-   "orientation": null,
-   "tao": 2203
-  },
-  {
    "id": "xlife-58",
    "title": "Self Stoic",
    "collection": "xlife",
@@ -56,7 +46,7 @@
    "unique": false,
    "image": "xlife/xlife-58-image.png",
    "orientation": null,
-   "tao": 2511
+   "tao": 2645
   },
   {
    "id": "xlife-38",
@@ -68,7 +58,7 @@
    "unique": false,
    "image": "xlife/xlife-38-image.gif",
    "orientation": null,
-   "tao": 4182
+   "tao": 4316
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -80,7 +70,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5795
+   "tao": 5930
   },
   {
    "id": "geodetic-onchain-2",
@@ -92,7 +82,19 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 6869
+   "tao": 7003
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-63-image.png",
+   "orientation": null,
+   "tao": 2338
   }
  ]
 }
