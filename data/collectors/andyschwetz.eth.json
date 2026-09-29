@@ -1,7 +1,9 @@
 {
  "address": "0x6a6d2019ed5079f07e84d30b4d702a601eaaa5f6",
  "ens": "andyschwetz.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "andyschwetz.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-05-13T11:59:51.000000Z",
  "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 17821,
+ "tao": 18224,
  "tao_rate": 12.6,
- "tao_rank": 548,
+ "tao_rank": 549,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -23,13 +25,13 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   },
   {
@@ -51,18 +53,6 @@
    "orientation": null
   },
   {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2022-12-30T23:04:11.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5610
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -72,7 +62,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5761
   },
   {
    "id": "we-are-the-line-1",
@@ -95,7 +85,19 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6583
+   "tao": 6717
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5745
   }
  ]
 }
