@@ -1,7 +1,9 @@
 {
  "address": "0x5ffd8de19910efff95df729c54699aebcee8f747",
  "ens": "vuja-de.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "vuja-de.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 4
  },
  "first_collected": "2022-11-29T02:53:59.000Z",
- "last_collected": "2023-01-06T00:05:35.000000Z",
- "tao": 16957,
+ "last_collected": "2022-12-27T05:11:47.000000Z",
+ "tao": 17360,
  "tao_rate": 12.6,
- "tao_rank": 565,
+ "tao_rank": 567,
  "collections": [
   {
    "slug": "roads-and-rivers",
@@ -28,29 +30,17 @@
    "works": 1
   },
   {
-   "slug": "xlife",
-   "title": "XLIFE",
+   "slug": "xnouns",
+   "title": "XNouns",
    "works": 1
   },
   {
-   "slug": "xnouns",
-   "title": "XNouns",
+   "slug": "xlife",
+   "title": "XLIFE",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-06T00:05:35.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5585
-  },
   {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
@@ -61,7 +51,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5626
+   "tao": 5761
   },
   {
    "id": "seize-and-share-cc0-the-movie-2204",
@@ -73,7 +63,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-cc0-the-movie-2204-display.webp",
    "orientation": null,
-   "tao": 5744
+   "tao": 5879
   },
   {
    "id": "xnouns-42",
@@ -85,6 +75,18 @@
    "unique": true,
    "image": "xnouns/xnouns-42-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5719
   }
  ]
 }
