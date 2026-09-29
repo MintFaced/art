@@ -1,7 +1,9 @@
 {
  "address": "0xb68babf19df3889f5185576f7f657c9272923002",
  "ens": "synthetic.schizosthesia.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "synthetic.schizosthesia.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-12-28T00:33:11.000000Z",
  "last_collected": "2023-01-02T00:39:35.000000Z",
- "tao": 112465,
+ "tao": 115152,
  "tao_rate": 84,
- "tao_rank": 130,
+ "tao_rank": 131,
  "collections": [
   {
    "slug": "xlife",
@@ -39,7 +41,7 @@
    "unique": false,
    "image": "xlife/xlife-5-image.gif",
    "orientation": null,
-   "tao": 5602
+   "tao": 5736
   },
   {
    "id": "xlife-3",
@@ -51,19 +53,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 5605
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2022-12-30T04:03:11.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5621
+   "tao": 5739
   },
   {
    "id": "roads-or-rivers-twisted",
@@ -75,7 +65,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-twisted-image.jpg",
    "orientation": null,
-   "tao": 22492
+   "tao": 23030
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -87,7 +77,19 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 73142
+   "tao": 74889
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5756
   }
  ]
 }
