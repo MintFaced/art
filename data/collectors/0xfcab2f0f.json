@@ -1,7 +1,9 @@
 {
  "address": "0xfcab2f0f8e64bbda95e1c65d368e6cb22bc5a808",
  "ens": null,
+ "fwd": "sigpunk.eth",
  "display_name": null,
+ "x": null,
  "slug": "0xfcab2f0f",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-12-01T02:49:59.000Z",
  "last_collected": "2023-01-01T05:44:23.000000Z",
- "tao": 90938,
+ "tao": 93088,
  "tao_rate": 67.2,
- "tao_rank": 175,
+ "tao_rank": 176,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -44,19 +46,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 5605
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-01T05:02:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5605
+   "tao": 5739
   },
   {
    "id": "xlife-2",
@@ -68,7 +58,7 @@
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 5605
+   "tao": 5740
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -80,7 +70,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5656
+   "tao": 5791
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -92,7 +82,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5669
+   "tao": 5803
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -104,7 +94,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11358
+   "tao": 11626
   },
   {
    "id": "seize-and-share-griftercity-2690",
@@ -116,7 +106,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-griftercity-2690-display.webp",
    "orientation": null,
-   "tao": 5686
+   "tao": 5820
   },
   {
    "id": "seize-and-share-vibe-2617",
@@ -128,7 +118,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-vibe-2617-display.webp",
    "orientation": null,
-   "tao": 5700
+   "tao": 5834
   },
   {
    "id": "seize-and-share-xdecal-2590",
@@ -140,7 +130,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-xdecal-2590-display.webp",
    "orientation": null,
-   "tao": 5706
+   "tao": 5840
   },
   {
    "id": "seize-and-share-trashyad-2592",
@@ -152,7 +142,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-trashyad-2592-display.webp",
    "orientation": null,
-   "tao": 5708
+   "tao": 5842
   },
   {
    "id": "seize-and-share-don-t-trust-clowns-2451",
@@ -164,7 +154,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-don-t-trust-clowns-2451-display.webp",
    "orientation": null,
-   "tao": 5716
+   "tao": 5851
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -176,7 +166,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5724
+   "tao": 5858
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -188,7 +178,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5729
+   "tao": 5863
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -200,7 +190,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5729
+   "tao": 5863
   },
   {
    "id": "seize-and-share-nights-dawn-2382",
@@ -212,7 +202,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-nights-dawn-2382-display.webp",
    "orientation": null,
-   "tao": 5736
+   "tao": 5870
   },
   {
    "id": "xnouns-57",
@@ -224,6 +214,18 @@
    "unique": true,
    "image": "xnouns/xnouns-57-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5740
   }
  ]
 }
