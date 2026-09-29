@@ -1,7 +1,9 @@
 {
  "address": "0xc73ffb72eb85059908b6f72ef4b0d3b38d46e0ad",
  "ens": null,
+ "fwd": "magnivault.eth",
  "display_name": null,
+ "x": null,
  "slug": "0xc73ffb72",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2024-08-25T10:33:23.000000Z",
  "last_collected": "2025-04-02T02:00:47.000000Z",
- "tao": 290404,
+ "tao": 303128,
  "tao_rate": 397.8,
- "tao_rank": 34,
+ "tao_rank": 30,
  "collections": [
   {
    "slug": "xlife",
@@ -28,18 +30,8 @@
    "works": 2
   },
   {
-   "slug": "first-selfie",
-   "title": "First Selfie",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-moments",
-   "title": "Geodetic Moments",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-world",
-   "title": "Geodetic World",
+   "slug": "two-burdens",
+   "title": "Two Burdens",
    "works": 1
   },
   {
@@ -48,8 +40,18 @@
    "works": 1
   },
   {
-   "slug": "two-burdens",
-   "title": "Two Burdens",
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "first-selfie",
+   "title": "First Selfie",
    "works": 1
   }
  ],
@@ -64,7 +66,7 @@
    "unique": false,
    "image": "xlife/xlife-64-image.png",
    "orientation": null,
-   "tao": 2153
+   "tao": 2288
   },
   {
    "id": "geodetic-moments-29",
@@ -76,31 +78,7 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-29-display.webp",
    "orientation": null,
-   "tao": 50490
-  },
-  {
-   "id": "geodetic-world-19",
-   "title": "Geodetic Greece",
-   "collection": "geodetic-world",
-   "group": "geodetic",
-   "genre": "AI",
-   "acquired": "2024-08-25T10:33:23.000000Z",
-   "unique": true,
-   "image": "geodetic-world/geodetic-world-19-display.webp",
-   "orientation": "portrait",
-   "tao": 50540
-  },
-  {
-   "id": "roads-or-rivers-42-below",
-   "title": "42 Below",
-   "collection": "roads-and-rivers",
-   "group": "core",
-   "genre": "Photography",
-   "acquired": "2024-08-25T10:33:23.000000Z",
-   "unique": false,
-   "image": "roads-and-rivers/roads-or-rivers-42-below-image.jpg",
-   "orientation": null,
-   "tao": 3076
+   "tao": 52697
   },
   {
    "id": "two-burdens-33",
@@ -112,7 +90,31 @@
    "unique": true,
    "image": "two-burdens/two-burdens-33-display.webp",
    "orientation": "portrait",
-   "tao": 50540
+   "tao": 52747
+  },
+  {
+   "id": "roads-or-rivers-42-below",
+   "title": "42 Below",
+   "collection": "roads-and-rivers",
+   "group": "core",
+   "genre": "Photography",
+   "acquired": "2024-08-25T10:33:23.000000Z",
+   "unique": false,
+   "image": "roads-and-rivers/roads-or-rivers-42-below-image.jpg",
+   "orientation": null,
+   "tao": 3210
+  },
+  {
+   "id": "geodetic-world-19",
+   "title": "Geodetic Greece",
+   "collection": "geodetic-world",
+   "group": "geodetic",
+   "genre": "AI",
+   "acquired": "2024-08-25T10:33:23.000000Z",
+   "unique": true,
+   "image": "geodetic-world/geodetic-world-19-display.webp",
+   "orientation": "portrait",
+   "tao": 52747
   },
   {
    "id": "xlife-49",
@@ -124,7 +126,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-46",
@@ -136,7 +138,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-43",
@@ -148,7 +150,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-42",
@@ -160,7 +162,7 @@
    "unique": false,
    "image": "xlife/xlife-42-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-39",
@@ -172,7 +174,7 @@
    "unique": false,
    "image": "xlife/xlife-39-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-36",
@@ -184,7 +186,7 @@
    "unique": false,
    "image": "xlife/xlife-36-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-35",
@@ -196,19 +198,7 @@
    "unique": false,
    "image": "xlife/xlife-35-image.gif",
    "orientation": null,
-   "tao": 3076
-  },
-  {
-   "id": "xlife-33",
-   "title": "CC0 King",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2024-08-25T10:33:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-33-image.gif",
-   "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-31",
@@ -220,7 +210,7 @@
    "unique": false,
    "image": "xlife/xlife-31-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-30",
@@ -232,7 +222,7 @@
    "unique": false,
    "image": "xlife/xlife-30-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-28",
@@ -244,7 +234,7 @@
    "unique": false,
    "image": "xlife/xlife-28-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-27",
@@ -256,7 +246,7 @@
    "unique": false,
    "image": "xlife/xlife-27-image.png",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-26",
@@ -268,7 +258,7 @@
    "unique": false,
    "image": "xlife/xlife-26-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-25",
@@ -280,7 +270,7 @@
    "unique": false,
    "image": "xlife/xlife-25-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-24",
@@ -292,7 +282,7 @@
    "unique": false,
    "image": "xlife/xlife-24-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-23",
@@ -304,7 +294,7 @@
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-22",
@@ -316,7 +306,7 @@
    "unique": false,
    "image": "xlife/xlife-22-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-21",
@@ -328,19 +318,7 @@
    "unique": false,
    "image": "xlife/xlife-21-image.gif",
    "orientation": null,
-   "tao": 3076
-  },
-  {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2024-08-25T10:33:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-17",
@@ -352,7 +330,7 @@
    "unique": false,
    "image": "xlife/xlife-17-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-13",
@@ -364,7 +342,7 @@
    "unique": false,
    "image": "xlife/xlife-13-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-12",
@@ -376,7 +354,7 @@
    "unique": false,
    "image": "xlife/xlife-12-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-11",
@@ -388,7 +366,7 @@
    "unique": false,
    "image": "xlife/xlife-11-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-10",
@@ -400,19 +378,7 @@
    "unique": false,
    "image": "xlife/xlife-10-image.gif",
    "orientation": null,
-   "tao": 3076
-  },
-  {
-   "id": "xlife-9",
-   "title": "First Selfie",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2024-08-25T10:33:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-9-image.gif",
-   "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-7",
@@ -424,7 +390,7 @@
    "unique": false,
    "image": "xlife/xlife-7-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "xlife-3",
@@ -436,7 +402,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 3076
+   "tao": 3210
   },
   {
    "id": "first-selfie-54",
@@ -448,7 +414,7 @@
    "unique": true,
    "image": "first-selfie/first-selfie-54-image.gif",
    "orientation": null,
-   "tao": 50540
+   "tao": 52747
   },
   {
    "id": "xnouns-397",
@@ -471,6 +437,42 @@
    "unique": true,
    "image": "xnouns/xnouns-164-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-33",
+   "title": "CC0 King",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-33-image.gif",
+   "orientation": null,
+   "tao": 3210
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 3210
+  },
+  {
+   "id": "xlife-9",
+   "title": "First Selfie",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-9-image.gif",
+   "orientation": null,
+   "tao": 3210
   }
  ]
 }
