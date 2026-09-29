@@ -48,6 +48,13 @@ const shortOf = (a, n) => a.slice(0, 2 + n);
  * that actually changed cannot be found. Both callers write it through here so
  * the file does not change shape depending on which of them ran last.
  */
+/** The held works, one collector per line: wallet -> [work, label, image, since]. */
+export function heldFile(held) {
+  const rows = Object.entries(held || {}).sort(([a], [b]) => a.localeCompare(b));
+  return `{\n "_note": "The work each collector has held longest: [id, label, image, since]. Built with the register ... see api/_lib/collectors.js.",\n "fields": ["work", "label", "image", "since"],\n "held": {\n`
+    + rows.map(([a, v]) => `  ${JSON.stringify(a)}: ${JSON.stringify(v)}`).join(',\n') + '\n }\n}\n';
+}
+
 export function registerFile(register) {
   return `{\n "_note": ${JSON.stringify(register._note)},\n "generated": ${JSON.stringify(register.generated)},\n`
     + ` "fields": ${JSON.stringify(register.fields)},\n "rows": [\n`
@@ -254,10 +261,28 @@ export function deriveCollectors(collections, titleOf, privateList = new Set(), 
       ]),
   };
 
+  /* The work each collector has held longest, for their face's placeholder
+     and for what the face turns into when it is held down. Its own small file
+     rather than four more columns on the register: the register is what the
+     table paints first, and this can arrive after it. Private collectors are
+     left out, as they are left unnamed. */
+  const labelOf = (w) => (/^#?\d+$/.test(String(w.title || '').trim())
+    ? `${titleOf.get(w.collection) || w.collection} ${String(w.title).replace('#', '')}` : (w.title || w.id));
+  const held = {};
+  for (const p of all) {
+    if (p.private) continue;
+    /* A holding the sweep never dated still stands for them; it just cannot
+       say for how long. */
+    const oldest = p.works.filter((w) => w.acquired).sort((a, b) => String(a.acquired).localeCompare(String(b.acquired)))[0]
+      || p.works.find((w) => w.image);
+    if (oldest) held[p.address] = [oldest.id, labelOf(oldest), oldest.image || '', oldest.acquired ? String(oldest.acquired).slice(0, 10) : ''];
+  }
+
   return {
     hexBits: n,
     all: ranked,
     register,
+    held,
     index: {
       _note: 'Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.',
       generated: new Date().toISOString(),

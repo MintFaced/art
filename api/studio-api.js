@@ -8,6 +8,8 @@ import { enqueue, slotsRow } from './_lib/wire.js';
 import { list as notesList, get as noteGet, update as noteUpdate, missedPaths, STATUSES } from './_lib/feedback.js';
 import { loadRegister } from './_lib/register.js';
 import { fold, tagIndex } from './_lib/names.js';
+import { K as PFP_KEYS, record as pfpRecord } from './_lib/pfp.js';
+import { pipe } from './_lib/kv.js';
 
 /* A note's wallet, as the note gave it, and the collector page it leads to if
    it is a wallet that holds TAO. The link is built here from the register and
@@ -95,6 +97,31 @@ export async function POST(request) {
   }
   if (action === 'misses') {
     return json({ ok: true, misses: await missedPaths({ days: 14 }) });
+  }
+
+  /* ------------------------------------------------------ faces
+     Where the backfill is up to, and one collector's picture found by wallet,
+     name or .eth. The console changes it through /api/pfp itself, as the
+     artist; this only finds whose it is and says what is there now, including
+     who put it there, which the public answer leaves out. */
+  if (action === 'pfp') {
+    const [job, pictures, none] = await pipe([['GET', PFP_KEYS.job], ['HLEN', PFP_KEYS.map], ['SCARD', PFP_KEYS.none]]);
+    const out = { ok: true, job: job ? JSON.parse(job) : null, pictures: Number(pictures) || 0, chose_none: Number(none) || 0 };
+    const q = String(body.q || '').trim();
+    if (q) {
+      let address = /^0x[0-9a-fA-F]{40}$/.test(q) ? q.toLowerCase() : null;
+      let name = null;
+      const site = process.env.SITE_ORIGIN || 'https://mintface.art';
+      const at = async (_o, path) => (await fetch(site + '/' + path, { headers: { accept: 'application/json' } })).json();
+      try {
+        const reg = await loadRegister(at, site);
+        if (reg && !address) address = tagIndex(reg).get(fold(q.replace(/^@/, ''))) || null;
+        if (reg && address) { const w = reg.who(address); name = w.private ? 'Private collector' : (w.name || null); }
+      } catch (e) { /* an address still works without the register */ }
+      if (!address) return json({ ...out, error: 'Nobody on the register by that name.' }, 404);
+      out.found = { address, name, record: await pfpRecord(address) };
+    }
+    return json(out);
   }
 
   /* Nudge authoring. A nudge is one question, a close date, and nothing else

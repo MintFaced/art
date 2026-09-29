@@ -452,6 +452,11 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
    a hairline under every name reads as a form rather than as a conversation.
    The rule arrives under the pointer, which is the house link worn quietly. */
 .m .who a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
+/* Faces: beside the name at the head of a run, smaller on a reply and on the
+   line it quotes. Centred, where the words beside them sit on a baseline. */
+.m .who .pfp{align-self:center;margin-right:-2px}
+.m .re .pfp{align-self:center;flex:none}
+.nudges .ledger td.n .pfp{margin:-7px 10px -7px 0}
 .m .who a:hover{border-color:var(--ink)}
 /* SIXTY-FIVE CHARACTERS. A line longer than that is the biggest tax on
    reading this column, and the column was wider than that. */
@@ -1334,7 +1339,7 @@ function card(m, prev) {
   const ctl = ways || mod ? `<div class="ctl">${ways}${mod}</div>` : '';
   return `<article class="m${cont ? ' cont' : ''}${mine ? ' mine' : ''}${namesMe(m) ? ' at' : ''}${isArtist ? ' by-artist' : ''}${ROOM.palette === m.n ? ' open' : ''}" id="m-${m.n}">
     ${cont ? '' : `<div class="who">
-      <span class="nm${isArtist ? ' artist' : ''}">${who}</span>
+      ${MF.pfp.html(m.address, m.reply ? 22 : 28)}<span class="nm${isArtist ? ' artist' : ''}">${who}</span>
       ${isArtist ? '<span class="role">the artist</span>' : `<span class="tao">${e(m.worn)} TAO</span>`}
       ${m.edited ? '<span class="ed">edited</span>' : ''}
       <span class="at" title="${e(stampFull(m.at))}">${e(stamp(m.at))}</span>
@@ -1374,7 +1379,7 @@ function replyLine(m) {
     : (r.quote != null ? r.quote : (parent && parent.text) || (parent && parent.image ? 'A picture' : ''));
   const quote = String(said || '').replace(/\s+/g, ' ').slice(0, 160);
   return `<div class="re"><button type="button" data-act="goto" data-n="${r.n}"
-      title="Go to the message this answers"><span class="rn">${label}</span>${
+      title="Go to the message this answers">${r.address ? MF.pfp.html(r.address, 22) : ''}<span class="rn">${label}</span>${
       quote ? ` <span class="rq">${e(quote)}</span>` : ''}</button></div>`;
 }
 
@@ -2695,7 +2700,7 @@ function ledger(x) {
     <tbody>${x.ledger.map((r) => {
       const label = e(r.name || short(r.address));
       return `<tr>
-        <td class="n">${r.url ? `<a href="${e(r.url)}">${label}</a>` : label}</td>
+        <td class="n">${MF.pfp.html(r.address, 32)}${r.url ? `<a href="${e(r.url)}">${label}</a>` : label}</td>
         <td class="s">${e(r.side)}${r.clamped ? ' &middot; clamped' : ''}</td>
         <td class="w">${num(r.weight)}</td>
       </tr>`;
@@ -3021,7 +3026,7 @@ function standingsRows(x) {
       return `<tr>
         <td class="c">${r.on.map((o) => `<span class="hexdot" style="background:${e(o.hex)}"
           title="${e(o.hex)}"></span>`).join('')}</td>
-        <td class="n">${who}${r.combo ? `<span class="cl">${e(r.combo)}</span>` : ''}</td>
+        <td class="n">${MF.pfp.html(r.address, 32)}${who}${r.combo ? `<span class="cl">${e(r.combo)}</span>` : ''}</td>
         <td class="w">${num(r.total)} TAO${r.on.length > 1
           ? `<span class="cl"> across ${r.on.length}</span>` : ''}</td>
         <td class="t">${r.artist ? '<span class="cl">artist · not counted</span>' : r.clamped ? '<span class="cl">clamped</span>' : ''}</td>
@@ -3053,7 +3058,7 @@ function ledgerRows(x, { tally = true } = {}) {
       return `<tr${r.moved ? ' class="moved"' : ''}>
         <td class="c"><span class="hexdot" style="background:${e(r.candidate || '#fff')}"
           title="${e(r.candidate || '')}"></span></td>
-        <td class="n">${who}</td>
+        <td class="n">${MF.pfp.html(r.address, 32)}${who}</td>
         <td class="w"><span class="${d < 0 ? 'down' : 'up'}">${d < 0 ? '&minus;' : '+'}${num(Math.abs(d))}</span>${r.moved ? '<span class="cl"> moved</span>' : ''}${r.combo ? `<span class="cl"> ${e(r.combo)}</span>` : ''}</td>
         <td class="t">${e(shortDate(r.at))}</td>
       </tr>`;
@@ -4129,6 +4134,8 @@ load({ bottom: sent == null }).then(async () => {
   }
   ROOM.timer = setInterval(poll, 6000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
+  /* Faces once the room is up, into boxes already their size. */
+  MF.pfp.load();
 });
 </script>
 </body>

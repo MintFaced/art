@@ -93,6 +93,7 @@ function studio(state, session) {
       colour: { name: () => ({ label: '\\u2248 PANTONE 359 C', short: '359 C' }),
         check: () => ({ ok: true, hex: '#207070', distance: 0.4 }) },
       session: { current: () => SESSION, open: async () => ({}) },
+      pfp: { html: () => '' },
     };
     const viewer = () => (SESSION && NUDGE.who && NUDGE.who === SESSION.address ? SESSION : null);
     const loadNudges = async () => {};

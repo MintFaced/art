@@ -94,7 +94,7 @@ export async function GET(request) {
       let media = [];
       if (said.card) {
         try {
-          const r = await fetch(cardUrl(site, said, ev));
+          const r = await fetch(await cardUrl(site, said, ev));
           if (r.ok) {
             const id = await uploadMedia(Buffer.from(await r.arrayBuffer()), 'image/png');
             if (id) media = [id];
@@ -135,11 +135,26 @@ async function readOverlay() {
   catch (e) { return null; }
 }
 
+/* The backer's face beside their name, where they have a picture and the
+   copy names them (PFP.md). Nothing where they have none: absence is silent.
+   Off until WIRE_PFP=1, so the timeline can wait until most of the register
+   has a face rather than showing the first few hundred. */
+async function faceFor(address) {
+  if (process.env.WIRE_PFP !== '1' || !address || !storeConfigured()) return null;
+  try {
+    const [raw] = await pipe([['GET', `pfp:${String(address).toLowerCase()}`]]);
+    const rec = raw ? JSON.parse(raw) : null;
+    return rec && rec.source !== 'none' && rec.url ? rec.url : null;
+  } catch (e) { return null; }
+}
+
 /* What the card is drawn from. Every value is on the event already, so this is
    a URL rather than a second reading of the register. */
-function cardUrl(site, said, ev) {
+async function cardUrl(site, said, ev) {
   const c = said.card || {};
   const q = new URLSearchParams({ wire: '1' });
+  const face = await faceFor(c.face);
+  if (face) q.set('face', face);
   const p = ev.payload || {};
   if (c.hex) q.set('hex', c.hex);
   if (p.slots_row) q.set('slots', p.slots_row);

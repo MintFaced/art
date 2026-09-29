@@ -1,6 +1,6 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { computeTao } from '../_lib/tao.js';
-import { deriveCollectors, registerFile } from '../_lib/collectors.js';
+import { deriveCollectors, registerFile, heldFile } from '../_lib/collectors.js';
 import { loadRuns, saveRuns, hoursSince } from '../_lib/runs.js';
 import { send } from '../_lib/email.js';
 import { enqueue as wire } from '../_lib/wire.js';
@@ -567,6 +567,12 @@ async function run({ key, dry, started, prior, url }) {
         const cur = await readFile('data/collectors-register.json').catch(() => ({ sha: null }));
         await writeFile('data/collectors-register.json', registerFile(d.register),
           `Register: ${d.register.rows.length} ranked by TAO`, cur.sha || undefined);
+      }
+      /* What each collector has held longest, for their face (PFP.md). */
+      {
+        const cur = await readFile('data/collectors-held.json').catch(() => ({ sha: null }));
+        const text = heldFile(d.held);
+        if (cur.text !== text) await writeFile('data/collectors-held.json', text, 'Register: held longest', cur.sha || undefined);
       }
       await put('data/collector-slugs.json', d.slugMap, 'Collectors: slug map');
 

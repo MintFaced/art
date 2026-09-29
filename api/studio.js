@@ -105,7 +105,7 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
 .miss .n{text-align:right;font-family:var(--font-mono);white-space:nowrap}
 </style>
 </head>
-<body>
+<body data-nav="off">
 <div class="wrap">
 
 <div id="gate">
@@ -174,6 +174,16 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
   <!-- The agent rail and the rebate: signing, renewing and stopping orders,
        and running a campaign. They sign from the holding wallet rather than
        behind this password, so they live on their own page. -->
+  <!-- Faces: anybody's picture, set, switched or taken down. The same crop
+       as a collector's own; if they upload later, theirs wins. -->
+  <section id="faces" class="nudges-admin">
+    <h2 class="sec">Pictures</h2>
+    <p class="note" id="pfpJob">Loading</p>
+    <div class="row"><label><span class="lab">Wallet, name or .eth</span><input id="pfpQ" enterkeyhint="search" autocomplete="off"></label></div>
+    <button class="btn quiet" id="pfpFind">Find</button>
+    <div id="pfpOne"></div>
+  </section>
+
   <section class="nudges-admin">
     <h2 class="sec">Agent rail</h2>
     <p class="note"><a href="/mintwork/rail">Orders and rebates</a> ... signed from the holding wallet.</p>
@@ -211,6 +221,7 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
 </div>
 
 </div>
+<script src="/mintface.js"></script>
 <script>
 const $ = (id) => document.getElementById(id);
 const api = (q, body) => fetch('/api/studio-api?do=' + q, {
@@ -231,8 +242,40 @@ $('in').addEventListener('click', async () => {
   loadNudges();
   loadNotes();
   loadMisses();
+  loadFaces();
 });
 $('pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('in').click(); });
+
+/* ------------------------------------------------------------ faces
+ *
+ * One collector at a time: found, shown at the profile's size, and changed
+ * with the same crop a collector gets on their own page. What the artist sets
+ * is recorded as his and never said anywhere public.
+ */
+async function loadFaces(q) {
+  const r = await api('pfp', q ? { q: q } : {});
+  const j = r.body.job;
+  const hits = j && j.hits ? Object.keys(j.hits).map((k) => k + ' ' + j.hits[k]).join(' &middot; ') : '';
+  $('pfpJob').innerHTML = (r.body.pictures || 0) + ' pictures &middot; ' + (r.body.chose_none || 0) + ' chose none'
+    + (j ? '<br>Backfill: ' + esc2(j.phase) + (j.phase === 'idle' ? ', next refresh ' + dayOf(j.next_refresh)
+      : ', at ' + nnum(j.cursor)) + (hits ? ' &middot; ' + hits : '') : '<br>Backfill has not run yet.');
+  if (!q) return;
+  if (!r.ok) { $('pfpOne').innerHTML = '<p class="note bad">' + esc2(r.body.error || 'No.') + '</p>'; return; }
+  const f = r.body.found;
+  const rec = f.record || {};
+  await MF.pfp.load();
+  $('pfpOne').innerHTML = '<div class="confirm">'
+    + '<div style="display:flex;gap:18px;align-items:center">' + MF.pfp.html(f.address, 120, {})
+    + '<div><p class="cap">' + esc2(f.name || MF.shortAddress(f.address)) + '</p>'
+    + '<p class="note" id="pfpSrc">' + (rec.source ? esc2(rec.source + (rec.uploaded_by ? ' by ' + rec.uploaded_by : '')
+      + (rec.chosen ? ', chosen' : '')) + (rec.updated ? ' &middot; ' + dayOf(rec.updated) : '') : 'nothing yet') + '</p>'
+    + '<p class="note"><a href="https://collectors.mintface.art/' + esc2(f.address) + '" target="_blank" rel="noopener">Their page</a></p></div></div>'
+    + '<div id="pfpCtl"></div></div>';
+  MF.pfp.editor(document.querySelector('#pfpOne .pfp'), { artist: true, host: $('pfpCtl'), pick: false,
+    onDone: () => loadFaces(f.address) });
+}
+$('pfpFind').addEventListener('click', () => { const q = $('pfpQ').value.trim(); if (q) loadFaces(q); });
+$('pfpQ').addEventListener('keydown', (ev) => { if (ev.key === 'Enter') $('pfpFind').click(); });
 
 /* ------------------------------------------------------------ the round
  *

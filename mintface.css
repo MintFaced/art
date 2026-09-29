@@ -533,3 +533,73 @@ a.pal-slot:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
   .pal-band{height:46px}
 }
 
+
+/* ---------- faces ----------
+   A pointy-top hexagon, the same shape at every size, drawn by MF.pfp. No
+   border and no shadow at rest; under a pointer or a finger the outline draws
+   itself, a pixel of ink, and the picture lifts two. Nothing rotates, bounces
+   or glows. */
+.pfp{position:relative;display:inline-block;flex:none;width:var(--s,32px);height:var(--s,32px);
+  vertical-align:middle;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:transparent}
+.pfp .face{position:absolute;inset:0;overflow:hidden;background:var(--sunk);
+  clip-path:polygon(50% 0,93.3% 25%,93.3% 75%,50% 100%,6.7% 75%,6.7% 25%);
+  transition:transform .2s ease-out,opacity .35s ease}
+.pfp .face img{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .5s ease}
+/* Nobody's picture yet: what they have held longest, faintly, on paper. */
+.pfp .face.none{background:var(--paper)}
+.pfp .face.none img{opacity:.35}
+.pfp .face.held{opacity:0}
+.pfp .edge{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;
+  transition:transform .2s ease-out}
+.pfp .edge polygon{fill:none;stroke:var(--ink);stroke-dasharray:100;stroke-dashoffset:100;
+  stroke-linejoin:round;transition:stroke-dashoffset .2s ease-out}
+@media(hover:hover){
+  .pfp:hover .edge polygon{stroke-dashoffset:0}
+  .pfp:hover .face,.pfp:hover .edge{transform:translateY(-2px)}
+}
+.pfp.on .edge polygon{stroke-dashoffset:0}
+.pfp.on .face,.pfp.on .edge{transform:translateY(-2px)}
+.pfp[data-mine]{cursor:pointer}
+.pfp[data-mine]:focus-visible{outline:none}
+.pfp[data-mine]:focus-visible .edge polygon{stroke-dashoffset:0}
+/* Held down: what they have kept, and for how long. */
+.pfp.holding .face.held{opacity:1}
+.pfp.holding .face:not(.held){opacity:0}
+.pfp .cap{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);z-index:6;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  white-space:nowrap;color:var(--muted);background:var(--paper);padding:1px 5px;pointer-events:none;
+  opacity:0;transition:opacity .35s ease}
+.pfp.holding .cap.hold{opacity:1;color:var(--ink)}
+.pfp .cap.add{opacity:1;font-size:9.5px}
+/* The first reveal: once, unprompted, then gone. */
+.pfp.reveal .edge polygon{animation:pfp-reveal 1.5s ease-out 1}
+@keyframes pfp-reveal{0%{stroke-dashoffset:100;opacity:1}50%{stroke-dashoffset:0;opacity:1}
+  80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+/* Cropping, in the face itself. */
+.pfp.cropping{cursor:grab;touch-action:none}
+.pfp.cropping:active{cursor:grabbing}
+.pfp.cropping .edge polygon{stroke-dashoffset:0;stroke:var(--muted)}
+.pfp .face img.crop{position:absolute;max-width:none;width:auto;height:auto;transition:none;opacity:1}
+.pfp-panel{margin:14px 0 0}
+.pfp-panel.float{position:fixed;top:64px;right:16px;z-index:80;background:var(--paper);
+  border:1px solid var(--rule);padding:16px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;align-items:flex-start}
+.pfp-acts{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px}
+.pfp-acts button{background:none;border:0;padding:4px 0;cursor:pointer;color:var(--muted);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  border-bottom:1px solid transparent}
+.pfp-acts button:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.pfp-acts button[data-p="save"]{color:var(--ink);border-bottom-color:var(--ink)}
+.pfp-acts button:disabled{opacity:.45;cursor:default}
+.pfp-say{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin:8px 0 0;min-height:1em}
+.pfp-say.bad{color:var(--alert)}
+/* Beside your name in the bar. Not on a phone: the bar is already full there,
+   and a face beside a name cut to one letter is worse than the name. */
+.nav .me .pfp{margin-right:8px;align-self:center}
+@media(max-width:560px){.nav .me .pfp{display:none}}
+@media(prefers-reduced-motion:reduce){
+  .pfp .face,.pfp .edge,.pfp .edge polygon,.pfp .cap,.pfp .face img{transition:none}
+  .pfp:hover .face,.pfp:hover .edge,.pfp.on .face,.pfp.on .edge{transform:none}
+  .pfp.reveal .edge polygon{animation:none}
+}

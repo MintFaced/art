@@ -71,23 +71,42 @@ export function sniff(bytes) {
  * Transparency is laid on white, because a JPEG has none and a black ground
  * under a screenshot's corners is not what anybody sent.
  */
-export async function processImage(bytes) {
+/**
+ * Any picture this site takes, decoded and upright, as a sharp pipeline ready
+ * for whatever is done to it next: HEIC through libheif, everything else
+ * through libvips with its orientation applied. Nothing about the source
+ * survives into whatever is written from it.
+ */
+export async function decodeImage(bytes) {
   const b = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
   if (!b.length) return { error: 'that image did not arrive whole' };
   if (b.length > IN_MAX_BYTES) {
-    return { error: `${(b.length / 1048576).toFixed(1)}MB, and Studio takes pictures up to ${IN_MAX_BYTES / 1048576}MB` };
+    return { error: `${(b.length / 1048576).toFixed(1)}MB, and the limit is ${IN_MAX_BYTES / 1048576}MB` };
   }
   const kind = sniff(b);
-  if (!kind) return { error: 'Studio takes JPEG, PNG, WebP and HEIC pictures' };
-  let img;
+  if (!kind) return { error: 'That is not a JPEG, PNG, WebP or HEIC picture' };
   try {
     if (kind === 'image/heic') {
       const { width, height, data } = await heicDecode({ buffer: b });
-      img = sharp(Buffer.from(data.buffer, data.byteOffset, data.byteLength), { raw: { width, height, channels: 4 } });
-    } else {
-      img = sharp(b, { failOn: 'error' }).rotate();
+      return { img: sharp(Buffer.from(data.buffer, data.byteOffset, data.byteLength), { raw: { width, height, channels: 4 } }), kind, width, height };
     }
-    const out = await img
+    /* Upright first, and measured upright: a crop drawn over the picture on
+       a phone is drawn over it the right way up. */
+    const upright = await sharp(b, { failOn: 'error' }).rotate().raw().toBuffer({ resolveWithObject: true });
+    const { width, height, channels } = upright.info;
+    return { img: sharp(upright.data, { raw: { width, height, channels } }), kind, width, height };
+  } catch (e) {
+    return { error: 'that picture would not open. Try another, or a screenshot of it.' };
+  }
+}
+
+export async function processImage(bytes) {
+  const d = await decodeImage(bytes);
+  if (d.error) return { error: d.error === 'That is not a JPEG, PNG, WebP or HEIC picture' ? 'Studio takes JPEG, PNG, WebP and HEIC pictures' : d.error };
+  const kind = d.kind;
+  const b = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
+  try {
+    const out = await d.img
       .resize({ width: LONG_EDGE, height: LONG_EDGE, fit: 'inside', withoutEnlargement: true })
       .flatten({ background: '#ffffff' })
       .toColourspace('srgb')

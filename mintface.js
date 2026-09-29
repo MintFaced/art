@@ -3213,6 +3213,501 @@ MF.picture = {
   },
 };
 
+/* ---------- faces ----------
+ *
+ * A hexagon for every collector (PFP.md), drawn by this and nothing else, at
+ * whatever size the page asks: 120 on a profile, 32 in the register and the
+ * ledger, 28 and 22 in the room and the nav.
+ *
+ * Two small files make every face on a page. The pictures, wallet to key name,
+ * from the picture service; and the work each collector has held longest, which
+ * is what somebody with no picture is drawn as, faintly, and what a picture
+ * turns into when it is held down. Both are fetched after the page has painted,
+ * into boxes that were already the right size, so nothing moves when they land.
+ *
+ * Every picture is ours: kept in R2, made there from wherever it came from. A
+ * face never points at OpenSea or X.
+ */
+MF.pfp = {
+  map: null,
+  base: `${ASSETS_BASE}/pfp`,
+  small: 128,
+  held: null,
+  _load: null,
+  /* A press long enough to mean it, and a hover long enough not to happen by
+     accident on the way across a row. */
+  HOLD_TOUCH: 450,
+  HOLD_HOVER: 600,
+  SEEN: 'mf_pfp_seen',
+
+  load() {
+    if (this._load) return this._load;
+    const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    this.wire();
+    this._load = Promise.all([get(`${MF.ART}/api/pfp?all=1`), get(`${MF.ART}/data/collectors-held.json`)])
+      .then(([p, h]) => {
+        this.map = (p && p.map) || {};
+        if (p && p.base) this.base = p.base;
+        if (p && p.small) this.small = p.small;
+        this.held = (h && h.held) || {};
+        this.fill(document);
+      });
+    return this._load;
+  },
+  ready() { return Boolean(this.map && this.held); },
+
+  urlOf(address, small) {
+    const h = this.map && this.map[address];
+    return h ? `${this.base}/${address}/${h}${small ? `-${this.small}` : ''}.webp` : null;
+  },
+
+  /* What they have held longest, and for how long. */
+  heldOf(address) {
+    const h = this.held && this.held[address];
+    if (!h) return null;
+    const [id, label, image, since] = h;
+    const days = since ? Math.max(0, Math.floor((Date.now() - Date.parse(since)) / 86400000)) : null;
+    return { id, label, image, since, days };
+  },
+  /* Sized by the resizer the grids already use: a thirty-two pixel placeholder
+     has no business fetching a display copy. */
+  heldSrc(h, size) {
+    if (!h || !h.image) return null;
+    const url = /^[a-z][a-z0-9+.-]*:|^\/\//i.test(h.image) ? h.image : `${ASSETS_BASE}/${h.image}`;
+    if (url.startsWith('data:')) return MF.safeData(url);
+    if (!THUMB_PROXY) return url;
+    /* The first frame only. A face is still, and every frame of a large
+       animated GIF is more than the resizer will take. */
+    return THUMB_PROXY.replace('{url}', encodeURIComponent(url.replace(/^https?:\/\//, '')))
+      .replace('{w}', String(Math.min(480, size * 2))).replace(/&n=-1/, '');
+  },
+  caption(h) {
+    const label = String(h.label || '').replace(/#/g, '').replace(/\s+/g, ' ').trim().toUpperCase();
+    return h.days == null ? `HELD · ${label}` : `HELD ${h.days.toLocaleString('en-NZ')} DAY${h.days === 1 ? '' : 'S'} · ${label}`;
+  },
+
+  /**
+   * A face, as markup a page can put straight into its own template.
+   *   hold  it turns into what they have held longest when pressed or hovered
+   *   href  a tap on it goes there (the row's own link, beside it)
+   *   mine  their own: tap to change, and ADD A PICTURE under a placeholder
+   *   panel where the controls go when it is changed (a selector), else after it
+   * Drawn empty and exactly the right size until the two files have arrived.
+   */
+  html(address, size, opts = {}) {
+    const a = String(address || '').toLowerCase();
+    const e = MF.escape;
+    const on = this.ready();
+    const mine = opts.mine ? ' data-mine="1" role="button" tabindex="0" aria-label="Change your picture"' : ' aria-hidden="true"';
+    return `<span class="pfp${opts.mine ? ' mine' : ''}" data-pfp="${e(a)}" data-s="${Number(size) || 32}"`
+      + `${opts.hold ? ' data-hold="1"' : ''}${opts.href ? ` data-href="${e(opts.href)}"` : ''}`
+      + `${opts.panel ? ` data-panel="${e(opts.panel)}"` : ''}${mine}`
+      + `${on ? ' data-on="1"' : ''} style="--s:${Number(size) || 32}px">${on ? this.inner(a, Number(size) || 32, opts) : ''}</span>`;
+  },
+
+  inner(a, size, opts = {}) {
+    const e = MF.escape;
+    const full = this.urlOf(a, false);
+    const small = size <= 48 && full ? this.urlOf(a, true) : null;
+    const h = this.heldOf(a);
+    let face;
+    if (full) {
+      const src = small
+        ? `src="${e(small)}" srcset="${e(small)} ${this.small}w, ${e(full)} 512w" sizes="${size}px"`
+        : `src="${e(full)}"`;
+      face = `<span class="face"><img ${src} alt="" width="${size}" height="${size}" loading="lazy" decoding="async" draggable="false"></span>`;
+    } else {
+      const ph = this.heldSrc(h, size);
+      face = `<span class="face none">${ph ? `<img src="${e(ph)}" alt="" width="${size}" height="${size}" loading="lazy" decoding="async" draggable="false">` : ''}</span>`;
+    }
+    /* The outline is drawn a pixel wide at every size, which in a hundred-unit
+       box is a different number at each one. */
+    const edge = `<svg class="edge" viewBox="0 0 100 100" aria-hidden="true"><polygon pathLength="100"
+      points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" stroke-width="${(100 / size).toFixed(3)}"/></svg>`;
+    const cap = full && opts.hold && h ? `<span class="cap hold">${e(this.caption(h))}</span>`
+      : (!full && opts.mine && size >= 96 ? '<span class="cap add">Add a picture</span>' : '');
+    return face + edge + cap;
+  },
+
+  optsOf(el) {
+    return { hold: Boolean(el.dataset.hold), href: el.dataset.href || null, mine: Boolean(el.dataset.mine),
+      panel: el.dataset.panel || null };
+  },
+
+  /** Every empty box under root, painted. Boxes drawn after the files arrived
+      were painted as they were drawn and are left alone. */
+  fill(root) {
+    if (!this.ready() || !root || !root.querySelectorAll) return;
+    root.querySelectorAll('.pfp[data-pfp]:not([data-on])').forEach((el) => {
+      el.innerHTML = this.inner(el.dataset.pfp, Number(el.dataset.s) || 32, this.optsOf(el));
+      el.dataset.on = '1';
+    });
+  },
+
+  /** A new picture, or none, everywhere it is drawn on this page, faded in. */
+  set(address, pfp) {
+    const a = String(address || '').toLowerCase();
+    if (!this.map) this.map = {};
+    const m = pfp && pfp.url ? /\/([0-9a-f]+)\.webp$/.exec(pfp.url) : null;
+    if (m) this.map[a] = m[1]; else delete this.map[a];
+    if (!this.ready()) return;
+    document.querySelectorAll(`.pfp[data-pfp="${a}"]`).forEach((el) => {
+      el.innerHTML = this.inner(a, Number(el.dataset.s) || 32, this.optsOf(el));
+      el.dataset.on = '1';
+      const img = el.querySelector('.face img');
+      if (img && !img.complete) {
+        img.style.opacity = '0';
+        const show = () => { img.style.opacity = ''; };
+        img.addEventListener('load', show, { once: true });
+        img.addEventListener('error', show, { once: true });
+      }
+    });
+    if (m) this.seen(a, m[1]);
+  },
+
+  /* The first reveal: the first time somebody is shown the face the site found
+     for them, its outline draws once, unprompted, and never again. */
+  seen(address, hash) {
+    try {
+      const all = JSON.parse(localStorage.getItem(this.SEEN) || '{}');
+      const was = all[address];
+      all[address] = hash;
+      localStorage.setItem(this.SEEN, JSON.stringify(all));
+      return was;
+    } catch (err) { return true; }
+  },
+  reveal(el) {
+    if (!el || !this.ready()) return;
+    const a = el.dataset.pfp;
+    const hash = this.map[a];
+    if (!hash) return;
+    const was = this.seen(a, hash);
+    if (was) return;
+    el.classList.add('reveal');
+    setTimeout(() => el.classList.remove('reveal'), 1600);
+  },
+
+  canHold(el) {
+    return Boolean(el && el.dataset.hold && this.ready() && this.map[el.dataset.pfp] && this.heldOf(el.dataset.pfp));
+  },
+  /* The held work goes in when it is first wanted, not with the page: a
+     register of three thousand faces is not three thousand more pictures. */
+  prime(el) {
+    if (el.querySelector('.face.held')) return;
+    const h = this.heldOf(el.dataset.pfp);
+    const src = this.heldSrc(h, Number(el.dataset.s) || 32);
+    if (!src) return;
+    const f = document.createElement('span');
+    f.className = 'face held';
+    f.innerHTML = `<img src="${MF.escape(src)}" alt="" decoding="async" draggable="false">`;
+    el.insertBefore(f, el.querySelector('.edge'));
+  },
+
+  wire() {
+    if (this._wired || typeof document === 'undefined') return;
+    this._wired = true;
+    let timer = null;
+    let holding = null;
+    let wanted = null;
+    let pressed = null;
+    let swallow = false;
+    const stop = () => {
+      clearTimeout(timer);
+      timer = null;
+      wanted = null;
+      if (holding) holding.classList.remove('holding');
+      holding = null;
+    };
+    /* The crossfade waits for the work to have arrived: a face that fades to
+       an empty hexagon and then fills is worse than one that waits a moment. */
+    const start = (el, ms, touch) => {
+      stop();
+      this.prime(el);
+      wanted = el;
+      timer = setTimeout(() => {
+        timer = null;
+        if (touch) swallow = true;
+        const img = el.querySelector('.face.held img');
+        const show = () => { if (wanted === el) { holding = el; el.classList.add('holding'); } };
+        if (!img || img.complete) show();
+        else img.addEventListener('load', show, { once: true });
+      }, ms);
+    };
+    const faceOf = (t) => (t && t.closest ? t.closest('.pfp') : null);
+    document.addEventListener('pointerover', (ev) => {
+      if (ev.pointerType !== 'mouse') return;
+      const el = faceOf(ev.target);
+      if (!el || (ev.relatedTarget && el.contains(ev.relatedTarget)) || el.classList.contains('cropping')) return;
+      if (this.canHold(el)) start(el, this.HOLD_HOVER, false);
+    });
+    document.addEventListener('pointerout', (ev) => {
+      if (ev.pointerType !== 'mouse') return;
+      const el = faceOf(ev.target);
+      if (!el || (ev.relatedTarget && el.contains(ev.relatedTarget))) return;
+      stop();
+    });
+    /* Touch: the outline draws while the finger is down, as it does under a
+       pointer, and a long press turns the face into what they have kept. */
+    document.addEventListener('pointerdown', (ev) => {
+      if (ev.pointerType === 'mouse') return;
+      const el = faceOf(ev.target);
+      if (!el || el.classList.contains('cropping')) return;
+      swallow = false;
+      pressed = el;
+      el.classList.add('on');
+      if (this.canHold(el)) start(el, this.HOLD_TOUCH, true);
+    });
+    const up = () => {
+      if (pressed) pressed.classList.remove('on');
+      pressed = null;
+      if (timer || holding || wanted) stop();
+    };
+    document.addEventListener('pointerup', up);
+    document.addEventListener('pointercancel', up);
+    /* A long press on a picture is the phone's cue for its own menu. */
+    document.addEventListener('contextmenu', (ev) => {
+      const el = faceOf(ev.target);
+      if (el && el.dataset.hold) ev.preventDefault();
+    });
+    document.addEventListener('click', (ev) => {
+      const el = faceOf(ev.target);
+      if (!el || el.classList.contains('cropping') || ev.target.closest('.pfp-panel')) return;
+      if (swallow) { swallow = false; ev.preventDefault(); ev.stopPropagation(); return; }
+      if (el.dataset.mine) { ev.preventDefault(); this.editor(el); return; }
+      if (el.dataset.href) { ev.preventDefault(); location.href = el.dataset.href; }
+    }, true);
+    /* A picture that will not come leaves the hexagon as paper, not as the
+       browser's broken-image mark. */
+    document.addEventListener('error', (ev) => {
+      const t = ev.target;
+      if (t && t.tagName === 'IMG' && t.closest && t.closest('.pfp') && !t.classList.contains('crop')) t.style.visibility = 'hidden';
+    }, true);
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Enter' && ev.key !== ' ') return;
+      const el = faceOf(ev.target);
+      if (el && el.dataset.mine && ev.target === el) { ev.preventDefault(); this.editor(el); }
+    });
+  },
+
+  /* ---------- changing it ----------
+   *
+   * In the hexagon itself. Tap your own face and the picker opens; choose a
+   * picture and it lands inside the face, to be dragged into place and pinched
+   * or scrolled to size, then saved. The picture goes up first and comes back
+   * made safe ... upright, stripped, a JPEG ... so the crop is drawn over what
+   * the server will actually cut, even from a HEIC this browser cannot show.
+   *
+   * A face too small to crop in (the nav's) opens its own, at 120, in a panel.
+   */
+  async post(body, upload) {
+    let init;
+    if (upload) {
+      const form = new FormData();
+      form.set('payload', JSON.stringify(body));
+      form.set('image', upload.blob, upload.name || 'picture');
+      init = { body: form };
+    } else init = { headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) };
+    const r = await fetch(`${MF.ART}/api/pfp`, { method: 'POST', credentials: 'include', ...init });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      const err = new Error(j.error || 'That did not go through.');
+      err.signin = Boolean(j.signin);
+      throw err;
+    }
+    return j;
+  },
+
+  editor(at, opts = {}) {
+    if (this.open) this.open.close();
+    const address = at.dataset.pfp;
+    const artist = Boolean(opts.artist);
+    const e = MF.escape;
+    const panel = document.createElement('div');
+    panel.className = 'pfp-panel';
+    let face = at;
+    const big = (Number(at.dataset.s) || 32) >= 96;
+    if (!big) {
+      /* The nav's face is twenty-two pixels. The crop happens in a proper one. */
+      panel.classList.add('float');
+      panel.innerHTML = this.html(address, 120, {});
+      face = panel.firstElementChild;
+      document.body.appendChild(panel);
+    } else {
+      const host = opts.host || (at.dataset.panel ? document.querySelector(at.dataset.panel) : null);
+      if (host) host.appendChild(panel); else at.insertAdjacentElement('afterend', panel);
+    }
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif';
+    input.hidden = true;
+    panel.appendChild(input);
+    const row = document.createElement('div');
+    row.className = 'pfp-acts';
+    panel.appendChild(row);
+    const said = document.createElement('p');
+    said.className = 'pfp-say';
+    said.setAttribute('role', 'status');
+    panel.appendChild(said);
+
+    const st = { tmp: null, w: 0, h: 0, cx: 0.5, cy: 0.5, zoom: 1, busy: false };
+    const was = face.innerHTML;
+    const say = (t, bad) => { said.textContent = t || ''; said.classList.toggle('bad', Boolean(bad)); };
+    const draw = () => {
+      row.innerHTML = [
+        st.tmp ? '<button type="button" data-p="save">Save</button>' : '<button type="button" data-p="choose">Choose a picture</button>',
+        '<button type="button" data-p="opensea">Use OpenSea</button>',
+        '<button type="button" data-p="ens">Use ENS</button>',
+        '<button type="button" data-p="x">Use X</button>',
+        '<button type="button" data-p="remove">Remove</button>',
+        '<button type="button" data-p="cancel">Cancel</button>',
+      ].join('');
+      row.querySelectorAll('button').forEach((b) => { b.disabled = st.busy; });
+    };
+
+    /* The crop, as the server will cut it: the largest square that fits,
+       divided by the zoom, centred where cx and cy say. */
+    const S = () => Number(face.dataset.s) || 120;
+    const place = () => {
+      const img = face.querySelector('img.crop');
+      if (!img || !st.w) return;
+      const side = Math.min(st.w, st.h) / st.zoom;
+      st.cx = Math.min(1 - side / 2 / st.w, Math.max(side / 2 / st.w, st.cx));
+      st.cy = Math.min(1 - side / 2 / st.h, Math.max(side / 2 / st.h, st.cy));
+      const k = S() / side;
+      img.style.width = `${st.w * k}px`;
+      img.style.height = `${st.h * k}px`;
+      img.style.left = `${S() / 2 - st.cx * st.w * k}px`;
+      img.style.top = `${S() / 2 - st.cy * st.h * k}px`;
+    };
+    const pts = new Map();
+    let pinch = null;
+    const onDown = (ev) => {
+      if (!st.tmp) return;
+      ev.preventDefault();
+      face.setPointerCapture(ev.pointerId);
+      pts.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+      if (pts.size === 2) {
+        const [p, q] = [...pts.values()];
+        pinch = { d: Math.hypot(p.x - q.x, p.y - q.y), zoom: st.zoom };
+      }
+    };
+    const onMove = (ev) => {
+      const prev = pts.get(ev.pointerId);
+      if (!prev || !st.tmp) return;
+      const now = { x: ev.clientX, y: ev.clientY };
+      pts.set(ev.pointerId, now);
+      if (pts.size >= 2 && pinch) {
+        const [p, q] = [...pts.values()];
+        st.zoom = Math.min(8, Math.max(1, pinch.zoom * (Math.hypot(p.x - q.x, p.y - q.y) / (pinch.d || 1))));
+      } else {
+        const side = Math.min(st.w, st.h) / st.zoom;
+        const k = S() / side;
+        st.cx -= (now.x - prev.x) / (st.w * k);
+        st.cy -= (now.y - prev.y) / (st.h * k);
+      }
+      place();
+    };
+    const onUp = (ev) => { pts.delete(ev.pointerId); if (pts.size < 2) pinch = null; };
+    const onWheel = (ev) => {
+      if (!st.tmp) return;
+      ev.preventDefault();
+      st.zoom = Math.min(8, Math.max(1, st.zoom * Math.exp(-ev.deltaY / 400)));
+      place();
+    };
+    face.addEventListener('pointerdown', onDown);
+    face.addEventListener('pointermove', onMove);
+    face.addEventListener('pointerup', onUp);
+    face.addEventListener('pointercancel', onUp);
+    face.addEventListener('wheel', onWheel, { passive: false });
+
+    const close = () => {
+      face.removeEventListener('pointerdown', onDown);
+      face.removeEventListener('pointermove', onMove);
+      face.removeEventListener('pointerup', onUp);
+      face.removeEventListener('pointercancel', onUp);
+      face.removeEventListener('wheel', onWheel);
+      face.classList.remove('cropping');
+      if (big && st.tmp) { face.innerHTML = was; }
+      panel.remove();
+      if (this.open === api) this.open = null;
+    };
+    const failed = (err) => {
+      st.busy = false;
+      draw();
+      if (err && err.signin && MF.nav && MF.nav.el) {
+        say('Sign in with your wallet to change your picture.', true);
+        MF.nav.note = { signin: true };
+        MF.nav.draw();
+        return;
+      }
+      say(String((err && err.message) || err), true);
+    };
+    const done = (j) => {
+      st.tmp = null;
+      close();
+      this.set(address, j.pfp);
+      if (opts.onDone) opts.onDone(j.pfp);
+    };
+    const run = async (fn) => {
+      st.busy = true;
+      draw();
+      try { await fn(); } catch (err) { failed(err); }
+    };
+    const body = (x) => (artist ? { ...x, address } : x);
+
+    input.addEventListener('change', () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      input.value = '';
+      run(async () => {
+        say('Reading the picture ...');
+        const up = await MF.picture.prepare(file);
+        say('Sending it ...');
+        const j = await this.post(body({ action: 'stage' }), up);
+        Object.assign(st, { tmp: j.tmp, w: j.w, h: j.h, cx: 0.5, cy: 0.5, zoom: 1, busy: false });
+        face.classList.add('cropping');
+        face.innerHTML = `<span class="face"><img class="crop" src="${e(j.url)}" alt="" draggable="false"></span>${
+          face.querySelector('.edge') ? face.querySelector('.edge').outerHTML : ''}`;
+        place();
+        say('Drag to place it. Pinch or scroll to size it.');
+        draw();
+      });
+    });
+    row.addEventListener('click', (ev) => {
+      const b = ev.target.closest('button[data-p]');
+      if (!b || st.busy) return;
+      const p = b.dataset.p;
+      if (p === 'choose') { input.click(); return; }
+      if (p === 'cancel') { close(); return; }
+      if (p === 'save') {
+        run(async () => {
+          say('Saving ...');
+          const crop = { cx: +st.cx.toFixed(4), cy: +st.cy.toFixed(4), zoom: +st.zoom.toFixed(3) };
+          done(await this.post(body({ action: 'save', tmp: st.tmp, crop })));
+        });
+        return;
+      }
+      if (p === 'remove') {
+        run(async () => { say('Removing ...'); done(await this.post(body({ action: 'remove' }))); });
+        return;
+      }
+      const name = { opensea: 'OpenSea', ens: 'ENS', x: 'X' }[p];
+      run(async () => {
+        say(`Asking ${name} ...`);
+        done(await this.post(body({ action: 'use', source: p })));
+      });
+    });
+
+    const api = { close, panel };
+    this.open = api;
+    draw();
+    /* Straight to the picker from the tap that opened this, where the browser
+       still counts it as the reader's own gesture. */
+    if (opts.pick !== false) input.click();
+    return api;
+  },
+};
+
 /* ---------- day and night ----------
  *
  * One choice, two deploys, and it has to be settled before the first pixel.
@@ -3410,7 +3905,13 @@ MF.nav = {
          from except the room ... and switching wallets, which is the first
          thing anybody testing this does, meant finding that one page first.
          Two lines, the bar's own smallcaps, on a hairline. */
-      right = `<span class="me">
+      /* Your face beside your name, and a tap on it changes it. Asked for
+         once the page has settled: a bar is not worth holding a page up. */
+      const face = s.spectator ? '' : MF.pfp.html(s.address, 22, { mine: true });
+      if (!s.spectator && !MF.pfp._load) {
+        (window.requestIdleCallback || ((f) => setTimeout(f, 300)))(() => MF.pfp.load());
+      }
+      right = `<span class="me">${face}
         <button type="button" class="you" data-nav="menu"
           aria-haspopup="true" aria-expanded="${this.menu ? 'true' : 'false'}">${e(name)}</button>
         ${this.menu ? `<span class="menu" role="menu">
@@ -3734,6 +4235,12 @@ MF.nav = {
          if that method ever failed or returned early. */
       this.draw();
       await this.refresh();
+      /* And the page hears it, as it hears a sign-out: a profile that has just
+         learned it is yours has a face to offer to change. */
+      try {
+        const now = MF.session.current();
+        document.dispatchEvent(new CustomEvent('mf:session', { detail: { address: now ? now.address : null } }));
+      } catch (err) { /* an old browser simply misses the hint */ }
     } catch (err) {
       this.busy = null;
       /* More than one answering and none of them already authorised here. The

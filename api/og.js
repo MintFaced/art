@@ -91,8 +91,22 @@ const imageOf = (w) => {
   return sized(first);
 };
 
+/* A face (PFP.md): the collector's hexagon, 160 across, the same pointy-top
+   shape the pages draw. Satori reads no webp, so the kept picture comes
+   through the resizer as a jpeg; it is ours in R2 either way, never OpenSea's
+   or X's. Somebody with no picture is their longest-held work, faintly. */
+const HEX = 'polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%)';
+const faceSrc = (url) => `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ''))}&w=320&h=320&fit=cover&output=jpg&q=85`;
+function Face({ src, faint }) {
+  return { type: 'div', props: {
+    style: { width: '160px', height: '160px', display: 'flex', flexShrink: 0, marginRight: '30px' },
+    children: { type: 'img', props: { src, width: 160, height: 160,
+      style: { width: '160px', height: '160px', objectFit: 'cover', clipPath: HEX, opacity: faint ? 0.35 : 1 } } },
+  } };
+}
+
 /* ---------- the card ---------- */
-function Card({ image, title, lines, dot, tall }) {
+function Card({ image, title, lines, dot, tall, face }) {
   return {
     type: 'div',
     props: {
@@ -111,15 +125,17 @@ function Card({ image, title, lines, dot, tall }) {
         { type: 'div', props: {
           style: { flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '64px 58px 46px' },
           children: [
-            { type: 'div', props: { style: { display: 'flex', flexDirection: 'column' }, children: [
+            { type: 'div', props: { style: { display: 'flex', alignItems: 'center' }, children: [
+            face ? Face(face) : null,
+            { type: 'div', props: { style: { display: 'flex', flexDirection: 'column', flex: '1' }, children: [
               { type: 'div', props: { style: {
-                fontSize: tall ? '46px' : '58px', lineHeight: 1.03, letterSpacing: '-0.03em',
+                fontSize: face ? (tall ? '34px' : '44px') : (tall ? '46px' : '58px'), lineHeight: 1.03, letterSpacing: '-0.03em',
                 color: INK, fontWeight: 400, display: 'flex' }, children: title } },
               { type: 'div', props: { style: { display: 'flex', flexDirection: 'column', marginTop: '30px' },
                 children: lines.filter(Boolean).map((l, i) => ({
                   type: 'div', props: {
                     key: String(i),
-                    style: { fontFamily: 'Geist Mono', fontSize: '19px', letterSpacing: '0.13em',
+                    style: { fontFamily: 'Geist Mono', fontSize: face ? '16px' : '19px', letterSpacing: face ? '0.1em' : '0.13em',
                       color: i === 0 ? MUTED : INK, marginTop: i ? '14px' : '0', display: 'flex', alignItems: 'center' },
                     children: l,
                   },
@@ -131,6 +147,7 @@ function Card({ image, title, lines, dot, tall }) {
                   { type: 'div', props: { style: { fontFamily: 'Geist Mono', fontSize: '19px', letterSpacing: '0.13em', color: INK, display: 'flex' }, children: dot } },
                 ],
               } } : null,
+            ].filter(Boolean) } },
             ].filter(Boolean) } },
             { type: 'div', props: { style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }, children: [
               { type: 'div', props: { style: { fontSize: '25px', letterSpacing: '-0.02em', color: INK, display: 'flex' }, children: 'MintFace' } },
@@ -230,8 +247,22 @@ async function collectorCard(slug) {
       }
     } catch (e) { /* the card stands without it */ }
   }
+  /* Their face: the kept picture, or the work they have held longest. */
+  let face = null;
+  try {
+    const [raw] = storeConfigured() ? await pipe([['GET', `pfp:${String(page.address).toLowerCase()}`]]) : [null];
+    const rec = raw ? JSON.parse(raw) : null;
+    if (rec && rec.url && rec.source !== 'none') face = { src: faceSrc(rec.url), faint: false };
+  } catch (e) { /* the card stands without it */ }
+  if (!face) {
+    const kept = (page.works || []).filter((w) => w.acquired && w.image)
+      .sort((a, b) => String(a.acquired).localeCompare(String(b.acquired)))[0];
+    const u = kept && (/^[a-z][a-z0-9+.-]*:/i.test(kept.image) ? kept.image : `${ASSETS}/${kept.image}`);
+    if (u && !u.startsWith('data:')) face = { src: faceSrc(u), faint: true };
+  }
   return {
     image,
+    face,
     title: name,
     lines: [
       `${page.counts.works} WORKS · TAO ${(page.tao || 0).toLocaleString('en-NZ')}`,
@@ -275,13 +306,21 @@ const div = (style, children) => ({ type: 'div', props: { style: { display: 'fle
 function WireCard(c) {
   const slots = c.slots || [];
   const big = c.hex || null;
+  /* The backer's face, beside the caption that names them. */
+  const caption = div({ fontSize: c.caption && c.caption.length > 46 ? '46px' : '58px', color: INK,
+    letterSpacing: '-0.02em', lineHeight: 1.12, maxWidth: c.face ? '850px' : '1000px' }, [c.caption || '']);
   return div({ width: '1200px', height: '675px', background: PAPER, fontFamily: 'Geist',
     flexDirection: 'column', padding: '54px 56px', justifyContent: 'space-between' }, [
     div({ flexDirection: 'column', flexShrink: 0 }, [
       div({ fontSize: '19px', letterSpacing: '0.16em', color: MUTED, fontFamily: 'GeistMono',
         textTransform: 'uppercase' }, [c.eyebrow || 'MINTFACE']),
-      div({ fontSize: c.caption && c.caption.length > 46 ? '46px' : '58px', color: INK, marginTop: '16px',
-        letterSpacing: '-0.02em', lineHeight: 1.12, maxWidth: '1000px' }, [c.caption || '']),
+      div({ marginTop: '16px', alignItems: 'center' }, [
+        c.face ? div({ width: '120px', height: '120px', flexShrink: 0, marginRight: '28px' }, [
+          { type: 'img', props: { src: faceSrc(c.face), width: 120, height: 120,
+            style: { width: '120px', height: '120px', objectFit: 'cover', clipPath: HEX } } },
+        ]) : null,
+        caption,
+      ].filter(Boolean)),
     ]),
     /* The colour itself, as large as the card allows. */
     big ? div({ alignItems: 'flex-end', marginTop: '18px', marginBottom: '26px', flexGrow: 1 }, [
@@ -336,6 +375,9 @@ export async function GET(request) {
     return new ImageResponse(WireCard({
       eyebrow: q('eyebrow'), caption: q('caption'), hex: /^#[0-9A-Fa-f]{6}$/.test(q('hex') || '') ? q('hex') : null,
       name: q('name'), figure: q('figure'), foot: q('foot'), slots,
+      /* Only a face we keep: the query is public, and a card is not a way to
+         draw anybody's picture from anywhere. */
+      face: /^https:\/\/assets\.mintface\.art\/pfp\/0x[0-9a-f]{40}\/[0-9a-f]+\.webp$/.test(q('face') || '') ? q('face') : null,
     }), {
       width: 1200,
       height: 675,

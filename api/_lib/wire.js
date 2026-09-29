@@ -112,7 +112,9 @@ export function compose(ev, { overlay = null, register = null } = {}) {
     const body = p.moved
       ? speak([`${w.label || 'A COLLECTOR'} MOVED ${n(p.amount)} TAO ${TAO_GLYPH} TO ${said(p.hex)}`])
       : speak([`${w.label || 'A COLLECTOR'} PUT ${amount} BEHIND ${said(p.hex)}`]);
-    return { text: body, card: { kind: 'swatch', hex: p.hex, slot: p.slot, total: p.total } };
+    /* Whose face may go on the card beside their name: never somebody the
+       copy has left unnamed. */
+    return { text: body, card: { kind: 'swatch', hex: p.hex, slot: p.slot, total: p.total, face: w.quiet || !w.label ? null : p.address } };
   }
 
   if (ev.kind === 'nudge-lock') {

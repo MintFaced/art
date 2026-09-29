@@ -17,7 +17,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { deriveCollectors, registerFile } from '../api/_lib/collectors.js';
+import { deriveCollectors, registerFile, heldFile } from '../api/_lib/collectors.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const DRY = process.argv.includes('--dry');
@@ -54,6 +54,13 @@ const names = load('data/source/collector-overlay.json', null);
 
 const d = deriveCollectors(collections, titleOf, privateList, tao, nudges, forward, names);
 
+/* Just the held-longest file, leaving everything else as it is. */
+if (process.argv.includes('--held-only')) {
+  fs.writeFileSync(path.join(ROOT, 'data/collectors-held.json'), heldFile(d.held));
+  console.log(`wrote data/collectors-held.json (${Object.keys(d.held).length} collectors)`);
+  process.exit(0);
+}
+
 if (DRY) {
   console.log(JSON.stringify(d.index.counts, null, 1));
   console.log(`address slugs use ${d.hexBits} hex chars`);
@@ -67,6 +74,7 @@ if (DRY) {
   fs.writeFileSync(path.join(ROOT, 'data/collectors.json'), JSON.stringify(d.index, null, 1) + '\n');
   // one row per line keeps the nightly diff readable and the file small
   fs.writeFileSync(path.join(ROOT, 'data/collectors-register.json'), registerFile(d.register));
+  fs.writeFileSync(path.join(ROOT, 'data/collectors-held.json'), heldFile(d.held));
   fs.writeFileSync(path.join(ROOT, 'data/collector-slugs.json'), JSON.stringify(d.slugMap, null, 1) + '\n');
 
   const dir = path.join(ROOT, 'data/collectors');
