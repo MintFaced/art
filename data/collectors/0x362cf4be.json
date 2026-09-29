@@ -1,7 +1,9 @@
 {
  "address": "0x362cf4be53248d0872ccbfba570254c08e2f3d09",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x362cf4be",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-05-09T00:47:31.000000Z",
  "last_collected": "2023-01-01T05:44:23.000000Z",
- "tao": 23419,
+ "tao": 23956,
  "tao_rate": 16.8,
- "tao_rank": 457,
+ "tao_rank": 458,
  "collections": [
   {
    "slug": "xlife",
@@ -39,7 +41,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 5605
+   "tao": 5739
   },
   {
    "id": "xlife-2",
@@ -51,19 +53,7 @@
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 5606
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-01T03:26:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5606
+   "tao": 5740
   },
   {
    "id": "2022-10k-2",
@@ -75,7 +65,19 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6601
+   "tao": 6736
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5740
   }
  ]
 }
