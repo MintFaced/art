@@ -5,6 +5,28 @@ import { bankingContext, bankNudge } from './_lib/banking.js';
 import { kindOf, lockRule, lockLine, checkHex, CANDIDATES } from './_lib/nudges.js';
 import { seriesState } from './_lib/palette.js';
 import { enqueue, slotsRow } from './_lib/wire.js';
+import { list as notesList, get as noteGet, update as noteUpdate, missedPaths, STATUSES } from './_lib/feedback.js';
+import { loadRegister } from './_lib/register.js';
+import { fold, tagIndex } from './_lib/names.js';
+
+/* A note's wallet, as the note gave it, and the collector page it leads to if
+   it is a wallet that holds TAO. The link is built here from the register and
+   the TAO table, never taken from anything the note said. */
+async function walletLinks(notes) {
+  if (!notes.some((n) => n.wallet)) return notes;
+  const site = process.env.SITE_ORIGIN || 'https://mintface.art';
+  const at = async (_o, path) => (await fetch(site + '/' + path, { headers: { accept: 'application/json' } })).json();
+  let tao = null; let index = null;
+  try { tao = await at(site, 'data/tao.json'); } catch (e) { tao = null; }
+  try { const reg = await loadRegister(at, site); index = reg ? tagIndex(reg) : null; } catch (e) { index = null; }
+  return notes.map((n) => {
+    if (!n.wallet) return n;
+    const w = String(n.wallet).trim();
+    const address = /^0x[0-9a-fA-F]{40}$/.test(w) ? w.toLowerCase() : (index ? index.get(fold(w.replace(/^@/, ''))) || null : null);
+    const held = address && tao && tao.wallets && tao.wallets[address] ? tao.wallets[address].tao : 0;
+    return { ...n, wallet_url: held > 0 ? 'https://collectors.mintface.art/' + address : null };
+  });
+}
 
 const SOURCE = 'data/source/recent-work.json';
 const json = (b, s = 200, headers = {}) =>
@@ -55,6 +77,25 @@ export async function POST(request) {
   }
 
   if (!sessionOk(sessionFrom(request))) return json({ error: 'sign in first' }, 401);
+
+  /* ------------------------------------------------------ agent notes
+     Read, answered and sorted here, behind the password. The note's text goes
+     back to the console as data and is drawn there as plain text. */
+  if (action === 'notes') {
+    return json({ ok: true, notes: await walletLinks(await notesList({ limit: 300 })), statuses: STATUSES });
+  }
+  if (action === 'note') {
+    const n = await noteGet(String(body.id || ''));
+    if (!n) return json({ error: 'no such note' }, 404);
+    return json({ ok: true, note: (await walletLinks([n]))[0], statuses: STATUSES });
+  }
+  if (action === 'note-set') {
+    const out = await noteUpdate(String(body.id || ''), { status: body.status, reply: body.reply, spam: body.spam });
+    return json(out, out.status || 200);
+  }
+  if (action === 'misses') {
+    return json({ ok: true, misses: await missedPaths({ days: 14 }) });
+  }
 
   /* Nudge authoring. A nudge is one question, a close date, and nothing else
      required. While it is open only the wording of the note and the image may

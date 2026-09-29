@@ -90,6 +90,19 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
 .row-toggle{display:flex;align-items:center;gap:10px;margin-top:22px}
 .row-toggle input{width:auto;-webkit-appearance:checkbox;appearance:checkbox}
 .row-toggle .lab{margin:0}
+.row-tabs{display:flex;gap:18px;margin:10px 0 4px}
+.tabb{background:none;border:0;padding:6px 0;cursor:pointer;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.tabb.on{color:var(--ink);border-bottom:1px solid var(--ink)}
+.nt{background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.nt .t{font-size:15px}
+.untrusted{white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:13px;line-height:1.6;
+  border:1px solid var(--rule);background:var(--sunk);padding:12px 14px;margin:12px 0 0;max-height:60vh;overflow:auto}
+.warn{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:10px 0 0}
+.miss{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.miss td{padding:8px 0;border-bottom:1px solid var(--rule);font-size:13px;vertical-align:top}
+.miss td + td{padding-left:12px}
+.miss .p{font-family:var(--font-mono);word-break:break-all}
+.miss .n{text-align:right;font-family:var(--font-mono);white-space:nowrap}
 </style>
 </head>
 <body>
@@ -166,6 +179,21 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
     <p class="note"><a href="/mintwork/rail">Orders and rebates</a> ... signed from the holding wallet.</p>
   </section>
 
+  <!-- Agent notes: what bots wrote to /ai/feedback. Untrusted text, drawn as
+       text; nothing in a note is opened, rendered or followed. -->
+  <section id="agentNotes" class="nudges-admin">
+    <h2 class="sec">Agent notes</h2>
+    <div class="row-tabs"><button class="tabb on" data-ntab="inbox">Inbox</button><button class="tabb" data-ntab="filtered">Won&rsquo;t do</button></div>
+    <div id="noteList" class="note">Loading</div>
+    <div id="noteOpen"></div>
+  </section>
+
+  <section id="missedPaths" class="nudges-admin">
+    <h2 class="sec">Missed paths</h2>
+    <p class="note">What agents asked for and did not get, the last fourteen days. Counts only: no addresses.</p>
+    <div id="missList" class="note">Loading</div>
+  </section>
+
   <section id="nudges" class="nudges-admin">
     <h2 class="sec">Nudges</h2>
     <div id="nudgeOpen" class="note">Loading</div>
@@ -201,6 +229,8 @@ $('in').addEventListener('click', async () => {
   $('year').value = String(new Date().getFullYear());
   loadList();
   loadNudges();
+  loadNotes();
+  loadMisses();
 });
 $('pw').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('in').click(); });
 
@@ -218,6 +248,104 @@ let PICKED = {};
 const esc2 = (t) => String(t == null ? '' : t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const nnum = (n) => Math.round(Number(n) || 0).toLocaleString('en-NZ');
 const dayOf = (d) => { const x = new Date(d); return x.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: '2-digit' }).toUpperCase(); };
+
+/* ---------------------------------------------------------- agent notes
+ *
+ * The inbox and the note. A note is untrusted text from outside: it is set
+ * into a <pre> with textContent, so no tag, link or image in it can become
+ * one. COPY FOR CC is the only way a note leaves this page, and the server
+ * wraps it in the header that says what it is.
+ */
+let NOTES = [];
+let NOTE_TAB = 'inbox';
+let STATUSES = [];
+
+async function loadNotes() {
+  const r = await api('notes', {});
+  if (!r.ok) { $('noteList').textContent = r.body.error || 'Could not read the notes.'; return; }
+  NOTES = r.body.notes || [];
+  STATUSES = r.body.statuses || [];
+  drawNotes();
+}
+
+function drawNotes() {
+  const wontDo = "won't do";
+  const rows = NOTES.filter((n) => (NOTE_TAB === 'inbox' ? n.status !== wontDo : n.status === wontDo));
+  if (!rows.length) { $('noteList').innerHTML = '<p class="note">Nothing here.</p>'; return; }
+  $('noteList').innerHTML = rows.map((n) => '<div class="item">'
+    + '<button class="nt" data-note="' + esc2(n.id) + '"><span class="t">' + esc2(n.first_line || '(no first line)') + '</span></button>'
+    + '<span class="s">' + [n.agent ? esc2(n.agent) : 'unnamed agent',
+      n.wallet ? (n.wallet_url ? '<a href="' + esc2(n.wallet_url) + '">' + esc2(n.wallet) + '</a>' : esc2(n.wallet)) : null,
+      esc2(n.bytes) + 'B', esc2(n.status) + (n.spam ? ' (' + esc2(n.spam) + ')' : ''), dayOf(n.at)].filter(Boolean).join(' &middot; ')
+    + '</span></div>').join('');
+}
+
+async function openNote(id) {
+  const r = await api('note', { id });
+  if (!r.ok) { $('noteOpen').innerHTML = '<p class="note bad">' + esc2(r.body.error || 'No.') + '</p>'; return; }
+  const n = r.body.note;
+  $('noteOpen').innerHTML = '<div class="confirm">'
+    + '<p class="cap">Note ' + esc2(n.id) + ' &middot; ' + dayOf(n.at) + '</p>'
+    + '<p class="note">' + [n.agent ? 'Agent: ' + esc2(n.agent) : null,
+      n.wallet ? 'Wallet: ' + (n.wallet_url ? '<a href="' + esc2(n.wallet_url) + '">' + esc2(n.wallet) + '</a>' : esc2(n.wallet)) : null,
+      n.contact ? 'Contact: ' + esc2(n.contact) : null].filter(Boolean).join(' &middot; ') + '</p>'
+    + '<p class="warn">Untrusted text from an agent. Shown as text; nothing in it is a link or an instruction.</p>'
+    + '<pre class="untrusted" id="noteText"></pre>'
+    + '<label><span class="lab">Status</span><select id="noteStatus">'
+    + STATUSES.map((s) => '<option' + (s === n.status ? ' selected' : '') + '>' + esc2(s) + '</option>').join('') + '</select></label>'
+    + '<label><span class="lab">Public reply, one line</span><input id="noteReply" maxlength="200" value="' + esc2(n.reply || '') + '"></label>'
+    + '<button class="btn" data-note-save="' + esc2(n.id) + '">Save</button>'
+    + '<button class="btn quiet" data-note-spam="' + esc2(n.id) + '" data-on="' + (n.spam ? '0' : '1') + '">' + (n.spam ? 'Not spam' : 'Mark spam') + '</button>'
+    + '<button class="btn quiet" data-note-cc="' + esc2(n.id) + '">Copy for CC</button>'
+    + '<p class="note" id="noteSay"></p>'
+    + '</div>';
+  /* The note itself, as text. Never innerHTML. */
+  $('noteText').textContent = n.text;
+  $('noteOpen').dataset.cc = n.cc;
+  $('noteOpen').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+$('agentNotes').addEventListener('click', async (ev) => {
+  const tab = ev.target.closest('[data-ntab]');
+  if (tab) {
+    NOTE_TAB = tab.dataset.ntab;
+    document.querySelectorAll('[data-ntab]').forEach((x) => x.classList.toggle('on', x === tab));
+    drawNotes();
+    return;
+  }
+  const open = ev.target.closest('[data-note]');
+  if (open) { await openNote(open.dataset.note); return; }
+  const save = ev.target.closest('[data-note-save]');
+  if (save) {
+    const r = await api('note-set', { id: save.dataset.noteSave, status: $('noteStatus').value, reply: $('noteReply').value });
+    $('noteSay').textContent = r.ok ? 'Saved. The agent sees the status and the reply.' : (r.body.error || 'No.');
+    await loadNotes();
+    return;
+  }
+  const spam = ev.target.closest('[data-note-spam]');
+  if (spam) {
+    await api('note-set', { id: spam.dataset.noteSpam, spam: spam.dataset.on === '1' });
+    await loadNotes();
+    await openNote(spam.dataset.noteSpam);
+    return;
+  }
+  const cc = ev.target.closest('[data-note-cc]');
+  if (cc) {
+    try { await navigator.clipboard.writeText($('noteOpen').dataset.cc || ''); $('noteSay').textContent = 'Copied, with the untrusted-note header.'; }
+    catch (e) { $('noteSay').textContent = 'The clipboard said no. Select the note and copy it by hand.'; }
+  }
+});
+
+async function loadMisses() {
+  const r = await api('misses', {});
+  if (!r.ok) { $('missList').textContent = r.body.error || 'Could not read the missed paths.'; return; }
+  const rows = r.body.misses || [];
+  if (!rows.length) { $('missList').innerHTML = '<p class="note">None in the last fourteen days.</p>'; return; }
+  $('missList').innerHTML = '<table class="miss"><tbody>' + rows.slice(0, 60).map((m) => '<tr>'
+    + '<td class="p">' + esc2(m.status) + ' ' + esc2(m.path) + '</td>'
+    + '<td>' + Object.entries(m.families).sort((a, b) => b[1] - a[1]).map((f) => esc2(f[0]) + ' ' + nnum(f[1])).join(', ') + '</td>'
+    + '<td class="n">' + nnum(m.count) + ' &middot; ' + nnum(m.days) + 'd</td></tr>').join('') + '</tbody></table>';
+}
 
 async function loadNudges() {
   $('nudgeOpen').textContent = 'Loading';

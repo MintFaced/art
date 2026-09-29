@@ -1,5 +1,6 @@
 import { findWork, useRequestOrigin, siteOrigin } from './_lib/data.js';
 import { one, storeConfigured } from './_lib/kv.js';
+import { logMiss } from './_lib/feedback.js';
 
 /* The rail's record for a work, read straight from the store rather than
    through api/_lib/aab.js, so every work page does not load the chain client to
@@ -133,6 +134,9 @@ export async function GET(request) {
       .replace('</head>', `${meta}\n</head>`);
   }
 
+  /* A work nobody has: counted, because an agent asking for one is a signal
+     about what it thought was here. */
+  if (!hit && id) await logMiss({ path: `/w/${id}`, status: 404, ua: request.headers.get('user-agent') });
   return new Response(html, {
     status: hit || !id ? 200 : 404,
     headers: {

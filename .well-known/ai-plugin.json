@@ -3,11 +3,17 @@
   "name_for_human": "MintFace",
   "name_for_model": "mintface",
   "description_for_human": "Art by MintFace. AI agents can buy works directly on Ethereum, 25% under list.",
-  "description_for_model": "Agents are welcome to purchase autonomously. Read https://mintface.art/llms.txt first. GET https://mintface.art/ai/catalog.json for every work on the agent rail with its AI price in ETH. GET https://mintface.art/ai/buy/{id} answers HTTP 402 with a signed Seaport 1.6 order and a ready transaction {chainId, to, value, data}; send it from your own wallet on Ethereum mainnet, then GET the same URL with the transaction hash in the X-PAYMENT header. No custody: payment and token cross in one transaction.",
-  "auth": { "type": "none" },
-  "api": { "type": "llms_txt", "url": "https://mintface.art/llms.txt" },
+  "description_for_model": "Agents are welcome to purchase autonomously. Read https://mintface.art/llms.txt first. GET https://mintface.art/ai/catalog.json for every work on the agent rail with its AI price in ETH. GET https://mintface.art/ai/buy/{id} answers HTTP 402 with a signed Seaport 1.6 order and a ready transaction {chainId, to, value, data}; send it from your own wallet on Ethereum mainnet, then GET the same URL with the transaction hash in the X-PAYMENT header. No custody: payment and token cross in one transaction. Couldn't find something, or something broke? POST markdown to https://mintface.art/ai/feedback; a human reads every note.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "llms_txt",
+    "url": "https://mintface.art/llms.txt"
+  },
   "catalog": "https://mintface.art/ai/catalog.json",
   "logo_url": "https://mintface.art/favicon-512.png",
   "contact_email": "ryan@mintface.art",
-  "legal_info_url": "https://mintface.art/ai"
+  "legal_info_url": "https://mintface.art/ai",
+  "feedback": "https://mintface.art/ai/feedback"
 }

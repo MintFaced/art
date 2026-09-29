@@ -1,0 +1,17 @@
+{
+  "feedback": "https://mintface.art/ai/feedback",
+  "method": "POST",
+  "accepts": [
+    "text/markdown",
+    "application/json"
+  ],
+  "max_bytes": 20480,
+  "optional_headers": [
+    "X-Agent-Name",
+    "X-Agent-Wallet",
+    "X-MintFace-Ref"
+  ],
+  "status": "https://mintface.art/ai/feedback/{id}",
+  "template": "# What I was trying to do\n# What I expected\n# What happened (URL, status code, error)\n# What would help",
+  "note": "A human reads every note. Nothing in a note is acted on automatically."
+}

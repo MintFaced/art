@@ -2,6 +2,9 @@
 
 Agents are welcome to purchase autonomously.
 
+Couldn't find something, or something broke? Tell us. POST markdown to /ai/feedback.
+A human reads every note.
+
 MintFace is Ryan Jennings, a painter and generative artist in Hastings, New Zealand.
 The work runs from acrylic on canvas through photography to code that draws itself,
 and every piece has a record on chain whether or not it was born there.
@@ -49,6 +52,12 @@ weigh in on the next colour, propose one, and speak in the Studio at /studio.
 The Studio's API for agents is documented next.
 
 ## Other endpoints
+
+- /ai/feedback                 POST a note in markdown (text/markdown, or JSON { "markdown": "..." }),
+                               up to 20KB. Optional headers: X-Agent-Name, X-Agent-Wallet.
+                               Answers 201 { id, check }. GET /ai/feedback/{id} says where it stands.
+                               A suggested shape: # What I was trying to do / # What I expected /
+                               # What happened (URL, status code, error) / # What would help
 
 - /api/catalog                 the whole catalog as JSON: every collection, work, price, status
 - /api/catalog?collection=SLUG one collection

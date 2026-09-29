@@ -14,6 +14,7 @@ import { storeConfigured } from './_lib/kv.js';
 import * as R from './_lib/aab.js';
 import * as S from './_lib/seaport.js';
 import * as B from './_lib/rebate.js';
+import { logMiss } from './_lib/feedback.js';
 
 const json = (body, status = 200, extra = {}) => new Response(JSON.stringify(body, null, 1), {
   status,
@@ -32,7 +33,29 @@ export async function OPTIONS() {
   return json({}, 204);
 }
 
+/* What an agent is answered with when it does not get what it asked for: the
+   letterbox, in the body, so an agent that cannot find something is told where
+   to say so. And the miss itself, counted: most agents never write in. */
+function forAgent(request, res) {
+  return (async () => {
+    if (res.status < 400 && res.status !== 402) return res;
+    const url = new URL(request.url);
+    if (res.status === 404 || res.status >= 500) {
+      await logMiss({ path: url.pathname, status: res.status, ua: request.headers.get('user-agent') });
+    }
+    let body;
+    try { body = await res.clone().json(); } catch (e) { return res; }
+    if (!body || typeof body !== 'object' || Array.isArray(body)) return res;
+    return new Response(JSON.stringify({ ...body, feedback: '/ai/feedback' }, null, 1),
+      { status: res.status, headers: res.headers });
+  })();
+}
+
 export async function GET(request) {
+  return forAgent(request, await answer(request));
+}
+
+async function answer(request) {
   useRequestOrigin(request);
   if (!storeConfigured()) return unready();
   const url = new URL(request.url);
@@ -64,7 +87,7 @@ export async function GET(request) {
       return json(await B.view({ wallet: /^0x[0-9a-fA-F]{40}$/.test(w || '') ? w : null }), 200,
         { 'cache-control': w ? 'no-store' : 'public, max-age=60' });
     }
-    return json({ error: 'Nothing here. The rail is at /ai/catalog.json and /ai/buy/{id}.' }, 404);
+    return json({ error: 'Nothing here. The rail is at /ai/catalog.json and /ai/buy/{id}, and /llms.txt says the rest. If you were looking for something that should be here, tell us.' }, 404);
   } catch (e) {
     console.error('aab GET', path, e);
     return json({ error: 'The rail could not answer just now. Try again in a minute.' }, 500);

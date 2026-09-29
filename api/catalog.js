@@ -1,5 +1,6 @@
 import { siteIndex, siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { nzdToUsd } from './_lib/fx.js';
+import { logMiss } from './_lib/feedback.js';
 
 // The catalog, shaped for something that is reading rather than looking. The
 // site's own data files are split for the browser; this puts a work's contract,
@@ -64,7 +65,10 @@ export async function GET(request) {
   const fx = await rates();
 
   const wanted = idx.collections.filter((c) => (only ? c.slug === only : true) && c.slug !== 'the-vault' && c.display !== false);
-  if (only && !wanted.length) return json({ error: 'no such collection' }, 404);
+  if (only && !wanted.length) {
+    await logMiss({ path: `/api/catalog?collection=${only}`, status: 404, ua: request.headers.get('user-agent') });
+    return json({ error: 'no such collection', feedback: '/ai/feedback' }, 404);
+  }
 
   const out = [];
   for (const c of wanted) {
