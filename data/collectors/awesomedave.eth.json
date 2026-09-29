@@ -1,7 +1,9 @@
 {
  "address": "0xc6aef9394574777c237fc10bb122589d36d13dc7",
  "ens": "awesomedave.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "awesomedave.eth",
  "private": false,
  "has_page": true,
@@ -13,7 +15,7 @@
  },
  "first_collected": "2022-12-14T17:22:11.000Z",
  "last_collected": "2024-06-28T09:01:47.000000Z",
- "tao": 211776,
+ "tao": 217015,
  "tao_rate": 163.8,
  "tao_rank": 54,
  "collections": [
@@ -54,7 +56,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 3320
+   "tao": 3454
   },
   {
    "id": "xlife-46",
@@ -66,7 +68,7 @@
    "unique": false,
    "image": "xlife/xlife-46-image.gif",
    "orientation": null,
-   "tao": 3670
+   "tao": 3804
   },
   {
    "id": "xlife-43",
@@ -78,7 +80,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4068
+   "tao": 4203
   },
   {
    "id": "we-are-the-line-7",
@@ -101,7 +103,7 @@
    "unique": false,
    "image": "xlife/xlife-31-image.gif",
    "orientation": null,
-   "tao": 4779
+   "tao": 4913
   },
   {
    "id": "xlife-23",
@@ -113,7 +115,7 @@
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 5222
+   "tao": 5356
   },
   {
    "id": "xlife-22",
@@ -125,7 +127,7 @@
    "unique": false,
    "image": "xlife/xlife-22-image.gif",
    "orientation": null,
-   "tao": 5248
+   "tao": 5382
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -137,19 +139,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5249
-  },
-  {
-   "id": "xlife-20",
-   "title": "Balloon Payment",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-03-20T02:25:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-20-image.gif",
-   "orientation": null,
-   "tao": 5278
+   "tao": 5383
   },
   {
    "id": "xlife-4",
@@ -161,7 +151,7 @@
    "unique": false,
    "image": "xlife/xlife-4-image.gif",
    "orientation": null,
-   "tao": 5596
+   "tao": 5730
   },
   {
    "id": "xlife-3",
@@ -173,19 +163,7 @@
    "unique": false,
    "image": "xlife/xlife-3-image.gif",
    "orientation": null,
-   "tao": 5605
-  },
-  {
-   "id": "xlife-1",
-   "title": "On The Line",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-01T03:23:35.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-1-image.gif",
-   "orientation": null,
-   "tao": 5606
+   "tao": 5739
   },
   {
    "id": "xlife-2",
@@ -197,7 +175,7 @@
    "unique": false,
    "image": "xlife/xlife-2-image.gif",
    "orientation": null,
-   "tao": 5606
+   "tao": 5740
   },
   {
    "id": "roads-or-rivers-twisted",
@@ -209,7 +187,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-twisted-image.jpg",
    "orientation": null,
-   "tao": 67478
+   "tao": 69090
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -221,7 +199,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 67520
+   "tao": 69132
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -233,7 +211,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5670
+   "tao": 5805
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -245,7 +223,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11358
+   "tao": 11627
   },
   {
    "id": "xnouns-327",
@@ -279,6 +257,30 @@
    "unique": true,
    "image": "xnouns/xnouns-130-image.avif",
    "orientation": null
+  },
+  {
+   "id": "xlife-20",
+   "title": "Balloon Payment",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-20-image.gif",
+   "orientation": null,
+   "tao": 5412
+  },
+  {
+   "id": "xlife-1",
+   "title": "On The Line",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-1-image.gif",
+   "orientation": null,
+   "tao": 5740
   }
  ]
 }
