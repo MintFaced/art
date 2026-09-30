@@ -3,6 +3,47 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmuomct9a",
+   "at": "2026-09-30T21:30:17.758Z",
+   "ok": true,
+   "ms": 73119,
+   "blocks": {
+    "from": 25820496,
+    "to": 26092994,
+    "scanned": 272499
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 0,
+    "sales": 0,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 0,
+   "tao": {
+    "live": 74207533,
+    "was": 74142359,
+    "delta": 65174,
+    "lost_to_sales": 282251,
+    "wallets": 3438
+   },
+   "register": {
+    "collectors": 3677,
+    "with_page": 808,
+    "private": 0,
+    "named": 1219
+   },
+   "classified": 0,
+   "unclassified": 0,
+   "events": 13107,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 101,
+   "files": 5,
+   "pages": 0,
+   "movements": [],
+   "movers": []
+  },
+  {
    "run_id": "rmun6wyei",
    "at": "2026-09-29T21:30:17.514Z",
    "ok": true,
