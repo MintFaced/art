@@ -3,6 +3,80 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmuq1sng6",
+   "at": "2026-10-01T21:30:17.142Z",
+   "ok": true,
+   "ms": 87875,
+   "blocks": {
+    "from": 25820496,
+    "to": 26100165,
+    "scanned": 279670
+   },
+   "chain_events": 1,
+   "changed_hands": {
+    "works": 1,
+    "sales": 1,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 2,
+   "tao": {
+    "live": 74272655,
+    "was": 74207533,
+    "delta": 65122,
+    "lost_to_sales": 282303,
+    "wallets": 3439
+   },
+   "register": {
+    "collectors": 3679,
+    "with_page": 808,
+    "private": 0,
+    "named": 1219
+   },
+   "classified": 1,
+   "unclassified": 0,
+   "events": 13108,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 100,
+   "files": 9,
+   "pages": 1,
+   "movements": [
+    {
+     "work": "xlife-56",
+     "title": "Late Stage Memeism",
+     "token": "56",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-01T02:32:11.000Z",
+     "block": 26094497,
+     "tx": "0xa5166e63c14952deea2bc25a4262549ee61e0ca9e495ad6813d0942711a3fb9e",
+     "from": "0xe6da4a4930e896c7e1ff590779b4046d7587b802",
+     "to": "0xd2ab77a10cab66433c167e9aa4cc3178fe133def",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0xe6da4a4930e896c7e1ff590779b4046d7587b802",
+     "before": 756,
+     "after": 713,
+     "delta": -43,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0xd2ab77a10cab66433c167e9aa4cc3178fe133def",
+     "before": 0,
+     "after": 3,
+     "delta": 3,
+     "gained": 1
+    }
+   ]
+  },
+  {
    "run_id": "rmuomct9a",
    "at": "2026-09-30T21:30:17.758Z",
    "ok": true,
