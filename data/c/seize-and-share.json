@@ -1200,8 +1200,16 @@
      "address": "0x373678E468a51B881BfD2F2957eC992072e0D78a",
      "ens": "patriciaklein.eth",
      "display_name": null,
-     "qty": 2,
+     "qty": 3,
      "acquired": "2022-06-18T09:09:31.000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xd10a4426dF58fe27ce1207BD6F0F04738039336c",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2022-06-18T03:10:43.000Z",
      "status": "acquired"
     },
     {
@@ -2331,7 +2339,7 @@
      "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
      "ens": "mintface.eth",
      "display_name": null,
-     "qty": 15,
+     "qty": 12,
      "acquired": "2022-06-17T06:29:33.000Z",
      "status": "artist_held"
     },
@@ -2373,38 +2381,6 @@
      "display_name": null,
      "qty": 1,
      "acquired": "2022-06-18T03:07:56.000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x05576913eea5d79B83f28f0Cb0D12BE54Fdae8dC",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-06-18T03:20:25.000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xBD751CaC1FB27D930a6a0394D97C77908d94AD5D",
-     "ens": "summernoka-x-x.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-06-18T11:32:29.000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x11a22b262e505d355F975e1E48A365b5D4811Ae0",
-     "ens": "bombaymalayali.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-06-18T06:45:10.000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x838A1c2F0CAe94072332c346533ACDc6C590971F",
-     "ens": "olliesblog.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-07-01T05:52:35.000Z",
      "status": "acquired"
     },
     {
@@ -2711,7 +2687,7 @@
      "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
      "ens": "mintface.eth",
      "display_name": null,
-     "qty": 19,
+     "qty": 21,
      "acquired": "2022-06-17T06:29:33.000Z",
      "status": "artist_held"
     },
@@ -2753,6 +2729,30 @@
      "display_name": null,
      "qty": 1,
      "acquired": "2022-06-18T11:22:01.000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0x19615DEdA24af940a6509b64c16fd6BABA9Aa42a",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2022-06-19T02:58:42.000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xf5D11352D19952Bee143A7BdE6Ec462487b0Fbbf",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2022-06-19T01:57:00.000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xE8B1Fe994860DF93107aE7dfb7979d153b2233a3",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2022-07-04T04:56:31.000Z",
      "status": "acquired"
     }
    ],
@@ -2835,6 +2835,14 @@
    },
    "status": "sold_out",
    "holders": [
+    {
+     "address": "0xc6400A5584db71e41B0E5dFbdC769b54B91256CD",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2022-07-23T00:42:26.000Z",
+     "status": "acquired"
+    },
     {
      "address": "0xAB0e2f3C3C29DeAa7C3ca0DaceC97a33d5C26708",
      "ens": "muzeu.eth",
@@ -3896,7 +3904,7 @@
      "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
      "ens": "mintface.eth",
      "display_name": null,
-     "qty": 3,
+     "qty": 2,
      "acquired": "2022-08-25T23:14:54.000Z",
      "status": "artist_held"
     },
@@ -3947,14 +3955,6 @@
      "qty": 1,
      "acquired": "2022-12-07T02:21:47.000Z",
      "status": "vaulted"
-    },
-    {
-     "address": "0xC457FEe0564bf3EB972114762f62aB45C0e3590B",
-     "ens": "rakeshpulapa.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-08-25T23:59:49.000Z",
-     "status": "acquired"
     }
    ],
    "assets": {
@@ -4024,44 +4024,20 @@
    "status": "available",
    "holders": [
     {
-     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
-     "ens": "mintface.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-08-30T00:32:33.000Z",
-     "status": "artist_held"
-    },
-    {
-     "address": "0x32FfE815277FF53dd2a73557664E229899e6501E",
-     "ens": "justanotherblockinthechain.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-09-03T05:31:33.000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xc6400A5584db71e41B0E5dFbdC769b54B91256CD",
-     "ens": "6529museum.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-12-30T20:57:35.000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xcDA72070E455bb31C7690a170224Ce43623d0B6f",
-     "ens": null,
-     "display_name": null,
-     "qty": 4,
-     "acquired": "2024-05-03T02:09:59.000Z",
-     "status": "listed"
-    },
-    {
      "address": "0x862464BbD83d5743F9Cf873C6eA3d187D0f909BF",
      "ens": "priyanka29.eth",
      "display_name": null,
      "qty": 1,
      "acquired": "2022-08-30T01:07:18.000Z",
      "status": "acquired"
+    },
+    {
+     "address": "0xcDA72070E455bb31C7690a170224Ce43623d0B6f",
+     "ens": null,
+     "display_name": null,
+     "qty": 3,
+     "acquired": "2024-05-03T02:09:59.000Z",
+     "status": "listed"
     },
     {
      "address": "0x057117f9C9e95C2804C6133C6d63B32A519eeC57",
@@ -4685,20 +4661,52 @@
      "status": "listed"
     },
     {
-     "address": "0xa5DcE742F3775059d9406342D2ECBB0Ff8E3a3c2",
-     "ens": "johndoe8891.eth",
+     "address": "0xc6400A5584db71e41B0E5dFbdC769b54B91256CD",
+     "ens": null,
      "display_name": null,
-     "qty": 2,
-     "acquired": "2022-10-03T21:41:47.000Z",
+     "qty": 1,
+     "acquired": "2022-12-30T20:57:35.000Z",
      "status": "acquired"
     },
     {
      "address": "0xdD6B80649e8D472EB8fb52eb7eEcFd2Dc219AcE7",
      "ens": "ryanj.eth",
      "display_name": null,
-     "qty": 33,
+     "qty": 36,
      "acquired": "2022-09-24T05:59:23.000Z",
      "status": "artist_held"
+    },
+    {
+     "address": "0xBD751CaC1FB27D930a6a0394D97C77908d94AD5D",
+     "ens": "summernoka-x-x.eth",
+     "display_name": null,
+     "qty": 2,
+     "acquired": "2022-09-24T08:13:11.000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xe23E0bd6E320c87367B0E4b797B42dC9b4fE7cA0",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2022-09-24T08:38:59.000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": "2022-09-24T10:06:59.000Z",
+     "status": "acquired"
+    },
+    {
+     "address": "0xa5DcE742F3775059d9406342D2ECBB0Ff8E3a3c2",
+     "ens": "johndoe8891.eth",
+     "display_name": null,
+     "qty": 2,
+     "acquired": "2022-10-03T21:41:47.000Z",
+     "status": "acquired"
     },
     {
      "address": "0xBdBed7B28d31d8d370190E2c144c8A50fdFCb20a",
@@ -4722,14 +4730,6 @@
      "display_name": null,
      "qty": 1,
      "acquired": "2022-12-07T02:50:47.000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xBD751CaC1FB27D930a6a0394D97C77908d94AD5D",
-     "ens": "summernoka-x-x.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2022-09-24T08:13:11.000Z",
      "status": "acquired"
     },
     {
