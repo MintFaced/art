@@ -1,6 +1,6 @@
 {
  "_note": "Every exit, with the verdict that decided whether its TAO was taken back.",
- "generated": "2026-09-29T21:31:17.000Z",
+ "generated": "2026-10-01T21:31:29.000Z",
  "exits": [
   {
    "address": "0xcf79b7ba24c70341e3fd5409381e1f00aab275d9",
@@ -23057,6 +23057,17 @@
    "verdict": "sale",
    "tao": 178,
    "work": "xlife-20"
+  },
+  {
+   "address": "0xe6da4a4930e896c7e1ff590779b4046d7587b802",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "56",
+   "qty": 1,
+   "at": 1790821931,
+   "tx": "0xa5166e63c14952deea2bc25a4262549ee61e0ca9e495ad6813d0942711a3fb9e",
+   "verdict": "sale",
+   "tao": 52,
+   "work": "xlife-56"
   }
  ]
 }
