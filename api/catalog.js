@@ -1,6 +1,8 @@
 import { siteIndex, siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { nzdToUsd } from './_lib/fx.js';
 import { logMiss } from './_lib/feedback.js';
+import { publicSites } from './strip-sites.js';
+import { counts as stripCounts } from '../strip-plan.js';
 
 // The catalog, shaped for something that is reading rather than looking. The
 // site's own data files are split for the browser; this puts a work's contract,
@@ -85,6 +87,9 @@ export async function GET(request) {
       counts: c.counts,
       contracts: col.contracts || null,
       works: (col.works || []).filter((w) => w.status !== 'burned').map((w) => shape(w, c, fx)),
+      /* Strip Paintings live on buildings: where each site is, and how far
+         along, from data/strip-sites.json (also at /api/strip-sites). */
+      ...(c.slug === 'strip-paintings' ? { sites: (() => { const s = publicSites(); return { counts: stripCounts(s), list: s, source: '/api/strip-sites' }; })() } : {}),
     });
   }
 

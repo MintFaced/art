@@ -61,6 +61,9 @@ The Studio's API for agents is documented next.
 
 - /api/catalog                 the whole catalog as JSON: every collection, work, price, status
 - /api/catalog?collection=SLUG one collection
+- /api/strip-sites             Strip Paintings: every site on Heretaunga Street West and King Street,
+                               Hastings (address, building, size, status installed | approved | proposed,
+                               specimens, sale state) and the counts
 - /ai                          the rail explained, for humans
 
 ## Terms
