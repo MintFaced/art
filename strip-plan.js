@@ -44,8 +44,20 @@ export const known = (v) => (v == null || /^\s*\[[^\]]*\]\s*$/.test(String(v)) ?
 
 /* What the plan calls a building: the name before any comma, "building"
    shortened as the mockup does, and the fascia where it is known. */
+const LABEL_MAX = 16;
 function planLabel(site) {
-  const name = String(site.building || '').split(',')[0].replace(/\bbuilding\b/i, 'bldg').trim().toUpperCase();
+  let name = String(site.building || '').split(',')[0].replace(/\bbuilding\b/i, 'bldg').trim().toUpperCase();
+  /* A long name keeps its first words: the register underneath has it whole,
+     and a plan of full restaurant names is a plan nobody can read. */
+  if (name.length > LABEL_MAX) {
+    let cut = '';
+    for (const w of name.split(/\s+/)) {
+      const next = cut ? `${cut} ${w}` : w;
+      if (next.length > LABEL_MAX) break;
+      cut = next;
+    }
+    name = cut || name.slice(0, LABEL_MAX);
+  }
   const street = site.side === 'king' ? ' · KING ST' : '';
   const size = site.fascia_m && site.fascia_m >= 3 ? ` · ${+site.fascia_m} M` : '';
   return `${name}${street}${size}`;
@@ -80,10 +92,16 @@ export function layout(sites) {
   /* Label tiers: on each side, a label that would overlap the one before it
      on the same tier moves one tier further from the street. */
   const charW = { num: 7.9, name: 7.9 };
+  /* King Street's own labels sit beside its bars, level with the first north
+     tier, so a north label east of King Street steps out past them. */
+  const king = out.filter((q) => q.kind === 'king');
+  const kingRight = king.length ? Math.max(...king.map((q) => q.bar.x + BAR + 10 + Math.max(String(numberOf(q.site)).length * charW.num, planLabel(q.site).length * charW.name) + 6)) : null;
   for (const north of [true, false]) {
     const tiers = [];
+    let passedKing = false;
     for (const p of out.filter((q) => q.kind === 'street' && q.north === north).sort((a, b) => a.cx - b.cx)) {
       const half = Math.max(String(numberOf(p.site)).length * charW.num, planLabel(p.site).length * charW.name) / 2 + 6;
+      if (north && kingRight != null && !passedKing && p.cx > KING.x) { tiers[0] = Math.max(tiers[0] ?? -Infinity, kingRight); passedKing = true; }
       let t = 0;
       while (tiers[t] != null && tiers[t] > p.cx - half) t += 1;
       tiers[t] = p.cx + half;

@@ -13,7 +13,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { planSVG, registerRows, known } from '../../strip-plan.js';
 import {
   plateHTML, factsOf, actionOf, editionLine, heroOf, paletteSiteOf, plateTitle,
-  STRIP_ETH_NZD, fromNZD, ethAtStripRate,
+  STRIP_ETH_NZD, STANDARD_M, fromNZD, ethAtStripRate,
 } from '../../strip-plate.js';
 import { GET } from '../../api/strip-sites.js';
 
@@ -37,7 +37,10 @@ console.log('\n— zero hardcoded site facts —');
    thing about any one site: every address, building and size arrives from
    the API. */
 const bare = page.replace(/<!--[\s\S]*?-->/g, '').replace(/\/\*[\s\S]*?\*\//g, '');
-const facts = sites.flatMap((s) => [s.address, s.building, s.size, s.tenant].filter(Boolean));
+/* a standard panel size is the series' fact (the technical sheet names it),
+   even when a site happens to be one */
+const standard = STANDARD_M.map((m) => `${m} m × 600 mm`);
+const facts = sites.flatMap((s) => [s.address, s.building, standard.includes(s.size) ? null : s.size, s.tenant].filter(Boolean));
 is('no address, building, size or tenant is written into the page', facts.filter((f) => bare.includes(f)), []);
 const plate = read('strip-plate.js').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
 is('nor into the plate component', facts.filter((f) => plate.includes(f)), []);
@@ -70,6 +73,16 @@ is('no photographs: no figures at all, never an empty frame', none.includes('<fi
 is('a work renders its band', none.includes('class="plate-band"'), true);
 is('no data URIs anywhere in a plate', [h1, h2, none].some((h) => h.includes('data:')), false);
 
+console.log('\n— the acceptance, on the real file —');
+is('ten sites', sites.length, 10);
+const real = (no) => plateHTML(site(no), works[site(no).work_id]);
+is('site 1: Before and After, so a slider', [!!site(1).work_id, real(1).includes('type="range"')], [true, true]);
+is('site 2: gallery and before, no slider', [!!site(2).work_id, real(2).includes('ph-gallery'), real(2).includes('ph-before'), real(2).includes('type="range"')], [true, true, true, false]);
+is('site 5: no work, so a register row only', [site(5).work_id, registerRows(sites).some((r) => r.no === '05')], [null, true]);
+is('site 5\'s After is a mockup, and the register says so', registerRows(sites).find((r) => r.no === '05').specimens, 'BEFORE · AFTER (MOCKUP)');
+is('every specimen key is an R2 key, never a data URI or a local path', sites.every((s) => Object.entries(s.specimens).every(([k, v]) => k === 'after_is_mockup' || v == null || /^strip(-paintings)?\//.test(v))), true);
+is('no placeholder survives into the file', JSON.stringify(sites).includes('[SIZE]'), false);
+
 console.log('\n— facts and actions —');
 const f = (s, o) => Object.fromEntries(factsOf(s, works[s.work_id], o));
 is('a priced site: NZD, then ETH at the fixed rate, then USD', f(site(1, { price: { nzd: 1800 }, sale_state: 'for_sale' }), { usd: 0.6 }).Price,
@@ -79,7 +92,8 @@ is('no price: the sale state\'s word', [f(site(1, { sale_state: 'on_building' })
 is('no price and no sale state: no price fact, nothing invented', 'Price' in f(site(1, { price: { nzd: null }, sale_state: null })), false);
 is('no size on file: no size fact', 'Size' in f(site(3, { size: null })), false);
 is('panels join the size when known', f(site(1, { panels: 3 })).Size, `${site(1).size} · 3 panels`);
-is('for_sale: COLLECT, into the existing checkout on the work page', actionOf(site(1, { sale_state: 'for_sale' })), { label: 'Collect', href: '/w/strip-painting-site-1', button: true });
+is('for_sale and priced: COLLECT, into the existing checkout on the work page', actionOf(site(1, { sale_state: 'for_sale', price: { nzd: 3600 } })), { label: 'Collect', href: '/w/strip-painting-site-1', button: true });
+is('for_sale with no price yet: no button, the facts say "For sale"', [actionOf(site(1, { sale_state: 'for_sale', price: { nzd: null } })), f(site(1, { sale_state: 'for_sale', price: { nzd: null } })).Price], [null, 'For sale']);
 is('rental_only: "Available to rent"', actionOf(site(1, { sale_state: 'rental_only' })).label, 'Available to rent');
 is('anything else: no action', [null, 'on_building', 'collected', 'not_for_sale'].map((x) => actionOf(site(1, { sale_state: x }))), [null, null, null, null]);
 is('no edition line until the tokens exist', [editionLine(site(1)), editionLine(site(1, { edition: { contract: '0x1', tokens: null } }))], [null, null]);

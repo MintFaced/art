@@ -90,9 +90,12 @@ export function factsOf(site, work, { usd = null } = {}) {
   return out;
 }
 
-/** The one thing a plate offers, by sale state; most plates offer nothing. */
+/** The one thing a plate offers, by sale state; most plates offer nothing.
+    COLLECT waits for a price: the checkout sells a priced work, and a button
+    into a page that cannot sell is worse than no button. */
 export function actionOf(site, { rent = '/strip-paintings/rent' } = {}) {
-  if (site.sale_state === 'for_sale' && site.work_id) return { label: 'Collect', href: `/w/${encodeURIComponent(site.work_id)}`, button: true };
+  const priced = site.price && typeof site.price.nzd === 'number' && site.price.nzd > 0;
+  if (site.sale_state === 'for_sale' && site.work_id && priced) return { label: 'Collect', href: `/w/${encodeURIComponent(site.work_id)}`, button: true };
   if (site.sale_state === 'rental_only') return { label: 'Available to rent', href: rent, button: false };
   return null;
 }
