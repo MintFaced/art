@@ -12,3 +12,7 @@ archive/
 # The favicon source archive. The cut files beside it are the website; the zip
 # they came out of is not, and this directory is served as it stands.
 assets/*.zip
+
+# Internal docs: specs, reports and drafts, not the website. Nothing links to
+# them and no function reads them, so they are not deployed at all.
+docs/
