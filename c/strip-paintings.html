@@ -342,7 +342,11 @@ import { plateHTML, wireSlider, heroOf, paletteSiteOf, kindLabel, plateTitle, SE
 
 const e = MF.escape;
 const $ = (id) => document.getElementById(id);
-const img = (key, w) => MF.thumbUrl({ assets: { image: key } }, w);
+/* IMG_V is part of every image address on this page. The resizer caches a
+   failed fetch per address, so a photograph asked for before it reached R2
+   stays broken there; bumping this re-asks for all of them. */
+const IMG_V = 2;
+const img = (key, w) => `${MF.thumbUrl({ assets: { image: key } }, w)}&v=${IMG_V}`;
 const srcset = (key, ws) => ws.map((w) => `${img(key, w)} ${w}w`).join(', ');
 
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve',
