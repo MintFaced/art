@@ -1,5 +1,5 @@
 {
- "_note": "Strip Paintings: the sites. The single source of truth for the plan, the register, the counts, /api/strip-sites, the agent catalog and the dossier. Status is exactly one of proposed | approved | installed; painting progress shows through which specimens exist, never a fourth status. Counts are computed from this file, never typed. A tenant is shown only where tenant_public is true. Seeded 1 October 2026 (docs/STRIP-MAP.md).",
+ "_note": "Strip Paintings: the sites. The single source of truth for the plan, the register, the counts, /api/strip-sites, the agent catalog and the dossier. Status is exactly one of proposed | approved | installed; painting progress shows through which specimens exist, never a fourth status. Counts are computed from this file, never typed. A tenant is shown only where tenant_public is true. Seeded 1 October 2026 (docs/STRIP-MAP.md). `exhibited` is the three tiles under Exhibited and documented on the page: a tile with no image shows its label, with its dates or 'date to come', never a broken picture.",
  "sites": [
   {
    "no": 1,
@@ -270,6 +270,35 @@
    "lat": null,
    "lng": null,
    "notes": null
+  }
+ ],
+ "exhibited": [
+  {
+   "name": "The Line",
+   "place": "Hastings",
+   "kind": null,
+   "title": null,
+   "dates": null,
+   "image": "strip-paintings/strip-paintings-1.jpg",
+   "href": null
+  },
+  {
+   "name": "The film",
+   "place": null,
+   "kind": null,
+   "title": null,
+   "dates": null,
+   "image": null,
+   "href": null
+  },
+  {
+   "name": "W",
+   "place": null,
+   "kind": "Sculpture",
+   "title": null,
+   "dates": "March 2027",
+   "image": null,
+   "href": null
   }
  ]
 }

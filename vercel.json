@@ -65,6 +65,11 @@
       "source": "/data/strip-sites.json",
       "destination": "/api/strip-sites",
       "permanent": false
+    },
+    {
+      "source": "/strip-sites",
+      "destination": "/c/strip-paintings#street",
+      "permanent": false
     }
   ],
   "rewrites": [

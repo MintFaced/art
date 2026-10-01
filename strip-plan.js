@@ -39,6 +39,8 @@ export function countLine(sites, { scroll = false } = {}) {
 }
 /** Which specimens exist, in the order the shot sheet names them. */
 export const specimensOf = (site) => ['gallery', 'before', 'after', 'detail'].filter((k) => site.specimens && site.specimens[k]);
+/** A value still waiting on Ryan ("[SIZE]") is no value at all: never printed. */
+export const known = (v) => (v == null || /^\s*\[[^\]]*\]\s*$/.test(String(v)) ? null : v);
 
 /* What the plan calls a building: the name before any comma, "building"
    shortened as the mockup does, and the fascia where it is known. */
@@ -77,7 +79,7 @@ export function layout(sites) {
   }
   /* Label tiers: on each side, a label that would overlap the one before it
      on the same tier moves one tier further from the street. */
-  const charW = { num: 7.9, name: 6.7 };
+  const charW = { num: 7.9, name: 7.9 };
   for (const north of [true, false]) {
     const tiers = [];
     for (const p of out.filter((q) => q.kind === 'street' && q.north === north).sort((a, b) => a.cx - b.cx)) {
@@ -107,35 +109,38 @@ export function planSVG(sites, { interactive = true, title = 'Site plan of Heret
   parts.push(`<svg class="strip-plan" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(`${title}: ${c.total} Strip Painting sites, ${c.installed} installed, ${c.approved} approved, ${c.proposed} proposed`)}">`);
   if (interactive) parts.push(`<style>.sp-site{cursor:pointer;transition:transform .2s ease;outline:none}.sp-site:hover,.sp-site:focus-visible,.sp-site.is-lit{transform:translateY(-2px)}.sp-site:focus-visible .sp-bar{stroke:${COLOURS.ink};stroke-width:2.5}</style>`);
   parts.push(`<rect x="0" y="0" width="${W}" height="${H}" fill="${COLOURS.paper}"/>`);
-  parts.push(`<g font-family="${MONO}" font-size="12" letter-spacing="2" fill="${COLOURS.grey}"><text x="20" y="34">NORTH · ODD NUMBERS</text><text x="20" y="${H - 20}">SOUTH · EVEN NUMBERS</text></g>`);
+  parts.push(`<g font-family="${MONO}" font-size="13" letter-spacing="2" fill="${COLOURS.grey}"><text x="20" y="34">NORTH · ODD NUMBERS</text><text x="20" y="${H - 20}">SOUTH · EVEN NUMBERS</text></g>`);
   parts.push(`<rect x="${STREET.left}" y="${STREET.top}" width="${STREET.right - STREET.left}" height="${STREET.bottom - STREET.top}" fill="${COLOURS.street}"/>`);
   parts.push(`<rect x="${KING.x}" y="${KING.top}" width="${KING.w}" height="${KING.bottom - KING.top}" fill="${COLOURS.street}"/>`);
   parts.push(`<line x1="${STREET.left}" y1="${STREET.top}" x2="${STREET.right}" y2="${STREET.top}" stroke="${COLOURS.kerb}"/><line x1="${STREET.left}" y1="${STREET.bottom}" x2="${STREET.right}" y2="${STREET.bottom}" stroke="${COLOURS.kerb}"/>`);
   const mid = (STREET.top + STREET.bottom) / 2 + 5;
-  parts.push(`<g font-family="${MONO}" font-size="13" letter-spacing="3" fill="${COLOURS.grey}" text-anchor="middle"><text x="${(STREET.left + KING.x) / 2}" y="${mid}">HERETAUNGA STREET WEST</text><text x="${(KING.x + KING.w + STREET.right) / 2}" y="${mid}">HERETAUNGA STREET WEST</text><text x="${KING.x + KING.w / 2}" y="290" transform="rotate(-90 ${KING.x + KING.w / 2} 290)" font-size="12">KING ST</text></g>`);
+  parts.push(`<g font-family="${MONO}" font-size="13" letter-spacing="3" fill="${COLOURS.grey}" text-anchor="middle"><text x="${(STREET.left + KING.x) / 2}" y="${mid}">HERETAUNGA STREET WEST</text><text x="${(KING.x + KING.w + STREET.right) / 2}" y="${mid}">HERETAUNGA STREET WEST</text><text x="${KING.x + KING.w / 2}" y="290" transform="rotate(-90 ${KING.x + KING.w / 2} 290)" font-size="13">KING ST</text></g>`);
   parts.push(`<g font-family="${MONO}" font-size="13" fill="${COLOURS.ink}">`);
   for (const p of layout(sites)) {
     const s = p.site;
     const n = numberOf(s);
     const label = planLabel(s);
-    const a = interactive ? ` class="sp-site" data-no="${esc(s.no)}" tabindex="0" role="link" aria-label="${esc(`No. ${s.no}, ${s.address}, ${s.building}, ${s.status}`)}"` : '';
+    /* The name starts with what the bar visibly says, in the order it says
+       it, so a voice user can speak the label they see. */
+    const seen = p.kind !== 'king' && p.north ? `${label} ${n}` : `${n} ${label}`;
+    const a = interactive ? ` class="sp-site" data-no="${esc(s.no)}" tabindex="0" role="link" aria-label="${esc(`${seen}: No. ${s.no}, ${s.address}, ${s.building}, ${s.status}`)}"` : '';
     parts.push(`<g${a}><rect class="sp-bar" x="${p.bar.x.toFixed(1)}" y="${p.bar.y.toFixed(1)}" width="${p.bar.w.toFixed(1)}" height="${p.bar.h.toFixed(1)}" ${STYLE[s.status] ? STYLE[s.status]() : STYLE.proposed()}/>`);
     if (p.kind === 'king') {
       const ty = p.bar.y + 22;
-      parts.push(`<text x="${p.bar.x + BAR + 10}" y="${ty}">${n}</text><text x="${p.bar.x + BAR + 10}" y="${ty + 18}" font-size="11" fill="${COLOURS.grey}">${esc(label)}</text>`);
+      parts.push(`<text x="${p.bar.x + BAR + 10}" y="${ty}">${n}</text> <text x="${p.bar.x + BAR + 10}" y="${ty + 18}" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text>`);
     } else if (p.north) {
       const base = p.bar.y - 8 - p.tier * 38;
-      parts.push(`<text x="${p.cx.toFixed(1)}" y="${base - 18}" text-anchor="middle" font-size="11" fill="${COLOURS.grey}">${esc(label)}</text><text x="${p.cx.toFixed(1)}" y="${base}" text-anchor="middle">${n}</text>`);
+      parts.push(`<text x="${p.cx.toFixed(1)}" y="${base - 18}" text-anchor="middle" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text> <text x="${p.cx.toFixed(1)}" y="${base}" text-anchor="middle">${n}</text>`);
     } else {
       const base = p.bar.y + BAR + 22 + p.tier * 38;
-      parts.push(`<text x="${p.cx.toFixed(1)}" y="${base}" text-anchor="middle">${n}</text><text x="${p.cx.toFixed(1)}" y="${base + 18}" text-anchor="middle" font-size="11" fill="${COLOURS.grey}">${esc(label)}</text>`);
+      parts.push(`<text x="${p.cx.toFixed(1)}" y="${base}" text-anchor="middle">${n}</text> <text x="${p.cx.toFixed(1)}" y="${base + 18}" text-anchor="middle" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text>`);
     }
     parts.push('</g>');
   }
   parts.push('</g>');
   /* The legend, top right. */
   const lx = 960;
-  parts.push(`<g font-family="${MONO}" font-size="12" fill="${COLOURS.grey}" letter-spacing="2">`
+  parts.push(`<g font-family="${MONO}" font-size="13" fill="${COLOURS.grey}" letter-spacing="2">`
     + `<rect x="${lx}" y="24" width="28" height="12" ${STYLE.installed()}/><text x="${lx + 36}" y="34">INSTALLED</text>`
     + `<rect x="${lx + 134}" y="24" width="28" height="12" ${STYLE.approved()}/><text x="${lx + 170}" y="34">APPROVED</text>`
     + `<rect x="${lx + 258}" y="24" width="28" height="12" ${STYLE.proposed()}/><text x="${lx + 294}" y="34">PROPOSED</text></g>`);
@@ -146,8 +151,9 @@ export function planSVG(sites, { interactive = true, title = 'Site plan of Heret
 /** The register, as rows: every site, plates or not. */
 export function registerRows(sites) {
   return sites.slice().sort((a, b) => a.no - b.no).map((s) => ({
-    no: String(s.no).padStart(2, '0'), address: s.address, building: s.building, size: s.size || null,
-    status: s.status.toUpperCase(), specimens: specimensOf(s).map((k) => k.toUpperCase()).join(' · '),
+    no: String(s.no).padStart(2, '0'), address: s.address, building: s.building, size: known(s.size) || null,
+    status: s.status.toUpperCase(),
+    specimens: specimensOf(s).map((k) => (k === 'after' && s.specimens.after_is_mockup ? 'AFTER (MOCKUP)' : k.toUpperCase())).join(' · '),
   }));
 }
 

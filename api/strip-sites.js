@@ -4,6 +4,11 @@
 import sitesFile from '../data/strip-sites.json' with { type: 'json' };
 import { counts } from '../strip-plan.js';
 
+/* Where the pages and files of the later slices live (STRIP-RENT, STRIP-DOSSIER),
+   null until each one is published. The page links to what is here and writes
+   to the studio for what is not, so nothing ever links to a 404. */
+export const LINKS = { rent: null, technical_sheet: null, dossier: null };
+
 export function publicSites(file = sitesFile) {
   return file.sites.map(({ notes, tenant, tenant_public: tp, ...s }) => ({ ...s, tenant: tp ? tenant : null }));
 }
@@ -16,6 +21,8 @@ export async function GET() {
     statuses: ['installed', 'approved', 'proposed'],
     counts: counts(sites),
     sites,
+    exhibited: sitesFile.exhibited || [],
+    links: LINKS,
   }, null, 1), {
     status: 200,
     headers: {

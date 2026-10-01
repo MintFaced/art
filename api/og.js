@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { nzdToUsd } from './_lib/fx.js';
 import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
+import { heroOf } from '../strip-plate.js';
 
 /* Link previews as exhibition posters.
  *
@@ -215,8 +216,17 @@ async function collectionCard(slug) {
   const isFeature = meta.group === 'feature';
   const third = isFeature ? upper(meta.card_statement || meta.statement || '').slice(0, 64)
     : (meta.sold_out ? 'MINT SOLD OUT' : null);
+  /* Strip Paintings leads with the street (STRIP-PAGE): its page's hero, the
+     first After photograph there is, rather than a catalog cover. */
+  let image = meta.cover ? imageOf(meta.cover) : null;
+  if (slug === 'strip-paintings') {
+    try {
+      const hero = heroOf((await get('api/strip-sites')).sites || []);
+      if (hero) image = sized(`${ASSETS}/${hero.key}`);
+    } catch (e) { /* the cover stands */ }
+  }
   return {
-    image: meta.cover ? imageOf(meta.cover) : null,
+    image,
     title: meta.title || slug,
     lines: [second, third],
     dot: !isFeature && !meta.sold_out && avail > 0 ? `${avail} AVAILABLE` : null,

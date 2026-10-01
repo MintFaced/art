@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Static site. The dependencies are for the Vercel functions in api/ only, there is no build step.",
   "scripts": {
-    "test": "node test/tao-cron.test.mjs && node scripts/chat/test-siwe.mjs && node scripts/tao/test-nudges.mjs && node scripts/tao/test-weigh-journey.mjs && node scripts/tao/test-wire.mjs && node scripts/aab/test-rail.mjs && node scripts/aab/test-rebate.mjs && node scripts/chat/test-edit-pictures.mjs && node scripts/aab/test-feedback.mjs && node scripts/pfp/test-pfp.mjs && node scripts/strip/test-strip-sites.mjs",
+    "test": "node test/tao-cron.test.mjs && node scripts/chat/test-siwe.mjs && node scripts/tao/test-nudges.mjs && node scripts/tao/test-weigh-journey.mjs && node scripts/tao/test-wire.mjs && node scripts/aab/test-rail.mjs && node scripts/aab/test-rebate.mjs && node scripts/chat/test-edit-pictures.mjs && node scripts/aab/test-feedback.mjs && node scripts/pfp/test-pfp.mjs && node scripts/strip/test-strip-sites.mjs && node scripts/strip/test-strip-page.mjs",
     "test:fork": "node scripts/aab/fork-e2e.mjs"
   },
   "dependencies": {

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Strip Paintings has its own page rather than c.html, so it carries its own
+     head: the filesystem answers /c/strip-paintings before the /c/:slug
+     rewrite ever sees it. The card is /api/og's, led by the page's hero. -->
+<title>Strip Paintings ... MintFace</title>
+<meta name="description" content="The colours of a street, painted back onto it. Strip Paintings by MintFace, on the empty fascias of Hastings.">
+<link rel="canonical" href="https://mintface.art/c/strip-paintings">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<meta property="og:title" content="Strip Paintings">
+<meta property="og:description" content="The colours of a street, painted back onto it.">
+<meta property="og:url" content="https://mintface.art/c/strip-paintings">
+<meta property="og:image" content="https://mintface.art/api/og?collection=strip-paintings">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Strip Paintings by MintFace">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Strip Paintings">
+<meta name="twitter:description" content="The colours of a street, painted back onto it.">
+<meta name="twitter:image" content="https://mintface.art/api/og?collection=strip-paintings">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://images.weserv.nl">
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* LEGIBILITY.md: metadata grey no lighter than #6B6A64, 13px the floor and 15
+   for sentences, mono caps for data only, 44px targets, no colour but the
+   art's. Night keeps the site's own night values, which pass the same bar. */
+:root{--sp-grey:#6B6A64;--sp-line:#E4E2DA;--sp-wall:#D9D2C4;--sp-under:#C9C6BC}
+@media(prefers-color-scheme:dark){:root:not([data-theme="day"]){--sp-grey:var(--n-muted);--sp-line:var(--n-rule);--sp-wall:var(--n-sunk);--sp-under:var(--n-faint)}}
+:root[data-theme="night"]{--sp-grey:var(--n-muted);--sp-line:var(--n-rule);--sp-wall:var(--n-sunk);--sp-under:var(--n-faint)}
+
+.sp{color:var(--ink);font-family:var(--font-sans)}
+.sp a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--sp-under);text-underline-offset:3px}
+.sp a:hover{text-decoration-color:var(--ink)}
+.sp a:focus-visible,.sp button:focus-visible,.sp [tabindex]:focus-visible,.sp input:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1440px;margin:0 auto;padding:0 40px;box-sizing:border-box}
+.mono{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.grey{color:var(--sp-grey)}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sp h2{margin:0;font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.sp p{margin:0}
+section.s{padding-top:112px}
+
+/* 1 · the hero */
+.hero{margin:0;background:var(--sunk)}
+.hero img{display:block;width:100%;height:clamp(300px,46vw,620px);object-fit:cover}
+.hero-cap{padding-top:12px}
+.title{padding-top:48px;display:flex;flex-direction:column;gap:12px}
+.title h1{margin:0;font-size:72px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.title .sub{font-size:26px;line-height:1.3;color:var(--sp-grey)}
+
+/* 2 · what it is */
+.what{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:80px;align-items:start}
+.what .copy{display:flex;flex-direction:column;gap:24px;font-size:19px;line-height:1.6;max-width:40em}
+.what aside{display:flex;flex-direction:column;gap:12px}
+.swatches{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:4px;height:96px;list-style:none;margin:0;padding:0}
+.swatches li{position:relative}
+.swatches li.red{box-shadow:inset 0 0 0 2px var(--ink)}
+.what .band{display:block;width:100%;height:auto;max-height:160px;object-fit:contain;object-position:left center}
+.facts{margin:24px 0 0;display:flex;flex-direction:column}
+.facts div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--sp-line)}
+.facts dt{color:var(--sp-grey)}
+.facts dd{margin:0;text-align:right}
+
+/* 3 · the palette */
+.pal{display:flex;flex-direction:column;gap:20px}
+.pal .lede{font-size:19px;line-height:1.6;max-width:40em}
+.slots{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;max-width:980px;height:64px;list-style:none;margin:12px 0 0;padding:0}
+.slots li{position:relative;box-sizing:border-box;display:flex;align-items:center;justify-content:center}
+.slots li.empty{border:1px solid var(--sp-line)}
+.slots li.open{border:2px dashed var(--ink);font-family:var(--font-mono);font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;max-width:1180px;margin-top:20px}
+.steps div{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--sp-line);padding-top:16px}
+.steps p{font-size:17px;line-height:1.55}
+.steps a{font-size:16px;align-self:flex-start;padding:10px 0;margin:-10px 0}
+
+/* 4 · the street */
+.street{display:flex;flex-direction:column;gap:20px}
+.street .lede{font-size:19px;line-height:1.6;max-width:44em}
+.street .count .scroll{display:none}
+.plan{overflow-x:auto;-webkit-overflow-scrolling:touch;background:#F8F7F3}
+.plan svg{display:block;width:100%;max-width:1360px;height:auto}
+
+/* 5 · the works */
+.works{display:flex;flex-direction:column;gap:56px}
+.plate{display:flex;flex-direction:column;gap:24px;border-top:1px solid var(--ink);padding-top:24px;scroll-margin-top:24px;transition:background-color .2s}
+.plate.is-lit{background:var(--wash)}
+.plate-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.plate-head h3{margin:0;font-size:28px;font-weight:600;letter-spacing:-.01em}
+.plate-status{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.plate-band{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;object-position:left center}
+.plate-photos{display:grid;gap:24px;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+.plate-photos.n1{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+.plate-photos.n3{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,.6fr)}
+.ph{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.ph-frame,.ba{position:relative;height:420px;overflow:hidden;background:var(--sp-wall)}
+.ph-frame img,.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ph-mock{position:absolute;left:12px;top:12px;background:var(--paper);color:var(--ink);padding:4px 8px;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.ph figcaption{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--sp-grey)}
+.ba{cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.ba .ba-after{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba-line{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:var(--ink);pointer-events:none}
+.ba-controls{display:flex;align-items:center;gap:16px}
+.ba-controls input{flex:1 1 auto;min-width:0;height:44px;margin:0;accent-color:var(--ink);cursor:pointer}
+.plate-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin:0;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.plate-facts div{display:flex;flex-direction:column;gap:4px}
+.plate-facts dt{color:var(--sp-grey)}
+.plate-facts dd{margin:0}
+.plate-act{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;box-sizing:border-box;border:1px solid var(--ink);background:var(--ink);color:var(--paper)!important;text-decoration:none!important;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.btn.ghost{background:transparent;color:var(--ink)!important}
+.plate-edition{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;color:var(--sp-grey)}
+
+.register{width:100%;border-collapse:collapse;border-top:1px solid var(--sp-line)}
+.register th{text-align:left;font-weight:400;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--sp-grey);padding:12px 16px 12px 0;border-bottom:1px solid var(--sp-line)}
+.register td{padding:16px 16px 16px 0;border-bottom:1px solid var(--sp-line);font-size:16px;vertical-align:baseline;transition:background-color .2s}
+.register td.m{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em}
+.register td.no{font-family:var(--font-mono);font-size:14px}
+.register tr.is-lit td{background:var(--wash)}
+.register tr{scroll-margin-top:24px}
+
+/* 6 · built for the footpath */
+.foot-path{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px;align-items:start}
+.foot-path .copy{display:flex;flex-direction:column;gap:20px}
+.foot-path .copy p{font-size:19px;line-height:1.6}
+.foot-path .copy a{font-size:16px;align-self:flex-start}
+.sheet{margin:0;display:flex;flex-direction:column;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.sheet div{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid var(--sp-line);padding:12px 0}
+.sheet dt{color:var(--sp-grey);flex:0 0 auto}
+.sheet dd{margin:0;text-align:right}
+
+/* 7 · exhibited */
+.shown{display:flex;flex-direction:column;gap:28px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;list-style:none;margin:0;padding:0}
+.tiles li{position:relative;height:240px;background:var(--sp-wall);display:flex;align-items:flex-end;overflow:hidden}
+.tiles img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tiles .lab{position:relative;margin:16px;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.tiles li.has-img .lab{background:var(--paper);padding:6px 8px;margin:12px}
+
+/* 8 · acquire */
+.doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.doors div{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--ink);padding-top:20px}
+.doors h3{margin:0;font-size:26px;font-weight:600}
+.doors p{font-size:17px;line-height:1.55;color:var(--sp-grey)}
+.doors a{font-size:16px;align-self:flex-start;padding:10px 0;margin:-10px 0}
+
+/* 9 · the dossier, and the foot */
+.dossier{margin-top:96px;padding-top:96px;padding-bottom:96px;border-top:1px solid var(--sp-line);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.dossier h2{font-size:22px}
+.dossier p{font-size:16px;color:var(--sp-grey);margin-top:6px}
+.sp-foot{border-top:1px solid var(--sp-line);padding-top:24px;padding-bottom:24px}
+.sp-foot a{color:var(--sp-grey);text-decoration-color:var(--sp-line);display:inline-block;padding:14px 0;margin:-14px 0}
+
+@media (max-width:760px){
+  .wrap{padding:0 20px}
+  section.s{padding-top:72px}
+  .sp h2{font-size:30px}
+  .hero img{height:300px}
+  .title{padding-top:28px}
+  .title h1{font-size:44px}
+  .title .sub{font-size:20px}
+  .what,.foot-path{grid-template-columns:minmax(0,1fr);gap:40px}
+  .what .copy,.pal .lede,.street .lede,.foot-path .copy p{font-size:17px}
+  .swatches{height:64px;gap:3px}
+  .slots{height:48px;gap:4px}
+  .slots li.open{font-size:13px}
+  .steps,.doors,.tiles{grid-template-columns:minmax(0,1fr);gap:24px}
+  .street .count .scroll{display:inline}
+  .plan svg{width:1360px;max-width:none}
+  .plate-head h3{font-size:24px}
+  .plate-photos,.plate-photos.n1,.plate-photos.n3{grid-template-columns:minmax(0,1fr)}
+  .ph-frame,.ba{height:auto;aspect-ratio:4/3}
+  .plate-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .btn{width:100%;justify-content:center}
+  .register thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .register,.register tbody{display:block}
+  .register tr{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:8px;padding:14px 0;border-bottom:1px solid var(--sp-line)}
+  .register td{display:block;border:0;padding:0;grid-column:2}
+  .register td.no{grid-column:1;grid-row:1 / span 5}
+  .register td.addr{font-weight:600}
+  .register td.addr a{display:inline-block;padding:12px 0;margin:-12px 0}
+  .register td.m{margin-top:4px}
+  .register td:empty{display:none}
+  .sheet div{flex-direction:column;gap:4px}
+  .sheet dd{text-align:left}
+  .dossier{margin-top:72px;padding-top:56px;padding-bottom:56px}
+  .dossier .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav"></header>
+
+<main class="sp" id="main">
+
+  <figure class="hero" id="hero" aria-label="Strip Paintings"></figure>
+  <div class="wrap">
+    <p class="hero-cap mono grey" id="heroCap"></p>
+    <div class="title">
+      <h1>Strip Paintings</h1>
+      <p class="sub">The colours of a street, painted back onto it.</p>
+    </div>
+  </div>
+
+  <!-- 2 · What it is. The copy is the series', the same for every site. -->
+  <section class="s wrap" aria-labelledby="what-h">
+    <h2 class="vh" id="what-h">What it is</h2>
+    <div class="what">
+      <div class="copy">
+        <p>A Strip Painting is a panel of horizontal bands hung over the empty fascia of a vacant shop. Its colours come from the street around it... the signs, the facades, the neighbours' paint. The gap in the street is filled with the street.</p>
+        <p>The method is the same every time. Photograph the site. Reduce it to twelve colours by how much of the street each one covers. Give each colour strips in proportion to its share, so a dominant sign gets the widest bands and a flash of trim the thinnest. Order them by one fixed rule. Fifty-five strips at full intensity. The rule never changes, and no two sites give the same painting.</p>
+        <p>Every Strip Painting carries one red strip, sixteen up from the bottom, twelve millimetres high. It is the one colour not taken from the street. The red line is the constant.</p>
+        <p>Gerhard Richter made his Strip paintings by slicing one of his own abstracts into bands. These slice a street instead. The pigments are Golden, carried on from PixelArcade, and the panels are built for weather, because the gallery for this work is a footpath.</p>
+      </div>
+      <aside aria-label="One painting's palette, and the facts every painting shares">
+        <div id="swatch"></div>
+        <dl class="facts mono">
+          <div><dt>Strip heights</dt><dd>Three · set by the street</dd></div>
+          <div><dt>Strips</dt><dd id="factStrips">55 at full intensity</dd></div>
+          <div><dt>Red line</dt><dd id="factRed">Position 16 · 12 mm</dd></div>
+          <div><dt>Sequence</dt><dd>One fixed rule · every site</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 3 · The palette: the collectors' twelve, read live from the nudges. -->
+  <section class="s wrap pal" id="palette" aria-labelledby="pal-h">
+    <h2 id="pal-h">Twelve colours, chosen by collectors.</h2>
+    <p class="lede">Beside the street palettes there is a second series: a Strip Painting whose twelve colours are chosen one at a time by the people who hold MintFace art.</p>
+    <ol class="slots" id="slots" aria-label="The collectors' palette, twelve slots"></ol>
+    <p class="mono" id="palCount" aria-live="polite"></p>
+    <div class="steps">
+      <div><span class="mono">1 · Hold</span><p>Own a MintFace work and TAO accrues daily. A 1/1 earns 69 a day.</p><a href="/tao">What is TAO</a></div>
+      <div><span class="mono">2 · Weigh in</span><p>In the Studio, put your TAO behind a colour. It is weighed, not spent. You keep it.</p><a href="/studio">Open the Studio</a></div>
+      <div><span class="mono">3 · Lock</span><p id="lockLine">When five collectors and 500,000 TAO agree, the colour locks. Mixed in the studio, painted into the series.</p><a href="/studio#pots">See the pottles</a></div>
+    </div>
+  </section>
+
+  <!-- 4 · The street: counted from the sites, never typed. -->
+  <section class="s wrap street" id="street" aria-labelledby="street-h">
+    <h2 id="street-h">WestSide Hastings.</h2>
+    <p class="lede" id="streetLede"></p>
+    <p class="mono count" id="streetCount"></p>
+    <div class="plan" id="plan" tabindex="0" role="region" aria-label="Site plan, scrolls sideways on a small screen"></div>
+  </section>
+
+  <!-- 5 · The works: a plate for every site with a painting, then the whole
+       street as one list. -->
+  <section class="s wrap works" id="works" aria-labelledby="works-h">
+    <h2 id="works-h">The works.</h2>
+    <div id="plates" class="works"></div>
+    <table class="register" id="register">
+      <caption class="vh">Every Strip Painting site</caption>
+      <thead><tr><th scope="col">No.</th><th scope="col">Address</th><th scope="col">Building</th><th scope="col">Size</th><th scope="col">Status</th><th scope="col">Specimens</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- 6 · Built for the footpath. Generic on purpose: what the work is made
+       of, never how the sequence is made. -->
+  <section class="s wrap foot-path" aria-labelledby="fp-h">
+    <div class="copy">
+      <h2 id="fp-h">Built for the footpath.</h2>
+      <p>Acrylic on panel. Golden professional acrylics, twelve colours per site plus the red line, each laid in two coats over an archival ground. Exterior works are painted on aluminium composite panel; gallery works on treated plywood. Every edge is hand-masked. The surface is sealed with an isolation coat and a UV-protective, exterior-grade varnish, so the painting can live on a street and be cleaned and re-varnished without touching the paint.</p>
+      <a id="sheetLink" href="#" hidden>Download the technical sheet (PDF)</a>
+    </div>
+    <dl class="sheet" id="sheet">
+      <div><dt>Medium</dt><dd>Acrylic on panel</dd></div>
+      <div><dt>Paint</dt><dd>Golden professional acrylics · two coats</dd></div>
+      <div><dt>Ground</dt><dd>Archival acrylic ground</dd></div>
+      <div><dt>Finish</dt><dd>Isolation coat · UV-protective exterior varnish</dd></div>
+      <div><dt>Support</dt><dd>Aluminium composite (exterior) · treated ply (gallery)</dd></div>
+      <div><dt>Strips</dt><dd>55 at full intensity · red line at 16</dd></div>
+      <div><dt>Standard panel</dt><dd>2.4 m or 1.2 m × 600 mm</dd></div>
+    </dl>
+  </section>
+
+  <!-- 7 · Exhibited and documented. -->
+  <section class="s wrap shown" aria-labelledby="shown-h">
+    <h2 id="shown-h">Exhibited and documented.</h2>
+    <ul class="tiles" id="tiles"></ul>
+  </section>
+
+  <!-- 8 · Acquire: three doors, one sentence and one link each. -->
+  <section class="s wrap" aria-labelledby="doors-h">
+    <h2 class="vh" id="doors-h">Collect, commission or rent</h2>
+    <div class="doors">
+      <div><h3>Collect.</h3><p>Own a Strip Painting outright. ETH, NZD or USD. Card or crypto.</p><a href="#works">Works for sale</a></div>
+      <div><h3>Commission.</h3><p id="commission">Choose the colours. We paint it.</p><a href="/strip-painting-maker">Design yours</a></div>
+      <div><h3>Rent.</h3><p id="rent">A Strip Painting on your vacant fascia.</p><a id="rentLink" href="mailto:art@mintface.art?subject=Renting%20a%20Strip%20Painting">For buildings</a></div>
+    </div>
+  </section>
+
+  <!-- 9 · The dossier. -->
+  <section class="wrap" aria-labelledby="dossier-h">
+    <div class="dossier">
+      <div>
+        <h2 id="dossier-h">The dossier.</h2>
+        <p>Statement, bio, every plate, the technical sheet, prices, contact. One PDF.</p>
+      </div>
+      <a class="btn ghost" id="dossierLink" href="mailto:art@mintface.art?subject=Strip%20Paintings%20dossier">Ask for the dossier</a>
+    </div>
+  </section>
+
+  <footer class="wrap sp-foot mono grey">
+    <a href="mailto:art@mintface.art">art@mintface.art</a> · The Line, Hastings · 39.64°S 176.85°E
+  </footer>
+</main>
+
+<script src="/mintface.js"></script>
+<script type="module">
+/* Strip Paintings (docs/STRIP-PAGE.md). Every site fact on this page comes
+   from /api/strip-sites (data/strip-sites.json) and the catalog work each
+   site names; the palette comes from the nudges. The copy above is the
+   series' and is the same whatever the street does. */
+import { planSVG, wirePlan, countLine, registerRows, counts, numberOf } from '/strip-plan.js';
+import { plateHTML, wireSlider, heroOf, paletteSiteOf, kindLabel, plateTitle, SERIES, STRIP_ETH_NZD, fromNZD, ethAtStripRate, RENT_NZD_MONTH, nzd } from '/strip-plate.js';
+
+const e = MF.escape;
+const $ = (id) => document.getElementById(id);
+const img = (key, w) => MF.thumbUrl({ assets: { image: key } }, w);
+const srcset = (key, ws) => ws.map((w) => `${img(key, w)} ${w}w`).join(', ');
+
+const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve',
+  'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+const ORD = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth'];
+const word = (n) => WORDS[n] || String(n);
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+/* "Heretaunga St W" as a sentence says it */
+const streetName = (s) => String(s).replace(/\bSt\b/g, 'Street').replace(/\bW$/, 'West').replace(/\bE$/, 'East');
+const settle = (label, fn) => { try { fn(); } catch (err) { console.error(label, err); } };
+
+/* ---------- the doors and the downloads, which need no data ---------- */
+const from = fromNZD();
+$('commission').textContent = `Choose the colours. We paint it. From ${nzd(from)} · ${ethAtStripRate(from)} ETH at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH.`;
+$('rent').textContent = `A Strip Painting on your vacant fascia. ${nzd(RENT_NZD_MONTH)} a month, installed.`;
+$('factStrips').textContent = `${SERIES.strips} at full intensity`;
+$('factRed').textContent = `Position ${SERIES.red_at} · 12 mm`;
+/* ---------- the palette: the collectors' twelve, live ---------- */
+async function paintPalette() {
+  const state = await fetch('/api/nudge').then((r) => (r.ok ? r.json() : null));
+  const series = state && state.series;
+  if (!series || series.collection !== 'strip-paintings') throw new Error('no strip palette series');
+  const slots = MF.palette.slots(series);
+  const total = slots.length;
+  $('slots').innerHTML = slots.map((v) => {
+    const n = v.slot;
+    if (v.state === 'locked' && v.hex) {
+      const hex = String(v.hex).toUpperCase();
+      const nm = MF.colour.name(hex);
+      const by = v.locked_by === 'artist' ? ', the artist’s call' : '';
+      const say = `Slot ${n}: ${hex}${nm ? `, ${nm.label}` : ''}, locked by Nudge #${v.number}${by}`;
+      return `<li class="locked" style="background:${e(hex)}" title="${e(say)}"><span class="vh">${e(say)}</span></li>`;
+    }
+    if (v.state === 'open') return `<li class="open" title="Slot ${n}: open now, Nudge #${e(v.number)}"><span aria-hidden="true">${n}</span><span class="vh">Slot ${n}: open now, Nudge #${e(v.number)}</span></li>`;
+    return `<li class="empty"><span class="vh">Slot ${n}: still to come</span></li>`;
+  }).join('');
+  const locked = slots.filter((v) => v.state === 'locked').length;
+  const open = slots.find((v) => v.state === 'open');
+  const line = [`${word(locked)} of ${word(total)} locked`];
+  if (open) line.push(`the ${ORD[open.slot] || `no. ${open.slot}`} is open`);
+  else if (locked === total) line.push('the palette is complete');
+  $('palCount').textContent = line.join(' · ').toUpperCase();
+  /* the thresholds belong to the nudge, so the sentence reads them there */
+  const nudges = (state.nudges || []).filter((x) => x.series === series.id);
+  const live = nudges.find((x) => x.open) || nudges[0];
+  const rule = live && (live.rule || live.lock);
+  if (rule && rule.voters && rule.tao) {
+    $('lockLine').textContent = `When ${word(rule.voters)} collectors and ${Number(rule.tao).toLocaleString('en-NZ')} TAO agree, the colour locks. Mixed in the studio, painted into the series.`;
+  }
+}
+paintPalette().catch((err) => {
+  console.error('palette', err);
+  $('slots').remove();
+  $('palCount').textContent = '';
+});
+
+/* ---------- everything the sites say ---------- */
+const [data, col, fx] = await Promise.all([
+  fetch('/api/strip-sites').then((r) => r.json()),
+  fetch('/data/c/strip-paintings.json').then((r) => (r.ok ? r.json() : { works: [] })).catch(() => ({ works: [] })),
+  MF.fx().catch(() => ({})),
+]);
+const sites = (data.sites || []).slice().sort((a, b) => a.no - b.no);
+const works = Object.fromEntries((col.works || []).map((w) => [w.id, w]));
+
+/* The rent page and the PDFs are later slices. Until the API names one, its
+   door is a letter to the studio rather than a link to nothing. */
+settle('links', () => {
+  const l = data.links || {};
+  if (l.rent) $('rentLink').href = l.rent;
+  if (l.technical_sheet) { $('sheetLink').href = l.technical_sheet; $('sheetLink').hidden = false; }
+  if (l.dossier) {
+    const a = $('dossierLink');
+    a.href = l.dossier;
+    a.textContent = 'Download the dossier';
+  }
+});
+
+/* 1 · the hero: the first After there is, the street with its painting */
+settle('hero', () => {
+  const h = heroOf(sites, works);
+  if (!h) { $('hero').remove(); return; }
+  const alt = h.kind === 'render' ? `${plateTitle(h.site)}, the painting` : `${plateTitle(h.site)}, ${kindLabel(h.kind).toLowerCase()}`;
+  /* An After is shot with the fascia centred (docs/SPECIMEN-SHOTS.md); a
+     gallery photograph standing in for one has the painting low in frame. */
+  const focus = h.kind === 'gallery' ? 'center 85%' : 'center';
+  $('hero').innerHTML = `<img style="object-position:${focus}" src="${e(img(h.key, 1600))}" srcset="${e(srcset(h.key, [800, 1600, 2400]))}" sizes="100vw" alt="${e(alt)}" fetchpriority="high" decoding="async">`;
+  $('heroCap').textContent = `${plateTitle(h.site)} · ${kindLabel(h.kind)}`.toUpperCase();
+});
+
+/* 2 · one painting's palette beside the method: twelve and the red */
+settle('swatch', () => {
+  const ps = paletteSiteOf(sites);
+  const lead = ps || sites.find((s) => s.work_id && works[s.work_id]);
+  if (!lead) return;
+  const head = `<p class="mono">${e(`${plateTitle(lead)} · palette`.toUpperCase())}</p>`;
+  const foot = '<p class="mono grey">Twelve sampled · one red line</p>';
+  if (ps) {
+    const last = ps.palette.length - 1;
+    $('swatch').innerHTML = `<div style="display:flex;flex-direction:column;gap:12px">${head}`
+      + `<ul class="swatches" aria-label="${e(`${plateTitle(ps)}: ${ps.palette.length} colours, the last the red line`)}">${ps.palette.map((hex, i) => {
+        const say = i === last ? `${hex}, the red line` : hex;
+        return `<li${i === last ? ' class="red"' : ''} style="background:${e(hex)}" title="${e(say)}"><span class="vh">${e(say)}</span></li>`;
+      }).join('')}</ul>${foot}</div>`;
+    return;
+  }
+  /* No hexes on record yet: the painting is its own palette, so it stands in */
+  const w = works[lead.work_id];
+  $('swatch').innerHTML = `<div style="display:flex;flex-direction:column;gap:12px">${head}`
+    + `<img class="band" src="${e(img(w.assets.image, 1200))}" alt="${e(`${plateTitle(lead)}, the painting: its colours as strips`)}"${Number(w.aspect) > 0 ? ` style="aspect-ratio:${Number(w.aspect)}"` : ''}>${foot}</div>`;
+});
+
+/* 4 · the street, counted */
+settle('street', () => {
+  const c = counts(sites);
+  const nums = sites.map(numberOf).filter((n) => n > 0);
+  const streets = [...new Set(sites.map((s) => s.street).filter(Boolean))].map(streetName);
+  const where = streets.length > 1 ? `${streets.slice(0, -1).join(', ')} and ${streets[streets.length - 1]}` : streets[0] || '';
+  const bits = [`${cap(word(c.total))} ${c.total === 1 ? 'fascia' : 'fascias'}${where ? ` on ${where}` : ''}${nums.length > 1 ? `, between ${Math.min(...nums)} and ${Math.max(...nums)}` : ''}.`];
+  if (c.installed) bits.push(`${cap(word(c.installed))} installed.`);
+  if (c.approved) bits.push(`${cap(word(c.approved))} approved and in the studio.`);
+  if (c.proposed) bits.push(`${cap(word(c.proposed))} proposed.`);
+  bits.push('The map is the plan for the whole street as one work.');
+  $('streetLede').textContent = bits.join(' ');
+  $('streetCount').innerHTML = `${e(countLine(sites))}<span class="scroll"> · SCROLL →</span>`;
+  $('plan').innerHTML = planSVG(sites);
+  wirePlan($('plan'));
+});
+
+/* 5 · the works: plates for sites with a painting, then every site */
+settle('plates', () => {
+  const usd = fx && fx.usd ? fx.usd : null;
+  $('plates').innerHTML = sites.filter((s) => s.work_id).map((s) => plateHTML(s, works[s.work_id] || null, { img, usd })).join('');
+  wireSlider($('plates'));
+  const plated = new Set(sites.filter((s) => s.work_id).map((s) => String(s.no)));
+  document.querySelector('#register tbody').innerHTML = registerRows(sites).map((r) => {
+    const no = Number(r.no);
+    const addr = plated.has(String(no)) ? `<a href="#plate-${no}">${e(r.address)}</a>` : e(r.address);
+    return `<tr id="site-${no}" data-site-no="${no}"><td class="no">${e(r.no)}</td><td class="addr">${addr}</td><td>${e(r.building)}</td>`
+      + `<td class="m">${e(r.size || '')}</td><td class="m">${e(r.status)}</td><td class="m grey">${e(r.specimens)}</td></tr>`;
+  }).join('');
+});
+
+/* 7 · exhibited: a tile with no picture shows its label and its date */
+settle('tiles', () => {
+  $('tiles').innerHTML = (data.exhibited || []).map((t) => {
+    const date = t.dates || (t.image ? null : 'Date to come');
+    const label = [t.name, t.place, t.kind, t.title, date].filter(Boolean).join(' · ');
+    const pic = t.image ? `<img src="${e(img(t.image, 900))}" alt="${e(`${t.name}${t.place ? `, ${t.place}` : ''}`)}" loading="lazy" decoding="async">` : '';
+    const lab = t.href ? `<a class="lab" href="${e(t.href)}">${e(label)}</a>` : `<span class="lab">${e(label)}</span>`;
+    return `<li${t.image ? ' class="has-img"' : ''}>${pic}${lab}</li>`;
+  }).join('');
+});
+
+/* a link from elsewhere to #plate-N or #site-N lands once the plates exist */
+if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+</script>
+</body>
+</html>
