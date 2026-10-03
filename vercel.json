@@ -74,7 +74,7 @@
   ],
   "rewrites": [
     {
-      "source": "/api/pfp/index",
+      "source": "/api/pfp/list",
       "destination": "/api/pfp?peers=1"
     },
     {

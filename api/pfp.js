@@ -2,7 +2,7 @@
  *
  *   GET  /api/pfp?address=0x...   one collector's picture: { source, url, updated }
  *   GET  /api/pfp?all=1           every picture, wallet -> url, for the register
- *   GET  /api/pfp/index           every wallet The Line may ask about (rewritten to ?peers=1)
+ *   GET  /api/pfp/list            every wallet The Line may ask about (rewritten to ?peers=1)
  *   GET  /api/pfp/{address}       what The Line is told (rewritten to ?peer=): the
  *                                 picture this site holds, or that the collector
  *                                 chose none here; otherwise 404. Never the placeholder.
