@@ -74,6 +74,14 @@
   ],
   "rewrites": [
     {
+      "source": "/api/pfp/index",
+      "destination": "/api/pfp?peers=1"
+    },
+    {
+      "source": "/api/pfp/:address",
+      "destination": "/api/pfp?peer=:address"
+    },
+    {
       "source": "/api/stripe-webhook",
       "destination": "/api/webhook"
     },

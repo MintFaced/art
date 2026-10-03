@@ -2,6 +2,10 @@
  *
  *   GET  /api/pfp?address=0x...   one collector's picture: { source, url, updated }
  *   GET  /api/pfp?all=1           every picture, wallet -> url, for the register
+ *   GET  /api/pfp/index           every wallet The Line may ask about (rewritten to ?peers=1)
+ *   GET  /api/pfp/{address}       what The Line is told (rewritten to ?peer=): the
+ *                                 picture this site holds, or that the collector
+ *                                 chose none here; otherwise 404. Never the placeholder.
  *   POST /api/pfp                 your own picture:
  *        stage   (multipart: payload + image)  -> { tmp, url, w, h } to crop over
  *        save    { tmp, crop: { cx, cy, zoom } }
@@ -61,6 +65,19 @@ export async function GET(request) {
     /* Short: a face somebody has just saved should reach the register and
        their page within about a minute and a half, not seven. */
     return out(request, { base: `${P.PUBLIC}/pfp`, small: P.SMALL, map, alias: P.aliases() }, 200, 'public, max-age=30, s-maxage=60');
+  }
+  /* The other gallery asking. A face The Line itself gave us is not said back
+     to it, and a private collector has no face to give. */
+  if (url.searchParams.get('peers')) {
+    const addresses = (await P.peerList()).filter((a) => !priv.has(a));
+    return out(request, { addresses }, 200, 'public, max-age=3600, s-maxage=3600');
+  }
+  if (url.searchParams.has('peer')) {
+    const who = lower(url.searchParams.get('peer'));
+    if (!isAddr(who)) return out(request, { error: 'Which wallet?' }, 400);
+    const said = priv.has(who) ? null : P.peerSaid(await P.record(who));
+    return said ? out(request, said, 200, 'public, max-age=3600, s-maxage=3600')
+      : out(request, { error: 'No picture here.' }, 404, 'public, max-age=3600, s-maxage=3600');
   }
   const address = lower(url.searchParams.get('address'));
   if (!isAddr(address)) return out(request, { error: 'Which wallet?' }, 400);
