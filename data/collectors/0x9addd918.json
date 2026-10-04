@@ -1,7 +1,9 @@
 {
  "address": "0x9addd91874b08f6856bf6b4a2263665d2bc0d933",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x9addd918",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-08-11T08:32:44.000000Z",
  "last_collected": "2022-10-10T08:21:35.000Z",
- "tao": 119875,
+ "tao": 122893,
  "tao_rate": 81.6,
- "tao_rank": 118,
+ "tao_rank": 119,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -23,13 +25,13 @@
    "works": 2
   },
   {
-   "slug": "geodetica",
-   "title": "Geodetica",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "geodetica",
+   "title": "Geodetica",
    "works": 1
   }
  ],
@@ -44,7 +46,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 5953
+   "tao": 6109
   },
   {
    "id": "seize-and-share-eth-is-finite-1805",
@@ -56,7 +58,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null,
-   "tao": 5975
+   "tao": 6130
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -68,7 +70,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 5994
+   "tao": 6150
   },
   {
    "id": "geodetica-26",
@@ -80,7 +82,7 @@
    "unique": true,
    "image": "geodetica/geodetica-26-display.webp",
    "orientation": "square",
-   "tao": 101951
+   "tao": 104503
   }
  ]
 }
