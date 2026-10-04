@@ -1,7 +1,9 @@
 {
  "address": "0x251216dd3473ea5fcdbaffd0dd0826017f8e1b24",
  "ens": "bananajam.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "bananajam.eth",
  "private": false,
  "has_page": true,
@@ -13,18 +15,18 @@
  },
  "first_collected": "2022-07-09T08:28:33.000Z",
  "last_collected": "2022-10-12T07:52:47.000Z",
- "tao": 18435,
+ "tao": 18901,
  "tao_rate": 12.6,
- "tao_rank": 526,
+ "tao_rank": 528,
  "collections": [
-  {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
-   "works": 1
-  },
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
    "works": 1
   },
   {
@@ -44,7 +46,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 5945
+   "tao": 6100
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -56,7 +58,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 6017
+   "tao": 6173
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -68,7 +70,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6356
+   "tao": 6512
   }
  ]
 }
