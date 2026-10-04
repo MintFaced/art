@@ -1,7 +1,9 @@
 {
  "address": "0xd7d16a716f6dfcef1e9553bf12136463f6414f1a",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0xd7d16a71",
  "private": false,
  "has_page": true,
@@ -13,18 +15,18 @@
  },
  "first_collected": "2022-08-18T11:41:13.000Z",
  "last_collected": "2022-12-16T16:11:11.000Z",
- "tao": 17517,
+ "tao": 17983,
  "tao_rate": 12.6,
- "tao_rank": 554,
+ "tao_rank": 556,
  "collections": [
-  {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
-   "works": 1
-  },
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
    "works": 1
   },
   {
@@ -44,7 +46,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 5670
+   "tao": 5826
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -56,7 +58,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5670
+   "tao": 5826
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -68,7 +70,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6175
+   "tao": 6331
   }
  ]
 }
