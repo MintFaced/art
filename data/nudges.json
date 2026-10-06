@@ -861,7 +861,281 @@
    "image": null,
    "opens": "2026-09-28T04:43:57.583Z",
    "closes": "2026-10-06T00:00:00.000Z",
-   "published": true
+   "published": true,
+   "banked": {
+    "number": 4,
+    "kind": "candidates",
+    "rule": {
+     "voters": 5,
+     "tao": 500000
+    },
+    "total": 1842215,
+    "collectors": 6,
+    "leader": {
+     "hex": "#00B3B3",
+     "total": 775000,
+     "voters": 2
+    },
+    "locked": {
+     "hex": "#00B3B3",
+     "total": 775000,
+     "voters": 2
+    },
+    "locked_by": "artist",
+    "met": {
+     "voters": false,
+     "tao": true
+    },
+    "closed_early": null,
+    "why": null,
+    "progress": {
+     "voters": {
+      "at": 2,
+      "of": 5
+     },
+     "tao": {
+      "at": 775000,
+      "of": 500000
+     }
+    },
+    "ledger": [
+     {
+      "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
+      "name": "iagof.eth",
+      "candidate": "#00B3B3",
+      "at": "2026-10-05T11:50:30.934Z",
+      "clamped": false
+     },
+     {
+      "address": "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8",
+      "name": "visco.eth",
+      "candidate": "#401C21",
+      "at": "2026-10-05T09:38:58.150Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "name": "piercedcat.eth",
+      "candidate": "#640125",
+      "at": "2026-09-30T15:39:16.471Z",
+      "clamped": false
+     },
+     {
+      "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+      "name": "carlos28355.eth",
+      "candidate": "#401C21",
+      "at": "2026-09-30T04:32:49.172Z",
+      "clamped": false
+     },
+     {
+      "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+      "name": "carlos28355.eth",
+      "candidate": "#00B3B3",
+      "at": "2026-09-30T04:32:38.668Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#86862D",
+      "at": "2026-09-30T01:03:32.177Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#401C21",
+      "at": "2026-09-30T01:03:13.629Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#00B3B3",
+      "at": "2026-09-30T01:02:58.930Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#86862D",
+      "at": "2026-09-29T09:07:11.161Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#00B3B3",
+      "at": "2026-09-29T08:33:48.911Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#86862D",
+      "at": "2026-09-29T08:33:15.353Z",
+      "clamped": false
+     },
+     {
+      "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+      "name": "carlos28355.eth",
+      "candidate": "#00B3B3",
+      "at": "2026-09-29T03:13:33.855Z",
+      "clamped": false
+     },
+     {
+      "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+      "name": "carlos28355.eth",
+      "candidate": "#401C21",
+      "at": "2026-09-29T03:13:33.855Z",
+      "clamped": false
+     },
+     {
+      "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+      "name": "carlos28355.eth",
+      "candidate": "#401C21",
+      "at": "2026-09-29T03:12:55.090Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#86862D",
+      "at": "2026-09-29T01:08:15.853Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#00B3B3",
+      "at": "2026-09-29T01:07:36.866Z",
+      "clamped": false
+     },
+     {
+      "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+      "name": "imagebyandy.eth",
+      "candidate": "#401C21",
+      "at": "2026-09-29T00:55:40.052Z",
+      "clamped": false
+     }
+    ],
+    "candidates": [
+     {
+      "hex": "#00B3B3",
+      "total": 775000,
+      "voters": 2,
+      "share": 0.42068922465618835,
+      "proposed_by": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "proposed_name": "0xunix.eth",
+      "wallets": [
+       {
+        "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
+        "name": "iagof.eth",
+        "amount": 575000,
+        "weight": 575000,
+        "clamped": false
+       },
+       {
+        "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+        "name": "0xunix.eth",
+        "amount": 200000,
+        "weight": 200000,
+        "clamped": false
+       },
+       {
+        "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+        "name": "MintFace",
+        "amount": 26900,
+        "weight": 26900,
+        "clamped": false,
+        "artist": true
+       }
+      ]
+     },
+     {
+      "hex": "#401C21",
+      "total": 774993,
+      "voters": 3,
+      "share": 0.4206854248825463,
+      "proposed_by": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+      "proposed_name": "imagebyandy.eth",
+      "wallets": [
+       {
+        "address": "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8",
+        "name": "visco.eth",
+        "amount": 420000,
+        "weight": 420000,
+        "clamped": false
+       },
+       {
+        "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+        "name": "carlos28355.eth",
+        "amount": 179993,
+        "weight": 179993,
+        "clamped": false
+       },
+       {
+        "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+        "name": "imagebyandy.eth",
+        "amount": 175000,
+        "weight": 175000,
+        "clamped": false
+       },
+       {
+        "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+        "name": "MintFace",
+        "amount": 26900,
+        "weight": 26900,
+        "clamped": false,
+        "artist": true
+       }
+      ]
+     },
+     {
+      "hex": "#640125",
+      "total": 222222,
+      "voters": 1,
+      "share": 0.12062761404070643,
+      "proposed_by": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "proposed_name": "piercedcat.eth",
+      "wallets": [
+       {
+        "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+        "name": "piercedcat.eth",
+        "amount": 222222,
+        "weight": 222222,
+        "clamped": false
+       }
+      ]
+     },
+     {
+      "hex": "#86862D",
+      "total": 70000,
+      "voters": 1,
+      "share": 0.037997736420558946,
+      "proposed_by": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "proposed_name": "MintFace",
+      "wallets": [
+       {
+        "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+        "name": "0xunix.eth",
+        "amount": 70000,
+        "weight": 70000,
+        "clamped": false
+       },
+       {
+        "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+        "name": "MintFace",
+        "amount": 26900,
+        "weight": 26900,
+        "clamped": false,
+        "artist": true
+       }
+      ]
+     }
+    ],
+    "banked_at": "2026-10-06T01:57:26.486Z"
+   }
   }
  ],
  "series": {
