@@ -1,6 +1,6 @@
 {
  "_note": "Nudges: artist-authored questions the collectors weigh TAO behind. Authored in the studio, banked by api/cron/nudges.js. A nudge steers, it never commands ... except where the studio says otherwise on the nudge itself, which is what `promise` is for. A nudge with kind: candidates has no sides: collectors propose the answers and weigh on them, and one locks only if the leader carries `lock.voters` collectors AND `lock.tao` TAO at close. `series` is the arc a nudge belongs to and `slot` is the colour it fills; the series block below is also the maker's community palette, so when the last slot locks the palette is simply complete. See docs/AVS-NUDGES.md.",
- "next_number": 5,
+ "next_number": 6,
  "nudges": [
   {
    "id": "nudge-1",
@@ -1136,6 +1136,24 @@
     ],
     "banked_at": "2026-10-06T01:57:26.486Z"
    }
+  },
+  {
+   "id": "nudge-5",
+   "number": 5,
+   "question": "Strip Painting 5th Color",
+   "kind": "candidates",
+   "series": "strip-palette",
+   "slot": 5,
+   "lock": {
+    "voters": 5,
+    "tao": 500000
+   },
+   "promise": "MintFace will paint the colour this locks. A nudge steers; this one decides.",
+   "note": "Feel the rhythm of colors that went before, and decide the color that deserves to go next. Energy goes where TAO flows.",
+   "image": null,
+   "opens": "2026-10-06T01:58:28.954Z",
+   "closes": "2026-10-21T00:00:00.000Z",
+   "published": true
   }
  ],
  "series": {
