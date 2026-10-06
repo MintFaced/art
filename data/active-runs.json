@@ -3,6 +3,29 @@
  "keep": 60,
  "runs": [
   {
+   "run_id": "amux9510h",
+   "at": "2026-10-06T22:30:15.137Z",
+   "ok": true,
+   "ms": 133472,
+   "chain": {
+    "asked": 381,
+    "moved": 81,
+    "unknown": 15,
+    "refused": 429,
+    "rate": 5,
+    "due": 381,
+    "due_left": 0,
+    "paged": 808,
+    "of": 3679,
+    "covered": 3680
+   },
+   "studio": {
+    "lit": 11,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
    "run_id": "amuvtp6f7",
    "at": "2026-10-05T22:30:15.235Z",
    "ok": true,
