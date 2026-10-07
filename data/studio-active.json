@@ -1,10 +1,14 @@
 {
  "_note": "Collectors active in the MintFace Studio inside the last 30 days, and what they last did. Recomputed whole every night from the nudge ledger, the room and the notes ... no chain lookup is involved and none is needed. A wallet drops off this list by going quiet, not by being removed. See docs/ACTIVITY.md.",
- "generated": "2026-10-06T22:30:15.137Z",
+ "generated": "2026-10-07T22:30:15.141Z",
  "window_days": 30,
  "wallets": {
+  "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488": [
+   1791343784,
+   "reacted"
+  ],
   "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7": [
-   1791317417,
+   1791342831,
    "said something"
   ],
   "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2": [
@@ -18,10 +22,6 @@
   "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8": [
    1791193147,
    "weighed"
-  ],
-  "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488": [
-   1791189497,
-   "reacted"
   ],
   "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5": [
    1790742778,
