@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-10-06T21:00:49.405Z",
+ "generated": "2026-10-07T21:00:40.130Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -54,7 +54,6 @@
   "0xdbbd6bb7adcbc9d1ae962df6cf24f3bd14e1bc9b": "active.secureid.eth",
   "0xce5993291aada8cb38d9014f626a405e0f1128a4": "vault.scobel.eth",
   "0x88be96dc047cde01286e991f7333a2e9a4865856": "beholdier-vault.eth",
-  "0xc777a7bbf87be1b765f3af26f833111316178121": "nasacrypto.eth",
   "0x41205d22c7152ab6db642d789d471f6b888c45b7": "andginja.eth",
   "0x02d61cc47cc9a19b2a023c33c094269d9af07862": "dolcepaganne.eth",
   "0x35365ae5c8557ea978a63b35a6459f2560e809b9": "bacca.eth",
@@ -271,6 +270,11 @@
    "maybetodaysatan.eth",
    "outsidetheflicker.eth",
    "daysthatendiny.eth"
+  ],
+  "0xc777a7bbf87be1b765f3af26f833111316178121": [
+   "schmeckle.eth",
+   "nasacrypto.eth",
+   "schmeckles.eth"
   ],
   "0xd3aefe3c531e3e2eb0689206e7d495843c943550": [
    "boringboredape.eth",
@@ -635,8 +639,8 @@
   ]
  },
  "counts": {
-  "asked": 2461,
-  "named": 158,
-  "ambiguous": 75
+  "asked": 2462,
+  "named": 157,
+  "ambiguous": 76
  }
 }
