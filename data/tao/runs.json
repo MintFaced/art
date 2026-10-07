@@ -3,6 +3,80 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmuymfrn5",
+   "at": "2026-10-07T21:30:17.393Z",
+   "ok": true,
+   "ms": 75707,
+   "blocks": {
+    "from": 25820496,
+    "to": 26143208,
+    "scanned": 322713
+   },
+   "chain_events": 1,
+   "changed_hands": {
+    "works": 1,
+    "sales": 1,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 2,
+   "tao": {
+    "live": 74662179,
+    "was": 74598492,
+    "delta": 63687,
+    "lost_to_sales": 283790,
+    "wallets": 3440
+   },
+   "register": {
+    "collectors": 3680,
+    "with_page": 807,
+    "private": 0,
+    "named": 1218
+   },
+   "classified": 1,
+   "unclassified": 0,
+   "events": 13110,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 100,
+   "files": 8,
+   "pages": 0,
+   "movements": [
+    {
+     "work": "xlife-42",
+     "title": "They Don't Know...",
+     "token": "42",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-07T10:56:11.000Z",
+     "block": 26140048,
+     "tx": "0xc16875b026a9a89c086a44fe8a674fc1ae15afb3bad9ba523549b31670739942",
+     "from": "0x107b2e855528f344556f8c766a6187326a2c2fa6",
+     "to": "0xebd9f3b0ac0b7758685e338d8e6e94d5c7bdf65e",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0x107b2e855528f344556f8c766a6187326a2c2fa6",
+     "before": 4921,
+     "after": 3445,
+     "delta": -1476,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0xebd9f3b0ac0b7758685e338d8e6e94d5c7bdf65e",
+     "before": 0,
+     "after": 1,
+     "delta": 1,
+     "gained": 1
+    }
+   ]
+  },
+  {
    "run_id": "rmux6zwss",
    "at": "2026-10-06T21:30:17.164Z",
    "ok": true,
