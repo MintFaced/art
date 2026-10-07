@@ -7234,7 +7234,7 @@
    "edition": {
     "type": "edition",
     "minted": 19,
-    "holders": 13,
+    "holders": 11,
     "artist_held": 1,
     "vaulted": 6
    },
@@ -7243,91 +7243,19 @@
    "collector": null,
    "holders": [
     {
-     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
-     "ens": "mintface.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-12-31T22:16:11.000000Z",
-     "status": "artist_held"
-    },
-    {
      "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
      "ens": "mintestate.eth",
      "display_name": null,
      "qty": 6,
-     "acquired": "2023-12-31T22:16:11.000000Z",
+     "acquired": null,
      "status": "vaulted"
-    },
-    {
-     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
-     "ens": "parachica.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-12-31T22:16:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x39Cc9C86E67BAf2129b80Fe3414c397492eA8026",
-     "ens": "xcopy.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-12-31T22:16:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xCEEd9585854F12F81A0103861b83b995A64AD915",
-     "ens": "thenounishprof.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-01-01T12:47:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xc6400A5584db71e41B0E5dFbdC769b54B91256CD",
-     "ens": "6529museum.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-01-01T21:10:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x31f8e9B0c3da5EA19f06c6DF7E88F3c60FDda1b4",
-     "ens": null,
-     "display_name": "firstladyart.eth",
-     "qty": 1,
-     "acquired": "2024-01-11T07:48:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xdC694F0dc6b3593b0500D7bE9C45c95801531716",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2025-05-29T06:22:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xC73Ffb72EB85059908b6f72eF4b0d3B38d46e0aD",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-25T10:33:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x107B2E855528F344556f8C766A6187326a2C2FA6",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2025-10-18T09:53:35.000000Z",
-     "status": "acquired"
     },
     {
      "address": "0x914361B591a8c8De83A0d4E23c7C6dA2d226eEFd",
      "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2025-11-05T02:33:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -7335,7 +7263,63 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-01-05T20:07:11.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
+     "ens": "parachica.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xEBD9F3B0AC0B7758685e338d8e6e94D5C7bdf65E",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xdC694F0dc6b3593b0500D7bE9C45c95801531716",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "ens": "mintface.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "artist_held"
+    },
+    {
+     "address": "0xCEEd9585854F12F81A0103861b83b995A64AD915",
+     "ens": "nounishprof.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC73Ffb72EB85059908b6f72eF4b0d3B38d46e0aD",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc6400A5584db71e41B0E5dFbdC769b54B91256CD",
+     "ens": "6529museum.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -7343,7 +7327,23 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-04-18T17:32:11.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x39Cc9C86E67BAf2129b80Fe3414c397492eA8026",
+     "ens": "xcopy.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x31f8e9B0c3da5EA19f06c6DF7E88F3c60FDda1b4",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     }
    ],
