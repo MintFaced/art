@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-10-06T21:31:18.539Z",
+ "generated": "2026-10-07T21:00:41.269Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -14,8 +14,8 @@
   "wallets": 3439
  },
  "counts": {
-  "collectors": 3679,
-  "with_page": 808,
+  "collectors": 3680,
+  "with_page": 807,
   "private": 0,
   "named": 1218
  },
@@ -6701,7 +6701,7 @@
     "collections": 4
    },
    "first_collected": "2022-05-10T00:57:39.000000Z",
-   "last_collected": "2024-01-01T12:47:35.000000Z",
+   "last_collected": "2022-07-10T03:15:31.000Z",
    "tao": 24022,
    "tao_rate": 16.8,
    "tao_rank": 460
@@ -9290,27 +9290,6 @@
    "tao": 5794,
    "tao_rate": 4.2,
    "tao_rank": 2450
-  },
-  {
-   "address": "0x107b2e855528f344556f8c766a6187326a2c2fa6",
-   "ens": null,
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "0x107b2e85",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 1
-   },
-   "first_collected": "2025-08-08T17:38:47.000000Z",
-   "last_collected": "2025-10-18T09:53:35.000000Z",
-   "tao": 4921,
-   "tao_rate": 12.6,
-   "tao_rank": 2723
   },
   {
    "address": "0x111f412586d750951a603aee897afaf154746985",
