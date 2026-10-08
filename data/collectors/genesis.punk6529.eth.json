@@ -14,8 +14,8 @@
   "collections": 3
  },
  "first_collected": "2022-07-12T04:42:36.000Z",
- "last_collected": "2024-11-27T04:10:47.000000Z",
- "tao": 15061,
+ "last_collected": "2022-07-12T04:42:36.000Z",
+ "tao": 15087,
  "tao_rate": 12.6,
  "tao_rank": 598,
  "collections": [
@@ -37,18 +37,6 @@
  ],
  "works": [
   {
-   "id": "xlife-55",
-   "title": "Faded Summer",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2024-11-27T04:10:47.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-55-image.gif",
-   "orientation": null,
-   "tao": 2846
-  },
-  {
    "id": "geodetic-memory-geodetic-memory",
    "title": "Geodetic Memory",
    "collection": "geodetic-memory",
@@ -58,7 +46,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6496
+   "tao": 6504
   },
   {
    "id": "id-please-362",
@@ -70,7 +58,19 @@
    "unique": false,
    "image": "id-please/id-please-362-display.webp",
    "orientation": null,
-   "tao": 2131
+   "tao": 2139
+  },
+  {
+   "id": "xlife-55",
+   "title": "Faded Summer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-55-image.gif",
+   "orientation": null,
+   "tao": 2854
   }
  ]
 }
