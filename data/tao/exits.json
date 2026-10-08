@@ -1,6 +1,6 @@
 {
  "_note": "Every exit, with the verdict that decided whether its TAO was taken back.",
- "generated": "2026-10-07T21:31:20.000Z",
+ "generated": "2026-10-08T21:31:24.000Z",
  "exits": [
   {
    "address": "0xcf79b7ba24c70341e3fd5409381e1f00aab275d9",
@@ -23090,6 +23090,72 @@
    "verdict": "sale",
    "tao": 1487,
    "work": "xlife-42"
+  },
+  {
+   "address": "0x3a5055af0724a4b33fbdf09268b84877726b2560",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "28",
+   "qty": 1,
+   "at": 1791434843,
+   "tx": "0x6eaeff9276e39654a91dc15596114d9e5fc5a86765fcbdaf0970597be1cb8d8c",
+   "verdict": "sale",
+   "tao": 702,
+   "work": "xlife-28"
+  },
+  {
+   "address": "0xd2ab77a10cab66433c167e9aa4cc3178fe133def",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "56",
+   "qty": 1,
+   "at": 1791434951,
+   "tx": "0x06c3b0f269ce4ca8c9638d7f5869efb243093413c1ca18252f2eb9a432706ce7",
+   "verdict": "sale",
+   "tao": 30,
+   "work": "xlife-56"
+  },
+  {
+   "address": "0x107b2e855528f344556f8c766a6187326a2c2fa6",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "55",
+   "qty": 1,
+   "at": 1791465515,
+   "tx": "0x2d6413636c8e23ca9330f5836a6e673a4dcb70639855e368714bd72bcfa880dd",
+   "verdict": "sale",
+   "tao": 1657,
+   "work": "xlife-55"
+  },
+  {
+   "address": "0xee8bfacaa886d7b59bbdaa34b287f910559e7da4",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "56",
+   "qty": 1,
+   "at": 1791465515,
+   "tx": "0x2d6413636c8e23ca9330f5836a6e673a4dcb70639855e368714bd72bcfa880dd",
+   "verdict": "sale",
+   "tao": 387,
+   "work": "xlife-56"
+  },
+  {
+   "address": "0x6fad91115dc942e27a2325bad5e03c3bf2bce5fb",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "10",
+   "qty": 1,
+   "at": 1791465623,
+   "tx": "0x5a058f17090ec2783ea405b42eb49e4b4f05d097e4750dc6ccde97217b778d37",
+   "verdict": "sale",
+   "tao": 653,
+   "work": "xlife-10"
+  },
+  {
+   "address": "0xee8bfacaa886d7b59bbdaa34b287f910559e7da4",
+   "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+   "token": "55",
+   "qty": 1,
+   "at": 1791465743,
+   "tx": "0x09be0fe8c6cf69a0a24a1a49723af258b15a94597a7bd38428e5fd7e2a9307e9",
+   "verdict": "sale",
+   "tao": 217,
+   "work": "xlife-55"
   }
  ]
 }
