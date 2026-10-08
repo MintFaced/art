@@ -3,6 +3,191 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmv01vnhf",
+   "at": "2026-10-08T21:30:18.915Z",
+   "ok": true,
+   "ms": 78143,
+   "blocks": {
+    "from": 25820496,
+    "to": 26150375,
+    "scanned": 329880
+   },
+   "chain_events": 6,
+   "changed_hands": {
+    "works": 6,
+    "sales": 6,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 6,
+   "tao": {
+    "live": 74723706,
+    "was": 74662179,
+    "delta": 61527,
+    "lost_to_sales": 287436,
+    "wallets": 3439
+   },
+   "register": {
+    "collectors": 3680,
+    "with_page": 805,
+    "private": 0,
+    "named": 1218
+   },
+   "classified": 5,
+   "unclassified": 0,
+   "events": 13116,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 99,
+   "files": 9,
+   "pages": 1,
+   "movements": [
+    {
+     "work": "xlife-28",
+     "title": "Swap Anyway",
+     "token": "28",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-08T04:47:23.000Z",
+     "block": 26145383,
+     "tx": "0x6eaeff9276e39654a91dc15596114d9e5fc5a86765fcbdaf0970597be1cb8d8c",
+     "from": "0x3a5055af0724a4b33fbdf09268b84877726b2560",
+     "to": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "xlife-56",
+     "title": "Late Stage Memeism",
+     "token": "56",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-08T04:49:11.000Z",
+     "block": 26145392,
+     "tx": "0x06c3b0f269ce4ca8c9638d7f5869efb243093413c1ca18252f2eb9a432706ce7",
+     "from": "0xd2ab77a10cab66433c167e9aa4cc3178fe133def",
+     "to": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "xlife-55",
+     "title": "Faded Summer",
+     "token": "55",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-08T13:18:35.000Z",
+     "block": 26147932,
+     "tx": "0x2d6413636c8e23ca9330f5836a6e673a4dcb70639855e368714bd72bcfa880dd",
+     "from": "0x107b2e855528f344556f8c766a6187326a2c2fa6",
+     "to": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "xlife-56",
+     "title": "Late Stage Memeism",
+     "token": "56",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-08T13:18:35.000Z",
+     "block": 26147932,
+     "tx": "0x2d6413636c8e23ca9330f5836a6e673a4dcb70639855e368714bd72bcfa880dd",
+     "from": "0xee8bfacaa886d7b59bbdaa34b287f910559e7da4",
+     "to": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "xlife-10",
+     "title": "Fake Rare XCOPY",
+     "token": "10",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-08T13:20:23.000Z",
+     "block": 26147941,
+     "tx": "0x5a058f17090ec2783ea405b42eb49e4b4f05d097e4750dc6ccde97217b778d37",
+     "from": "0x6fad91115dc942e27a2325bad5e03c3bf2bce5fb",
+     "to": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "xlife-55",
+     "title": "Faded Summer",
+     "token": "55",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-08T13:22:23.000Z",
+     "block": 26147951,
+     "tx": "0x09be0fe8c6cf69a0a24a1a49723af258b15a94597a7bd38428e5fd7e2a9307e9",
+     "from": "0xee8bfacaa886d7b59bbdaa34b287f910559e7da4",
+     "to": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0x107b2e855528f344556f8c766a6187326a2c2fa6",
+     "before": 3445,
+     "after": 1795,
+     "delta": -1650,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0x3a5055af0724a4b33fbdf09268b84877726b2560",
+     "before": 700,
+     "after": 0,
+     "delta": -700,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0x6fad91115dc942e27a2325bad5e03c3bf2bce5fb",
+     "before": 2009,
+     "after": 1368,
+     "delta": -641,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0xee8bfacaa886d7b59bbdaa34b287f910559e7da4",
+     "before": 953,
+     "after": 358,
+     "delta": -595,
+     "gained": 0,
+     "sales": 2,
+     "transfers": 0
+    },
+    {
+     "address": "0xd2ab77a10cab66433c167e9aa4cc3178fe133def",
+     "before": 28,
+     "after": 0,
+     "delta": -28,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "before": 0,
+     "after": 11,
+     "delta": 11,
+     "gained": 6
+    }
+   ]
+  },
+  {
    "run_id": "rmuymfrn5",
    "at": "2026-10-07T21:30:17.393Z",
    "ok": true,
