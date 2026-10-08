@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-10-07T21:00:40.130Z",
+ "generated": "2026-10-08T21:00:44.779Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -52,6 +52,7 @@
   "0x55ee31604277c7e01946502003b58b9ca883c1cb": "substravault.eth",
   "0xe54a20c02a3735b9669005d9e846f38a3b8c7916": "askwho.eth",
   "0xdbbd6bb7adcbc9d1ae962df6cf24f3bd14e1bc9b": "active.secureid.eth",
+  "0xeadd2d51e75a8b42302adc2aff0157a4bf626adb": "rcsa69.eth",
   "0xce5993291aada8cb38d9014f626a405e0f1128a4": "vault.scobel.eth",
   "0x88be96dc047cde01286e991f7333a2e9a4865856": "beholdier-vault.eth",
   "0x41205d22c7152ab6db642d789d471f6b888c45b7": "andginja.eth",
@@ -71,7 +72,6 @@
   "0x73dfe934241963cd96118c6dce3fb950a4170c3e": "blvckjoy.eth",
   "0xfa413f911677512dda3a340370f635bc77789e0e": "synnfi.eth",
   "0x0623a3b40d4a7a95e410d203fae7d8f9c92ed480": "lilyillo.eth",
-  "0xeadd2d51e75a8b42302adc2aff0157a4bf626adb": "rcsa69.eth",
   "0x067e95ca18d1bfb75a12ca92cbc72cb142272052": "codeandwood.eth",
   "0x017347cb75ac8725608e593ea35d83f9b2b3cfb8": "6529memelabs.eth",
   "0x1e5ef06675b57558c5c7b7442695270ab5f21e28": "ethiopiandao.eth",
@@ -514,10 +514,6 @@
    "nadhira.eth",
    "shahira.eth"
   ],
-  "0xa42e1debeba42786a4d2b8226927291462271e96": [
-   "goodmeebin.eth",
-   "timesync.eth"
-  ],
   "0x938402d50e18c603bbf7cc9ec00482f20452adaf": [
    "0xfablo.eth",
    "16513.eth",
@@ -641,6 +637,6 @@
  "counts": {
   "asked": 2462,
   "named": 157,
-  "ambiguous": 76
+  "ambiguous": 75
  }
 }
