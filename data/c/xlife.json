@@ -2323,7 +2323,7 @@
    "edition": {
     "type": "edition",
     "minted": 100,
-    "holders": 90,
+    "holders": 89,
     "artist_held": 2,
     "vaulted": 7
    },
@@ -2346,6 +2346,14 @@
      "qty": 2,
      "acquired": null,
      "status": "artist_held"
+    },
+    {
+     "address": "0x9ea0940749187868DD6a433dB4FcC0281C6Ce897",
+     "ens": "0xclik.eth",
+     "display_name": null,
+     "qty": 2,
+     "acquired": null,
+     "status": "acquired"
     },
     {
      "address": "0x4e64c721eBBE3285CFA60b61a3E12a8f4E1709E8",
@@ -2388,14 +2396,6 @@
      "status": "acquired"
     },
     {
-     "address": "0xee8bFaCAA886d7b59bbDAA34B287F910559e7DA4",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": null,
-     "status": "acquired"
-    },
-    {
      "address": "0xeE2a2E390887E9bda9f869b041ccdcB9bFCd56dc",
      "ens": null,
      "display_name": null,
@@ -2429,14 +2429,6 @@
     },
     {
      "address": "0xE7d341F7A00a8F40D807185F0d2317B0E8491113",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": null,
-     "status": "acquired"
-    },
-    {
-     "address": "0xe6Da4a4930E896c7E1FF590779B4046d7587b802",
      "ens": null,
      "display_name": null,
      "qty": 1,
@@ -3130,7 +3122,7 @@
    "edition": {
     "type": "edition",
     "minted": 90,
-    "holders": 84,
+    "holders": 81,
     "artist_held": 1,
     "vaulted": 7
    },
@@ -3139,331 +3131,19 @@
    "collector": null,
    "holders": [
     {
-     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
-     "ens": "mintface.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-11-27T04:10:47.000000Z",
-     "status": "artist_held"
-    },
-    {
      "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
      "ens": "mintestate.eth",
      "display_name": null,
      "qty": 7,
-     "acquired": "2025-05-29T04:13:11.000000Z",
+     "acquired": null,
      "status": "vaulted"
     },
     {
-     "address": "0x39Cc9C86E67BAf2129b80Fe3414c397492eA8026",
-     "ens": "xcopy.eth",
+     "address": "0x9ea0940749187868DD6a433dB4FcC0281C6Ce897",
+     "ens": "0xclik.eth",
      "display_name": null,
-     "qty": 1,
-     "acquired": "2024-11-27T04:10:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xfD22004806A6846EA67ad883356be810F0428793",
-     "ens": "genesis.punk6529.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-11-27T04:10:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x8Bf824d7E8a2Dbbe6F47bD09721a8a3fDCe09D63",
-     "ens": "dsoeirosanches.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-11-27T18:24:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xF6852Df0c0A18AC3a4CB4B5D470895F86d3861CE",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T03:16:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xc31F81894A08aD1656512c60d5Ce91Ff2655AF1d",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T03:32:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x544071711d26867EE9E2Bc6eB8146655DA78E069",
-     "ens": "ronnyguy.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T03:37:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x71773bC122Fe810B6a83F20327E9AC9377791527",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T04:09:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xE460EFFF6D9c79B30634f514c6A2d6654A53a260",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T04:12:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xF08889f3b4f5A56482Fc295db2fFC7301F888cA0",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T04:56:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xE250c7540ffC0fE802A3cd1ba907addE9D410051",
-     "ens": "alwayshugo.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T04:59:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x9023Ef16968FFea318838A223ef2A79bd9f99F88",
-     "ens": "wades.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T05:00:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x80897383D295d79079dfeC48F4343F121DCB7C03",
-     "ens": "awhurst.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T05:05:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x671CcF0dE56EB7E9A94a05638a7B0FFF0de59166",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T05:07:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x6a3bF16Bba8D8e9b9738c0e97940f3F5e55D2417",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T05:11:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x6245f1c86AF1D0F87e5830b400033b1369d41c34",
-     "ens": "paligas.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T05:14:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xBF222CA2Ef5126afFe94EA72903764D52cD12642",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T05:27:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x5c75Ed5BEb9a43b68fae73706908b2fdF497f4a0",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T05:31:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x4E60C2E7181EDFc5471C0cBC8D485706d1b35686",
-     "ens": "ryansterling.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T09:08:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x227d93B231e70e7a6618D8bcb7eB68dC3D414F14",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T09:28:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x00a97CE41757a950077cca320Ea73FE8009d1164",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T10:43:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xa42E1dEBEbA42786a4d2b8226927291462271e96",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T10:48:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xAE5d235c7c24F06a14F25f3FA8906d536fFeBb57",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T11:20:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x7C7ce5A61dA17BBC36f45C64C1cEBE698e81C99B",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T11:50:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x07b3103f8ECEEE53f233e58d6B4481EDab2784a1",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T12:08:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x353339c5EBc17B740BE010A6F7C5627b46B005e5",
-     "ens": "kingbab.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T13:12:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x2ff32A0F8C0813CD1bB8007cb88D29d40bAb2C4d",
-     "ens": "markkroon.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T18:17:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x74715e12d34706Dc93DF96D2D8e813fb06Af146A",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:03:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xF46490acd12b53E5cC5274cDE36b5598DaCbD207",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:03:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xCbcB8A49716228e93f31759500A5D378F3582954",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:12:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x41f884B86E3D6F802Dc726a49709a1938231802a",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:20:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xcD9E0fE98bfe8D06B52fF93aBF12b2a63FEd2bc8",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:23:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x38ba7aA30C96A6E2aFAF5D66f0CF74eA7CF6d5da",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:35:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x974aF4b22E1d0fcF2dd1549A25b867a8AaAF07A7",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:37:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x451dD290Fa6c7046A9fca8C8d3d62D038D8c7ff5",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:39:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x5fC13C5A541041f8fa12fab492D064435eB8d2F5",
-     "ens": "deltasauce.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:49:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x2882898129bfB577f756350d8443265038FCe7cc",
-     "ens": "chiefnoodle.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T19:56:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x35e352E52Fc7B7Daa82c8e875C45294800bc530B",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T21:01:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x2Ca5D416d1fd797B598D0300Ad8fFf4aE32BaA4C",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T21:23:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x8f55b286b1E4f2AeE061024F5766698f57434D8F",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T21:41:11.000000Z",
+     "qty": 2,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -3471,223 +3151,15 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-12-02T21:43:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0x9659FEa40AFd9d06a699FE913d21EcdB43Bd62C2",
-     "ens": null,
+     "address": "0xfD22004806A6846EA67ad883356be810F0428793",
+     "ens": "genesis.punk6529.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-12-02T21:57:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x6b44f348D121080F54A64e06077AbEc48f6Bed32",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T22:22:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xA95F82e86Fc4D560366b7D1bBe806b9A90aB6537",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T22:26:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xf16856221E8fBf526AF371E8851351d38512aC5d",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T22:30:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x947fF1d931Db1035282CBD45BBc7AA6B6A7825aA",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T22:57:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x7df93b753b1bdC2f506ec82085300A704236e0D6",
-     "ens": "guzzlabs.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T23:00:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xe5a752e5011b8e191Dad28882e494065518119a7",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T23:21:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x379309D50E5Cac65770f89ccD5fB46A3C2ce5F3a",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-02T23:32:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xA9642b2b486f07d5185C96a0C919448CbfF6ed34",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T00:22:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xAc912D99D40aAF02eCfEbA67B3dbA1D7E8bBEDab",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T00:33:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x25255a36287c9DF4B2363Fd9F998CEEc7F12BEf0",
-     "ens": "conny.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T00:54:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x48B8142ad2c17000073218127e48faA8780d2843",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T00:56:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x42c0D0c0B39DEcbbeC20c93076e675124CBE9711",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T00:58:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x53144CBbf9fcD0E6eC2A6A791dE33B11b8e38d5A",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T01:37:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x18A428CE0c31584a21CF8ceFDb8849d8013E1994",
-     "ens": "xabbu.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T01:50:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x1c21230D4A2E920d11655CC6AFE567eE38bFAcda",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T01:57:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x499B3a83E1d9802086A5FAEA4773fb5d798594bF",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T02:46:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x312226D46fF38E620B067EFad8d45F8c0E92e2B2",
-     "ens": "imnotningning.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T04:12:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x2809ea636e9A9B05AA464fc13587eC54C28f8D44",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T05:49:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x8c1F8159C5b185a934a201Eb0F61Acc98afA0257",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T05:55:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x54E91e9D6022f67448cf0A09473d1D1666b65283",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T05:57:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xBeCa6bc671F23392F789Ca12bC5e383245892B52",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T06:46:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x47d8404fCD1c52E6642C7eD374FaB052b381Ccc1",
-     "ens": "bsimon.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T12:48:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xcC52FeFb566a2e68aaC7154ee53ACE5A658FFD9A",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T12:57:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xEe9b3476b970e79BE3Bff57985d0D08752FD9480",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T18:30:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x19D0ECB21628A55B0D79C49EF97d404Cf36571f9",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T20:56:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xE491f1393dc20C298705D9A6c61C966594C753f1",
-     "ens": "tokenbaldguy.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T22:31:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -3695,95 +3167,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-12-03T23:11:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x9fA3dc85C36C84E2be1C94b8A044276729d54297",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-03T23:24:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x70CA541640AAC86b8e05568400049642edB77ecA",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-04T01:19:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x491875DE96e72E52c6fC3c74AEa61319Fe1d0e82",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-06T05:36:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x07c70120e3141E3145f5ed1B327584dd0C773d4C",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-07T08:39:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xedF441c1A8473779F2D94DEDB3b1Cc5e1c142fdf",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-14T21:55:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xea88730CAfeC7A18685712b1cE200301c7c0b754",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-17T07:57:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x12eb7ed1e15d383ee21338676067530c83551796",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-12-29T16:22:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xdE58879DE5cA41367a5093dEE41F622C167b94B4",
-     "ens": null,
-     "display_name": "sailoulau.eth",
-     "qty": 1,
-     "acquired": "2025-07-09T00:48:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x9E597A7e01ED135eFFb7e95Bd017Fe958e7656B8",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2025-07-21T01:21:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x0b3b0f9046905f50E13D3eBE055AB21E838eC872",
-     "ens": null,
-     "display_name": "gissie.eth",
-     "qty": 1,
-     "acquired": "2025-08-06T05:11:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x107B2E855528F344556f8C766A6187326a2C2FA6",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2025-09-18T01:59:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -3791,15 +3175,583 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-05-16T10:52:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0xee8bFaCAA886d7b59bbDAA34B287F910559e7DA4",
+     "address": "0xF6852Df0c0A18AC3a4CB4B5D470895F86d3861CE",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-08-17T19:46:59.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xF46490acd12b53E5cC5274cDE36b5598DaCbD207",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xf16856221E8fBf526AF371E8851351d38512aC5d",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xF08889f3b4f5A56482Fc295db2fFC7301F888cA0",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xEe9b3476b970e79BE3Bff57985d0D08752FD9480",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xedF441c1A8473779F2D94DEDB3b1Cc5e1c142fdf",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xea88730CAfeC7A18685712b1cE200301c7c0b754",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xe5a752e5011b8e191Dad28882e494065518119a7",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xE491f1393dc20C298705D9A6c61C966594C753f1",
+     "ens": "tokenbaldguy.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xE460EFFF6D9c79B30634f514c6A2d6654A53a260",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xE250c7540ffC0fE802A3cd1ba907addE9D410051",
+     "ens": "alwayshugo.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xdE58879DE5cA41367a5093dEE41F622C167b94B4",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "ens": "mintface.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "artist_held"
+    },
+    {
+     "address": "0xcD9E0fE98bfe8D06B52fF93aBF12b2a63FEd2bc8",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xcC52FeFb566a2e68aaC7154ee53ACE5A658FFD9A",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xCbcB8A49716228e93f31759500A5D378F3582954",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc31F81894A08aD1656512c60d5Ce91Ff2655AF1d",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xBF222CA2Ef5126afFe94EA72903764D52cD12642",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xBeCa6bc671F23392F789Ca12bC5e383245892B52",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xAE5d235c7c24F06a14F25f3FA8906d536fFeBb57",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xAc912D99D40aAF02eCfEbA67B3dbA1D7E8bBEDab",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xA9642b2b486f07d5185C96a0C919448CbfF6ed34",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xA95F82e86Fc4D560366b7D1bBe806b9A90aB6537",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xa42E1dEBEbA42786a4d2b8226927291462271e96",
+     "ens": "timesync.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9fA3dc85C36C84E2be1C94b8A044276729d54297",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9E597A7e01ED135eFFb7e95Bd017Fe958e7656B8",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x974aF4b22E1d0fcF2dd1549A25b867a8AaAF07A7",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9659FEa40AFd9d06a699FE913d21EcdB43Bd62C2",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x947fF1d931Db1035282CBD45BBc7AA6B6A7825aA",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9023Ef16968FFea318838A223ef2A79bd9f99F88",
+     "ens": "wades.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8f55b286b1E4f2AeE061024F5766698f57434D8F",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8c1F8159C5b185a934a201Eb0F61Acc98afA0257",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8Bf824d7E8a2Dbbe6F47bD09721a8a3fDCe09D63",
+     "ens": "dsoeirosanches.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x80897383D295d79079dfeC48F4343F121DCB7C03",
+     "ens": "awhurst.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7df93b753b1bdC2f506ec82085300A704236e0D6",
+     "ens": "guzzlabs.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7C7ce5A61dA17BBC36f45C64C1cEBE698e81C99B",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x74715e12d34706Dc93DF96D2D8e813fb06Af146A",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x71773bC122Fe810B6a83F20327E9AC9377791527",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x70CA541640AAC86b8e05568400049642edB77ecA",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6b44f348D121080F54A64e06077AbEc48f6Bed32",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6a3bF16Bba8D8e9b9738c0e97940f3F5e55D2417",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x671CcF0dE56EB7E9A94a05638a7B0FFF0de59166",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6245f1c86AF1D0F87e5830b400033b1369d41c34",
+     "ens": "paligas.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x5fC13C5A541041f8fa12fab492D064435eB8d2F5",
+     "ens": "deltasauce.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x5c75Ed5BEb9a43b68fae73706908b2fdF497f4a0",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x54E91e9D6022f67448cf0A09473d1D1666b65283",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x544071711d26867EE9E2Bc6eB8146655DA78E069",
+     "ens": "ronnyguy.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x53144CBbf9fcD0E6eC2A6A791dE33B11b8e38d5A",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x4E60C2E7181EDFc5471C0cBC8D485706d1b35686",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x499B3a83E1d9802086A5FAEA4773fb5d798594bF",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x491875DE96e72E52c6fC3c74AEa61319Fe1d0e82",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x48B8142ad2c17000073218127e48faA8780d2843",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x47d8404fCD1c52E6642C7eD374FaB052b381Ccc1",
+     "ens": "bsimon.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x451dD290Fa6c7046A9fca8C8d3d62D038D8c7ff5",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x42c0D0c0B39DEcbbeC20c93076e675124CBE9711",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x41f884B86E3D6F802Dc726a49709a1938231802a",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x39Cc9C86E67BAf2129b80Fe3414c397492eA8026",
+     "ens": "xcopy.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x38ba7aA30C96A6E2aFAF5D66f0CF74eA7CF6d5da",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x379309D50E5Cac65770f89ccD5fB46A3C2ce5F3a",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x35e352E52Fc7B7Daa82c8e875C45294800bc530B",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x353339c5EBc17B740BE010A6F7C5627b46B005e5",
+     "ens": "kingbab.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x312226D46fF38E620B067EFad8d45F8c0E92e2B2",
+     "ens": "imnotningning.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2ff32A0F8C0813CD1bB8007cb88D29d40bAb2C4d",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2Ca5D416d1fd797B598D0300Ad8fFf4aE32BaA4C",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2882898129bfB577f756350d8443265038FCe7cc",
+     "ens": "chiefnoodle.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2809ea636e9A9B05AA464fc13587eC54C28f8D44",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x25255a36287c9DF4B2363Fd9F998CEEc7F12BEf0",
+     "ens": "conny.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x227d93B231e70e7a6618D8bcb7eB68dC3D414F14",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x1c21230D4A2E920d11655CC6AFE567eE38bFAcda",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x19D0ECB21628A55B0D79C49EF97d404Cf36571f9",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x18A428CE0c31584a21CF8ceFDb8849d8013E1994",
+     "ens": "xabbu.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x12eb7ed1e15d383ee21338676067530c83551796",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -3807,7 +3759,39 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-08-22T03:20:59.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x0b3b0f9046905f50E13D3eBE055AB21E838eC872",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x07c70120e3141E3145f5ed1B327584dd0C773d4C",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x07b3103f8ECEEE53f233e58d6B4481EDab2784a1",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x00a97CE41757a950077cca320Ea73FE8009d1164",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     }
    ],
@@ -9314,7 +9298,7 @@
    "edition": {
     "type": "edition",
     "minted": 32,
-    "holders": 16,
+    "holders": 15,
     "artist_held": 0,
     "vaulted": 6
    },
@@ -9327,63 +9311,15 @@
      "ens": "mintestate.eth",
      "display_name": null,
      "qty": 6,
-     "acquired": "2023-05-07T01:36:59.000000Z",
+     "acquired": null,
      "status": "vaulted"
     },
     {
      "address": "0x40D2f4399D23f9AfB82D0a6B73055f13208614F9",
-     "ens": "mintsafe.eth",
+     "ens": null,
      "display_name": null,
      "qty": 6,
-     "acquired": "2023-05-07T01:36:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
-     "ens": "parachica.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-07T01:36:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
-     "ens": "visco.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-07T01:36:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x95B2db3f49B8A5365aFaCc6342f5ece0D253F8E0",
-     "ens": "vvveary.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-07T01:36:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x43D4bdeEcA8dD891E89ED80DAc83b70bF2D1d753",
-     "ens": "photox.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-07T01:36:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x39Cc9C86E67BAf2129b80Fe3414c397492eA8026",
-     "ens": "xcopy.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-07T01:36:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x665654f2D2a151bE2D0F8E3697e6Ce780F732aF2",
-     "ens": "artpleb.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-07T01:36:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -9391,7 +9327,7 @@
      "ens": null,
      "display_name": null,
      "qty": 3,
-     "acquired": "2023-05-07T17:49:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -9399,23 +9335,7 @@
      "ens": "bergleeuw.eth",
      "display_name": null,
      "qty": 3,
-     "acquired": "2023-05-07T19:31:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
-     "ens": "iagof.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-12T08:40:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xCc3B37EeB73143e6D2a547058118Fe25561A4eb2",
-     "ens": "0xunix.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-05-19T04:58:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -9423,15 +9343,23 @@
      "ens": null,
      "display_name": null,
      "qty": 3,
-     "acquired": "2023-05-22T05:17:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0x7020965F33AE0458e45929d7771bA6f301C3D855",
-     "ens": null,
+     "address": "0xEE2c055f7706b9dFCd98Cd5A23d5629D6316C0bD",
+     "ens": "parachica.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-09-18T01:13:35.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xCc3B37EeB73143e6D2a547058118Fe25561A4eb2",
+     "ens": "0xunix.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -9439,15 +9367,71 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-08-25T10:33:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0x3a5055Af0724A4B33FbDF09268b84877726b2560",
+     "address": "0x9ea0940749187868DD6a433dB4FcC0281C6Ce897",
+     "ens": "0xclik.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x95B2db3f49B8A5365aFaCc6342f5ece0D253F8E0",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-04-23T23:54:11.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+     "ens": "visco.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7020965F33AE0458e45929d7771bA6f301C3D855",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x665654f2D2a151bE2D0F8E3697e6Ce780F732aF2",
+     "ens": "artpleb.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x43D4bdeEcA8dD891E89ED80DAc83b70bF2D1d753",
+     "ens": "photox.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x39Cc9C86E67BAf2129b80Fe3414c397492eA8026",
+     "ens": "xcopy.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+     "ens": "iagof.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     }
    ],
@@ -13072,7 +13056,7 @@
    "edition": {
     "type": "edition",
     "minted": 61,
-    "holders": 45,
+    "holders": 43,
     "artist_held": 1,
     "vaulted": 6
    },
@@ -13081,123 +13065,19 @@
    "collector": null,
    "holders": [
     {
+     "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
+     "ens": "mintestate.eth",
+     "display_name": null,
+     "qty": 6,
+     "acquired": null,
+     "status": "vaulted"
+    },
+    {
      "address": "0xE6CE1BC6255FCC6598f07Fab5d7c851C73C423c3",
      "ens": null,
      "display_name": null,
      "qty": 4,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x7b0546D5847F5d6b2F0702e9e71AC0C371D54DCA",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x9438160d839391Bd22a2BC8CDCAab010063Ba131",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xf52A30142877E3b7d30F3F6BB2C6bc55b8888710",
-     "ens": "astromarkc.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x33a34e27a81436BA9D79276406a285E89A8bD8a8",
-     "ens": "tacita.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x43D4bdeEcA8dD891E89ED80DAc83b70bF2D1d753",
-     "ens": "photox.eth",
-     "display_name": null,
-     "qty": 2,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x13EEe41d67b8d99E11174161D72cF8cCD194458C",
-     "ens": "davidkibler.eth",
-     "display_name": "davidkibler.eth",
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x7DcCC79361b0227A85c2FF788cA240d31f2a78d0",
-     "ens": "incept.eth",
-     "display_name": null,
-     "qty": 2,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x7a79944AC7E770cFd13eC024A4B31B8c5eFeE60d",
-     "ens": "alpinelifer.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xe485656EC623115Bf2d445B925DB5D63707Bf74b",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
-     "ens": "visco.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x8af6e15ED513B5B73573F58158b1b0BbD5085eC7",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
-     "ens": "iagof.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xfcBFe4130a0031558B10053f17B7597F428a59e8",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x01Ab06F4Eb304a6f804E26CbE5f16D23D06b68a5",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -13205,103 +13085,15 @@
      "ens": null,
      "display_name": null,
      "qty": 3,
-     "acquired": "2023-01-29T23:22:11.000000Z",
+     "acquired": null,
      "status": "acquired"
-    },
-    {
-     "address": "0xFB74Eee69be0C2bd8Fb42ee67b6B6c4e05CD9Ddd",
-     "ens": "craigreilly.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xCe7640AE90b7ebDEcd188419a7C6fB0f3EDC78BE",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x0a1c6F1638ADBE3873c7e8Dad6c0E3b08285BA07",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x595A1B38c53D8FB5fbDF68196F22ef79FE59c9e9",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xffC15eF23f4Ba7Faf4B4d3c28a35A28f126BCc0D",
-     "ens": "byoldme.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x1e7F2ef8BbdE7FCaea03Ba0C83d5D293D066f41c",
-     "ens": "icdaywee.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xe53c5B4F841570D193e05a27BFaFE1c554f14875",
-     "ens": "icki.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x930922B1114ed66734BD773184667B227520f43F",
-     "ens": "spuddhism.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
-     "ens": "mintestate.eth",
-     "display_name": null,
-     "qty": 6,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "vaulted"
-    },
-    {
-     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
-     "ens": "mintface.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-29T23:22:11.000000Z",
-     "status": "artist_held"
     },
     {
      "address": "0xE74abe3BC87a4cF34acfD7C548208700c0e669b0",
      "ens": "charliebubba.eth",
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-30T01:49:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xA30eB1520cFA84F31f2021621d5Ae27857D5BBf6",
-     "ens": "jacobtheape.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-30T02:22:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -13309,15 +13101,7 @@
      "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-30T02:31:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xeb3B759a882E45301bbD7c5507BDdbadA47DCA81",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-30T04:30:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -13325,7 +13109,71 @@
      "ens": "piercedcat.eth",
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-30T08:03:35.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xaFcCEbed934565586A749C66Ff352B0fc871042b",
+     "ens": null,
+     "display_name": null,
+     "qty": 2,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7DcCC79361b0227A85c2FF788cA240d31f2a78d0",
+     "ens": "incept.eth",
+     "display_name": null,
+     "qty": 2,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x43D4bdeEcA8dD891E89ED80DAc83b70bF2D1d753",
+     "ens": "photox.eth",
+     "display_name": null,
+     "qty": 2,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xffC15eF23f4Ba7Faf4B4d3c28a35A28f126BCc0D",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xfcBFe4130a0031558B10053f17B7597F428a59e8",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xFB74Eee69be0C2bd8Fb42ee67b6B6c4e05CD9Ddd",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xf52A30142877E3b7d30F3F6BB2C6bc55b8888710",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xeb3B759a882E45301bbD7c5507BDdbadA47DCA81",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -13333,31 +13181,23 @@
      "ens": "georgebenjamin.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-30T08:39:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0xCd241563F7288b5eb2b9B715F736232889B62d8b",
-     "ens": "readypereone.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-30T09:52:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x41254fe73d3B49f0FE3Cc7743b4d40eF26bB338e",
-     "ens": "jpghodl.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-30T10:35:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x039ec0b36450E9b2c5f59A3A6FE991469ac744F2",
+     "address": "0xe53c5B4F841570D193e05a27BFaFE1c554f14875",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-30T11:06:23.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xe485656EC623115Bf2d445B925DB5D63707Bf74b",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -13365,31 +13205,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-30T14:30:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x4F99D481981f464d824592604f58BCeE9Cb8ABF6",
-     "ens": "none32x32.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-31T02:22:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x0a0C26f2a5C8a44116Fd33837F154922668c012B",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-31T02:24:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xCc3B37EeB73143e6D2a547058118Fe25561A4eb2",
-     "ens": "0xunix.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-02-11T22:59:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -13397,7 +13213,47 @@
      "ens": "framesbyvik.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-11-04T01:51:59.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
+     "ens": "mintface.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "artist_held"
+    },
+    {
+     "address": "0xCF8e055FB098c1F376A65d5184c4b2E08998896c",
+     "ens": "meysvm.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xCe7640AE90b7ebDEcd188419a7C6fB0f3EDC78BE",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xCd241563F7288b5eb2b9B715F736232889B62d8b",
+     "ens": "readypereone.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xCc3B37EeB73143e6D2a547058118Fe25561A4eb2",
+     "ens": "0xunix.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -13405,39 +13261,167 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-08-25T10:33:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0xaFcCEbed934565586A749C66Ff352B0fc871042b",
-     "ens": "memevault1.web3at50.eth",
+     "address": "0xA30eB1520cFA84F31f2021621d5Ae27857D5BBf6",
+     "ens": "jacobtheape.eth",
      "display_name": null,
-     "qty": 2,
-     "acquired": "2025-09-28T10:36:11.000000Z",
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9ea0940749187868DD6a433dB4FcC0281C6Ce897",
+     "ens": "0xclik.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9438160d839391Bd22a2BC8CDCAab010063Ba131",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x930922B1114ed66734BD773184667B227520f43F",
+     "ens": "spuddhism.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8be5A2dF6488B0937299D27F092716F4a9ab2fD8",
+     "ens": "visco.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8af6e15ED513B5B73573F58158b1b0BbD5085eC7",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7b0546D5847F5d6b2F0702e9e71AC0C371D54DCA",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x7a79944AC7E770cFd13eC024A4B31B8c5eFeE60d",
+     "ens": "alpinelifer.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x595A1B38c53D8FB5fbDF68196F22ef79FE59c9e9",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x4F99D481981f464d824592604f58BCeE9Cb8ABF6",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x41254fe73d3B49f0FE3Cc7743b4d40eF26bB338e",
+     "ens": "jpghodl.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x33a34e27a81436BA9D79276406a285E89A8bD8a8",
+     "ens": "tacita.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+     "ens": "iagof.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0x26dD8c07Cf666502f729dAF1825268AaF964D2e3",
-     "ens": "stellarglyphventures.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2025-12-25T16:55:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x6Fad91115dC942E27a2325bad5e03C3BF2bCe5fb",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-05-06T02:42:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0xCF8e055FB098c1F376A65d5184c4b2E08998896c",
-     "ens": "meysvm.eth",
+     "address": "0x1e7F2ef8BbdE7FCaea03Ba0C83d5D293D066f41c",
+     "ens": "icdaywee.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2026-08-21T07:34:23.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x13EEe41d67b8d99E11174161D72cF8cCD194458C",
+     "ens": "davidkibler.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x0a1c6F1638ADBE3873c7e8Dad6c0E3b08285BA07",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x0a0C26f2a5C8a44116Fd33837F154922668c012B",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x039ec0b36450E9b2c5f59A3A6FE991469ac744F2",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x01Ab06F4Eb304a6f804E26CbE5f16D23D06b68a5",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     }
    ],
