@@ -1,7 +1,9 @@
 {
  "address": "0xd5df3f5022572f461459fc62dbbfaa54191fc551",
  "ens": "framesbyvik.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "framesbyvik.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-05-13T21:18:42.000000Z",
  "last_collected": "2024-10-05T07:49:59.000000Z",
- "tao": 40897,
+ "tao": 42102,
  "tao_rate": 29.4,
- "tao_rank": 320,
+ "tao_rank": 325,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -28,8 +30,8 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -38,8 +40,8 @@
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   },
   {
@@ -59,18 +61,6 @@
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
-  },
-  {
-   "id": "xlife-10",
-   "title": "Fake Rare XCOPY",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-11-04T01:51:59.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-10-image.gif",
-   "orientation": null,
-   "tao": 4316
   },
   {
    "id": "we-are-the-line-5",
@@ -93,7 +83,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5799
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -105,7 +95,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 5995
+   "tao": 6167
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -117,7 +107,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 12031
+   "tao": 12376
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -129,7 +119,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6344
+   "tao": 6516
   },
   {
    "id": "2022-10k-2",
@@ -141,7 +131,19 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6581
+   "tao": 6753
+  },
+  {
+   "id": "xlife-10",
+   "title": "Fake Rare XCOPY",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-10-image.gif",
+   "orientation": null,
+   "tao": 4489
   }
  ]
 }
