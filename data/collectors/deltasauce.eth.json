@@ -1,7 +1,9 @@
 {
  "address": "0x5fc13c5a541041f8fa12fab492d064435eb8d2f5",
  "ens": "deltasauce.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "deltasauce.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 2
  },
  "first_collected": "2023-05-21T04:42:23.000000Z",
- "last_collected": "2024-12-02T19:49:11.000000Z",
- "tao": 5577,
+ "last_collected": "2024-10-05T07:51:35.000000Z",
+ "tao": 5922,
  "tao_rate": 8.4,
- "tao_rank": 2650,
+ "tao_rank": 2366,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -29,18 +31,6 @@
   }
  ],
  "works": [
-  {
-   "id": "xlife-55",
-   "title": "Faded Summer",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2024-12-02T19:49:11.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-55-image.gif",
-   "orientation": null,
-   "tao": 2658
-  },
   {
    "id": "we-are-the-line-8",
    "title": "First 1000 artists on The Line",
@@ -62,7 +52,7 @@
    "unique": false,
    "image": "xlife/xlife-52-image.gif",
    "orientation": null,
-   "tao": 2918
+   "tao": 3091
   },
   {
    "id": "we-are-the-line-6",
@@ -74,6 +64,18 @@
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-6-image.png",
    "orientation": null
+  },
+  {
+   "id": "xlife-55",
+   "title": "Faded Summer",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-55-image.gif",
+   "orientation": null,
+   "tao": 2831
   }
  ]
 }
