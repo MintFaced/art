@@ -1,7 +1,9 @@
 {
  "address": "0x69cb3b1de24e08f1cfc2994171b6c6930498f750",
  "ens": "sundayfunday.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "sundayfunday.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 3
  },
  "first_collected": "2022-07-09T16:37:26.000Z",
- "last_collected": "2023-01-02T00:27:23.000000Z",
- "tao": 36073,
+ "last_collected": "2022-12-16T14:47:59.000Z",
+ "tao": 37156,
  "tao_rate": 25.2,
- "tao_rank": 347,
+ "tao_rank": 348,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -35,18 +37,6 @@
  ],
  "works": [
   {
-   "id": "xlife-4",
-   "title": "XCOFFEE",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2023-01-02T00:27:23.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-4-image.gif",
-   "orientation": null,
-   "tao": 5602
-  },
-  {
    "id": "seize-and-share-accessdenied-mp4-2882",
    "title": "AccessDenied.mp4",
    "collection": "seize-and-share",
@@ -56,7 +46,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5671
+   "tao": 5851
   },
   {
    "id": "seize-and-share-gm-gm-1683",
@@ -68,7 +58,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 5995
+   "tao": 6175
   },
   {
    "id": "seize-and-share-gm-518",
@@ -80,7 +70,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-518-display.webp",
    "orientation": null,
-   "tao": 6119
+   "tao": 6299
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -92,7 +82,19 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12685
+   "tao": 13046
+  },
+  {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null,
+   "tao": 5782
   }
  ]
 }
