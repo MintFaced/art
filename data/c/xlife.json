@@ -14681,7 +14681,7 @@
    "edition": {
     "type": "edition",
     "minted": 58,
-    "holders": 33,
+    "holders": 30,
     "artist_held": 12,
     "vaulted": 12
    },
@@ -14690,19 +14690,11 @@
    "collector": null,
    "holders": [
     {
-     "address": "0x000000000000000000000000000000000000dead",
-     "ens": null,
-     "display_name": null,
-     "qty": 42,
-     "acquired": "2023-02-09T01:12:59.000000Z",
-     "status": "acquired"
-    },
-    {
      "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
      "ens": "mintestate.eth",
      "display_name": null,
      "qty": 12,
-     "acquired": "2023-01-02T06:32:59.000000Z",
+     "acquired": null,
      "status": "vaulted"
     },
     {
@@ -14710,7 +14702,7 @@
      "ens": "ryanj.eth",
      "display_name": null,
      "qty": 6,
-     "acquired": "2023-01-02T00:39:35.000000Z",
+     "acquired": null,
      "status": "artist_held"
     },
     {
@@ -14718,15 +14710,15 @@
      "ens": "mintface.eth",
      "display_name": null,
      "qty": 6,
-     "acquired": "2023-01-02T00:39:35.000000Z",
+     "acquired": null,
      "status": "artist_held"
     },
     {
      "address": "0xEEDA4E9a5Ca757e3a2dd9aB5d91E99C4a1FF0423",
-     "ens": "0x69x0.eth",
+     "ens": null,
      "display_name": null,
      "qty": 3,
-     "acquired": "2023-01-03T06:55:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14734,23 +14726,23 @@
      "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-03T04:19:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0x95B2db3f49B8A5365aFaCc6342f5ece0D253F8E0",
-     "ens": "vvveary.eth",
+     "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-03T04:18:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0xffC15eF23f4Ba7Faf4B4d3c28a35A28f126BCc0D",
-     "ens": "byoldme.eth",
+     "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T02:22:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14758,7 +14750,15 @@
      "ens": "web3bebop.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:54:11.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xe1DDc7f1A171F927eF4B79e55d1d0838308aD4A5",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14766,23 +14766,15 @@
      "ens": "0xunix.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T06:12:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0xc84D2bc55399De1f181c5ADC01eE9B4e9a1f5EFD",
-     "ens": "danhawkvault.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2023-01-02T01:39:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xC4a843ddF533540474FDDb7a9a03342348f6742B",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T02:21:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14790,7 +14782,7 @@
      "ens": "synthetic.schizosthesia.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:39:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14798,15 +14790,15 @@
      "ens": "100series.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T04:43:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0xaFcCEbed934565586A749C66Ff352B0fc871042b",
-     "ens": "memevault1.web3at50.eth",
+     "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2025-09-28T10:34:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14814,7 +14806,7 @@
      "ens": "lapislight.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-04T07:51:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14822,7 +14814,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-03T00:30:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14830,7 +14822,7 @@
      "ens": "niftybois.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T04:56:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14838,7 +14830,7 @@
      "ens": "visco.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:39:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14846,15 +14838,15 @@
      "ens": "zilchedhash.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T05:27:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0x80f6D7138Ba478B9501c44988503F23d37Fcac6D",
-     "ens": "punkcomputer.eth",
+     "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T05:55:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14862,7 +14854,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-09-18T01:13:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14870,7 +14862,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T23:38:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14878,7 +14870,7 @@
      "ens": "artpleb.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-10T19:56:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14886,7 +14878,7 @@
      "ens": "jpghodl.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T04:25:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14894,7 +14886,7 @@
      "ens": "hiten.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T07:11:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14902,7 +14894,7 @@
      "ens": "tacita.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T01:21:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14910,7 +14902,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T06:11:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14918,7 +14910,7 @@
      "ens": "iagof.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-02-08T09:04:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14926,7 +14918,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T01:06:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14934,15 +14926,15 @@
      "ens": "totty.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T01:32:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0x13EEe41d67b8d99E11174161D72cF8cCD194458C",
      "ens": "davidkibler.eth",
-     "display_name": "davidkibler.eth",
+     "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:39:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14950,7 +14942,7 @@
      "ens": "domesplitta.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T04:44:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -14958,7 +14950,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T04:26:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     }
    ],
@@ -15011,7 +15003,7 @@
    "edition": {
     "type": "edition",
     "minted": 72,
-    "holders": 50,
+    "holders": 49,
     "artist_held": 2,
     "vaulted": 6
    },
@@ -15020,19 +15012,11 @@
    "collector": null,
    "holders": [
     {
-     "address": "0x000000000000000000000000000000000000dead",
+     "address": "0xEEDA4E9a5Ca757e3a2dd9aB5d91E99C4a1FF0423",
      "ens": null,
      "display_name": null,
-     "qty": 28,
-     "acquired": "2023-01-10T02:05:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xEEDA4E9a5Ca757e3a2dd9aB5d91E99C4a1FF0423",
-     "ens": "0x69x0.eth",
-     "display_name": null,
      "qty": 8,
-     "acquired": "2023-01-03T06:45:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15040,31 +15024,31 @@
      "ens": "mintestate.eth",
      "display_name": null,
      "qty": 6,
-     "acquired": "2023-01-02T00:30:23.000000Z",
+     "acquired": null,
      "status": "vaulted"
-    },
-    {
-     "address": "0xC4a843ddF533540474FDDb7a9a03342348f6742B",
-     "ens": null,
-     "display_name": null,
-     "qty": 3,
-     "acquired": "2023-01-02T02:03:23.000000Z",
-     "status": "acquired"
     },
     {
      "address": "0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180",
      "ens": "mintface.eth",
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-02T00:30:23.000000Z",
+     "acquired": null,
      "status": "artist_held"
+    },
+    {
+     "address": "0xC4a843ddF533540474FDDb7a9a03342348f6742B",
+     "ens": null,
+     "display_name": null,
+     "qty": 2,
+     "acquired": null,
+     "status": "acquired"
     },
     {
      "address": "0xB099A3c3043B262518d9b6CD4D5c9f589b15e2aD",
      "ens": "100series.eth",
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-02T01:13:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15072,7 +15056,7 @@
      "ens": "visco.eth",
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-02T00:28:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15080,7 +15064,7 @@
      "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-09-18T01:18:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15088,7 +15072,7 @@
      "ens": "hiten.eth",
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-02T07:00:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15096,7 +15080,7 @@
      "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-01-02T06:09:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15104,7 +15088,7 @@
      "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2025-08-08T18:06:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15112,15 +15096,15 @@
      "ens": null,
      "display_name": null,
      "qty": 2,
-     "acquired": "2023-10-29T17:22:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0xffC15eF23f4Ba7Faf4B4d3c28a35A28f126BCc0D",
-     "ens": "byoldme.eth",
+     "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T02:06:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15128,7 +15112,7 @@
      "ens": "web3bebop.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:38:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15136,7 +15120,7 @@
      "ens": "mysterian.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-04T06:36:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15144,7 +15128,7 @@
      "ens": "0xunix.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T06:10:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15152,7 +15136,7 @@
      "ens": "awesomedave.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-03T10:27:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15160,7 +15144,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-02-09T03:50:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15168,23 +15152,23 @@
      "ens": "sumofprimes.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-03T02:00:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0xaFcCEbed934565586A749C66Ff352B0fc871042b",
-     "ens": "memevault1.web3at50.eth",
+     "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2025-09-28T10:34:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0xa1F05dbe26cDC2EDe4f410a5C54fE6473B5D7071",
      "ens": null,
-     "display_name": "ryanog.eth",
+     "display_name": null,
      "qty": 1,
-     "acquired": "2025-07-09T00:57:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15192,7 +15176,15 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T14:23:59.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9ea0940749187868DD6a433dB4FcC0281C6Ce897",
+     "ens": "0xclik.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15200,7 +15192,7 @@
      "ens": "thesprink.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T12:45:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15208,15 +15200,15 @@
      "ens": "lapislight.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-04T07:46:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0x95B2db3f49B8A5365aFaCc6342f5ece0D253F8E0",
-     "ens": "vvveary.eth",
+     "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:32:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15224,7 +15216,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T07:05:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15232,7 +15224,7 @@
      "ens": "niftybois.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T02:25:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15240,7 +15232,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2025-11-11T14:30:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15248,7 +15240,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-05T05:26:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15256,7 +15248,7 @@
      "ens": "zilchedhash.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T05:22:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15264,7 +15256,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-07-01T07:52:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15272,7 +15264,7 @@
      "ens": "a7111a.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-04T15:46:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15280,7 +15272,7 @@
      "ens": "sanddollarart.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T03:31:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15288,7 +15280,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T12:22:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15296,7 +15288,7 @@
      "ens": "drleenft.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T14:24:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15304,7 +15296,7 @@
      "ens": "sundayfunday.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:27:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15312,7 +15304,7 @@
      "ens": "artpleb.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-10T19:56:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15320,7 +15312,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:38:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15328,7 +15320,7 @@
      "ens": "carlos28355.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-09T04:38:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15336,7 +15328,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T08:54:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15344,7 +15336,7 @@
      "ens": "loosetooth.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-03T06:53:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15352,7 +15344,7 @@
      "ens": "jpghodl.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T03:51:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15360,7 +15352,7 @@
      "ens": "tacita.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T01:20:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15368,7 +15360,7 @@
      "ens": "iagof.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-02-09T08:57:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15376,7 +15368,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T01:00:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15384,7 +15376,7 @@
      "ens": "icdaywee.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T02:39:23.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15392,15 +15384,15 @@
      "ens": "totty.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T01:28:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
      "address": "0x13EEe41d67b8d99E11174161D72cF8cCD194458C",
      "ens": "davidkibler.eth",
-     "display_name": "davidkibler.eth",
+     "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:35:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15408,7 +15400,7 @@
      "ens": "domesplitta.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T04:41:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15416,7 +15408,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T03:14:11.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -15424,7 +15416,7 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2023-01-02T00:37:47.000000Z",
+     "acquired": null,
      "status": "acquired"
     }
    ],
