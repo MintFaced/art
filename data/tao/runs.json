@@ -3,6 +3,119 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmv2wrcgz",
+   "at": "2026-10-10T21:30:18.467Z",
+   "ok": true,
+   "ms": 75642,
+   "blocks": {
+    "from": 25820496,
+    "to": 26164734,
+    "scanned": 344239
+   },
+   "chain_events": 3,
+   "changed_hands": {
+    "works": 3,
+    "sales": 3,
+    "transfers": 0,
+    "mints": 0
+   },
+   "wallets_affected": 3,
+   "tao": {
+    "live": 74842471,
+    "was": 74788875,
+    "delta": 53596,
+    "lost_to_sales": 299006,
+    "wallets": 3439
+   },
+   "register": {
+    "collectors": 3680,
+    "with_page": 806,
+    "private": 0,
+    "named": 1217
+   },
+   "classified": 2,
+   "unclassified": 0,
+   "events": 13119,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 101,
+   "files": 10,
+   "pages": 2,
+   "movements": [
+    {
+     "work": "xlife-5",
+     "title": "WEN MINT",
+     "token": "5",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-10T07:42:35.000Z",
+     "block": 26160608,
+     "tx": "0xbca014fe6a77f1f469eaf71655b991288ac6db59b092155656637df2c589d519",
+     "from": "0xc4a843ddf533540474fddb7a9a03342348f6742b",
+     "to": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "xlife-4",
+     "title": "XCOFFEE",
+     "token": "4",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-10T07:42:35.000Z",
+     "block": 26160608,
+     "tx": "0xbca014fe6a77f1f469eaf71655b991288ac6db59b092155656637df2c589d519",
+     "from": "0xc4a843ddf533540474fddb7a9a03342348f6742b",
+     "to": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "xlife-4",
+     "title": "XCOFFEE",
+     "token": "4",
+     "contract": "0x8f6ee5787a60959c8daf3d35fa48fd0c49bcca2a",
+     "qty": 1,
+     "at": "2026-10-10T18:51:59.000Z",
+     "block": 26163944,
+     "tx": "0x0d355b2b3def60e9019c42b6309adf35f059a44cb9749b2c25c02f6ccefdb01a",
+     "from": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
+     "to": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0xc4a843ddf533540474fddb7a9a03342348f6742b",
+     "before": 23130,
+     "after": 11573,
+     "delta": -11557,
+     "gained": 0,
+     "sales": 2,
+     "transfers": 0
+    },
+    {
+     "address": "0x9ea0940749187868dd6a433db4fcc0281c6ce897",
+     "before": 36,
+     "after": 62,
+     "delta": 26,
+     "gained": 1
+    },
+    {
+     "address": "0xe1ddc7f1a171f927ef4b79e55d1d0838308ad4a5",
+     "before": 4919,
+     "after": 4934,
+     "delta": 15,
+     "gained": 2,
+     "sales": 1,
+     "transfers": 0
+    }
+   ]
+  },
+  {
    "run_id": "rmv1hbgv6",
    "at": "2026-10-09T21:30:17.250Z",
    "ok": true,
