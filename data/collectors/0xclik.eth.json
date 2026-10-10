@@ -8,21 +8,21 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 4,
+  "works": 5,
   "one_of_ones": 0,
-  "editions": 4,
+  "editions": 5,
   "collections": 1
  },
  "first_collected": null,
  "last_collected": null,
- "tao": 11,
+ "tao": 36,
  "tao_rate": 25.2,
- "tao_rank": 3227,
+ "tao_rank": 3225,
  "collections": [
   {
    "slug": "xlife",
    "title": "XLIFE",
-   "works": 4
+   "works": 5
   }
  ],
  "works": [
@@ -36,7 +36,7 @@
    "unique": false,
    "image": "xlife/xlife-56-image.gif",
    "orientation": null,
-   "tao": 4
+   "tao": 12
   },
   {
    "id": "xlife-55",
@@ -48,7 +48,7 @@
    "unique": false,
    "image": "xlife/xlife-55-image.gif",
    "orientation": null,
-   "tao": 2
+   "tao": 11
   },
   {
    "id": "xlife-28",
@@ -60,7 +60,7 @@
    "unique": false,
    "image": "xlife/xlife-28-image.gif",
    "orientation": null,
-   "tao": 2
+   "tao": 7
   },
   {
    "id": "xlife-10",
@@ -72,7 +72,18 @@
    "unique": false,
    "image": "xlife/xlife-10-image.gif",
    "orientation": null,
-   "tao": 1
+   "tao": 5
+  },
+  {
+   "id": "xlife-4",
+   "title": "XCOFFEE",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-4-image.gif",
+   "orientation": null
   }
  ]
 }
