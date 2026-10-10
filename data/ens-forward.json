@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-10-08T21:00:44.779Z",
+ "generated": "2026-10-10T21:00:44.955Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -150,7 +150,6 @@
   "0xd26b76e50f6510cdd4bf45d59279705f36946d23": "ghostnotes.eth",
   "0xd769cd834caf60ed90afc1a6265c8ce88c5f98e9": "nftholder18.eth",
   "0xf1a15477c766981c9169be9b911a34d33f311f83": "yusaymon.eth",
-  "0xe3c53c7d0ccb5ea35043b13af31f5854cffeb8aa": "lordoflords.eth",
   "0xe51ff9ef0cb02a8715729de3da80e0f438033b14": "saninbc.eth",
   "0xf549dffa66bd19b26d8884a6dbbe70314321a7a1": "solumproject.eth",
   "0xe2fc343bd76e2fcdc582ce0bc3773e87fc8feecb": "grails.radicalnotions.eth",
@@ -326,7 +325,6 @@
    "smoking.mythc.eth",
    "drb.clankers.eth",
    "voidtickler.eth",
-   "drb.eth",
    "thegrokwallet.eth"
   ],
   "0x136bbfe37988f82f8585ed155615b75371489d45": [
@@ -598,6 +596,10 @@
    "cohete.eth",
    "frag.sparesoul.eth"
   ],
+  "0xe3c53c7d0ccb5ea35043b13af31f5854cffeb8aa": [
+   "lordoflords.eth",
+   "argonaut8393.eth"
+  ],
   "0xf207e69a7cc3b4a00fec3039891a77b3df8c3577": [
    "xen0ph0n.eth",
    "soulsecurity.eth",
@@ -635,8 +637,8 @@
   ]
  },
  "counts": {
-  "asked": 2462,
-  "named": 157,
-  "ambiguous": 75
+  "asked": 2463,
+  "named": 156,
+  "ambiguous": 76
  }
 }
