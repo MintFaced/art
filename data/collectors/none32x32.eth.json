@@ -14,10 +14,10 @@
   "collections": 4
  },
  "first_collected": "2022-09-25T09:13:47.000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 57140,
+ "last_collected": "2023-12-15T01:11:47.000000Z",
+ "tao": 57266,
  "tao_rate": 42,
- "tao_rank": 281,
+ "tao_rank": 280,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -42,17 +42,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "xlife-40",
    "title": "AI Swear",
    "collection": "xlife",
@@ -62,7 +51,7 @@
    "unique": false,
    "image": "xlife/xlife-40-image.gif",
    "orientation": null,
-   "tao": 4316
+   "tao": 4329
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -74,7 +63,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5799
+   "tao": 5811
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -86,7 +75,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5829
+   "tao": 5841
   },
   {
    "id": "seize-and-share-accessdenied-mp4-2882",
@@ -98,7 +87,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-accessdenied-mp4-2882-display.webp",
    "orientation": null,
-   "tao": 5843
+   "tao": 5856
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -110,7 +99,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11701
+   "tao": 11727
   },
   {
    "id": "seize-and-share-surreal-dreamooor-2430",
@@ -122,7 +111,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-surreal-dreamooor-2430-image.webp",
    "orientation": null,
-   "tao": 5896
+   "tao": 5909
   },
   {
    "id": "roads-or-rivers-roads",
@@ -134,7 +123,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-roads-image.jpg",
    "orientation": null,
-   "tao": 5911
+   "tao": 5924
   },
   {
    "id": "we-are-the-line-4",
@@ -157,7 +146,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 6188
+   "tao": 6201
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   },
   {
    "id": "xlife-10",
@@ -169,7 +169,7 @@
    "unique": false,
    "image": "xlife/xlife-10-image.gif",
    "orientation": null,
-   "tao": 5652
+   "tao": 5664
   }
  ]
 }
