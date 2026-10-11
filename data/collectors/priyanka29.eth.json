@@ -14,10 +14,10 @@
   "collections": 3
  },
  "first_collected": "2022-08-30T01:07:18.000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 60294,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 60588,
  "tao_rate": 42,
- "tao_rank": 261,
+ "tao_rank": 260,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -37,17 +37,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -57,7 +46,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5782
+   "tao": 5811
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -69,7 +58,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5812
+   "tao": 5841
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -81,7 +70,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 11668
+   "tao": 11726
   },
   {
    "id": "we-are-the-line-4",
@@ -104,7 +93,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-and-rivers-roads-and-rivers-traffic-display.webp",
    "orientation": "landscape",
-   "tao": 12205
+   "tao": 12264
   },
   {
    "id": "seize-and-share-eth-is-finite-1805",
@@ -116,7 +105,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null,
-   "tao": 12261
+   "tao": 12320
   },
   {
    "id": "seize-and-share-10kseized-488",
@@ -128,7 +117,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10kseized-488-display.webp",
    "orientation": null,
-   "tao": 6282
+   "tao": 6311
   },
   {
    "id": "seize-and-share-greengm-498",
@@ -140,7 +129,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-greengm-498-image.gif",
    "orientation": null,
-   "tao": 6282
+   "tao": 6311
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
