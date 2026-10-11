@@ -1,7 +1,9 @@
 {
  "address": "0x1e0486ee85dd758078d75c674f3d28efc4c899fc",
  "ens": "dsanches-vault.eth",
+ "fwd": null,
  "display_name": "dsanches-vault.eth",
+ "x": null,
  "slug": "dsanches-vault.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2023-11-07T01:40:59.000000Z",
  "last_collected": "2025-09-01T00:17:59.000000Z",
- "tao": 82865,
+ "tao": 89304,
  "tao_rate": 146.4,
- "tao_rank": 182,
+ "tao_rank": 178,
  "collections": [
   {
    "slug": "two-burdens",
@@ -44,18 +46,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-36-display.webp",
    "orientation": "portrait",
-   "tao": 24901
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T08:02:35.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 27937
   },
   {
    "id": "two-burdens-3",
@@ -67,7 +58,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-3-display.webp",
    "orientation": "portrait",
-   "tao": 50543
+   "tao": 53578
   },
   {
    "id": "xlife-50",
@@ -79,7 +70,7 @@
    "unique": false,
    "image": "xlife/xlife-50-image.gif",
    "orientation": null,
-   "tao": 3115
+   "tao": 3300
   },
   {
    "id": "xlife-34",
@@ -91,7 +82,18 @@
    "unique": false,
    "image": "xlife/xlife-34-image.gif",
    "orientation": null,
-   "tao": 4304
+   "tao": 4489
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
