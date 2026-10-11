@@ -1,7 +1,9 @@
 {
  "address": "0xaed8e151086a85d39166b80bb4b4cec2f6328a7a",
  "ens": "parradesys.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "parradesys.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-10-21T00:54:47.000000Z",
  "last_collected": "2026-08-22T00:07:47.000000Z",
- "tao": 76569,
+ "tao": 79974,
  "tao_rate": 77.4,
- "tao_rank": 198,
+ "tao_rank": 197,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -23,13 +25,13 @@
    "works": 2
   },
   {
-   "slug": "geodetica",
-   "title": "Geodetica",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "geodetica",
+   "title": "Geodetica",
    "works": 1
   },
   {
@@ -49,18 +51,7 @@
    "unique": false,
    "image": "xlife/xlife-34-image.gif",
    "orientation": null,
-   "tao": 24
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 209
   },
   {
    "id": "geodetica-27",
@@ -72,7 +63,7 @@
    "unique": true,
    "image": "geodetica/geodetica-27-display.webp",
    "orientation": "square",
-   "tao": 70917
+   "tao": 73952
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -84,7 +75,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-1",
@@ -95,6 +86,17 @@
    "acquired": "2022-10-21T00:54:47.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-1-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
   }
  ]
