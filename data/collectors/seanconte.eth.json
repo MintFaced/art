@@ -1,7 +1,9 @@
 {
  "address": "0x1f2df2c970307ab0be504a8b1bfca4347bca14e4",
  "ens": "seanconte.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "seanconte.eth",
  "private": false,
  "has_page": true,
@@ -12,8 +14,8 @@
   "collections": 4
  },
  "first_collected": "2022-08-13T07:11:16.000000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 17413,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 17967,
  "tao_rate": 12.6,
  "tao_rank": 556,
  "collections": [
@@ -40,17 +42,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -60,7 +51,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-4",
@@ -83,7 +74,18 @@
    "unique": false,
    "image": "2022-10k/2022-10k-4-display.webp",
    "orientation": null,
-   "tao": 6197
+   "tao": 6382
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   },
   {
    "id": "xlife-6",
@@ -95,7 +97,7 @@
    "unique": false,
    "image": "xlife/xlife-6-image.gif",
    "orientation": null,
-   "tao": 5588
+   "tao": 5773
   }
  ]
 }
