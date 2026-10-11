@@ -1,7 +1,9 @@
 {
  "address": "0x1430997022e8ccf845af34596ef37f4754983f85",
  "ens": "apocalypseart.eth",
+ "fwd": null,
  "display_name": "apocalypseart.eth",
+ "x": null,
  "slug": "apocalypseart.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 9
  },
  "first_collected": "2022-02-17T18:52:56.000000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 291641,
+ "last_collected": "2024-09-28T23:59:47.000000Z",
+ "tao": 301670,
  "tao_rate": 228,
- "tao_rank": 33,
+ "tao_rank": 34,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -23,13 +25,13 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "two-burdens",
+   "title": "Two Burdens",
    "works": 1
   },
   {
-   "slug": "genesis",
-   "title": "Genesis",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -43,18 +45,18 @@
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "genesis",
+   "title": "Genesis",
+   "works": 1
+  },
+  {
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   },
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
-   "works": 1
-  },
-  {
-   "slug": "two-burdens",
-   "title": "Two Burdens",
    "works": 1
   },
   {
@@ -65,17 +67,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "two-burdens-16",
    "title": "Safe Harbour",
    "collection": "two-burdens",
@@ -85,7 +76,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-16-display.webp",
    "orientation": "square",
-   "tao": 48155
+   "tao": 51190
   },
   {
    "id": "xlife-30",
@@ -97,7 +88,7 @@
    "unique": false,
    "image": "xlife/xlife-30-image.gif",
    "orientation": null,
-   "tao": 4349
+   "tao": 4534
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -109,7 +100,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-1",
@@ -132,7 +123,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-awakening-1547-display.webp",
    "orientation": null,
-   "tao": 6006
+   "tao": 6191
   },
   {
    "id": "foundation-105105",
@@ -144,7 +135,7 @@
    "unique": true,
    "image": "genesis/foundation-105105-display.webp",
    "orientation": null,
-   "tao": 99970
+   "tao": 103005
   },
   {
    "id": "2022-10k-2",
@@ -156,7 +147,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6601
+   "tao": 6785
   },
   {
    "id": "geodetic-onchain-2",
@@ -168,7 +159,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 6934
+   "tao": 7118
   },
   {
    "id": "geodetic-moments-65",
@@ -180,7 +171,18 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-65-display.webp",
    "orientation": null,
-   "tao": 113996
+   "tao": 117031
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
