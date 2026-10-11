@@ -1,7 +1,9 @@
 {
  "address": "0xd444f003f3b7a5d52d5d388eec1fbd8dbfb95026",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0xd444f003",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 3
  },
  "first_collected": "2022-05-14T03:29:39.000000Z",
- "last_collected": "2024-10-05T07:50:47.000000Z",
- "tao": 12544,
+ "last_collected": "2022-10-07T22:39:23.000Z",
+ "tao": 12913,
  "tao_rate": 8.4,
- "tao_rank": 834,
+ "tao_rank": 840,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -35,28 +37,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:50:47.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2023-01-15T23:51:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
-  },
-  {
    "id": "seize-and-share-stored-digital-value-1830",
    "title": "Stored Digital Value",
    "collection": "seize-and-share",
@@ -66,7 +46,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-stored-digital-value-1830-image.gif",
    "orientation": null,
-   "tao": 5963
+   "tao": 6148
   },
   {
    "id": "2022-10k-2",
@@ -78,7 +58,29 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6580
+   "tao": 6765
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
   }
  ]
 }
