@@ -1,7 +1,9 @@
 {
  "address": "0xc9a194bb6a3855b14dc4699cabe7b2881c3f6552",
  "ens": "tylekki.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "tylekki.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 3
  },
  "first_collected": "2022-10-31T00:16:11.000000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 11895,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 15299,
  "tao_rate": 77.4,
- "tao_rank": 1162,
+ "tao_rank": 596,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -35,17 +37,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -55,7 +46,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "seize-and-share-winter-shade-2135",
@@ -67,7 +58,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-winter-shade-2135-display.webp",
    "orientation": null,
-   "tao": 5803
+   "tao": 5988
   },
   {
    "id": "we-are-the-line-4",
@@ -78,6 +69,17 @@
    "acquired": "2022-10-31T00:16:11.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-4-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
   }
  ]
