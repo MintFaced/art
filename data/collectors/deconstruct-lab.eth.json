@@ -1,7 +1,9 @@
 {
  "address": "0x9f35af4727fb91114563d8a8f779a792cb557f3f",
  "ens": "deconstruct-lab.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "deconstruct-lab.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 4
  },
  "first_collected": "2022-09-29T05:12:59.000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 20008,
+ "last_collected": "2024-09-03T05:12:11.000000Z",
+ "tao": 20747,
  "tao_rate": 16.8,
- "tao_rank": 485,
+ "tao_rank": 483,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -40,17 +42,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "xlife-50",
    "title": "Bullish Seizing",
    "collection": "xlife",
@@ -60,7 +51,7 @@
    "unique": false,
    "image": "xlife/xlife-50-image.gif",
    "orientation": null,
-   "tao": 3039
+   "tao": 3224
   },
   {
    "id": "xlife-17",
@@ -72,7 +63,7 @@
    "unique": false,
    "image": "xlife/xlife-17-image.gif",
    "orientation": null,
-   "tao": 5341
+   "tao": 5525
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -84,7 +75,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-4",
@@ -107,7 +98,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-bicameral-hallucination-1580-display.webp",
    "orientation": null,
-   "tao": 6000
+   "tao": 6185
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
