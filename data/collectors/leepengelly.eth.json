@@ -1,7 +1,9 @@
 {
  "address": "0xa8ef8e793210158ece2dbdb87b091f1574f0adb9",
  "ens": "leepengelly.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "leepengelly.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 5
  },
  "first_collected": "2022-02-17T23:21:47.000000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 132731,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 136320,
  "tao_rate": 81.6,
- "tao_rank": 95,
+ "tao_rank": 94,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -23,8 +25,8 @@
    "works": 2
   },
   {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -33,28 +35,17 @@
    "works": 1
   },
   {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
   {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
@@ -65,7 +56,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-4",
@@ -88,7 +79,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6339
+   "tao": 6524
   },
   {
    "id": "geodetic-onchain-1",
@@ -100,7 +91,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6780
+   "tao": 6965
   },
   {
    "id": "geodetic-moments-74",
@@ -112,7 +103,18 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-74-display.webp",
    "orientation": null,
-   "tao": 113983
+   "tao": 117018
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
