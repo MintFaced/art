@@ -1,7 +1,9 @@
 {
  "address": "0x2a7999c9c0ae20e7b64a126f838351bbb6c120b4",
  "ens": "cmplx.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "cmplx.eth",
  "private": false,
  "has_page": true,
@@ -12,19 +14,19 @@
   "collections": 4
  },
  "first_collected": "2022-11-17T11:07:11.000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 82367,
+ "last_collected": "2023-11-04T02:28:23.000Z",
+ "tao": 85771,
  "tao_rate": 77.4,
- "tao_rank": 183,
+ "tao_rank": 182,
  "collections": [
-  {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
-   "works": 1
-  },
   {
    "slug": "geodetic-world",
    "title": "Geodetic World",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
    "works": 1
   },
   {
@@ -40,17 +42,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "seize-and-share-grimalkin-2312",
    "title": "Grimalkin",
    "collection": "seize-and-share",
@@ -60,7 +51,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-grimalkin-2312-display.webp",
    "orientation": null,
-   "tao": 4316
+   "tao": 4501
   },
   {
    "id": "geodetic-world-81",
@@ -72,7 +63,7 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-81-display.webp",
    "orientation": "square",
-   "tao": 72256
+   "tao": 75291
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -84,7 +75,18 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 5793
+   "tao": 5978
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
