@@ -3,6 +3,7 @@
  "ens": "akshayupadhya.eth",
  "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "akshayupadhya.eth",
  "private": false,
  "has_page": true,
@@ -13,10 +14,10 @@
   "collections": 5
  },
  "first_collected": "2022-06-22T06:05:48.000000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 42880,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 43909,
  "tao_rate": 29.4,
- "tao_rank": 312,
+ "tao_rank": 316,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -46,17 +47,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -66,7 +56,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5664
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-1",
@@ -89,7 +79,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
    "orientation": null,
-   "tao": 5975
+   "tao": 6122
   },
   {
    "id": "seize-and-share-eth-is-finite-1805",
@@ -101,7 +91,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-eth-is-finite-1805-display.webp",
    "orientation": null,
-   "tao": 6012
+   "tao": 6159
   },
   {
    "id": "seize-and-share-10k-buidling-643",
@@ -113,7 +103,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-10k-buidling-643-display.webp",
    "orientation": null,
-   "tao": 6059
+   "tao": 6206
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -125,7 +115,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12714
+   "tao": 13008
   },
   {
    "id": "2022-10k-1",
@@ -137,7 +127,18 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6453
+   "tao": 6600
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
