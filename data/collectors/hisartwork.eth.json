@@ -1,7 +1,9 @@
 {
  "address": "0x5cbb31e39ca93ca13d8e9f686bf749b14076bc65",
  "ens": "hisartwork.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "hisartwork.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 3
  },
  "first_collected": "2022-03-15T01:19:28.000000Z",
- "last_collected": "2024-10-05T07:51:35.000000Z",
- "tao": 6832,
+ "last_collected": "2023-05-21T04:42:23.000000Z",
+ "tao": 7017,
  "tao_rate": 4.2,
- "tao_rank": 1311,
+ "tao_rank": 1318,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -34,17 +36,6 @@
   }
  ],
  "works": [
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:51:35.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
   {
    "id": "we-are-the-line-6",
    "title": "The Line continues",
@@ -66,7 +57,18 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6832
+   "tao": 7017
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   },
   {
    "id": "xnouns-187",
