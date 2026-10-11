@@ -1,7 +1,9 @@
 {
  "address": "0xbd72d021d3cb334deb3151db905ee073b8eee518",
  "ens": "mightymoose.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "mightymoose.eth",
  "private": false,
  "has_page": true,
@@ -12,8 +14,8 @@
   "collections": 5
  },
  "first_collected": "2022-07-15T03:28:05.000Z",
- "last_collected": "2024-10-05T07:50:47.000000Z",
- "tao": 91480,
+ "last_collected": "2023-09-25T21:09:23.000000Z",
+ "tao": 95069,
  "tao_rate": 81.6,
  "tao_rank": 173,
  "collections": [
@@ -23,38 +25,27 @@
    "works": 2
   },
   {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
-   "works": 1
-  },
-  {
    "slug": "geodetic-world",
    "title": "Geodetic World",
    "works": 1
   },
   {
-   "slug": "xlife",
-   "title": "XLIFE",
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
    "works": 1
   },
   {
    "slug": "xnouns",
    "title": "XNouns",
    "works": 1
+  },
+  {
+   "slug": "xlife",
+   "title": "XLIFE",
+   "works": 1
   }
  ],
  "works": [
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:50:47.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
   {
    "id": "geodetic-world-4",
    "title": "Geodetic New York",
@@ -65,7 +56,7 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-4-display.webp",
    "orientation": "landscape",
-   "tao": 73624
+   "tao": 76660
   },
   {
    "id": "xlife-23",
@@ -77,18 +68,7 @@
    "unique": false,
    "image": "xlife/xlife-23-image.gif",
    "orientation": null,
-   "tao": 5215
-  },
-  {
-   "id": "we-are-the-line-5",
-   "title": "The Line Artist 201 to 420",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2023-01-15T23:51:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-5-image.png",
-   "orientation": null
+   "tao": 5400
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -100,7 +80,29 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12640
+   "tao": 13009
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-5",
+   "title": "The Line Artist 201 to 420",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-5-image.png",
+   "orientation": null
   },
   {
    "id": "xnouns-206",
