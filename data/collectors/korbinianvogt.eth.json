@@ -1,7 +1,9 @@
 {
  "address": "0x2327dbcc6c2a3821a97c3d9004954970900441e2",
  "ens": "korbinianvogt.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "korbinianvogt.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 4
  },
  "first_collected": "2022-03-07T01:37:06.000000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 18980,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 19534,
  "tao_rate": 12.6,
- "tao_rank": 510,
+ "tao_rank": 509,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -23,8 +25,8 @@
    "works": 2
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
@@ -33,23 +35,12 @@
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   }
  ],
  "works": [
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
   {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
@@ -60,7 +51,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-1",
@@ -83,7 +74,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6486
+   "tao": 6671
   },
   {
    "id": "geodetic-onchain-2",
@@ -95,7 +86,18 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 6866
+   "tao": 7051
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
