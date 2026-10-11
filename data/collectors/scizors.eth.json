@@ -1,7 +1,9 @@
 {
  "address": "0x855ae7f1e0ea6f754f4d30b92cdc43a7b045a0b8",
  "ens": "scizors.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "scizors.eth",
  "private": false,
  "has_page": true,
@@ -11,11 +13,11 @@
   "editions": 2,
   "collections": 2
  },
- "first_collected": "2023-01-15T23:51:11.000000Z",
- "last_collected": "2024-10-05T07:50:47.000000Z",
- "tao": 70920,
+ "first_collected": "2023-11-04T01:59:23.000000Z",
+ "last_collected": "2023-11-04T01:59:23.000000Z",
+ "tao": 73955,
  "tao_rate": 69,
- "tao_rank": 210,
+ "tao_rank": 208,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -30,17 +32,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:50:47.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "geodetic-world-40",
    "title": "Geodetic Dawn",
    "collection": "geodetic-world",
@@ -50,7 +41,18 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-40-display.webp",
    "orientation": "landscape",
-   "tao": 70920
+   "tao": 73955
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   },
   {
    "id": "we-are-the-line-5",
@@ -58,7 +60,7 @@
    "collection": "we-are-the-line",
    "group": "experiments",
    "genre": null,
-   "acquired": "2023-01-15T23:51:11.000000Z",
+   "acquired": null,
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-5-image.png",
    "orientation": null
