@@ -3,6 +3,7 @@
  "ens": "burnasso.eth",
  "fwd": null,
  "display_name": "burnasso.eth",
+ "x": null,
  "slug": "burnasso.eth",
  "private": false,
  "has_page": true,
@@ -14,9 +15,9 @@
  },
  "first_collected": "2022-05-13T15:09:23.000000Z",
  "last_collected": "2025-04-01T23:16:23.000000Z",
- "tao": 106476,
+ "tao": 111084,
  "tao_rate": 115.2,
- "tao_rank": 143,
+ "tao_rank": 137,
  "collections": [
   {
    "slug": "seize-and-share",
@@ -55,18 +56,7 @@
    "unique": false,
    "image": "xlife/xlife-64-image.png",
    "orientation": null,
-   "tao": 2171
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:53:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 2339
   },
   {
    "id": "xlife-51",
@@ -78,7 +68,7 @@
    "unique": false,
    "image": "xlife/xlife-51-image.gif",
    "orientation": null,
-   "tao": 6147
+   "tao": 6483
   },
   {
    "id": "two-burdens-22",
@@ -90,7 +80,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-22-display.webp",
    "orientation": "square",
-   "tao": 50750
+   "tao": 53510
   },
   {
    "id": "xlife-49",
@@ -102,7 +92,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 3341
+   "tao": 3509
   },
   {
    "id": "seize-and-share-rememes-3252",
@@ -114,7 +104,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-rememes-3252-image.gif",
    "orientation": null,
-   "tao": 5673
+   "tao": 5841
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -126,7 +116,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 5997
+   "tao": 6165
   },
   {
    "id": "seize-and-share-mint-face-367",
@@ -138,7 +128,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-367-image.png",
    "orientation": null,
-   "tao": 25795
+   "tao": 26467
   },
   {
    "id": "2022-10k-2",
@@ -150,7 +140,18 @@
    "unique": false,
    "image": "2022-10k/2022-10k-2-display.webp",
    "orientation": null,
-   "tao": 6599
+   "tao": 6767
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
