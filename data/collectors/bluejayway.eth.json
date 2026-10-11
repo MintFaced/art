@@ -1,7 +1,9 @@
 {
  "address": "0x19e080e1cd70240c17002ff11dd02ad0508bcb12",
  "ens": "bluejayway.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "bluejayway.eth",
  "private": false,
  "has_page": true,
@@ -13,9 +15,9 @@
  },
  "first_collected": "2022-06-21T00:30:01.000Z",
  "last_collected": "2026-08-23T06:59:23.000000Z",
- "tao": 12067,
+ "tao": 12621,
  "tao_rate": 12.6,
- "tao_rank": 853,
+ "tao_rank": 852,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -23,13 +25,13 @@
    "works": 2
   },
   {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 1
   },
   {
@@ -49,18 +51,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 19
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 204
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -72,7 +63,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-1",
@@ -95,7 +86,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mint-face-229-image.png",
    "orientation": null,
-   "tao": 6421
+   "tao": 6606
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
