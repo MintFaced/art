@@ -1,7 +1,9 @@
 {
  "address": "0xa1b32581ec3bb4c85f47806bfa8566ae08989870",
  "ens": "jusstin.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "jusstin.eth",
  "private": false,
  "has_page": true,
@@ -12,8 +14,8 @@
   "collections": 3
  },
  "first_collected": "2022-09-27T03:45:23.000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 17631,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 18185,
  "tao_rate": 12.6,
  "tao_rank": 552,
  "collections": [
@@ -35,17 +37,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -55,7 +46,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5627
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-1",
@@ -78,7 +69,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-gm-gm-1683-display.webp",
    "orientation": null,
-   "tao": 5995
+   "tao": 6180
   },
   {
    "id": "seize-and-share-freedom-to-live-1654",
@@ -90,7 +81,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 6009
+   "tao": 6193
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
