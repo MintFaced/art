@@ -3,25 +3,26 @@
  "ens": "rakeshpulapa.eth",
  "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "rakeshpulapa.eth",
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 9,
+  "works": 8,
   "one_of_ones": 1,
-  "editions": 8,
+  "editions": 7,
   "collections": 6
  },
  "first_collected": "2022-02-17T11:33:57.000000Z",
- "last_collected": "2024-10-05T07:49:11.000000Z",
- "tao": 163816,
+ "last_collected": "2022-12-27T03:29:59.000000Z",
+ "tao": 167920,
  "tao_rate": 102.6,
- "tao_rank": 73,
+ "tao_rank": 72,
  "collections": [
   {
    "slug": "seize-and-share",
    "title": "Seize And Share",
-   "works": 3
+   "works": 2
   },
   {
    "slug": "we-are-the-line",
@@ -51,17 +52,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "roads-or-rivers-the-line",
    "title": "The Line",
    "collection": "roads-and-rivers",
@@ -71,7 +61,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 5643
+   "tao": 5811
   },
   {
    "id": "we-are-the-line-4",
@@ -94,19 +84,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 12065
-  },
-  {
-   "id": "seize-and-share-10kseized-488",
-   "title": "10kSeized",
-   "collection": "seize-and-share",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2022-08-25T23:59:49.000Z",
-   "unique": false,
-   "image": "seize-and-share/seize-and-share-10kseized-488-display.webp",
-   "orientation": null,
-   "tao": 6160
+   "tao": 12401
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -118,7 +96,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 12662
+   "tao": 12998
   },
   {
    "id": "seize-and-share-mint-face-360",
@@ -130,7 +108,7 @@
    "unique": false,
    "image": "https://i2c.seadn.io/ethereum/0xe63f4e6ce4110a2fad3de9ed38e7ea5858eb953b/df274434a6beab6116e1f654fe415e01.png",
    "orientation": null,
-   "tao": 6449
+   "tao": 6617
   },
   {
    "id": "2022-10k-1",
@@ -142,7 +120,7 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6541
+   "tao": 6709
   },
   {
    "id": "geodetic-moments-5",
@@ -154,7 +132,18 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-5-display.webp",
    "orientation": null,
-   "tao": 114292
+   "tao": 117052
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
