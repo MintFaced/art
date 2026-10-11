@@ -1,7 +1,9 @@
 {
  "address": "0x51c92564137510602710f742250101669b1e6f83",
  "ens": "phoenixfawkes25.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "phoenixfawkes25.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 3
  },
  "first_collected": "2022-03-15T04:16:42.000000Z",
- "last_collected": "2024-10-05T07:53:11.000000Z",
- "tao": 119076,
+ "last_collected": "2022-03-15T04:18:36.000000Z",
+ "tao": 122296,
  "tao_rate": 73.2,
- "tao_rank": 120,
+ "tao_rank": 121,
  "collections": [
   {
    "slug": "geodetic-illusions",
@@ -35,17 +37,6 @@
  ],
  "works": [
   {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:53:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
-  {
    "id": "geodetic-illusions-64",
    "title": "Double Sunrise",
    "collection": "geodetic-illusions",
@@ -55,7 +46,7 @@
    "unique": true,
    "image": "geodetic-illusions/geodetic-illusions-64-image.jpg",
    "orientation": "square",
-   "tao": 112244
+   "tao": 115279
   },
   {
    "id": "geodetic-onchain-1",
@@ -67,7 +58,18 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 6832
+   "tao": 7017
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
