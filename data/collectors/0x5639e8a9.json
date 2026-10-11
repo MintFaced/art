@@ -1,7 +1,9 @@
 {
  "address": "0x5639e8a9eaa2bb07070c10c6d18d49473bdd88de",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x5639e8a9",
  "private": false,
  "has_page": true,
@@ -15,7 +17,7 @@
  "last_collected": "2025-04-24T00:52:23.000000Z",
  "tao": 0,
  "tao_rate": 0,
- "tao_rank": 3231,
+ "tao_rank": 3227,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -24,17 +26,6 @@
   }
  ],
  "works": [
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2025-04-24T00:52:23.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
   {
    "id": "we-are-the-line-1",
    "title": "The Line Artist 001 to 100",
@@ -55,6 +46,17 @@
    "acquired": "2025-04-23T23:45:59.000000Z",
    "unique": false,
    "image": "we-are-the-line/we-are-the-line-6-image.png",
+   "orientation": null
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
    "orientation": null
   }
  ]
