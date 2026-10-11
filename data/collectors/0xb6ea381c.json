@@ -1,7 +1,9 @@
 {
  "address": "0xb6ea381cac9da2de47c6a760445bbeab2b1db480",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0xb6ea381c",
  "private": false,
  "has_page": true,
@@ -13,18 +15,18 @@
  },
  "first_collected": "2023-10-21T09:03:11.000000Z",
  "last_collected": "2025-03-03T09:10:59.000000Z",
- "tao": 78610,
+ "tao": 81830,
  "tao_rate": 73.2,
- "tao_rank": 194,
+ "tao_rank": 193,
  "collections": [
-  {
-   "slug": "geodetic-world",
-   "title": "Geodetic World",
-   "works": 1
-  },
   {
    "slug": "roads-and-rivers",
    "title": "Roads & Rivers",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-world",
+   "title": "Geodetic World",
    "works": 1
   },
   {
@@ -44,18 +46,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 2278
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-11-10T12:19:47.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 2463
   },
   {
    "id": "geodetic-world-85",
@@ -67,7 +58,18 @@
    "unique": true,
    "image": "geodetic-world/geodetic-world-85-display.webp",
    "orientation": "square",
-   "tao": 71865
+   "tao": 74900
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
