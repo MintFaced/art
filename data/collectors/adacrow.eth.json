@@ -3,6 +3,7 @@
  "ens": "adacrow.eth",
  "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "adacrow.eth",
  "private": false,
  "has_page": true,
@@ -14,9 +15,10 @@
  },
  "first_collected": "2022-10-14T03:11:47.000Z",
  "last_collected": "2026-08-21T04:56:11.000000Z",
- "tao": 154185,
+ "tao": 160633,
  "tao_rate": 184.2,
- "tao_rank": 78,
+ "tao_rank": 76,
+ "nudges": 1,
  "collections": [
   {
    "slug": "roads-and-rivers",
@@ -55,18 +57,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-27-display.webp",
    "orientation": "square",
-   "tao": 1082
-  },
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:49:11.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
+   "tao": 3497
   },
   {
    "id": "roads-or-rivers-the-journey",
@@ -78,7 +69,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-journey-image.jpg",
    "orientation": null,
-   "tao": 4870
+   "tao": 5017
   },
   {
    "id": "we-are-the-line-7",
@@ -101,7 +92,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-up-only-image.jpg",
    "orientation": null,
-   "tao": 5660
+   "tao": 5807
   },
   {
    "id": "roads-or-rivers-the-line",
@@ -113,7 +104,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-the-line-image.jpg",
    "orientation": null,
-   "tao": 34014
+   "tao": 34896
   },
   {
    "id": "seize-and-share-anxn-3250",
@@ -125,7 +116,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-anxn-3250-display.webp",
    "orientation": null,
-   "tao": 5677
+   "tao": 5824
   },
   {
    "id": "seize-and-share-mintface-says-2778",
@@ -137,7 +128,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-mintface-says-2778-display.webp",
    "orientation": null,
-   "tao": 5716
+   "tao": 5863
   },
   {
    "id": "we-are-the-line-1",
@@ -160,7 +151,18 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-certificate-of-mint-1918-display.webp",
    "orientation": null,
-   "tao": 5975
+   "tao": 6122
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   },
   {
    "id": "first-selfie-17",
@@ -172,7 +174,7 @@
    "unique": true,
    "image": "first-selfie/first-selfie-17-image.gif",
    "orientation": null,
-   "tao": 91188
+   "tao": 93603
   }
  ]
 }
