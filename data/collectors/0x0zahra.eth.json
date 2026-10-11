@@ -1,7 +1,9 @@
 {
  "address": "0x1059c7e69c743ed1cdd10380fd3127536d5eafc3",
  "ens": "0x0zahra.eth",
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x0zahra.eth",
  "private": false,
  "has_page": true,
@@ -12,10 +14,10 @@
   "collections": 3
  },
  "first_collected": "2022-07-11T11:02:57.000Z",
- "last_collected": "2024-10-05T07:51:35.000000Z",
- "tao": 12351,
+ "last_collected": "2023-05-21T04:42:23.000000Z",
+ "tao": 12720,
  "tao_rate": 8.4,
- "tao_rank": 843,
+ "tao_rank": 849,
  "collections": [
   {
    "slug": "we-are-the-line",
@@ -34,17 +36,6 @@
   }
  ],
  "works": [
-  {
-   "id": "we-are-the-line-8",
-   "title": "First 1000 artists on The Line",
-   "collection": "we-are-the-line",
-   "group": "experiments",
-   "genre": null,
-   "acquired": "2024-10-05T07:51:35.000000Z",
-   "unique": false,
-   "image": "we-are-the-line/we-are-the-line-8-image.png",
-   "orientation": null
-  },
   {
    "id": "we-are-the-line-6",
    "title": "The Line continues",
@@ -66,7 +57,7 @@
    "unique": false,
    "image": "seize-and-share/seize-and-share-freedom-to-live-1654-display.webp",
    "orientation": null,
-   "tao": 6015
+   "tao": 6200
   },
   {
    "id": "geodetic-memory-geodetic-memory",
@@ -78,7 +69,18 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 6335
+   "tao": 6520
+  },
+  {
+   "id": "we-are-the-line-8",
+   "title": "First 1000 artists on The Line",
+   "collection": "we-are-the-line",
+   "group": "experiments",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "we-are-the-line/we-are-the-line-8-image.png",
+   "orientation": null
   }
  ]
 }
