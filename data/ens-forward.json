@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-10-10T21:00:44.955Z",
+ "generated": "2026-10-11T21:00:54.325Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -52,7 +52,6 @@
   "0x55ee31604277c7e01946502003b58b9ca883c1cb": "substravault.eth",
   "0xe54a20c02a3735b9669005d9e846f38a3b8c7916": "askwho.eth",
   "0xdbbd6bb7adcbc9d1ae962df6cf24f3bd14e1bc9b": "active.secureid.eth",
-  "0xeadd2d51e75a8b42302adc2aff0157a4bf626adb": "rcsa69.eth",
   "0xce5993291aada8cb38d9014f626a405e0f1128a4": "vault.scobel.eth",
   "0x88be96dc047cde01286e991f7333a2e9a4865856": "beholdier-vault.eth",
   "0x41205d22c7152ab6db642d789d471f6b888c45b7": "andginja.eth",
@@ -72,6 +71,7 @@
   "0x73dfe934241963cd96118c6dce3fb950a4170c3e": "blvckjoy.eth",
   "0xfa413f911677512dda3a340370f635bc77789e0e": "synnfi.eth",
   "0x0623a3b40d4a7a95e410d203fae7d8f9c92ed480": "lilyillo.eth",
+  "0xeadd2d51e75a8b42302adc2aff0157a4bf626adb": "rcsa69.eth",
   "0x067e95ca18d1bfb75a12ca92cbc72cb142272052": "codeandwood.eth",
   "0x017347cb75ac8725608e593ea35d83f9b2b3cfb8": "6529memelabs.eth",
   "0x1e5ef06675b57558c5c7b7442695270ab5f21e28": "ethiopiandao.eth",
@@ -116,7 +116,6 @@
   "0x88a6f6ac171e24be54d95dfa7ceff80ff185b346": "nine.9dcc.eth",
   "0x802fa804b97ccef82331243feb6ba56c9b4281e0": "anhwa.eth",
   "0x7829a2edf3ea4662f0e1f3797173efff9d58b353": "gaudiy.eth",
-  "0x911f632cc251cc435bf3eb071cad3339c7a0e2d5": "jisun.eth",
   "0x8f71f86160ab1cfcccdbc5fdcc88fcc31c4b0db1": "moosecatmusic.eth",
   "0x782cfa467f2780a9eb266f5add30420aa2970820": "kazuma-ono.eth",
   "0xa081ae42802e0be86f5a6dd9274adf50c9986a1d": "biggamejames.eth",
@@ -125,6 +124,7 @@
   "0xa1decc5297ed590dbecd689add0d2d622224263b": "0x584.eth",
   "0x9a8b253c304b897af8147143c5d0db4635e8c9c6": "peduroh.eth",
   "0x9fef296d8dc2e5c3ceae453b88ea69632d7b4a5e": "dripstein1488.eth",
+  "0x911f632cc251cc435bf3eb071cad3339c7a0e2d5": "jisun.eth",
   "0x97ece7185467c78293f3b796bde3704421d4fa69": "fafomfer.eth",
   "0x94f052ca65a34d7f581bba95a749b1cf52689dd5": "heraldddd.eth",
   "0xa72dd288b659c8f9c8279751b25af28a2b4e631a": "smokevault.eth",
@@ -136,7 +136,6 @@
   "0xb396fca2d58421c550ce24ef4ecc2029233e0b31": "netwxrk.eth",
   "0xbd2e72b402cf46dce4ee80c14ddcc89b25f393f4": "fireteam.eth",
   "0xba2b0fe6f96d70a29ab2da1afeaecdc2208135c8": "ak47ad.eth",
-  "0xbfd90a5fa214a5e868bca65fd37b2acd7643ec85": "jefffrost.eth",
   "0xac104d56e4f8e0462f8c001ec7dde4c68deb596f": "tapirone.eth",
   "0xabc64317f72e78ed3dd23502a4dcbe13b0e00588": "ethereussy.eth",
   "0xaf53afceabb7ecc3a2aa9fc681e1af4f68f830e4": "punishman.eth",
@@ -454,7 +453,6 @@
   ],
   "0x71aa6c4e87225fcae2df49f977c7fc0d1e8d2112": [
    "carcarly.eth",
-   "yakku.eth",
    "trieu.eth"
   ],
   "0x7320dfa95fadd9bbc20bf8eca42587c44176e9a7": [
@@ -637,8 +635,8 @@
   ]
  },
  "counts": {
-  "asked": 2463,
-  "named": 156,
+  "asked": 2467,
+  "named": 155,
   "ambiguous": 76
  }
 }
