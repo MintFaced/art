@@ -11,7 +11,7 @@
    "tenant_public": false,
    "fascia_m": 6.0,
    "panels": 3,
-   "size": "6.0 m × 600 mm",
+   "size": "6.0 m × 545 mm",
    "status": "installed",
    "installed_at": null,
    "work_id": "strip-painting-site-1",
@@ -34,34 +34,34 @@
   },
   {
    "no": 2,
-   "address": "221 West",
+   "address": "328 West",
    "street": "Heretaunga St W",
    "side": "north",
-   "building": "Grant & Douglas building",
+   "building": "Value Hub Variety Store",
    "tenant": null,
    "tenant_public": false,
    "fascia_m": null,
-   "panels": null,
-   "size": null,
-   "status": "approved",
+   "panels": 1,
+   "size": "2.4 m × 600 mm",
+   "status": "installed",
    "installed_at": null,
-   "work_id": "strip-painting-site-3",
+   "work_id": "strip-painting-site-6",
    "specimens": {
-    "gallery": "strip/specimens/strip-02-gallery.jpg",
-    "gallery_alt": "strip/specimens/strip-02-gallery-2.jpg",
-    "before": "strip/specimens/strip-02-before.jpg",
-    "after": null,
+    "gallery": "strip/specimens/328-west-gallery.webp",
+    "gallery_alt": "strip/specimens/328-west-gallery-window.webp",
+    "before": "strip/specimens/328-west-before.webp",
+    "after": "strip/specimens/328-west-after.webp",
     "detail": null
    },
    "palette": null,
    "price": {
     "nzd": null
    },
-   "sale_state": "on_building",
+   "sale_state": "not_for_sale",
    "edition": null,
    "lat": null,
    "lng": null,
-   "notes": "Install pending. After photo will be minted. Work (guess, for Ryan to confirm): the catalog's Site 3 render. Its cream, pale blue, navy and red match the long panel in The Line's window in strip-02-gallery. Size still to come."
+   "notes": "Installed. Super loud, yellow-led. After is the frontal shot, taken from the Before's standing position so the slider lines up. gallery_alt is the work in The Line's window during Fotofest. The verandah and street views and the window shot are also on the work (Site 6) as details. Placed on the north side on Ryan's word (15 October), though the number is even."
   },
   {
    "no": 3,
@@ -73,14 +73,14 @@
    "tenant_public": false,
    "fascia_m": 1.25,
    "panels": 1,
-   "size": "1.2 m × 600 mm",
-   "status": "approved",
+   "size": "1.2 m × 540 mm",
+   "status": "installed",
    "installed_at": null,
    "work_id": "strip-painting-site-5",
    "specimens": {
     "gallery": "strip/specimens/strip-03-gallery.jpg",
     "before": "strip/specimens/strip-03-before.jpg",
-    "after": null,
+    "after": "strip/specimens/227-west-after.webp",
     "detail": "strip-paintings/strip-painting-5-detail.jpg"
    },
    "palette": null,
@@ -91,7 +91,7 @@
    "edition": null,
    "lat": null,
    "lng": null,
-   "notes": "Painting in progress. Work: the catalog's Site 5, located at 227 West, 124.5 x 55 cm (certain). Detail: the raking-light photograph already in R2 from the September set."
+   "notes": "Installed on the timber fascia between 2degrees and The Cutting Booth, above the Floorless door. Work: the catalog's Site 5, located at 227 West. Detail: the raking-light photograph already in R2 from the September set. Size 1.2 m × 540 mm per Ryan's 15 October measurements (the brief said 228 West; Ryan confirmed 227)."
   },
   {
    "no": 4,
@@ -125,6 +125,67 @@
   },
   {
    "no": 5,
+   "address": "221 West",
+   "street": "Heretaunga St W",
+   "side": "north",
+   "building": "Grant & Douglas building",
+   "tenant": null,
+   "tenant_public": false,
+   "fascia_m": null,
+   "panels": null,
+   "size": null,
+   "status": "approved",
+   "installed_at": null,
+   "work_id": "strip-painting-site-3",
+   "specimens": {
+    "gallery": "strip/specimens/strip-02-gallery.jpg",
+    "gallery_alt": "strip/specimens/strip-02-gallery-2.jpg",
+    "before": "strip/specimens/strip-02-before.jpg",
+    "after": null,
+    "detail": null
+   },
+   "palette": null,
+   "price": {
+    "nzd": null
+   },
+   "sale_state": "on_building",
+   "edition": null,
+   "lat": null,
+   "lng": null,
+   "notes": "Install pending. After photo will be minted. Work (guess, for Ryan to confirm): the catalog's Site 3 render. Its cream, pale blue, navy and red match the long panel in The Line's window in strip-02-gallery. Size still to come."
+  },
+  {
+   "no": 6,
+   "address": "311 West",
+   "street": "Heretaunga St W",
+   "side": "north",
+   "building": "Pandit Restaurant & Sweets",
+   "tenant": null,
+   "tenant_public": false,
+   "fascia_m": null,
+   "panels": 2,
+   "size": "2 × 2.4 m × 600 mm",
+   "status": "proposed",
+   "installed_at": null,
+   "work_id": "strip-painting-site-4",
+   "specimens": {
+    "gallery": null,
+    "before": "strip/specimens/strip-09-before.jpg",
+    "after": null,
+    "detail": null
+   },
+   "palette": null,
+   "price": {
+    "nzd": null
+   },
+   "sale_state": "not_for_sale",
+   "edition": null,
+   "lat": null,
+   "lng": null,
+   "notes": "Occupied-shop variant, panels flank the sign. Work (guess, for Ryan to confirm): the catalog's Site 4 render (site4-panel-240cm), whose dark green, charcoal and tan match the Pandit shopfront; Ryan's note says two 2.4 m panels."
+  },
+  {
+   "no": 7,
    "address": "350 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -155,7 +216,7 @@
    "notes": "Size still to come."
   },
   {
-   "no": 6,
+   "no": 8,
    "address": "230 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -185,7 +246,7 @@
    "notes": "Size still to come."
   },
   {
-   "no": 7,
+   "no": 9,
    "address": "118 West",
    "street": "King St",
    "side": "king",
@@ -215,7 +276,7 @@
    "notes": "Before shot is a side angle; reshoot straight on. Size still to come."
   },
   {
-   "no": 8,
+   "no": 10,
    "address": "402 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -243,67 +304,6 @@
    "lat": null,
    "lng": null,
    "notes": "No photos yet. Size still to come."
-  },
-  {
-   "no": 9,
-   "address": "311 West",
-   "street": "Heretaunga St W",
-   "side": "north",
-   "building": "Pandit Indian Restaurant & Sweets",
-   "tenant": null,
-   "tenant_public": false,
-   "fascia_m": null,
-   "panels": 2,
-   "size": "2 × 2.4 m × 600 mm",
-   "status": "proposed",
-   "installed_at": null,
-   "work_id": "strip-painting-site-4",
-   "specimens": {
-    "gallery": null,
-    "before": "strip/specimens/strip-09-before.jpg",
-    "after": null,
-    "detail": null
-   },
-   "palette": null,
-   "price": {
-    "nzd": null
-   },
-   "sale_state": "not_for_sale",
-   "edition": null,
-   "lat": null,
-   "lng": null,
-   "notes": "Occupied-shop variant, panels flank the sign. Work (guess, for Ryan to confirm): the catalog's Site 4 render (site4-panel-240cm), whose dark green, charcoal and tan match the Pandit shopfront; Ryan's note says two 2.4 m panels."
-  },
-  {
-   "no": 10,
-   "address": "328 West",
-   "street": "Heretaunga St W",
-   "side": "south",
-   "building": "Value Hub Variety Store",
-   "tenant": null,
-   "tenant_public": false,
-   "fascia_m": null,
-   "panels": 1,
-   "size": "2.4 m × 600 mm",
-   "status": "proposed",
-   "installed_at": null,
-   "work_id": null,
-   "specimens": {
-    "gallery": null,
-    "before": "strip/specimens/strip-10-before.jpg",
-    "after": "strip/specimens/strip-10-after-mockup.jpg",
-    "detail": null,
-    "after_is_mockup": true
-   },
-   "palette": null,
-   "price": {
-    "nzd": null
-   },
-   "sale_state": "not_for_sale",
-   "edition": null,
-   "lat": null,
-   "lng": null,
-   "notes": "Super loud, yellow-led."
   }
  ],
  "exhibited": [

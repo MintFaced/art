@@ -15,8 +15,8 @@
  "nudge": "nudge-1",
  "series": "strip-palette",
  "counts": {
-  "works": 10,
-  "not_tokenized": 10
+  "works": 11,
+  "not_tokenized": 11
  },
  "works": [
   {
@@ -170,6 +170,50 @@
    "collector": null
   },
   {
+   "id": "strip-painting-site-6",
+   "title": "Site 6",
+   "group": "site-design",
+   "site": 6,
+   "caption": "SITE 6",
+   "year": "2026",
+   "medium": "Acrylic and resin on panel",
+   "statement": "The colourway for site 6, sampled from the neighbouring streetscape. The red line sits sixteen strips from the base, as it does on every one.",
+   "aspect": 4,
+   "orientation": "landscape",
+   "physical": {
+    "exists": true
+   },
+   "location": "328 West, Hastings CBD",
+   "gallery": true,
+   "tokenized": false,
+   "status": "not_tokenized",
+   "details": [
+    {
+     "caption": "INSTALLED · 328 WEST",
+     "alt": "Site 6 installed on the verandah fascia at 328 West, beside the Value Hub sign, a red car parked out front",
+     "asset": "strip/specimens/328-west-after-verandah.webp"
+    },
+    {
+     "caption": "INSTALLED · HERETAUNGA ST W",
+     "alt": "Site 6 on the verandah at 328 West, looking down Heretaunga Street West",
+     "asset": "strip/specimens/328-west-after-street.webp"
+    },
+    {
+     "caption": "THE LINE · WINDOW",
+     "alt": "Site 6 leaning in the window at The Line during Fotofest",
+     "asset": "strip/specimens/328-west-gallery-window.webp"
+    }
+   ],
+   "assets": {
+    "image": "strip-paintings/strip-painting-6-render.webp"
+   },
+   "collection": "strip-paintings",
+   "edition": {
+    "type": "1/1"
+   },
+   "collector": null
+  },
+  {
    "id": "strip-paintings-the-line-frontage",
    "title": "The Line, frontage",
    "group": "install",
@@ -298,7 +342,7 @@
  "genre": "Painting",
  "facets": {
   "orientation": {
-   "landscape": 6,
+   "landscape": 7,
    "square": 1,
    "portrait": 3
   }

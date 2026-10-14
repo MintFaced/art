@@ -89,9 +89,8 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .shot .hint{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:7px}
 
 /* ---------- palette ---------- */
-/* Row gap enough for the label that hangs under a swatch. It used to be 8,
-   because only the red carried one; the collectors' colours all do now, and on
-   a wrapped row a 17px label under an 8px gap lands on the swatch below. */
+/* Row gap enough for the label that hangs under the red: on a wrapped row a
+   17px label under an 8px gap lands on the swatch below. */
 .swatches{display:flex;flex-wrap:wrap;gap:24px 8px;align-items:center}
 .sw{
   width:44px;height:44px;border:1px solid var(--rule);cursor:pointer;position:relative;
@@ -104,22 +103,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 }
 .sw-red{cursor:default;border-color:var(--ink)}
 .sw-red:hover{border-color:var(--ink)}
-/* A colour the collectors locked. Marked by the ink rule down its left, the
-   way this site marks everything it means, rather than by a second colour. */
-.sw-tao{border-left:2px solid var(--ink)}
-.sw-tao .n{color:var(--muted)}
-/* The artist's own lock, marked along the foot as well as the side, so the two
-   kinds of locked colour are told apart at a glance in the tray. */
-.sw-artist{box-shadow:inset 0 -3px 0 var(--ink)}
 .swatch-note{font-family:var(--font-sans);font-size:12.5px;color:var(--muted);margin-top:26px;line-height:1.6}
-/* The arc, under the working palette. Twelve slots in nudge order and the red
-   after them, drawn by MF.palette so this cannot drift from the studio's copy
-   or the collection page's ... the red is the constant at strip position 16,
-   and it had been reading as though it were the second colour chosen. */
-.community{margin-top:32px;padding-top:22px;border-top:1px solid var(--rule)}
-.community .chead{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);font-weight:400;margin:0;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
-.community .chead span{color:var(--faint);font-variant-numeric:tabular-nums}
 
 /* ---------- preview ----------
  *
@@ -221,6 +205,17 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
     </div>
   </section>
 
+  <!-- Straight under the sequence, so the slider and what it does are on
+       screen together. -->
+  <section class="sect">
+    <h2>Preview</h2>
+    <div class="preview"><div class="strips" id="strips">
+      <img id="stripImg" alt="The strip painting as configured">
+      <span class="redmark" id="redMark" hidden></span>
+    </div></div>
+    <div class="preview-note" id="previewNote">Preview not to scale</div>
+  </section>
+
   <div class="rule"></div>
 
   <section class="sect">
@@ -240,26 +235,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   <section class="sect">
     <h2>Palette</h2>
     <div class="swatches" id="swatches"></div>
-    <p class="swatch-note">Tap a swatch to drop it, minimum four. The red line sits outside the palette and never changes. <span id="taoNote"></span></p>
-    <!-- The collectors' twelve, in the order the nudges filled them. The row
-         above is a working palette ... it sorts by what it is for, and colours
-         come and go from it ... and this is the arc, which has one order and
-         one drawing of it, shared with the studio and the collection page. -->
-    <div class="community" id="community" hidden>
-      <h3 class="chead">The collectors' palette <span id="communityCount"></span></h3>
-      <div id="communityStrip"></div>
-    </div>
-  </section>
-
-  <div class="rule"></div>
-
-  <section class="sect">
-    <h2>Preview</h2>
-    <div class="preview"><div class="strips" id="strips">
-      <img id="stripImg" alt="The strip painting as configured">
-      <span class="redmark" id="redMark" hidden></span>
-    </div></div>
-    <div class="preview-note" id="previewNote">Preview not to scale</div>
+    <p class="swatch-note">Tap a swatch to drop it, minimum four. The red line sits outside the palette and never changes.</p>
   </section>
 
   <section class="price">
@@ -592,17 +568,8 @@ function draw() {
   } else { mark.hidden = true; }
   $('previewNote').textContent = `${S.strips.length} strips ... red line at ${redAt} from base ... preview not to scale`;
 
-  $('swatches').innerHTML = S.palette.map((c) => (c.tao
-    /* "Chosen by the collectors" is true of a colour the thresholds carried and
-       not of one the studio locked over them, and this is the pottle a painter
-       reads before mixing. So the one the artist settled says so, on the swatch
-       and in the title, rather than sitting here wearing the collectors' word
-       for it. */
-    ? `<button class="sw sw-tao${c.tao.locked_by === 'artist' ? ' sw-artist' : ''}" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}"
-        title="${e(said(c.hex))} ... ${c.tao.locked_by === 'artist'
-          ? `locked by the artist on nudge #${c.tao.number}, not by the thresholds`
-          : `chosen by the collectors on nudge #${c.tao.number}`} ... tap to drop"><span class="n">nudge #${c.tao.number}${c.tao.locked_by === 'artist' ? ' &middot; artist' : ''}</span></button>`
-    : `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(said(c.hex))} ... tap to drop"></button>`)).join('')
+  $('swatches').innerHTML = S.palette.map((c) =>
+    `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(said(c.hex))} ... tap to drop"></button>`).join('')
     + `<button class="sw sw-red" type="button" disabled style="background:${RED_LINE}"
         title="${e(said(RED_LINE))} ... the constant at strip ${RED_LINE_NOMINAL} from the base, on every one of these paintings"><span class="n">red line</span></button>`;
 
@@ -632,10 +599,6 @@ function specText() {
     `${S.widthM}m x ${S.heightMM}mm | intensity ${conf.label} (${conf.note}) | sequence ${Math.round(S.vib * 100)}/100 calm-to-vibrant | ${S.strips.length} strips`,
     `price ${fmt(price)} NZD (${fmt(conf.rate)}/m at 550mm, height factor ${factor.toFixed(2)}) | est ${days.toFixed(1)} days on site`,
     `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
-    ...(S.palette.some((c) => c.tao)
-      ? [`collectors' colours: ${S.palette.filter((c) => c.tao)
-        .map((c) => `${said(c.hex)} (nudge #${c.tao.number})`).join(', ')}`]
-      : []),
     `RED LINE: ${said(RED_LINE)} ... STRIP ${redAt} OF ${S.strips.length} FROM BASE`,
     '',
     'strips, bottom up:',
@@ -763,66 +726,6 @@ function say(msg) {
 }
 
 draw();
-
-/* ---------- the collectors' colours ----------
- *
- * The maker's palette and the nudge series are one config, which is the whole
- * point of the arc: when the twelfth slot locks, this palette is complete and
- * there is nothing to move across. Until then the locked colours join what is
- * already here and are marked, rather than replacing it ... a maker with two
- * colours in it would be a worse tool than a maker with fourteen.
- *
- * Asked for after the page is drawn. A palette that waited on a fetch to draw
- * itself would be a slower page for the sake of some swatches, and this is a
- * tool people open to move sliders.
- */
-async function readSeries() {
-  try {
-    const r = await fetch('/api/nudge');
-    if (!r.ok) return null;
-    const j = await r.json();
-    return (j && j.series) || null;
-  } catch (err) {
-    /* The maker works without the studio. It always did. */
-    return null;
-  }
-}
-
-readSeries().then((s) => {
-  if (!s) return;
-  /* The arc is drawn whether or not anything is locked yet: twelve slots with
-     one filled says what this is, and one swatch does not. */
-  const strip = $('communityStrip');
-  if (strip) {
-    strip.innerHTML = MF.palette.strip(s, { base: '/studio' });
-    $('communityCount').textContent = `${(s.locked || []).length} of ${s.slots} locked`;
-    $('community').hidden = false;
-  }
-  if (!(s.locked || []).length) return;
-  const note = $('taoNote');
-  const added = [];
-  for (const slot of s.locked) {
-    const hex = String(slot.hex).toUpperCase();
-    const at = S.palette.findIndex((p) => p.hex.toUpperCase() === hex);
-    /* A colour the collectors chose that No. 1 already used is marked where it
-       sits rather than added twice ... which is the case worth getting right,
-       because a streetscape is where both palettes came from. */
-    if (at >= 0) S.palette[at] = { ...S.palette[at], tao: slot };
-    else { S.palette = [...S.palette, { hex, w: 60, tao: slot }]; added.push(hex); }
-  }
-  if (note) {
-    const n = s.locked.length;
-    const tao = s.locked.reduce((a, x) => a + (Number(x.tao) || 0), 0);
-    note.textContent = s.complete
-      ? `The marked swatches are the whole palette: ${s.provenance}.`
-      : `The ${n === 1 ? 'marked swatch is' : `${n} marked swatches are`} the collectors' `
-        + `... ${s.locked.map((x) => x.hex).join(', ')}, locked on `
-        + `${n === 1 ? `nudge #${s.locked[0].number}` : `nudges ${s.locked.map((x) => `#${x.number}`).join(', ')}`} `
-        + `with ${tao.toLocaleString('en-NZ')} TAO behind them. `
-        + `${s.slots - n} of ${s.slots} still to choose.`;
-  }
-  draw();
-});
 </script>
 </body>
 </html>

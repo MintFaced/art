@@ -345,12 +345,12 @@ const fixture = () => ({
     /mine\.find\(\(n\) => n\.open\)/.test(col), true);
 
   const maker = read('strip-painting-maker.html');
-  is('the maker reads the series rather than a single colour',
-    /function readSeries/.test(maker) && !/readCommunityColour/.test(maker), true);
-  is('a locked colour already in the palette is marked, not added twice',
-    /if \(at >= 0\) S\.palette\[at\]/.test(maker), true);
-  is('and the spec names whose colours they were',
-    /collectors' colours/.test(maker), true);
+  /* The collectors' palette came out of the maker on 15 October: it is the
+     street's palette and the red, and nothing from the nudges. */
+  is('the maker no longer reads the series',
+    /\/api\/nudge|readSeries|readCommunityColour|MF\.palette/.test(maker), false);
+  is('and neither shows nor marks the collectors\' colours',
+    /id="community"|sw-tao|collectors' colours/.test(maker), false);
 
   is('a work carries the whole palette, with every slot reachable',
     /palette-slots/.test(read('w.html')), true);

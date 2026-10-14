@@ -49,9 +49,9 @@ is('the page reads the sites from the API', /fetch\('\/api\/strip-sites'\)/.test
 console.log('\n— plates —');
 const plated = sites.filter((s) => s.work_id).map((s) => s.no);
 is('a plate for every site with a work, and only those', plated.length > 0 && plated.every((n) => sites.find((s) => s.no === n).work_id), true);
-const five = site(5);
-is('site 5 has no work, so no plate', five.work_id, null);
-is('… but it is in the register', registerRows(sites).some((r) => r.no === '05' && r.address === five.address), true);
+const seven = site(7);
+is('site 7 has no work, so no plate', seven.work_id, null);
+is('… but it is in the register', registerRows(sites).some((r) => r.no === '07' && r.address === seven.address), true);
 is('the register lists every site, plated or not', registerRows(sites).length, sites.length);
 
 const one = specimens(site(1), { gallery: 'k/g.jpg', before: 'k/b.jpg', after: 'k/a.jpg', detail: 'k/d.jpg' });
@@ -77,9 +77,11 @@ console.log('\n— the acceptance, on the real file —');
 is('ten sites', sites.length, 10);
 const real = (no) => plateHTML(site(no), works[site(no).work_id]);
 is('site 1: Before and After, so a slider', [!!site(1).work_id, real(1).includes('type="range"')], [true, true]);
-is('site 2: gallery and before, no slider', [!!site(2).work_id, real(2).includes('ph-gallery'), real(2).includes('ph-before'), real(2).includes('type="range"')], [true, true, true, false]);
-is('site 5: no work, so a register row only', [site(5).work_id, registerRows(sites).some((r) => r.no === '05')], [null, true]);
-is('site 5\'s After is a mockup, and the register says so', registerRows(sites).find((r) => r.no === '05').specimens, 'BEFORE · AFTER (MOCKUP)');
+is('site 2 (328 West): gallery, then Before and After as a slider', [!!site(2).work_id, real(2).includes('ph-gallery'), real(2).includes('type="range"')], [true, true, true]);
+is('site 3 (227 West): installed, so a slider too', [site(3).status, real(3).includes('type="range"')], ['installed', true]);
+is('site 5 (221 West): gallery and before, no slider', [!!site(5).work_id, real(5).includes('ph-gallery'), real(5).includes('ph-before'), real(5).includes('type="range"')], [true, true, true, false]);
+is('site 7: no work, so a register row only', [site(7).work_id, registerRows(sites).some((r) => r.no === '07')], [null, true]);
+is('site 7\'s After is a mockup, and the register says so', registerRows(sites).find((r) => r.no === '07').specimens, 'BEFORE · AFTER (MOCKUP)');
 is('every specimen key is an R2 key, never a data URI or a local path', sites.every((s) => Object.entries(s.specimens).every(([k, v]) => k === 'after_is_mockup' || v == null || /^strip(-paintings)?\//.test(v))), true);
 is('no placeholder survives into the file', JSON.stringify(sites).includes('[SIZE]'), false);
 

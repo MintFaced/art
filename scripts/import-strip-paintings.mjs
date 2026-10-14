@@ -29,7 +29,7 @@ const dry = process.argv.includes('--dry');
 
 const { putObject, r2Configured } = await import(`${ROOT}api/_lib/r2.js`);
 
-const TYPES = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', json: 'application/json' };
+const TYPES = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', json: 'application/json' };
 
 const manifest = JSON.parse(readFileSync(`${ROOT}${DIR}/manifest.json`, 'utf8'));
 const src = JSON.parse(readFileSync(ROOT + SOURCE, 'utf8'));
