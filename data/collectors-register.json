@@ -1,6 +1,6 @@
 {
  "_note": "Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.",
- "generated": "2026-10-13T21:31:24.351Z",
+ "generated": "2026-10-14T21:00:46.489Z",
  "fields": ["address","name","ens","slug","private","works","unique","tao","rate","last","rank","fwd","x"],
  "rows": [
   ["0x8be5a2df6488b0937299d27f092716f4a9ab2fd8","visco.eth","visco.eth","visco.eth",0,83,11,1551828,1162.2,"2026-08-21",1,"",""],
@@ -3334,6 +3334,7 @@
   ["0x02d61cc47cc9a19b2a023c33c094269d9af07862","","","",0,2,0,0,0,null,3227,"dolcepaganne.eth",""],
   ["0x0235fb40f10b5ea49a9fb7660a8af76787c0d394","","","",0,2,0,0,0,"2023-05-21",3227,"",""],
   ["0x3819660cb4d48b192b4973cb8323d6cb1404d930","tarainabstract.eth","tarainabstract.eth","",0,2,0,0,0,"2023-05-21",3227,"",""],
+  ["0x73924aa28f23256d994e20803a6c63d9dd056d7d","","","0x73924aa2",0,2,2,0,0,"2026-10-14",3227,"",""],
   ["0x2d9cbc4ecfbd1b8f66aa798fd51585ae058daa8b","metamu.eth","metamu.eth","metamu.eth",0,2,2,0,0,null,3227,"",""],
   ["0x8fbe34a4a6c38d44fd7642440908ee44067c00e4","heydonttouchmethere.eth","heydonttouchmethere.eth","heydonttouchmethere.eth",0,2,2,0,0,null,3227,"",""],
   ["0xedc1a397589a0236c4810883b7d559288a5fe7e1","fattybuthappy.eth","fattybuthappy.eth","fattybuthappy.eth",0,2,2,0,0,null,3227,"",""],
@@ -3635,7 +3636,6 @@
   ["0x04efffd230dd2352056874710ca2c64247636352","ramizaksoy.eth","ramizaksoy.eth","",0,1,0,0,0,"2022-10-21",3227,"",""],
   ["0x17bd154e5e07216071d61a56ead560bca7829835","","","",0,1,0,0,0,"2023-01-01",3227,"",""],
   ["0x11302831dac338809ae423c53e597ef0df3ea48f","","","",0,1,0,0,0,"2024-12-08",3227,"",""],
-  ["0x73924aa28f23256d994e20803a6c63d9dd056d7d","","","0x73924aa2",0,1,1,0,0,null,3227,"",""],
   ["0x48c45b619c308b91ee1fa09a112bd4461d2c182c","","","0x48c45b61",0,1,1,0,0,null,3227,"",""],
   ["0x78b68c09de611b5bad844bff74cf7bfe15f30ad8","givemeone.eth","givemeone.eth","givemeone.eth",0,1,1,0,0,null,3227,"",""],
   ["0x3d98eb94a591b231d6912cb60328b75ff109aa04","","","0x3d98eb94",0,1,1,0,0,null,3227,"",""],
