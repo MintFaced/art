@@ -78,7 +78,7 @@ export function factsOf(site, work, { usd = null } = {}) {
   const size = known(site.size);
   if (size) out.push(['Size', site.panels > 1 && !/panel|×.*×/i.test(size) ? `${size} · ${site.panels} panels` : size]);
   if (work && work.medium) out.push(['Medium', work.medium]);
-  out.push(['Strips', `${SERIES.strips} · red line at ${SERIES.red_at}`]);
+  out.push(['Strips', String(SERIES.strips)]);
   const p = site.price && site.price.nzd;
   if (typeof p === 'number' && p > 0) {
     const bits = [nzd(p), `${ethAtStripRate(p)} ETH at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH`];

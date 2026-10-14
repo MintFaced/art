@@ -94,6 +94,7 @@ is('no price: the sale state\'s word', [f(site(1, { sale_state: 'on_building' })
   ['On a building', 'Collected', 'Not for sale']);
 is('no price and no sale state: no price fact, nothing invented', 'Price' in f(site(1, { price: { nzd: null }, sale_state: null })), false);
 is('no size on file: no size fact', 'Size' in f(site(3, { size: null })), false);
+is('strips is the count alone, no red line position (Ryan, 15 October)', [f(site(1)).Strips, f(site(5)).Strips], ['55', '55']);
 is('panels join the size when known', f(site(1, { panels: 3 })).Size, `${site(1).size} · 3 panels`);
 is('for_sale and priced: COLLECT, into the existing checkout on the work page', actionOf(site(1, { sale_state: 'for_sale', price: { nzd: 3600 } })), { label: 'Collect', href: '/w/strip-painting-site-1', button: true });
 is('for_sale with no price yet: no button, the facts say "For sale"', [actionOf(site(1, { sale_state: 'for_sale', price: { nzd: null } })), f(site(1, { sale_state: 'for_sale', price: { nzd: null } })).Price], [null, 'For sale']);

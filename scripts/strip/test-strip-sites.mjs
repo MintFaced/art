@@ -25,8 +25,8 @@ is('odd numbers on the north side, even on the south (King St and 328 apart)', s
 is('every field the doc names is present on every site', sites.every((s) => ['no', 'address', 'street', 'side', 'building', 'tenant', 'fascia_m', 'panels', 'size', 'status', 'installed_at', 'work_id', 'specimens', 'palette', 'price', 'sale_state', 'edition', 'lat', 'lng', 'notes'].every((k) => k in s)), true);
 
 console.log('\n— counts, computed —');
-is('4 installed, 1 approved, 6 proposed', counts(sites), { installed: 4, approved: 1, proposed: 6, total: 11 });
-is('the count line', countLine(sites), '4 INSTALLED · 1 APPROVED · 6 PROPOSED');
+is('4 installed, 0 approved, 7 proposed', counts(sites), { installed: 4, approved: 0, proposed: 7, total: 11 });
+is('the count line', countLine(sites), '4 INSTALLED · 0 APPROVED · 7 PROPOSED');
 is('and on a phone it says to scroll', countLine(sites, { scroll: true }).endsWith('SCROLL →'), true);
 
 console.log('\n— the plan —');
@@ -47,9 +47,12 @@ is('… and it is not counted into the Heretaunga spread', L.filter((p) => p.kin
 is('north sites above the street, south below', L.filter((p) => p.kind === 'street').every((p) => (p.north ? p.bar.y + p.bar.h <= 150 : p.bar.y >= 210)), true);
 is('a bar is as wide as its fascia: 6.0 m is 150 px, unknown is 1.2 m (30 px)', [at(320).bar.w, at(350).bar.w], [150, 30]);
 const svg = planSVG(sites);
+/* nothing is approved just now (221 West went back to proposed on 15 October), so the
+   outline is checked on a copy with 221 approved */
+const svgA = planSVG(sites.map((s) => (s.no === 7 ? { ...s, status: 'approved' } : s)));
 is('installed solid, approved an ink outline, proposed grey dashed', [
   /data-no="2"[^>]*><rect[^>]*fill="#141414"/.test(svg),
-  /data-no="7"[^>]*><rect[^>]*fill="none" stroke="#141414"/.test(svg),
+  /data-no="7"[^>]*><rect[^>]*fill="none" stroke="#141414"/.test(svgA),
   /data-no="8"[^>]*><rect[^>]*stroke-dasharray="4 3"/.test(svg),
 ], [true, true, true]);
 is('the laneway is installed, so solid ink', /data-no="5"[^>]*><rect[^>]*fill="#141414"/.test(svg), true);
@@ -78,14 +81,14 @@ const ten = { no: 12, address: '302 West', street: 'Heretaunga St W', side: 'sou
 const more = [...sites, ten];
 is('it is on the plan', planSVG(more).includes('data-no="12"'), true);
 is('in the register', registerRows(more).map((r) => r.no).includes('12'), true);
-is('and in the counts', counts(more), { installed: 4, approved: 1, proposed: 7, total: 12 });
+is('and in the counts', counts(more), { installed: 4, approved: 0, proposed: 8, total: 12 });
 is('placed on the south side between 320 and King Street', (() => { const l = layout(more); const p = l.find((q) => q.site.no === 12); return [p.north, p.cx > l.find((q) => q.site.no === 1).cx, p.cx < kingX]; })(), [false, true, true]);
 is('through the API as well', publicSites({ sites: more }).length, 12);
 
 console.log('\n— the API —');
 const r = await GET();
 const j = await r.json();
-is('serves the sites and the counts, public and cached', [r.status, j.counts, j.sites.length, /public/.test(r.headers.get('cache-control'))], [200, { installed: 4, approved: 1, proposed: 6, total: 11 }, 11, true]);
+is('serves the sites and the counts, public and cached', [r.status, j.counts, j.sites.length, /public/.test(r.headers.get('cache-control'))], [200, { installed: 4, approved: 0, proposed: 7, total: 11 }, 11, true]);
 is('editorial notes stay out of it', JSON.stringify(j).includes('"notes"'), false);
 const withTenant = publicSites({ sites: [{ ...ten, tenant: 'Private Co', tenant_public: false }, { ...ten, no: 12, tenant: 'Public Co', tenant_public: true }] });
 is('a tenant is named only where agreed', withTenant.map((s) => s.tenant), [null, 'Public Co']);
