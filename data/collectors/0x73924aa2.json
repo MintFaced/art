@@ -1,29 +1,42 @@
 {
  "address": "0x73924aa28f23256d994e20803a6c63d9dd056d7d",
  "ens": null,
+ "fwd": null,
  "display_name": null,
+ "x": null,
  "slug": "0x73924aa2",
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 1,
-  "one_of_ones": 1,
+  "works": 2,
+  "one_of_ones": 2,
   "editions": 0,
   "collections": 1
  },
- "first_collected": null,
- "last_collected": null,
+ "first_collected": "2026-10-14T19:47:47.000Z",
+ "last_collected": "2026-10-14T19:47:47.000Z",
  "tao": 0,
  "tao_rate": 0,
- "tao_rank": 3231,
+ "tao_rank": 3227,
  "collections": [
   {
    "slug": "xnouns",
    "title": "XNouns",
-   "works": 1
+   "works": 2
   }
  ],
  "works": [
+  {
+   "id": "xnouns-519",
+   "title": "XNouns #519",
+   "collection": "xnouns",
+   "group": "experiments",
+   "genre": "Design",
+   "acquired": "2026-10-14T19:47:47.000Z",
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=519&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x-top-right.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-teal-light.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-bling-sparkles.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-hotdog.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",
+   "orientation": null
+  },
   {
    "id": "xnouns-518",
    "title": "XNouns #518",
