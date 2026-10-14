@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-10-13T21:31:24.359Z",
+ "generated": "2026-10-14T21:00:46.497Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -2524,7 +2524,8 @@
    "last_collected": "2025-04-01T23:16:23.000000Z",
    "tao": 111430,
    "tao_rate": 115.2,
-   "tao_rank": 137
+   "tao_rank": 137,
+   "nudges": 1
   },
   {
    "address": "0xfb74eee69be0c2bd8fb42ee67b6b6c4e05cd9ddd",
@@ -13912,6 +13913,27 @@
    "tao_rank": 3227
   },
   {
+   "address": "0x73924aa28f23256d994e20803a6c63d9dd056d7d",
+   "ens": null,
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "0x73924aa2",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 2,
+    "one_of_ones": 2,
+    "editions": 0,
+    "collections": 1
+   },
+   "first_collected": "2026-10-14T19:47:47.000Z",
+   "last_collected": "2026-10-14T19:47:47.000Z",
+   "tao": 0,
+   "tao_rate": 0,
+   "tao_rank": 3227
+  },
+  {
    "address": "0x8c0ca6b72104dbb7095d8b349bccc2f60f24bf41",
    "ens": null,
    "fwd": null,
@@ -15422,27 +15444,6 @@
    "tao": 3706,
    "tao_rate": 69,
    "tao_rank": 2780
-  },
-  {
-   "address": "0x73924aa28f23256d994e20803a6c63d9dd056d7d",
-   "ens": null,
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "0x73924aa2",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 1,
-    "one_of_ones": 1,
-    "editions": 0,
-    "collections": 1
-   },
-   "first_collected": null,
-   "last_collected": null,
-   "tao": 0,
-   "tao_rate": 0,
-   "tao_rank": 3227
   },
   {
    "address": "0x73dfe934241963cd96118c6dce3fb950a4170c3e",
