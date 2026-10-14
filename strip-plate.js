@@ -13,7 +13,7 @@ import { known } from './strip-plan.js';
 
 /* The series' fixed numbers (STRIP-MAKER §Pricing). Copy, not site facts:
    they are the same for every painting, which is why they live here once. */
-export const SERIES = { strips: 55, red_at: 16 };
+export const SERIES = { strips: 55 };
 export const STRIP_ETH_NZD = 5000;
 export const NZD_PER_METRE = 1500;
 export const STANDARD_M = [1.2, 2.4];

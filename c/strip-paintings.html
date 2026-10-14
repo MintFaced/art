@@ -240,7 +240,7 @@ section.s{padding-top:112px}
         <dl class="facts mono">
           <div><dt>Strip heights</dt><dd>Three · set by the street</dd></div>
           <div><dt>Strips</dt><dd id="factStrips">55 at full intensity</dd></div>
-          <div><dt>Red line</dt><dd id="factRed">Position 16 · 12 mm</dd></div>
+          <div><dt>Red line</dt><dd>12 mm</dd></div>
           <div><dt>Sequence</dt><dd>One fixed rule · every site</dd></div>
         </dl>
       </aside>
@@ -363,7 +363,6 @@ const from = fromNZD();
 $('commission').textContent = `Choose the colours. We paint it. From ${nzd(from)} · ${ethAtStripRate(from)} ETH at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH.`;
 $('rent').textContent = `A Strip Painting on your vacant fascia. ${nzd(RENT_NZD_MONTH)} a month, installed.`;
 $('factStrips').textContent = `${SERIES.strips} at full intensity`;
-$('factRed').textContent = `Position ${SERIES.red_at} · 12 mm`;
 /* ---------- the palette: the collectors' twelve, live ---------- */
 async function paintPalette() {
   const state = await fetch('/api/nudge').then((r) => (r.ok ? r.json() : null));
