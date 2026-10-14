@@ -74,7 +74,7 @@ is('a work renders its band', none.includes('class="plate-band"'), true);
 is('no data URIs anywhere in a plate', [h1, h2, none].some((h) => h.includes('data:')), false);
 
 console.log('\n— the acceptance, on the real file —');
-is('ten sites', sites.length, 10);
+is('eleven sites', sites.length, 11);
 const real = (no) => plateHTML(site(no), works[site(no).work_id]);
 is('site 1: Before and After, so a slider', [!!site(1).work_id, real(1).includes('type="range"')], [true, true]);
 is('site 2 (328 West): gallery, then Before and After as a slider', [!!site(2).work_id, real(2).includes('ph-gallery'), real(2).includes('type="range"')], [true, true, true]);

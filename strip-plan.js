@@ -8,9 +8,12 @@
  * the far left, 227 at the far right. Odd numbers are on the north side (top),
  * even on the south. King Street crosses between the 300s and the 200s, and a
  * site whose side is "king" sits on King Street, north of Heretaunga, its bar
- * along King Street. Installed is solid ink, approved an ink outline,
- * proposed a grey dashed outline. A bar is as wide as its fascia where the
- * fascia is known, 1.2 m where it is not. No colour but the art's.
+ * along King Street. A site whose side is "lane" is up a laneway off
+ * Heretaunga, drawn above the site it opens beside (its "beside" address) with
+ * its top level with the top of King Street. Installed is solid ink, approved
+ * an ink outline, proposed a grey dashed outline. A bar is as wide as its
+ * fascia where the fascia is known, 1.2 m where it is not. No colour but the
+ * art's.
  */
 
 export const STATUSES = ['installed', 'approved', 'proposed'];
@@ -70,7 +73,7 @@ function planLabel(site) {
  * survey. Labels on one side that would collide step out a tier.
  */
 export function layout(sites) {
-  const here = sites.filter((s) => s.side !== 'king');
+  const here = sites.filter((s) => s.side !== 'king' && s.side !== 'lane');
   const west = here.filter((s) => numberOf(s) >= 300).sort((a, b) => numberOf(b) - numberOf(a));
   const east = here.filter((s) => numberOf(s) < 300).sort((a, b) => numberOf(b) - numberOf(a));
   const spread = (list, x0, x1) => list.map((s, i) => [s, x0 + ((i + 0.5) * (x1 - x0)) / list.length]);
@@ -88,6 +91,17 @@ export function layout(sites) {
     y -= len;
     out.push({ site: s, kind: 'king', north: true, cx: KING.x + KING.w + 4 + BAR / 2, bar: { x: KING.x + KING.w + 4, y, w: BAR, h: len } });
     y -= 12;
+  }
+  /* Laneways: straight up from the site the lane opens beside, the box's top
+     level with the top of King Street. A lane with no "beside" on the plan goes
+     above the Heretaunga site nearest it by number. */
+  const street = out.filter((q) => q.kind === 'street');
+  for (const s of sites.filter((x) => x.side === 'lane')) {
+    const at = street.find((q) => q.site.address === s.beside)
+      || street.slice().sort((a, b) => Math.abs(numberOf(a.site) - numberOf(s)) - Math.abs(numberOf(b.site) - numberOf(s)))[0];
+    if (!at) continue;
+    const w = Math.max(PX_PER_M * DEFAULT_M, PX_PER_M * (s.fascia_m || DEFAULT_M));
+    out.push({ site: s, kind: 'lane', north: true, cx: at.cx, bar: { x: at.cx - w / 2, y: KING.top, w, h: BAR } });
   }
   /* Label tiers: on each side, a label that would overlap the one before it
      on the same tier moves one tier further from the street. */
@@ -140,12 +154,16 @@ export function planSVG(sites, { interactive = true, title = 'Site plan of Heret
     const label = planLabel(s);
     /* The name starts with what the bar visibly says, in the order it says
        it, so a voice user can speak the label they see. */
-    const seen = p.kind !== 'king' && p.north ? `${label} ${n}` : `${n} ${label}`;
+    const seen = p.kind === 'street' && p.north ? `${label} ${n}` : `${n} ${label}`;
     const a = interactive ? ` class="sp-site" data-no="${esc(s.no)}" tabindex="0" role="link" aria-label="${esc(`${seen}: No. ${s.no}, ${s.address}, ${s.building}, ${s.status}`)}"` : '';
     parts.push(`<g${a}><rect class="sp-bar" x="${p.bar.x.toFixed(1)}" y="${p.bar.y.toFixed(1)}" width="${p.bar.w.toFixed(1)}" height="${p.bar.h.toFixed(1)}" ${STYLE[s.status] ? STYLE[s.status]() : STYLE.proposed()}/>`);
     if (p.kind === 'king') {
       const ty = p.bar.y + 22;
       parts.push(`<text x="${p.bar.x + BAR + 10}" y="${ty}">${n}</text> <text x="${p.bar.x + BAR + 10}" y="${ty + 18}" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text>`);
+    } else if (p.kind === 'lane') {
+      /* beside the box, as King Street's are, clear of the labels below it */
+      const lx = (p.bar.x + p.bar.w + 10).toFixed(1);
+      parts.push(`<text x="${lx}" y="${p.bar.y + 13}">${n}</text> <text x="${lx}" y="${p.bar.y + 31}" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text>`);
     } else if (p.north) {
       const base = p.bar.y - 8 - p.tier * 38;
       parts.push(`<text x="${p.cx.toFixed(1)}" y="${base - 18}" text-anchor="middle" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text> <text x="${p.cx.toFixed(1)}" y="${base}" text-anchor="middle">${n}</text>`);
