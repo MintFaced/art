@@ -15,8 +15,8 @@
  "nudge": "nudge-1",
  "series": "strip-palette",
  "counts": {
-  "works": 11,
-  "not_tokenized": 11
+  "works": 12,
+  "not_tokenized": 12
  },
  "works": [
   {
@@ -214,6 +214,42 @@
    "collector": null
   },
   {
+   "id": "strip-painting-site-7",
+   "title": "Site 7",
+   "group": "site-design",
+   "site": 7,
+   "caption": "SITE 7",
+   "year": "2026",
+   "medium": "Acrylic and resin on panel",
+   "statement": "The colourway for site 7, sampled from the neighbouring streetscape, its strips stood upright to fill a boarded window. The red line runs through it, as it does through every one.",
+   "aspect": 0.5,
+   "orientation": "portrait",
+   "physical": {
+    "exists": true,
+    "width_cm": 55,
+    "height_cm": 110
+   },
+   "location": "300 West laneway, Hastings CBD",
+   "gallery": true,
+   "tokenized": false,
+   "status": "not_tokenized",
+   "details": [
+    {
+     "caption": "INSTALLED · THE WINDOW",
+     "alt": "Site 7 in the window reveal of the mint brick gable, straight on",
+     "asset": "strip/specimens/300-west-after-window.webp"
+    }
+   ],
+   "assets": {
+    "image": "strip-paintings/strip-painting-7-render.webp"
+   },
+   "collection": "strip-paintings",
+   "edition": {
+    "type": "1/1"
+   },
+   "collector": null
+  },
+  {
    "id": "strip-paintings-the-line-frontage",
    "title": "The Line, frontage",
    "group": "install",
@@ -343,8 +379,8 @@
  "facets": {
   "orientation": {
    "landscape": 7,
-   "square": 1,
-   "portrait": 3
+   "portrait": 4,
+   "square": 1
   }
  }
 }

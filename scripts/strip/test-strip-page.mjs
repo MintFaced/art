@@ -49,9 +49,9 @@ is('the page reads the sites from the API', /fetch\('\/api\/strip-sites'\)/.test
 console.log('\n— plates —');
 const plated = sites.filter((s) => s.work_id).map((s) => s.no);
 is('a plate for every site with a work, and only those', plated.length > 0 && plated.every((n) => sites.find((s) => s.no === n).work_id), true);
-const seven = site(7);
-is('site 7 has no work, so no plate', seven.work_id, null);
-is('… but it is in the register', registerRows(sites).some((r) => r.no === '07' && r.address === seven.address), true);
+const eight = site(8);
+is('site 8 has no work, so no plate', eight.work_id, null);
+is('… but it is in the register', registerRows(sites).some((r) => r.no === '08' && r.address === eight.address), true);
 is('the register lists every site, plated or not', registerRows(sites).length, sites.length);
 
 const one = specimens(site(1), { gallery: 'k/g.jpg', before: 'k/b.jpg', after: 'k/a.jpg', detail: 'k/d.jpg' });
@@ -79,9 +79,10 @@ const real = (no) => plateHTML(site(no), works[site(no).work_id]);
 is('site 1: Before and After, so a slider', [!!site(1).work_id, real(1).includes('type="range"')], [true, true]);
 is('site 2 (328 West): gallery, then Before and After as a slider', [!!site(2).work_id, real(2).includes('ph-gallery'), real(2).includes('type="range"')], [true, true, true]);
 is('site 3 (227 West): installed, so a slider too', [site(3).status, real(3).includes('type="range"')], ['installed', true]);
-is('site 5 (221 West): gallery and before, no slider', [!!site(5).work_id, real(5).includes('ph-gallery'), real(5).includes('ph-before'), real(5).includes('type="range"')], [true, true, true, false]);
-is('site 7: no work, so a register row only', [site(7).work_id, registerRows(sites).some((r) => r.no === '07')], [null, true]);
-is('site 7\'s After is a mockup, and the register says so', registerRows(sites).find((r) => r.no === '07').specimens, 'BEFORE · AFTER (MOCKUP)');
+is('site 5 (300 West laneway): installed, a slider and its detail, no gallery', [site(5).status, real(5).includes('type="range"'), real(5).includes('ph-detail'), real(5).includes('ph-gallery')], ['installed', true, true, false]);
+is('site 7 (221 West): gallery and before, no slider', [!!site(7).work_id, real(7).includes('ph-gallery'), real(7).includes('ph-before'), real(7).includes('type="range"')], [true, true, true, false]);
+is('site 8: no work, so a register row only', [site(8).work_id, registerRows(sites).some((r) => r.no === '08')], [null, true]);
+is('site 8\'s After is a mockup, and the register says so', registerRows(sites).find((r) => r.no === '08').specimens, 'BEFORE · AFTER (MOCKUP)');
 is('every specimen key is an R2 key, never a data URI or a local path', sites.every((s) => Object.entries(s.specimens).every(([k, v]) => k === 'after_is_mockup' || v == null || /^strip(-paintings)?\//.test(v))), true);
 is('no placeholder survives into the file', JSON.stringify(sites).includes('[SIZE]'), false);
 

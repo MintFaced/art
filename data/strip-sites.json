@@ -125,24 +125,24 @@
   },
   {
    "no": 5,
-   "address": "221 West",
+   "address": "300 West",
    "street": "Heretaunga St W",
-   "side": "north",
-   "building": "Grant & Douglas building",
+   "side": "lane",
+   "beside": "328 West",
+   "building": "Laneway, boarded gable window",
    "tenant": null,
    "tenant_public": false,
-   "fascia_m": null,
-   "panels": null,
-   "size": null,
-   "status": "approved",
+   "fascia_m": 0.55,
+   "panels": 1,
+   "size": "550 × 1100 mm",
+   "status": "installed",
    "installed_at": null,
-   "work_id": "strip-painting-site-3",
+   "work_id": "strip-painting-site-7",
    "specimens": {
-    "gallery": "strip/specimens/strip-02-gallery.jpg",
-    "gallery_alt": "strip/specimens/strip-02-gallery-2.jpg",
-    "before": "strip/specimens/strip-02-before.jpg",
-    "after": null,
-    "detail": null
+    "gallery": null,
+    "before": "strip/specimens/300-west-before.webp",
+    "after": "strip/specimens/300-west-after.webp",
+    "detail": "strip/specimens/300-west-detail.webp"
    },
    "palette": null,
    "price": {
@@ -152,7 +152,7 @@
    "edition": null,
    "lat": null,
    "lng": null,
-   "notes": "Install pending. After photo will be minted. Work (guess, for Ryan to confirm): the catalog's Site 3 render. Its cream, pale blue, navy and red match the long panel in The Line's window in strip-02-gallery. Size still to come."
+   "notes": "Installed. The alley window work: vertical strips in the boarded window on the mint brick gable, 550 × 1100 mm. After is the dusk wide of the gable, Before the bare wall with the bin. Detail is the flat panel with its gloss. The straight-on window shot is on the work (Site 7) as a detail. On the plan it sits up the laneway above 328 West, the top of its box level with the top of King Street (Ryan, 15 October)."
   },
   {
    "no": 6,
@@ -186,6 +186,37 @@
   },
   {
    "no": 7,
+   "address": "221 West",
+   "street": "Heretaunga St W",
+   "side": "north",
+   "building": "Grant & Douglas building",
+   "tenant": null,
+   "tenant_public": false,
+   "fascia_m": null,
+   "panels": null,
+   "size": null,
+   "status": "approved",
+   "installed_at": null,
+   "work_id": "strip-painting-site-3",
+   "specimens": {
+    "gallery": "strip/specimens/strip-02-gallery.jpg",
+    "gallery_alt": "strip/specimens/strip-02-gallery-2.jpg",
+    "before": "strip/specimens/strip-02-before.jpg",
+    "after": null,
+    "detail": null
+   },
+   "palette": null,
+   "price": {
+    "nzd": null
+   },
+   "sale_state": "on_building",
+   "edition": null,
+   "lat": null,
+   "lng": null,
+   "notes": "Install pending. After photo will be minted. Work (guess, for Ryan to confirm): the catalog's Site 3 render. Its cream, pale blue, navy and red match the long panel in The Line's window in strip-02-gallery. Size still to come."
+  },
+  {
+   "no": 8,
    "address": "350 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -216,7 +247,7 @@
    "notes": "Size still to come."
   },
   {
-   "no": 8,
+   "no": 9,
    "address": "230 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -246,7 +277,7 @@
    "notes": "Size still to come."
   },
   {
-   "no": 9,
+   "no": 10,
    "address": "118 West",
    "street": "King St",
    "side": "king",
@@ -276,7 +307,7 @@
    "notes": "Before shot is a side angle; reshoot straight on. Size still to come."
   },
   {
-   "no": 10,
+   "no": 11,
    "address": "402 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -304,37 +335,6 @@
    "lat": null,
    "lng": null,
    "notes": "No photos yet. Size still to come."
-  },
-  {
-   "no": 11,
-   "address": "300 West",
-   "street": "Heretaunga St W",
-   "side": "lane",
-   "beside": "328 West",
-   "building": "Laneway",
-   "tenant": null,
-   "tenant_public": false,
-   "fascia_m": null,
-   "panels": null,
-   "size": null,
-   "status": "proposed",
-   "installed_at": null,
-   "work_id": null,
-   "specimens": {
-    "gallery": null,
-    "before": null,
-    "after": null,
-    "detail": null
-   },
-   "palette": null,
-   "price": {
-    "nzd": null
-   },
-   "sale_state": "not_for_sale",
-   "edition": null,
-   "lat": null,
-   "lng": null,
-   "notes": "Added 15 October on Ryan’s word: up the laneway above 328 West (Value Hub), drawn at the top of the plan level with the top of King Street. Status, building and size still to come; proposed until Ryan says otherwise."
   }
  ],
  "exhibited": [
