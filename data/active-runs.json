@@ -3,6 +3,29 @@
  "keep": 60,
  "runs": [
   {
+   "run_id": "amva43p9j",
+   "at": "2026-10-15T22:30:15.463Z",
+   "ok": true,
+   "ms": 236887,
+   "chain": {
+    "asked": 681,
+    "moved": 68,
+    "unknown": 31,
+    "refused": 776,
+    "rate": 4.97,
+    "due": 1070,
+    "due_left": 389,
+    "paged": 806,
+    "of": 3678,
+    "covered": 3683
+   },
+   "studio": {
+    "lit": 9,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
    "run_id": "amv8onuep",
    "at": "2026-10-14T22:30:15.217Z",
    "ok": true,
