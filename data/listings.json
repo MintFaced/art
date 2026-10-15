@@ -1,18 +1,18 @@
 {
  "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
- "generated": "2026-10-14T20:03:03.762Z",
+ "generated": "2026-10-15T20:03:06.339Z",
  "sources": [
   "foundation",
   "opensea"
  ],
  "counts": {
-  "checked": 1394,
-  "owner_unresolved": 61,
+  "checked": 1395,
+  "owner_unresolved": 62,
   "escrowed": 30,
   "priced": 76,
   "auction": 21,
   "opensea": 67,
-  "carried_forward": 1
+  "carried_forward": 2
  },
  "works": {
   "geodetic-world-2": {
@@ -107,12 +107,6 @@
    "auction_id": "358495",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/33"
   },
-  "geodetic-world-41": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "358508",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/41"
-  },
   "geodetic-world-51": {
    "venue": "foundation",
    "kind": "auction",
@@ -137,14 +131,6 @@
    "auction_id": "359088",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/82"
   },
-  "foundation-91080": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 1,
-   "price_wei": "1000000000000000000",
-   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
-   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/91080"
-  },
   "foundation-109050": {
    "venue": "foundation",
    "kind": "buy-now",
@@ -166,6 +152,14 @@
    "kind": "auction",
    "auction_id": "196544",
    "url": "https://foundation.app/mint/eth/0xe5eb0070a13f868a72996a568e12d085413445b8/1"
+  },
+  "seize-and-share-mint-face-319": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 0.5,
+   "price_wei": "500000000000000000",
+   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
+   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/319"
   },
   "seize-and-share-mint-face-321": {
    "venue": "foundation",
@@ -808,13 +802,20 @@
    "expires": "2027-02-19T06:29:25.000Z",
    "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
   },
-  "seize-and-share-mint-face-319": {
+  "geodetic-world-41": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "358508",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/41",
+   "carried_forward": true
+  },
+  "foundation-91080": {
    "venue": "foundation",
    "kind": "buy-now",
-   "price_eth": 0.5,
-   "price_wei": "500000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/319",
+   "price_eth": 1,
+   "price_wei": "1000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/91080",
    "carried_forward": true
   }
  }
