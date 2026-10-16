@@ -1,6 +1,7 @@
 import { readState, writeWorkState } from '../_lib/state.js';
 import { findWork, siteOrigin, useRequestOrigin } from '../_lib/data.js';
 import { send, templates } from '../_lib/email.js';
+import { readContact } from '../_lib/contacts.js';
 
 // Runs daily. Nudges on day twelve, lets go on day fourteen.
 export async function GET(request) {
@@ -31,6 +32,8 @@ export async function GET(request) {
       continue;
     }
     if (s.status !== 'reserved' || !s.reserve?.expires) continue;
+    /* who holds it is kept privately now; an older hold still carries it */
+    const who = (await readContact('reserve', id)) || { name: s.reserve.name || null, email: s.reserve.email || null };
     const expires = new Date(s.reserve.expires).getTime();
     const hit = await findWork(id);
     const title = hit?.work?.title || id;
@@ -40,9 +43,9 @@ export async function GET(request) {
     if (now >= expires) {
       await writeWorkState(id, { status: 'available', reserve: null, note: 'hold expired' },
         `Hold expired: ${title}, back on sale`);
-      if (s.reserve.email) {
-        const t = templates.released({ name: s.reserve.name, title });
-        await send({ to: s.reserve.email, subject: t.subject, text: t.text }).catch(() => {});
+      if (who.email) {
+        const t = templates.released({ name: who.name, title });
+        await send({ to: who.email, subject: t.subject, text: t.text }).catch(() => {});
       }
       acted.released.push(id);
       continue;
@@ -50,9 +53,9 @@ export async function GET(request) {
 
     const twoDaysOut = expires - 2 * 24 * 60 * 60 * 1000;
     if (!s.reserve.reminded && now >= twoDaysOut) {
-      if (s.reserve.email) {
-        const t = templates.reminder({ name: s.reserve.name, title, until: untilText, url });
-        await send({ to: s.reserve.email, subject: t.subject, text: t.text }).catch(() => {});
+      if (who.email) {
+        const t = templates.reminder({ name: who.name, title, until: untilText, url });
+        await send({ to: who.email, subject: t.subject, text: t.text }).catch(() => {});
       }
       await writeWorkState(id, { reserve: { ...s.reserve, reminded: true } }, `Reminder sent: ${title}`);
       acted.reminded.push(id);

@@ -1,6 +1,7 @@
 import { findWork, siteOrigin, useRequestOrigin } from './_lib/data.js';
 import { writeWorkState, workState, stateConfigured } from './_lib/state.js';
 import { send, templates } from './_lib/email.js';
+import { keepContact } from './_lib/contacts.js';
 
 const DAYS = Number(process.env.RESERVE_DAYS || 14);
 const json = (body, status = 200) =>
@@ -36,14 +37,15 @@ export async function POST(request) {
 
   await writeWorkState(workId, {
     status: 'reserved',
+    /* state.json and its commit messages are public: who holds the work is
+       kept privately, and the record says only that it is held, and until when */
     reserve: {
-      name: (name || '').slice(0, 120) || null,
-      email,
       from: now.toISOString(),
       expires: until.toISOString(),
       reminded: false,
     },
-  }, `Reserved: ${title} for ${email} until ${until.toISOString().slice(0, 10)}`);
+  }, `Reserved: ${title} until ${until.toISOString().slice(0, 10)}`);
+  await keepContact('reserve', workId, { name: (name || '').slice(0, 120) || null, email });
 
   const url = `${siteOrigin()}/w/${encodeURIComponent(workId)}`;
   const untilText = until.toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' });
