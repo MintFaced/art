@@ -1,11 +1,14 @@
-/* /api/strip-render: a Strip Painting for the home page's commission block,
- * as data. One colour and one width in millimetres per strip, first to last,
- * across the painting's width; the page draws them and turns them for portrait.
+/* /api/strip-render: a Strip Painting as data, for the home page's commission
+ * block and the Maker. One colour and one height in millimetres per strip,
+ * bottom first, across the painting's width; the page draws them and turns
+ * them for portrait. The layout is api/_lib/strip-render.js, never the page's.
  *
  * GET  ?width=60                  a palette at random, a different one each visit
  *      ?width=60&not=site-1,site-4   ... other than the ones this visitor just saw
  *      ?width=90&palette=site-6     that palette again, at another width
  * POST {width, colours:[{hex,w}]}  the visitor's own, sampled from a photograph
+ * POST {height_mm, colours, gamma?, count?}   the Maker's: any measure on the
+ *                                  6 mm grid, its vibrancy and strip count
  *
  * The palettes are the site designs' (data/strip-palettes.json) and the
  * collectors' twelve so far, read live from the nudges: every colour locked,
@@ -13,7 +16,7 @@
  * the same painting, so an order needs only those two to paint what was shown.
  */
 import palettesFile from '../data/strip-palettes.json' with { type: 'json' };
-import { layStrips } from './_lib/strip-render.js';
+import { layout } from './_lib/strip-render.js';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 
 const WIDTHS = { min: 10, max: 120, step: 10, standard: 60 };
@@ -56,11 +59,15 @@ async function readCollectors(origin) {
   }
 }
 
-const painted = (palette, width) => ({
-  palette: { id: palette.id, colours: palette.colours.map((c) => c.hex) },
-  width_cm: width,
-  strips: layStrips(palette.colours, width * 10),
-});
+const painted = (palette, width, { mm = width * 10, gamma, count } = {}) => {
+  const l = layout(palette.colours, mm, { gamma, count });
+  return {
+    palette: { id: palette.id, colours: palette.colours.map((c) => c.hex) },
+    ...(width ? { width_cm: width } : {}),
+    height_mm: l.height, count: l.count,
+    strips: l.strips,
+  };
+};
 
 export async function GET(request) {
   const url = new URL(request.url);
@@ -97,12 +104,17 @@ export async function GET(request) {
 export async function POST(request) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad request' }, 400, 'no-store'); }
-  const width = widthOf(body && body.width);
-  if (!width) return json({ error: `width is ${WIDTHS.min} to ${WIDTHS.max} cm in steps of ${WIDTHS.step}` }, 400, 'no-store');
+  /* the Maker asks by the millimetre, anything from 102 to 2,400 */
+  const maker = body && body.height_mm != null;
+  const mm = maker ? Number(body.height_mm) : null;
+  if (maker && !(mm >= 102 && mm <= 2400)) return json({ error: 'height_mm is 102 to 2,400' }, 400, 'no-store');
+  const width = maker ? null : widthOf(body && body.width);
+  if (!maker && !width) return json({ error: `width is ${WIDTHS.min} to ${WIDTHS.max} cm in steps of ${WIDTHS.step}` }, 400, 'no-store');
   const colours = Array.isArray(body.colours) ? body.colours
     .filter((c) => c && HEX.test(String(c.hex)))
     .map((c) => ({ hex: String(c.hex).toUpperCase(), w: Math.min(1000, Math.max(1, Number(c.w) || 1)) }))
     .slice(0, 12) : [];
   if (new Set(colours.map((c) => c.hex)).size < 4) return json({ error: 'four colours at the least' }, 400, 'no-store');
-  return json(painted({ id: 'photo', colours }, width), 200, 'no-store');
+  const opts = maker ? { mm, gamma: body.gamma, count: body.count } : {};
+  return json(painted({ id: maker ? 'maker' : 'photo', colours }, width, opts), 200, 'no-store');
 }

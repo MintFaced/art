@@ -59,14 +59,6 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 .field input[type=number]:focus{outline:0;border-bottom-color:var(--ink)}
 .field .unit{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:6px}
 
-.tiers{display:flex;gap:0;border:1px solid var(--rule);width:fit-content}
-.tiers button{
-  background:none;border:0;cursor:pointer;padding:11px 18px;
-  font-family:var(--font-mono);font-weight:400;font-size:10.5px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--muted);border-right:1px solid var(--rule);
-}
-.tiers button:last-child{border-right:0}
-.tiers button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .tier-note{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:9px}
 
 .slider{max-width:420px}
@@ -170,7 +162,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 
 <main class="wrap">
   <h1>Strip Painting Maker</h1>
-  <p class="intro">Design a colourway for your Strip Painting by MintFace. Colours are sampled from the neighbouring signs and the facade above after uploading a photo.</p>
+  <p class="intro">Design a colourway for your Strip Painting by MintFace. Colours are sampled from the neighbouring signs and the facade above after uploading a photo. The colours are yours; the rhythm is every Strip Painting's, and the same choices always make the same painting.</p>
 
   <div class="rule"></div>
 
@@ -184,28 +176,25 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
       </label>
       <label class="field">
         <span class="lab">Height</span>
-        <input type="number" id="height" value="550" min="100" step="10" inputmode="numeric">
-        <span class="unit">millimetres</span>
+        <input type="number" id="height" value="600" min="102" step="6" inputmode="numeric">
+        <span class="unit">millimetres · on the 6 mm grid</span>
       </label>
-      <div class="field">
-        <span class="lab">Strip intensity</span>
-        <div class="tiers" id="tiers">
-          <button type="button" data-k="low" aria-pressed="false">Low</button>
-          <button type="button" data-k="medium" aria-pressed="false">Medium</button>
-          <button type="button" data-k="high" aria-pressed="true">High</button>
-        </div>
-        <div class="tier-note" id="tierNote"></div>
-      </div>
+      <label class="field">
+        <span class="lab">Strips</span>
+        <input type="number" id="count" value="55" min="16" max="400" step="1" inputmode="numeric">
+        <span class="unit" id="countNote">red line 16th from the bottom</span>
+      </label>
     </div>
+    <div class="tier-note" id="fitNote" aria-live="polite"></div>
 
     <div class="slider" style="margin-top:30px">
-      <span class="lab" style="font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">Sequence</span>
-      <input type="range" id="vib" min="0" max="100" value="70">
-      <div class="ends"><span>Calm</span><span id="vibVal">70</span><span>Vibrant</span></div>
+      <label for="vib" class="lab" style="font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">Vibrancy</label>
+      <input type="range" id="vib" min="1" max="1.6" step="0.05" value="1">
+      <div class="ends"><span>Calm</span><span id="vibVal">1.00</span><span>Punchy</span></div>
     </div>
   </section>
 
-  <!-- Straight under the sequence, so the slider and what it does are on
+  <!-- Straight under the vibrancy, so the slider and what it does are on
        screen together. -->
   <section class="sect">
     <h2>Preview</h2>
@@ -244,11 +233,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
       <tr><td class="what">Estimated days on site</td><td id="pDays"></td></tr>
       <tr><td class="what">Price</td><td id="pTotal"></td></tr>
     </table>
-    <p class="price-note">Collected from The Line, Hastings. Intensity changes the painting, never the price. A frame or worldwide shipping is added when you order.</p>
+    <p class="price-note">Collected from The Line, Hastings. Vibrancy and the strip count change the painting, never the price. A frame or worldwide shipping is added when you order.</p>
   </section>
 
   <div class="actions">
-    <button type="button" id="regen">Regenerate pattern</button>
     <button type="button" id="copy">Copy spec</button>
     <button type="button" id="png">Download PNG</button>
     <a class="go" id="enquire" href="#">Send this to the studio</a>
@@ -272,25 +260,18 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 
 <script src="/mintface.js"></script>
 <script type="module">
-/* The price is the home page's, from the one function both read
+/* The Strip Painting Maker. The colours are the visitor's; the layout is the
+   rhythm every Strip Painting follows, laid on the server (/api/strip-render)
+   and handed back as strips, a colour and a height each. Nothing here is
+   random and nothing here lays a strip: the same palette, height, vibrancy
+   and count make the same painting, every time.
+
+   The price is the home page's, from the one function both read
    (strip-price.js): the same painting is never two prices. */
 import { stripPrice, fmtNZD, fmtETH, fmtUSD, STRIP_ETH_NZD } from '/strip-price.js';
 
-/* The logic here is the reference implementation, ported. Anything that
-   changes the drawing is unchanged from it on purpose. */
-
-const RED_LINE = '#d32011';
-const RED_LINE_H = 12;
-// the 16th strip up from the base, as long as there are enough strips for that
-// to sit in the bottom third
-const RED_LINE_NOMINAL = 16;
-const RED_LINE_MIN_STRIPS = 48;
-
-const INTENSITY = {
-  low:    { label: 'Low',    strips: '~23', sizes: [24],        daysPerM: 0.67, note: '24mm bands' },
-  medium: { label: 'Medium', strips: '~33', sizes: [24, 12],    daysPerM: 0.83, note: '12 / 24mm' },
-  high:   { label: 'High',   strips: '55',  sizes: [24, 12, 6], daysPerM: 1.17, note: '6 / 12 / 24mm' },
-};
+const RED_LINE = '#D32011';
+const DAYS_PER_M = 1.17; // on site, a metre at 550 mm
 
 // Strip Painting No. 1, with each colour weighted by its millimetres on the wall
 const DEFAULT_PALETTE = [
@@ -306,11 +287,9 @@ const dist2 = (a, b) => {
   const dr = a[0] - b[0], dg = a[1] - b[1], db = a[2] - b[2];
   return dr * dr + dg * dg + db * db;
 };
-const hexToRgb = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
-const lum = (rgb) => 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
 
 // downsample, bucket to 4 bits a channel, keep the twelve most common that are
-// actually distinct from one another
+// actually distinct from one another, each weighted by its share
 function extractPalette(imgData) {
   const buckets = new Map();
   const d = imgData.data;
@@ -334,126 +313,12 @@ function extractPalette(imgData) {
   return picked.map((p) => ({ hex: rgbToHex(...p.rgb), w: Math.max(1, Math.round((p.n / total) * 100)) }));
 }
 
-// vib 0 is calm and dominance led, 1 leans hard on contrast against the strip below
-function pickColour(palette, prevHex, rand, vib) {
-  // The calm end keeps the paired runs of No. 1. Merely allowing the previous
-  // colour back into the pool almost never picks it, one chance in twelve, so
-  // at the calm end the pair is taken rather than permitted.
-  if (prevHex && vib < 0.45 && rand() < 0.12) {
-    const same = palette.find((p) => p.hex === prevHex);
-    if (same) return same;
-  }
-  const pool = palette.filter((p) => p.hex !== prevHex);
-  const list = pool.length ? pool : palette;
-  if (!prevHex) {
-    const total = list.reduce((s, p) => s + p.w, 0);
-    let r = rand() * total;
-    for (const p of list) { r -= p.w; if (r <= 0) return p; }
-    return list[list.length - 1];
-  }
-  const prev = hexToRgb(prevHex);
-  const scored = list.map((p) => {
-    const rgb = hexToRgb(p.hex);
-    const d = Math.sqrt(dist2(prev, rgb)) / 441.7;
-    const dl = Math.abs(lum(prev) - lum(rgb)) / 255;
-    const contrast = 0.5 * d + 0.5 * dl;
-    return { p, score: p.w * (0.1 + (1 - vib) * 0.6 + vib * 4 * Math.pow(contrast, 2)) };
-  });
-  const total = scored.reduce((s, x) => s + x.score, 0);
-  let r = rand() * total;
-  for (const x of scored) { r -= x.score; if (r <= 0) return x.p; }
-  return scored[scored.length - 1].p;
-}
-
-// seeded, so regenerating is a new design and moving the slider is the same one
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-// A strip draws from its own stream rather than from one running sequence, so
-// moving the sequence slider changes which colours are chosen without shifting
-// every draw after the first change. That is what makes the slider morph one
-// design instead of reshuffling it. Heights get a second stream of their own,
-// so they do not move at all when the slider does.
-const streamFor = (seed, idx, salt) =>
-  mulberry32((Math.imul(seed, 0x9e3779b1) ^ Math.imul(idx + 1, 0x85ebca6b) ^ Math.imul(salt, 0xc2b2ae35)) >>> 0);
-
-/* Where the red line goes.
-
-   It is the 16th strip up from the base. On a short wall, or at Low, there are
-   not enough strips for the 16th to still be near the bottom, so it goes a
-   third of the way up instead, rounded to the nearest strip.
-
-   The count is not known until the strips exist, so it is estimated by running
-   the generator on a fixed seed and the reference palette, whatever palette the
-   viewer is actually using. That keeps the position a function of the wall and
-   the intensity alone: regenerating re-rolls every colour and height, adding or
-   dropping colours changes the whole wall, and the red line does not move. */
-function redLineIndex(intensityKey, heightMM) {
-  const est = layStrips(DEFAULT_PALETTE, intensityKey, heightMM, 1, 0.7, -1).length;
-  if (est >= RED_LINE_MIN_STRIPS) return RED_LINE_NOMINAL - 1;
-  const third = Math.max(1, Math.round(est / 3));
-  return Math.min(est - 1, third - 1);
-}
-
-function generateStrips(palette, intensityKey, heightMM, seed, vib) {
-  const idx = redLineIndex(intensityKey, heightMM);
-  return layStrips(palette, intensityKey, heightMM, seed, vib, idx);
-}
-
-// built from the bottom up, to exactly the height asked for. redIndex of -1
-// lays the wall with no red line, which is how the count is estimated.
-function layStrips(palette, intensityKey, heightMM, seed, vib, redIndex) {
-  const sizes = INTENSITY[intensityKey].sizes;
-  const maxW = Math.max(...palette.map((p) => p.w));
-  const strips = [];
-  let sum = 0;
-  const minSize = Math.min(...sizes);
-  while (sum < heightMM - 0.01) {
-    const idx = strips.length;
-    if (idx === redIndex && heightMM - sum >= RED_LINE_H) {
-      strips.push({ hex: RED_LINE, h: RED_LINE_H, red: true });
-      sum += RED_LINE_H;
-      continue;
-    }
-    const prev = strips.length ? strips[strips.length - 1].hex : null;
-    const c = pickColour(palette, prev, streamFor(seed, idx, 1), vib);
-    const dominance = c.w / maxW;
-    let h;
-    if (sizes.length === 1) h = sizes[0];
-    else {
-      const roll = streamFor(seed, idx, 2)();
-      if (dominance > 0.6) h = roll < 0.5 ? sizes[0] : sizes[1];
-      // High is the No. 1 spec, 55 strips at 550mm, so it leans on the 6mm band
-      else if (sizes.length === 3) h = roll < 0.07 ? sizes[0] : roll < 0.30 ? sizes[1] : sizes[2];
-      else h = roll < 0.35 ? sizes[0] : sizes[1];
-    }
-    const remaining = heightMM - sum;
-    if (h > remaining) h = remaining >= minSize ? minSize : remaining;
-    if (remaining - h > 0 && remaining - h < minSize) h = remaining;
-    strips.push({ hex: c.hex, h });
-    sum += h;
-  }
-  return strips;
-}
-
-/* The wall's width is the painting's length, its height the measure the
-   strips are laid across. Past what the price function covers, it is a talk. */
-const FX = { usd: null };
-const priceOf = () => stripPrice({ lengthCm: S.widthM * 100, widthCm: S.heightMM / 10 });
-const priceLine = (nzd) => (nzd == null ? 'Quoted after we talk'
-  : [fmtNZD(nzd), `${fmtETH(nzd)} at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH`, fmtUSD(nzd, FX.usd)].filter(Boolean).join(' · '));
-
 /* ---------- state ---------- */
 const S = {
-  widthM: 6, heightMM: 550, intensity: 'high',
-  palette: DEFAULT_PALETTE.slice(), seed: 1, vib: 0.7, strips: [],
+  widthM: 6, heightMM: 600, count: 55, gamma: 1,
+  palette: DEFAULT_PALETTE.slice(), strips: [], laid: null,
 };
+const FX = { usd: null };
 const $ = (id) => document.getElementById(id);
 /* A colour with the nearest Pantone or standard name after it. A spec sheet of
    bare hexes is a sheet nobody can talk through on a scaffold. */
@@ -463,40 +328,42 @@ const said = (hex) => {
 };
 const e = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/* The wall's width is the painting's length, its height the measure the
+   strips are laid across. Past what the price function covers, it is a talk. */
+const priceOf = () => stripPrice({ lengthCm: S.widthM * 100, widthCm: S.heightMM / 10 });
+const priceLine = (nzd) => (nzd == null ? 'Quoted after we talk'
+  : [fmtNZD(nzd), `${fmtETH(nzd)} at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH`, fmtUSD(nzd, FX.usd)].filter(Boolean).join(' · '));
+const redAt = () => S.strips.findIndex((x) => x.hex.toUpperCase() === RED_LINE) + 1;
+
+/* ---------- the layout, from the server ---------- */
+const LAID = new Map();
+let asked = 0;
+async function layOut() {
+  const body = JSON.stringify({ height_mm: S.heightMM, gamma: S.gamma, count: S.count, colours: S.palette.map((c) => ({ hex: c.hex, w: c.w })) });
+  if (LAID.has(body)) return LAID.get(body);
+  const r = await fetch('/api/strip-render', { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || `strip-render ${r.status}`);
+  LAID.set(body, j);
+  return j;
+}
+
 /* ---------- the file ----------
  *
  * The painting, drawn to its own proportions at a size worth looking at, and
- * nothing else in the frame: no border, no caption, no strip count baked into
- * a corner. The spec is a thing you copy; this is a thing you look at, and a
- * picture carrying its own label is a picture that cannot be used for anything
- * but the page it came off.
- *
- * INTEGER EDGES, EVERY BAND. A wall is measured in millimetres and a file in
- * pixels, and dividing one by the other lands band edges on fractions ... which
- * the canvas then antialiases, putting a row of colours along every boundary
- * that are in neither of the strips they sit between. On a painting made ENTIRELY
- * of boundaries that is not a rounding error, it is a different painting. So
- * every edge is the running total rounded once: adjacent bands share the exact
- * integer, the seams are hard, and the heights still add up to the whole
- * because each one is the difference between two rounded totals rather than a
- * rounded difference.
+ * nothing else in the frame. Every edge is the running total rounded once, so
+ * adjacent bands share the exact integer and the seams are hard: a painting
+ * made entirely of boundaries cannot have colours along them that are in
+ * neither strip. The smallest strip always gets a whole pixel.
  */
 const EXPORT_LONG = 3000;
 
 function exportCanvas() {
   const cv = $('out');
   const wMM = S.widthM * 1000;
-  const hMM = S.heightMM;
+  const hMM = S.laid ? S.laid.height : S.heightMM;
   let scale = EXPORT_LONG / Math.max(wMM, hMM);
-  /* EVERY BAND HAS TO SURVIVE THE ROUNDING, and it is the narrowest one that
-     decides. A 6mm strip on a wall twenty metres long and a third of a metre
-     high is nine tenths of a pixel at this scale, which rounds to nothing on
-     about half the offsets it can land on ... and a painting with strips
-     missing from it is not the painting. Give the smallest strip a whole
-     pixel and every strip has one, because each height is the difference
-     between two rounded totals and a gap of one or more never rounds to zero.
-     The file gets bigger rather than poorer; 3000 is a floor, not a budget. */
-  const minMM = Math.min(...S.strips.map((x) => x.h));
+  const minMM = Math.min(...S.strips.map((x) => x.mm));
   if (minMM * scale < 1) scale = 1 / minMM;
   const W = Math.round(wMM * scale);
   const H = Math.round(hMM * scale);
@@ -504,141 +371,136 @@ function exportCanvas() {
   cv.height = H;
   const ctx = cv.getContext('2d', { alpha: false });
   ctx.imageSmoothingEnabled = false;
-  /* Bottom up, the way it is painted and the way S.strips is laid. */
+  /* bottom up, the way it is painted and the way the strips arrive */
   let mm = 0;
   for (const st of S.strips) {
-    const y0 = H - Math.round((mm + st.h) * scale);
+    const y0 = H - Math.round((mm + st.mm) * scale);
     const y1 = H - Math.round(mm * scale);
     ctx.fillStyle = st.hex;
     ctx.fillRect(0, y0, W, y1 - y0);
-    mm += st.h;
+    mm += st.mm;
   }
   return cv;
 }
 
-/* What the file is called, and it is the whole of what a shared file knows
-   about itself. The design number is the one this maker counts: it moves every
-   time the pattern is regenerated, a colour is dropped or a photograph is
-   read, which is exactly the set of things that make it a different painting. */
+/* What the file is called: the wall it is for and the strips it has. */
 function exportName() {
-  const redAt = S.strips.findIndex((x) => x.red) + 1;
-  return `strip-painting-site${S.seed}-${S.strips.length}strips-redline${redAt}.png`;
+  const h = S.laid ? S.laid.height : S.heightMM;
+  return `strip-painting-${S.widthM}m-${h}mm-${S.strips.length}strips-redline${redAt()}.png`;
 }
 
-/* The preview and the download are one blob.
- *
- * Debounced, because the sequence slider redraws on every pixel of its travel
- * and encoding a three-thousand pixel PNG per pixel of slider is a slider that
- * stutters. The old picture stays up until the new one has decoded, so the
- * preview never blinks white in the middle of a drag.
- */
+/* The preview and the download are one blob. The old picture stays up until
+   the new one has decoded, so the preview never blinks white mid-drag. */
 const SHOT = { url: null, timer: null, name: '' };
 
 function paintPreview() {
   const img = $('stripImg');
-  if (!img) return;
+  if (!img || !S.strips.length) return;
   exportCanvas().toBlob((blob) => {
     if (!blob) return;
     const url = URL.createObjectURL(blob);
     const old = SHOT.url;
     SHOT.url = url;
-    /* The old one goes only once the new one is on screen: revoking it while
-       it is still the src is a preview that turns into a broken image. */
     img.onload = () => { if (old) URL.revokeObjectURL(old); };
     img.src = url;
   }, 'image/png');
 }
-
 function refreshShot() {
   clearTimeout(SHOT.timer);
   SHOT.timer = setTimeout(paintPreview, 90);
 }
 
-function draw() {
-  S.strips = generateStrips(S.palette, S.intensity, S.heightMM, S.seed, S.vib);
-  const conf = INTENSITY[S.intensity];
-
-  const total = S.strips.reduce((n, s) => n + s.h, 0) || 1;
-  const redAt = S.strips.findIndex((x) => x.red) + 1;
-  SHOT.name = exportName();
-  $('stripImg').alt = `Strip painting, ${S.widthM}m by ${S.heightMM}mm, ${S.strips.length} strips, red line at ${redAt} from the base`;
-  refreshShot();
-  /* The red line's number, put where the red line is. The preview is stretched
-     to its box, so the mark goes by the same fraction the band does. */
-  const above = S.strips.slice(redAt).reduce((n, x) => n + x.h, 0);
-  const red = S.strips[redAt - 1];
-  const mark = $('redMark');
-  if (red) {
-    mark.hidden = false;
-    mark.textContent = String(redAt);
-    mark.style.top = `${((above + red.h / 2) / total * 100).toFixed(3)}%`;
-  } else { mark.hidden = true; }
-  $('previewNote').textContent = `${S.strips.length} strips ... red line at ${redAt} from base ... preview not to scale`;
-
+/* Everything that does not wait on the layout, then the layout. */
+function words() {
+  const nzd = priceOf();
+  const days = DAYS_PER_M * S.widthM * (S.heightMM / 550);
+  $('pSize').textContent = `${S.widthM} m × ${S.laid ? S.laid.height : S.heightMM} mm`;
+  $('pDays').textContent = days.toFixed(1);
+  $('pTotal').textContent = priceLine(nzd);
+  $('vibVal').textContent = S.gamma.toFixed(2);
   $('swatches').innerHTML = S.palette.map((c) =>
     `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(said(c.hex))} ... tap to drop"></button>`).join('')
     + `<button class="sw sw-red" type="button" disabled style="background:${RED_LINE}"
-        title="${e(said(RED_LINE))} ... the constant at strip ${RED_LINE_NOMINAL} from the base, on every one of these paintings"><span class="n">red line</span></button>`;
-
-  const days = conf.daysPerM * S.widthM * (S.heightMM / 550);
-  $('pSize').textContent = `${S.widthM} m × ${S.heightMM} mm`;
-  $('pDays').textContent = days.toFixed(1);
-  $('pTotal').textContent = priceLine(priceOf());
-  $('tierNote').textContent = `${conf.strips} strips ... ${conf.note}`;
-  for (const b of $('tiers').querySelectorAll('button')) {
-    b.setAttribute('aria-pressed', String(b.dataset.k === S.intensity));
-  }
+        title="${e(said(RED_LINE))} ... the constant, 16th from the bottom, on every one of these paintings"><span class="n">red line</span></button>`;
   $('enquire').href = mailto();
 }
 
+async function draw() {
+  words();
+  const my = ++asked;
+  try {
+    const j = await layOut();
+    if (my !== asked) return; // a later change has already asked again
+    S.strips = j.strips;
+    S.laid = { height: j.height_mm, count: j.count };
+  } catch (err) {
+    console.error('layout', err);
+    say('The painting could not be laid out just now');
+    return;
+  }
+  const n = S.strips.length;
+  const at = redAt();
+  SHOT.name = exportName();
+  $('stripImg').alt = `Strip painting, ${S.widthM} m by ${S.laid.height} mm, ${n} strips, red line ${at} from the base`;
+  refreshShot();
+  /* the red line's number, put where the red line is */
+  const total = S.strips.reduce((s, x) => s + x.mm, 0) || 1;
+  const red = S.strips[at - 1];
+  const above = S.strips.slice(at).reduce((s, x) => s + x.mm, 0);
+  const mark = $('redMark');
+  if (red) {
+    mark.hidden = false;
+    mark.textContent = String(at);
+    mark.style.top = `${((above + red.mm / 2) / total * 100).toFixed(3)}%`;
+  } else { mark.hidden = true; }
+  $('previewNote').textContent = `${n} strips ... red line at ${at} from base ... preview not to scale`;
+  /* where the wall had to give: a height off the grid, a count it cannot hold */
+  const notes = [];
+  if (S.laid.height !== S.heightMM) notes.push(`laid at ${S.laid.height} mm, on the 6 mm grid`);
+  if (S.laid.count !== S.count) notes.push(`${S.laid.height} mm holds ${S.laid.count} strips here`);
+  $('fitNote').textContent = notes.join(' ... ');
+  words();
+}
+
 function specText() {
-  const conf = INTENSITY[S.intensity];
-  const redAt = S.strips.findIndex((x) => x.red) + 1;
-  const days = conf.daysPerM * S.widthM * (S.heightMM / 550);
+  const at = redAt();
+  const h = S.laid ? S.laid.height : S.heightMM;
   return [
     'MintFace Strip Painting ... configured spec',
-    `${S.widthM}m x ${S.heightMM}mm | intensity ${conf.label} (${conf.note}) | sequence ${Math.round(S.vib * 100)}/100 calm-to-vibrant | ${S.strips.length} strips`,
-    `price ${priceLine(priceOf())}, collected from The Line | est ${days.toFixed(1)} days on site`,
+    `${S.widthM}m x ${h}mm | ${S.strips.length} strips | vibrancy ${S.gamma.toFixed(2)}`,
+    `price ${priceLine(priceOf())}, collected from The Line | est ${(DAYS_PER_M * S.widthM * (S.heightMM / 550)).toFixed(1)} days on site`,
     `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
-    `RED LINE: ${said(RED_LINE)} ... STRIP ${redAt} OF ${S.strips.length} FROM BASE`,
+    `RED LINE: ${said(RED_LINE)} ... STRIP ${at} OF ${S.strips.length} FROM BASE`,
     '',
     'strips, bottom up:',
     ...S.strips.map((s, i) =>
-      `${String(i + 1).padStart(2)}  ${said(s.hex).padEnd(28)}  ${String(s.h).padStart(2)}mm${s.red ? `  RED LINE (strip ${redAt} of ${S.strips.length} from base)` : ''}`),
+      `${String(i + 1).padStart(2)}  ${said(s.hex).padEnd(28)}  ${String(s.mm).padStart(2)}mm${s.hex.toUpperCase() === RED_LINE ? `  RED LINE (strip ${at} of ${S.strips.length} from base)` : ''}`),
   ].join('\n');
 }
 
 // TODO: Ryan to settle the enquiry path. This is v1: it opens a mail with the
-// spec in the body. A deposit through Stripe would replace it.
+// spec in the body. The commission checkout takes over once the Maker's
+// paintings can be ordered from (STRIP-MAKER).
 function mailto() {
-  const subject = `Strip Painting ... ${S.widthM}m x ${S.heightMM}mm, ${INTENSITY[S.intensity].label}`;
-  return `mailto:ryan@mintface.art?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(specText())}`;
+  const subject = `Strip Painting ... ${S.widthM}m x ${S.laid ? S.laid.height : S.heightMM}mm, ${S.strips.length || S.count} strips`;
+  return `mailto:ryan@mintface.art?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(S.strips.length ? specText() : '')}`;
 }
 
 /* ---------- wiring ---------- */
 const num = (v, fb) => { const n = parseFloat(v); return isNaN(n) || n <= 0 ? fb : n; };
+let typing;
+const soon = () => { clearTimeout(typing); typing = setTimeout(draw, 250); };
 
-$('width').addEventListener('input', (ev) => { S.widthM = num(ev.target.value, 6); draw(); });
-$('height').addEventListener('input', (ev) => { S.heightMM = Math.round(num(ev.target.value, 550)); draw(); });
-$('tiers').addEventListener('click', (ev) => {
-  const b = ev.target.closest('button');
-  if (!b) return;
-  S.intensity = b.dataset.k;
-  draw();
-});
-$('vib').addEventListener('input', (ev) => {
-  S.vib = Number(ev.target.value) / 100;
-  $('vibVal').textContent = ev.target.value;
-  draw();   // same seed, so the design morphs rather than reshuffling
-});
-$('regen').addEventListener('click', () => { S.seed += 1; draw(); });
+$('width').addEventListener('input', (ev) => { S.widthM = num(ev.target.value, 6); words(); refreshShot(); });
+$('height').addEventListener('input', (ev) => { S.heightMM = Math.round(num(ev.target.value, 600)); soon(); });
+$('count').addEventListener('input', (ev) => { S.count = Math.round(num(ev.target.value, 55)); soon(); });
+$('vib').addEventListener('input', (ev) => { S.gamma = Number(ev.target.value); draw(); });
 
 $('swatches').addEventListener('click', (ev) => {
   const b = ev.target.closest('.sw');
   if (!b || b.disabled) return;
   if (S.palette.length <= 4) { say('Four colours is the minimum'); return; }
   S.palette = S.palette.filter((c) => c.hex !== b.dataset.hex);
-  S.seed += 1;
   draw();
 });
 
@@ -659,7 +521,6 @@ $('file').addEventListener('change', (ev) => {
     else say('Not enough colour in that one ... palette kept');
     $('shot').src = url;
     $('shotWrap').hidden = false;
-    S.seed += 1;
     draw();
   };
   img.src = url;
@@ -680,7 +541,6 @@ $('shot').addEventListener('click', (ev) => {
   if (next.length >= 12) next.pop();
   next.push({ hex, w: Math.max(8, Math.round(next[0].w * 0.4)) });
   S.palette = next;
-  S.seed += 1;
   draw();
   say(`${hex} taken`);
 });
@@ -698,6 +558,7 @@ $('copy').addEventListener('click', async () => {
    what it is. Not a fresh render: a button that quietly drew its own copy
    could hand somebody a file that is not the picture they were looking at. */
 $('png').addEventListener('click', () => {
+  if (!S.strips.length) return;
   const go = (url, name) => {
     const a = document.createElement('a');
     a.href = url;
@@ -708,8 +569,6 @@ $('png').addEventListener('click', () => {
   };
   const name = SHOT.name || exportName();
   if (SHOT.url) { go(SHOT.url, name); say(`Saved ${name}`); return; }
-  /* Before the first encode has come back, which is a tenth of a second after
-     the page settles and can still be beaten by a fast hand. */
   exportCanvas().toBlob((blob) => {
     if (!blob) { say('Could not draw the file'); return; }
     const url = URL.createObjectURL(blob);
@@ -727,7 +586,7 @@ function say(msg) {
 }
 
 draw();
-MF.fx().then((fx) => { FX.usd = fx && fx.usd ? fx.usd : null; draw(); }).catch(() => {});
+MF.fx().then((fx) => { FX.usd = fx && fx.usd ? fx.usd : null; words(); }).catch(() => {});
 </script>
 </body>
 </html>

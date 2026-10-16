@@ -10,7 +10,7 @@
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { stripPrice, stripEth } from '../../strip-price.js';
-import { layStrips, RED_LINE } from '../../api/_lib/strip-render.js';
+import { layStrips, layout, RED_LINE } from '../../api/_lib/strip-render.js';
 import { GET, POST } from '../../api/strip-render.js';
 
 let pass = 0, fail = 0;
@@ -38,14 +38,33 @@ console.log('\n— the Maker reads the same function —');
 const maker = read('strip-painting-maker.html');
 is('it imports strip-price.js and asks it', /from '\/strip-price\.js'/.test(maker) && /stripPrice\(/.test(maker), true);
 is('the old tiers, rate and height factor are gone', /rate: (650|800|1000)|Height factor|\$1,000\/m/.test(maker), false);
+is('the Maker lays no strip itself: it asks the server, by the millimetre', [/mulberry32|pickColour|layStrips|streamFor|Regenerate/.test(maker), /\/api\/strip-render/.test(maker) && /height_mm/.test(maker)], [false, true]);
+is('its dials are the rhythm\'s: strips, vibrancy 1.0 to 1.6, height on the 6 mm grid', [/id="count"/.test(maker), /id="vib" min="1" max="1.6"/.test(maker), /id="height" value="600" min="102" step="6"/.test(maker)], [true, true, true]);
+
+console.log('\n— the rhythm (strip-rhythm-spec) —');
+const twelve = Array.from({ length: 12 }, (_, i) => ({ hex: `#${(0x0f0f0f * (i + 1)).toString(16).padStart(6, '0').slice(-6).toUpperCase()}` }));
+const L = layout(twelve, 600);
+const notRed = L.strips.filter((_, i) => i !== 15);
+is('55 strips summing exactly to 600 mm, every one 6, 12 or 24', [L.count, L.strips.reduce((a, x) => a + x.mm, 0), notRed.every((x) => [6, 12, 24].includes(x.mm))], [55, 600, true]);
+is('exactly one red strip, 16th from the bottom, 12 mm', [L.strips.filter((x) => x.hex === RED_LINE).length, L.strips[15].hex, L.strips[15].mm], [1, RED_LINE, 12]);
+is('the order reverses every twelve: strip i and strip 23 − i are one colour', L.strips.slice(0, 12).every((x, i) => 23 - i === 15 || L.strips[23 - i].hex === x.hex), true);
+is('… and the run of 24 repeats up the stack', L.strips.slice(24, 48).every((x, i) => i + 24 === 15 || x.hex === (L.strips[i].hex === RED_LINE ? x.hex : L.strips[i].hex)), true);
+const dom = L.strips.filter((x) => x.hex === twelve[0].hex);
+is('the dominant colour appears about five times and carries the thick strips', [dom.length >= 4 && dom.length <= 5, dom.filter((x) => x.mm === 24).length >= 3], [true, true]);
+const thick = (g) => layout(twelve, 600, { gamma: g }).strips.filter((x, i) => i !== 15 && x.mm === 24).length;
+is('punchier vibrancy, more 24 mm blocks (1.0 → 1.6)', thick(1.6) > thick(1.0), true);
+const p16 = layout(twelve, 600, { gamma: 1.6 }).strips.filter((_, i) => i !== 15);
+is('at 1.6, about 10 thick, 15 medium, 30 thin', [p16.filter((x) => x.mm === 24).length, p16.filter((x) => x.mm === 12).length + 1, p16.filter((x) => x.mm === 6).length], [10, 15, 30]);
+is('the same inputs make the same painting, every run', JSON.stringify(layout(twelve, 600, { gamma: 1.3 })) === JSON.stringify(layout(twelve, 600, { gamma: 1.3 })), true);
+is('a height off the grid is laid at the nearest 6 mm; a count it cannot hold is cut', [layout(twelve, 550).height, layout(twelve, 300).count, layout(twelve, 100).height, layout(twelve, 100).count, layout(twelve, 100).strips[15].hex], [552, 49, 102, 16, RED_LINE]);
 
 console.log('\n— the render —');
 const palettes = JSON.parse(read('data/strip-palettes.json')).palettes;
 const designs = JSON.parse(read('data/source/strip-paintings.json')).works.filter((w) => w.group === 'site-design');
 is('a palette for every site design, four colours at the least', designs.every((w) => palettes.some((p) => p.work === w.id && p.colours.length >= 4)), true);
 const widths = [10, 30, 60, 90, 120];
-is('every palette, every width: the red line is there and the strips fill the width',
-  palettes.every((p) => widths.every((cm) => { const s = layStrips(p.colours, cm * 10); return s.some((x) => x.hex === RED_LINE) && s.reduce((a, x) => a + x.mm, 0) === cm * 10; })), true);
+is('every palette, every width: one red line, 16th, and the strips fill the width on the 6 mm grid',
+  palettes.every((p) => widths.every((cm) => { const l = layout(p.colours, cm * 10); return l.strips.filter((x) => x.hex === RED_LINE).length === 1 && l.strips[15].hex === RED_LINE && l.strips.reduce((a, x) => a + x.mm, 0) === l.height && Math.abs(l.height - cm * 10) <= 3; })), true);
 const ask = async (q) => { const r = await GET(new Request(`http://localhost:9/api/strip-render?${q}`)); return { r, j: await r.json() }; };
 const a = await ask('width=60&palette=site-1');
 const b = await ask('width=60&palette=site-1');
