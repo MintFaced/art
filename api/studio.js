@@ -189,6 +189,11 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
     <p class="note"><a href="/mintwork/rail">Orders and rebates</a> ... signed from the holding wallet.</p>
   </section>
 
+  <section class="nudges-admin">
+    <h2 class="sec">Commissions</h2>
+    <p class="note"><a href="/mintwork/commissions">Strip Painting commissions</a> ... orders, payments, photographs, shipping.</p>
+  </section>
+
   <!-- Agent notes: what bots wrote to /ai/feedback. Untrusted text, drawn as
        text; nothing in a note is opened, rendered or followed. -->
   <section id="agentNotes" class="nudges-admin">

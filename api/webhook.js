@@ -2,6 +2,8 @@ import Stripe from 'stripe';
 import { findWork, useRequestOrigin, siteOrigin, includesPainting, describeWhat } from './_lib/data.js';
 import { writeWorkState, workState } from './_lib/state.js';
 import { send, templates } from './_lib/email.js';
+import { cardPaid } from './_lib/commissions.js';
+import { keepContact } from './_lib/contacts.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-07-29.dahlia' });
 const SECRET = process.env.STRIPE_WEBHOOK_SECRET;
@@ -27,14 +29,17 @@ export async function POST(request) {
         const session = event.data.object;
         // a completed session can still be unpaid with delayed payment methods
         if (session.payment_status === 'unpaid') break;
+        /* A Strip Painting commission pays its own order, once per event and
+           once per order however Stripe retries (api/_lib/commissions.js). */
+        if (session.metadata?.kind === 'commission') { await cardPaid(session, event.id); break; }
         await fulfil(session);
         break;
       }
       case 'checkout.session.async_payment_failed':
-        await release(event.data.object, 'payment failed');
-        break;
       case 'checkout.session.expired':
-        await release(event.data.object, 'checkout abandoned');
+        // an abandoned commission session leaves its order waiting, on its own clock
+        if (event.data.object.metadata?.kind === 'commission') break;
+        await release(event.data.object, event.type.endsWith('failed') ? 'payment failed' : 'checkout abandoned');
         break;
       default:
         break;
@@ -100,9 +105,11 @@ async function fulfilSet(session, ids) {
       sold_out: true,
       set: setName,
       paid: { amount, currency, session: session.id, at, set: setName },
-      collector: { email, display_name: null, ens: null, note: null, acquired: at },
+      /* state.json is public: the buyer's email is kept privately instead */
+      collector: { display_name: null, ens: null, note: null, acquired: at },
       token_transfer: 'pending',
     }, `Sold as part of the ${setName} set: ${title}`);
+    await keepContact('collector', id, { email, session: session.id, set: setName });
   }
 
   const list = titles.map((t, i) => `  ${i + 1}. ${t}`).join('\n');
@@ -174,9 +181,11 @@ async function fulfil(session) {
     what,
     sold_out: closes,
     paid: { amount, currency, session: session.id, at: new Date().toISOString() },
-    collector: { email, display_name: null, ens: null, note: null, acquired: new Date().toISOString() },
+    /* state.json is public: the buyer's email and address are kept privately */
+    collector: { display_name: null, ens: null, note: null, acquired: new Date().toISOString() },
     token_transfer: 'pending',
   }, `Sold: ${title} (${what}, ${amount} ${currency})`);
+  await keepContact('collector', workId, { email, shipping, session: session.id });
 
   const notify = process.env.EMAIL_TO_ARTIST || 'ryan@mintface.art';
   const t = templates.sold({ title, what, amount, currency, email, shipping });

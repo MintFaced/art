@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- One page for a Strip Painting commission (STRIP-CHECKOUT): /commission/{id}
+     pays for it, /commission/{id}/paid says it is done. Every number on it is
+     the order's, read from the server; the page never sends an amount. -->
+<title>Strip Painting commission ... MintFace</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.cm{max-width:1240px;margin:0 auto;padding:48px 28px 96px;box-sizing:border-box;color:var(--ink);font-family:var(--font-sans)}
+.cm .mono{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.cm .grey{color:var(--muted)}
+.cm [hidden]{display:none!important}
+.cm-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:64px;align-items:start}
+/* the painting stays in view while the form is filled in beside it */
+.cm-art{display:flex;flex-direction:column;gap:10px;position:sticky;top:88px}
+.cm-art p{margin:0}
+.cm-art img{display:block;max-width:100%;max-height:520px;width:auto;height:auto;align-self:center;background:var(--sunk)}
+.cm-ref{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em}
+.cm-line{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;line-height:1.6;text-transform:uppercase}
+.cm h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1.05;margin:0 0 22px}
+.cm form{display:flex;flex-direction:column;gap:18px}
+.cm label{display:flex;flex-direction:column;gap:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cm input[type=text],.cm input[type=email],.cm textarea{font-family:var(--font-sans);font-size:16px;letter-spacing:0;text-transform:none;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--rule);padding:8px 0;border-radius:0}
+.cm textarea{resize:vertical;min-height:84px;border:1px solid var(--rule);padding:10px}
+.cm input:focus,.cm textarea:focus{outline:0;border-color:var(--ink)}
+.cm .check{flex-direction:row;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
+.cm-quiet{background:none;border:0;padding:10px 0;font-family:var(--font-sans);font-size:14px;color:var(--muted);cursor:pointer;text-align:left}
+.cm-quiet:hover{color:var(--ink)}
+.cm-doors{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.cm-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;text-decoration:none}
+.cm-btn.ghost{background:none;color:var(--ink)}
+.cm-btn[disabled]{opacity:.5;cursor:default}
+.cm-say{min-height:20px;font-size:14px;color:var(--muted)}
+.cm-say.err{color:var(--ink)}
+.cm-eth{display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--rule);padding-top:20px}
+.cm-eth p{margin:0}
+.cm-eth .amount{font-family:var(--font-mono);font-size:20px;letter-spacing:.02em}
+.cm-addr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--font-mono);font-size:13px;word-break:break-all}
+.cm-qr{width:168px;height:168px;background:#fff;padding:6px;box-sizing:border-box}
+.cm-qr svg{display:block;width:100%;height:100%}
+.cm-done{display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6}
+@media(max-width:820px){
+  .cm{padding:28px 20px 72px}
+  .cm-grid{grid-template-columns:minmax(0,1fr);gap:32px}
+  .cm-art{position:static}
+  .cm-btn{flex:1 1 100%}
+}
+</style>
+</head>
+<body>
+<header class="nav" id="nav"></header>
+<main class="cm" id="main"><p class="mono grey">Loading</p></main>
+<script src="/mintface.js"></script>
+<script type="module" src="/commission.js"></script>
+</body>
+</html>

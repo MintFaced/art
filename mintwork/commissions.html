@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- The studio's commissions (STRIP-CHECKOUT): /mintwork/commissions and
+     /mintwork/commissions/{id}. Behind the console password; the buyer's
+     details are drawn here as plain text and never leave this page. -->
+<title>Commissions ... MintFace studio</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/mintface.css">
+<style>
+body{background:var(--paper)}
+.ck{max-width:1200px;margin:0 auto;padding:36px 24px 80px;font-family:var(--font-sans);color:var(--ink)}
+.ck h1{font-weight:400;font-size:32px;letter-spacing:-.02em;margin:0 0 18px}
+.ck .mono{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.ck .grey{color:var(--muted)}
+.ck a{color:var(--ink)}
+.tabs{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 18px}
+.tabs button,.ck .quiet{background:none;border:0;padding:8px 0;font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.tabs button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:5px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);font-size:14px;vertical-align:top}
+th{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400}
+td.m{font-family:var(--font-mono);font-size:12px}
+.detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:40px;align-items:start}
+.detail canvas{display:block;max-width:100%;background:var(--sunk)}
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 16px;margin:0}
+.kv dt{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kv dd{margin:0;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.box{border-top:1px solid var(--rule);padding-top:16px;margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.box label{display:flex;flex-direction:column;gap:4px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.box input,.box select,.box textarea{font-family:var(--font-sans);font-size:14px;padding:8px;border:1px solid var(--rule);background:none;color:var(--ink);text-transform:none;letter-spacing:0}
+.btn{align-self:flex-start;min-height:40px;padding:0 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink)}
+.say{min-height:18px;font-size:13px;color:var(--muted)}
+.photos img{max-width:160px;max-height:160px;margin:0 8px 8px 0}
+@media(max-width:820px){.detail{grid-template-columns:minmax(0,1fr)}.kv{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<main class="ck" id="main"><p class="mono grey">Loading</p></main>
+<script>
+/* Plain text in, plain text out: every value from an order goes through esc
+   before it touches the page, the buyer's address and notes above all. */
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const main = document.getElementById('main');
+const ID = location.pathname.split('/')[3] || null;
+const FILTERS = [['', 'All'], ['pending_payment', 'Pending'], ['paid', 'Paid'], ['in_studio', 'In studio'], ['painted', 'Painted'], ['shipped', 'Shipped'], ['collected', 'Collected'], ['complete', 'Complete'], ['expired', 'Expired'], ['refunded', 'Refunded']];
+let filter = '';
+
+async function api(q, body) {
+  const r = await fetch(`/api/commission-admin${q || ''}`, body ? { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) } : {});
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401) { login(); throw new Error('sign in first'); }
+  if (!r.ok) throw new Error(j.error || `error ${r.status}`);
+  return j;
+}
+
+function login() {
+  main.innerHTML = `<h1>Commissions</h1><form id="in" class="box" style="max-width:320px"><label>Studio password<input type="password" name="p" autocomplete="current-password"></label><button class="btn">Sign in</button><p class="say" id="say"></p></form>`;
+  document.getElementById('in').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const r = await fetch('/api/studio-api?do=login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: ev.target.p.value }) });
+    if (r.ok) start(); else document.getElementById('say').textContent = r.status === 429 ? 'Too many tries. Wait a few minutes.' : 'No.';
+  });
+}
+
+async function list() {
+  const j = await api(filter ? `?status=${encodeURIComponent(filter)}` : '');
+  main.innerHTML = `<h1>Commissions</h1>
+    <div class="tabs">${FILTERS.map(([k, label]) => `<button type="button" data-f="${k}" aria-pressed="${k === filter}">${label}</button>`).join('')}</div>
+    ${j.orders.length ? `<table><thead><tr><th>Reference</th><th>Date</th><th>Spec</th><th>Method</th><th>Status</th><th>Amount</th></tr></thead><tbody>
+    ${j.orders.map((o) => `<tr><td class="m"><a href="/mintwork/commissions/${esc(o.id)}">${esc(o.id)}</a></td><td class="m">${esc(new Date(o.created).toLocaleDateString('en-NZ'))}</td>
+      <td>${esc(o.spec_line)}${o.name ? `<br><span class="grey">${esc(o.name)}</span>` : ''}</td><td class="m">${esc(o.method || '')}</td><td class="m">${esc(o.status.replace('_', ' '))}</td>
+      <td class="m">${esc(o.paid_amount || `NZD ${Number(o.nzd).toLocaleString('en-NZ')} · ${o.eth} ETH`)}</td></tr>`).join('')}
+    </tbody></table>` : '<p class="grey">None.</p>'}`;
+  main.querySelectorAll('[data-f]').forEach((b) => b.addEventListener('click', () => { filter = b.dataset.f; list(); }));
+}
+
+function draw(canvas, o) {
+  const portrait = o.spec.orientation === 'portrait';
+  const pw = portrait ? o.spec.width_cm : o.spec.length_cm;
+  const ph = portrait ? o.spec.length_cm : o.spec.width_cm;
+  const k = Math.min(440 / pw, 440 / ph);
+  canvas.width = Math.round(pw * k); canvas.height = Math.round(ph * k);
+  const ctx = canvas.getContext('2d');
+  const total = o.strip_data.reduce((n, s) => n + s.mm, 0) || 1;
+  const across = portrait ? canvas.width : canvas.height;
+  let mm = 0;
+  for (const s of o.strip_data) {
+    const a = Math.round((mm / total) * across); const b = Math.round(((mm + s.mm) / total) * across);
+    ctx.fillStyle = s.hex;
+    if (portrait) ctx.fillRect(a, 0, b - a, canvas.height); else ctx.fillRect(0, canvas.height - b, canvas.width, b - a);
+    mm += s.mm;
+  }
+}
+
+async function detail(id) {
+  const { order: o, statuses } = await api(`?id=${encodeURIComponent(id)}`);
+  const eth = o.eth ? `${o.eth.received_wei !== '0' ? `received ${(Number(BigInt(o.eth.received_wei) / 10n ** 12n) / 1e6)} of ${o.price.eth} ETH` : `${o.price.eth} ETH, nothing yet`}${o.eth.surplus_wei ? ` · SURPLUS to refund by hand` : ''}${(o.eth.txs || []).map((t) => `\n${t.hash} (${t.how})`).join('')}` : '';
+  const row = (k, v) => (v ? `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>` : '');
+  main.innerHTML = `<p><a class="quiet" href="/mintwork/commissions">← All commissions</a></p>
+    <h1>${esc(o.id)}</h1>
+    <div class="detail">
+      <div><canvas id="art"></canvas>
+        <p class="mono" style="margin-top:12px">${esc(o.spec_line)}</p>
+        <p><a class="btn ghost" style="display:inline-flex;align-items:center;text-decoration:none" href="/api/commission-admin?id=${encodeURIComponent(o.id)}&strips=1">Download strip data</a></p>
+        ${o.photos && o.photos.length ? `<div class="photos">${o.photos.map((p) => `<a href="https://assets.mintface.art/${esc(p.key)}" target="_blank" rel="noopener"><img src="https://assets.mintface.art/${esc(p.key)}" alt="Photograph of ${esc(o.id)}"></a>`).join('')}</div>` : ''}
+      </div>
+      <div>
+        <dl class="kv">
+          ${row('Status', o.status.replace('_', ' '))}${row('Created', new Date(o.created).toLocaleString('en-NZ'))}${row('Expires', o.status === 'pending_payment' ? new Date(o.expires_at).toLocaleString('en-NZ') : '')}
+          ${row('Price', `NZD ${Number(o.price.nzd).toLocaleString('en-NZ')} · ${o.price.eth} ETH at ${o.price.eth_rate} · ${o.price.usd ? `USD ${o.price.usd}` : ''}`)}
+          ${row('Paid', o.paid_at ? `${o.paid_amount || ''} by ${o.method} · ${new Date(o.paid_at).toLocaleString('en-NZ')}` : '')}${row('Payment ref', o.payment_ref)}${row('ETH', eth)}
+          ${row('Palette', `${o.spec.palette_id} · ${o.spec.colours.map((c) => c.hex).join(' ')}`)}
+          ${row('Name', o.name)}${row('Email', o.email)}${row('Ship to', o.spec.delivery === 'shipped' ? o.ship_to : 'Collect from The Line')}
+          ${row('X', o.mention && o.x_handle ? `@${o.x_handle} (mention)` : '')}${row('Tracking', o.tracking)}
+          ${row('Notes', (o.notes || []).map((n) => `${new Date(n.at).toLocaleString('en-NZ')} · ${n.note}`).join('\n'))}
+          ${row('History', (o.history || []).map((h) => `${new Date(h.at).toLocaleString('en-NZ')} · ${h.what}${h.note ? ` · ${h.note}` : ''}`).join('\n'))}
+        </dl>
+        <form class="box" id="st"><label>Status<select name="status">${statuses.map((s) => `<option value="${s}" ${s === o.status ? 'selected' : ''}>${s.replace('_', ' ')}</option>`).join('')}</select></label>
+          <label>Tracking<input name="tracking" value="${esc(o.tracking || '')}"></label><label>Note<textarea name="note" rows="2"></textarea></label>
+          <button class="btn">Save</button><p class="grey" style="font-size:13px;margin:0">Painted emails the buyer the latest photograph; shipped emails the tracking.</p></form>
+        <form class="box" id="ph"><label>Photograph of the painting<input type="file" name="f" accept="image/*"></label><button class="btn ghost">Upload</button></form>
+        ${['pending_payment', 'expired'].includes(o.status) ? `<form class="box" id="mp"><label>Mark paid by hand<select name="method"><option>bank</option><option>eth</option><option>card</option><option>cash</option><option>other</option></select></label>
+          <label>Reference<input name="ref"></label><label>Note (why)<textarea name="note" rows="2" required></textarea></label><button class="btn ghost">Mark paid</button></form>` : ''}
+        <p class="say" id="say"></p>
+      </div>
+    </div>`;
+  draw(document.getElementById('art'), o);
+  const say = (m) => { document.getElementById('say').textContent = m; };
+  document.getElementById('st').addEventListener('submit', async (ev) => {
+    ev.preventDefault(); const f = ev.target;
+    try { await api('', { id: o.id, action: 'status', status: f.status.value, tracking: f.tracking.value || undefined, note: f.note.value || undefined }); detail(o.id); } catch (err) { say(err.message); }
+  });
+  document.getElementById('ph').addEventListener('submit', async (ev) => {
+    ev.preventDefault(); const file = ev.target.f.files[0]; if (!file) return;
+    say('Sizing and sending');
+    try {
+      const img = await createImageBitmap(file);
+      const k = Math.min(1, 2000 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      const data = c.toDataURL('image/jpeg', 0.86).split(',')[1];
+      await api('', { id: o.id, action: 'photo', type: 'image/jpeg', data });
+      detail(o.id);
+    } catch (err) { say(err.message); }
+  });
+  const mp = document.getElementById('mp');
+  if (mp) mp.addEventListener('submit', async (ev) => {
+    ev.preventDefault(); const f = ev.target;
+    if (!confirm(`Mark ${o.id} paid by ${f.method.value}? The buyer and you are emailed.`)) return;
+    try { await api('', { id: o.id, action: 'mark-paid', method: f.method.value, ref: f.ref.value || undefined, note: f.note.value }); detail(o.id); } catch (err) { say(err.message); }
+  });
+}
+
+function start() { (ID ? detail(ID) : list()).catch((err) => { if (err.message !== 'sign in first') main.innerHTML = `<p>${esc(err.message)}</p>`; }); }
+start();
+</script>
+</body>
+</html>

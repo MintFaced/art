@@ -11,8 +11,10 @@ export function emailConfigured() {
   return Boolean(resend);
 }
 
-// Plain text. The site is quiet, the emails should be too.
-export async function send({ to, subject, text }) {
+// Plain text. The site is quiet, the emails should be too. A commission's
+// emails carry its render, so attachments ([{ filename, content }], content a
+// Buffer) pass through, and a reply can be pointed somewhere other than art@.
+export async function send({ to, subject, text, attachments, replyTo }) {
   if (!resend) return { skipped: 'RESEND_API_KEY is not set' };
   const { data, error } = await resend.emails.send({
     from: FROM,
@@ -20,6 +22,8 @@ export async function send({ to, subject, text }) {
     subject,
     text,
     ...(BCC ? { bcc: BCC } : {}),
+    ...(attachments && attachments.length ? { attachments } : {}),
+    ...(replyTo ? { replyTo } : {}),
   });
   if (error) throw new Error(`resend: ${error.message || error}`);
   return data;

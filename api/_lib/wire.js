@@ -164,6 +164,17 @@ export function compose(ev, { overlay = null, register = null } = {}) {
     };
   }
 
+  /* A Strip Painting commission paid in ETH (card ones never come here). The
+     card is the render the buyer chose; the buyer is named only where they
+     ticked "Mention me on X". */
+  if (ev.kind === 'commission') {
+    return {
+      text: speak(['COMMISSIONED', 'STRIP PAINTING', up(p.size), up(p.price), p.handle ? `@${p.handle}` : null])
+        + (p.url ? `\n\n${p.url}` : ''),
+      card: { kind: 'work', id: p.id },
+    };
+  }
+
   if (ev.kind === 'rebate-close') {
     return { text: speak([`${up(p.campaign)} CLOSED`, `${Number(p.rebated_eth).toFixed(2)} ETH REBATED`,
       `${p.collectors} COLLECTORS`, `${p.scouts} SCOUT${p.scouts === 1 ? '' : 'S'}`]) + '\n\nhttps://mintface.art/ai', card: null };

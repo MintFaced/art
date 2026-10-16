@@ -156,3 +156,26 @@ Card `4242 4242 4242 4242`, any future expiry, any CVC. For the webhook locally,
 The ledger can be exercised before the real token exists by pointing `GITHUB_API_BASE` at a stand-in that implements the same compare and swap. The whole reserve loop was run that way: hold taken, a second buyer refused, reminder sent once and not repeated, hold released on expiry, work back on sale, with a readable commit for each step.
 
 Nothing sells until a work has a price. `pricing_nzd` is null everywhere in the catalog today, so the button reads "Enquire about this artwork" and opens an email instead.
+
+## Strip Painting commissions
+
+A sixth way to buy: a painting made to order from the home page's slider (STRIP-HOME, STRIP-CHECKOUT).
+
+```
+Home block COMMISSION ... POST /api/commission {create} ..... order SP-YYYY-NNNN, key
+/commission/{id} ........ card: POST {card} ................ Stripe Checkout (NZD or USD)
+                          ETH:  POST {eth}, {eth-tx} ........ mintface.eth, exact wei
+Stripe ................. POST /api/webhook ................ metadata.kind = commission → paid
+Every minute ........... GET  /api/cron/commissions ....... ETH watcher, nudge, expiry
+/mintwork/commissions .. /api/commission-admin ............ list, detail, status, photos
+```
+
+- **The order lives in the store (Upstash), never the repository.** It holds a name, an email and an address, and the repository is public. Keys: `commission:o:{id}`, `commission:ids`, `commission:seq:{year}`, `commission:eth` (waiting on ETH), `commission:tx:{hash}` (a transaction counts once), `commission:paid:{id}` (side effects once), `commission:evt:{id}` (Stripe events seen through).
+- **The price is the server's.** `strip-price.js` through `api/_lib/commission-spec.js`; the browser sends choices, never an amount. ETH is NZD / 5,000, exact in wei, fixed on the order.
+- **Changing an order takes its key**, handed back once at create, carried after a `#` and kept in the buyer's browser. The public view (`GET ?id=`) has nothing personal in it.
+- **Paid happens once.** The order is written, then the emails (buyer and studio, render attached) and, for ETH only, the X post go out behind `commission:paid:{id}`. Card commissions stay off the timeline, like every fiat sale.
+- **ETH is found two ways.** A connected wallet's transaction carries the order id in its data and is checked on chain at two confirmations; anything else is read from Etherscan (`ETHERSCAN_API_KEY`) by the minute cron and matched by the order id in the data or, failing that, the amount to within a thousandth. Short leaves the order waiting with the balance shown; over pays it and notes the surplus for a refund by hand.
+- **Quotes lapse:** seven days from the order, 48 hours once ETH is chosen. The buyer gets one nudge an hour after choosing ETH if nothing has arrived.
+- **Tests:** `scripts/strip/test-commission.mjs`, the routes against an in-memory store with every outside service stubbed.
+
+Buyer and reserver contacts for the painting checkout are kept the same way since October 2026 (`api/_lib/contacts.js`, `contact:collector:{work}`, `contact:reserve:{work}`); `data/state.json` no longer carries an email. Two earlier ones remain in the git history.

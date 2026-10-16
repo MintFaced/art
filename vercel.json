@@ -43,6 +43,9 @@
     },
     "api/cron/wire.js": {
       "maxDuration": 60
+    },
+    "api/cron/commissions.js": {
+      "maxDuration": 60
     }
   },
   "redirects": [
@@ -142,6 +145,18 @@
       "destination": "/set"
     },
     {
+      "source": "/commission/:id/paid",
+      "destination": "/commission"
+    },
+    {
+      "source": "/commission/:id",
+      "destination": "/commission"
+    },
+    {
+      "source": "/mintwork/commissions/:id",
+      "destination": "/mintwork/commissions"
+    },
+    {
       "source": "/:key",
       "destination": "/api/studio"
     }
@@ -181,6 +196,10 @@
     },
     {
       "path": "/api/cron/wire",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/commissions",
       "schedule": "* * * * *"
     }
   ],

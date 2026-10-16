@@ -126,6 +126,8 @@ function command(cmd) {
     }
     case 'EXPIRE': { const r = alive(key); if (!r) return 0; r.exp = Date.now() + Number(rest[1]) * 1000; return 1; }
     case 'RPUSH': { const l = [...listOf(key), ...rest.slice(1).map(String)]; put(key, 'list', l); return l.length; }
+    case 'LPUSH': { const l = [...rest.slice(1).map(String).reverse(), ...listOf(key)]; put(key, 'list', l); return l.length; }
+    case 'EXISTS': return rest.filter((k) => alive(k)).length;
     case 'LLEN': return listOf(key).length;
     case 'LRANGE': { const l = listOf(key); const [s, e] = slice(l.length, Number(rest[1]), Number(rest[2])); return l.slice(s, e + 1); }
     case 'LTRIM': { const l = listOf(key); const [s, e] = slice(l.length, Number(rest[1]), Number(rest[2])); put(key, 'list', l.slice(s, e + 1)); return 'OK'; }

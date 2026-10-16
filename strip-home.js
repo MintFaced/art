@@ -295,6 +295,33 @@ export function mount(root) {
   for (const b of root.querySelectorAll('[data-frame]')) b.addEventListener('click', () => { S.frame = b.dataset.frame; update(false); });
   $('[data-ship]').addEventListener('click', () => { S.shipping = !S.shipping; update(false); });
   $('[data-new]').addEventListener('click', newColours);
+  /* COMMISSION makes the order and opens its checkout (/commission/{id}). The
+     palette goes with it, and for the collectors' or a photograph's the
+     colours on screen, so what is painted is what was seen. The price is the
+     server's to work out. If the order cannot be made, the link it falls back
+     to is the letter to the studio it always carried. */
+  $('[data-go]').addEventListener('click', async (ev) => {
+    if (!S.palette) return;
+    ev.preventDefault();
+    const go = ev.currentTarget;
+    if (go.getAttribute('aria-busy') === 'true') return;
+    go.setAttribute('aria-busy', 'true');
+    try {
+      const spec = {
+        length_cm: S.length, width_cm: S.width, orientation: S.orient, frame: S.frame,
+        delivery: S.shipping ? 'shipped' : 'collect', palette_id: S.palette.id,
+        ...(S.photo ? { colours: S.photo } : S.palette.id === 'collectors' ? { colours: S.palette.colours } : {}),
+      };
+      const r = await fetch('/api/commission', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'create', spec }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.id || !j.key) throw new Error(j.error || `commission ${r.status}`);
+      location.href = `/commission/${encodeURIComponent(j.id)}#k=${encodeURIComponent(j.key)}`;
+    } catch (err) {
+      console.error('commission', err);
+      go.removeAttribute('aria-busy');
+      location.href = go.href;
+    }
+  });
   $('[data-photo]').addEventListener('click', () => $('[data-file]').click());
   $('[data-file]').addEventListener('change', (ev) => {
     const f = ev.target.files && ev.target.files[0];
