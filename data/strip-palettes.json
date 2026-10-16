@@ -1,0 +1,297 @@
+{
+ "_note": "The site palettes the home page commission block draws from, one per site design, read off each render by scripts/strip/derive-palettes.mjs: twelve colours at most, weighted by how much of the painting each covers, the red line left out because every painting carries it. Rerun the script when a render changes. The collectors' palette is not here: /api/strip-render reads it live from the nudges.",
+ "palettes": [
+  {
+   "id": "site-1",
+   "work": "strip-painting-site-1",
+   "address": "320 West",
+   "from": "strip-painting-1-illustrated.jpg",
+   "colours": [
+    {
+     "hex": "#E06448",
+     "w": 23
+    },
+    {
+     "hex": "#D5C089",
+     "w": 11
+    },
+    {
+     "hex": "#60B15C",
+     "w": 10
+    },
+    {
+     "hex": "#2F201D",
+     "w": 9
+    },
+    {
+     "hex": "#B67556",
+     "w": 9
+    },
+    {
+     "hex": "#EEBFB7",
+     "w": 7
+    },
+    {
+     "hex": "#B4BAB0",
+     "w": 6
+    },
+    {
+     "hex": "#87B0CC",
+     "w": 5
+    },
+    {
+     "hex": "#6B3930",
+     "w": 5
+    },
+    {
+     "hex": "#4C413F",
+     "w": 5
+    },
+    {
+     "hex": "#858181",
+     "w": 5
+    },
+    {
+     "hex": "#2D642A",
+     "w": 4
+    }
+   ]
+  },
+  {
+   "id": "site-2",
+   "work": "strip-painting-site-2",
+   "address": "341 West",
+   "from": "strip-painting-2-illustrated.jpg",
+   "colours": [
+    {
+     "hex": "#9099A3",
+     "w": 29
+    },
+    {
+     "hex": "#2673AB",
+     "w": 20
+    },
+    {
+     "hex": "#3D353A",
+     "w": 15
+    },
+    {
+     "hex": "#5A2327",
+     "w": 10
+    },
+    {
+     "hex": "#615256",
+     "w": 8
+    },
+    {
+     "hex": "#73777B",
+     "w": 5
+    },
+    {
+     "hex": "#24467C",
+     "w": 5
+    },
+    {
+     "hex": "#A19188",
+     "w": 5
+    },
+    {
+     "hex": "#1E2D43",
+     "w": 3
+    }
+   ]
+  },
+  {
+   "id": "site-3",
+   "work": "strip-painting-site-3",
+   "address": "221 West",
+   "from": "site3-strip-painting.jpg",
+   "colours": [
+    {
+     "hex": "#D7DDDE",
+     "w": 29
+    },
+    {
+     "hex": "#818180",
+     "w": 22
+    },
+    {
+     "hex": "#D8D2AF",
+     "w": 20
+    },
+    {
+     "hex": "#33353C",
+     "w": 13
+    },
+    {
+     "hex": "#554046",
+     "w": 10
+    },
+    {
+     "hex": "#BACBCC",
+     "w": 5
+    }
+   ]
+  },
+  {
+   "id": "site-4",
+   "work": "strip-painting-site-4",
+   "address": "311 West",
+   "from": "site4-panel-240cm.jpg",
+   "colours": [
+    {
+     "hex": "#424B44",
+     "w": 44
+    },
+    {
+     "hex": "#2C2523",
+     "w": 31
+    },
+    {
+     "hex": "#BFAB88",
+     "w": 13
+    },
+    {
+     "hex": "#745D43",
+     "w": 4
+    },
+    {
+     "hex": "#A08366",
+     "w": 4
+    },
+    {
+     "hex": "#D6D3CB",
+     "w": 3
+    },
+    {
+     "hex": "#B7A479",
+     "w": 1
+    }
+   ]
+  },
+  {
+   "id": "site-5",
+   "work": "strip-painting-site-5",
+   "address": "227 West",
+   "from": "strip-painting-5-wide.jpg",
+   "colours": [
+    {
+     "hex": "#8FB6BB",
+     "w": 20
+    },
+    {
+     "hex": "#27A9E7",
+     "w": 20
+    },
+    {
+     "hex": "#DBEDF1",
+     "w": 14
+    },
+    {
+     "hex": "#454544",
+     "w": 11
+    },
+    {
+     "hex": "#292A2C",
+     "w": 10
+    },
+    {
+     "hex": "#ACC5C9",
+     "w": 6
+    },
+    {
+     "hex": "#DCD9C8",
+     "w": 5
+    },
+    {
+     "hex": "#7D7B6F",
+     "w": 4
+    },
+    {
+     "hex": "#D8BB8F",
+     "w": 4
+    },
+    {
+     "hex": "#536162",
+     "w": 4
+    }
+   ]
+  },
+  {
+   "id": "site-6",
+   "work": "strip-painting-site-6",
+   "address": "328 West",
+   "from": "strip-painting-6-render.webp",
+   "colours": [
+    {
+     "hex": "#332F2C",
+     "w": 27
+    },
+    {
+     "hex": "#ABBBCC",
+     "w": 20
+    },
+    {
+     "hex": "#E4D43B",
+     "w": 20
+    },
+    {
+     "hex": "#5C5853",
+     "w": 19
+    },
+    {
+     "hex": "#898E8F",
+     "w": 9
+    },
+    {
+     "hex": "#8D5846",
+     "w": 5
+    }
+   ]
+  },
+  {
+   "id": "site-7",
+   "work": "strip-painting-site-7",
+   "address": "300 West",
+   "from": "strip-painting-7-render-h.webp",
+   "colours": [
+    {
+     "hex": "#C8D0D3",
+     "w": 20
+    },
+    {
+     "hex": "#7D7E5D",
+     "w": 15
+    },
+    {
+     "hex": "#DDF8F2",
+     "w": 13
+    },
+    {
+     "hex": "#724C38",
+     "w": 10
+    },
+    {
+     "hex": "#535932",
+     "w": 10
+    },
+    {
+     "hex": "#720310",
+     "w": 9
+    },
+    {
+     "hex": "#B3C7BE",
+     "w": 9
+    },
+    {
+     "hex": "#2B2F29",
+     "w": 7
+    },
+    {
+     "hex": "#FCAF22",
+     "w": 7
+    }
+   ]
+  }
+ ]
+}

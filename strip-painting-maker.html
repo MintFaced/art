@@ -240,13 +240,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 
   <section class="price">
     <table class="rows">
-      <tr><td class="what">Rate</td><td id="pRate"></td></tr>
-      <tr><td class="what">Width</td><td id="pWidth"></td></tr>
-      <tr><td class="what">Height factor</td><td id="pFactor"></td></tr>
+      <tr><td class="what">Size</td><td id="pSize"></td></tr>
       <tr><td class="what">Estimated days on site</td><td id="pDays"></td></tr>
-      <tr><td class="what">Indicative</td><td id="pTotal"></td></tr>
+      <tr><td class="what">Price</td><td id="pTotal"></td></tr>
     </table>
-    <p class="price-note">High $1,000/m ... Medium $800/m ... Low $650/m, scaled by height. Prices are indicative ... every commission is quoted after a site visit.</p>
+    <p class="price-note">Collected from The Line, Hastings. Intensity changes the painting, never the price. A frame or worldwide shipping is added when you order.</p>
   </section>
 
   <div class="actions">
@@ -273,7 +271,11 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 </footer>
 
 <script src="/mintface.js"></script>
-<script>
+<script type="module">
+/* The price is the home page's, from the one function both read
+   (strip-price.js): the same painting is never two prices. */
+import { stripPrice, fmtNZD, fmtETH, fmtUSD, STRIP_ETH_NZD } from '/strip-price.js';
+
 /* The logic here is the reference implementation, ported. Anything that
    changes the drawing is unchanged from it on purpose. */
 
@@ -285,9 +287,9 @@ const RED_LINE_NOMINAL = 16;
 const RED_LINE_MIN_STRIPS = 48;
 
 const INTENSITY = {
-  low:    { label: 'Low',    strips: '~23', sizes: [24],        rate: 650,  daysPerM: 0.67, note: '24mm bands' },
-  medium: { label: 'Medium', strips: '~33', sizes: [24, 12],    rate: 800,  daysPerM: 0.83, note: '12 / 24mm' },
-  high:   { label: 'High',   strips: '55',  sizes: [24, 12, 6], rate: 1000, daysPerM: 1.17, note: '6 / 12 / 24mm' },
+  low:    { label: 'Low',    strips: '~23', sizes: [24],        daysPerM: 0.67, note: '24mm bands' },
+  medium: { label: 'Medium', strips: '~33', sizes: [24, 12],    daysPerM: 0.83, note: '12 / 24mm' },
+  high:   { label: 'High',   strips: '55',  sizes: [24, 12, 6], daysPerM: 1.17, note: '6 / 12 / 24mm' },
 };
 
 // Strip Painting No. 1, with each colour weighted by its millimetres on the wall
@@ -440,7 +442,12 @@ function layStrips(palette, intensityKey, heightMM, seed, vib, redIndex) {
   return strips;
 }
 
-const fmt = (n) => '$' + Math.round(n).toLocaleString('en-NZ');
+/* The wall's width is the painting's length, its height the measure the
+   strips are laid across. Past what the price function covers, it is a talk. */
+const FX = { usd: null };
+const priceOf = () => stripPrice({ lengthCm: S.widthM * 100, widthCm: S.heightMM / 10 });
+const priceLine = (nzd) => (nzd == null ? 'Quoted after we talk'
+  : [fmtNZD(nzd), `${fmtETH(nzd)} at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH`, fmtUSD(nzd, FX.usd)].filter(Boolean).join(' · '));
 
 /* ---------- state ---------- */
 const S = {
@@ -573,14 +580,10 @@ function draw() {
     + `<button class="sw sw-red" type="button" disabled style="background:${RED_LINE}"
         title="${e(said(RED_LINE))} ... the constant at strip ${RED_LINE_NOMINAL} from the base, on every one of these paintings"><span class="n">red line</span></button>`;
 
-  const factor = S.heightMM / 550;
-  const price = conf.rate * S.widthM * factor;
-  const days = conf.daysPerM * S.widthM * factor;
-  $('pRate').textContent = `${fmt(conf.rate)} / m at 550mm`;
-  $('pWidth').textContent = `${S.widthM} m`;
-  $('pFactor').textContent = `${factor.toFixed(2)} (${S.heightMM}mm)`;
+  const days = conf.daysPerM * S.widthM * (S.heightMM / 550);
+  $('pSize').textContent = `${S.widthM} m × ${S.heightMM} mm`;
   $('pDays').textContent = days.toFixed(1);
-  $('pTotal').textContent = `${fmt(price)} NZD`;
+  $('pTotal').textContent = priceLine(priceOf());
   $('tierNote').textContent = `${conf.strips} strips ... ${conf.note}`;
   for (const b of $('tiers').querySelectorAll('button')) {
     b.setAttribute('aria-pressed', String(b.dataset.k === S.intensity));
@@ -591,13 +594,11 @@ function draw() {
 function specText() {
   const conf = INTENSITY[S.intensity];
   const redAt = S.strips.findIndex((x) => x.red) + 1;
-  const factor = S.heightMM / 550;
-  const price = conf.rate * S.widthM * factor;
-  const days = conf.daysPerM * S.widthM * factor;
+  const days = conf.daysPerM * S.widthM * (S.heightMM / 550);
   return [
     'MintFace Strip Painting ... configured spec',
     `${S.widthM}m x ${S.heightMM}mm | intensity ${conf.label} (${conf.note}) | sequence ${Math.round(S.vib * 100)}/100 calm-to-vibrant | ${S.strips.length} strips`,
-    `price ${fmt(price)} NZD (${fmt(conf.rate)}/m at 550mm, height factor ${factor.toFixed(2)}) | est ${days.toFixed(1)} days on site`,
+    `price ${priceLine(priceOf())}, collected from The Line | est ${days.toFixed(1)} days on site`,
     `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
     `RED LINE: ${said(RED_LINE)} ... STRIP ${redAt} OF ${S.strips.length} FROM BASE`,
     '',
@@ -726,6 +727,7 @@ function say(msg) {
 }
 
 draw();
+MF.fx().then((fx) => { FX.usd = fx && fx.usd ? fx.usd : null; draw(); }).catch(() => {});
 </script>
 </body>
 </html>
