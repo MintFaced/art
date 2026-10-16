@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-10-14T21:00:45.169Z",
+ "generated": "2026-10-16T21:03:45.478Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -116,6 +116,7 @@
   "0x88a6f6ac171e24be54d95dfa7ceff80ff185b346": "nine.9dcc.eth",
   "0x802fa804b97ccef82331243feb6ba56c9b4281e0": "anhwa.eth",
   "0x7829a2edf3ea4662f0e1f3797173efff9d58b353": "gaudiy.eth",
+  "0x911f632cc251cc435bf3eb071cad3339c7a0e2d5": "jisun.eth",
   "0x8f71f86160ab1cfcccdbc5fdcc88fcc31c4b0db1": "moosecatmusic.eth",
   "0x782cfa467f2780a9eb266f5add30420aa2970820": "kazuma-ono.eth",
   "0xa081ae42802e0be86f5a6dd9274adf50c9986a1d": "biggamejames.eth",
@@ -124,7 +125,6 @@
   "0xa1decc5297ed590dbecd689add0d2d622224263b": "0x584.eth",
   "0x9a8b253c304b897af8147143c5d0db4635e8c9c6": "peduroh.eth",
   "0x9fef296d8dc2e5c3ceae453b88ea69632d7b4a5e": "dripstein1488.eth",
-  "0x911f632cc251cc435bf3eb071cad3339c7a0e2d5": "jisun.eth",
   "0x97ece7185467c78293f3b796bde3704421d4fa69": "fafomfer.eth",
   "0x94f052ca65a34d7f581bba95a749b1cf52689dd5": "heraldddd.eth",
   "0xa72dd288b659c8f9c8279751b25af28a2b4e631a": "smokevault.eth",
@@ -630,7 +630,7 @@
   ]
  },
  "counts": {
-  "asked": 2467,
+  "asked": 2464,
   "named": 155,
   "ambiguous": 75
  }
