@@ -45,6 +45,11 @@ function sampleColours(imgData) {
   return picked.map((p) => ({ hex: `#${p.rgb.map((v) => v.toString(16).padStart(2, '0')).join('')}`, w: Math.max(1, Math.round((p.n / total) * 100)) }));
 }
 
+/* Two curved arrows, drawn in the ink: no fill, no colour of their own. */
+const TURN = '<svg class="sh-turn" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+  + '<path vector-effect="non-scaling-stroke" d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path vector-effect="non-scaling-stroke" d="M21 3v5h-5"/>'
+  + '<path vector-effect="non-scaling-stroke" d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path vector-effect="non-scaling-stroke" d="M8 16H3v5"/></svg>';
+
 const MARKUP = `
   <div class="sh-intro">
     <p class="sh-h">Your size.</p>
@@ -76,8 +81,12 @@ const MARKUP = `
             <input id="shWidth" type="range" min="${WIDTH.min}" max="${WIDTH.max}" step="${WIDTH.step}" value="${WIDTH.standard}" data-width>
           </span>
         </div>
-        <div class="sh-pick" role="group" aria-label="Frame">
-          <button type="button" data-frame="none" aria-pressed="true">None</button><span aria-hidden="true">&middot;</span><button type="button" data-frame="black" aria-pressed="false">Black</button><span aria-hidden="true">&middot;</span><button type="button" data-frame="white" aria-pressed="false">White</button>
+        <div class="sh-row">
+          <div class="sh-pick" role="group" aria-label="Frame">
+            <button type="button" data-frame="none" aria-pressed="true">None</button><span aria-hidden="true">&middot;</span><button type="button" data-frame="black" aria-pressed="false">Black</button><span aria-hidden="true">&middot;</span><button type="button" data-frame="white" aria-pressed="false">White</button>
+          </div>
+          <span class="sh-sep" aria-hidden="true">&middot;</span>
+          <button type="button" class="sh-new" data-new aria-label="New colours">${TURN}<span>New colours</span></button>
         </div>
       </div>
       <p class="sh-result" data-result aria-live="polite"></p>
@@ -93,7 +102,7 @@ export function mount(root) {
   const $ = (sel) => root.querySelector(sel);
   const S = {
     length: LEN.standard, width: WIDTH.standard, orient: 'landscape', frame: 'none', shipping: false,
-    palette: null, photo: null, strips: null, usd: null, cache: new Map(), asked: 0,
+    palette: null, photo: null, strips: null, usd: null, cache: new Map(), asked: 0, turns: 0,
   };
 
   /* ---------- the painting ---------- */
@@ -226,6 +235,53 @@ export function mount(root) {
 
   const update = (repaint) => { say(); if (repaint) paint(); else draw(); };
 
+  /* NEW COLOURS: another palette from the pool, never the one on screen, in
+     the same size, turn, width and frame. The painting crossfades in place:
+     the old one is laid over the new as a still and faded out. The palette
+     on screen is the one the email carries. */
+  const STILL = window.matchMedia('(prefers-reduced-motion: reduce)');
+  async function newColours() {
+    const icon = root.querySelector('.sh-turn');
+    S.turns += 1;
+    if (icon) icon.style.transform = `rotate(${S.turns * 180}deg)`;
+    const ask = ++S.asked;
+    try {
+      const not = S.photo || !S.palette ? '' : S.palette.id;
+      const r = await fetch(`/api/strip-render?width=${S.width}&not=${encodeURIComponent(not)}`);
+      if (!r.ok) throw new Error(`strip-render ${r.status}`);
+      const j = await r.json();
+      if (ask !== S.asked) return;
+      const old = STILL.matches ? null : still();
+      S.photo = null;
+      S.palette = j.palette;
+      seen.add(j.palette.id);
+      S.cache.set(`${j.palette.id}:${S.width}`, j);
+      S.strips = j.strips;
+      say();
+      draw();
+      if (old) {
+        requestAnimationFrame(() => requestAnimationFrame(() => { old.style.opacity = '0'; }));
+        setTimeout(() => old.remove(), 260);
+      }
+    } catch (err) {
+      console.error('new colours', err);
+    }
+  }
+  /* the painting as it is now, as a picture laid exactly over it */
+  function still() {
+    const cv = $('[data-canvas]');
+    if (!cv || !cv.width || !S.strips) return null;
+    const o = document.createElement('canvas');
+    o.width = cv.width;
+    o.height = cv.height;
+    o.getContext('2d').drawImage(cv, 0, 0);
+    o.className = 'sh-fade';
+    o.setAttribute('aria-hidden', 'true');
+    Object.assign(o.style, { width: cv.style.width, height: cv.style.height, left: `${cv.offsetLeft}px`, top: `${cv.offsetTop}px` });
+    cv.after(o);
+    return o;
+  }
+
   /* ---------- wiring ---------- */
   $('[data-len]').addEventListener('input', (ev) => { S.length = Number(ev.target.value); update(false); });
   $('[data-width]').addEventListener('input', (ev) => { S.width = Number(ev.target.value); update(true); });
@@ -238,6 +294,7 @@ export function mount(root) {
   for (const b of root.querySelectorAll('[data-orient]')) b.addEventListener('click', () => { S.orient = b.dataset.orient; update(false); });
   for (const b of root.querySelectorAll('[data-frame]')) b.addEventListener('click', () => { S.frame = b.dataset.frame; update(false); });
   $('[data-ship]').addEventListener('click', () => { S.shipping = !S.shipping; update(false); });
+  $('[data-new]').addEventListener('click', newColours);
   $('[data-photo]').addEventListener('click', () => $('[data-file]').click());
   $('[data-file]').addEventListener('change', (ev) => {
     const f = ev.target.files && ev.target.files[0];
