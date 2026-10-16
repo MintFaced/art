@@ -67,6 +67,7 @@ const home = read('index.html');
 is('the home page opens the door from strip-home.js', /import\('\/strip-home\.js'\)/.test(home), true);
 is('the site bands are gone from it', /MF\.stripBands|id="stripBands"/.test(home), false);
 is('"See the street" goes to the collection page', /href="\/c\/strip-paintings">See the street/.test(home), true);
+is('the block opens in landscape, 120 by 60, unframed (Ryan, 16 October)', /length: LEN\.standard, width: WIDTH\.standard, orient: 'landscape', frame: 'none'/.test(read('strip-home.js')), true);
 
 console.log('\n— the secret stays secret —');
 const spec = new URL('../../docs/STRIP-PAGE.md', import.meta.url);

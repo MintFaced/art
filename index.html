@@ -124,9 +124,11 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 .sh-intro{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
 .sh-h{font-family:var(--font-sans);font-weight:400;font-size:clamp(30px,4vw,44px);line-height:1.05;letter-spacing:-.02em;margin:0}
 .sh-lede{font-family:var(--font-sans);font-size:17px;line-height:1.5;color:var(--muted);margin:0}
-.sh-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;align-items:end}
-.sh-stage{margin:0;position:relative;height:clamp(300px,30vw,440px);border-bottom:1px solid var(--rule)}
-.sh-stage canvas{display:block;position:absolute;inset:0}
+/* On a desktop the canvas is the painting at its own proportions, and the
+   two columns centre on each other whatever height it is drawn to. */
+.sh-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;align-items:center}
+.sh-stage{margin:0;position:relative}
+.sh-stage canvas{display:block}
 .sh-floor{position:absolute;left:0;top:0;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .sh-controls{display:flex;flex-direction:column;gap:20px;padding-bottom:4px}
 .sh-len{position:relative;padding-bottom:22px}
@@ -153,7 +155,8 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 @media(max-width:820px){
   .sh{padding:0 20px}
   .sh-body{grid-template-columns:minmax(0,1fr);gap:28px}
-  .sh-stage{height:clamp(300px,95vw,440px)}
+  .sh-stage{height:clamp(300px,95vw,440px);border-bottom:1px solid var(--rule)}
+  .sh-stage canvas{position:absolute;inset:0}
   .sh-go{align-self:stretch;justify-content:center}
   .sh-street{padding:22px 20px 0}
 }

@@ -67,7 +67,7 @@ const MARKUP = `
       </div>
       <div class="sh-opts">
         <div class="sh-pick" role="group" aria-label="Orientation">
-          <button type="button" data-orient="portrait" aria-pressed="true">Portrait</button><span aria-hidden="true">&middot;</span><button type="button" data-orient="landscape" aria-pressed="false">Landscape</button>
+          <button type="button" data-orient="portrait" aria-pressed="false">Portrait</button><span aria-hidden="true">&middot;</span><button type="button" data-orient="landscape" aria-pressed="true">Landscape</button>
         </div>
         <div class="sh-width">
           <button type="button" class="sh-quiet" data-width-open aria-expanded="false" aria-controls="shWidth">60 cm wide</button>
@@ -92,7 +92,7 @@ export function mount(root) {
   root.innerHTML = MARKUP;
   const $ = (sel) => root.querySelector(sel);
   const S = {
-    length: LEN.standard, width: WIDTH.standard, orient: 'portrait', frame: 'none', shipping: false,
+    length: LEN.standard, width: WIDTH.standard, orient: 'landscape', frame: 'none', shipping: false,
     palette: null, photo: null, strips: null, usd: null, cache: new Map(), asked: 0,
   };
 
@@ -132,24 +132,22 @@ export function mount(root) {
     }
   }
 
-  /* To scale: in portrait the stage's height is 240 cm, in landscape its
-     width is, so the slider is seen to make the painting bigger. Edges are
+  /* To scale: in portrait the tallest painting (240 cm) is the stage's full
+     height, in landscape the longest is its full width, so the slider is seen
+     to make the painting bigger. On a phone the stage is a fixed box and the
+     painting stands on its foot. On a desktop the canvas is the painting, at
+     its own proportions, and the grid centres the controls on it. Edges are
      running totals rounded once, so no seam is a colour of its own. */
+  const PHONE = window.matchMedia('(max-width: 820px)');
   function draw() {
     const cv = $('[data-canvas]');
     const stage = $('[data-stage]');
     if (!S.strips || !cv) return;
+    const phone = PHONE.matches;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     const W = stage.clientWidth;
-    const H = stage.clientHeight;
+    const H = phone ? stage.clientHeight : Math.min(440, Math.max(300, window.innerWidth * 0.3));
     if (!W || !H) return;
-    cv.width = Math.round(W * dpr);
-    cv.height = Math.round(H * dpr);
-    cv.style.width = `${W}px`;
-    cv.style.height = `${H}px`;
-    const ctx = cv.getContext('2d', { alpha: true });
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, H);
     const portrait = S.orient === 'portrait';
     const pad = 8;
     const scale = portrait
@@ -159,11 +157,19 @@ export function mount(root) {
     const widPx = Math.round(S.width * 10 * scale);
     const pw = portrait ? widPx : lenPx;
     const ph = portrait ? lenPx : widPx;
-    const x0 = Math.round((W - pw) / 2);
-    const y0 = H - pad - ph; // it stands on the foot of the stage
     const frame = FRAME[S.frame];
+    const f = frame ? Math.max(3, Math.round(Math.min(pw, ph) * 0.04)) : 0;
+    const CH = phone ? H : ph + f * 2;
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(CH * dpr);
+    cv.style.width = `${W}px`;
+    cv.style.height = `${CH}px`;
+    const ctx = cv.getContext('2d', { alpha: true });
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, CH);
+    const x0 = Math.round((W - pw) / 2);
+    const y0 = phone ? H - pad - ph : f; // a phone's stands on the foot of the stage
     if (frame) {
-      const f = Math.max(3, Math.round(Math.min(pw, ph) * 0.04));
       ctx.fillStyle = frame;
       ctx.fillRect(x0 - f, y0 - f, pw + f * 2, ph + f * 2);
       if (S.frame === 'white') { ctx.strokeStyle = 'rgba(20,20,20,.25)'; ctx.lineWidth = 1; ctx.strokeRect(x0 - f + 0.5, y0 - f + 0.5, pw + f * 2 - 1, ph + f * 2 - 1); }
@@ -254,6 +260,7 @@ export function mount(root) {
     img.src = url;
   });
   if ('ResizeObserver' in window) new ResizeObserver(() => draw()).observe($('[data-stage]'));
+  PHONE.addEventListener('change', () => draw());
 
   say();
   paint();
