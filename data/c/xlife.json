@@ -4741,7 +4741,7 @@
    "edition": {
     "type": "edition",
     "minted": 60,
-    "holders": 31,
+    "holders": 29,
     "artist_held": 24,
     "vaulted": 6
    },
@@ -4754,111 +4754,23 @@
      "ens": "mintface.eth",
      "display_name": null,
      "qty": 24,
-     "acquired": "2024-09-08T04:07:11.000000Z",
+     "acquired": null,
      "status": "artist_held"
     },
     {
-     "address": "0xC839de0fEd241607d50aa4107aE582443B906e4c",
-     "ens": "hugofaz.eth",
+     "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
+     "ens": "mintestate.eth",
      "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x248458947c120Ca057EC028B3Fe7e4B3f26fDB3d",
-     "ens": "omdegen.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x02b294ED96E1175B8c71071A303e8A7D2396b017",
-     "ens": "memes.chrisroc.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x82139687FaAe8A29851902783E02E699dE0e0846",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xeADD2d51E75a8B42302Adc2Aff0157a4BF626adB",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xe322875FFfB56F840456c7ba4742c125dd9cFd14",
-     "ens": "giopetto.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
+     "qty": 6,
+     "acquired": null,
+     "status": "vaulted"
     },
     {
      "address": "0x8889EBB11295F456541901f50BCB5f382047cAaC",
      "ens": "darrensrs.eth",
      "display_name": null,
      "qty": 2,
-     "acquired": "2024-09-09T07:23:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xd3364EA1C742Cc2d396aC65e1723b8d608a939bb",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x3d885cb987C00fe980c20e76e21C53313f43946A",
-     "ens": "vault.brookr.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x1E0486EE85dd758078d75C674f3D28Efc4C899Fc",
-     "ens": "dsanches-vault.eth",
-     "display_name": "dsanches-vault.eth",
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x4269AaDfd043b58cbA893BfE6029C9895C25cb61",
-     "ens": null,
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xe6dba9BD4E5E7ce88D8A4f4ba02e7B5eCD86B588",
-     "ens": "vault.square-pixel.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x91e8be20d0DfB2293b97317e906223C1fa833A48",
-     "ens": "secureid.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -4866,15 +4778,15 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0xc837d4986B23F96f8d758BbeDF07C1D25fF83B19",
+     "address": "0xeADD2d51E75a8B42302Adc2Aff0157a4BF626adB",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -4882,95 +4794,39 @@
      "ens": "pinkapewife.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0x41146e2b9DfdFc47724A20cB86a15dc206c97E44",
+     "address": "0xe6dba9BD4E5E7ce88D8A4f4ba02e7B5eCD86B588",
+     "ens": "vault.square-pixel.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xe322875FFfB56F840456c7ba4742c125dd9cFd14",
+     "ens": "giopetto.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xd3364EA1C742Cc2d396aC65e1723b8d608a939bb",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
-     "address": "0x3839a6C85A38dE97Abd0ECc092Ef3311a7f1311E",
-     "ens": "tharwin.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xA8174ABc36B3298356D273E512CD87223a2b3FFA",
+     "address": "0xD2AB77a10cab66433C167e9Aa4Cc3178fE133DEF",
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x5a8116f07937394e6Ac2A51995Ab6a054C08bF9e",
-     "ens": "leafswan.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x6e420B64bb329bE84a6627c68A7BdFf825139773",
-     "ens": "mintestate.eth",
-     "display_name": null,
-     "qty": 6,
-     "acquired": "2024-08-16T01:26:59.000000Z",
-     "status": "vaulted"
-    },
-    {
-     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
-     "ens": "iagof.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-18T12:32:23.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x8Bf824d7E8a2Dbbe6F47bD09721a8a3fDCe09D63",
-     "ens": "dsoeirosanches.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-19T22:03:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x3d91ad906C3969f86C588C988F721d5a735c6f81",
-     "ens": "jonnypickles.eth",
-     "display_name": "jonnypickles.eth",
-     "qty": 1,
-     "acquired": "2024-08-20T02:01:35.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x6f566a6672f615C2975F6c48224c46153e12FFcf",
-     "ens": "nftvaultdiegorst.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-08-21T15:35:47.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0x9F35AF4727FB91114563D8A8f779A792cB557f3f",
-     "ens": "deconstruct-lab.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-09-03T05:12:11.000000Z",
-     "status": "acquired"
-    },
-    {
-     "address": "0xC881Ba24fEA61D9c629BB7EB79B3B20392584115",
-     "ens": "vanto.eth",
-     "display_name": null,
-     "qty": 1,
-     "acquired": "2024-09-07T14:06:35.000000Z",
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -4978,7 +4834,39 @@
      "ens": "safe.regulardad.eth",
      "display_name": null,
      "qty": 1,
-     "acquired": "2025-02-17T00:19:11.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xC839de0fEd241607d50aa4107aE582443B906e4c",
+     "ens": "hugofaz.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xc837d4986B23F96f8d758BbeDF07C1D25fF83B19",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0xA8174ABc36B3298356D273E512CD87223a2b3FFA",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x9F35AF4727FB91114563D8A8f779A792cB557f3f",
+     "ens": "deconstruct-lab.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -4986,7 +4874,111 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2025-07-21T01:21:35.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x91e8be20d0DfB2293b97317e906223C1fa833A48",
+     "ens": "secureid.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x8Bf824d7E8a2Dbbe6F47bD09721a8a3fDCe09D63",
+     "ens": "dsoeirosanches.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x82139687FaAe8A29851902783E02E699dE0e0846",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x6f566a6672f615C2975F6c48224c46153e12FFcf",
+     "ens": "nftvaultdiegorst.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x5a8116f07937394e6Ac2A51995Ab6a054C08bF9e",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x4269AaDfd043b58cbA893BfE6029C9895C25cb61",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x41146e2b9DfdFc47724A20cB86a15dc206c97E44",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x3d91ad906C3969f86C588C988F721d5a735c6f81",
+     "ens": "jonnypickles.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x3d885cb987C00fe980c20e76e21C53313f43946A",
+     "ens": "vault.brookr.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x3839a6C85A38dE97Abd0ECc092Ef3311a7f1311E",
+     "ens": "tharwin.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x2d92214855f88f1a3f24B1A3f8F6d533CD0e2E37",
+     "ens": "iagof.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x248458947c120Ca057EC028B3Fe7e4B3f26fDB3d",
+     "ens": null,
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x1E0486EE85dd758078d75C674f3D28Efc4C899Fc",
+     "ens": "dsanches-vault.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     },
     {
@@ -4994,7 +4986,15 @@
      "ens": null,
      "display_name": null,
      "qty": 1,
-     "acquired": "2025-08-01T01:24:23.000000Z",
+     "acquired": null,
+     "status": "acquired"
+    },
+    {
+     "address": "0x02b294ED96E1175B8c71071A303e8A7D2396b017",
+     "ens": "memes.chrisroc.eth",
+     "display_name": null,
+     "qty": 1,
+     "acquired": null,
      "status": "acquired"
     }
    ],
