@@ -45,7 +45,9 @@ async function paletteOf(file) {
   for (const b of bands) {
     if (b.n < 2) continue; // an antialiased seam, not a band
     const c = b.sum.map((v) => v / b.n);
-    if (d2(c, RED) < 2500) continue;
+    // the red line itself, and only it: Pandit's mandala orange (#E14300) is
+    // about 41 away from it and is a colour of the painting
+    if (d2(c, RED) < 400) continue;
     const hit = colours.find((x) => d2(x.rgb, c) < 900);
     if (hit) { hit.rgb = hit.rgb.map((v, k) => (v * hit.n + c[k] * b.n) / (hit.n + b.n)); hit.n += b.n; }
     else colours.push({ rgb: c, n: b.n });
