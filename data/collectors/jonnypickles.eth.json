@@ -1,7 +1,9 @@
 {
  "address": "0x3d91ad906c3969f86c588c988f721d5a735c6f81",
  "ens": "jonnypickles.eth",
+ "fwd": null,
  "display_name": "jonnypickles.eth",
+ "x": null,
  "slug": "jonnypickles.eth",
  "private": false,
  "has_page": true,
@@ -13,24 +15,14 @@
  },
  "first_collected": "2024-04-20T21:20:35.000000Z",
  "last_collected": "2025-05-27T23:55:23.000000Z",
- "tao": 170018,
+ "tao": 182714,
  "tao_rate": 249,
- "tao_rank": 69,
+ "tao_rank": 67,
  "collections": [
   {
    "slug": "xlife",
    "title": "XLIFE",
    "works": 7
-  },
-  {
-   "slug": "geodetic-moments",
-   "title": "Geodetic Moments",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-onchain",
-   "title": "Geodetic On-Chain",
-   "works": 1
   },
   {
    "slug": "patrimora",
@@ -40,6 +32,16 @@
   {
    "slug": "two-burdens",
    "title": "Two Burdens",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-moments",
+   "title": "Geodetic Moments",
+   "works": 1
+  },
+  {
+   "slug": "geodetic-onchain",
+   "title": "Geodetic On-Chain",
    "works": 1
   }
  ],
@@ -54,7 +56,7 @@
    "unique": false,
    "image": "xlife/xlife-66-image.gif",
    "orientation": null,
-   "tao": 3838
+   "tao": 4266
   },
   {
    "id": "xlife-64",
@@ -66,7 +68,7 @@
    "unique": false,
    "image": "xlife/xlife-64-image.png",
    "orientation": null,
-   "tao": 2154
+   "tao": 2368
   },
   {
    "id": "geodetic-onchain-4",
@@ -78,7 +80,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-4-display.webp",
    "orientation": null,
-   "tao": 2372
+   "tao": 2586
   },
   {
    "id": "patrimora-162",
@@ -90,7 +92,7 @@
    "unique": true,
    "image": "patrimora/patrimora-162-image.png",
    "orientation": null,
-   "tao": 39108
+   "tao": 42626
   },
   {
    "id": "xlife-58",
@@ -102,7 +104,7 @@
    "unique": false,
    "image": "xlife/xlife-58-image.png",
    "orientation": null,
-   "tao": 2514
+   "tao": 2728
   },
   {
    "id": "xlife-51",
@@ -114,7 +116,7 @@
    "unique": false,
    "image": "xlife/xlife-51-image.gif",
    "orientation": null,
-   "tao": 3057
+   "tao": 3271
   },
   {
    "id": "two-burdens-1",
@@ -126,19 +128,7 @@
    "unique": true,
    "image": "two-burdens/two-burdens-1-display.webp",
    "orientation": "portrait",
-   "tao": 50778
-  },
-  {
-   "id": "xlife-50",
-   "title": "Bullish Seizing",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": "2024-08-20T02:01:35.000000Z",
-   "unique": false,
-   "image": "xlife/xlife-50-image.gif",
-   "orientation": null,
-   "tao": 3098
+   "tao": 54296
   },
   {
    "id": "geodetic-moments-81",
@@ -150,7 +140,7 @@
    "unique": true,
    "image": "geodetic-moments/geodetic-moments-81-display.webp",
    "orientation": null,
-   "tao": 52553
+   "tao": 56071
   },
   {
    "id": "xlife-49",
@@ -162,7 +152,7 @@
    "unique": false,
    "image": "xlife/xlife-49-image.gif",
    "orientation": null,
-   "tao": 3325
+   "tao": 3539
   },
   {
    "id": "xlife-48",
@@ -174,7 +164,19 @@
    "unique": false,
    "image": "xlife/xlife-48-image.gif",
    "orientation": null,
-   "tao": 7217
+   "tao": 7645
+  },
+  {
+   "id": "xlife-50",
+   "title": "Bullish Seizing",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-50-image.gif",
+   "orientation": null,
+   "tao": 3313
   }
  ]
 }
