@@ -41,6 +41,7 @@ function kv([cmd, ...a]) {
     case 'HDEL': { const h = g(a[0]); if (h) a.slice(1).forEach((x) => h.delete(x)); return 1; }
     case 'HLEN': { const h = g(a[0]); return h ? h.size : 0; }
     case 'HGETALL': { const h = g(a[0]); return h ? [...h].flat() : []; }
+    case 'HKEYS': { const h = g(a[0]); return h ? [...h.keys()] : []; }
     case 'TTL': return 60;
     default: throw new Error(`fake kv: ${C}`);
   }
@@ -302,6 +303,36 @@ is('one collector found by wallet, with who set their picture', [found.body.foun
 const byName = byRank.find((r) => /\.eth$/.test(r[f('name')] || ''));
 const named = await desk({ q: byName[f('name')] });
 is('and by name', named.body.found && named.body.found.address, byName[f('address')]);
+
+console.log('\n— what The Line is told —');
+const peer = async (a) => {
+  const r = await route.GET(new Request(`http://localhost:3000/api/pfp?peer=${a}`));
+  return { status: r.status, body: await r.json(), cache: r.headers.get('cache-control') };
+};
+const pc = await peer(C);
+is('a known upload: source, picture, date, cached an hour', [pc.status, pc.body.source, pc.body.url === JSON.parse(KV.get(`pfp:${C}`)).url, pc.cache],
+  [200, 'upload', true, 'public, max-age=3600, s-maxage=3600']);
+is('and never who set it', 'uploaded_by' in pc.body, false);
+const pv = await peer(VISCO);
+is('a collector who chose none says so, so The Line does not fill them', [pv.status, pv.body.source, pv.body.url], [200, 'none', null]);
+is('a wallet with no picture: 404, never the placeholder', (await peer(`0x${'9'.repeat(40)}`)).status, 404);
+KV.set(`pfp:${H}`, JSON.stringify({ address: H, source: 'peer', url: 'https://assets.mintface.art/pfp/h/abc.webp', origin: 'upload' }));
+KV.get('pfp:map').set(H, 'https://assets.mintface.art/pfp/h/abc.webp');
+KV.set('pfp:peer', new Set([H]));
+is('a face The Line gave us is not said back to it', (await peer(H)).status, 404);
+const privRow = reg.rows.find((r) => r[f('private')]);
+if (privRow) {
+  const pa = privRow[f('address')];
+  KV.set(`pfp:${pa}`, JSON.stringify({ address: pa, source: 'opensea', url: 'https://assets.mintface.art/pfp/p/abc.webp' }));
+  is('a private collector has no face to give, even with one kept', (await peer(pa)).status, 404);
+}
+is('a wallet that is not one: 400', (await peer('nope')).status, 400);
+const list = await route.GET(new Request('http://localhost:3000/api/pfp?peers=1'));
+const listed = (await list.json()).addresses;
+is('the list The Line reads once: faces and choices of none here', [listed.includes(C), listed.includes(VISCO), listed.includes(D)], [true, true, true]);
+is('and never a face The Line gave us', listed.includes(H), false);
+const mf = await peer(RYANJ);
+is('an artist wallet answers with the one MintFace face', [mf.status, mf.body.url], [200, rv.body.pfp.url]);
 
 console.log('\n— fetching somebody else\'s picture —');
 is('http is refused', (await P.fetchPicture('http://pics.example/a.png')).error, 'not a public https URL');
