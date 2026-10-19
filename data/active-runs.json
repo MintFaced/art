@@ -3,6 +3,29 @@
  "keep": 60,
  "runs": [
   {
+   "run_id": "amvftv3pe",
+   "at": "2026-10-19T22:30:15.170Z",
+   "ok": true,
+   "ms": 90058,
+   "chain": {
+    "asked": 253,
+    "moved": 41,
+    "unknown": 20,
+    "refused": 284,
+    "rate": 5,
+    "due": 253,
+    "due_left": 0,
+    "paged": 806,
+    "of": 3676,
+    "covered": 3686
+   },
+   "studio": {
+    "lit": 8,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
    "run_id": "amveef917",
    "at": "2026-10-18T22:30:15.163Z",
    "ok": true,
