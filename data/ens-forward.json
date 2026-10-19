@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-10-17T21:00:44.698Z",
+ "generated": "2026-10-19T21:01:22.233Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -25,6 +25,7 @@
   "0x1145b29b49f9b61d6178050b4b5e520255c2e565": "aussiebloke.eth",
   "0x9438160d839391bd22a2bc8cdcaab010063ba131": "badroibot.eth",
   "0xf4959e582adc2d90a1b71d7e283d885225bcebdb": "champs.digijoint.eth",
+  "0x474b6c2366128eacaea1b6e411171c06b49bdc97": "womannft.eth",
   "0x32d53a21813debfcb33a2b1ff2a396bd3a06f818": "juancruz-vault.eth",
   "0xc01c99b2543e28eff240e90384a1fd757a484927": "yakobelmoussa.eth",
   "0x437e59a28d34f755eb1654db31a0249c27cd8c7c": "vased.eth",
@@ -390,21 +391,14 @@
   ],
   "0x36ab75710650754c32e4850d2ad050849ebb5899": [
    "0x1014.eth",
-   "00000110.eth",
    "sudo.g3rm.eth",
-   "transitory.eth",
    "00000001.eth",
    "thispc.eth",
    "wrappedeth.eth",
    "rotae.eth",
-   "00001000.eth",
-   "00001001.eth",
    "semis.eth",
-   "00000111.eth",
-   "carryout.eth",
    "nativeamerican.eth",
    "dateofbirth.eth",
-   "00000101.eth",
    "drinkresponsibly.eth",
    "inflate.eth",
    "3210.eth",
@@ -600,7 +594,6 @@
   ],
   "0xe5db01c9d588ede7c9939753fb877ebe296ba529": [
    "bitcoinofficial.eth",
-   "jadedlondon.eth",
    "bencaplin.eth",
    "skint.eth",
    "officialmeta.eth",
@@ -630,8 +623,8 @@
   ]
  },
  "counts": {
-  "asked": 2464,
-  "named": 155,
+  "asked": 2465,
+  "named": 156,
   "ambiguous": 75
  }
 }
