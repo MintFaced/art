@@ -479,10 +479,13 @@ function provenanceFold(work) {
   /* Nothing on chain, and not sold into being on chain either. Said plainly,
      rather than as an empty table of chain rows with nothing in them. */
   if (isGallery(work)) {
+    /* no chain links, but a project site still belongs here (the Coffee Stop's tour) */
+    const links = MF.links(work);
     return `<details>
       <summary>Provenance</summary>
       <div class="fold-body">
         <p>Not yet tokenized. This work is on record here and nowhere else ... no contract, no token, nothing written to chain. When it is written, the record graduates in place and keeps this page and this address.</p>
+        ${links.length ? `<div class="chain-links">${links.map(([t, u]) => `<a href="${e(u)}" target="_blank" rel="noopener">${e(t)}</a>`).join('')}</div>` : ''}
       </div>
     </details>`;
   }
