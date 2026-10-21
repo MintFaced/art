@@ -10,7 +10,8 @@
  * site whose side is "king" sits on King Street, north of Heretaunga, its bar
  * along King Street. A site whose side is "lane" is up a laneway off
  * Heretaunga, drawn above the site it opens beside (its "beside" address) with
- * its top level with the top of King Street. Installed is solid ink, approved
+ * its top level with the top of King Street; a second site in the same lane,
+ * nearer the street, says "lane_row": 1 and is drawn a row down. Installed is solid ink, approved
  * an ink outline, proposed a grey dashed outline. A bar is as wide as its
  * fascia where the fascia is known, 1.2 m where it is not. No colour but the
  * art's.
@@ -26,6 +27,7 @@ const KING = { x: 760, w: 44, top: 40, bottom: 320 };
 const PX_PER_M = 25;
 const DEFAULT_M = 1.2;
 const BAR = 18;
+const LANE_ROW = BAR + 6;
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const numberOf = (site) => Number(String(site.address || '').match(/\d+/)?.[0] || 0);
@@ -101,7 +103,8 @@ export function layout(sites) {
       || street.slice().sort((a, b) => Math.abs(numberOf(a.site) - numberOf(s)) - Math.abs(numberOf(b.site) - numberOf(s)))[0];
     if (!at) continue;
     const w = Math.max(PX_PER_M * DEFAULT_M, PX_PER_M * (s.fascia_m || DEFAULT_M));
-    out.push({ site: s, kind: 'lane', north: true, cx: at.cx, bar: { x: at.cx - w / 2, y: KING.top, w, h: BAR } });
+    const y = KING.top + (Number(s.lane_row) || 0) * LANE_ROW;
+    out.push({ site: s, kind: 'lane', north: true, cx: at.cx, bar: { x: at.cx - w / 2, y, w, h: BAR } });
   }
   /* Label tiers: on each side, a label that would overlap the one before it
      on the same tier moves one tier further from the street. */
@@ -161,9 +164,10 @@ export function planSVG(sites, { interactive = true, title = 'Site plan of Heret
       const ty = p.bar.y + 22;
       parts.push(`<text x="${p.bar.x + BAR + 10}" y="${ty}">${n}</text> <text x="${p.bar.x + BAR + 10}" y="${ty + 18}" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text>`);
     } else if (p.kind === 'lane') {
-      /* beside the box, as King Street's are, clear of the labels below it */
+      /* beside the box on one line, so a second site down the same lane
+         stays clear of it and of the labels below */
       const lx = (p.bar.x + p.bar.w + 10).toFixed(1);
-      parts.push(`<text x="${lx}" y="${p.bar.y + 13}">${n}</text> <text x="${lx}" y="${p.bar.y + 31}" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text>`);
+      parts.push(`<text x="${lx}" y="${p.bar.y + 13}">${n} <tspan fill="${COLOURS.grey}">${esc(label)}</tspan></text>`);
     } else if (p.north) {
       const base = p.bar.y - 8 - p.tier * 38;
       parts.push(`<text x="${p.cx.toFixed(1)}" y="${base - 18}" text-anchor="middle" font-size="13" fill="${COLOURS.grey}">${esc(label)}</text> <text x="${p.cx.toFixed(1)}" y="${base}" text-anchor="middle">${n}</text>`);

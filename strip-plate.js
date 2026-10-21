@@ -61,9 +61,15 @@ export const paletteSiteOf = (sites) => sites.slice().sort((a, b) => a.no - b.no
 const KIND_LABEL = { gallery: 'In the gallery', before: 'Before', after: 'After', detail: 'Detail · raking light', render: 'The painting' };
 export const kindLabel = (kind) => KIND_LABEL[kind] || kind;
 
+/* A site that isn't a fascia (the laneway table) says what its photographs
+   show in `captions`: { kind: { label, alt } }, either one optional. */
+const said = (site, kind) => (site.captions && site.captions[kind]) || {};
+const labelFor = (site, kind) => said(site, kind).label || kindLabel(kind);
+
 /** What a photograph is of, for somebody who cannot see it. */
 function altFor(site, kind) {
   const where = `No. ${site.no}, ${site.address}`;
+  if (said(site, kind).alt) return `${where}: ${said(site, kind).alt}`;
   return {
     gallery: `${where}: the painting on the wall at The Line`,
     before: `${where}: the fascia before the painting`,
@@ -130,7 +136,7 @@ const isMock = (site, kind) => kind === 'after' && !!(site.specimens && site.spe
 function figure(site, kind, key, img) {
   const mock = isMock(site, kind);
   return `<figure class="ph ph-${kind}"><div class="ph-frame"><img src="${esc(img(key, 1200))}" alt="${esc(altFor(site, kind))}${mock ? ' (a mockup)' : ''}" loading="lazy" decoding="async">${mock ? MOCK : ''}</div>`
-    + `<figcaption>${esc(kindLabel(kind))}${mock ? ' · mockup' : ''}</figcaption></figure>`;
+    + `<figcaption>${esc(labelFor(site, kind))}${mock ? ' · mockup' : ''}</figcaption></figure>`;
 }
 
 /* Before and After as one figure: two photographs from the same standing

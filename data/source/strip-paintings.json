@@ -214,6 +214,45 @@
       }
     },
     {
+      "id": "strip-painting-coffee-stop",
+      "title": "Coffee Stop",
+      "group": "site-design",
+      "site": 8,
+      "caption": "COFFEE STOP · THE LANEWAY TABLE",
+      "year": "2026",
+      "medium": "Acrylic and resin on panel",
+      "statement": "A table, not a wall. The first Strip Painting you can sit at, its colours gathered from the works already installed along the street, three from each, every one already mixed in the studio pots. The red line runs through it like every work on the tour. Grab a coffee from Sutto or Dax, set it down on the painting, and you're part of it.",
+      "aspect": 2.0135,
+      "orientation": "landscape",
+      "physical": {
+        "exists": true,
+        "width_cm": 149,
+        "height_cm": 74
+      },
+      "location": "300 West laneway, Hastings CBD",
+      "gallery": true,
+      "tokenized": false,
+      "status": "not_tokenized",
+      "links": {
+        "site": "https://hastingscbd.nz/walk-the-line"
+      },
+      "details": [
+        {
+          "caption": "WITH A COFFEE · THE LANEWAY",
+          "alt": "A cup of coffee on the Coffee Stop table, looking out of the laneway to Heretaunga Street",
+          "asset": "strip/specimens/300-west-coffee-laneway.webp"
+        },
+        {
+          "caption": "INSTALLED · IN THE SUN",
+          "alt": "The Coffee Stop table top from a low angle, its strips in sun and shadow",
+          "asset": "strip/specimens/300-west-coffee-angle.webp"
+        }
+      ],
+      "assets": {
+        "image": "strip-paintings/coffee-stop-render.webp"
+      }
+    },
+    {
       "id": "strip-paintings-the-line-frontage",
       "title": "The Line, frontage",
       "group": "install",

@@ -1,5 +1,5 @@
 {
- "_note": "Strip Paintings: the sites. The single source of truth for the plan, the register, the counts, /api/strip-sites, the agent catalog and the dossier. Status is exactly one of proposed | approved | installed; painting progress shows through which specimens exist, never a fourth status. Counts are computed from this file, never typed. A tenant is shown only where tenant_public is true. Seeded 1 October 2026 (docs/STRIP-MAP.md), replaced the same day by Ryan's ten-site specimen set: photographs in R2 under strip/specimens/, a mocked-up After flagged after_is_mockup (shown labelled MOCKUP until the real one replaces it), gallery_alt a second gallery view. `exhibited` is the three tiles under Exhibited and documented on the page: a tile with no image shows its label, with its dates or 'date to come', never a broken picture.",
+ "_note": "Strip Paintings: the sites. The single source of truth for the plan, the register, the counts, /api/strip-sites, the agent catalog and the dossier. Status is exactly one of proposed | approved | installed; painting progress shows through which specimens exist, never a fourth status. Counts are computed from this file, never typed. A tenant is shown only where tenant_public is true. Seeded 1 October 2026 (docs/STRIP-MAP.md), replaced the same day by Ryan's ten-site specimen set: photographs in R2 under strip/specimens/, a mocked-up After flagged after_is_mockup (shown labelled MOCKUP until the real one replaces it), gallery_alt a second gallery view. `exhibited` is the three tiles under Exhibited and documented on the page: a tile with no image shows its label, with its dates or 'date to come', never a broken picture. A site that isn't a fascia says what its photographs show in `captions` ({kind: {label, alt}}, both optional; the laneway table). A second site up the same laneway, nearer the street, carries lane_row 1 and is drawn a row down from the first.",
  "sites": [
   {
    "no": 1,
@@ -95,33 +95,47 @@
   },
   {
    "no": 4,
-   "address": "341 West",
+   "address": "300 West",
    "street": "Heretaunga St W",
-   "side": "north",
-   "building": "Villa d'Este building",
+   "side": "lane",
+   "beside": "328 West",
+   "lane_row": 1,
+   "building": "Coffee Stop, a table halfway down the laneway",
    "tenant": null,
    "tenant_public": false,
-   "fascia_m": null,
-   "panels": null,
-   "size": null,
-   "status": "proposed",
+   "fascia_m": 1.49,
+   "panels": 1,
+   "size": "1490 × 740 mm",
+   "status": "installed",
    "installed_at": null,
-   "work_id": "strip-painting-site-2",
+   "work_id": "strip-painting-coffee-stop",
    "specimens": {
-    "gallery": "strip/specimens/strip-04-gallery.jpg",
-    "before": "strip/specimens/strip-04-before.jpg",
-    "after": null,
-    "detail": null
+    "gallery": null,
+    "before": "strip/specimens/300-west-coffee-before.webp",
+    "after": "strip/specimens/300-west-coffee-after.webp",
+    "detail": "strip/specimens/300-west-coffee-detail.webp"
+   },
+   "captions": {
+    "before": {
+     "alt": "the laneway table before the painting, its timber top weathered"
+    },
+    "after": {
+     "alt": "the same table with the painting on its top"
+    },
+    "detail": {
+     "label": "Detail · from above",
+     "alt": "the painted table top from above, a coffee set down on the strips"
+    }
    },
    "palette": null,
    "price": {
     "nzd": null
    },
-   "sale_state": "for_sale",
+   "sale_state": "not_for_sale",
    "edition": null,
    "lat": null,
    "lng": null,
-   "notes": "Painted, awaiting approval. Work: the catalog's Site 2. strip-04-gallery is the same tall blue and maroon panel as strip-paintings-2.jpg. Size still to come."
+   "notes": "Installed. A table, not a wall: the painting is the top of the laneway table, 1490 × 740 mm, halfway down the 300 West laneway (Ryan, 21 October). Its colours are gathered from the works already installed, three from each. Before and After are from one standing position (the Before warped onto the After by its bench and frame), Detail is the top from above with a coffee. The laneway view with a cup and the low angle in sun are on the work as details. On the plan it sits up the laneway with the gable window (No. 5), nearer the street. It is Stop 3 on hastingscbd.nz/walk-the-line. Sale state is Not for sale until Ryan says otherwise."
   },
   {
    "no": 5,
@@ -156,21 +170,21 @@
   },
   {
    "no": 6,
-   "address": "311 West",
+   "address": "341 West",
    "street": "Heretaunga St W",
    "side": "north",
-   "building": "Pandit Restaurant & Sweets",
+   "building": "Villa d'Este building",
    "tenant": null,
    "tenant_public": false,
    "fascia_m": null,
-   "panels": 2,
-   "size": "2 × 2.4 m × 600 mm",
-   "status": "approved",
+   "panels": null,
+   "size": null,
+   "status": "proposed",
    "installed_at": null,
-   "work_id": "strip-painting-site-4",
+   "work_id": "strip-painting-site-2",
    "specimens": {
-    "gallery": null,
-    "before": "strip/specimens/strip-09-before.jpg",
+    "gallery": "strip/specimens/strip-04-gallery.jpg",
+    "before": "strip/specimens/strip-04-before.jpg",
     "after": null,
     "detail": null
    },
@@ -178,11 +192,11 @@
    "price": {
     "nzd": null
    },
-   "sale_state": "not_for_sale",
+   "sale_state": "for_sale",
    "edition": null,
    "lat": null,
    "lng": null,
-   "notes": "Occupied-shop variant, panels flank the sign. Work: the catalog's Site 4 render, approved 18 October 2026 with two colours swapped for ones sampled from Pandit's own sign: #745d45 to #a75823 (deep amber) and #a08367 to #ebbd81 (gold). The render is site4-panel-240cm-v4. Ryan's note says two 2.4 m panels."
+   "notes": "Painted, awaiting approval. Work: the catalog's Site 2. strip-04-gallery is the same tall blue and maroon panel as strip-paintings-2.jpg. Size still to come."
   },
   {
    "no": 7,
@@ -217,6 +231,36 @@
   },
   {
    "no": 8,
+   "address": "311 West",
+   "street": "Heretaunga St W",
+   "side": "north",
+   "building": "Pandit Restaurant & Sweets",
+   "tenant": null,
+   "tenant_public": false,
+   "fascia_m": null,
+   "panels": 2,
+   "size": "2 × 2.4 m × 600 mm",
+   "status": "approved",
+   "installed_at": null,
+   "work_id": "strip-painting-site-4",
+   "specimens": {
+    "gallery": null,
+    "before": "strip/specimens/strip-09-before.jpg",
+    "after": null,
+    "detail": null
+   },
+   "palette": null,
+   "price": {
+    "nzd": null
+   },
+   "sale_state": "not_for_sale",
+   "edition": null,
+   "lat": null,
+   "lng": null,
+   "notes": "Occupied-shop variant, panels flank the sign. Work: the catalog's Site 4 render, approved 18 October 2026 with two colours swapped for ones sampled from Pandit's own sign: #745d45 to #a75823 (deep amber) and #a08367 to #ebbd81 (gold). The render is site4-panel-240cm-v4. Ryan's note says two 2.4 m panels."
+  },
+  {
+   "no": 9,
    "address": "350 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -247,7 +291,7 @@
    "notes": "Size still to come."
   },
   {
-   "no": 9,
+   "no": 10,
    "address": "230 West",
    "street": "Heretaunga St W",
    "side": "south",
@@ -277,7 +321,7 @@
    "notes": "Size still to come."
   },
   {
-   "no": 10,
+   "no": 11,
    "address": "118 West",
    "street": "King St",
    "side": "king",
@@ -307,7 +351,7 @@
    "notes": "Before shot is a side angle; reshoot straight on. Size still to come."
   },
   {
-   "no": 11,
+   "no": 12,
    "address": "402 West",
    "street": "Heretaunga St W",
    "side": "south",
