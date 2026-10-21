@@ -1,6 +1,6 @@
 {
  "_note": "Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.",
- "generated": "2026-10-20T21:31:28.985Z",
+ "generated": "2026-10-21T21:01:00.236Z",
  "fields": ["address","name","ens","slug","private","works","unique","tao","rate","last","rank","fwd","x"],
  "rows": [
   ["0x8be5a2df6488b0937299d27f092716f4a9ab2fd8","visco.eth","visco.eth","visco.eth",0,83,11,1559963,1162.2,"2026-08-21",1,"",""],
@@ -360,7 +360,7 @@
   ["0x1145b29b49f9b61d6178050b4b5e520255c2e565","","","0x1145b29b",0,4,0,36584,25.2,"2022-12-20",355,"aussiebloke.eth",""],
   ["0x53bd35217f5529eb8f9a5babe5bf833a6957d9d6","","","0x53bd3521",0,4,0,36002,25.2,"2022-12-20",356,"",""],
   ["0x82f79d8090e32835f7fd7963f14f1aeb1faf2676","theadriel.eth","theadriel.eth","theadriel.eth",0,3,0,35877,29.4,"2024-08-30",357,"",""],
-  ["0x7d88f221e9ecef9eef118e0d0e8a47f81b37e0b6","gpebbles.eth","gpebbles.eth","gpebbles.eth",0,4,2,35861,146.4,"2026-03-08",358,"",""],
+  ["0x7d88f221e9ecef9eef118e0d0e8a47f81b37e0b6","gpebbles.eth","gpebbles.eth","gpebbles.eth",0,3,2,35861,146.4,"2026-03-08",358,"",""],
   ["0xb1b81fd772169a18504aee662cbd5ebb4886e0d4","","","0xb1b81fd7",0,4,0,35654,25.2,"2022-12-20",359,"",""],
   ["0xcfc9336910420e2fb7b9c19f62a38bbac34dc352","hot.giopetto.eth","hot.giopetto.eth","hot.giopetto.eth",0,1,1,35420,69,"2025-08-31",360,"",""],
   ["0x188b70ba85b04e1eb0841dcc3c6581b415a65951","","","",0,2,0,35182,25.2,"2022-12-27",361,"",""],
@@ -3229,9 +3229,9 @@
   ["0xa891fde42e982148b5f2f6b06f04be8e706a190e","wall2wall.eth","wall2wall.eth","wall2wall.eth",0,18,18,0,0,null,3224,"",""],
   ["0x9b568c65c0f1bc630d44ef7bcb24a815343912f1","","","0x9b568c65",0,18,18,0,0,null,3224,"",""],
   ["0x1b49e7c19632d27b3362151ef1f1818e5eab69f7","","","0x1b49e7c1",0,16,16,0,0,null,3224,"",""],
+  ["0x2f1a8e273430c9fa7a73ac6e682d2728000ae89e","","","0x2f1a8e27",0,12,12,0,0,"2026-10-21",3224,"",""],
   ["0x0bc3807ec262cb779b38d65b38158acc3bfede10","","","0x0bc3807e",0,11,11,0,0,null,3224,"",""],
-  ["0x2f1a8e273430c9fa7a73ac6e682d2728000ae89e","","","0x2f1a8e27",0,11,11,0,0,"2026-10-20",3224,"",""],
-  ["0x73924aa28f23256d994e20803a6c63d9dd056d7d","","","0x73924aa2",0,6,6,0,0,"2026-10-20",3224,"",""],
+  ["0x73924aa28f23256d994e20803a6c63d9dd056d7d","","","0x73924aa2",0,6,6,0,0,"2026-10-21",3224,"",""],
   ["0x421ab72a939becf0ef6dc607960d877da6e7b0c7","","","0x421ab72a",0,6,6,0,0,null,3224,"",""],
   ["0x20be2aff79b1f330a798983c78c0e056f8627623","jasonagogo.eth","jasonagogo.eth","jasonagogo.eth",0,5,5,0,0,null,3224,"",""],
   ["0xbd96ce810533583090b27afe327de711b401840e","","","0xbd96ce81",0,5,5,0,0,null,3224,"",""],
