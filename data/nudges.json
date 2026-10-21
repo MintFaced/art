@@ -1153,7 +1153,162 @@
    "image": null,
    "opens": "2026-10-06T01:58:28.954Z",
    "closes": "2026-10-21T00:00:00.000Z",
-   "published": true
+   "published": true,
+   "banked": {
+    "number": 5,
+    "kind": "candidates",
+    "rule": {
+     "voters": 5,
+     "tao": 500000
+    },
+    "total": 639677,
+    "collectors": 4,
+    "leader": {
+     "hex": "#17184B",
+     "total": 577222,
+     "voters": 4
+    },
+    "locked": null,
+    "locked_by": null,
+    "met": null,
+    "closed_early": null,
+    "why": "The leading colour has the TAO and needs 5 collectors. It has 4.",
+    "progress": {
+     "voters": {
+      "at": 4,
+      "of": 5
+     },
+     "tao": {
+      "at": 577222,
+      "of": 500000
+     }
+    },
+    "ledger": [
+     {
+      "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+      "name": "burnasso.eth",
+      "candidate": "#E1B589",
+      "at": "2026-10-14T15:48:18.099Z",
+      "clamped": false
+     },
+     {
+      "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+      "name": "burnasso.eth",
+      "candidate": "#17184B",
+      "at": "2026-10-14T15:48:07.745Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#17184B",
+      "at": "2026-10-11T22:10:26.049Z",
+      "clamped": false
+     },
+     {
+      "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+      "name": "imagebyandy.eth",
+      "candidate": "#17184B",
+      "at": "2026-10-08T17:39:54.728Z",
+      "clamped": false
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "candidate": "#17184B",
+      "at": "2026-10-08T13:49:34.956Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "name": "piercedcat.eth",
+      "candidate": "#17184B",
+      "at": "2026-10-08T13:13:56.908Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#E1B589",
+      "at": "2026-10-06T20:07:50.915Z",
+      "clamped": false
+     }
+    ],
+    "candidates": [
+     {
+      "hex": "#17184B",
+      "total": 577222,
+      "voters": 4,
+      "share": 0.9023647872285544,
+      "proposed_by": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "proposed_name": "piercedcat.eth",
+      "wallets": [
+       {
+        "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+        "name": "piercedcat.eth",
+        "amount": 222222,
+        "weight": 222222,
+        "clamped": false
+       },
+       {
+        "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+        "name": "imagebyandy.eth",
+        "amount": 150000,
+        "weight": 150000,
+        "clamped": false
+       },
+       {
+        "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+        "name": "0xunix.eth",
+        "amount": 150000,
+        "weight": 150000,
+        "clamped": false
+       },
+       {
+        "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+        "name": "burnasso.eth",
+        "amount": 55000,
+        "weight": 55000,
+        "clamped": false
+       },
+       {
+        "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+        "name": "MintFace",
+        "amount": 69,
+        "weight": 69,
+        "clamped": false,
+        "artist": true
+       }
+      ]
+     },
+     {
+      "hex": "#E1B589",
+      "total": 62455,
+      "voters": 1,
+      "share": 0.09763521277144559,
+      "proposed_by": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "proposed_name": "MintFace",
+      "wallets": [
+       {
+        "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+        "name": "MintFace",
+        "amount": 69000,
+        "weight": 69000,
+        "clamped": false,
+        "artist": true
+       },
+       {
+        "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+        "name": "burnasso.eth",
+        "amount": 62455,
+        "weight": 62455,
+        "clamped": false
+       }
+      ]
+     }
+    ],
+    "banked_at": "2026-10-21T22:00:12.082Z"
+   }
   }
  ],
  "series": {
