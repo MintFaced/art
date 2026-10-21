@@ -9,10 +9,10 @@
  "statement": "Nouns with the X factor. A new XNouns is born every 8 hours, 8 minutes and 8 seconds, auctioned one at a time. The work is a CC0 derivative celebrating the glitch origins of XCOPY and the artistic freedom of Nouns, made by and for XCOPY-enjoyooors. xnouns.xyz",
  "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise.",
  "counts": {
-  "works": 536,
-  "acquired": 391,
+  "works": 538,
+  "acquired": 392,
   "burned": 51,
-  "available": 83,
+  "available": 84,
   "vaulted": 11
  },
  "contracts": [
@@ -21283,11 +21283,99 @@
    "listed_on": null,
    "reserve": null,
    "collector": {
+    "address": "0x2f1a8e273430c9fa7A73ac6e682d2728000Ae89e",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-10-21T04:52:11.000Z"
+   }
+  },
+  {
+   "minted_onchain": "2026-10-21T04:52:11.000Z",
+   "mint_tx": "0x29ded7c120deac51861a890ce3a62698faf3199ef29e770037fad3d1798c816b",
+   "id": "xnouns-536",
+   "collection": "xnouns",
+   "title": "XNouns #536",
+   "statement": "XNouns celebrates the glitch origins of XCOPY combined with the artistic freedom of Nouns.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x2969Eca285C9acD0B7EeDEbE7714C4D913700794",
+    "token_id": "536",
+    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=536&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-dark.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-purple.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-rgb.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-brain.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",
+    "animation": null,
+    "image_details": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "available",
+   "held_by": "mintface.eth",
+   "listed_on": null,
+   "reserve": null,
+   "collector": null
+  },
+  {
+   "minted_onchain": "2026-10-21T04:52:11.000Z",
+   "mint_tx": "0x29ded7c120deac51861a890ce3a62698faf3199ef29e770037fad3d1798c816b",
+   "id": "xnouns-537",
+   "collection": "xnouns",
+   "title": "XNouns #537",
+   "statement": "XNouns celebrates the glitch origins of XCOPY combined with the artistic freedom of Nouns.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x2969Eca285C9acD0B7EeDEbE7714C4D913700794",
+    "token_id": "537",
+    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=537&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-x.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-bege-bsod.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-bling-gold-ingot.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-rosebud.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-purple.png",
+    "animation": null,
+    "image_details": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "acquired",
+   "held_by": null,
+   "listed_on": null,
+   "reserve": null,
+   "collector": {
     "address": "0x73924Aa28f23256D994E20803a6C63d9dd056d7d",
     "ens": null,
     "display_name": null,
     "note": null,
-    "acquired": "2026-10-20T20:41:11.000Z"
+    "acquired": "2026-10-21T04:52:11.000Z"
    }
   }
  ],
