@@ -1,0 +1,2190 @@
+{
+ "_note": "Pulled by films/data/pull.ts. Every figure and picture in the films comes from here or from data/captures.json.",
+ "taken_at": "2026-10-28T06:52:45.752Z",
+ "site": "https://mintface.art",
+ "rates": {
+  "unique_per_day": 69,
+  "edition_copy_per_day": 4.2
+ },
+ "palette": [
+  {
+   "slot": 1,
+   "hex": "#0E5890",
+   "nudge": "nudge-1",
+   "number": 1,
+   "locked_at": "2026-09-07T08:34:48.729Z",
+   "backers": 5,
+   "tao": 639514,
+   "locked_by": null
+  },
+  {
+   "slot": 2,
+   "hex": "#80E080",
+   "nudge": "nudge-2",
+   "number": 2,
+   "locked_at": "2026-09-20T05:56:23.733Z",
+   "backers": 4,
+   "tao": 627000,
+   "locked_by": "artist"
+  },
+  {
+   "slot": 3,
+   "hex": "#E080E0",
+   "nudge": "nudge-3",
+   "number": 3,
+   "locked_at": "2026-09-28T04:42:40.012Z",
+   "backers": 4,
+   "tao": 819000,
+   "locked_by": "artist"
+  },
+  {
+   "slot": 4,
+   "hex": "#00B3B3",
+   "nudge": "nudge-4",
+   "number": 4,
+   "locked_at": "2026-10-06T01:57:26.486Z",
+   "backers": 2,
+   "tao": 775000,
+   "locked_by": "artist"
+  },
+  {
+   "slot": 5,
+   "hex": "#17184B",
+   "nudge": "nudge-5",
+   "number": 5,
+   "locked_at": "2026-10-21T00:00:00.000Z",
+   "backers": 4,
+   "tao": 577222,
+   "locked_by": "artist"
+  }
+ ],
+ "slots": 12,
+ "open": {
+  "id": "nudge-6",
+  "number": 6,
+  "slot": 6,
+  "closes": "2026-11-11T00:00:00.000Z",
+  "question": "Weigh in on the sixth colour.",
+  "candidates": []
+ },
+ "board": {
+  "id": "nudge-5",
+  "number": 5,
+  "question": "Strip Painting 5th Color",
+  "closes": "2026-10-21T00:00:00.000Z",
+  "slot": 5,
+  "rule": {
+   "voters": 5,
+   "tao": 500000
+  },
+  "total": 639677,
+  "collectors": 4,
+  "line": "Locked · #17184B · 577,222 TAO · 4 collectors · TAO threshold met · Locked by the artist at 4 of 5 voters",
+  "locked": {
+   "hex": "#17184B",
+   "total": 577222,
+   "voters": 4
+  },
+  "locked_by": "artist",
+  "candidates": [
+   {
+    "hex": "#17184B",
+    "total": 577222,
+    "voters": 4,
+    "wallets": [
+     {
+      "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "name": "piercedcat.eth",
+      "weight": 222222,
+      "artist": false,
+      "face": "snap/pfp-dafa9e3dae.webp"
+     },
+     {
+      "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+      "name": "imagebyandy.eth",
+      "weight": 150000,
+      "artist": false,
+      "face": "snap/pfp-795e430765.webp"
+     },
+     {
+      "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+      "name": "0xunix.eth",
+      "weight": 150000,
+      "artist": false,
+      "face": "snap/pfp-cc3b37eeb7.webp"
+     },
+     {
+      "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+      "name": "burnasso.eth",
+      "weight": 55000,
+      "artist": false,
+      "face": "snap/pfp-bc5a7cf988.webp"
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "weight": 69,
+      "artist": true,
+      "face": "snap/pfp-dd6b80649e.webp"
+     }
+    ]
+   },
+   {
+    "hex": "#E1B589",
+    "total": 62455,
+    "voters": 1,
+    "wallets": [
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "weight": 69000,
+      "artist": true,
+      "face": "snap/pfp-dd6b80649e.webp"
+     },
+     {
+      "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+      "name": "burnasso.eth",
+      "weight": 62455,
+      "artist": false,
+      "face": "snap/pfp-bc5a7cf988.webp"
+     }
+    ]
+   }
+  ],
+  "ledger": [
+   {
+    "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+    "name": "MintFace",
+    "candidate": "#E1B589",
+    "amount": 69000,
+    "at": "2026-10-06T20:07:50.915Z",
+    "artist": true
+   },
+   {
+    "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+    "name": "piercedcat.eth",
+    "candidate": "#17184B",
+    "amount": 222222,
+    "at": "2026-10-08T13:13:56.908Z",
+    "artist": false
+   },
+   {
+    "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+    "name": "0xunix.eth",
+    "candidate": "#17184B",
+    "amount": 150000,
+    "at": "2026-10-08T13:49:34.956Z",
+    "artist": false
+   },
+   {
+    "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+    "name": "imagebyandy.eth",
+    "candidate": "#17184B",
+    "amount": 150000,
+    "at": "2026-10-08T17:39:54.728Z",
+    "artist": false
+   },
+   {
+    "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+    "name": "MintFace",
+    "candidate": "#17184B",
+    "amount": 69,
+    "at": "2026-10-11T22:10:26.049Z",
+    "artist": true
+   },
+   {
+    "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+    "name": "burnasso.eth",
+    "candidate": "#17184B",
+    "amount": 55000,
+    "at": "2026-10-14T15:48:07.745Z",
+    "artist": false
+   },
+   {
+    "address": "0xbc5a7cf988f7e7e8f3893cd0ee1d0786cd4af889",
+    "name": "burnasso.eth",
+    "candidate": "#E1B589",
+    "amount": 62455,
+    "at": "2026-10-14T15:48:18.099Z",
+    "artist": false
+   }
+  ]
+ },
+ "top": [
+  {
+   "rank": 1,
+   "address": "0x8be5a2df6488b0937299d27f092716f4a9ab2fd8",
+   "name": "visco.eth",
+   "tao": 1568099,
+   "rate": 1162.2,
+   "works": 83,
+   "one_of_ones": 11,
+   "editions": 72,
+   "face": "snap/pfp-8be5a2df64.webp",
+   "held": {
+    "id": "geodetic-moments-8",
+    "label": "Geodetic Moment #8",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-8-900.webp"
+   }
+  },
+  {
+   "rank": 2,
+   "address": "0xe09c0d24725c5e3b191031aa43a84e19b9bb120b",
+   "name": "josephj.eth",
+   "tao": 1086360,
+   "rate": 1725,
+   "works": 25,
+   "one_of_ones": 25,
+   "editions": 0,
+   "face": "snap/pfp-e09c0d2472.webp",
+   "held": {
+    "id": "patrimora-127",
+    "label": "Patrimora #127",
+    "since": "2025-02-05",
+    "days": 630,
+    "image": "snap/held-patrimora-127-900.webp"
+   }
+  },
+  {
+   "rank": 3,
+   "address": "0x6140f00e4ff3936702e68744f2b5978885464cbb",
+   "name": "yungwknd.xyz",
+   "tao": 1023170,
+   "rate": 1633.2,
+   "works": 32,
+   "one_of_ones": 23,
+   "editions": 9,
+   "face": "snap/pfp-6140f00e4f.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-10",
+    "days": 1632,
+    "image": "snap/held-2022-10k-2-900.webp"
+   }
+  },
+  {
+   "rank": 4,
+   "address": "0x2d92214855f88f1a3f24b1a3f8f6d533cd0e2e37",
+   "name": "iagof.eth",
+   "tao": 952016,
+   "rate": 758.4,
+   "works": 77,
+   "one_of_ones": 11,
+   "editions": 66,
+   "face": "snap/pfp-2d92214855.webp",
+   "held": {
+    "id": "seize-and-share-mint-face-229",
+    "label": "Mint Face",
+    "since": "2022-06-20",
+    "days": 1591,
+    "image": "snap/held-seize-and-share-mint-face-229-900.webp"
+   }
+  },
+  {
+   "rank": 5,
+   "address": "0xc97958ff5370c56b7e0e6fb58437f00702714d49",
+   "name": "glitchqueen.eth",
+   "tao": 662387,
+   "rate": 430.8,
+   "works": 8,
+   "one_of_ones": 6,
+   "editions": 2,
+   "face": "snap/pfp-c97958ff53-s.webp",
+   "held": {
+    "id": "geodetic-memory-geodetic-memory",
+    "label": "Geodetic Memory",
+    "since": "2022-07-09",
+    "days": 1572,
+    "image": "snap/held-geodetic-memory-geodetic-memory-240.webp"
+   }
+  },
+  {
+   "rank": 6,
+   "address": "0xd9c1780ff96a463d97cbb2f62e4dae0ccf8791e4",
+   "name": "0xd9c1…91e4",
+   "tao": 636967,
+   "rate": 414,
+   "works": 6,
+   "one_of_ones": 6,
+   "editions": 0,
+   "face": "snap/pfp-d9c1780ff9-s.webp",
+   "held": {
+    "id": "geodetica-94",
+    "label": "Geodetica #94",
+    "since": "2022-08-11",
+    "days": 1539,
+    "image": "snap/held-geodetica-94-240.webp"
+   }
+  },
+  {
+   "rank": 7,
+   "address": "0x13eee41d67b8d99e11174161d72cf8ccd194458c",
+   "name": "davidkibler.eth",
+   "tao": 583366,
+   "rate": 763.8,
+   "works": 43,
+   "one_of_ones": 9,
+   "editions": 34,
+   "face": "snap/pfp-13eee41d67-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-11",
+    "days": 1631,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 8,
+   "address": "0xd69e257ae6088b717ae6d2ddec9297703b4fb725",
+   "name": "mysterian.eth",
+   "tao": 573887,
+   "rate": 402.6,
+   "works": 40,
+   "one_of_ones": 2,
+   "editions": 38,
+   "face": "snap/pfp-d69e257ae6-s.webp",
+   "held": {
+    "id": "2022-10k-3",
+    "label": "10k Project Blueprint",
+    "since": "2022-06-13",
+    "days": 1598,
+    "image": "snap/held-2022-10k-3-240.webp"
+   }
+  },
+  {
+   "rank": 9,
+   "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+   "name": "piercedcat.eth",
+   "tao": 569276,
+   "rate": 559.2,
+   "works": 43,
+   "one_of_ones": 5,
+   "editions": 38,
+   "face": "snap/pfp-dafa9e3dae-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-12",
+    "days": 1630,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 10,
+   "address": "0x31f8e9b0c3da5ea19f06c6df7e88f3c60fdda1b4",
+   "name": "firstladyart.eth",
+   "tao": 567227,
+   "rate": 870,
+   "works": 23,
+   "one_of_ones": 12,
+   "editions": 11,
+   "face": "snap/pfp-31f8e9b0c3-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-11",
+    "days": 1631,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 11,
+   "address": "0xee2c055f7706b9dfcd98cd5a23d5629d6316c0bd",
+   "name": "parachica.eth",
+   "tao": 566647,
+   "rate": 421.2,
+   "works": 28,
+   "one_of_ones": 3,
+   "editions": 25,
+   "face": "snap/pfp-ee2c055f77-s.webp",
+   "held": {
+    "id": "seize-and-share-seize-and-share-172",
+    "label": "Seize and Share",
+    "since": "2022-06-11",
+    "days": 1600,
+    "image": "snap/held-seize-and-share-seize-and-share-172-240.webp"
+   }
+  },
+  {
+   "rank": 12,
+   "address": "0x40d2f4399d23f9afb82d0a6b73055f13208614f9",
+   "name": "mintsafe.eth",
+   "tao": 553599,
+   "rate": 420,
+   "works": 15,
+   "one_of_ones": 3,
+   "editions": 12,
+   "face": null,
+   "held": {
+    "id": "2022-10k-1",
+    "label": "10k Project Black and White",
+    "since": "2022-08-03",
+    "days": 1547,
+    "image": "snap/held-2022-10k-1-240.webp"
+   }
+  },
+  {
+   "rank": 13,
+   "address": "0xe6ce1bc6255fcc6598f07fab5d7c851c73c423c3",
+   "name": "0xe6ce…23c3",
+   "tao": 490806,
+   "rate": 360,
+   "works": 12,
+   "one_of_ones": 4,
+   "editions": 8,
+   "face": null,
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 14,
+   "address": "0x18e0f9aadde970d74430cc8636a381ccfcd1f559",
+   "name": "implantsanta",
+   "tao": 484383,
+   "rate": 355.8,
+   "works": 13,
+   "one_of_ones": 4,
+   "editions": 9,
+   "face": "snap/pfp-18e0f9aadd-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 15,
+   "address": "0xcc3b37eeb73143e6d2a547058118fe25561a4eb2",
+   "name": "0xunix.eth",
+   "tao": 412200,
+   "rate": 479.4,
+   "works": 50,
+   "one_of_ones": 19,
+   "editions": 31,
+   "face": "snap/pfp-cc3b37eeb7-s.webp",
+   "held": {
+    "id": "xlife-3",
+    "label": "New Year, New X",
+    "since": "2023-01-02",
+    "days": 1395,
+    "image": "snap/held-xlife-3-240.webp"
+   }
+  },
+  {
+   "rank": 16,
+   "address": "0xc6400a5584db71e41b0e5dfbdc769b54b91256cd",
+   "name": "6529museum.eth",
+   "tao": 403139,
+   "rate": 470.4,
+   "works": 45,
+   "one_of_ones": 0,
+   "editions": 45,
+   "face": "snap/pfp-c6400a5584-s.webp",
+   "held": {
+    "id": "seize-and-share-dalleglytch6529-387",
+    "label": "Dalleglytch6529",
+    "since": "2022-07-23",
+    "days": 1558,
+    "image": "snap/held-seize-and-share-dalleglytch6529-387-240.webp"
+   }
+  },
+  {
+   "rank": 17,
+   "address": "0x93c4b4334f77d56a84a13077d7fc6f38e3ff833f",
+   "name": "sfancy",
+   "tao": 391884,
+   "rate": 259.8,
+   "works": 28,
+   "one_of_ones": 6,
+   "editions": 22,
+   "face": "snap/pfp-93c4b4334f-s.webp",
+   "held": {
+    "id": "2022-10k-1",
+    "label": "10k Project Black and White",
+    "since": "2022-06-01",
+    "days": 1610,
+    "image": "snap/held-2022-10k-1-240.webp"
+   }
+  },
+  {
+   "rank": 18,
+   "address": "0x436a257ab8f9d8579594f493ffb81fa5245ada26",
+   "name": "nptacek.eth",
+   "tao": 382333,
+   "rate": 223.8,
+   "works": 7,
+   "one_of_ones": 3,
+   "editions": 4,
+   "face": "snap/pfp-436a257ab8-s.webp",
+   "held": {
+    "id": "geodetic-moments-61",
+    "label": "Geodetic Moment #61",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-61-240.webp"
+   }
+  },
+  {
+   "rank": 19,
+   "address": "0x257984b6b5bcfd665532649450242d4df1eb304f",
+   "name": "_xo.eth",
+   "tao": 378569,
+   "rate": 629.4,
+   "works": 12,
+   "one_of_ones": 9,
+   "editions": 3,
+   "face": "snap/pfp-257984b6b5-s.webp",
+   "held": {
+    "id": "seize-and-share-mintface-says-2778",
+    "label": "MintFace says",
+    "since": "2022-12-14",
+    "days": 1414,
+    "image": "snap/held-seize-and-share-mintface-says-2778-240.webp"
+   }
+  },
+  {
+   "rank": 20,
+   "address": "0x32ffe815277ff53dd2a73557664e229899e6501e",
+   "name": "justanotherblockinthechain.eth",
+   "tao": 378461,
+   "rate": 253.8,
+   "works": 36,
+   "one_of_ones": 1,
+   "editions": 35,
+   "face": null,
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-09",
+    "days": 1633,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 21,
+   "address": "0x95b2db3f49b8a5365afacc6342f5ece0d253f8e0",
+   "name": "vvveary.eth",
+   "tao": 368084,
+   "rate": 289.2,
+   "works": 43,
+   "one_of_ones": 6,
+   "editions": 37,
+   "face": "snap/pfp-95b2db3f49-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-12",
+    "days": 1630,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 22,
+   "address": "0xef5ab90a44b68d4f5e3f6be6af4bedb12cd2c66e",
+   "name": "rockshassa.eth",
+   "tao": 360297,
+   "rate": 228,
+   "works": 8,
+   "one_of_ones": 3,
+   "editions": 5,
+   "face": "snap/pfp-ef5ab90a44-s.webp",
+   "held": {
+    "id": "geodetic-onchain-2",
+    "label": "Geodetic Moment Dark",
+    "since": "2022-02-21",
+    "days": 1710,
+    "image": "snap/held-geodetic-onchain-2-240.webp"
+   }
+  },
+  {
+   "rank": 23,
+   "address": "0x410e7f16476faff4a4d7565d8b34245cb52dfdc2",
+   "name": "nesnft.eth",
+   "tao": 342222,
+   "rate": 226.2,
+   "works": 20,
+   "one_of_ones": 2,
+   "editions": 18,
+   "face": "snap/pfp-410e7f1647-s.webp",
+   "held": {
+    "id": "geodetic-memory-geodetic-memory",
+    "label": "Geodetic Memory",
+    "since": "2022-07-09",
+    "days": 1572,
+    "image": "snap/held-geodetic-memory-geodetic-memory-240.webp"
+   }
+  },
+  {
+   "rank": 25,
+   "address": "0x82139687faae8a29851902783e02e699de0e0846",
+   "name": "0x8213…0846",
+   "tao": 332741,
+   "rate": 247.2,
+   "works": 17,
+   "one_of_ones": 2,
+   "editions": 15,
+   "face": null,
+   "held": {
+    "id": "geodetic-moments-66",
+    "label": "Geodetic Moment #66",
+    "since": "2022-04-21",
+    "days": 1651,
+    "image": "snap/held-geodetic-moments-66-240.webp"
+   }
+  },
+  {
+   "rank": 26,
+   "address": "0xbc1eb4359ab755af079f6ef77e3faac465e53eda",
+   "name": "👑29.eth",
+   "tao": 331198,
+   "rate": 215.4,
+   "works": 5,
+   "one_of_ones": 3,
+   "editions": 2,
+   "face": null,
+   "held": {
+    "id": "geodetica-6",
+    "label": "Geodetica #6",
+    "since": "2022-08-11",
+    "days": 1539,
+    "image": "snap/held-geodetica-6-240.webp"
+   }
+  },
+  {
+   "rank": 27,
+   "address": "0x2debdf4427ccbcfdbc7f29d63964499a0ec184f6",
+   "name": "krybharat",
+   "tao": 324369,
+   "rate": 211.2,
+   "works": 4,
+   "one_of_ones": 3,
+   "editions": 1,
+   "face": "snap/pfp-2debdf4427-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-09",
+    "days": 1633,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 28,
+   "address": "0x49df36a77f819190a41368bc8aca8a54fb6d760d",
+   "name": "ilikecats.eth",
+   "tao": 318490,
+   "rate": 207,
+   "works": 3,
+   "one_of_ones": 3,
+   "editions": 0,
+   "face": "snap/pfp-49df36a77f-s.webp",
+   "held": {
+    "id": "geodetica-1",
+    "label": "Geodetica #1",
+    "since": "2022-08-11",
+    "days": 1539,
+    "image": "snap/held-geodetica-1-240.webp"
+   }
+  },
+  {
+   "rank": 29,
+   "address": "0x001b26186552e79a318df256830a485bdbca4677",
+   "name": "01-01-2000.eth",
+   "tao": 318481,
+   "rate": 207,
+   "works": 3,
+   "one_of_ones": 3,
+   "editions": 0,
+   "face": "snap/pfp-001b261865-s.webp",
+   "held": {
+    "id": "geodetica-71",
+    "label": "Geodetica #71",
+    "since": "2022-08-11",
+    "days": 1539,
+    "image": "snap/held-geodetica-71-240.webp"
+   }
+  },
+  {
+   "rank": 30,
+   "address": "0xc73ffb72eb85059908b6f72ef4b0d3b38d46e0ad",
+   "name": "magnivault.eth",
+   "tao": 314664,
+   "rate": 397.8,
+   "works": 35,
+   "one_of_ones": 6,
+   "editions": 29,
+   "face": null,
+   "held": {
+    "id": "two-burdens-33",
+    "label": "Cascade",
+    "since": "2024-08-25",
+    "days": 794,
+    "image": "snap/held-two-burdens-33-240.webp"
+   }
+  },
+  {
+   "rank": 31,
+   "address": "0x0a1c6f1638adbe3873c7e8dad6c0e3b08285ba07",
+   "name": "the commodore",
+   "tao": 309315,
+   "rate": 228.6,
+   "works": 28,
+   "one_of_ones": 2,
+   "editions": 26,
+   "face": "snap/pfp-0a1c6f1638-s.webp",
+   "held": {
+    "id": "seize-and-share-anxn-3250",
+    "label": "Anxn",
+    "since": "2022-12-24",
+    "days": 1404,
+    "image": "snap/held-seize-and-share-anxn-3250-240.webp"
+   }
+  },
+  {
+   "rank": 32,
+   "address": "0xc142dc5ceb96f73635d66b62bfde2a0eea4e4ce1",
+   "name": "sumofprimes.eth",
+   "tao": 306122,
+   "rate": 203.4,
+   "works": 30,
+   "one_of_ones": 2,
+   "editions": 28,
+   "face": "snap/pfp-c142dc5ceb-s.webp",
+   "held": {
+    "id": "geodetic-moments-52",
+    "label": "Geodetic Moment #52",
+    "since": "2022-04-22",
+    "days": 1650,
+    "image": "snap/held-geodetic-moments-52-240.webp"
+   }
+  },
+  {
+   "rank": 33,
+   "address": "0x7ef61cacd0c785eacdfe17649d1c5bcba676a858",
+   "name": "kkmoney.eth",
+   "tao": 305930,
+   "rate": 218.4,
+   "works": 9,
+   "one_of_ones": 0,
+   "editions": 9,
+   "face": "snap/pfp-7ef61cacd0-s.webp",
+   "held": {
+    "id": "roads-or-rivers-the-line",
+    "label": "The Line",
+    "since": "2022-12-27",
+    "days": 1401,
+    "image": "snap/held-roads-or-rivers-the-line-240.webp"
+   }
+  },
+  {
+   "rank": 34,
+   "address": "0x1430997022e8ccf845af34596ef37f4754983f85",
+   "name": "apocalypseart.eth",
+   "tao": 305546,
+   "rate": 228,
+   "works": 9,
+   "one_of_ones": 3,
+   "editions": 6,
+   "face": "snap/pfp-1430997022-s.webp",
+   "held": {
+    "id": "geodetic-moments-65",
+    "label": "Geodetic Moment #65",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-65-240.webp"
+   }
+  },
+  {
+   "rank": 35,
+   "address": "0x128ad42b82c752c5b4c7f679231d8956c98038eb",
+   "name": "seizerdao.eth",
+   "tao": 294498,
+   "rate": 210,
+   "works": 45,
+   "one_of_ones": 0,
+   "editions": 45,
+   "face": null,
+   "held": {
+    "id": "seize-and-share-bicameral-hallucination-1580",
+    "label": "Bicameral Hallucination",
+    "since": "2022-12-07",
+    "days": 1421,
+    "image": "snap/held-seize-and-share-bicameral-hallucination-1580-240.webp"
+   }
+  },
+  {
+   "rank": 36,
+   "address": "0x43d4bdeeca8dd891e89ed80dac83b70bf2d1d753",
+   "name": "photox.eth",
+   "tao": 282268,
+   "rate": 209.4,
+   "works": 15,
+   "one_of_ones": 2,
+   "editions": 13,
+   "face": "snap/pfp-43d4bdeeca-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-02-01",
+    "days": 1365,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 37,
+   "address": "0x4076eca4db9684fa1d9bfac231cb516889a33e5a",
+   "name": "genesis.articulate.eth",
+   "tao": 272923,
+   "rate": 171.6,
+   "works": 11,
+   "one_of_ones": 2,
+   "editions": 9,
+   "face": "snap/pfp-4076eca4db-s.webp",
+   "held": {
+    "id": "geodetic-onchain-1",
+    "label": "Geodetic Moment Light",
+    "since": "2022-02-19",
+    "days": 1712,
+    "image": "snap/held-geodetic-onchain-1-240.webp"
+   }
+  },
+  {
+   "rank": 38,
+   "address": "0x33a34e27a81436ba9d79276406a285e89a8bd8a8",
+   "name": "tacita.eth",
+   "tao": 269543,
+   "rate": 278.4,
+   "works": 18,
+   "one_of_ones": 3,
+   "editions": 15,
+   "face": "snap/pfp-33a34e27a8-s.webp",
+   "held": {
+    "id": "seize-and-share-mintface-says-2778",
+    "label": "MintFace says",
+    "since": "2022-12-14",
+    "days": 1414,
+    "image": "snap/held-seize-and-share-mintface-says-2778-240.webp"
+   }
+  },
+  {
+   "rank": 39,
+   "address": "0xf1e1c701b49b1dc2405a9e8ef40f9f88802b80fa",
+   "name": "norcalguy.eth",
+   "tao": 268407,
+   "rate": 180,
+   "works": 12,
+   "one_of_ones": 2,
+   "editions": 10,
+   "face": "snap/pfp-f1e1c701b4-s.webp",
+   "held": {
+    "id": "foundation-91070",
+    "label": "Mountains on Mountains",
+    "since": "2022-04-30",
+    "days": 1642,
+    "image": "snap/held-foundation-91070-240.webp"
+   }
+  },
+  {
+   "rank": 40,
+   "address": "0xaab85567766043f4108d486b1c27535d0d57678e",
+   "name": "rcsa69",
+   "tao": 261282,
+   "rate": 180.6,
+   "works": 20,
+   "one_of_ones": 0,
+   "editions": 20,
+   "face": null,
+   "held": {
+    "id": "seize-and-share-mint-face-353",
+    "label": "Mint Face",
+    "since": "2022-06-23",
+    "days": 1588,
+    "image": "snap/held-seize-and-share-mint-face-353-240.webp"
+   }
+  },
+  {
+   "rank": 41,
+   "address": "0x7dccc79361b0227a85c2ff788ca240d31f2a78d0",
+   "name": "incept.eth",
+   "tao": 260752,
+   "rate": 192.6,
+   "works": 11,
+   "one_of_ones": 2,
+   "editions": 9,
+   "face": "snap/pfp-7dccc79361-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 42,
+   "address": "0x795e430765a79cfa80b11c61af2d30597d29361f",
+   "name": "imagebyandy.eth",
+   "tao": 256615,
+   "rate": 178.2,
+   "works": 32,
+   "one_of_ones": 3,
+   "editions": 29,
+   "face": "snap/pfp-795e430765-s.webp",
+   "held": {
+    "id": "2022-10k-1",
+    "label": "10k Project Black and White",
+    "since": "2022-08-23",
+    "days": 1527,
+    "image": "snap/held-2022-10k-1-240.webp"
+   }
+  },
+  {
+   "rank": 43,
+   "address": "0xf474e475fc675a37075ce0d9d5b4367d54c4d8fe",
+   "name": "drabstract.eth",
+   "tao": 249882,
+   "rate": 154.8,
+   "works": 7,
+   "one_of_ones": 2,
+   "editions": 5,
+   "face": "snap/pfp-f474e475fc-s.webp",
+   "held": {
+    "id": "geodetic-moments-34",
+    "label": "Geodetic Moment #34",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-34-240.webp"
+   }
+  },
+  {
+   "rank": 44,
+   "address": "0xc839de0fed241607d50aa4107ae582443b906e4c",
+   "name": "hugofaz.eth",
+   "tao": 249360,
+   "rate": 174,
+   "works": 23,
+   "one_of_ones": 1,
+   "editions": 22,
+   "face": "snap/pfp-c839de0fed-s.webp",
+   "held": {
+    "id": "geodetic-onchain-2",
+    "label": "Geodetic Moment Dark",
+    "since": "2022-02-28",
+    "days": 1703,
+    "image": "snap/held-geodetic-onchain-2-240.webp"
+   }
+  },
+  {
+   "rank": 45,
+   "address": "0x9481d8bc76fb1b7d2f95733a6ec0b40d0cb1fffc",
+   "name": "nftacular.eth",
+   "tao": 246132,
+   "rate": 163.2,
+   "works": 8,
+   "one_of_ones": 2,
+   "editions": 6,
+   "face": "snap/pfp-9481d8bc76-s.webp",
+   "held": {
+    "id": "geodetica-43",
+    "label": "Geodetica #43",
+    "since": "2022-08-29",
+    "days": 1521,
+    "image": "snap/held-geodetica-43-240.webp"
+   }
+  },
+  {
+   "rank": 46,
+   "address": "0x8c36654b71c52bf8bf2ca8c3ec19bd4e83da7d11",
+   "name": "helocjay",
+   "tao": 243622,
+   "rate": 142.2,
+   "works": 3,
+   "one_of_ones": 2,
+   "editions": 1,
+   "face": null,
+   "held": {
+    "id": "geodetic-moments-19",
+    "label": "Geodetic Moment #19",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-19-240.webp"
+   }
+  },
+  {
+   "rank": 47,
+   "address": "0x3b33605a49803ce5bf936d61ec34a82dc9a8af67",
+   "name": "justicechrist",
+   "tao": 236254,
+   "rate": 138,
+   "works": 2,
+   "one_of_ones": 2,
+   "editions": 0,
+   "face": "snap/pfp-3b33605a49-s.webp",
+   "held": {
+    "id": "geodetic-moments-16",
+    "label": "Geodetic Moment #16",
+    "since": "2022-02-07",
+    "days": 1724,
+    "image": "snap/held-geodetic-moments-16-240.webp"
+   }
+  },
+  {
+   "rank": 48,
+   "address": "0x565465a0e19309ecb839319453e2c83aa0befdf2",
+   "name": "dinocelotti.eth",
+   "tao": 231598,
+   "rate": 155.4,
+   "works": 25,
+   "one_of_ones": 0,
+   "editions": 25,
+   "face": "snap/pfp-565465a0e1-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-11",
+    "days": 1631,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 49,
+   "address": "0x360bd0e8ef21909115d520b924e72de923eff47e",
+   "name": "lostwisdom.eth",
+   "tao": 230164,
+   "rate": 280.2,
+   "works": 5,
+   "one_of_ones": 4,
+   "editions": 1,
+   "face": "snap/pfp-360bd0e8ef-s.webp",
+   "held": {
+    "id": "xlife-18",
+    "label": "Sound Choice",
+    "since": "2024-05-16",
+    "days": 895,
+    "image": "snap/held-xlife-18-240.webp"
+   }
+  },
+  {
+   "rank": 50,
+   "address": "0x7b7ca7aa1034cde3d0d93fb2e6a6b3e4eb09bb60",
+   "name": "dombaker.eth",
+   "tao": 229976,
+   "rate": 163.2,
+   "works": 10,
+   "one_of_ones": 2,
+   "editions": 8,
+   "face": "snap/pfp-7b7ca7aa10-s.webp",
+   "held": {
+    "id": "geodetic-moments-95",
+    "label": "Geodetic Moment #95",
+    "since": "2022-02-19",
+    "days": 1712,
+    "image": "snap/held-geodetic-moments-95-240.webp"
+   }
+  },
+  {
+   "rank": 51,
+   "address": "0x41254fe73d3b49f0fe3cc7743b4d40ef26bb338e",
+   "name": "jpghodl.eth",
+   "tao": 224426,
+   "rate": 169.8,
+   "works": 23,
+   "one_of_ones": 1,
+   "editions": 22,
+   "face": "snap/pfp-41254fe73d-s.webp",
+   "held": {
+    "id": "seize-and-share-anxn-3250",
+    "label": "Anxn",
+    "since": "2022-12-25",
+    "days": 1403,
+    "image": "snap/held-seize-and-share-anxn-3250-240.webp"
+   }
+  },
+  {
+   "rank": 52,
+   "address": "0xc25461af5e224b7aceeaf0eff443a239fd5040e6",
+   "name": "z777",
+   "tao": 222010,
+   "rate": 148.8,
+   "works": 17,
+   "one_of_ones": 1,
+   "editions": 16,
+   "face": "snap/pfp-c25461af5e-s.webp",
+   "held": {
+    "id": "geodetica-3",
+    "label": "Geodetica #3",
+    "since": "2022-08-11",
+    "days": 1539,
+    "image": "snap/held-geodetica-3-240.webp"
+   }
+  },
+  {
+   "rank": 53,
+   "address": "0xc6aef9394574777c237fc10bb122589d36d13dc7",
+   "name": "awesomedave.eth",
+   "tao": 221765,
+   "rate": 163.8,
+   "works": 20,
+   "one_of_ones": 3,
+   "editions": 17,
+   "face": "snap/pfp-c6aef93945-s.webp",
+   "held": {
+    "id": "seize-and-share-mintface-says-2778",
+    "label": "MintFace says",
+    "since": "2022-12-14",
+    "days": 1414,
+    "image": "snap/held-seize-and-share-mintface-says-2778-240.webp"
+   }
+  },
+  {
+   "rank": 54,
+   "address": "0xde58879de5ca41367a5093dee41f622c167b94b4",
+   "name": "sailoulau.eth",
+   "tao": 221333,
+   "rate": 468.6,
+   "works": 21,
+   "one_of_ones": 8,
+   "editions": 13,
+   "face": null,
+   "held": {
+    "id": "patrimora-95",
+    "label": "Patrimora #95",
+    "since": "2025-07-09",
+    "days": 476,
+    "image": "snap/held-patrimora-95-240.webp"
+   }
+  },
+  {
+   "rank": 55,
+   "address": "0xcf4485735f981bff764023f04c58d2db649b3b8d",
+   "name": "roanas.eth",
+   "tao": 218169,
+   "rate": 136.2,
+   "works": 15,
+   "one_of_ones": 1,
+   "editions": 14,
+   "face": null,
+   "held": {
+    "id": "geodetic-onchain-1",
+    "label": "Geodetic Moment Light",
+    "since": "2022-02-21",
+    "days": 1710,
+    "image": "snap/held-geodetic-onchain-1-240.webp"
+   }
+  },
+  {
+   "rank": 56,
+   "address": "0xffc15ef23f4ba7faf4b4d3c28a35a28f126bcc0d",
+   "name": "byoldme.eth",
+   "tao": 217564,
+   "rate": 161.4,
+   "works": 31,
+   "one_of_ones": 10,
+   "editions": 21,
+   "face": "snap/pfp-ffc15ef23f-s.webp",
+   "held": {
+    "id": "geodetic-memory-geodetic-memory",
+    "label": "Geodetic Memory",
+    "since": "2022-07-13",
+    "days": 1568,
+    "image": "snap/held-geodetic-memory-geodetic-memory-240.webp"
+   }
+  },
+  {
+   "rank": 57,
+   "address": "0xba9941758893819c506b79906a02ebdaac0e337c",
+   "name": "syrupnbbq.eth",
+   "tao": 217192,
+   "rate": 142.2,
+   "works": 3,
+   "one_of_ones": 2,
+   "editions": 1,
+   "face": "snap/pfp-ba99417588-s.webp",
+   "held": {
+    "id": "geodetica-11",
+    "label": "Geodetica #11",
+    "since": "2022-08-22",
+    "days": 1528,
+    "image": "snap/held-geodetica-11-240.webp"
+   }
+  },
+  {
+   "rank": 58,
+   "address": "0x856a4ed4c11a610cc2a4dd706f5642208bf6521d",
+   "name": "trentnorth.eth",
+   "tao": 213290,
+   "rate": 132,
+   "works": 15,
+   "one_of_ones": 1,
+   "editions": 14,
+   "face": "snap/pfp-856a4ed4c1-s.webp",
+   "held": {
+    "id": "geodetic-moments-70",
+    "label": "Geodetic Moment #70",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-70-240.webp"
+   }
+  },
+  {
+   "rank": 59,
+   "address": "0xae291acb5941a8629f44b91c8edd3613401b03ab",
+   "name": "demonflipper.eth",
+   "tao": 212328,
+   "rate": 138,
+   "works": 2,
+   "one_of_ones": 2,
+   "editions": 0,
+   "face": "snap/pfp-ae291acb59-s.webp",
+   "held": {
+    "id": "geodetica-31",
+    "label": "Geodetica #31",
+    "since": "2022-08-11",
+    "days": 1539,
+    "image": "snap/held-geodetica-31-240.webp"
+   }
+  },
+  {
+   "rank": 60,
+   "address": "0xbb261e9c522d826886cf9d03b200e268a7ca36cb",
+   "name": "0xbb26…36cb",
+   "tao": 210167,
+   "rate": 138,
+   "works": 2,
+   "one_of_ones": 2,
+   "editions": 0,
+   "face": null,
+   "held": {
+    "id": "geodetica-30",
+    "label": "Geodetica #30",
+    "since": "2022-08-26",
+    "days": 1524,
+    "image": "snap/held-geodetica-30-240.webp"
+   }
+  },
+  {
+   "rank": 61,
+   "address": "0xd26ce943636ca63a1810886fd1444d3dcaf738b3",
+   "name": "🏴‍☠🚂💨💨.eth",
+   "tao": 204094,
+   "rate": 123.6,
+   "works": 10,
+   "one_of_ones": 1,
+   "editions": 9,
+   "face": "snap/pfp-d26ce94363-s.webp",
+   "held": {
+    "id": "geodetic-moments-6",
+    "label": "Geodetic Moment #6",
+    "since": "2022-02-19",
+    "days": 1712,
+    "image": "snap/held-geodetic-moments-6-240.webp"
+   }
+  },
+  {
+   "rank": 62,
+   "address": "0xdcffdb9fde25ab47d3412e3de4acf84ed034615a",
+   "name": "benizm.eth",
+   "tao": 192947,
+   "rate": 136.2,
+   "works": 6,
+   "one_of_ones": 1,
+   "editions": 5,
+   "face": "snap/pfp-dcffdb9fde-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-10",
+    "days": 1632,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 63,
+   "address": "0x0b3b0f9046905f50e13d3ebe055ab21e838ec872",
+   "name": "gissie.eth",
+   "tao": 192722,
+   "rate": 430.8,
+   "works": 10,
+   "one_of_ones": 6,
+   "editions": 4,
+   "face": null,
+   "held": {
+    "id": "patrimora-110",
+    "label": "Patrimora #110",
+    "since": "2025-08-06",
+    "days": 448,
+    "image": "snap/held-patrimora-110-240.webp"
+   }
+  },
+  {
+   "rank": 64,
+   "address": "0xeeaf3bd19ebe8823abcc994538a930ee37a6dd3b",
+   "name": "christophejr.eth",
+   "tao": 192076,
+   "rate": 132,
+   "works": 18,
+   "one_of_ones": 2,
+   "editions": 16,
+   "face": "snap/pfp-eeaf3bd19e-s.webp",
+   "held": {
+    "id": "seize-and-share-freedom-to-live-1654",
+    "label": "Freedom to Live",
+    "since": "2022-09-25",
+    "days": 1494,
+    "image": "snap/held-seize-and-share-freedom-to-live-1654-240.webp"
+   }
+  },
+  {
+   "rank": 65,
+   "address": "0x9438160d839391bd22a2bc8cdcaab010063ba131",
+   "name": "badroibot.eth",
+   "tao": 190360,
+   "rate": 140.4,
+   "works": 15,
+   "one_of_ones": 1,
+   "editions": 14,
+   "face": "snap/pfp-9438160d83-s.webp",
+   "held": {
+    "id": "roads-or-rivers-the-wei",
+    "label": "The Wei",
+    "since": "2022-12-27",
+    "days": 1401,
+    "image": "snap/held-roads-or-rivers-the-wei-240.webp"
+   }
+  },
+  {
+   "rank": 66,
+   "address": "0x52abe6a75eaaed6545b615ec4e0d08e689e84cc5",
+   "name": "carlos28355.eth",
+   "tao": 185688,
+   "rate": 203.4,
+   "works": 28,
+   "one_of_ones": 1,
+   "editions": 27,
+   "face": "snap/pfp-52abe6a75e-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-11",
+    "days": 1631,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 67,
+   "address": "0x3d91ad906c3969f86c588c988f721d5a735c6f81",
+   "name": "jonnypickles.eth",
+   "tao": 185204,
+   "rate": 249,
+   "works": 11,
+   "one_of_ones": 3,
+   "editions": 8,
+   "face": "snap/pfp-3d91ad906c-s.webp",
+   "held": {
+    "id": "xlife-48",
+    "label": "Freedom Enjoyoor",
+    "since": "2024-04-20",
+    "days": 921,
+    "image": "snap/held-xlife-48-240.webp"
+   }
+  },
+  {
+   "rank": 68,
+   "address": "0xfa977a0125c16a658a59ca1e59c7c48d58142226",
+   "name": "signaturepriest.eth",
+   "tao": 183796,
+   "rate": 236.4,
+   "works": 10,
+   "one_of_ones": 3,
+   "editions": 7,
+   "face": null,
+   "held": {
+    "id": "seize-and-share-freedom-to-live-1654",
+    "label": "Freedom to Live",
+    "since": "2022-12-12",
+    "days": 1416,
+    "image": "snap/held-seize-and-share-freedom-to-live-1654-240.webp"
+   }
+  },
+  {
+   "rank": 69,
+   "address": "0x1e7f2ef8bbde7fcaea03ba0c83d5d293d066f41c",
+   "name": "icdaywee.eth",
+   "tao": 183717,
+   "rate": 136.2,
+   "works": 17,
+   "one_of_ones": 1,
+   "editions": 16,
+   "face": "snap/pfp-1e7f2ef8bb-s.webp",
+   "held": {
+    "id": "xlife-2",
+    "label": "X Mode",
+    "since": "2022-12-31",
+    "days": 1397,
+    "image": "snap/held-xlife-2-240.webp"
+   }
+  },
+  {
+   "rank": 70,
+   "address": "0x7a79944ac7e770cfd13ec024a4b31b8c5efee60d",
+   "name": "alpinelifer.eth",
+   "tao": 179165,
+   "rate": 132,
+   "works": 16,
+   "one_of_ones": 1,
+   "editions": 15,
+   "face": "snap/pfp-7a79944ac7-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-09",
+    "days": 1633,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 71,
+   "address": "0xa9276b86e04058b70cd43916e8e666bc3ad5bc9a",
+   "name": "0xa927…bc9a",
+   "tao": 171731,
+   "rate": 113.4,
+   "works": 5,
+   "one_of_ones": 0,
+   "editions": 5,
+   "face": "snap/pfp-a9276b86e0-s.webp",
+   "held": {
+    "id": "geodetic-memory-geodetic-memory",
+    "label": "Geodetic Memory",
+    "since": "2022-07-18",
+    "days": 1563,
+    "image": "snap/held-geodetic-memory-geodetic-memory-240.webp"
+   }
+  },
+  {
+   "rank": 72,
+   "address": "0xd0fefee51ac174206aed0f859ab73a0960b2523f",
+   "name": "0xd0fe…523f",
+   "tao": 170043,
+   "rate": 215.4,
+   "works": 4,
+   "one_of_ones": 3,
+   "editions": 1,
+   "face": null,
+   "held": {
+    "id": "two-burdens-25",
+    "label": "The Highwayman",
+    "since": "2024-08-22",
+    "days": 797,
+    "image": "snap/held-two-burdens-25-240.webp"
+   }
+  },
+  {
+   "rank": 73,
+   "address": "0xc457fee0564bf3eb972114762f62ab45c0e3590b",
+   "name": "rakeshpulapa.eth",
+   "tao": 169665,
+   "rate": 102.6,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": "snap/pfp-c457fee056-s.webp",
+   "held": {
+    "id": "geodetic-moments-5",
+    "label": "Geodetic Moment #5",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-5-240.webp"
+   }
+  },
+  {
+   "rank": 74,
+   "address": "0xe6666ba861c4749e316756e3f599676d1184e77c",
+   "name": "mavin.eth",
+   "tao": 164353,
+   "rate": 98.4,
+   "works": 7,
+   "one_of_ones": 1,
+   "editions": 6,
+   "face": "snap/pfp-e6666ba861-s.webp",
+   "held": {
+    "id": "geodetic-moments-17",
+    "label": "Geodetic Moment #17",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-17-240.webp"
+   }
+  },
+  {
+   "rank": 75,
+   "address": "0x91cb1ff4322559a5c5c67dba075ab081c255ba1f",
+   "name": "adacrow.eth",
+   "tao": 163764,
+   "rate": 184.2,
+   "works": 11,
+   "one_of_ones": 2,
+   "editions": 9,
+   "face": "snap/pfp-91cb1ff432-s.webp",
+   "held": {
+    "id": "seize-and-share-certificate-of-mint-1918",
+    "label": "Certificate of Mint",
+    "since": "2022-10-14",
+    "days": 1475,
+    "image": "snap/held-seize-and-share-certificate-of-mint-1918-240.webp"
+   }
+  },
+  {
+   "rank": 76,
+   "address": "0x9e597a7e01ed135effb7e95bd017fe958e7656b8",
+   "name": "0x9e59…56b8",
+   "tao": 163086,
+   "rate": 351.6,
+   "works": 22,
+   "one_of_ones": 4,
+   "editions": 18,
+   "face": null,
+   "held": {
+    "id": "patrimora-94",
+    "label": "Patrimora #94",
+    "since": "2025-07-21",
+    "days": 464,
+    "image": "snap/held-patrimora-94-240.webp"
+   }
+  },
+  {
+   "rank": 77,
+   "address": "0x057117f9c9e95c2804c6133c6d63b32a519eec57",
+   "name": "0x0571…ec57",
+   "tao": 162652,
+   "rate": 113.4,
+   "works": 11,
+   "one_of_ones": 0,
+   "editions": 11,
+   "face": null,
+   "held": {
+    "id": "geodetic-memory-geodetic-memory",
+    "label": "Geodetic Memory",
+    "since": "2022-07-10",
+    "days": 1571,
+    "image": "snap/held-geodetic-memory-geodetic-memory-240.webp"
+   }
+  },
+  {
+   "rank": 78,
+   "address": "0x319af5203839970ccb04d2eda95c427941c498ae",
+   "name": "0x319a…98ae",
+   "tao": 160890,
+   "rate": 98.4,
+   "works": 7,
+   "one_of_ones": 1,
+   "editions": 6,
+   "face": "snap/pfp-319af52038-s.webp",
+   "held": {
+    "id": "geodetic-moments-72",
+    "label": "Geodetic Moment #72",
+    "since": "2022-04-21",
+    "days": 1651,
+    "image": "snap/held-geodetic-moments-72-240.webp"
+   }
+  },
+  {
+   "rank": 79,
+   "address": "0xeeda4e9a5ca757e3a2dd9ab5d91e99c4a1ff0423",
+   "name": "0x69x0.eth",
+   "tao": 159644,
+   "rate": 117.6,
+   "works": 12,
+   "one_of_ones": 0,
+   "editions": 12,
+   "face": "snap/pfp-eeda4e9a5c-s.webp",
+   "held": {
+    "id": "xlife-3",
+    "label": "New Year, New X",
+    "since": "2023-01-03",
+    "days": 1394,
+    "image": "snap/held-xlife-3-240.webp"
+   }
+  },
+  {
+   "rank": 80,
+   "address": "0xbe8fe12b9eb1ca2a593e6c070c71c294b6fe9f00",
+   "name": "poseidon.eth",
+   "tao": 159474,
+   "rate": 276,
+   "works": 4,
+   "one_of_ones": 4,
+   "editions": 0,
+   "face": "snap/pfp-be8fe12b9e-s.webp",
+   "held": {
+    "id": "patrimora-164",
+    "label": "Patrimora #164",
+    "since": "2025-03-29",
+    "days": 578,
+    "image": "snap/held-patrimora-164-240.webp"
+   }
+  },
+  {
+   "rank": 81,
+   "address": "0x895bef95023f591ebd1a9e8f53bed2b73702e4d1",
+   "name": "vivianeg.eth",
+   "tao": 155937,
+   "rate": 94.2,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": "snap/pfp-895bef9502-s.webp",
+   "held": {
+    "id": "geodetic-moments-2",
+    "label": "Geodetic Moment #2",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-2-240.webp"
+   }
+  },
+  {
+   "rank": 82,
+   "address": "0xf52a30142877e3b7d30f3f6bb2c6bc55b8888710",
+   "name": "astromarkc.eth",
+   "tao": 155012,
+   "rate": 115.2,
+   "works": 13,
+   "one_of_ones": 1,
+   "editions": 12,
+   "face": "snap/pfp-f52a301428-s.webp",
+   "held": {
+    "id": "seize-and-share-anxn-3250",
+    "label": "Anxn",
+    "since": "2022-12-24",
+    "days": 1404,
+    "image": "snap/held-seize-and-share-anxn-3250-240.webp"
+   }
+  },
+  {
+   "rank": 83,
+   "address": "0xab0e2f3c3c29deaa7c3ca0dacec97a33d5c26708",
+   "name": "muzeu.eth",
+   "tao": 154229,
+   "rate": 105,
+   "works": 7,
+   "one_of_ones": 0,
+   "editions": 7,
+   "face": "snap/pfp-ab0e2f3c3c-s.webp",
+   "held": {
+    "id": "seize-and-share-dalleglytch6529-387",
+    "label": "Dalleglytch6529",
+    "since": "2022-08-04",
+    "days": 1546,
+    "image": "snap/held-seize-and-share-dalleglytch6529-387-240.webp"
+   }
+  },
+  {
+   "rank": 84,
+   "address": "0x3c2550ddb9294c21d209999bdaa15f8249d0c161",
+   "name": "0xdariush.eth",
+   "tao": 153540,
+   "rate": 106.8,
+   "works": 11,
+   "one_of_ones": 1,
+   "editions": 10,
+   "face": null,
+   "held": {
+    "id": "seize-and-share-freedom-to-live-1654",
+    "label": "Freedom to Live",
+    "since": "2022-09-25",
+    "days": 1494,
+    "image": "snap/held-seize-and-share-freedom-to-live-1654-240.webp"
+   }
+  },
+  {
+   "rank": 85,
+   "address": "0xe53c5b4f841570d193e05a27bfafe1c554f14875",
+   "name": "icki.eth",
+   "tao": 150816,
+   "rate": 115.2,
+   "works": 10,
+   "one_of_ones": 1,
+   "editions": 9,
+   "face": "snap/pfp-e53c5b4f84-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 86,
+   "address": "0x81b55fbe66c5ffbb8468328e924af96a84438f14",
+   "name": "a7111a.eth",
+   "tao": 150295,
+   "rate": 105,
+   "works": 13,
+   "one_of_ones": 0,
+   "editions": 13,
+   "face": "snap/pfp-81b55fbe66-s.webp",
+   "held": {
+    "id": "seize-and-share-seize-and-share-175",
+    "label": "Seize and Share",
+    "since": "2022-06-18",
+    "days": 1593,
+    "image": "snap/held-seize-and-share-seize-and-share-175-240.webp"
+   }
+  },
+  {
+   "rank": 87,
+   "address": "0xd70150a7a5a42d4cd25974dae077a79a1547fcf2",
+   "name": "ggroogle.eth",
+   "tao": 149367,
+   "rate": 105,
+   "works": 16,
+   "one_of_ones": 0,
+   "editions": 16,
+   "face": "snap/pfp-d70150a7a5-s.webp",
+   "held": {
+    "id": "2022-10k-1",
+    "label": "10k Project Black and White",
+    "since": "2022-05-28",
+    "days": 1614,
+    "image": "snap/held-2022-10k-1-240.webp"
+   }
+  },
+  {
+   "rank": 88,
+   "address": "0x5b046272cb9fde317ab73a836546e52b1f2d81f3",
+   "name": "sarahc.eth",
+   "tao": 145543,
+   "rate": 111,
+   "works": 7,
+   "one_of_ones": 1,
+   "editions": 6,
+   "face": "snap/pfp-5b046272cb-s.webp",
+   "held": {
+    "id": "2022-10k-2",
+    "label": "10k Project",
+    "since": "2022-05-13",
+    "days": 1629,
+    "image": "snap/held-2022-10k-2-240.webp"
+   }
+  },
+  {
+   "rank": 89,
+   "address": "0x595a1b38c53d8fb5fbdf68196f22ef79fe59c9e9",
+   "name": "0x595a…c9e9",
+   "tao": 143017,
+   "rate": 106.8,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": null,
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 90,
+   "address": "0x930922b1114ed66734bd773184667b227520f43f",
+   "name": "spuddhism.eth",
+   "tao": 142885,
+   "rate": 106.8,
+   "works": 10,
+   "one_of_ones": 1,
+   "editions": 9,
+   "face": "snap/pfp-930922b111-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 91,
+   "address": "0xba0431f70833fe78d118f1e55bab3c8a526f303c",
+   "name": "0xba04…303c",
+   "tao": 141939,
+   "rate": 90,
+   "works": 5,
+   "one_of_ones": 1,
+   "editions": 4,
+   "face": "snap/pfp-ba0431f708-s.webp",
+   "held": {
+    "id": "roads-and-rivers-roads-and-rivers-traffic",
+    "label": "Roads and Rivers Traffic",
+    "since": "2022-10-11",
+    "days": 1478,
+    "image": "snap/held-roads-and-rivers-roads-and-rivers-traffic-240.webp"
+   }
+  },
+  {
+   "rank": 92,
+   "address": "0x266d5bdae1a0bb609b3de4c5c8aae4231e356bf7",
+   "name": "pandl.eth",
+   "tao": 141126,
+   "rate": 94.2,
+   "works": 7,
+   "one_of_ones": 1,
+   "editions": 6,
+   "face": "snap/pfp-266d5bdae1-s.webp",
+   "held": {
+    "id": "geodetica-58",
+    "label": "Geodetica #58",
+    "since": "2022-08-23",
+    "days": 1527,
+    "image": "snap/held-geodetica-58-240.webp"
+   }
+  },
+  {
+   "rank": 93,
+   "address": "0x87accabbdedce63379af9d246bb979a3a481534c",
+   "name": "artnftlove.eth",
+   "tao": 140908,
+   "rate": 85.8,
+   "works": 5,
+   "one_of_ones": 1,
+   "editions": 4,
+   "face": "snap/pfp-87accabbde-s.webp",
+   "held": {
+    "id": "geodetic-moments-1",
+    "label": "Geodetic Moment #1",
+    "since": "2022-04-21",
+    "days": 1651,
+    "image": "snap/held-geodetic-moments-1-240.webp"
+   }
+  },
+  {
+   "rank": 94,
+   "address": "0xa8ef8e793210158ece2dbdb87b091f1574f0adb9",
+   "name": "leepengelly.eth",
+   "tao": 137708,
+   "rate": 81.6,
+   "works": 6,
+   "one_of_ones": 1,
+   "editions": 5,
+   "face": "snap/pfp-a8ef8e7932-s.webp",
+   "held": {
+    "id": "geodetic-moments-74",
+    "label": "Geodetic Moment #74",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-74-240.webp"
+   }
+  },
+  {
+   "rank": 95,
+   "address": "0x7b0546d5847f5d6b2f0702e9e71ac0c371d54dca",
+   "name": "0x7b05…4dca",
+   "tao": 137343,
+   "rate": 102.6,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": null,
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 96,
+   "address": "0x01ab06f4eb304a6f804e26cbe5f16d23d06b68a5",
+   "name": "0x01ab…68a5",
+   "tao": 137342,
+   "rate": 102.6,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": "snap/pfp-01ab06f4eb-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 96,
+   "address": "0x8af6e15ed513b5b73573f58158b1b0bbd5085ec7",
+   "name": "0x8af6…5ec7",
+   "tao": 137342,
+   "rate": 102.6,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": null,
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 96,
+   "address": "0xfcbfe4130a0031558b10053f17b7597f428a59e8",
+   "name": "0xfcbf…59e8",
+   "tao": 137342,
+   "rate": 102.6,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": "snap/pfp-fcbfe4130a-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 99,
+   "address": "0xfb74eee69be0c2bd8fb42ee67b6b6c4e05cd9ddd",
+   "name": "craigreilly.eth",
+   "tao": 137340,
+   "rate": 102.6,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": "snap/pfp-fb74eee69b-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 100,
+   "address": "0xce7640ae90b7ebdecd188419a7c6fb0f3edc78be",
+   "name": "0xce76…78be",
+   "tao": 137338,
+   "rate": 102.6,
+   "works": 9,
+   "one_of_ones": 1,
+   "editions": 8,
+   "face": "snap/pfp-ce7640ae90-s.webp",
+   "held": {
+    "id": "xlife-11",
+    "label": "Resurrection of X",
+    "since": "2023-01-31",
+    "days": 1366,
+    "image": "snap/held-xlife-11-240.webp"
+   }
+  },
+  {
+   "rank": 101,
+   "address": "0x49f49396c23e4b976e375231a210b04b93569b1b",
+   "name": "elenagraham.eth",
+   "tao": 137298,
+   "rate": 81.6,
+   "works": 5,
+   "one_of_ones": 1,
+   "editions": 4,
+   "face": "snap/pfp-49f49396c2-s.webp",
+   "held": {
+    "id": "geodetic-moments-21",
+    "label": "Geodetic Moment #21",
+    "since": "2022-02-17",
+    "days": 1714,
+    "image": "snap/held-geodetic-moments-21-240.webp"
+   }
+  }
+ ],
+ "front": {
+  "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+  "name": "piercedcat.eth",
+  "tao": 569276,
+  "rate": 559.2,
+  "one_of_ones": 5,
+  "editions": 39,
+  "face": "snap/pfp-dafa9e3dae.webp",
+  "works": [
+   {
+    "id": "first-selfie-99",
+    "title": "First Selfie #98 Deca",
+    "unique": true,
+    "tao": 94175,
+    "image": "snap/work-first-selfie-99.webp"
+   },
+   {
+    "id": "panoptic-10",
+    "title": "Panoptic X",
+    "unique": true,
+    "tao": 90283,
+    "image": "snap/work-panoptic-10.webp"
+   },
+   {
+    "id": "roads-and-rivers-2",
+    "title": "Roads and Rivers #2",
+    "unique": true,
+    "tao": 62580,
+    "image": "snap/work-roads-and-rivers-2.webp"
+   },
+   {
+    "id": "patrimora-84",
+    "title": "Patrimora #84",
+    "unique": true,
+    "tao": 43469,
+    "image": "snap/work-patrimora-84.webp"
+   },
+   {
+    "id": "pixelarcade-13",
+    "title": "Eight-Bit Study No. 13",
+    "unique": true,
+    "tao": 4669,
+    "image": "snap/work-pixelarcade-13.webp"
+   },
+   {
+    "id": "2022-10k-2",
+    "title": "10k Project",
+    "unique": false,
+    "tao": 13698,
+    "image": "snap/work-2022-10k-2.webp"
+   },
+   {
+    "id": "seize-and-share-eth-is-finite-1805",
+    "title": "Eth Is Finite",
+    "unique": false,
+    "tao": 12463,
+    "image": "snap/work-seize-and-share-eth-is-finite-1805.webp"
+   },
+   {
+    "id": "seize-and-share-certificate-of-mint-1918",
+    "title": "Certificate of Mint",
+    "unique": false,
+    "tao": 12387,
+    "image": "snap/work-seize-and-share-certificate-of-mint-1918.webp"
+   }
+  ],
+  "weighed": 222222
+ },
+ "strip": {
+  "no": 1,
+  "address": "320 West",
+  "street": "Heretaunga St W",
+  "building": "F.King building",
+  "size": "6.0 m × 545 mm",
+  "before": "snap/street-1-before.jpg",
+  "after": "snap/street-1-after.jpg",
+  "before_size": {
+   "w": 4032,
+   "h": 3024
+  },
+  "after_size": {
+   "w": 3944,
+   "h": 5327
+  },
+  "H": [
+   [
+    0.776141985,
+    0.02032049,
+    147.696275136
+   ],
+   [
+    0.039268885,
+    0.766399047,
+    -1046.057629197
+   ],
+   [
+    0.000032182,
+    0.000007732,
+    1
+   ]
+  ],
+  "after_in_before": [
+   [
+    147.7,
+    -1046.1
+   ],
+   [
+    2847.4,
+    -790.8
+   ],
+   [
+    2839.7,
+    2732.1
+   ],
+   [
+    245.8,
+    2916.4
+   ]
+  ],
+  "fascia": [
+   [
+    575,
+    950
+   ],
+   [
+    3405,
+    1015
+   ],
+   [
+    3405,
+    1290
+   ],
+   [
+    575,
+    1262
+   ]
+  ],
+  "swatches": [
+   {
+    "hex": "#E06448",
+    "x": 496.8,
+    "y": 1166.4
+   },
+   {
+    "hex": "#4C413F",
+    "x": 1569.4,
+    "y": 1326.1
+   },
+   {
+    "hex": "#D5C089",
+    "x": 2511.5,
+    "y": 869.7
+   },
+   {
+    "hex": "#2F201D",
+    "x": 2632.1,
+    "y": 1544.5
+   },
+   {
+    "hex": "#60B15C",
+    "x": 3655.8,
+    "y": 1097.9
+   }
+  ]
+ },
+ "slider": {
+  "min": 80,
+  "max": 240,
+  "step": 10,
+  "standard": 120
+ },
+ "register": {
+  "collectors": 3676,
+  "tao_live": 75944933
+ }
+}

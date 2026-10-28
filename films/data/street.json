@@ -1,0 +1,93 @@
+{
+ "_note": "Per site, from data/register-street.py and data/street-swatches.py (OpenCV, run once). H maps the after photo onto the before photo, in full-resolution pixels. fascia is the empty fascia's corners in the before photo (TL, TR, BR, BL). swatches are the painting's colours found on the street, each at the point in the before photo where it sits; colours not on the street are left out.",
+ "1": {
+  "before_size": {
+   "w": 4032,
+   "h": 3024
+  },
+  "after_size": {
+   "w": 3944,
+   "h": 5327
+  },
+  "H": [
+   [
+    0.776141985,
+    0.02032049,
+    147.696275136
+   ],
+   [
+    0.039268885,
+    0.766399047,
+    -1046.057629197
+   ],
+   [
+    3.2182e-05,
+    7.732e-06,
+    1.0
+   ]
+  ],
+  "after_in_before": [
+   [
+    147.7,
+    -1046.1
+   ],
+   [
+    2847.4,
+    -790.8
+   ],
+   [
+    2839.7,
+    2732.1
+   ],
+   [
+    245.8,
+    2916.4
+   ]
+  ],
+  "fascia": [
+   [
+    575,
+    950
+   ],
+   [
+    3405,
+    1015
+   ],
+   [
+    3405,
+    1290
+   ],
+   [
+    575,
+    1262
+   ]
+  ],
+  "swatches": [
+   {
+    "hex": "#E06448",
+    "x": 496.8,
+    "y": 1166.4
+   },
+   {
+    "hex": "#4C413F",
+    "x": 1569.4,
+    "y": 1326.1
+   },
+   {
+    "hex": "#D5C089",
+    "x": 2511.5,
+    "y": 869.7
+   },
+   {
+    "hex": "#2F201D",
+    "x": 2632.1,
+    "y": 1544.5
+   },
+   {
+    "hex": "#60B15C",
+    "x": 3655.8,
+    "y": 1097.9
+   }
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "mintface-films",
+  "private": true,
+  "type": "module",
+  "description": "Four short films and a 60-second cut for X, built from mintface.art's real data. See FILMS.md.",
+  "scripts": {
+    "pull": "node data/pull.ts",
+    "capture": "node capture.ts",
+    "grep": "node secret-grep.ts",
+    "render": "node render.ts",
+    "studio": "remotion studio src/index.ts",
+    "all": "node data/pull.ts && node capture.ts && node secret-grep.ts && node render.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.539",
+    "@remotion/cli": "4.0.539",
+    "@remotion/renderer": "4.0.539",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "remotion": "4.0.539"
+  }
+}

@@ -1,0 +1,86 @@
+{
+ "_note": "All copy and timings for the films (FILMS.md). Times are seconds of the film's own timeline; every master holds its first frame for 0.5 s before it (the clean head), and the end card takes the last 2 s. {tokens} are filled from data/snapshot.json at render, so a figure on screen is always the snapshot's. No em-dashes: use an ellipsis. Edit a film's block and `npm run films` re-renders that film and the 60-second cut, nothing else.",
+ "fps": 60,
+ "width": 1920,
+ "height": 1080,
+ "board_nudge": "nudge-5",
+ "front_collector": "piercedcat.eth",
+ "featured_count": 4,
+ "hold_rank": 1,
+ "street_site": 1,
+ "chat_range": [393, 395],
+ "films": {
+  "01-strips": {
+   "duration": 20,
+   "title": "//Strips",
+   "beats": [
+    { "at": 0, "to": 3, "type": "//Strips" },
+    { "at": 3, "to": 8, "type": "Colours from the street." },
+    { "at": 8, "to": 12, "type": "Heretaunga St West.", "corner": "No. {site_no} · {site_street_no} Heretaunga St West" },
+    { "at": 12, "to": 17.0, "type": "Your size. {slider_min} to {slider_max} cm." }
+   ],
+   "end": "mintface.art/c/strip-paintings"
+  },
+  "02-tao": {
+   "duration": 20,
+   "beats": [
+    { "at": 0, "to": 3, "type": "TAO", "label": "Total Art Owned" },
+    { "at": 3, "to": 8, "type": "Hold a 1/1. {rate_unique} TAO a day." },
+    { "at": 8, "to": 11, "type": "An edition. {rate_edition} a day." },
+    { "at": 11, "to": 17.0, "type": "Time held is your weight." }
+   ],
+   "end": "mintface.art/studio"
+  },
+  "03-collectors": {
+   "duration": 20,
+   "beats": [
+    { "at": 0, "to": 4, "type": "Every collector." },
+    { "at": 4, "to": 9, "type": "Ranked by time held." },
+    { "at": 9, "to": 14, "type": "" },
+    { "at": 14, "to": 17.0, "type": "Hold a face. See what they've kept." }
+   ],
+   "end": "collectors.mintface.art"
+  },
+  "04-studio": {
+   "duration": 20,
+   "beats": [
+    { "at": 0, "to": 3, "type": "The studio." },
+    { "at": 3, "to": 7, "type": "{locked_word} colours chosen by collectors." },
+    { "at": 7, "to": 10, "type": "Nudge", "label": "The artist asks. Collectors propose." },
+    { "at": 10, "to": 15, "type": "Weigh in", "label": "Back a colour with your TAO." },
+    { "at": 15, "to": 17.0, "type": "Talk to the artist." }
+   ],
+   "rule": ["Most TAO at close locks", "5 collectors + 500K TAO carries it outright"],
+   "end": "mintface.art/studio"
+  },
+  "00-mintface-60": {
+   "duration": 60,
+   "open": "MintFace",
+   "open_len": 2.0,
+   "chapters": [
+    {
+     "film": "01-strips",
+     "card": "//Strips",
+     "ranges": [[0, 7.6], [12.3, 16.6]]
+    },
+    {
+     "film": "02-tao",
+     "card": "TAO",
+     "ranges": [[0, 7.8], [11.0, 16.0]]
+    },
+    {
+     "film": "03-collectors",
+     "card": "Collectors",
+     "ranges": [[0, 8.4], [14.0, 17.0]]
+    },
+    {
+     "film": "04-studio",
+     "card": "Studio",
+     "ranges": [[0, 6.9], [7.6, 14.9]]
+    }
+   ],
+   "card_len": 1.0,
+   "end": "mintface.art · collectors.mintface.art"
+  }
+ }
+}
