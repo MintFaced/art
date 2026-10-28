@@ -1,6 +1,6 @@
 {
- "_note": "Nudges: artist-authored questions the collectors weigh TAO behind. Authored in the studio, banked by api/cron/nudges.js. A nudge steers, it never commands ... except where the studio says otherwise on the nudge itself, which is what `promise` is for. A nudge with kind: candidates has no sides: collectors propose the answers and weigh on them, and one locks only if the leader carries `lock.voters` collectors AND `lock.tao` TAO at close. `series` is the arc a nudge belongs to and `slot` is the colour it fills; the series block below is also the maker's community palette, so when the last slot locks the palette is simply complete. See docs/AVS-NUDGES.md.",
- "next_number": 6,
+ "_note": "Nudges: artist-authored questions the collectors weigh TAO behind. Authored in the studio, banked by api/cron/nudges.js. A nudge steers, it never commands ... except where the studio says otherwise on the nudge itself, which is what `promise` is for. A nudge with kind: candidates has no sides: collectors propose the answers and weigh on them, and at close the colour with the most TAO locks: `lock.voters` collectors AND `lock.tao` TAO carry it outright, and a lock short of either says so (`locked_by: close`, or `artist` where the studio locked it from the console). A tie the tie-break cannot settle waits for the artist. `series` is the arc a nudge belongs to and `slot` is the colour it fills; the series block below is also the maker's community palette, so when the last slot locks the palette is simply complete. See docs/AVS-NUDGES.md. `rev` counts every write: /api/nudge reads the newer of the deployment and the store copy written with it (api/_lib/nudge-file.js).",
+ "next_number": 7,
  "nudges": [
   {
    "id": "nudge-1",
@@ -1168,11 +1168,19 @@
      "total": 577222,
      "voters": 4
     },
-    "locked": null,
-    "locked_by": null,
-    "met": null,
+    "locked": {
+     "hex": "#17184B",
+     "total": 577222,
+     "voters": 4
+    },
+    "locked_by": "artist",
+    "locked_at": "2026-10-21T00:00:00.000Z",
+    "met": {
+     "voters": false,
+     "tao": true
+    },
     "closed_early": null,
-    "why": "The leading colour has the TAO and needs 5 collectors. It has 4.",
+    "why": null,
     "progress": {
      "voters": {
       "at": 4,
@@ -1307,8 +1315,28 @@
       ]
      }
     ],
-    "banked_at": "2026-10-21T22:00:12.082Z"
+    "banked_at": "2026-10-21T22:00:12.082Z",
+    "amended_at": "2026-10-28T05:41:33.173Z",
+    "amended": "Banked with nothing locked by the close job on 21 Oct; locked by the artist on 28 Oct on the board as it stood at close."
    }
+  },
+  {
+   "id": "nudge-6",
+   "number": 6,
+   "question": "Weigh in on the sixth colour.",
+   "kind": "candidates",
+   "series": "strip-palette",
+   "slot": 6,
+   "lock": {
+    "voters": 5,
+    "tao": 500000
+   },
+   "promise": "MintFace will paint the colour this locks. A nudge steers; this one decides.",
+   "note": "The colours already locked sit beside every candidate here: #0E5890, #80E080, #E080E0, #00B3B3, #17184B. This one has to stand clear of all of them ... the picker will not take a colour that does not. Propose one, or put your TAO behind one already on the board. Weighed TAO is never spent and never moves.",
+   "image": null,
+   "opens": "2026-10-28T05:41:33.173Z",
+   "closes": "2026-11-11T00:00:00.000Z",
+   "published": true
   }
  ],
  "series": {
@@ -1344,5 +1372,6 @@
    0.1
   ],
   "field_share": 0.25
- }
+ },
+ "rev": 1
 }
