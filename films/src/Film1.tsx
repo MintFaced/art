@@ -15,10 +15,8 @@ const ID = '01-strips';
 const st = S.strip;
 const PANEL = { x: 120, y: 228, w: 1680, h: 640 };
 type Cam = { x: number; y: number; w: number };
-const A: Cam = { x: 0, y: 470, w: 4032 };
-const B: Cam = { x: 440, y: 799, w: 2360 };
-const C0: Cam = { x: 520, y: 892, w: 1500 };
-const C1: Cam = { x: 1300, y: 892, w: 1500 };
+/* The site's framings, in before-photo pixels (data/street.json). */
+const { A, B, C0, C1 } = st.cams as Record<'A' | 'B' | 'C0' | 'C1', Cam>;
 
 const mixCam = (a: Cam, b: Cam, p: number): Cam => ({ x: lerp(a.x, b.x, p), y: lerp(a.y, b.y, p), w: Math.exp(lerp(Math.log(a.w), Math.log(b.w), p)) });
 const camAt = (frame: number): Cam => {

@@ -184,6 +184,11 @@ const strip = {
   after: await keep(`${ASSETS}/${site.specimens.after}`, `street-${site.no}-after`),
   ...street,
 };
+/* street.json can name a sharper original than R2 holds (328 West's before).
+   That one is not pulled, so stop here if it is missing. */
+for (const k of ['before', 'after']) if (street[k] && !fs.existsSync(path.join(ROOT, 'public', street[k]))) {
+  throw new Error(`public/${street[k]} (named in data/street.json) is missing: copy the original in`);
+}
 
 /* ---------------------------------------------------------- the slider */
 const len = /const LEN = \{ min: (\d+), max: (\d+), step: (\d+), standard: (\d+) \}/.exec(stripHome);

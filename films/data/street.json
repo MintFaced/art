@@ -1,5 +1,5 @@
 {
- "_note": "Per site, from data/register-street.py and data/street-swatches.py (OpenCV, run once). H maps the after photo onto the before photo, in full-resolution pixels. fascia is the empty fascia's corners in the before photo (TL, TR, BR, BL). swatches are the painting's colours found on the street, each at the point in the before photo where it sits; colours not on the street are left out.",
+ "_note": "Per site, from data/register-street.py and data/street-swatches.py (OpenCV, run once). H maps the after photo onto the before photo, in full-resolution pixels. fascia is the empty fascia's corners in the before photo (TL, TR, BR, BL). swatches are the painting's colours found on the street, each at the point in the before photo where it sits; colours not on the street are left out. cams are film 1's four framings in before-photo pixels (A wide, B closer, C0 and C1 the pan on the fascia). before/after here override the pictures pull.ts copies from R2. Site 2 (328 West): the before is Ryan's 4032 px original (Downloads/328_West_1.JPG; R2 holds a 2000 px copy) and the after is R2's 2000 px frontal shot. Its H is fitted to the four fascia corners alone, since the Value Hub sign is not in the fascia's plane; the frames keep out the man on the bench (x < 300) and both cars' plates. Its yellow is the sign, found at tolerance 22 (the sign reads darker in that sun).",
  "1": {
   "before_size": {
    "w": 4032,
@@ -88,6 +88,141 @@
     "x": 3655.8,
     "y": 1097.9
    }
-  ]
+  ],
+  "cams": {
+   "A": {
+    "x": 0,
+    "y": 470,
+    "w": 4032
+   },
+   "B": {
+    "x": 440,
+    "y": 799,
+    "w": 2360
+   },
+   "C0": {
+    "x": 520,
+    "y": 892,
+    "w": 1500
+   },
+   "C1": {
+    "x": 1300,
+    "y": 892,
+    "w": 1500
+   }
+  }
+ },
+ "2": {
+  "before": "snap/street-2-before.jpg",
+  "before_size": {
+   "w": 4032,
+   "h": 3024
+  },
+  "after_size": {
+   "w": 2000,
+   "h": 1500
+  },
+  "H": [
+   [
+    0.906698871,
+    0.046097998,
+    788.823073185
+   ],
+   [
+    -0.194504153,
+    1.355926193,
+    767.550039062
+   ],
+   [
+    -0.000130882,
+    3.3937e-05,
+    1.0
+   ]
+  ],
+  "after_in_before": [
+   [
+    789.0,
+    768.0
+   ],
+   [
+    3525.0,
+    513.0
+   ],
+   [
+    3385.0,
+    3057.0
+   ],
+   [
+    816.0,
+    2666.0
+   ]
+  ],
+  "fascia": [
+   [
+    2110,
+    1220
+   ],
+   [
+    3077,
+    1262
+   ],
+   [
+    3068,
+    1502
+   ],
+   [
+    2108,
+    1463
+   ]
+  ],
+  "swatches": [
+   {
+    "hex": "#E4D43B",
+    "x": 1184.9,
+    "y": 1353.7
+   },
+   {
+    "hex": "#5C5853",
+    "x": 1613.5,
+    "y": 1603.4
+   },
+   {
+    "hex": "#ABBBCC",
+    "x": 1903.3,
+    "y": 931.2
+   },
+   {
+    "hex": "#898E8F",
+    "x": 3152.1,
+    "y": 965.2
+   },
+   {
+    "hex": "#332F2C",
+    "x": 3238.4,
+    "y": 801.8
+   }
+  ],
+  "cams": {
+   "A": {
+    "x": 300,
+    "y": 700,
+    "w": 3700
+   },
+   "B": {
+    "x": 1300,
+    "y": 990,
+    "w": 2100
+   },
+   "C0": {
+    "x": 1750,
+    "y": 1090,
+    "w": 1600
+   },
+   "C1": {
+    "x": 1880,
+    "y": 1120,
+    "w": 1450
+   }
+  }
  }
 }
