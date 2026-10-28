@@ -51,6 +51,22 @@ is('an artist lock says so on the timeline',
   text('nudge-lock', artist).endsWith('LOCKED BY THE ARTIST AT 4 OF 5 VOTERS'), true);
 is('a threshold lock claims nothing for him',
   text('nudge-lock', { ...artist, locked_by: 'threshold', met: { voters: true, tao: true }, voters: 6 }).includes('ARTIST'), false);
+is('a lock at close says what it was short of',
+  text('nudge-lock', { ...artist, locked_by: 'close' }).endsWith('LOCKED AT CLOSE AT 4 OF 5 VOTERS'), true);
+is('and claims nothing for the artist', text('nudge-lock', { ...artist, locked_by: 'close' }).includes('ARTIST'), false);
+is('a lock at close that carried both halves is a plain lock',
+  text('nudge-lock', { ...artist, locked_by: 'threshold', met: { voters: true, tao: true }, voters: 6 }).includes('AT CLOSE'), false);
+
+head('Once per act');
+{
+  const src = readFileSync(new URL('../../api/_lib/wire.js', import.meta.url), 'utf8');
+  const cron = readFileSync(new URL('../../api/cron/nudges.js', import.meta.url), 'utf8');
+  const con = readFileSync(new URL('../../api/studio-api.js', import.meta.url), 'utf8');
+  is('an act is claimed before it is queued', /\['SET', keys\.once\(once\), id, 'NX'\]/.test(src), true);
+  is('the close job claims the lock for the nudge', /once: `\$\{d\.n\.id\}:lock`/.test(cron), true);
+  is('and the console claims the same act', /once: `\$\{n\.id\}:lock`/.test(con), true);
+  is('an open is claimed once too', /once: `\$\{id\}:open`/.test(con), true);
+}
 
 head('Naming, and being left alone');
 is('a handle is used where the overlay knows one', who('0xaaa', OVERLAY).label, '@piercedcat');

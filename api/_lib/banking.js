@@ -70,12 +70,58 @@ export async function confirmCombos(rows, dropped = []) {
  * @param decision  { by: 'artist', hex } to lock against the thresholds, or
  *                  null to let them decide, which is the cron's case.
  */
-export async function bankNudge(n, ctx, decision = null, dropped = []) {
+export async function bankNudge(n, ctx, decision = null, dropped = [], { now = new Date() } = {}) {
   const rows = await confirmCombos(bankingRows(ctx.weighings, n), dropped);
   if (kindOf(n) === CANDIDATES) {
     const p = palette(rows, ctx.proposals.filter((x) => x.nudge === n.id), comboReader(ctx.readTao, rows), n);
-    return { banked: bankCandidates(p, n, decision), p };
+    return { banked: bankCandidates(p, n, decision, { now }), p };
   }
   const t = tally(rows, comboReader(ctx.readTao, rows));
   return { banked: bankTally(t, n), t };
+}
+
+/** The tweet a lock makes, from either hand that locks. */
+export function lockEvent(n, banked, arc, slotsRowOf) {
+  return {
+    number: n.number, hex: banked.locked.hex, total: banked.locked.total,
+    voters: banked.locked.voters, slot: n.slot || null, slots: (arc && arc.slots) || 12,
+    locked_by: banked.locked_by, met: banked.met, rule: banked.rule,
+    slots_row: slotsRowOf(arc),
+  };
+}
+
+/** What the close job may touch: published, not banked, and past its date. */
+export const dueAt = (store, now = new Date()) => (store.nudges || []).filter((n) =>
+  !n.banked && n.published !== false && new Date(n.closes).getTime() <= now.getTime());
+
+/**
+ * Close every nudge whose date has passed, in place on `store`.
+ *
+ * Pure apart from the COMBO re-check inside bankNudge, so a test can hand it a
+ * nudge that closed yesterday and read what it did and why. The one nudge it
+ * leaves alone is a board of colours tied on everything the tie-break reads:
+ * there the artist decides, so it waits on the console rather than banking
+ * empty, which is the exact trap #5 fell into.
+ *
+ * @returns [{ n, banked, held, why }]  `held` is true where nothing was written.
+ */
+export async function closeDue(store, ctx, { now = new Date(), dropped = [] } = {}) {
+  const out = [];
+  for (const n of dueAt(store, now)) {
+    const res = await bankNudge(n, ctx, null, dropped, { now });
+    const b = res.banked;
+    const when = `closed ${new Date(n.closes).toISOString().slice(0, 16).replace('T', ' ')} UTC`;
+    if (kindOf(n) === CANDIDATES && !b.locked && res.p && res.p.tied) {
+      out.push({ n, banked: null, held: true, why: `#${n.number} ${when} · ${res.p.why} Waiting on the console.` });
+      continue;
+    }
+    n.banked = b;
+    let why;
+    if (kindOf(n) !== CANDIDATES) why = `#${n.number} ${when} · ${b.result} · ${Math.round(b.total)} TAO across ${b.collectors}`;
+    else if (!b.locked) why = `#${n.number} ${when} · nothing locked · ${res.p.why}`;
+    else if (b.locked_by === 'close') why = `#${n.number} ${when} · ${b.locked.hex} led on TAO, so it locked · short of the thresholds`;
+    else why = `#${n.number} ${when} · ${b.locked.hex} carried both thresholds`;
+    out.push({ n, banked: b, held: false, why });
+  }
+  return out;
 }

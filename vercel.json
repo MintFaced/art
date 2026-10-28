@@ -188,7 +188,7 @@
     },
     {
       "path": "/api/cron/nudges",
-      "schedule": "0 22 * * *"
+      "schedule": "5 * * * *"
     },
     {
       "path": "/api/cron/active",

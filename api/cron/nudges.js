@@ -1,8 +1,8 @@
-import { readFile, writeFile } from '../_lib/repo.js';
-import { kindOf, CANDIDATES } from '../_lib/nudges.js';
-import { bankingContext, bankNudge } from '../_lib/banking.js';
+import { readFile } from '../_lib/repo.js';
+import { bankingContext, closeDue, dueAt, lockEvent } from '../_lib/banking.js';
 import { enqueue, slotsRow } from '../_lib/wire.js';
 import { seriesState } from '../_lib/palette.js';
+import { saveNudges, logAct, PATH } from '../_lib/nudge-file.js';
 
 /* Banking a nudge.
  *
@@ -34,59 +34,48 @@ export async function GET(request) {
   const site = process.env.SITE_ORIGIN || 'https://mintface.art';
   const at = async (p) => (await fetch(`${site}/${p}`, { headers: { accept: 'application/json' } })).json();
 
-  const ctx = await bankingContext(at);
-  const file = await readFile('data/nudges.json');
+  /* HOURLY, AT FIVE PAST. It ran once a day at 22:00 UTC, which banked a
+     nudge that closed at 1pm in Hastings at 11am the next day ... and in the
+     twenty-two hours between, the board said closed while nothing had been
+     decided. Every hour is the close within the hour, in either daylight, and
+     an hour with nothing due reads one file and stops. */
+  const file = await readFile(PATH);
   const store = JSON.parse(file.text);
-  const dropped = [];
-
-  const now = Date.now();
-  const banked = [];
-  for (const n of store.nudges || []) {
-    if (n.banked || n.published === false) continue;
-    if (new Date(n.closes).getTime() > now) continue;
-    /* A yes or a no keeps one weighing per wallet; a board of colours folds
-       every row a wallet ever signed. Taking the latest on a board throws away
-       every colour but the last one touched, which on nudge #1 was the whole
-       difference between a colour locking and nothing locking at all. */
-    /* A nudge with candidates banks a colour, or banks the fact that no colour
-       reached the threshold. Both are records and the second is not a failure:
-       the studio undertook to paint what locked, and a lock that would have
-       been carried by three people or by one wallet's holding is not the thing
-       that was promised.
-
-       No decision is passed: at the close date the thresholds decide, which is
-       the normal path. The artist's own lock comes through the console and the
-       same function, and says so on the card. */
-    const out = await bankNudge(n, ctx, null, dropped);
-    n.banked = out.banked;
-    /* The same event the console raises when it closes one early, from the
-       other path that closes them. One kind of thing happened, so one kind of
-       event goes out, and the feed cannot tell which hand did it ... which is
-       right, because the card already says. */
-    if (out.banked.locked) {
-      const arc = seriesState(store);
-      await enqueue('nudge-lock', {
-        number: n.number, hex: out.banked.locked.hex, total: out.banked.locked.total,
-        voters: out.banked.locked.voters, slot: n.slot || null, slots: (arc && arc.slots) || 12,
-        locked_by: out.banked.locked_by, met: out.banked.met, rule: out.banked.rule,
-        slots_row: slotsRow(arc),
-      });
-    }
-    if (kindOf(n) === CANDIDATES) {
-      banked.push(`#${n.number} ${out.p.locked ? `locked ${out.p.locked.hex}` : 'no colour locked'}`
-        + ` ... ${Math.round(out.p.total)} TAO across ${out.p.collectors}`);
-    } else {
-      banked.push(`#${n.number} ${out.t.result} ... ${Math.round(out.t.total)} TAO across ${out.t.collectors}`);
-    }
+  const now = new Date();
+  if (!dueAt(store, now).length) {
+    return new Response(JSON.stringify({ summary: 'nudges: nothing due', banked: [], dry }, null, 1),
+      { status: 200, headers: { 'content-type': 'application/json' } });
   }
+
+  const ctx = await bankingContext(at);
+  const dropped = [];
+  const done = await closeDue(store, ctx, { now, dropped });
+  const banked = done.filter((d) => !d.held);
 
   if (banked.length && !dry) {
-    await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n',
-      `Nudges: banked ${banked.length}`, file.sha);
+    await saveNudges(store, `Nudges: banked ${banked.map((d) => `#${d.n.number}${d.banked.locked ? ` ${d.banked.locked.hex}` : ''}`).join(', ')}`, file.sha);
+    const arc = seriesState(store);
+    for (const d of banked) {
+      /* The same event the console raises when it locks one, from the other
+         path that locks them, and claimed once for the nudge: whichever hand
+         gets there first is the tweet. */
+      if (d.banked.locked) {
+        await enqueue('nudge-lock', lockEvent(d.n, d.banked, arc, slotsRow), { once: `${d.n.id}:lock` });
+      }
+    }
+  }
+  if (!dry) {
+    for (const d of done) {
+      /* A held nudge is seen again every hour until the artist settles it, and
+         says so once: the first hour after its close. */
+      if (d.held && now.getTime() - new Date(d.n.closes).getTime() > 3600 * 1000) continue;
+      await logAct({ act: d.held ? 'hold' : 'close', nudge: d.n.id, number: d.n.number, by: 'close job', line: d.why });
+    }
   }
   const summary = `nudges: ${banked.length} banked`
+    + (done.length > banked.length ? `, ${done.length - banked.length} waiting on the artist` : '')
     + (dropped.length ? `, ${dropped.length} delegation${dropped.length === 1 ? '' : 's'} clamped` : '');
-  console.log(summary, banked.join('; '), dropped.join('; '));
-  return new Response(JSON.stringify({ summary, banked, dropped, dry }, null, 1),
+  console.log(summary, done.map((d) => d.why).join('; '), dropped.join('; '));
+  return new Response(JSON.stringify({ summary, banked: done.map((d) => d.why), dropped, dry }, null, 1),
     { status: 200, headers: { 'content-type': 'application/json' } });
 }

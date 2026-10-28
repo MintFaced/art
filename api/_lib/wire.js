@@ -22,6 +22,7 @@ export const keys = {
   ev: (id) => `wire:e:${id}`,        // the event itself
   sent: 'wire:sent',                 // id -> what X gave back. The dedupe.
   dead: 'wire:dead',                 // id -> why it will never send
+  once: (act) => `wire:once:${act}`, // an act that may only ever be queued once
 };
 
 /* 🧧 is the TAO glyph in this voice and the only one that appears by rule.
@@ -124,8 +125,9 @@ export function compose(ev, { overlay = null, register = null } = {}) {
        place a claim like that spreads beyond the people who were there. It is
        the same sentence the banked card carries, in this voice. */
     const artist = p.locked_by === 'artist';
+    const atClose = p.locked_by === 'close';
     const short = [];
-    if (artist) {
+    if (artist || atClose) {
       if (p.met && !p.met.voters) short.push(`${p.voters} OF ${p.rule.voters} VOTERS`);
       if (p.met && !p.met.tao) short.push(`${n(p.total)} OF ${n(p.rule.tao)} TAO`);
     }
@@ -135,6 +137,7 @@ export function compose(ev, { overlay = null, register = null } = {}) {
         `${p.voters} COLLECTOR${p.voters === 1 ? '' : 'S'}`,
         `COLOUR ${p.slot} OF ${p.slots}`,
         artist ? `LOCKED BY THE ARTIST${short.length ? ` AT ${short.join(' AND ')}` : ''}` : null,
+        atClose && short.length ? `LOCKED AT CLOSE AT ${short.join(' AND ')}` : null,
       ]),
       card: { kind: 'strip', slot: p.slot, hex: p.hex },
     };
@@ -223,11 +226,20 @@ export const eventId = (at = Date.now()) =>
  * that matters and the timeline is downstream of it. A dropped tweet is a
  * dropped tweet; a dropped sale is a different kind of day.
  */
-export async function enqueue(kind, payload, { test = false, at = Date.now() } = {}) {
+export async function enqueue(kind, payload, { test = false, at = Date.now(), once = null } = {}) {
   if (!storeConfigured()) return null;
   try {
     const id = eventId(at);
-    const ev = { id, kind, at: new Date(at).toISOString(), test: Boolean(test), payload };
+    /* ONCE PER THING THAT HAPPENED. `sent` stops one event going out twice;
+       this stops one act becoming two events, which is the other way to
+       double-tweet ... a lock written by the console, then seen again by the
+       close job, or a button pressed twice on a slow phone. The key names the
+       act (`nudge-5:lock`), and whoever claims it first queues the tweet. */
+    if (once) {
+      const [claimed] = await pipe([['SET', keys.once(once), id, 'NX']]);
+      if (claimed !== 'OK') return null;
+    }
+    const ev = { id, kind, at: new Date(at).toISOString(), test: Boolean(test), payload, ...(once ? { once } : {}) };
     await pipe([
       ['SET', keys.ev(id), JSON.stringify(ev)],
       ['RPUSH', keys.q, id],

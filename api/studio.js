@@ -75,6 +75,10 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
   padding:16px;font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
 }
 .btn[disabled]{opacity:.35;cursor:default}
+.btn.mono{font-family:var(--font-mono);font-weight:400;letter-spacing:.14em}
+.nudge .btn.mono{margin-top:14px}
+.acts{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;color:var(--faint);margin:8px 0 0;line-height:1.5}
+.confirm .figs{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--ink);margin:0 0 10px;line-height:1.6}
 .btn.quiet{background:none;color:var(--muted);border:1px solid var(--rule)}
 .note{font-size:13px;color:var(--muted);line-height:1.6;margin:14px 0 0}
 .bad{color:#8b3a2a}
@@ -212,6 +216,7 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
   <section id="nudges" class="nudges-admin">
     <h2 class="sec">Nudges</h2>
     <div id="nudgeOpen" class="note">Loading</div>
+    <p class="acts" id="nudgeLast"></p>
 
     <details id="newNudge">
       <summary>New nudge</summary>
@@ -219,9 +224,12 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
       <label><span class="lab">Note</span><textarea id="nqNote" rows="3"></textarea></label>
       <label><span class="lab">Closes</span><input type="date" id="nqCloses"></label>
       <p class="note" id="nqPrefill"></p>
-      <button class="btn" id="nqGo">Open nudge</button>
+      <button class="btn mono" id="nqGo">Open</button>
       <p class="note" id="nqSay"></p>
     </details>
+
+    <button class="btn mono quiet" id="nudgeRevalidate">Revalidate</button>
+    <p class="acts" id="nudgeRevalSay"></p>
   </section>
 </div>
 
@@ -405,6 +413,15 @@ async function loadNudges() {
   prefill();
 }
 
+/* What was last done to a nudge, and by which hand: one grey line. */
+const ACT_WORD = { open: 'Opened', lock: 'Locked', close: 'Closed', hold: 'Held', revalidate: 'Revalidated' };
+function actLine(a) {
+  if (!a) return '';
+  const when = new Date(a.at).toLocaleString('en-NZ', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false });
+  return (a.line || ACT_WORD[a.act] || a.act) + ' · ' + (a.by || 'console') + ' · ' + when;
+}
+const lastActFor = (id) => ((NUDGES && NUDGES.acts) || []).find((a) => a.nudge === id) || null;
+
 function meter(label, at, of) {
   const met = at >= of;
   const pct = Math.max(0, Math.min(100, of ? (at / of) * 100 : 0));
@@ -414,7 +431,9 @@ function meter(label, at, of) {
 
 function drawNudges() {
   const open = (NUDGES && NUDGES.open) || [];
-  if (!open.length) { $('nudgeOpen').textContent = 'Nothing open.'; return; }
+  const last = ((NUDGES && NUDGES.acts) || []).find((a) => a.act !== 'revalidate') || null;
+  $('nudgeLast').textContent = !open.length && last ? actLine(last) : '';
+  if (!open.length) { $('nudgeOpen').className = 'note'; $('nudgeOpen').textContent = 'Nothing open.'; return; }
   $('nudgeOpen').className = '';
   $('nudgeOpen').innerHTML = open.map((n) => {
     const p = n.progress || { voters: { at: 0, of: 0 }, tao: { at: 0, of: 0 } };
@@ -424,15 +443,17 @@ function drawNudges() {
       + ' aria-pressed="' + String(c.hex === picked) + '">'
       + '<b style="background:' + esc2(c.hex) + '"></b>' + esc2(c.hex) + ' &middot; ' + nnum(c.total) + ' &middot; ' + c.voters + '</button>').join('');
     return '<div class="nudge" data-n="' + esc2(n.id) + '">'
-      + '<div class="meta">Nudge #' + n.number + ' &middot; closes ' + dayOf(n.closes)
-      + (n.slot ? ' &middot; colour ' + n.slot + ' of ' + ((NUDGES.series && Number(NUDGES.series.slots)) || 12) : '') + '</div>'
+      + '<div class="meta">Nudge #' + n.number + ' &middot; ' + (n.asking ? 'closes ' : 'closed ') + dayOf(n.closes)
+      + (n.slot ? ' &middot; colour ' + n.slot + ' of ' + ((NUDGES.series && Number(NUDGES.series.slots)) || 12) : '')
+      + (n.asking ? '' : ' &middot; locks at five past the hour') + '</div>'
       + '<h3>' + esc2(n.question) + '</h3>'
       + '<div class="meta">' + n.collectors + ' collectors &middot; ' + nnum(n.total) + ' TAO weighed</div>'
       + meter('Voters on the leader', p.voters.at, p.voters.of)
       + meter('TAO on the leader', p.tao.at, p.tao.of)
       + '<div class="swatches">' + sw + '</div>'
-      + '<button class="btn" data-close="' + esc2(n.id) + '">Close &amp; lock</button>'
+      + '<button class="btn mono" data-close="' + esc2(n.id) + '">Lock now</button>'
       + '<div data-confirm="' + esc2(n.id) + '"></div>'
+      + '<p class="acts">' + esc2(actLine(lastActFor(n.id))) + '</p>'
       + '</div>';
   }).join('');
 }
@@ -453,8 +474,15 @@ $('nudgeOpen').addEventListener('click', async (ev) => {
     slot.innerHTML = '<p class="note">Reading the board&hellip;</p>';
     const r = await api('nudge-close', { id, lock: true, hex, preview: true });
     if (!r.ok) { slot.innerHTML = '<p class="note bad">' + esc2(r.body.error || 'No.') + '</p>'; return; }
-    /* The sentence, not a summary of it. This is the card. */
+    /* The figures first, read the moment the button was pressed, then the
+       sentence itself, not a summary of it. This is the card. */
+    const L = r.body.leader;
+    const backers = r.body.locked ? r.body.locked.voters : (L ? L.voters : 0);
     slot.innerHTML = '<div class="confirm">'
+      + '<p class="cap">Lock now</p>'
+      + '<p class="figs">Leader ' + esc2(L ? L.hex : 'none') + (L ? ' &middot; ' + nnum(L.total) + ' TAO &middot; ' + L.voters + ' backer' + (L.voters === 1 ? '' : 's') : '')
+      + '<br>Locking ' + esc2(hex) + (r.body.locked ? ' &middot; ' + nnum(r.body.locked.total) + ' TAO &middot; ' + backers + ' backer' + (backers === 1 ? '' : 's') : '')
+      + '<br>Board ' + nnum(r.body.total) + ' TAO across ' + r.body.collectors + ' collector' + (r.body.collectors === 1 ? '' : 's') + '</p>'
       + '<p class="cap">The banked card will say</p>'
       + '<p class="willsay">' + esc2(r.body.line) + '</p>'
       + (r.body.closed_early ? '<p class="note">Closing early &mdash; it was due ' + dayOf(r.body.closed_early) + '.</p>' : '')
@@ -495,7 +523,10 @@ function prefill() {
   const slot = (board.find((x) => x && x.state === 'empty') || {}).slot || null;
   const nth = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth'][slot] || ('colour ' + slot);
   if (!slot) { $('nqPrefill').textContent = 'The palette is full.'; return; }
-  if (open.length) { $('nqPrefill').textContent = 'Nudge #' + open[0].number + ' is still asking for colour ' + open[0].slot + '.'; }
+  /* One at a time: the route refuses a second, and so does the button. */
+  const asking = (NUDGES.open || [])[0] || null;
+  $('nqGo').disabled = Boolean(asking);
+  if (asking) { $('nqPrefill').textContent = 'Lock #' + asking.number + ' first.'; return; }
   $('nqQ').value = 'Weigh in on the ' + nth + ' colour.';
   const hexes = filled.map((f) => f.hex);
   $('nqNote').value = hexes.length === 1
@@ -524,8 +555,17 @@ $('nqGo').addEventListener('click', async () => {
     publish: true,
   });
   if (!r.ok) { $('nqSay').textContent = r.body.error || 'No.'; $('nqSay').className = 'note bad'; return; }
-  $('nqSay').textContent = 'Nudge #' + r.body.number + ' is open.';
+  $('nqSay').textContent = 'Nudge #' + r.body.number + ' is open' + (r.body.slot ? ', colour ' + r.body.slot + '.' : '.');
   $('nqSay').className = 'note';
+  await loadNudges();
+});
+
+$('nudgeRevalidate').addEventListener('click', async () => {
+  $('nudgeRevalidate').disabled = true;
+  $('nudgeRevalSay').textContent = 'Revalidating...';
+  const r = await api('nudge-revalidate', {});
+  $('nudgeRevalidate').disabled = false;
+  $('nudgeRevalSay').textContent = (r.body && (r.body.line || r.body.error)) || 'No.';
   await loadNudges();
 });
 

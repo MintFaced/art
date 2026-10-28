@@ -256,7 +256,7 @@ section.s{padding-top:112px}
     <div class="steps">
       <div><span class="mono">1 · Hold</span><p>Own a MintFace work and TAO accrues daily. A 1/1 earns 69 a day.</p><a href="/tao">What is TAO</a></div>
       <div><span class="mono">2 · Weigh in</span><p>In the Studio, put your TAO behind a colour. It is weighed, not spent. You keep it.</p><a href="/studio">Open the Studio</a></div>
-      <div><span class="mono">3 · Lock</span><p id="lockLine">When five collectors and 500,000 TAO agree, the colour locks. Mixed in the studio, painted into the series.</p><a href="/studio#pots">See the pottles</a></div>
+      <div><span class="mono">3 · Lock</span><p id="lockLine">At close the colour with the most TAO locks: five collectors and 500,000 TAO carry it outright. Mixed in the studio, painted into the series.</p><a href="/studio#pots">See the pottles</a></div>
     </div>
   </section>
 
@@ -393,7 +393,7 @@ async function paintPalette() {
   const live = nudges.find((x) => x.open) || nudges[0];
   const rule = live && (live.rule || live.lock);
   if (rule && rule.voters && rule.tao) {
-    $('lockLine').textContent = `When ${word(rule.voters)} collectors and ${Number(rule.tao).toLocaleString('en-NZ')} TAO agree, the colour locks. Mixed in the studio, painted into the series.`;
+    $('lockLine').textContent = `At close the colour with the most TAO locks: ${word(rule.voters)} collectors and ${Number(rule.tao).toLocaleString('en-NZ')} TAO carry it outright. Mixed in the studio, painted into the series.`;
   }
 }
 paintPalette().catch((err) => {

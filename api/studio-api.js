@@ -1,8 +1,9 @@
 import { readFile, writeFile, repoConfigured } from './_lib/repo.js';
 import { putObject, r2Configured } from './_lib/r2.js';
 import { passwordOk, issueSession, sessionOk, sessionFrom, cookieHeader, studioConfigured, tooManyAttempts, noteAttempt } from './_lib/studio.js';
-import { bankingContext, bankNudge } from './_lib/banking.js';
-import { kindOf, lockRule, lockLine, checkHex, CANDIDATES } from './_lib/nudges.js';
+import { bankingContext, bankNudge, lockEvent } from './_lib/banking.js';
+import { kindOf, lockRule, lockLine, checkHex, isOpen, CANDIDATES } from './_lib/nudges.js';
+import { saveNudges, mirror, logAct, recentActs, revOf, PATH as NUDGES_PATH } from './_lib/nudge-file.js';
 import { seriesState } from './_lib/palette.js';
 import { enqueue, slotsRow } from './_lib/wire.js';
 import { list as notesList, get as noteGet, update as noteUpdate, missedPaths, STATUSES } from './_lib/feedback.js';
@@ -136,10 +137,19 @@ export async function POST(request) {
     if (!Date.parse(closes)) return json({ error: 'a close date is required' }, 400);
     if (Date.parse(closes) < Date.now()) return json({ error: 'that date has already passed' }, 400);
 
-    const file = await readFile('data/nudges.json');
+    const file = await readFile(NUDGES_PATH);
     const store = JSON.parse(file.text);
     store.nudges = store.nudges || [];
-    const number = store.next_number || (store.nudges.length + 1);
+    /* ONE AT A TIME. A second nudge opened beside one still asking would take
+       the next slot while the last one is unsettled, and the palette would
+       fill out of order ... so it is refused, by name, rather than numbered
+       around. */
+    const asking = store.nudges.find((x) => !x.banked && x.published !== false);
+    if (asking) return json({ error: `Lock #${asking.number} first.` }, 409);
+    /* The number from the nudges themselves, never from a field that could be
+       stale: one more than the highest there is. */
+    const number = Math.max(1, Number(store.next_number) || 0,
+      ...store.nudges.map((x) => (Number(x.number) || 0) + 1));
     const id = `nudge-${number}`;
     /* A nudge with candidates has no sides: the collectors propose the answers
        and weigh on them, and a colour locks only if the leader carries enough
@@ -162,18 +172,18 @@ export async function POST(request) {
        has to stay open, because otherwise a palette that failed once is a
        palette that is short forever. */
     const series = String(body.series || '').trim() || null;
-    const slot = body.slot != null ? Math.floor(Number(body.slot)) : null;
+    let slot = null;
     if (series) {
       const arc = store.series;
       if (!arc || arc.id !== series) return json({ error: `no such series: ${series}` }, 400);
-      if (!(slot >= 1 && slot <= Number(arc.slots))) {
-        return json({ error: `a slot from 1 to ${arc.slots}` }, 400);
-      }
-      const taken = (store.nudges || []).find((x) => x.series === series && Number(x.slot) === slot
-        && (!x.banked || (x.banked && x.banked.locked)));
-      if (taken) {
-        return json({ error: `slot ${slot} is ${taken.banked ? 'locked by' : 'already being asked by'} nudge #${taken.number}` }, 409);
-      }
+      /* THE SLOT IS READ FROM THE PALETTE, NOT FROM THE FORM. The first one
+         nothing has locked: which, with every close now locking its leader, is
+         the number locked plus one. A form left open across a lock would
+         otherwise send the slot it was drawn with, and that is how a sixth
+         nudge gets asked as "5 of 12". */
+      const empty = ((seriesState(store) || {}).board || []).find((v) => v.state === 'empty');
+      if (!empty) return json({ error: 'The palette is full.' }, 409);
+      slot = empty.slot;
     }
     store.nudges.push({
       id, number, question, kind,
@@ -187,7 +197,7 @@ export async function POST(request) {
       published: body.publish !== false,
     });
     store.next_number = number + 1;
-    await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n', `Nudge ${number}: ${question.slice(0, 60)}`, file.sha);
+    await saveNudges(store, `Nudge ${number}: ${question.slice(0, 60)}`, file.sha);
     /* On the wire, after the write. Never before: a tweet about a nudge that
        failed to save is a tweet about something that did not happen, and the
        repo is the record the timeline reports on rather than the other way
@@ -195,8 +205,10 @@ export async function POST(request) {
     await enqueue('nudge-open', {
       number, question, closes: new Date(closes).toISOString(), slot,
       slots_row: slotsRow(seriesState(store), slot),
-    });
-    return json({ ok: true, id, number });
+    }, { once: `${id}:open` });
+    await logAct({ act: 'open', nudge: id, number, by: 'console',
+      line: `Opened #${number}${slot ? ` · colour ${slot} of ${(store.series && store.series.slots) || 12}` : ''} · closes ${new Date(closes).toISOString().slice(0, 10)}` });
+    return json({ ok: true, id, number, slot });
   }
 
   /* ------------------------------------------------------------- nudges
@@ -211,10 +223,10 @@ export async function POST(request) {
   if (action === 'nudge-state') {
     const site = process.env.SITE_ORIGIN || 'https://mintface.art';
     const at = async (path) => (await fetch(`${site}/${path}`, { headers: { accept: 'application/json' } })).json();
-    const file = await readFile('data/nudges.json');
+    const file = await readFile(NUDGES_PATH);
     const store = JSON.parse(file.text);
     const arc = seriesState(store) || null;
-    const ctx = await bankingContext(at);
+    const [ctx, acts] = await Promise.all([bankingContext(at), recentActs(30)]);
 
     /* Every published nudge that has not banked, with its board read live, so
        the console shows the same figures the public card does rather than a
@@ -226,6 +238,9 @@ export async function POST(request) {
       open.push({
         id: n.id, number: n.number, question: n.question, kind: kindOf(n),
         closes: n.closes, series: n.series || null, slot: n.slot || null,
+        /* Past its date and not banked yet: the close job takes it at five
+           past the hour, unless it is tied and waiting on the artist. */
+        asking: isOpen(n),
         rule: lockRule(n),
         total: banked.total, collectors: banked.collectors,
         leader: banked.leader || null,
@@ -237,7 +252,7 @@ export async function POST(request) {
         candidates: (banked.candidates || []).map((c) => ({ hex: c.hex, total: c.total, voters: c.voters })),
       });
     }
-    return json({ ok: true, open, series: arc, next_number: store.next_number || null });
+    return json({ ok: true, open, series: arc, next_number: store.next_number || null, rev: revOf(store), acts });
   }
 
   /* The close. `preview` writes nothing and returns the sentence the card will
@@ -246,11 +261,12 @@ export async function POST(request) {
   if (action === 'nudge-close') {
     const site = process.env.SITE_ORIGIN || 'https://mintface.art';
     const at = async (path) => (await fetch(`${site}/${path}`, { headers: { accept: 'application/json' } })).json();
-    const file = await readFile('data/nudges.json');
+    const file = await readFile(NUDGES_PATH);
     const store = JSON.parse(file.text);
     const n = (store.nudges || []).find((x) => x.id === String(body.id));
     if (!n) return json({ error: 'no such nudge' }, 404);
     if (n.banked) return json({ error: `nudge #${n.number} is already banked` }, 409);
+    if (n.published === false) return json({ error: `nudge #${n.number} is not open` }, 409);
 
     /* An artist lock names its colour. Absent, the thresholds decide, which is
        simply the cron's close run early. */
@@ -269,6 +285,9 @@ export async function POST(request) {
 
     if (body.preview) {
       return json({ ok: true, preview: true, line, dropped,
+        /* What the confirm step shows beside the sentence: who leads, on what,
+           and how many stand behind it, read the moment it was asked. */
+        leader: banked.leader || null, total: banked.total, collectors: banked.collectors,
         locked: banked.locked || null, locked_by: banked.locked_by || null,
         met: banked.met || null, rule: banked.rule || null,
         progress: banked.progress || null,
@@ -276,28 +295,49 @@ export async function POST(request) {
     }
 
     n.banked = banked;
-    await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n',
+    await saveNudges(store,
       `Nudge ${n.number}: ${banked.locked ? `locked ${banked.locked.hex}` : 'banked, nothing locked'}`, file.sha);
     if (banked.locked) {
-      const arc = seriesState(store);
-      await enqueue('nudge-lock', {
-        number: n.number, hex: banked.locked.hex, total: banked.locked.total, voters: banked.locked.voters,
-        slot: n.slot || null, slots: (arc && arc.slots) || 12,
-        locked_by: banked.locked_by, met: banked.met, rule: banked.rule,
-        slots_row: slotsRow(arc),
-      });
+      await enqueue('nudge-lock', lockEvent(n, banked, seriesState(store), slotsRow), { once: `${n.id}:lock` });
     }
+    await logAct({ act: 'lock', nudge: n.id, number: n.number, by: 'console', line });
     return json({ ok: true, line, dropped, locked: banked.locked || null, locked_by: banked.locked_by || null });
+  }
+
+  /* REVALIDATE. Every page that shows a nudge reads it through /api/nudge,
+     which takes the newer of the deployment and the store's copy ... so the
+     one thing that can look stale is a copy that never got written, or a
+     build that has not landed. This puts the repo's file in the store as the
+     copy, which every one of those pages reads on its next request, and says
+     how far behind the deployment is. Nothing in the record changes. */
+  if (action === 'nudge-revalidate') {
+    const site = process.env.SITE_ORIGIN || 'https://mintface.art';
+    const file = await readFile(NUDGES_PATH);
+    const store = JSON.parse(file.text);
+    let deployed = null;
+    try {
+      deployed = await (await fetch(`${site}/${NUDGES_PATH}?t=${Date.now()}`, { headers: { accept: 'application/json' }, cache: 'no-store' })).json();
+    } catch (e) { deployed = null; }
+    const copied = await mirror(store);
+    const repoRev = revOf(store);
+    const deployedRev = deployed ? revOf(deployed) : null;
+    const line = !copied
+      ? 'Could not write the copy. The pages read the deployment until it lands.'
+      : (deployedRev === repoRev
+        ? `Up to date · rev ${repoRev} everywhere.`
+        : `Pages now read rev ${repoRev} · the build is at rev ${deployedRev == null ? '?' : deployedRev} and catches up by itself.`);
+    await logAct({ act: 'revalidate', by: 'console', line });
+    return json({ ok: copied, line, repo_rev: repoRev, deployed_rev: deployedRev });
   }
 
   // what happened after a nudge banked, written on the record
   if (action === 'nudge-outcome') {
-    const file = await readFile('data/nudges.json');
+    const file = await readFile(NUDGES_PATH);
     const store = JSON.parse(file.text);
     const n = (store.nudges || []).find((x) => x.id === String(body.id));
     if (!n) return json({ error: 'no such nudge' }, 404);
     n.outcome = String(body.outcome || '').trim() || null;
-    await writeFile('data/nudges.json', JSON.stringify(store, null, 1) + '\n', `Nudge ${n.number}: outcome`, file.sha);
+    await saveNudges(store, `Nudge ${n.number}: outcome`, file.sha);
     return json({ ok: true });
   }
 

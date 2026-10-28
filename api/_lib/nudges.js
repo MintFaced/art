@@ -888,14 +888,30 @@ export const isOpen = (n, now = new Date()) =>
  * price of the power, and it is the same sentence in the console's confirm
  * step and on the public card, because they are the same function.
  */
-export function bankCandidates(p, n, decision = null) {
+export function bankCandidates(p, n, decision = null, { now = new Date() } = {}) {
   const rule = p.rule;
   const wanted = decision && decision.hex ? checkHex(decision.hex).hex : null;
   const pick = wanted ? (p.candidates || []).find((c) => c.hex === wanted) : p.leader;
   const asked = Boolean(decision && decision.by === 'artist' && pick);
+  /* THE LEADER LOCKS AT CLOSE (Ryan, 28 Oct 2026).
+   *
+   * Four nudges in a row closed with the TAO behind one colour and a collector
+   * short of five, and every one of them was locked by hand because the
+   * thresholds alone locked nothing. The fifth banked empty before anybody got
+   * to the console, and the palette sat a slot short for a week. So at close
+   * the colour with the most TAO locks, every time. The thresholds still say
+   * whether the collectors carried it outright, and where they did not the
+   * card says so in the same breath: LOCKED AT CLOSE AT 4 OF 5 VOTERS.
+   *
+   * Not on a tie the tie-break could not settle: there the artist decides, and
+   * the close job leaves the nudge for the console rather than banking it
+   * empty. Not on a board with no TAO on it either: nothing was chosen. */
+  const atClose = !asked && !p.locked && !p.tied && p.leader && Number(p.leader.total) > 0
+    ? (p.candidates || []).find((c) => c.hex === p.leader.hex) || p.leader
+    : null;
   const locked = asked
     ? { hex: pick.hex, total: pick.total, voters: pick.voters }
-    : p.locked;
+    : (atClose ? { hex: atClose.hex, total: atClose.total, voters: atClose.voters } : p.locked);
   /* AN ARTIST LOCK ON A COLOUR THAT CARRIED BOTH HALVES IS NOT AN ARTIST LOCK.
    *
    * Pressing the button early on a colour the collectors had already carried
@@ -908,6 +924,7 @@ export function bankCandidates(p, n, decision = null) {
      colours that both carried them, and the artist did. */
   const tiedAtClose = Boolean(p.tied && asked);
   const byArtist = asked && (!carried || tiedAtClose);
+  const byClose = Boolean(atClose) && !carried;
   /* Which halves actually held, recorded rather than recomputed later: the
      register moves, and a card read in two years must say what was true at
      close rather than what is true at reading. */
@@ -919,11 +936,13 @@ export function bankCandidates(p, n, decision = null) {
     total: p.total, collectors: p.collectors,
     leader: p.leader,
     locked,
-    /* 'threshold' where the numbers decided, 'artist' where the studio did.
+    /* 'threshold' where the numbers decided, 'artist' where the studio did,
+       'close' where the leader locked at close without carrying both halves.
        Absent on a nudge that locked nothing. */
-    locked_by: locked ? (byArtist ? 'artist' : 'threshold') : null,
+    locked_by: locked ? (byArtist ? 'artist' : (byClose ? 'close' : 'threshold')) : null,
+    locked_at: locked ? now.toISOString() : null,
     met,
-    closed_early: asked && new Date(n.closes).getTime() > Date.now() ? n.closes : null,
+    closed_early: asked && new Date(n.closes).getTime() > now.getTime() ? n.closes : null,
     ...(tiedAtClose ? { tied_at_close: true } : {}),
     why: locked ? null : p.why,
     progress: p.progress,
@@ -942,7 +961,7 @@ export function bankCandidates(p, n, decision = null) {
       wallets: (c.wallets || []).map((r) => ({ address: r.address, name: r.name || null,
         amount: r.amount, weight: r.weight, clamped: Boolean(r.clamped), ...(r.artist ? { artist: true } : {}) })),
     })),
-    banked_at: new Date().toISOString(),
+    banked_at: now.toISOString(),
   };
 }
 
@@ -968,25 +987,31 @@ export function lockLine(b) {
   const tao = `${Math.round(Number(b.locked.total) || 0).toLocaleString('en-NZ')} TAO`;
   const who = `${b.locked.voters} collector${b.locked.voters === 1 ? '' : 's'}`;
   const bits = [`Locked · ${b.locked.hex} · ${tao} · ${who}`];
-  const rule = b.rule || {};
   const met = b.met || {};
-  if (b.locked_by === 'artist') {
-    /* Name the half that held before the half that did not. An artist lock on
-       a colour that had the weight and not the spread is a different act from
-       one on a colour that had neither, and the card should not flatten them. */
+  if (b.locked_by === 'artist' || b.locked_by === 'close') {
+    /* Name the half that held before the half that did not. A lock on a colour
+       that had the weight and not the spread is a different act from one on a
+       colour that had neither, and the card should not flatten them. */
     if (met.tao && !met.voters) bits.push('TAO threshold met');
     else if (met.voters && !met.tao) bits.push('Collector threshold met');
     else if (met.tao && met.voters) bits.push('Both thresholds met');
     else bits.push('Neither threshold met');
-    const short = [];
-    if (!met.voters) short.push(`${b.locked.voters} of ${rule.voters} voters`);
-    if (!met.tao) short.push(`${Math.round(b.locked.total).toLocaleString('en-NZ')} of ${Math.round(Number(rule.tao) || 0).toLocaleString('en-NZ')} TAO`);
-    bits.push(short.length
-      ? `Locked by the artist at ${short.join(' and ')}`
-      : 'Locked by the artist');
+    const short = shortfall(b);
+    const how = b.locked_by === 'artist' ? 'Locked by the artist' : 'Locked at close';
+    bits.push(short.length ? `${how} at ${short.join(' and ')}` : how);
     if (b.tied_at_close) bits.push('Tied at close');
   }
   return bits.join(' · ');
+}
+
+/** What a lock was short of, said as fractions: `4 of 5 voters`. */
+function shortfall(b) {
+  const rule = b.rule || {};
+  const met = b.met || {};
+  const out = [];
+  if (!met.voters) out.push(`${b.locked.voters} of ${rule.voters} voters`);
+  if (!met.tao) out.push(`${Math.round(b.locked.total).toLocaleString('en-NZ')} of ${Math.round(Number(rule.tao) || 0).toLocaleString('en-NZ')} TAO`);
+  return out;
 }
 
 /** What a yes-or-no nudge banks. */
@@ -1040,16 +1065,14 @@ export const provenanceLine = (banked) => {
   const c = Number.isFinite(who) ? who : Number(banked.collectors) || 0;
   const line = `Colour chosen by ${t.toLocaleString('en-NZ')} TAO across `
     + `${c} collector${c === 1 ? '' : 's'} · ${banked.locked.hex} · Nudge #${banked.number}`;
-  if (banked.locked_by !== 'artist') return line;
-  /* AND WHERE THE ARTIST LOCKED IT, THAT TRAVELS TOO.
+  if (banked.locked_by !== 'artist' && banked.locked_by !== 'close') return line;
+  /* AND WHERE THE ARTIST LOCKED IT, OR THE CLOSE DID SHORT OF THE THRESHOLDS,
+     THAT TRAVELS TOO.
      This is the line a painting carries for as long as the painting exists. A
      colour the studio chose over the thresholds is a different fact about that
      painting from one the collectors carried outright, and the work is exactly
      where that difference matters most. */
-  const rule = banked.rule || {};
-  const met = banked.met || {};
-  const short = [];
-  if (!met.voters) short.push(`${banked.locked.voters} of ${rule.voters} voters`);
-  if (!met.tao) short.push(`${Math.round(banked.locked.total).toLocaleString('en-NZ')} of ${Math.round(Number(rule.tao) || 0).toLocaleString('en-NZ')} TAO`);
-  return `${line} · locked by the artist${short.length ? ` at ${short.join(' and ')}` : ''}${banked.tied_at_close ? ' · tied at close' : ''}`;
+  const short = shortfall(banked);
+  const how = banked.locked_by === 'artist' ? 'locked by the artist' : 'locked at close';
+  return `${line} · ${how}${short.length ? ` at ${short.join(' and ')}` : ''}${banked.tied_at_close ? ' · tied at close' : ''}`;
 };

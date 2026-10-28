@@ -3262,7 +3262,7 @@ function toLock(x) {
     : `${v.at}/${v.of}`;
   const scale = Math.max(t.of * 1.2, t.at) || 1;
   return `<div class="tolock">
-    <span class="lab">To lock</span>
+    <span class="lab">To carry</span>
     <span class="dots" role="img" title="${v.at} of ${v.of} collectors"
       aria-label="${v.at} of ${v.of} collectors">${dots}</span>
     <span class="lockbar" role="img" title="${num(t.at)} of ${num(t.of)} TAO on the leader"
@@ -3297,6 +3297,14 @@ function closesSaid(x) {
   return `closes ${whenOf(x.closes)}`;
 }
 
+/* What locks, said with this nudge's own thresholds. */
+function closeRule(x) {
+  const r = x.kind === 'candidates' && (x.rule || x.lock);
+  if (!r || !r.voters) return '';
+  return `<p>At close the colour with the most TAO locks. ${num(r.voters)} collectors and ${num(r.tao)} TAO
+      carry it outright; short of either, its card says by how much.</p>`;
+}
+
 /* The terms, one tap away rather than standing on the card. A collector
    weighing needs them available; one reading the board does not need them
    in the way. */
@@ -3304,6 +3312,7 @@ function helpFor(x) {
   return `<details class="help"><summary aria-label="How this nudge works" title="How this nudge works">?</summary>
     <div class="tip">${x.promise ? `<p>${e(x.promise)}</p>` : ''}<p>A nudge steers. It never commands.
       The studio may act with, against, or without the result.</p>
+      ${closeRule(x)}
       <p>A tie on TAO goes to the colour with more collectors, then to the one that reached its total first.
       If it is still tied, the artist decides.</p></div>
   </details>`;

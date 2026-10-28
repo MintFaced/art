@@ -583,8 +583,20 @@ const holds = (x) => five[x] || 0;
         { hex: '#BCE1DD', total: 461561, voters: 3, wallets: [] }],
       leader: { hex: '#80E080', total: 627000, voters: 4 }, locked: null,
       why: 'short', progress: { voters: { at: 4, of: 5 }, tao: { at: 627000, of: 500000 } }, ledger: [] };
+    /* The leader locks at close (28 Oct 2026). Four collectors short of five
+       still lock their colour ... and the card says by how much, in the same
+       place an artist lock does, with the other hand named. */
     const plain = bankCandidates(p2, N2);
-    is('the thresholds alone do not lock a colour four collectors carried', plain.locked, null);
+    is('at close the leader locks, short of the thresholds or not', plain.locked && plain.locked.hex, '#80E080');
+    is('and the record says it was the close, not the thresholds', plain.locked_by, 'close');
+    is('and when', typeof plain.locked_at, 'string');
+    is('and the card says the shortfall',
+      lockLine(plain), 'Locked \u00b7 #80E080 \u00b7 627,000 TAO \u00b7 4 collectors \u00b7 TAO threshold met \u00b7 Locked at close at 4 of 5 voters');
+    is('and claims nothing for the artist', lockLine(plain).includes('artist'), false);
+    is('and the work carries it', provenanceLine(plain).endsWith('locked at close at 4 of 5 voters'), true);
+    is('a board with no TAO on it locks nothing',
+      bankCandidates({ ...p2, total: 0, candidates: [{ hex: '#80E080', total: 0, voters: 0, wallets: [] }],
+        leader: { hex: '#80E080', total: 0, voters: 0 } }, N2).locked, null);
     const art = bankCandidates(p2, N2, { by: 'artist', hex: '#80E080' });
     is('the artist can lock it anyway', art.locked.hex, '#80E080');
     is('and the record says who did', art.locked_by, 'artist');
@@ -638,9 +650,9 @@ const holds = (x) => five[x] || 0;
      module must bank through the tested projection. Two implementations of a
      record that is never rewritten is the fault being guarded against, and
      that fault got closer rather than further away. */
-  is('the cron banks through the shared close', /bankNudge\(n, ctx/.test(cron), true);
+  is('the cron banks through the shared close', /closeDue\(store, ctx/.test(cron) && /bankNudge\(n, ctx/.test(bank), true);
   is('and the shared close banks through the tested projection',
-    /bankCandidates\(p, n, decision\)/.test(bank), true);
+    /bankCandidates\(p, n, decision[,)]/.test(bank), true);
   const api = fs4.readFileSync(new URL('../../api/studio-api.js', import.meta.url), 'utf8');
   is('and the console closes through it too, never its own',
     /bankNudge\(/.test(api) && !/bankCandidates\(/.test(api), true);
@@ -895,6 +907,60 @@ const holds = (x) => five[x] || 0;
   is('the artist can lock it, and the card says it was the artist\'s lock', lockLine(art),
     'Locked · #E080E0 · 819,000 TAO · 4 collectors · TAO threshold met · Locked by the artist at 4 of 5 voters');
   is('the banked record keeps the artist\'s row, still marked', art.candidates[0].wallets.some((x) => x.artist && x.weight === 42000), true);
+}
+
+/* ================= the close job, against a close date already past =================
+ *
+ * The acceptance case for #5's fix, run on a fixture: a test nudge that closed
+ * yesterday with the TAO on one colour and four collectors behind it. The job
+ * locks it and its line says why; a tied one is left for the console rather
+ * than banked empty; one still asking is not touched.
+ */
+{
+  const { closeDue, dueAt, lockEvent } = await import('../../api/_lib/banking.js');
+  const { freshest } = await import('../../api/_lib/nudge-file.js');
+  const NOW = new Date('2026-11-11T01:05:00Z');
+  const V = '#17184B', B = '#E1B589';
+  const mk = (id, number, closes) => ({ id, number, kind: 'candidates', lock: { voters: 5, tao: 500000 },
+    question: 'Test', closes, published: true, series: 'strip-palette', slot: number });
+  const store = { nudges: [
+    mk('t-past', 6, '2026-11-11T00:00:00Z'),
+    mk('t-tied', 7, '2026-11-10T00:00:00Z'),
+    mk('t-later', 8, '2026-11-20T00:00:00Z'),
+  ] };
+  const row = (nudge, address, candidate, amount, at) => ({ nudge, address, candidate, amount, alloc: true, at });
+  const ctx = {
+    weighings: [
+      row('t-past', '0x01', V, 222222, '2026-11-01'), row('t-past', '0x02', V, 150000, '2026-11-02'),
+      row('t-past', '0x03', V, 150000, '2026-11-03'), row('t-past', '0x04', V, 55000, '2026-11-04'),
+      row('t-past', '0x04', B, 62455, '2026-11-04'),
+      row('t-tied', '0x01', V, 100, '1'), row('t-tied', '0x02', B, 100, '1'),
+      row('t-tied', '0x03', V, 100, '2'), row('t-tied', '0x04', B, 100, '2'),
+      row('t-later', '0x01', V, 900000, '2026-11-05'),
+    ],
+    proposals: [{ nudge: 't-past', hex: V, address: '0x01', at: '0' }, { nudge: 't-past', hex: B, address: '0x04', at: '1' },
+      { nudge: 't-tied', hex: V, address: '0x01', at: '0' }, { nudge: 't-tied', hex: B, address: '0x02', at: '0' }],
+    readTao: () => 1_000_000,
+  };
+  is('due: the two past their date, not the one still asking', dueAt(store, NOW).map((n) => n.id), ['t-past', 't-tied']);
+  const done = await closeDue(store, ctx, { now: NOW });
+  const past = done.find((d) => d.n.id === 't-past');
+  is('the job locks the one whose close date has passed', [past.banked.locked.hex, past.banked.locked_by], [V, 'close']);
+  is('at the figures it closed on', [past.banked.locked.total, past.banked.locked.voters], [577222, 4]);
+  is('and its log line says why', past.why,
+    '#6 closed 2026-11-11 00:00 UTC · #17184B led on TAO, so it locked · short of the thresholds');
+  is('locked when the job ran', past.banked.locked_at, NOW.toISOString());
+  const tied = done.find((d) => d.n.id === 't-tied');
+  is('a tie the rule cannot break is held for the artist, not banked empty', [tied.held, Boolean(store.nudges[1].banked)], [true, false]);
+  is('and its line says so', /tied on TAO, collectors and time\. The artist decides\. Waiting on the console\.$/.test(tied.why), true);
+  is('the one still asking is untouched', Boolean(store.nudges[2].banked), false);
+  const ev = lockEvent(store.nudges[0], past.banked, { slots: 12, board: [] }, () => 'row');
+  is('the lock tweet carries what the card says', [ev.hex, ev.voters, ev.locked_by, ev.slot, ev.slots_row], [V, 4, 'close', 6, 'row']);
+
+  is('the newer copy wins', freshest({ rev: 3, nudges: [] }, { rev: 4, nudges: [1] }).rev, 4);
+  is('a tie goes to the deployment', freshest({ rev: 4, nudges: [0] }, { rev: 4, nudges: [1] }).nudges, [0]);
+  is('no copy, the deployment', freshest({ rev: 1, nudges: [] }, null).rev, 1);
+  is('a file from before rev counts as zero', freshest({ nudges: [] }, { rev: 1, nudges: [] }).rev, 1);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

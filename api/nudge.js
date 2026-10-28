@@ -9,6 +9,7 @@ import { loadRegister } from './_lib/register.js';
 import { storeConfigured, pipe } from './_lib/kv.js';
 import { chatStore, SCOPE_WEIGH } from './_lib/chat.js';
 import { cookieFrom, TOKEN_COOKIE } from './_lib/session.js';
+import { readCopy, freshest } from './_lib/nudge-file.js';
 
 /* Weighing TAO behind a Yes or a No.
  *
@@ -29,14 +30,18 @@ async function load(origin) {
     if (!r.ok) throw new Error(`${p}: ${r.status}`);
     return r.json();
   };
-  const [nudges, said, tao, live] = await Promise.all([
-    at('data/nudges.json'), at('data/nudge-weighings.json'), at('data/tao.json'),
+  const [deployed, copy, said, tao, live] = await Promise.all([
+    at('data/nudges.json'),
+    /* And the nudges as last written, which is newer than the deployment for
+       the length of a build after a lock or an open (api/_lib/nudge-file.js). */
+    readCopy(),
+    at('data/nudge-weighings.json'), at('data/tao.json'),
     /* What has been said since the last deploy. The file is served from the
-       deployment and this site does not deploy on push, so without this a
+       deployment, which trails the repo by a build, so without this a
        collector signs, is told it landed, and finds the board empty. */
     storeConfigured() ? nudgeStore(pipe).live().catch(() => []) : Promise.resolve([]),
   ]);
-  return { nudges, weighings: withLive(said, live), tao };
+  return { nudges: freshest(deployed, copy), weighings: withLive(said, live), tao };
 
 }
 
@@ -294,7 +299,13 @@ export async function POST(request) {
 
   const n = (data.nudges.nudges || []).find((x) => x.id === nudgeId);
   if (!n) return json({ error: 'no such nudge' }, 404);
-  if (!isOpen(n)) return json({ error: 'this nudge has closed' }, 409);
+  if (!isOpen(n)) {
+    /* Said as a sentence a collector can act on: when it closed, and where
+       the weighing can go instead. */
+    const day = new Date(n.closes).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', timeZone: 'Pacific/Auckland' });
+    const next = (data.nudges.nudges || []).find((x) => isOpen(x));
+    return json({ error: `Nudge #${n.number} closed on ${day}.${next ? ` Nudge #${next.number} is open.` : ''}` }, 409);
+  }
   const candidates = kindOf(n) === CANDIDATES;
 
   /* WHAT THIS WALLET MAY DEPLOY, ASKED OF THE CHAIN NOW.

@@ -2746,6 +2746,7 @@ MF.palette = {
     const hex = v.hex ? String(v.hex).toUpperCase() : null;
     const nm = hex ? MF.colour.name(hex) : null;
     const byArtist = v.state === 'locked' && v.locked_by === 'artist';
+    const atClose = v.state === 'locked' && v.locked_by === 'close';
     /* A slot says its number first and the nudge that answered it second. The
        number is the part that was going missing: it is what makes the twelve
        a sequence rather than a row, and the reason the red could pass for the
@@ -2768,7 +2769,8 @@ MF.palette = {
     const href = this.href(v, opts);
     const title = hex
       ? ` title="Slot ${n} &middot; ${e(hex)}${nm ? ` &middot; ${e(nm.label)}` : ''}`
-        + `${byArtist ? ' &middot; locked by the artist, not by the thresholds' : ''}"`
+        + `${byArtist ? ' &middot; locked by the artist, not by the thresholds' : ''}`
+        + `${atClose ? ' &middot; led on TAO at close, short of the thresholds' : ''}"`
       : '';
     return href
       ? `<a class="${cls}" href="${e(href)}"${title}>${inner}</a>`
