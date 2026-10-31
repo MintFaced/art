@@ -141,7 +141,7 @@ const STYLE = {
 export function planSVG(sites, { interactive = true, title = 'Site plan of Heretaunga Street West' } = {}) {
   const parts = [];
   const c = counts(sites);
-  parts.push(`<svg class="strip-plan" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(`${title}: ${c.total} Strip Painting sites, ${c.installed} installed, ${c.approved} approved, ${c.proposed} proposed`)}">`);
+  parts.push(`<svg class="strip-plan" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(`${title}: ${c.total} //Strips sites, ${c.installed} installed, ${c.approved} approved, ${c.proposed} proposed`)}">`);
   if (interactive) parts.push(`<style>.sp-site{cursor:pointer;transition:transform .2s ease;outline:none}.sp-site:hover,.sp-site:focus-visible,.sp-site.is-lit{transform:translateY(-2px)}.sp-site:focus-visible .sp-bar{stroke:${COLOURS.ink};stroke-width:2.5}</style>`);
   parts.push(`<rect x="0" y="0" width="${W}" height="${H}" fill="${COLOURS.paper}"/>`);
   parts.push(`<g font-family="${MONO}" font-size="13" letter-spacing="2" fill="${COLOURS.grey}"><text x="20" y="34">NORTH · ODD NUMBERS</text><text x="20" y="${H - 20}">SOUTH · EVEN NUMBERS</text></g>`);

@@ -667,7 +667,7 @@ dedicated({ slug: 'wallet', title: 'WALLΞT', group: 'ai-studies', year: '2022',
   }));
   const t = tally(works); stats['strip-paintings'] = t;
   push({
-    slug: 'strip-paintings', title: c.title || 'Strip Paintings', group: c.group || 'core',
+    slug: 'strip-paintings', title: c.title || '//Strips', group: c.group || 'core',
     year: c.year || null, medium: c.medium || null, physical: c.physical !== false,
     statement: c.statement || null,
     notes: c.notes || null,

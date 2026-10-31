@@ -172,7 +172,7 @@ export function compose(ev, { overlay = null, register = null } = {}) {
      ticked "Mention me on X". */
   if (ev.kind === 'commission') {
     return {
-      text: speak(['COMMISSIONED', 'STRIP PAINTING', up(p.size), up(p.price), p.handle ? `@${p.handle}` : null])
+      text: speak(['COMMISSIONED', '//STRIPS', up(p.size), up(p.price), p.handle ? `@${p.handle}` : null])
         + (p.url ? `\n\n${p.url}` : ''),
       card: { kind: 'work', id: p.id },
     };

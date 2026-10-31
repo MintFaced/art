@@ -53,11 +53,11 @@ const TURN = '<svg class="sh-turn" width="16" height="16" viewBox="0 0 24 24" fi
 const MARKUP = `
   <div class="sh-intro">
     <p class="sh-h">Your size.</p>
-    <p class="sh-lede">Choose a length. We paint a Strip Painting to it.</p>
+    <p class="sh-lede">Choose a length. We paint a //Strips to it.</p>
   </div>
   <div class="sh-body">
     <figure class="sh-stage" data-stage>
-      <canvas data-canvas role="img" aria-label="A Strip Painting"></canvas>
+      <canvas data-canvas role="img" aria-label="A //Strips"></canvas>
       <figcaption class="sh-floor" data-floor hidden>Stands on the floor.</figcaption>
     </figure>
     <div class="sh-controls">
@@ -195,7 +195,7 @@ export function mount(root) {
       else ctx.fillRect(x0, y0 + ph - b, pw, b - a);
       mm += s.mm;
     }
-    cv.setAttribute('aria-label', `A Strip Painting, ${S.length} by ${S.width} cm, ${S.orient}${S.frame !== 'none' ? `, in a ${S.frame} frame` : ''}`);
+    cv.setAttribute('aria-label', `A //Strips, ${S.length} by ${S.width} cm, ${S.orient}${S.frame !== 'none' ? `, in a ${S.frame} frame` : ''}`);
     $('[data-floor]').hidden = !(portrait && S.length === LEN.max);
   }
 
@@ -220,9 +220,9 @@ export function mount(root) {
 
   function mailto(nzd, usd) {
     const colours = S.palette ? S.palette.colours.join(' ') : '';
-    const subject = `Strip Painting commission ... ${S.length} × ${S.width} cm, ${S.orient}`;
+    const subject = `//Strips commission ... ${S.length} × ${S.width} cm, ${S.orient}`;
     const body = [
-      'I would like this Strip Painting.',
+      'I would like this //Strips.',
       '',
       `Size: ${S.length} × ${S.width} cm, ${S.orient}`,
       `Frame: ${S.frame}`,

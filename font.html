@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MintFace Fascia · free typeface</title>
-<meta name="description" content="A free display typeface cut from the MintFace Strip Paintings. Solid, Line and Strips, with the red line through every letter.">
+<meta name="description" content="A free display typeface cut from the MintFace //Strips. Solid, Line and Strips, with the red line through every letter.">
 <link rel="canonical" href="https://mintface.art/font">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MintFace">
 <meta property="og:url" content="https://mintface.art/font">
 <meta property="og:title" content="MintFace Fascia · free typeface">
-<meta property="og:description" content="A free display typeface cut from the MintFace Strip Paintings. Solid, Line and Strips, with the red line through every letter.">
+<meta property="og:description" content="A free display typeface cut from the MintFace //Strips. Solid, Line and Strips, with the red line through every letter.">
 <meta property="og:image" content="https://mintface.art/font/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -111,6 +111,7 @@ input[type=range] { width: 180px; accent-color: var(--red); }
 .stage.on-wall { background: var(--sheet); color: var(--sheet-ink); box-shadow: inset 0 0 0 1px var(--sheet-rule); }
 .stage.on-board { background: var(--board); color: var(--board-ink); }
 #out { line-height: .95; word-break: break-word; width: 100%; }
+#out.caps { text-transform: uppercase; }
 
 /* styles */
 .trio { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 32px; }
@@ -164,7 +165,7 @@ input[type=range] { width: 180px; accent-color: var(--red); }
 .token .addr { font-size: 22px; letter-spacing: .02em; }
 .post { grid-column: span 4; }
 .post .card { aspect-ratio: 1; background: var(--sheet); color: var(--sheet-ink); box-shadow: inset 0 0 0 1px var(--sheet-rule); display: grid; place-items: center; }
-.post .card span { font-size: clamp(48px, 6.4vw, 88px); line-height: .95; text-align: center; font-palette: --p2; }
+.post .card span { font-size: clamp(44px, 5.4vw, 76px); line-height: .95; text-align: center; font-palette: --p2; }
 /* a fixed sign ratio with a minimum height sets a minimum width (845px), so a phone gets the height alone */
 @media (max-width: 860px) { .walllabel, .token, .post { grid-column: span 12; } .token .card, .post .card { aspect-ratio: auto; min-height: 240px; } .fascia .sign { aspect-ratio: auto; } }
 
@@ -181,6 +182,10 @@ pre { background: var(--board); color: #E9E7E0; padding: 20px; overflow-x: auto;
   .trio { grid-template-columns: 1fr; }
   .stage { padding: 32px 20px; }
 }
+/* caps by default, the way the face was first drawn. The tester has the switch, the character
+   set shows every glyph, and a 0x address keeps its lowercase x. */
+.hero h1, h2, .trio h3, .trio .sample, .leaf .big, .pal .word, .uses .solid, .uses .line, .uses .strips { text-transform: uppercase; }
+.uses .addr { text-transform: none; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -196,11 +201,11 @@ pre { background: var(--board); color: #E9E7E0; padding: 20px; overflow-x: auto;
       <span class="label">MintFace · Typeface · v1.100</span>
       <span class="label" id="heroPal">Palette: WestSide</span>
     </div>
-    <h1 id="heroTitle">Strip<br>Paintings</h1>
+    <h1 id="heroTitle">//Strips</h1>
     <div class="meta">
       <div>
         <div class="label">The face</div>
-        <p><strong>MintFace Fascia.</strong> Display type cut from the Strip Paintings. Heavy, wide, square... and every letter carries a mint-leaf corner and the red line.</p>
+        <p><strong>MintFace Fascia.</strong> Display type cut from the //Strips. Heavy, wide, square... and every letter carries a mint-leaf corner and the red line.</p>
       </div>
       <div>
         <div class="label">Three styles</div>
@@ -237,6 +242,13 @@ pre { background: var(--board); color: #E9E7E0; padding: 20px; overflow-x: auto;
         <input id="size" type="range" min="40" max="320" value="168">
       </div>
       <div class="field">
+        <span class="label" id="case-l">Case</span>
+        <div class="seg" role="group" aria-labelledby="case-l" id="caseSeg">
+          <button type="button" data-v="caps" aria-pressed="true">Caps</button>
+          <button type="button" data-v="typed" aria-pressed="false">As typed</button>
+        </div>
+      </div>
+      <div class="field">
         <span class="label" id="bg-l">Background</span>
         <div class="seg" role="group" aria-labelledby="bg-l" id="bgSeg">
           <button type="button" data-v="wall" aria-pressed="true">Wall</button>
@@ -248,7 +260,7 @@ pre { background: var(--board); color: #E9E7E0; padding: 20px; overflow-x: auto;
       <span class="label" id="pal-l">Strips palette</span>
       <div class="chips" role="group" aria-labelledby="pal-l" id="chips"></div>
     </div>
-    <div class="stage on-wall" id="stage"><div id="out" class="strips">Walk the Line</div></div>
+    <div class="stage on-wall" id="stage"><div id="out" class="strips caps">Walk the Line</div></div>
   </div>
 </section>
 
@@ -270,7 +282,7 @@ pre { background: var(--board); color: #E9E7E0; padding: 20px; overflow-x: auto;
       <article>
         <div class="sample strips" style="font-palette:--p0">//STRIPS</div>
         <h3>Strips</h3>
-        <p>Colour font. Every letter is a Strip Painting, with the red line through the middle. Eight palettes built in. Apps without colour support fall back to Solid.</p>
+        <p>Colour font. Every letter is a //Strips, with the red line through the middle. Eight palettes built in. Apps without colour support fall back to Solid.</p>
       </article>
     </div>
   </div>
@@ -323,8 +335,7 @@ pre { background: var(--board); color: #E9E7E0; padding: 20px; overflow-x: auto;
       </div>
       <div class="use walllabel">
         <div class="card">
-          <div class="label">//Strips</div>
-          <div class="t solid">Strip Painting<br>No. 1</div>
+          <div class="t solid">//Strips<br>No. 1</div>
           <p>Acrylic on panel.<br>Heretaunga St West, Hastings.</p>
           <div class="line" style="font-size:22px">MintFace</div>
         </div>
@@ -403,9 +414,9 @@ const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzàáâãäå�
 
 const swatch = cols => '<span class="sw" aria-hidden="true">' + cols.map(c => '<i style="background:' + c + '"></i>').join("") + '</span>';
 const $ = id => document.getElementById(id);
-const state = { style: "strips", pal: 0, bg: "wall", size: 168 };
-// on a phone 168px splits "Walk" down the middle, so the tester starts where a word fits
-if (window.innerWidth < 640) { state.size = 112; $("size").value = 112; }
+const state = { style: "strips", pal: 0, bg: "wall", size: 168, caps: true };
+// on a phone 168px splits "WALK" down the middle, so the tester starts where a word fits
+if (window.innerWidth < 640) { state.size = 96; $("size").value = 96; }
 
 // palette chips
 $("chips").innerHTML = PALS.map((p, i) => '<button type="button" class="chip" data-i="' + i + '" aria-pressed="' + (i === 0) + '">' + swatch(p[2]) + p[0] + '</button>').join("");
@@ -421,7 +432,7 @@ $("grid").innerHTML = Array.from(CHARS).map(ch => '<span title="U+' + ch.codePoi
 function render() {
   const out = $("out");
   out.textContent = $("txt").value || " ";
-  out.className = state.style;
+  out.className = state.style + (state.caps ? " caps" : "");
   out.style.fontSize = state.size + "px";
   out.style.fontPalette = "--p" + state.pal;
   $("stage").className = "stage on-" + state.bg;
@@ -434,11 +445,13 @@ function render() {
   });
   document.querySelectorAll("#styleSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === state.style)));
   document.querySelectorAll("#bgSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === state.bg)));
+  document.querySelectorAll("#caseSeg button").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.v === "caps") === state.caps)));
 }
 $("txt").addEventListener("input", render);
 $("size").addEventListener("input", e => { state.size = +e.target.value; render(); });
 $("styleSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { state.style = b.dataset.v; render(); } });
 $("bgSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { state.bg = b.dataset.v; render(); } });
+$("caseSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { state.caps = b.dataset.v === "caps"; render(); } });
 $("chips").addEventListener("click", e => {
   const b = e.target.closest(".chip"); if (!b || b.disabled) return;
   state.pal = +b.dataset.i;

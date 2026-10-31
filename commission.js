@@ -74,7 +74,7 @@ function drawInto(canvas, o, maxW, maxH) {
     else ctx.fillRect(0, ph - b, pw, b - a);
     mm += s.mm;
   }
-  canvas.setAttribute('aria-label', `The Strip Painting on order ${o.id}: ${o.spec_line}`);
+  canvas.setAttribute('aria-label', `The //Strips on order ${o.id}: ${o.spec_line}`);
 }
 
 function artColumn(o) {

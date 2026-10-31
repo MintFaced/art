@@ -143,7 +143,7 @@ is('two is: the waiting page sees it paid', (await get(B.id)).j.status, 'paid');
 const tw = wireQueue().filter((ev) => ev.kind === 'commission');
 is('an ETH commission goes on the wire, with the render, naming the buyer who asked', [tw.length, tw[0] && tw[0].payload.handle, tw[0] && tw[0].payload.price], [1, 'bo_paints', '0.41 ETH']);
 const said = compose(tw[0]);
-is('"COMMISSIONED · STRIP PAINTING · 120 × 60 CM · 0.41 ETH · @bo_paints", the render as the card', [said.text.split('\n')[0], said.card.kind], ['COMMISSIONED · STRIP PAINTING · 120 × 60 CM · 0.41 ETH · @bo_paints', 'work']);
+is('"COMMISSIONED · //STRIPS · 120 × 60 CM · 0.41 ETH · @bo_paints", the render as the card', [said.text.split('\n')[0], said.card.kind], ['COMMISSIONED · //STRIPS · 120 × 60 CM · 0.41 ETH · @bo_paints', 'work']);
 
 console.log('\n— ETH: any wallet, matched by the watcher —');
 const auth = { headers: { authorization: 'Bearer ' } };

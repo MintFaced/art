@@ -1,7 +1,7 @@
 {
   "_note": "Strip Paintings. Gallery only ... none of these are on chain, so the collection carries gallery:true and every work carries tokenized:false and status not_tokenized. When a work is tokenized it gains a digital block and its status flips to available/acquired; nothing else here has to change. Images are local until scripts/import-strip-paintings.mjs puts them in R2 and rewrites `image` to the assets.mintface.art URL.",
   "collection": {
-    "title": "Strip Paintings",
+    "title": "//Strips",
     "group": "core",
     "genre": "Painting",
     "year": "2026",
@@ -9,7 +9,7 @@
     "physical": true,
     "gallery": true,
     "tokenized": false,
-    "statement": "Strip paintings over vacant fascia signage in Hastings CBD... colours sampled from the neighbouring streetscape. A red line runs through every one, sixteen strips from the base.",
+    "statement": "//Strips over vacant fascia signage in Hastings CBD... colours sampled from the neighbouring streetscape. A red line runs through every one, sixteen strips from the base.",
     "notes": "Not yet tokenized. These are on record here as a gallery ... no prices, nothing on offer. Each will be written to chain when it is, and the record graduates in place.",
     "links": {
       "maker": "/strip-painting-maker"
@@ -221,7 +221,7 @@
       "caption": "COFFEE STOP · THE LANEWAY TABLE",
       "year": "2026",
       "medium": "Acrylic and resin on panel",
-      "statement": "A table, not a wall. The first Strip Painting you can sit at, its colours gathered from the works already installed along the street, three from each, every one already mixed in the studio pots. The red line runs through it like every work on the tour. Grab a coffee from Sutto or Dax, set it down on the painting, and you're part of it.",
+      "statement": "A table, not a wall. The first //Strips you can sit at, its colours gathered from the works already installed along the street, three from each, every one already mixed in the studio pots. The red line runs through it like every work on the tour. Grab a coffee from Sutto or Dax, set it down on the painting, and you're part of it.",
       "aspect": 2.0135,
       "orientation": "landscape",
       "physical": {

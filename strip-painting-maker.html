@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strip Painting Maker ... MintFace</title>
-<meta name="description" content="Design a colourway for your Strip Painting by MintFace. Colours are sampled from the neighbouring signs and the facade above.">
+<title>//Strips Maker ... MintFace</title>
+<meta name="description" content="Design a colourway for your //Strips by MintFace. Colours are sampled from the neighbouring signs and the facade above.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MintFace">
-<meta property="og:title" content="Strip Painting Maker ... MintFace">
-<meta property="og:description" content="Design a colourway for your Strip Painting by MintFace, sampled from your own street.">
+<meta property="og:title" content="//Strips Maker ... MintFace">
+<meta property="og:description" content="Design a colourway for your //Strips by MintFace, sampled from your own street.">
 <!-- The mark, at every size a browser asks for. The white cut serves on a
      dark scheme, which is also the tab icon once night is on. -->
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -161,8 +161,8 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 <header class="nav" id="nav"></header>
 
 <main class="wrap">
-  <h1>Strip Painting Maker</h1>
-  <p class="intro">Design a colourway for your Strip Painting by MintFace. Colours are sampled from the neighbouring signs and the facade above after uploading a photo. The colours are yours; the rhythm is every Strip Painting's, and the same choices always make the same painting.</p>
+  <h1>//Strips Maker</h1>
+  <p class="intro">Design a colourway for your //Strips by MintFace. Colours are sampled from the neighbouring signs and the facade above after uploading a photo. The colours are yours; the rhythm is the one every //Strips follows, and the same choices always make the same painting.</p>
 
   <div class="rule"></div>
 
@@ -199,7 +199,7 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   <section class="sect">
     <h2>Preview</h2>
     <div class="preview"><div class="strips" id="strips">
-      <img id="stripImg" alt="The strip painting as configured">
+      <img id="stripImg" alt="The //Strips as configured">
       <span class="redmark" id="redMark" hidden></span>
     </div></div>
     <div class="preview-note" id="previewNote">Preview not to scale</div>
@@ -441,7 +441,7 @@ async function draw() {
   const n = S.strips.length;
   const at = redAt();
   SHOT.name = exportName();
-  $('stripImg').alt = `Strip painting, ${S.widthM} m by ${S.laid.height} mm, ${n} strips, red line ${at} from the base`;
+  $('stripImg').alt = `//Strips, ${S.widthM} m by ${S.laid.height} mm, ${n} strips, red line ${at} from the base`;
   refreshShot();
   /* the red line's number, put where the red line is */
   const total = S.strips.reduce((s, x) => s + x.mm, 0) || 1;
@@ -466,7 +466,7 @@ function specText() {
   const at = redAt();
   const h = S.laid ? S.laid.height : S.heightMM;
   return [
-    'MintFace Strip Painting ... configured spec',
+    'MintFace //Strips ... configured spec',
     `${S.widthM}m x ${h}mm | ${S.strips.length} strips | vibrancy ${S.gamma.toFixed(2)}`,
     `price ${priceLine(priceOf())}, collected from The Line | est ${(DAYS_PER_M * S.widthM * (S.heightMM / 550)).toFixed(1)} days on site`,
     `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
@@ -482,7 +482,7 @@ function specText() {
 // spec in the body. The commission checkout takes over once the Maker's
 // paintings can be ordered from (STRIP-MAKER).
 function mailto() {
-  const subject = `Strip Painting ... ${S.widthM}m x ${S.laid ? S.laid.height : S.heightMM}mm, ${S.strips.length || S.count} strips`;
+  const subject = `//Strips ... ${S.widthM}m x ${S.laid ? S.laid.height : S.heightMM}mm, ${S.strips.length || S.count} strips`;
   return `mailto:ryan@mintface.art?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(S.strips.length ? specText() : '')}`;
 }
 

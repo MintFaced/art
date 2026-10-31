@@ -226,7 +226,7 @@ export async function cardSession(stripe, o, { currency = 'NZD', origin = SITE()
         currency: cur.toLowerCase(),
         unit_amount: Math.round(amount * 100),
         product_data: {
-          name: `Strip Painting commission · ${o.id} · ${sizeLine(o)}`,
+          name: `//Strips commission · ${o.id} · ${sizeLine(o)}`,
           description: specLine(o.spec),
           ...(image ? { images: [image] } : {}),
         },
@@ -459,7 +459,7 @@ async function emailBuyerPaid(o) {
   if (!o.email) return;
   await send({
     to: o.email,
-    subject: `Strip Painting ${o.id} ... commissioned`,
+    subject: `//Strips ${o.id} ... commissioned`,
     text: `Commissioned.
 
 Reference: ${o.id}
@@ -482,7 +482,7 @@ MintFace`,
 async function emailArtistPaid(o) {
   await send({
     to: ARTIST(),
-    subject: `Strip Painting ${o.id} ... commissioned (${o.method})`,
+    subject: `//Strips ${o.id} ... commissioned (${o.method})`,
     text: `${o.id} is paid.
 
 ${specLine(o.spec)}
@@ -508,8 +508,8 @@ export async function nudgeEth(o) {
   await save(o, 'ETH nudge sent');
   await send({
     to: o.email,
-    subject: `Strip Painting ${o.id} ... waiting for ETH`,
-    text: `Your Strip Painting is waiting for its ETH.
+    subject: `//Strips ${o.id} ... waiting for ETH`,
+    text: `Your //Strips is waiting for its ETH.
 
 Send exactly ${o.price.eth} ETH (at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH)
 to ${PAY_TO_ENS} ${PAY_TO}
@@ -549,14 +549,14 @@ export async function studioUpdate(id, { status, note, tracking, photo } = {}, b
     const last = o.photos[o.photos.length - 1];
     await send({
       to: o.email,
-      subject: `Strip Painting ${o.id} ... painted`,
+      subject: `//Strips ${o.id} ... painted`,
       text: `It is painted. Here it is.\n\n${ASSETS}/${last.key}\n\n${o.spec.delivery === 'shipped' ? 'It ships next, boxed. We will send the tracking.' : 'Ready to collect from The Line, Hastings. Reply to arrange a time.'}\n\nRyan\nMintFace`,
     }).catch((e) => console.error('commission painted email', id, e.message));
   }
   if (status === 'shipped' && was !== 'shipped' && o.email) {
     await send({
       to: o.email,
-      subject: `Strip Painting ${o.id} ... shipped`,
+      subject: `//Strips ${o.id} ... shipped`,
       text: `It is on its way.${o.tracking ? `\n\nTracking: ${o.tracking}` : ''}\n\nRyan\nMintFace`,
     }).catch((e) => console.error('commission shipped email', id, e.message));
   }
