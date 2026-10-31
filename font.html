@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MintFace Fascia · free typeface</title>
+<meta name="description" content="A free display typeface cut from the MintFace Strip Paintings. Solid, Line and Strips, with the red line through every letter.">
+<link rel="canonical" href="https://mintface.art/font">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MintFace">
+<meta property="og:url" content="https://mintface.art/font">
+<meta property="og:title" content="MintFace Fascia · free typeface">
+<meta property="og:description" content="A free display typeface cut from the MintFace Strip Paintings. Solid, Line and Strips, with the red line through every letter.">
+<meta property="og:image" content="https://mintface.art/font/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mintface.art/font/og.png">
+<!-- The mark, at every size a browser asks for. The white cut serves on a
+     dark scheme, which is also the tab icon once night is on. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-white-16.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-white-32.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-white-512.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<!-- The reading choice, before the first pixel. The stylesheet defaults to
+     prefers-color-scheme on its own, so this is only the override: the cookie
+     both deploys share, or this browser's own note of it. Four lines, inline,
+     because anything else paints the wrong theme first and corrects it. -->
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/font/fonts/MintFaceFascia-Strips.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/font/fonts/MintFaceFascia-Solid.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/font/fonts/MintFaceFascia-Line.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+/* The specimen. The page follows the site's day and night; the samples sit on
+   a fixed wall or a fixed fascia board, because the palettes are the content
+   and they were cut for those two grounds. */
+:root {
+  --sheet: #f2efe9;
+  --sheet-ink: #14120f;
+  --sheet-muted: #6e6a62;
+  --sheet-rule: #e6e2da;
+  --board: #151515;
+  --board-ink: #efebe2;
+  --red: #D62828;
+  --display: "Fascia Solid", Impact, "Arial Black", sans-serif;
+}
+@font-face { font-family: "Fascia Solid"; src: url("/font/fonts/MintFaceFascia-Solid.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Fascia Line"; src: url("/font/fonts/MintFaceFascia-Line.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Fascia Strips"; src: url("/font/fonts/MintFaceFascia-Strips.woff2") format("woff2"); font-display: block; }
+@font-palette-values --p0 { font-family: "Fascia Strips"; base-palette: 0; }
+@font-palette-values --p1 { font-family: "Fascia Strips"; base-palette: 1; }
+@font-palette-values --p2 { font-family: "Fascia Strips"; base-palette: 2; }
+@font-palette-values --p3 { font-family: "Fascia Strips"; base-palette: 3; }
+@font-palette-values --p4 { font-family: "Fascia Strips"; base-palette: 4; }
+@font-palette-values --p5 { font-family: "Fascia Strips"; base-palette: 5; }
+@font-palette-values --p6 { font-family: "Fascia Strips"; base-palette: 6; }
+@font-palette-values --p7 { font-family: "Fascia Strips"; base-palette: 7; }
+
+body { font: 400 15px/1.6 var(--font-mono); }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+.solid { font-family: var(--display); }
+.line { font-family: "Fascia Line", var(--display); }
+.strips { font-family: "Fascia Strips", var(--display); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+.label { font: 500 11px/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h2 { font: 400 clamp(28px, 4vw, 44px)/1 var(--display); margin: 0; text-wrap: balance; }
+section { padding: 72px 0; border-top: 1px solid var(--rule); }
+
+/* hero */
+.hero { padding: 28px 0 40px; }
+.hero .top { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.hero h1 { font-family: "Fascia Strips", var(--display); font-weight: 400; font-size: clamp(64px, 15.5vw, 236px); line-height: .9; margin: 28px 0 0; letter-spacing: -0.005em; font-palette: --p0; }
+.hero .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 36px; }
+.hero .meta p { margin: 6px 0 0; max-width: 46ch; }
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--ink); color: var(--paper); text-decoration: none; padding: 12px 18px; font: 500 13px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; border: 0; cursor: pointer; }
+.btn:hover { background: var(--red); color: #fff; }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: var(--paper); }
+
+/* tester */
+.tester .controls { display: flex; flex-wrap: wrap; gap: 20px 28px; align-items: end; margin-top: 28px; }
+.field { display: grid; gap: 8px; }
+.field input[type=text] { font: 500 16px/1 var(--font-mono); padding: 12px 14px; border: 1.5px solid var(--ink); background: var(--sheet); color: var(--sheet-ink); width: min(360px, 80vw); }
+.seg { display: inline-flex; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.seg button { font: 500 12px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; padding: 12px 14px; background: transparent; border: 0; color: var(--ink); cursor: pointer; }
+.seg button[aria-pressed=true] { background: var(--ink); color: var(--paper); }
+input[type=range] { width: 180px; accent-color: var(--red); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: grid; gap: 6px; padding: 6px; background: transparent; border: 1.5px solid transparent; cursor: pointer; font: 500 10px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.chip[aria-pressed=true] { border-color: var(--ink); }
+.chip:disabled { opacity: .35; cursor: default; }
+.sw { display: flex; width: 78px; height: 14px; }
+.sw i { flex: 1; }
+.stage { margin-top: 28px; min-height: 280px; padding: 40px 32px; display: flex; align-items: center; overflow: hidden; transition: background .25s; }
+.stage.on-wall { background: var(--sheet); color: var(--sheet-ink); box-shadow: inset 0 0 0 1px var(--sheet-rule); }
+.stage.on-board { background: var(--board); color: var(--board-ink); }
+#out { line-height: .95; word-break: break-word; width: 100%; }
+
+/* styles */
+.trio { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 32px; }
+.trio article { display: grid; gap: 14px; align-content: start; }
+.trio .sample { font-size: clamp(40px, 4.6vw, 64px); line-height: .95; padding: 28px 22px; white-space: nowrap; background: var(--sheet); color: var(--sheet-ink); box-shadow: inset 0 0 0 1px var(--sheet-rule); }
+.trio h3 { font: 400 22px/1 var(--display); margin: 0; }
+.trio p { margin: 0; max-width: 40ch; }
+
+/* rule */
+.leaf { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; margin-top: 8px; }
+.leaf .big { font-size: clamp(120px, 20vw, 280px); line-height: .9; display: flex; gap: .08em; }
+.leaf ol { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 16px; counter-reset: n; }
+.leaf li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; counter-increment: n; max-width: 52ch; }
+.leaf li::before { content: counter(n, decimal-leading-zero); font: 500 12px/1.9 var(--font-mono); color: var(--red); }
+@media (max-width: 760px) { .leaf { grid-template-columns: 1fr; } }
+
+/* palettes */
+.pals { display: grid; gap: 0; margin-top: 32px; }
+.pal { display: grid; grid-template-columns: 120px 160px 1fr; gap: 20px; align-items: center; padding: 18px 20px; background: var(--sheet); color: var(--sheet-ink); border-top: 1px solid var(--sheet-rule); }
+.pal.dark { background: var(--board); color: var(--board-ink); border-top-color: var(--board); }
+.pal .sw { width: 160px; height: 22px; }
+.pal .word { font-size: clamp(40px, 6vw, 76px); line-height: 1; white-space: nowrap; overflow: hidden; }
+.pal .label { color: inherit; opacity: .75; }
+@media (max-width: 640px) { .pal { grid-template-columns: 1fr; gap: 10px; } }
+
+/* glyphs: the grid takes the tester's ground as well as its style and palette */
+.glyphs .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); margin-top: 28px; border-left: 1px solid var(--sheet-rule); border-top: 1px solid var(--sheet-rule); }
+.glyphs .grid span { aspect-ratio: 1; display: grid; place-items: center; font-size: 46px; line-height: 1; border-right: 1px solid var(--sheet-rule); border-bottom: 1px solid var(--sheet-rule); }
+.glyphs .grid.on-wall { background: var(--sheet); color: var(--sheet-ink); }
+.glyphs .grid.on-board { background: var(--board); color: var(--board-ink); }
+.glyphs .grid.on-board, .glyphs .grid.on-board span { border-color: #2a2a2a; }
+.glyphs .grid.on-wall span:hover { background: var(--board); color: var(--board-ink); }
+.glyphs .grid.on-board span:hover { background: var(--sheet); color: var(--sheet-ink); }
+.cover { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 18px; }
+
+/* in use */
+.uses { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-top: 32px; }
+.use { display: grid; gap: 10px; align-content: start; }
+.fascia { grid-column: span 12; }
+.fascia .sign { background: var(--board); color: var(--board-ink); padding: 2.2vw 3vw; display: flex; align-items: center; justify-content: space-between; gap: 24px; aspect-ratio: 11 / 1.25; min-height: 96px; }
+.fascia .sign span { font-size: clamp(34px, 6.4vw, 92px); line-height: 1; font-palette: --p5; }
+.fascia .shop { height: 46px; background: repeating-linear-gradient(90deg, #BDBBB3 0 2px, #D3D1CA 2px 240px); }
+.walllabel { grid-column: span 5; }
+.walllabel .card { background: #FBFAF7; color: var(--sheet-ink); padding: 26px; box-shadow: 0 1px 0 var(--sheet-rule), 0 12px 30px -18px rgba(0,0,0,.35); display: grid; gap: 12px; }
+.walllabel .card .label { color: var(--sheet-muted); }
+.walllabel .t { font-size: 34px; line-height: .95; }
+.walllabel p { margin: 0; font-size: 13px; }
+.token { grid-column: span 3; }
+.token .card { background: var(--board); color: var(--board-ink); aspect-ratio: 1; padding: 22px; display: grid; align-content: space-between; }
+.token .eth { font-size: 64px; line-height: 1; font-palette: --p7; }
+.token .addr { font-size: 22px; letter-spacing: .02em; }
+.post { grid-column: span 4; }
+.post .card { aspect-ratio: 1; background: var(--sheet); color: var(--sheet-ink); box-shadow: inset 0 0 0 1px var(--sheet-rule); display: grid; place-items: center; }
+.post .card span { font-size: clamp(48px, 6.4vw, 88px); line-height: .95; text-align: center; font-palette: --p2; }
+/* a fixed sign ratio with a minimum height sets a minimum width (845px), so a phone gets the height alone */
+@media (max-width: 860px) { .walllabel, .token, .post { grid-column: span 12; } .token .card, .post .card { aspect-ratio: auto; min-height: 240px; } .fascia .sign { aspect-ratio: auto; } }
+
+/* get */
+.get .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 28px; }
+.get ul { margin: 12px 0 0; padding-left: 18px; }
+pre { background: var(--board); color: #E9E7E0; padding: 20px; overflow-x: auto; font: 13px/1.6 var(--font-mono); margin: 12px 0 0; }
+.copyrow { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+#copied { font-size: 12px; color: var(--muted); }
+.credit { padding: 28px 28px 48px; border-top: 1px solid var(--rule); max-width: none; text-align: center; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+  .trio { grid-template-columns: 1fr; }
+  .stage { padding: 32px 20px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav"></header>
+
+<main>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="top">
+      <span class="label">MintFace · Typeface · v1.100</span>
+      <span class="label" id="heroPal">Palette: WestSide</span>
+    </div>
+    <h1 id="heroTitle">Strip<br>Paintings</h1>
+    <div class="meta">
+      <div>
+        <div class="label">The face</div>
+        <p><strong>MintFace Fascia.</strong> Display type cut from the Strip Paintings. Heavy, wide, square... and every letter carries a mint-leaf corner and the red line.</p>
+      </div>
+      <div>
+        <div class="label">Three styles</div>
+        <p>Solid for signage and print. Line for the red line as a cut. Strips, a colour font where every letter is a painting.</p>
+      </div>
+      <div>
+        <div class="label">Free to use</div>
+        <p>SIL Open Font License 1.1. Commercial work included.</p>
+        <p style="margin-top:14px"><a class="btn" href="https://assets.mintface.art/font/MintFace-Fascia-1.100.zip">Download ↓</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="tester" aria-labelledby="t-h">
+  <div class="wrap">
+    <div class="label">Try it</div>
+    <h2 id="t-h">Type tester</h2>
+    <div class="controls">
+      <div class="field">
+        <label class="label" for="txt">Your words</label>
+        <input id="txt" type="text" value="Walk the Line" maxlength="80" autocomplete="off">
+      </div>
+      <div class="field">
+        <span class="label" id="style-l">Style</span>
+        <div class="seg" role="group" aria-labelledby="style-l" id="styleSeg">
+          <button type="button" data-v="solid" aria-pressed="false">Solid</button>
+          <button type="button" data-v="line" aria-pressed="false">Line</button>
+          <button type="button" data-v="strips" aria-pressed="true">Strips</button>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" for="size">Size <span id="sizeV">168</span>px</label>
+        <input id="size" type="range" min="40" max="320" value="168">
+      </div>
+      <div class="field">
+        <span class="label" id="bg-l">Background</span>
+        <div class="seg" role="group" aria-labelledby="bg-l" id="bgSeg">
+          <button type="button" data-v="wall" aria-pressed="true">Wall</button>
+          <button type="button" data-v="board" aria-pressed="false">Board</button>
+        </div>
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px">
+      <span class="label" id="pal-l">Strips palette</span>
+      <div class="chips" role="group" aria-labelledby="pal-l" id="chips"></div>
+    </div>
+    <div class="stage on-wall" id="stage"><div id="out" class="strips">Walk the Line</div></div>
+  </div>
+</section>
+
+<section aria-labelledby="s-h">
+  <div class="wrap">
+    <div class="label">The family</div>
+    <h2 id="s-h">Solid, Line, Strips</h2>
+    <div class="trio">
+      <article>
+        <div class="sample solid">//STRIPS</div>
+        <h3>Solid</h3>
+        <p>The workhorse. Fascia vinyl, posters, wall labels, one-colour print. Works in every app.</p>
+      </article>
+      <article>
+        <div class="sample line">//STRIPS</div>
+        <h3>Line</h3>
+        <p>The red line as a cut. It sits at the same height in every letter, so it runs unbroken across a word, a sign, a whole street.</p>
+      </article>
+      <article>
+        <div class="sample strips" style="font-palette:--p0">//STRIPS</div>
+        <h3>Strips</h3>
+        <p>Colour font. Every letter is a Strip Painting, with the red line through the middle. Eight palettes built in. Apps without colour support fall back to Solid.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="r-h">
+  <div class="wrap leaf">
+    <div class="big solid" aria-hidden="true"><span>O</span><span>S</span><span>Ξ</span></div>
+    <div>
+      <div class="label">How it's built</div>
+      <h2 id="r-h">One rule, one line</h2>
+      <ol>
+        <li><span><strong>The leaf rule.</strong> Corners facing up-left and down-right are rounded. The other two stay sharp. Every square letter turns into a mint leaf... and the shapes still hold when you spin them 180°.</span></li>
+        <li><span><strong>The red line.</strong> Fixed at one height across the whole font, right through the crossbars. Type a word and it runs straight through, like it does across a painting.</span></li>
+        <li><span><strong>Built for signs.</strong> Wide, heavy, flat-topped caps that read from across the street. Figures share one width so prices and token amounts line up.</span></li>
+        <li><span><strong>Crypto native.</strong> Ξ, ₿ and ⟠ drawn to match, a pixel zero for <span class="solid" style="font-size:1.2em">0x</span> addresses, and Đ and Ł while we're at it.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="p-h">
+  <div class="wrap">
+    <div class="label">Strips</div>
+    <h2 id="p-h">Eight palettes</h2>
+    <div class="pals" id="pals"></div>
+  </div>
+</section>
+
+<section class="glyphs" aria-labelledby="g-h">
+  <div class="wrap">
+    <div class="label">Character set</div>
+    <h2 id="g-h">Caps, lowercase, figures, crypto, macrons</h2>
+    <div class="cover label">
+      <span>Caps + lowercase</span><span>Tabular figures</span><span>Ξ ₿ ⟠ Đ Ł</span><span>$ ¢ € £ ¥</span><span>Ā Ē Ī Ō Ū ā ē ī ō ū</span><span>Western European accents</span><span>Arrows</span>
+    </div>
+    <div class="grid solid on-wall" id="grid" aria-label="All characters"></div>
+  </div>
+</section>
+
+<section aria-labelledby="u-h">
+  <div class="wrap">
+    <div class="label">In use</div>
+    <h2 id="u-h">On the street, on the wall, on chain</h2>
+    <div class="uses">
+      <div class="use fascia">
+        <div class="sign"><span class="strips">The Line</span><span class="strips" aria-hidden="true">→</span></div>
+        <div class="shop" aria-hidden="true"></div>
+        <div class="label">Fascia board · Strips / Night</div>
+      </div>
+      <div class="use walllabel">
+        <div class="card">
+          <div class="label">//Strips</div>
+          <div class="t solid">Strip Painting<br>No. 1</div>
+          <p>Acrylic on panel.<br>Heretaunga St West, Hastings.</p>
+          <div class="line" style="font-size:22px">MintFace</div>
+        </div>
+        <div class="label">Wall label · Solid + Line</div>
+      </div>
+      <div class="use token">
+        <div class="card">
+          <span class="eth strips">⟠Ξ</span>
+          <span class="addr solid">0x00F0…0C0D</span>
+        </div>
+        <div class="label">Token card · Strips / Paper</div>
+      </div>
+      <div class="use post">
+        <div class="card"><span class="strips">//Strips<br>gm</span></div>
+        <div class="label">Post · Strips / Loud</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="get" id="get" aria-labelledby="d-h">
+  <div class="wrap">
+    <div class="label">Download</div>
+    <h2 id="d-h">Get MintFace Fascia</h2>
+    <div class="cols">
+      <div>
+        <p style="margin:0;max-width:52ch">One zip. OTF and TTF for design apps, WOFF2 for the web, the licence and a readme.</p>
+        <ul>
+          <li>Design apps: install the OTFs plus <code>MintFaceFascia-Strips.ttf</code></li>
+          <li>Websites: the three <code>.woff2</code> files</li>
+          <li>Office apps: the TTFs</li>
+        </ul>
+        <p style="margin-top:20px"><a class="btn" href="https://assets.mintface.art/font/MintFace-Fascia-1.100.zip">Download the zip ↓</a></p>
+        <p class="label" style="margin-top:12px">MintFace-Fascia-1.100.zip · 190 KB</p>
+        <p class="label" style="margin-top:22px">SIL Open Font License 1.1 · Free for personal and commercial use · Rename it if you modify it</p>
+      </div>
+      <div>
+        <div class="label">Pick a palette in CSS</div>
+<pre id="css">@font-face {
+  font-family: "MintFace Fascia Strips";
+  src: url("MintFaceFascia-Strips.woff2") format("woff2");
+}
+@font-palette-values --loud {
+  font-family: "MintFace Fascia Strips";
+  base-palette: 2;              /* 0 WestSide … 7 Paper */
+  override-colors: 12 #e10600;  /* 12 = the red line */
+}
+h1 {
+  font-family: "MintFace Fascia Strips";
+  font-palette: --loud;
+}</pre>
+        <div class="copyrow"><button class="btn ghost" type="button" id="copyBtn">Copy CSS</button><span id="copied" aria-live="polite"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="credit label">MintFace Fascia 1.100 · Designed by MintFace, Hastings, Aotearoa</div>
+
+</main>
+
+<footer class="foot">
+  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
+  <a class="smallcaps" href="/provenance">Provenance</a>
+  <a class="smallcaps" href="/claim">Receive your artwork</a>
+  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
+  <a class="smallcaps" href="/studio">Studio</a>
+  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
+</footer>
+
+<script src="/mintface.js"></script>
+<script>
+(() => {
+const PALS = [["WestSide","light",["#1B998B","#24364F","#F2B705","#0B6E99","#141414","#C9A227","#5FC9A8","#E86A33","#6A4C93","#2F7D44","#E9DCC0","#8193A8","#D62828"]],["Mint","light",["#0F5E4E","#1FA187","#7FD8BE","#B8EBDD","#2D6A4F","#52B788","#081C15","#40916C","#95D5B2","#1B4332","#74C69D","#2A9D8F","#D62828"]],["Loud","light",["#FFD400","#FF9F00","#141414","#FF5A00","#0057FF","#00A86B","#FFE34D","#2B2B2B","#FF3EA5","#FFC300","#4A4A4A","#00B4D8","#E10600"]],["Slate","light",["#2F3E46","#354F52","#52796F","#84A98C","#B8C2BA","#1C2321","#5C677D","#33415C","#7D8597","#0D1321","#979DAC","#4A4E69","#D62828"]],["Citrus","light",["#F26B1D","#F7931E","#FFC857","#1D3557","#457B9D","#A8DADC","#E9C46A","#264653","#F4A261","#2A9D8F","#E76F51","#141414","#C1121F"]],["Night","dark",["#00F5D4","#FEE440","#F15BB5","#9B5DE5","#00BBF9","#FFFFFF","#B8F2E6","#FF9F1C","#CBF3F0","#2EC4B6","#E0E0E0","#A0C4FF","#FF2D2D"]],["Ink","light",["#141414","#141414","#141414","#141414","#141414","#141414","#141414","#141414","#141414","#141414","#141414","#141414","#D62828"]],["Paper","dark",["#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#F5F2EA","#FF2D2D"]]];
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïñòóôõöøùúûüýÿāēīōūđł0123456789.,:;!?'\"‘’“”-–—_/\\()[]{}|<>+−=×*#@%&$•·^~`Ξ₿⟠¢€£¥ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝŸĀĒĪŌŪĐŁ→←↑↓↗↘…";
+
+const swatch = cols => '<span class="sw" aria-hidden="true">' + cols.map(c => '<i style="background:' + c + '"></i>').join("") + '</span>';
+const $ = id => document.getElementById(id);
+const state = { style: "strips", pal: 0, bg: "wall", size: 168 };
+// on a phone 168px splits "Walk" down the middle, so the tester starts where a word fits
+if (window.innerWidth < 640) { state.size = 112; $("size").value = 112; }
+
+// palette chips
+$("chips").innerHTML = PALS.map((p, i) => '<button type="button" class="chip" data-i="' + i + '" aria-pressed="' + (i === 0) + '">' + swatch(p[2]) + p[0] + '</button>').join("");
+
+// palette rows
+$("pals").innerHTML = PALS.map((p, i) =>
+  '<div class="pal ' + (p[1] === "dark" ? "dark" : "") + '"><div><div class="label">' + String(i).padStart(2, "0") + '</div><strong>' + p[0] + '</strong></div>' +
+  swatch(p[2]) + '<div class="word strips" style="font-palette:--p' + i + '">//STRIPS Ξ</div></div>').join("");
+
+// glyph grid
+$("grid").innerHTML = Array.from(CHARS).map(ch => '<span title="U+' + ch.codePointAt(0).toString(16).toUpperCase().padStart(4, "0") + '">' + ch.replace("&", "&amp;").replace("<", "&lt;") + '</span>').join("");
+
+function render() {
+  const out = $("out");
+  out.textContent = $("txt").value || " ";
+  out.className = state.style;
+  out.style.fontSize = state.size + "px";
+  out.style.fontPalette = "--p" + state.pal;
+  $("stage").className = "stage on-" + state.bg;
+  $("sizeV").textContent = state.size;
+  $("grid").className = "grid " + state.style + " on-" + state.bg;
+  $("grid").style.fontPalette = "--p" + state.pal;
+  document.querySelectorAll("#chips .chip").forEach(b => {
+    b.setAttribute("aria-pressed", String(+b.dataset.i === state.pal));
+    b.disabled = state.style !== "strips";
+  });
+  document.querySelectorAll("#styleSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === state.style)));
+  document.querySelectorAll("#bgSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === state.bg)));
+}
+$("txt").addEventListener("input", render);
+$("size").addEventListener("input", e => { state.size = +e.target.value; render(); });
+$("styleSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { state.style = b.dataset.v; render(); } });
+$("bgSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { state.bg = b.dataset.v; render(); } });
+$("chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b || b.disabled) return;
+  state.pal = +b.dataset.i;
+  const t = PALS[state.pal][1];
+  if (t === "dark" && state.bg === "wall") state.bg = "board";
+  if (t === "light" && state.bg === "board" && state.pal !== 6) state.bg = "wall";
+  render();
+});
+$("copyBtn").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText($("css").textContent); $("copied").textContent = "Copied"; }
+  catch (err) { $("copied").textContent = "Select the code and copy it by hand"; }
+});
+render();
+
+// hero: the light palettes take turns, like walking past the works. The hero
+// sits on the page itself, so on a night page it is the two cut for the dark.
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const night = () => {
+  const t = document.documentElement.getAttribute("data-theme");
+  return t ? t === "night" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+};
+let h = 0;
+function hero() {
+  const turn = night() ? [5, 7] : [0, 1, 2, 3, 4];
+  const p = turn[h % turn.length];
+  $("heroTitle").style.fontPalette = "--p" + p;
+  $("heroPal").textContent = "Palette: " + PALS[p][0];
+}
+hero();
+if (!reduce) setInterval(() => { h++; hero(); }, 2600);
+})();
+</script>
+</body>
+</html>
