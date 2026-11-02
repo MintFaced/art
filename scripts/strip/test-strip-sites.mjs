@@ -25,8 +25,8 @@ is('odd numbers on the north side, even on the south (King St and 328 apart)', s
 is('every field the doc names is present on every site', sites.every((s) => ['no', 'address', 'street', 'side', 'building', 'tenant', 'fascia_m', 'panels', 'size', 'status', 'installed_at', 'work_id', 'specimens', 'palette', 'price', 'sale_state', 'edition', 'lat', 'lng', 'notes'].every((k) => k in s)), true);
 
 console.log('\n— counts, computed —');
-is('5 installed, 1 approved, 6 proposed', counts(sites), { installed: 5, approved: 1, proposed: 6, total: 12 });
-is('the count line', countLine(sites), '5 INSTALLED · 1 APPROVED · 6 PROPOSED');
+is('6 installed, 0 approved, 6 proposed', counts(sites), { installed: 6, approved: 0, proposed: 6, total: 12 });
+is('the count line', countLine(sites), '6 INSTALLED · 0 APPROVED · 6 PROPOSED');
 is('and on a phone it says to scroll', countLine(sites, { scroll: true }).endsWith('SCROLL →'), true);
 
 console.log('\n— the plan —');
@@ -49,13 +49,15 @@ is('… and it is not counted into the Heretaunga spread', L.filter((p) => p.kin
 is('north sites above the street, south below', L.filter((p) => p.kind === 'street').every((p) => (p.north ? p.bar.y + p.bar.h <= 150 : p.bar.y >= 210)), true);
 is('a bar is as wide as its fascia: 6.0 m is 150 px, unknown is 1.2 m (30 px)', [at(320).bar.w, at(350).bar.w], [150, 30]);
 const svg = planSVG(sites);
-/* Pandit (No. 6 since 2 November, 311 West) was approved on 18 October */
+/* Pandit (No. 6, 311 West) was approved on 18 October and installed on 1 November. Nothing on the
+   register is approved now, so the outline is checked on a copy with 341 West approved. */
+const approvedSvg = planSVG(sites.map((s) => (s.no === 7 ? { ...s, status: 'approved' } : s)));
 is('installed solid, approved an ink outline, proposed grey dashed', [
   /data-no="2"[^>]*><rect[^>]*fill="#141414"/.test(svg),
-  /data-no="6"[^>]*><rect[^>]*fill="none" stroke="#141414"/.test(svg),
+  /data-no="7"[^>]*><rect[^>]*fill="none" stroke="#141414"/.test(approvedSvg),
   /data-no="9"[^>]*><rect[^>]*stroke-dasharray="4 3"/.test(svg),
 ], [true, true, true]);
-is('the laneway and its table are installed, so solid ink', [5, 4].map((n) => new RegExp(`data-no="${n}"[^>]*><rect[^>]*fill="#141414"`).test(svg)), [true, true]);
+is('the laneway, its table and Pandit are installed, so solid ink', [5, 4, 6].map((n) => new RegExp(`data-no="${n}"[^>]*><rect[^>]*fill="#141414"`).test(svg)), [true, true, true]);
 is('the legend says the three words', ['>INSTALLED<', '>APPROVED<', '>PROPOSED<'].every((w) => svg.includes(w)), true);
 is('no colour but ink, grey, street and paper', [...new Set(svg.match(/#[0-9A-Fa-f]{6}/g))].sort(), ['#141414', '#6B6A64', '#C9C6BC', '#EEECE4', '#F8F7F3'].sort());
 for (const north of [true, false]) {
@@ -84,14 +86,14 @@ const ten = { no: 13, address: '302 West', street: 'Heretaunga St W', side: 'sou
 const more = [...sites, ten];
 is('it is on the plan', planSVG(more).includes('data-no="13"'), true);
 is('in the register', registerRows(more).map((r) => r.no).includes('13'), true);
-is('and in the counts', counts(more), { installed: 5, approved: 1, proposed: 7, total: 13 });
+is('and in the counts', counts(more), { installed: 6, approved: 0, proposed: 7, total: 13 });
 is('placed on the south side between 320 and King Street', (() => { const l = layout(more); const p = l.find((q) => q.site.no === 13); return [p.north, p.cx > l.find((q) => q.site.no === 1).cx, p.cx < kingX]; })(), [false, true, true]);
 is('through the API as well', publicSites({ sites: more }).length, 13);
 
 console.log('\n— the API —');
 const r = await GET();
 const j = await r.json();
-is('serves the sites and the counts, public and cached', [r.status, j.counts, j.sites.length, /public/.test(r.headers.get('cache-control'))], [200, { installed: 5, approved: 1, proposed: 6, total: 12 }, 12, true]);
+is('serves the sites and the counts, public and cached', [r.status, j.counts, j.sites.length, /public/.test(r.headers.get('cache-control'))], [200, { installed: 6, approved: 0, proposed: 6, total: 12 }, 12, true]);
 is('editorial notes stay out of it', JSON.stringify(j).includes('"notes"'), false);
 const withTenant = publicSites({ sites: [{ ...ten, tenant: 'Private Co', tenant_public: false }, { ...ten, no: 14, tenant: 'Public Co', tenant_public: true }] });
 is('a tenant is named only where agreed', withTenant.map((s) => s.tenant), [null, 'Public Co']);
