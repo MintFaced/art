@@ -49,10 +49,10 @@ is('… and it is not counted into the Heretaunga spread', L.filter((p) => p.kin
 is('north sites above the street, south below', L.filter((p) => p.kind === 'street').every((p) => (p.north ? p.bar.y + p.bar.h <= 150 : p.bar.y >= 210)), true);
 is('a bar is as wide as its fascia: 6.0 m is 150 px, unknown is 1.2 m (30 px)', [at(320).bar.w, at(350).bar.w], [150, 30]);
 const svg = planSVG(sites);
-/* Pandit (No. 8 since 21 October, 311 West) was approved on 18 October */
+/* Pandit (No. 6 since 2 November, 311 West) was approved on 18 October */
 is('installed solid, approved an ink outline, proposed grey dashed', [
   /data-no="2"[^>]*><rect[^>]*fill="#141414"/.test(svg),
-  /data-no="8"[^>]*><rect[^>]*fill="none" stroke="#141414"/.test(svg),
+  /data-no="6"[^>]*><rect[^>]*fill="none" stroke="#141414"/.test(svg),
   /data-no="9"[^>]*><rect[^>]*stroke-dasharray="4 3"/.test(svg),
 ], [true, true, true]);
 is('the laneway and its table are installed, so solid ink', [5, 4].map((n) => new RegExp(`data-no="${n}"[^>]*><rect[^>]*fill="#141414"`).test(svg)), [true, true]);
