@@ -3,6 +3,107 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmw17brlp",
+   "at": "2026-11-03T21:30:17.341Z",
+   "ok": true,
+   "ms": 85093,
+   "blocks": {
+    "from": 25820496,
+    "to": 26336975,
+    "scanned": 516480
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 2,
+    "sales": 1,
+    "transfers": 1,
+    "mints": 0
+   },
+   "wallets_affected": 3,
+   "tao": {
+    "live": 76400688,
+    "was": 76335948,
+    "delta": 64740,
+    "lost_to_sales": 304862,
+    "wallets": 3441
+   },
+   "register": {
+    "collectors": 3679,
+    "with_page": 805,
+    "private": 0,
+    "named": 1211
+   },
+   "classified": 2,
+   "unclassified": 0,
+   "events": 13124,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 101,
+   "files": 8,
+   "pages": 0,
+   "movements": [
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-11-03T03:00:47.000Z",
+     "block": 26331443,
+     "tx": "0x5b171d34382b1f7512f492369b7fad79a23d521ccc662c4d6b1c2d9be056376a",
+     "from": "0xea98a37ce62f2342a3eb0ad9edd9181c383d8958",
+     "to": "0x0fca84455846d271216e5bdf0e8a984f535accfd",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-11-03T03:50:47.000Z",
+     "block": 26331692,
+     "tx": "0x35e2ba3f87aa23c638bfbf42405cdecb8d437e33a147c3c67a2faa58463742c2",
+     "from": "0x0fca84455846d271216e5bdf0e8a984f535accfd",
+     "to": "0xafef3bb7fc3cd8ae083672b65f79e6cefd4ac619",
+     "how": "transfer",
+     "effect": "the sender keeps what it banked and stops accruing; the receiver starts from zero",
+     "why": "no marketplace and no payment found"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0xea98a37ce62f2342a3eb0ad9edd9181c383d8958",
+     "before": 863,
+     "after": 436,
+     "delta": -427,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0xafef3bb7fc3cd8ae083672b65f79e6cefd4ac619",
+     "before": 0,
+     "after": 3,
+     "delta": 3,
+     "gained": 1
+    },
+    {
+     "address": "0x0fca84455846d271216e5bdf0e8a984f535accfd",
+     "before": 0,
+     "after": 0,
+     "delta": 0,
+     "gained": 1,
+     "sales": 0,
+     "transfers": 1
+    }
+   ],
+   "alarms": [
+    "the site is serving an ownership cursor of block 26329692 while the repo is on 26336874 ... mintface.art does not deploy from GitHub, so its static data is frozen at the last hand-run deploy. `vercel deploy --prod` in ~/dev/art publishes what the crons have written since."
+   ]
+  },
+  {
    "run_id": "rmvzrvwvp",
    "at": "2026-11-02T21:30:17.269Z",
    "ok": true,
