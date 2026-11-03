@@ -1,6 +1,6 @@
 {
  "_note": "Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.",
- "generated": "2026-11-02T21:31:26.940Z",
+ "generated": "2026-11-03T21:01:40.119Z",
  "fields": ["address","name","ens","slug","private","works","unique","tao","rate","last","rank","fwd","x"],
  "rows": [
   ["0x8be5a2df6488b0937299d27f092716f4a9ab2fd8","visco.eth","visco.eth","visco.eth",0,83,11,1575072,1162.2,"2026-08-21",1,"",""],
@@ -3189,7 +3189,7 @@
   ["0xde49832105f7799df7f5f6dfe53b620dae072056","plodes.eth","plodes.eth","",0,2,0,991,0,"2022-10-31",3184,"",""],
   ["0xe6da4a4930e896c7e1ff590779b4046d7587b802","","","",0,2,0,982,8.4,"2026-05-19",3185,"",""],
   ["0xc603ff55fadcdbbebc19cc48b271b9b90ca09068","","","",0,1,0,931,8.4,"2026-07-15",3186,"",""],
-  ["0xea98a37ce62f2342a3eb0ad9edd9181c383d8958","pian0.eth","pian0.eth","",0,1,0,863,8.4,null,3187,"",""],
+  ["0xea98a37ce62f2342a3eb0ad9edd9181c383d8958","","","",0,1,0,863,8.4,null,3187,"",""],
   ["0xfaca3ff0b46746e98a4129827927617b0fe2f0ef","","","",0,1,0,847,0,null,3188,"",""],
   ["0x4b54d229651f7c36b24a131a85f4a3d7c092dd91","","","",0,1,0,763,4.2,null,3189,"",""],
   ["0x9ea0940749187868dd6a433db4fcc0281c6ce897","0xclik.eth","0xclik.eth","0xclik.eth",0,5,0,738,29.4,null,3190,"",""],
@@ -3349,6 +3349,7 @@
   ["0xe5358cab95014e2306815743793f16c93a8a5c70","nnsregistry.eth","nnsregistry.eth","nnsregistry.eth",0,2,2,0,0,null,3226,"",""],
   ["0xdfff2d6d699ac30714cc981f3be1db5250931013","","","0xdfff2d6d",0,2,2,0,0,null,3226,"",""],
   ["0x0a148ab4952486f99619b05f221548a8c9b0de9f","","","0x0a148ab4",0,2,2,0,0,"2022-11-29",3226,"",""],
+  ["0xafef3bb7fc3cd8ae083672b65f79e6cefd4ac619","barnold.eth","barnold.eth","",0,1,0,0,0,null,3226,"",""],
   ["0xfee22e2ce7808ba88e5dbee52388e6f4a2eb0f42","","","",0,1,0,0,0,null,3226,"",""],
   ["0xfed71fd5dc37d07a5f9287483ce51bb91ffecea4","","","",0,1,0,0,0,null,3226,"",""],
   ["0xfed52bf80d4231f7f6f017790935d0e44c59563b","santiagoney.eth","santiagoney.eth","",0,1,0,0,0,null,3226,"",""],
