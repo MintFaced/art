@@ -1,6 +1,6 @@
 {
  "_note": "Every collector, for the register table. Built with data/collectors.json ... see api/_lib/collectors.js.",
- "generated": "2026-11-04T21:31:34.020Z",
+ "generated": "2026-11-05T21:00:57.818Z",
  "fields": ["address","name","ens","slug","private","works","unique","tao","rate","last","rank","fwd","x"],
  "rows": [
   ["0x8be5a2df6488b0937299d27f092716f4a9ab2fd8","visco.eth","visco.eth","visco.eth",0,83,11,1577396,1162.2,"2026-08-21",1,"",""],
@@ -250,7 +250,7 @@
   ["0x7b5af6790381f932abae790e8b0d0ff50e287f8e","regulardad.eth","regulardad.eth","regulardad.eth",0,3,0,70813,21,"2022-12-27",245,"",""],
   ["0x4cffc2b4fb3114ca8cf9a2a244632d0176395348","yumpling.eth","yumpling.eth","yumpling.eth",0,8,0,69709,46.2,"2022-12-20",246,"",""],
   ["0xce990032a3ed14e197421270a9bec9e276bf2f31","gareebaadmi.eth","gareebaadmi.eth","gareebaadmi.eth",0,3,0,67908,46.2,"2022-12-27",247,"",""],
-  ["0xafccebed934565586a749c66ff352b0fc871042b","memevault1.web3at50.eth","memevault1.web3at50.eth","memevault1.web3at50.eth",0,23,1,67213,165.6,"2025-09-28",248,"",""],
+  ["0xafccebed934565586a749c66ff352b0fc871042b","memevault1.web3at50.eth","memevault1.web3at50.eth","memevault1.web3at50.eth",0,22,1,67213,165.6,"2025-09-28",248,"",""],
   ["0x230f4981634d3c96ee9066f17652dc8b9049015f","","","",0,1,0,65531,42,"2022-07-30",249,"",""],
   ["0xce5993291aada8cb38d9014f626a405e0f1128a4","","","0xce599329",0,2,1,65214,73.2,"2024-05-28",250,"vault.scobel.eth",""],
   ["0xd3aefe3c531e3e2eb0689206e7d495843c943550","","","",0,2,0,65160,46.2,"2022-12-24",251,"",""],
@@ -2652,7 +2652,7 @@
   ["0x7aba135f55e9b60d4c14275fde03e3a4d23fcada","j3nn1b33.eth","j3nn1b33.eth","j3nn1b33.eth",0,3,0,5879,4.2,null,2645,"",""],
   ["0xe6ba7ce1bbd7b811d891c2d4c09d7295bb96752c","beholdingeye.eth","beholdingeye.eth","",0,2,0,5879,4.2,null,2645,"",""],
   ["0xf549dffa66bd19b26d8884a6dbbe70314321a7a1","","","",0,1,0,5879,4.2,null,2645,"solumproject.eth",""],
-  ["0x4023c5db63d01c0a797d7949b2d5396fd963ea49","","","",0,1,0,5879,4.2,null,2645,"satoswap.eth",""],
+  ["0x4023c5db63d01c0a797d7949b2d5396fd963ea49","","","",0,1,0,5879,4.2,null,2645,"",""],
   ["0x1be8ab23cea5b4de958bbb89c3df7f5589749316","","","",0,1,0,5879,4.2,null,2645,"morella.eth",""],
   ["0x0db3c685621cfa5b03b903460ad97f413ca62061","","","",0,1,0,5879,4.2,null,2645,"",""],
   ["0x348d43bd8daeb9f13611d5f0838225e6a9d89bd0","","","",0,2,0,5878,4.2,null,2653,"",""],
@@ -3350,6 +3350,7 @@
   ["0xe5358cab95014e2306815743793f16c93a8a5c70","nnsregistry.eth","nnsregistry.eth","nnsregistry.eth",0,2,2,0,0,null,3227,"",""],
   ["0xdfff2d6d699ac30714cc981f3be1db5250931013","","","0xdfff2d6d",0,2,2,0,0,null,3227,"",""],
   ["0x0a148ab4952486f99619b05f221548a8c9b0de9f","","","0x0a148ab4",0,2,2,0,0,"2022-11-29",3227,"",""],
+  ["0xb956590548825ce1fa682b61865a4bd5a061cef8","","","",0,1,0,0,0,null,3227,"memesafe.web3at50.eth",""],
   ["0xfee22e2ce7808ba88e5dbee52388e6f4a2eb0f42","","","",0,1,0,0,0,null,3227,"",""],
   ["0xfed71fd5dc37d07a5f9287483ce51bb91ffecea4","","","",0,1,0,0,0,null,3227,"",""],
   ["0xfed52bf80d4231f7f6f017790935d0e44c59563b","santiagoney.eth","santiagoney.eth","",0,1,0,0,0,null,3227,"",""],
