@@ -36,270 +36,323 @@ document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
 <style>
-.wrap{max-width:980px;margin:0 auto;padding:52px 28px 70px}
-h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px);line-height:1.02;margin:0;letter-spacing:-.03em}
-.intro{font-family:var(--font-sans);font-weight:400;font-size:clamp(17px,1.9vw,20px);line-height:1.55;color:var(--ink-3);margin:20px 0 0;max-width:620px}
+/* One viewport, two columns. The strip never leaves the screen and nothing
+   opens over it: adjusting and seeing happen at the same time. The page itself
+   doesn't scroll. If the rail runs out of room, only its middle does. */
+html,body{height:100%;overflow:hidden}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) clamp(300px,26vw,360px);height:calc(100dvh - 53px)}
 
-.rule{border-top:1px solid var(--rule);margin:44px 0 0}
-.sect{margin:30px 0 0}
-.sect > h2{
-  font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 16px;
-}
-
-/* ---------- inputs ---------- */
-.fields{display:flex;gap:34px;flex-wrap:wrap;align-items:flex-end}
-.field{display:flex;flex-direction:column}
-.field .lab{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.field input[type=number]{
-  font-family:var(--font-mono);font-weight:400;font-size:16px;font-variant-numeric:tabular-nums;
-  width:120px;background:none;border:0;border-bottom:1px solid var(--rule);padding:7px 0;color:var(--ink);
-  border-radius:0;-webkit-appearance:none;
-}
-.field input[type=number]:focus{outline:0;border-bottom-color:var(--ink)}
-.field .unit{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:6px}
-
-.tier-note{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:9px}
-
-.slider{max-width:420px}
-.slider input[type=range]{width:100%;accent-color:var(--ink);margin:6px 0 0}
-.slider .ends{
-  display:flex;justify-content:space-between;
-  font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:6px;
-}
-
-/* ---------- photo ---------- */
-.photo{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
-.dropzone{
-  border:1px solid var(--rule);padding:22px;min-width:260px;max-width:340px;cursor:pointer;
-  font-family:var(--font-sans);font-size:13px;line-height:1.6;color:var(--muted);
-}
-.dropzone:hover{border-color:var(--ink)}
-.dropzone input{display:none}
-.shot{max-width:340px}
-.shot img{width:100%;height:auto;display:block;cursor:crosshair;border:1px solid var(--rule)}
-.shot .hint{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:7px}
-
-/* ---------- palette ---------- */
-/* Row gap enough for the label that hangs under the red: on a wrapped row a
-   17px label under an 8px gap lands on the swatch below. */
-.swatches{display:flex;flex-wrap:wrap;gap:24px 8px;align-items:center}
-.sw{
-  width:44px;height:44px;border:1px solid var(--rule);cursor:pointer;position:relative;
-  padding:0;background:none;
-}
-.sw:hover{border-color:var(--ink)}
-.sw .n{
-  position:absolute;left:50%;transform:translateX(-50%);bottom:-17px;white-space:nowrap;
-  font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);
-}
-.sw-red{cursor:default;border-color:var(--ink)}
-.sw-red:hover{border-color:var(--ink)}
-.swatch-note{font-family:var(--font-sans);font-size:12.5px;color:var(--muted);margin-top:26px;line-height:1.6}
-
-/* ---------- preview ----------
+/* ---------- the strip ----------
  *
- * THE PREVIEW IS THE FILE. It was a stack of divs, which is a thing no browser
- * will let anybody keep: right-click offered nothing, because there was no
- * image there to save. It is an <img> now, backed by the very blob the
- * DOWNLOAD PNG button hands over ... so Save Image As gives the same pixels as
- * the button, and neither can drift from the other because there is only one
- * of them.
- *
- * Stretched to the box rather than to its own proportions, which is what the
- * stack of divs did and what the note under it has always said: a 6m wall at
- * 550mm is eleven to one, and eleven to one across this column is a preview
- * sixty pixels tall. The FILE is true to the wall. The preview is a swatch of
- * it. Pixelated rather than smoothed, because a band edge is a band edge and
- * the browser softening it is the browser inventing a colour that is not in
- * the painting. */
-.preview{border:1px solid var(--rule);padding:9px;background:var(--paper)}
-.strips{position:relative;height:190px;width:100%}
-.strips img{display:block;width:100%;height:100%;object-fit:fill;
-  image-rendering:pixelated;image-rendering:crisp-edges}
-/* The red line's number, over the image rather than baked into it: the file
-   carries the painting and nothing else, and this is a note about it. */
-.redmark{position:absolute;right:6px;transform:translateY(-50%);
-  font-family:var(--font-mono);font-size:9px;color:#fff;letter-spacing:.08em;pointer-events:none}
-.redmark[hidden]{display:none}
-.preview-note{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:9px}
+ * THE PREVIEW IS THE FILE. It's an <img> of the still the chain draws, so Save
+ * Image As works and there is nothing to drift. It fills the column rather than
+ * keeping its own proportions, because the bands are what get touched here and
+ * a band is flat along its length. Download keeps the true shape, and so does
+ * the small copy under Size. */
+.hero{display:flex;flex-direction:column;min-width:0;min-height:0;padding:14px 14px 8px}
+/* The hairline keeps a near-black band from reading as a gap in the night theme. */
+.strips{position:relative;flex:1;min-height:0;overflow:hidden;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 0 0 1px var(--rule)}
+.strips:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.strips.sliding{cursor:ew-resize}
+.strips.placing{cursor:ns-resize}
+.strips.portrait.sliding{cursor:ns-resize}
+.strips.portrait.placing{cursor:ew-resize}
+.strips img{position:absolute;inset:0;display:block;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+.marks{position:absolute;inset:0;pointer-events:none}
+/* A double hairline reads on any colour without changing the colour. */
+.mark{position:absolute;left:0;right:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.portrait .mark{left:auto;right:auto;top:0;bottom:0}
+.mark.on{z-index:1;box-shadow:0 0 0 1px #fff,0 0 0 2px #000}
+.mark.hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.85)}
+.knob{--track:clamp(180px,38%,340px);position:absolute;left:50%;z-index:2;width:var(--track);height:22px;transform:translate(-50%,50%);pointer-events:none}
+.knob[hidden],.tag[hidden]{display:none}
+.knob::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:#fff;box-shadow:0 0 0 1px #000}
+.portrait .knob{top:50%;transform:translate(-50%,-50%) rotate(-90deg)}
+.tick{position:absolute;top:50%;width:2px;height:10px;margin:-5px 0 0 -1px;background:#fff;box-shadow:0 0 0 1px #000}
+.tick-c{height:16px;margin-top:-8px}
+.dot{position:absolute;top:50%;left:50%;width:14px;height:14px;margin:-7px 0 0 -7px;background:#fff;box-shadow:0 0 0 1px #000}
+.tag{position:absolute;z-index:3;right:10px;max-width:calc(100% - 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  background:var(--paper);color:var(--ink);padding:3px 7px;pointer-events:none;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.06em}
+.signal{position:absolute;inset:0;z-index:4;background:#000;cursor:default}
+.signal[hidden]{display:none}
+.signal canvas{display:block;width:100%;height:100%}
+.sig-label{position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);background:var(--paper);color:var(--ink);padding:3px 7px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.06em}
+.caption{display:flex;gap:18px;justify-content:space-between;padding-top:7px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.caption span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ---------- price ---------- */
-.price{border-top:1px solid var(--ink);padding-top:18px;margin-top:44px}
-.rows{width:100%;border-collapse:collapse;max-width:520px}
-.rows td{padding:9px 0;border-bottom:1px solid var(--rule);font-size:13px}
-.rows td:last-child{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
-.rows tr:last-child td{border-bottom:0;padding-top:16px;font-size:15px}
-.rows tr:last-child td:last-child{font-size:24px;letter-spacing:-.01em}
-.rows .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.price-note{font-family:var(--font-sans);font-size:13px;line-height:1.7;color:var(--muted);margin-top:20px;max-width:560px}
-
-/* ---------- actions ---------- */
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.actions button,.actions a{
-  background:none;border:1px solid var(--rule);cursor:pointer;text-decoration:none;display:inline-block;
-  font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--muted);padding:13px 22px;
-}
-.actions button:hover,.actions a:hover{border-color:var(--ink);color:var(--ink)}
-.actions .go{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.actions .go:hover{color:var(--paper)}
-.said{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dot-available);margin-top:14px;min-height:14px}
-
-@media(max-width:820px){
-  .fields{gap:22px}
-}
-@media(max-width:560px){
-  .wrap{padding:32px 20px 60px}
-  .field input[type=number]{width:100%;min-width:120px}
-  .shot,.dropzone{max-width:100%}
-}
+/* ---------- the rail ---------- */
+.rail{display:flex;flex-direction:column;min-width:0;min-height:0;border-left:1px solid var(--rule)}
+.rail-body{flex:1;min-height:0;overflow:auto;padding:14px 18px}
+.rail-foot{border-top:1px solid var(--ink);padding:12px 18px 14px}
+h1{font-family:var(--font-sans);font-weight:400;font-size:20px;line-height:1.1;margin:0;letter-spacing:-.02em}
+.block{margin-top:14px}
+.block h2,.sub h2{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.block h2:not(:first-child){margin-top:11px}
+.nos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.no,.op{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;background:none;border:1px solid var(--rule);color:var(--ink-3);padding:8px 2px;cursor:pointer}
+.no:hover,.op:hover{border-color:var(--ink);color:var(--ink)}
+.no[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:6px}
 
 /* ---------- the palette ---------- */
-.pal{display:grid;gap:8px}
-.pal-row{display:grid;grid-template-columns:34px 92px minmax(0,1fr) auto;gap:10px;align-items:center}
-.pal-row input[type=color]{width:34px;height:34px;padding:0;border:1px solid var(--rule);background:none;border-radius:0;cursor:pointer}
-.pal-row input[type=text]{font-family:var(--font-mono);font-size:13px;width:100%;background:none;border:0;border-bottom:1px solid var(--rule);padding:6px 0;color:var(--ink);border-radius:0;text-transform:uppercase}
-.pal-row input[type=text]:focus{outline:0;border-bottom-color:var(--ink)}
-.seg{display:inline-flex;justify-self:start;border:1px solid var(--rule)}
-#pTotal,#pMint{font-size:14px;line-height:1.5}
+.swatches{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.sw{aspect-ratio:1;width:100%;border:1px solid var(--rule);padding:0;cursor:pointer;position:relative}
+.sw:hover{border-color:var(--ink)}
+.sw[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:1px}
+.sw-red{border-color:var(--ink)}
+.swatch-note{font-family:var(--font-sans);font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+.nudge{margin-top:9px;display:grid;gap:5px}
+.nudge[hidden]{display:none}
+.nudge-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.nudge-top input{font-family:var(--font-mono);font-size:12px;width:8ch;background:none;border:0;border-bottom:1px solid var(--rule);padding:3px 0;color:var(--ink);border-radius:0;text-transform:uppercase}
+.nudge-top input:focus{outline:0;border-bottom-color:var(--ink)}
+.nudge-name{font-family:var(--font-sans);font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nudge label{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:8px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.nudge input[type=range]{width:100%;margin:0;accent-color:var(--ink)}
+.red-words{font-family:var(--font-sans);font-size:12.5px;color:var(--ink-3);margin:0}
+.red-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.red-row output{font-family:var(--font-mono);font-size:12px;font-variant-numeric:tabular-nums}
+.quiet{display:inline-block;background:none;border:0;padding:0;font:inherit;font-size:12.5px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.quiet:hover{color:var(--ink)}
+
+/* ---------- custom ---------- */
+.custom{margin-top:14px;border-top:1px solid var(--rule)}
+.custom summary{cursor:pointer;padding:10px 0 2px;font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.custom summary:hover{color:var(--ink)}
+.sub{margin-top:16px}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.field{display:flex;flex-direction:column;min-width:0}
+.lab{font-family:var(--font-sans);font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.field input[type=number]{font-family:var(--font-mono);font-size:14px;font-variant-numeric:tabular-nums;width:100%;background:none;border:0;border-bottom:1px solid var(--rule);padding:5px 0;color:var(--ink);border-radius:0;-webkit-appearance:none}
+.field input[type=number]:focus{outline:0;border-bottom-color:var(--ink)}
+.unit{font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+.tier-note{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:7px}
+.seg{display:inline-flex;border:1px solid var(--rule);margin-top:10px}
 .seg button{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:0;color:var(--muted);padding:7px 10px;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.pal-acts{display:flex;gap:2px}
-.pal-acts button{font-family:var(--font-mono);font-size:12px;width:30px;height:30px;background:none;border:1px solid transparent;color:var(--muted);cursor:pointer}
+.shape{margin:12px 0 0}
+.shape img{display:block;max-width:100%;max-height:96px;border:1px solid var(--rule)}
+.shape figcaption,.hint{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:6px}
+.slider input[type=range]{width:100%;accent-color:var(--ink);margin:4px 0 0}
+.ends{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+.pal{display:grid;gap:5px}
+.pal-row{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:8px;align-items:center}
+.pal-dot{width:18px;height:18px;border:1px solid var(--rule)}
+.pal-row input[type=text]{font-family:var(--font-mono);font-size:12px;width:100%;background:none;border:0;border-bottom:1px solid var(--rule);padding:4px 0;color:var(--ink);border-radius:0;text-transform:uppercase}
+.pal-row input[type=text]:focus{outline:0;border-bottom-color:var(--ink)}
+.pal-acts{display:flex;gap:1px}
+.pal-acts button{font-family:var(--font-mono);font-size:12px;width:26px;height:26px;background:none;border:1px solid transparent;color:var(--muted);cursor:pointer}
 .pal-acts button:hover{border-color:var(--rule);color:var(--ink)}
 .pal-acts button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
 .pal-acts button:disabled{opacity:.3;cursor:default}
-.pal-tools,.street{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.pal-tools button,.pal-tools .tool,.street button{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-3);padding:8px 11px;cursor:pointer}
-.pal-tools button:hover,.pal-tools .tool:hover,.street button:hover{border-color:var(--ink);color:var(--ink)}
-.quiet{display:inline-block;background:none;border:0;padding:0;margin-top:16px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.quiet:hover{color:var(--ink)}
-.moment{display:flex;align-items:center;gap:12px;margin-top:12px}
-.moment[hidden]{display:none}
-.moment button:not(.quiet){font-family:var(--font-mono);width:32px;height:32px;background:none;border:1px solid var(--rule);color:var(--ink);cursor:pointer}
-.moment .quiet{margin-top:0}
-.moment output{font-family:var(--font-mono);font-size:13px;min-width:13ch;text-align:center;font-variant-numeric:tabular-nums}
-.signal{height:240px;background:#000}
-.strips{height:auto !important;display:flex;justify-content:center}
-.strips img{width:auto !important;height:auto !important;max-width:100%;max-height:440px;object-fit:contain !important}
+.pal-tools{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.pal-tools button,.pal-tools .tool{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-3);padding:6px 8px;cursor:pointer}
+.pal-tools button:hover,.pal-tools .tool:hover{border-color:var(--ink);color:var(--ink)}
+.shot{margin-top:10px}
+.shot img{width:100%;height:auto;display:block;cursor:crosshair;border:1px solid var(--rule)}
+
+/* ---------- the two buttons ---------- */
+.cost{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.cost[hidden]{display:none}
+.cost .what{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+#pMint{font-family:var(--font-mono);font-size:14px;font-variant-numeric:tabular-nums}
+.price-note{font-family:var(--font-sans);font-size:12.5px;line-height:1.5;color:var(--muted);margin:0 0 9px}
+.actions{display:grid;gap:7px}
+.actions button,.minted button.go{background:none;border:1px solid var(--rule);cursor:pointer;
+  font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:13px 12px;width:100%}
+.actions button:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.actions .go,.minted button.go{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.actions .go:hover:not(:disabled){color:var(--paper)}
 .actions button:disabled{opacity:.45;cursor:default}
-@media(max-width:560px){.pal-row{grid-template-columns:34px 76px minmax(0,1fr)}.pal-acts{grid-column:1/-1;justify-content:flex-end}}
+.actions .plain{border:0;padding:5px 0}
+.actions .plain:hover:not(:disabled){text-decoration:underline;text-underline-offset:3px}
+.test{display:block;width:100%;background:none;border:1px solid var(--rule);padding:9px 12px;cursor:pointer;
+  font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.test:hover{border-color:var(--ink);color:var(--ink)}
+.test[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.said{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dot-available);margin-top:8px;min-height:14px}
+
+/* ---------- after the mint ---------- */
+.minted[hidden],.buy[hidden]{display:none}
+.minted-no{font-family:var(--font-sans);font-size:20px;letter-spacing:-.02em;margin:0 0 4px}
+.minted-note{font-family:var(--font-sans);font-size:12.5px;line-height:1.5;color:var(--muted);margin:0 0 10px}
+.minted-price{font-family:var(--font-mono);font-size:11px;line-height:1.5;color:var(--muted);margin-top:7px}
+.minted-links{display:flex;justify-content:space-between;gap:12px;margin-top:10px}
+.minted-links a{font-size:12.5px;color:var(--ink)}
+
+/* A phone: the strip on top and never under 55% of the screen, the rail a sheet
+   below it. The sheet scrolls in itself, so the strip stays put while any
+   control is touched. */
+@media(max-width:820px){
+  .stage{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+  .hero{padding:0}
+  .strips{flex:none;height:55dvh}
+  .caption{padding:5px 12px;letter-spacing:.04em}
+  #previewNote{display:none}
+  .rail{border-left:0;border-top:1px solid var(--ink)}
+  .rail-body{padding:10px 14px}
+  .rail-foot{padding:9px 14px 10px}
+  h1{display:none}
+  .block:first-child{margin-top:0}
+  .actions{grid-template-columns:1fr 1fr}
+  .actions button{padding:12px 6px;letter-spacing:.1em}
+  .swatches{grid-template-columns:repeat(13,minmax(0,1fr));gap:3px}
+}
 </style>
 </head>
 <body>
 
 <header class="nav" id="nav"></header>
 
-<main class="wrap">
-  <h1>//Strips Maker</h1>
-  <p class="intro">Build a palette, set the size, and the Maker lays the strips. Mint it on Ethereum, or commission the painting.</p>
-
-  <div class="rule"></div>
-
-  <section class="sect">
-    <h2>Palette</h2>
-    <div class="pal" id="pal"></div>
-    <div class="pal-tools">
-      <button type="button" id="add">Add a colour</button>
-      <button type="button" id="refresh">Refresh</button>
-      <button type="button" id="community">Community palette</button>
-      <label class="tool" for="file">From a photo</label>
-      <input type="file" id="file" accept="image/*" hidden>
-    </div>
-    <div class="street" id="street" aria-label="A street work's palette"></div>
-    <p class="swatch-note">Three to twelve colours. Your photo stays on your device: only the colours are kept.</p>
-    <div class="shot" id="shotWrap" hidden>
-      <img id="shot" alt="Your photograph">
-      <div class="hint">Tap the photo to take a colour</div>
-    </div>
-    <button type="button" class="quiet" id="moment" aria-expanded="false">Marking a moment? Move the red line.</button>
-    <div class="moment" id="momentBox" hidden>
-      <button type="button" id="redDown" aria-label="Move the red line down a strip">&minus;</button>
-      <output id="redVal" aria-live="polite"></output>
-      <button type="button" id="redUp" aria-label="Move the red line up a strip">+</button>
-      <button type="button" class="quiet" id="redReset">Back to 16</button>
-    </div>
-  </section>
-
-  <section class="sect">
-    <h2>The strip</h2>
-    <div class="fields">
-      <label class="field">
-        <span class="lab">Length</span>
-        <input type="number" id="length" value="120" min="80" max="240" step="10" inputmode="numeric">
-        <span class="unit">cm · 80 to 240</span>
-      </label>
-      <label class="field">
-        <span class="lab">Width</span>
-        <input type="number" id="width" value="60" min="10" max="120" step="10" inputmode="numeric">
-        <span class="unit">cm · 10 to 120</span>
-      </label>
-      <label class="field">
-        <span class="lab">Strips</span>
-        <input type="number" id="count" value="55" min="16" max="199" step="1" inputmode="numeric">
-        <span class="unit" id="countNote"></span>
-      </label>
-      <div class="field">
-        <span class="lab">Orientation</span>
-        <div class="seg" role="group" aria-label="Orientation">
-          <button type="button" data-orient="landscape" aria-pressed="true">Landscape</button>
-          <button type="button" data-orient="portrait" aria-pressed="false">Portrait</button>
-        </div>
+<main class="stage">
+  <section class="hero" aria-label="The //Strips">
+    <div class="strips" id="strips" tabindex="0" role="slider" aria-label="The //Strips" aria-valuemin="0" aria-valuemax="2" aria-valuenow="1">
+      <img id="stripImg" alt="The //Strips as configured" draggable="false">
+      <div class="marks" id="marks"></div>
+      <div class="knob" id="knob" hidden>
+        <i class="tick" style="left:0"></i><i class="tick tick-c" style="left:50%"></i><i class="tick" style="left:100%"></i>
+        <b class="dot" id="dot"></b>
+      </div>
+      <div class="tag" id="tag" aria-live="polite" hidden></div>
+      <div class="signal" id="signal" hidden>
+        <canvas id="sigCanvas"></canvas>
+        <div class="sig-label">test signal... the real signal lands on-chain at mint</div>
       </div>
     </div>
-    <div class="tier-note" id="fitNote" aria-live="polite"></div>
-    <div class="slider" style="margin-top:30px">
-      <label for="vib" class="lab" style="font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px">Vibrancy</label>
-      <input type="range" id="vib" min="1" max="1.6" step="0.05" value="1">
-      <div class="ends"><span>Calm</span><span id="vibVal">1.00</span><span>Punchy</span></div>
+    <div class="caption"><span id="previewNote"></span><span id="hint"></span></div>
+  </section>
+
+  <aside class="rail" aria-label="Controls">
+    <div class="rail-body">
+      <h1>//Strips Maker</h1>
+
+      <section class="block">
+        <div class="nos" id="nos" role="group" aria-label="A palette that has worked on a wall"></div>
+        <div class="ops" id="ops" role="group" aria-label="The layout of this palette">
+          <button type="button" class="op" data-op="smol">smol</button>
+          <button type="button" class="op" data-op="bigly">bigly</button>
+          <button type="button" class="op" data-op="random">random</button>
+        </div>
+      </section>
+
+      <section class="block">
+        <button type="button" class="test" id="testSignal" aria-pressed="false">Test Signal</button>
+      </section>
+
+      <section class="block">
+        <h2>Palette</h2>
+        <div class="swatches" id="sws"></div>
+        <p class="swatch-note" id="redNote">The red line is always its own strip, never one of the twelve.</p>
+        <div class="nudge" id="nudge" hidden>
+          <div class="nudge-top">
+            <span class="nudge-name" id="nudgeName"></span>
+            <input type="text" id="nudgeHex" maxlength="7" spellcheck="false" aria-label="This colour as hex">
+          </div>
+          <label>Hue<input type="range" id="nH" min="0" max="360" step="1"></label>
+          <label>Colour<input type="range" id="nS" min="0" max="100" step="1"></label>
+          <label>Light<input type="range" id="nL" min="0" max="100" step="1"></label>
+        </div>
+        <div class="nudge" id="redBox" hidden>
+          <p class="red-words">The red line... yours to place.</p>
+          <div class="red-row">
+            <output id="redVal" aria-live="polite"></output>
+            <button type="button" class="quiet" id="redReset">Back to 16</button>
+          </div>
+        </div>
+      </section>
+
+      <details class="custom" id="custom">
+        <summary>Custom</summary>
+
+        <div class="sub">
+          <h2>Size</h2>
+          <div class="fields">
+            <label class="field">
+              <span class="lab">Length</span>
+              <input type="number" id="length" value="120" min="80" max="240" step="10" inputmode="numeric">
+              <span class="unit">cm · 80 to 240</span>
+            </label>
+            <label class="field">
+              <span class="lab">Width</span>
+              <input type="number" id="width" value="60" min="10" max="120" step="10" inputmode="numeric">
+              <span class="unit">cm · 10 to 120</span>
+            </label>
+            <label class="field">
+              <span class="lab">Strips</span>
+              <input type="number" id="count" value="55" min="16" max="199" step="1" inputmode="numeric">
+              <span class="unit" id="countNote"></span>
+            </label>
+          </div>
+          <div class="seg" role="group" aria-label="Orientation">
+            <button type="button" data-orient="landscape" aria-pressed="true">Landscape</button>
+            <button type="button" data-orient="portrait" aria-pressed="false">Portrait</button>
+          </div>
+          <div class="tier-note" id="fitNote" aria-live="polite"></div>
+          <figure class="shape">
+            <img id="trueShape" alt="The true shape of the //Strips">
+            <figcaption>The true shape. This still is the one on-chain.</figcaption>
+          </figure>
+        </div>
+
+        <div class="sub slider">
+          <label for="vib" class="lab">Vibrancy</label>
+          <input type="range" id="vib" min="1" max="1.6" step="0.05" value="1">
+          <div class="ends"><span>Calm</span><span id="vibVal">1.00</span><span>Punchy</span></div>
+        </div>
+
+        <div class="sub">
+          <h2>Colours</h2>
+          <div class="pal" id="pal"></div>
+          <div class="pal-tools">
+            <button type="button" id="add">Add a colour</button>
+            <button type="button" id="refresh">Refresh</button>
+            <button type="button" id="community">Community palette</button>
+            <label class="tool" for="file">From a photo</label>
+            <input type="file" id="file" accept="image/*" hidden>
+          </div>
+          <p class="swatch-note">Three to twelve colours. Your photo stays on your device: only the colours are kept.</p>
+          <div class="shot" id="shotWrap" hidden>
+            <img id="shot" alt="Your photograph">
+            <div class="hint">Tap the photo to take a colour</div>
+          </div>
+        </div>
+
+        <div class="sub"><button type="button" class="quiet" id="copy">Copy spec</button></div>
+      </details>
     </div>
-  </section>
 
-  <section class="sect">
-    <h2>The still</h2>
-    <div class="preview"><div class="strips" id="strips">
-      <img id="stripImg" alt="The //Strips as configured">
-    </div></div>
-    <div class="preview-note" id="previewNote"></div>
-  </section>
-
-  <section class="sect">
-    <h2>The signal</h2>
-    <div class="signal" id="signal"></div>
-    <div class="preview-note">Your signal is drawn at mint.</div>
-  </section>
-
-  <section class="price">
-    <table class="rows">
-      <tr><td class="what">Mint</td><td id="pMint">0.009 ETH</td></tr>
-      <tr><td class="what">Commission</td><td id="pTotal"></td></tr>
-    </table>
-    <p class="price-note" id="freeNote" hidden></p>
-    <p class="price-note">A mint is the //STRIP on Ethereum: this still and a signal of its own. A commission is the painting, collected from The Line, Hastings. Vibrancy and the strip count change the design, never the price.</p>
-  </section>
-
-  <div class="actions">
-    <button type="button" class="go" id="mint" disabled>Mint &middot; 0.009 ETH</button>
-    <button type="button" class="go" id="commission">Commission</button>
-    <button type="button" id="copy">Copy spec</button>
-    <button type="button" id="png">Download PNG</button>
-  </div>
-  <div class="said" id="said" aria-live="polite"></div>
+    <div class="rail-foot">
+      <div class="buy" id="buy">
+        <!-- Both of these are written by the script and start empty. Nothing here
+             may name a price before the page knows the state of the mint. -->
+        <div class="cost" id="cost" hidden><span class="what">Mint</span><span id="pMint"></span></div>
+        <p class="price-note" id="freeNote" hidden></p>
+        <div class="actions">
+          <button type="button" class="go" id="mint" disabled></button>
+          <button type="button" class="plain" id="png">Download //STRIP</button>
+        </div>
+      </div>
+      <div class="minted" id="minted" hidden>
+        <p class="minted-no" id="mintedNo"></p>
+        <p class="minted-note">It can be a painting too: this design, painted by hand and collected from The Line, Hastings.</p>
+        <button type="button" class="go" id="commission">Commission the painting</button>
+        <div class="minted-price" id="pTotal"></div>
+        <div class="minted-links">
+          <a id="seeToken" href="#">See your //STRIP →</a>
+          <button type="button" class="quiet" id="again">Make another</button>
+        </div>
+      </div>
+      <div class="said" id="said" aria-live="polite"></div>
+    </div>
+  </aside>
 
   <canvas id="cv" hidden></canvas>
   <!-- Where the file is drawn. Never shown. -->
   <canvas id="out" hidden></canvas>
 </main>
-
-<footer class="foot">
-  <a class="smallcaps" href="/exhibitions">Exhibitions</a>
-  <a class="smallcaps" href="/provenance">Provenance</a>
-  <a class="smallcaps" href="/claim">Receive your artwork</a>
-  <a class="smallcaps" href="mailto:ryan@mintface.art">Contact</a>
-  <a class="smallcaps" href="/studio">Studio</a>
-  <div class="sig">MintFace &middot; 39.64&deg;S 176.85&deg;E</div>
-</footer>
 
 <script src="/mintface.js"></script>
 <script type="module">
@@ -309,15 +362,19 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
    those bytes by the same function the chain uses (strips-design.js), so what
    you see is what you mint.
 
-   The signal is not the visitor's to choose: the screen below the still plays
-   samples, and the real one is drawn from a random word after the mint. */
+   The strip is the control surface. A band is pressed and dragged to say how
+   much of its colour there is, and the red line is pressed and dragged to say
+   where it sits. Neither knows the rule: a band is read back out of the bytes,
+   and every step is laid by the server like any other change.
+
+   The signal is not the visitor's to choose. Test Signal shows how one behaves;
+   the real one is drawn from a random word after the mint. */
 import { stripPrice, fmtNZD, fmtETH, fmtUSD, STRIP_ETH_NZD } from '/strip-price.js';
 import { stillSVG, decodeDesign } from '/strips-design.js';
-import { play, schedule, traitsOf } from '/strips-blink.js';
+import { renderFrame, renderStill, schedule, traitsOf } from '/strips-blink.js';
 
 const RED_LINE = '#D32011';
 const AMOUNTS = ['less', 'even', 'more'];
-const WEIGHT = { less: 1, even: 2, more: 4 };
 const MIN = 3, MAX = 12, PUBLIC_CAP = 621;
 
 /* Twelve rows, their colours fresh on every visit. A design can only be minted
@@ -329,6 +386,22 @@ const START = ['more', 'more', 'even', 'even', 'even', 'even', 'less', 'less', '
 const hex2 = (n) => n.toString(16).padStart(2, '0');
 const rgbToHex = (r, g, b) => `#${hex2(r)}${hex2(g)}${hex2(b)}`.toUpperCase();
 const dist2 = (a, b) => { const dr = a[0] - b[0], dg = a[1] - b[1], db = a[2] - b[2]; return dr * dr + dg * dg + db * db; };
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/* hue 0 to 360, the other two 0 to 100 */
+function fromHsl(h, s, l) {
+  const k = (n) => (n + h / 30) % 12, a = (s / 100) * Math.min(l / 100, 1 - l / 100);
+  const f = (n) => Math.round(255 * (l / 100 - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1))));
+  return rgbToHex(f(0), f(8), f(4));
+}
+function toHsl(hex) {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const hi = Math.max(r, g, b), lo = Math.min(r, g, b), d = hi - lo, l = (hi + lo) / 2;
+  if (!d) return [0, 0, Math.round(l * 100)];
+  const s = d / (1 - Math.abs(2 * l - 1));
+  const h = hi === r ? ((g - b) / d + 6) % 6 : hi === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return [Math.round(h * 60), Math.round(s * 100), Math.round(l * 100)];
+}
 
 // downsample, bucket to 4 bits a channel, keep the twelve most common that are
 // actually distinct from one another
@@ -362,10 +435,16 @@ function fromShares(list) {
 /* ---------- state ---------- */
 const S = {
   length: 120, width: 60, orient: 'landscape', count: 55, gamma: 1, redLine: 16,
-  palette: refreshed(START), design: null, strips: 0, taken: false,
+  palette: refreshed(START), design: null, strips: 0, taken: false, preset: null,
 };
 const CHAIN = { state: null, free: null, who: null };
 const FX = { usd: null };
+/* What's selected: a colour, or the red line. `band` is the one the slider sits on. */
+const SEL = { i: null, red: false, band: null };
+const selected = () => SEL.red || SEL.i != null;
+let GEO = null;     // the bands of the design on screen, read out of its bytes
+let DRAG = null;
+let MINTED = null;
 const $ = (id) => document.getElementById(id);
 const e = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const said = (hex) => { const n = MF.colour.name(String(hex).toUpperCase()); return n ? `${String(hex).toUpperCase()} ${n.label}` : String(hex).toUpperCase(); };
@@ -380,11 +459,12 @@ const priceLine = (nzd) => (nzd == null ? 'Quoted after we talk'
 
 /* ---------- the palette ---------- */
 function paintPalette() {
+  $('sws').innerHTML = S.palette.map((c, i) => `<button type="button" class="sw" data-i="${i}" style="background:${e(c.hex)}" aria-pressed="${SEL.i === i}" aria-label="${e(said(c.hex))}" title="${e(said(c.hex))}"></button>`).join('')
+    + `<button type="button" class="sw sw-red" id="swRed" style="background:${RED_LINE}" aria-pressed="${SEL.red}" aria-label="The red line" title="The red line"></button>`;
   $('pal').innerHTML = S.palette.map((c, i) => `
     <div class="pal-row" data-i="${i}">
-      <input type="color" value="${e(c.hex.toLowerCase())}" aria-label="Colour ${i + 1}">
+      <span class="pal-dot" style="background:${e(c.hex)}"></span>
       <input type="text" value="${e(c.hex)}" maxlength="7" spellcheck="false" aria-label="Colour ${i + 1} as hex" title="${e(said(c.hex))}">
-      <div class="seg" role="group" aria-label="How much of colour ${i + 1}">${AMOUNTS.map((a) => `<button type="button" data-amount="${a}" aria-pressed="${c.amount === a}">${a}</button>`).join('')}</div>
       <div class="pal-acts">
         <button type="button" data-act="lock" aria-pressed="${c.locked}" aria-label="Keep this colour on refresh" title="Keep on refresh">${c.locked ? '●' : '○'}</button>
         <button type="button" data-act="up" aria-label="Move up" ${i === 0 ? 'disabled' : ''}>↑</button>
@@ -394,22 +474,27 @@ function paintPalette() {
     </div>`).join('');
   $('add').disabled = S.palette.length >= MAX;
 }
-const setPalette = (list) => { S.palette = list.slice(0, MAX); paintPalette(); draw(); };
+const setPalette = (list, preset = null) => {
+  S.palette = list.slice(0, MAX);
+  S.preset = preset;
+  deselect();
+  paintPalette();
+  paintNos();
+  draw();
+};
 const validHex = (v) => /^#?[0-9a-f]{6}$/i.test(v.trim());
 const clean = (v) => `#${v.trim().replace('#', '').toUpperCase()}`;
 function setColour(i, hex) {
-  if (hex === RED_LINE) { say('That red is the red line\'s'); paintPalette(); return; }
-  if (S.palette.some((c, n) => n !== i && c.hex === hex)) { say(`${hex} is already in`); paintPalette(); return; }
+  if (hex === RED_LINE) { say('That red is the red line\'s'); paintPalette(); paintSelection(); return; }
+  if (S.palette.some((c, n) => n !== i && c.hex === hex)) { say(`${hex} is already in`); paintPalette(); paintSelection(); return; }
   S.palette[i].hex = hex;
+  S.preset = null;
   paintPalette();
+  paintNos();
+  paintSelection();
   draw();
 }
-function randomColour() {
-  const h = Math.random() * 360, s = 25 + Math.random() * 65, l = 18 + Math.random() * 66;
-  const k = (n) => (n + h / 30) % 12, a = (s / 100) * Math.min(l / 100, 1 - l / 100);
-  const f = (n) => Math.round(255 * (l / 100 - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1))));
-  return rgbToHex(f(0), f(8), f(4));
-}
+function randomColour() { return fromHsl(Math.random() * 360, 25 + Math.random() * 65, 18 + Math.random() * 66); }
 
 /* A new colour on every row that isn't locked: never the red line's, never twice. */
 function refreshed(list) {
@@ -427,8 +512,6 @@ $('pal').addEventListener('click', (ev) => {
   const row = ev.target.closest('.pal-row');
   if (!row) return;
   const i = Number(row.dataset.i);
-  const amount = ev.target.closest('[data-amount]');
-  if (amount) { S.palette[i].amount = amount.dataset.amount; paintPalette(); draw(); return; }
   const act = ev.target.closest('[data-act]');
   if (!act || act.disabled) return;
   const p = S.palette;
@@ -436,7 +519,10 @@ $('pal').addEventListener('click', (ev) => {
   if (act.dataset.act === 'drop') p.splice(i, 1);
   if (act.dataset.act === 'up') [p[i - 1], p[i]] = [p[i], p[i - 1]];
   if (act.dataset.act === 'down') [p[i + 1], p[i]] = [p[i], p[i + 1]];
+  S.preset = null;
+  deselect();
   paintPalette();
+  paintNos();
   draw();
 });
 $('pal').addEventListener('change', (ev) => {
@@ -459,108 +545,486 @@ $('community').addEventListener('click', async () => {
   } catch { say('Could not reach the community palette'); }
 });
 
-/* a street work's palette, in one tap */
-(async () => {
-  try {
-    const [pf, sf] = await Promise.all([fetch('/data/strip-palettes.json').then((r) => r.json()), fetch('/api/strip-sites').then((r) => r.json())]);
-    const sites = sf.sites || sf;
-    const works = sites.filter((s) => s.work_id).sort((a, b) => a.no - b.no);
-    const list = works.map((s) => ({ s, p: pf.palettes.find((x) => x.work === s.work_id) })).filter((x) => x.p);
-    $('street').innerHTML = list.map(({ s, p }) => `<button type="button" data-p="${e(p.id)}" title="${e(s.address)}">No.${e(s.no)}</button>`).join('');
-    $('street').addEventListener('click', (ev) => {
-      const b = ev.target.closest('[data-p]');
-      if (!b) return;
-      const p = pf.palettes.find((x) => x.id === b.dataset.p);
-      setPalette(fromShares(p.colours.filter((c) => c.hex.toUpperCase() !== RED_LINE)));
-    });
-  } catch { /* the street palettes are a shortcut, not the Maker */ }
-})();
+/* ---------- the numbers ----------
+   Eight palettes that have worked on a wall, or as well as if they had. Heaviest
+   first, and the order is kept: the server lays them as given. A number starts
+   from the standard layout, and the three below it go from there. */
+let PRESETS = [];
+function paintNos() {
+  $('nos').innerHTML = PRESETS.map((p) => `<button type="button" class="no" data-no="${p.no}" aria-pressed="${S.preset === p.no}" title="${e(p.title)}">No.${p.no}</button>`).join('');
+}
+function syncDials() { $('count').value = S.count; $('vib').value = S.gamma; }
+$('nos').addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-no]');
+  if (!b) return;
+  const p = PRESETS.find((x) => x.no === Number(b.dataset.no));
+  S.count = 55;
+  S.gamma = 1;
+  syncDials();
+  setPalette(fromShares(p.hexes.map((hex, i) => ({ hex, w: p.weights[i] }))), p.no);
+});
+fetch('/data/maker-presets.json').then((r) => r.json()).then((j) => { PRESETS = j.presets; paintNos(); }).catch(() => {});
+
+/* ---------- smol, bigly, random ----------
+   Layout, never colour. Each sets only what could be set by hand, the order, how
+   much of each, the strips and the vibrancy, and the server lays the result, so
+   the rhythm and the red line are never in question. */
+const stripsEvery = (n) => clamp(Math.round((S.width * 10) / n), 16, 199);
+const LAYOUTS = {
+  smol: () => ({ count: stripsEvery(8), gamma: 1, amounts: S.palette.map((c) => (c.amount === 'more' ? 'even' : c.amount)) }),
+  bigly: () => ({ count: stripsEvery(18), gamma: 1.6, amounts: S.palette.map((_, i) => (i < 3 ? 'more' : i < 6 ? 'even' : 'less')) }),
+  random: () => {
+    for (let i = S.palette.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [S.palette[i], S.palette[j]] = [S.palette[j], S.palette[i]];
+    }
+    return { count: stripsEvery(8 + Math.random() * 10), gamma: Number((1 + Math.floor(Math.random() * 13) * .05).toFixed(2)), amounts: S.palette.map(() => AMOUNTS[Math.floor(Math.random() * 3)]) };
+  },
+};
+$('ops').addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-op]');
+  if (!b) return;
+  deselect();
+  const next = LAYOUTS[b.dataset.op]();
+  S.palette.forEach((c, i) => { c.amount = next.amounts[i]; });
+  S.count = next.count;
+  S.gamma = next.gamma;
+  syncDials();
+  paintPalette();
+  draw();
+});
 
 /* ---------- the design, from the server ---------- */
-let asked = 0;
 const LAID = new Map();
-async function layOut() {
-  const body = JSON.stringify(spec());
+function layOut(asked = spec()) {
+  const body = JSON.stringify(asked);
   if (LAID.has(body)) return LAID.get(body);
-  const r = await fetch('/api/strips/preview', { method: 'POST', headers: { 'content-type': 'application/json' }, body });
-  const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(j.error || `preview ${r.status}`);
-  LAID.set(body, j);
-  return j;
+  const answer = (async () => {
+    /* The strip asks one question at a time, so a hung answer mustn't hold it. */
+    const r = await fetch('/api/strips/preview', { method: 'POST', headers: { 'content-type': 'application/json' }, body, signal: AbortSignal.timeout(15000) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || `preview ${r.status}`);
+    return j;
+  })();
+  LAID.set(body, answer);
+  answer.catch(() => LAID.delete(body));
+  return answer;
 }
 
+/* The bands as fractions of the stack, bottom first. */
+function geometry(design) {
+  const d = decodeDesign(design);
+  const total = d.bands.reduce((s, b) => s + b.u, 0);
+  let run = 0;
+  const list = d.bands.map((b) => { const at = run / total; run += b.u; return { hex: b.hex, at, to: run / total }; });
+  return { portrait: d.portrait, list };
+}
+function paintStill() {
+  const svg = stillSVG(S.design);
+  GEO = geometry(S.design);
+  /* the same still, told to fill the column */
+  $('stripImg').src = `data:image/svg+xml;base64,${btoa(svg.replace('<svg ', '<svg preserveAspectRatio="none" '))}`;
+  $('trueShape').src = `data:image/svg+xml;base64,${btoa(svg)}`;
+  $('strips').classList.toggle('portrait', GEO.portrait);
+  if (SIG.on) {
+    SIG.design = decodeDesign(S.design);
+    if (SIG.held) signalAt(SIG.first);
+  }
+}
+
+/* One question at a time. A drag asks faster than an answer comes back, so the
+   strip paints each answer and asks again with wherever things have got to. */
+let asking = false, again = false;
 async function draw() {
   words();
-  const my = ++asked;
-  let j;
-  try { j = await layOut(); } catch (err) {
-    if (my === asked) say(err.message || 'The design could not be laid out just now');
-    return;
-  }
-  if (my !== asked) return; // a later change has already asked again
-  S.design = j.design; S.strips = j.strips; S.taken = j.taken;
-  if (S.redLine > S.strips) S.redLine = S.strips;
-  const svg = stillSVG(S.design);
-  $('stripImg').src = `data:image/svg+xml;base64,${btoa(svg)}`;
-  $('stripImg').alt = `//Strips, ${S.length} by ${S.width} cm, ${S.strips} strips, red line ${S.redLine} from the base`;
-  $('previewNote').textContent = `${S.strips} strips ... red line ${S.redLine} from the base ... this still is the one on-chain`;
-  $('fitNote').textContent = S.count !== S.strips ? `${S.width} cm holds ${S.strips} strips` : '';
-  $('countNote').textContent = S.taken ? 'this design is taken' : '';
+  if (asking) { again = true; return; }
+  asking = true;
+  do {
+    again = false;
+    let j;
+    try { j = await layOut(); } catch (err) {
+      /* A narrower strip can leave the red line past the end: bring it back. */
+      const most = /^red_line is 1 to (\d+)/.exec(err.message || '');
+      if (most && S.redLine > Number(most[1])) { S.redLine = Number(most[1]); again = true; continue; }
+      say(err.message || 'The design could not be laid out just now');
+      continue;
+    }
+    S.design = j.design; S.strips = j.strips; S.taken = j.taken;
+    paintStill();
+    if (SEL.red) SEL.band = S.redLine - 1;
+    paintSelection();
+    $('stripImg').alt = `//Strips, ${S.length} by ${S.width} cm, ${S.strips} strips, red line ${S.redLine} from the base`;
+    $('previewNote').textContent = `${S.length} × ${S.width} cm ... ${S.strips} strips ... red line ${S.redLine} from the base`;
+    $('fitNote').textContent = S.count !== S.strips ? `${S.width} cm holds ${S.strips} strips` : '';
+    $('countNote').textContent = S.taken ? 'this design is taken' : '';
+  } while (again);
+  asking = false;
   words();
-  sample();
 }
 
-/* ---------- the sample signal ----------
-   A word out of the air and a different set each time. Never the token's: the
-   real word doesn't exist until the mint does. */
-let stop = null, turn = 0;
-const randomWord = () => `0x${[...crypto.getRandomValues(new Uint8Array(32))].map(hex2).join('')}`;
-function sample() {
-  clearTimeout(turn);
-  if (!S.design) return;
-  const word = randomWord();
-  const traits = traitsOf(word);
-  /* start just before something happens, or the sample may hold still throughout */
-  let t = 0;
-  while (t < 200 && !schedule(word, traits, t + 1)) t += .25;
-  if (stop) stop();
-  stop = play($('signal'), { design: S.design, word, minted: Date.now() / 1000 - t, long: 800 });
-  turn = setTimeout(sample, 9000);
+/* ---------- selecting ---------- */
+function hint() {
+  if (selected()) return 'Esc to let go';
+  const coarse = matchMedia('(pointer:coarse)').matches;
+  const way = GEO && GEO.portrait ? 'up for more, down for less' : 'right for more, left for less';
+  return `${coarse ? 'Tap a band, then drag' : 'Click a band and drag it'}: ${way}`;
 }
 
-/* ---------- the red line ---------- */
-function moveRed(to) {
-  S.redLine = Math.max(1, Math.min(S.strips || 16, to));
+/* Where the slider sits when a colour is picked from the rail: its band nearest
+   the middle of the stack, so it's never at the edge of the strip. */
+function settleBand() {
+  if (!GEO) return;
+  if (SEL.red) { SEL.band = S.redLine - 1; return; }
+  if (SEL.i == null) return;
+  const hex = S.palette[SEL.i].hex;
+  const here = GEO.list[SEL.band];
+  if (here && here.hex === hex) return;
+  let best = null, gap = 2;
+  GEO.list.forEach((b, n) => { if (b.hex === hex && Math.abs((b.at + b.to) / 2 - .5) < gap) { gap = Math.abs((b.at + b.to) / 2 - .5); best = n; } });
+  SEL.band = best;
+}
+const placed = (b) => (GEO.portrait
+  ? `left:${(b.at * 100).toFixed(3)}%;width:${((b.to - b.at) * 100).toFixed(3)}%`
+  : `bottom:${(b.at * 100).toFixed(3)}%;height:${((b.to - b.at) * 100).toFixed(3)}%`);
+
+function paintSelection() {
+  settleBand();
+  const c = SEL.i == null ? null : S.palette[SEL.i];
+  document.querySelectorAll('#sws .sw[data-i]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.i) === SEL.i)));
+  $('swRed').setAttribute('aria-pressed', String(SEL.red));
+  $('redNote').hidden = selected();
+  $('nudge').hidden = !c;
+  $('redBox').hidden = !SEL.red;
+  $('hint').textContent = hint();
+
+  const marks = !GEO || !selected() ? [] : SEL.red ? [SEL.band] : GEO.list.map((b, n) => (b.hex === c.hex ? n : -1)).filter((n) => n >= 0);
+  $('marks').innerHTML = marks.filter((n) => GEO.list[n]).map((n) => `<i class="mark${n === SEL.band ? ' on' : ''}" style="${placed(GEO.list[n])}"></i>`).join('');
+
+  const knob = $('knob'), tag = $('tag'), band = GEO && GEO.list[SEL.band];
+  knob.hidden = !c || !band;
+  tag.hidden = !band || !selected();
+  if (!band || !selected()) { ariaOf(); return; }
+  const mid = ((band.at + band.to) / 2) * 100;
+  if (c) {
+    knob.style.bottom = GEO.portrait ? '' : `${mid.toFixed(3)}%`;
+    knob.style.left = GEO.portrait ? `${mid.toFixed(3)}%` : '';
+    if (!DRAG) $('dot').style.left = `${50 + 50 * (AMOUNTS.indexOf(c.amount) - 1)}%`;
+    tag.textContent = `${said(c.hex)} ... ${c.amount}`;
+  } else tag.textContent = 'the red line... yours to place';
+  /* above the band, or below it when the top of the strip is in the way */
+  const high = !GEO.portrait && mid > 88;
+  tag.style.top = GEO.portrait ? '10px' : high ? `calc(${(100 - mid).toFixed(3)}% + 14px)` : '';
+  tag.style.bottom = GEO.portrait || high ? '' : `calc(${mid.toFixed(3)}% + 14px)`;
+  tag.style.left = GEO.portrait && mid < 50 ? `calc(${mid.toFixed(3)}% + 12px)` : '';
+  tag.style.right = GEO.portrait && mid < 50 ? 'auto' : GEO.portrait ? `calc(${(100 - mid).toFixed(3)}% + 12px)` : '';
+  ariaOf();
+}
+function ariaOf() {
+  const s = $('strips');
+  const c = SEL.i == null ? null : S.palette[SEL.i];
+  s.setAttribute('aria-valuemin', SEL.red ? '1' : '0');
+  s.setAttribute('aria-valuemax', SEL.red ? String(S.strips || S.count) : '2');
+  s.setAttribute('aria-valuenow', String(SEL.red ? S.redLine : c ? AMOUNTS.indexOf(c.amount) : 1));
+  s.setAttribute('aria-valuetext', SEL.red ? `The red line, ${S.redLine} of ${S.strips}` : c ? `${said(c.hex)}, ${c.amount}` : 'Nothing selected');
+}
+function fillNudge() {
+  const c = SEL.i == null ? null : S.palette[SEL.i];
+  if (!c) return;
+  const [h, s, l] = toHsl(c.hex);
+  $('nH').value = h; $('nS').value = s; $('nL').value = l;
+  $('nudgeHex').value = c.hex;
+  $('nudgeName').textContent = said(c.hex).replace(c.hex, '').trim();
+}
+/* Both of the other amounts are asked for as soon as a colour is picked, so a
+   drag swaps between answers already here rather than waiting on the server. */
+function askAhead() {
+  if (SEL.i == null) return;
+  for (const amount of AMOUNTS) {
+    const s = spec();
+    s.colours[SEL.i].amount = amount;
+    layOut(s).catch(() => {});
+  }
+}
+function select({ i = null, red = false, band = null }) {
+  SEL.i = i; SEL.red = red; SEL.band = band;
+  paintSelection();
+  fillNudge();
+  askAhead();
+  words();
+}
+function deselect() {
+  SEL.i = null; SEL.red = false; SEL.band = null;
+  if ($('swRed')) paintSelection();
+  words();
+}
+function pick(n) {
+  const b = GEO.list[n];
+  if (b.hex === RED_LINE) { select({ red: true, band: n }); return; }
+  const i = S.palette.findIndex((c) => c.hex === b.hex);
+  if (i >= 0) select({ i, band: n });
+}
+
+$('sws').addEventListener('click', (ev) => {
+  const b = ev.target.closest('.sw');
+  if (!b) return;
+  if (b.id === 'swRed') select({ red: true });
+  else select({ i: Number(b.dataset.i) });
+});
+
+/* ---------- the strip, under a hand ---------- */
+const surface = $('strips');
+const fractionAt = (ev) => {
+  const r = surface.getBoundingClientRect();
+  return GEO.portrait ? (ev.clientX - r.left) / r.width : 1 - (ev.clientY - r.top) / r.height;
+};
+const bandAt = (f, geo = GEO) => {
+  const n = geo.list.findIndex((b) => f < b.to);
+  return n < 0 ? geo.list.length - 1 : n;
+};
+const stepPx = () => $('knob').getBoundingClientRect()[GEO.portrait ? 'height' : 'width'] / 2 || 90;
+
+function setAmount(i, amount) {
+  if (S.palette[i].amount === amount) return;
+  S.palette[i].amount = amount;
+  paintSelection();
   draw();
 }
-$('moment').addEventListener('click', () => {
-  const box = $('momentBox');
-  box.hidden = !box.hidden;
-  $('moment').setAttribute('aria-expanded', String(!box.hidden));
+function moveRed(to) {
+  const line = clamp(to, 1, S.strips || 16);
+  if (line === S.redLine) return;
+  S.redLine = line;
+  SEL.band = line - 1;
+  paintSelection();
+  draw();
+}
+function grab(ev, hit, wasSelected) {
+  const c = SEL.i == null ? null : S.palette[SEL.i];
+  const red = GEO.list[S.redLine - 1];
+  DRAG = {
+    id: ev.pointerId, x: ev.clientX, y: ev.clientY, hit, wasSelected, moved: false,
+    touch: ev.pointerType === 'touch', geo: GEO,
+    amount: c && c.amount, line: S.redLine, from: red ? (red.at + red.to) / 2 : 0,
+  };
+  surface.classList.toggle('sliding', Boolean(c));
+  surface.classList.toggle('placing', SEL.red);
+}
+function letGo() {
+  DRAG = null;
+  surface.classList.remove('sliding', 'placing');
+  paintSelection();
+  draw();
+}
+
+surface.addEventListener('dragstart', (ev) => ev.preventDefault());
+surface.addEventListener('pointerdown', (ev) => {
+  if (!GEO || ev.button || SIG.on) return;
+  surface.setPointerCapture(ev.pointerId);
+  const hit = bandAt(fractionAt(ev));
+  const touch = ev.pointerType === 'touch';
+  /* A finger can't land on a thin band twice. Once something is selected a drag
+     anywhere moves it, and only a tap picks again. */
+  const wasSelected = selected();
+  if (!touch || !wasSelected) pick(hit);
+  if (selected()) grab(ev, hit, wasSelected);
 });
-$('redDown').addEventListener('click', () => moveRed(S.redLine - 1));
-$('redUp').addEventListener('click', () => moveRed(S.redLine + 1));
+surface.addEventListener('pointermove', (ev) => {
+  if (!GEO || SIG.on) return;
+  if (!DRAG) {
+    if (ev.pointerType !== 'mouse') return;
+    const old = $('marks').querySelector('.hover');
+    if (old) old.remove();
+    const b = GEO.list[bandAt(fractionAt(ev))];
+    if (!selected() && b) $('marks').insertAdjacentHTML('beforeend', `<i class="mark hover" style="${placed(b)}"></i>`);
+    return;
+  }
+  if (ev.pointerId !== DRAG.id) return;
+  const dx = ev.clientX - DRAG.x, dy = ev.clientY - DRAG.y;
+  if (!DRAG.moved && Math.hypot(dx, dy) < 4) return;
+  DRAG.moved = true;
+  if (SEL.red) {
+    /* Read against the bands as they were when the drag began: the answers
+       shift them a little, and the line mustn't chase its own tail. */
+    const r = surface.getBoundingClientRect();
+    const f = DRAG.from + (DRAG.geo.portrait ? dx / r.width : -dy / r.height);
+    moveRed(bandAt(clamp(f, 0, .9999), DRAG.geo) + 1);
+    return;
+  }
+  if (SEL.i == null) return;
+  const step = stepPx();
+  const x = clamp((AMOUNTS.indexOf(DRAG.amount) - 1) * step + (GEO.portrait ? -dy : dx), -step, step);
+  $('dot').style.left = `${50 + 50 * (x / step)}%`;
+  setAmount(SEL.i, AMOUNTS[Math.round(x / step) + 1]);
+});
+surface.addEventListener('pointerup', (ev) => {
+  if (!DRAG || ev.pointerId !== DRAG.id) return;
+  if (!DRAG.moved && DRAG.touch && DRAG.wasSelected) pick(DRAG.hit);
+  letGo();
+});
+surface.addEventListener('pointercancel', () => { if (DRAG) putBack(); });
+surface.addEventListener('pointerleave', () => { const old = $('marks').querySelector('.hover'); if (old) old.remove(); });
+
+function putBack() {
+  if (SEL.i != null && DRAG.amount) S.palette[SEL.i].amount = DRAG.amount;
+  if (SEL.red) S.redLine = DRAG.line;
+  letGo();
+}
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape' && SIG.on) { setSignal(false); return; }
+  if (ev.key === 'Escape' && selected()) {
+    if (DRAG) putBack();
+    deselect();
+    return;
+  }
+  if (!selected() || /^(INPUT|TEXTAREA|SELECT)$/.test(ev.target.tagName)) return;
+  const up = ev.key === 'ArrowRight' || ev.key === 'ArrowUp';
+  const down = ev.key === 'ArrowLeft' || ev.key === 'ArrowDown';
+  if (!up && !down) return;
+  ev.preventDefault();
+  if (SEL.red) { moveRed(S.redLine + (up ? 1 : -1)); return; }
+  const at = AMOUNTS.indexOf(S.palette[SEL.i].amount);
+  setAmount(SEL.i, AMOUNTS[clamp(at + (up ? 1 : -1), 0, 2)]);
+});
+document.addEventListener('pointerdown', (ev) => {
+  if (selected() && !ev.target.closest('#strips, #sws, #nudge, #redBox')) deselect();
+});
+
+/* ---------- one colour, nudged ----------
+   A colour changes no band's width, so the still can change at once: the same
+   bytes with that colour's three swapped. The server's answer follows and is
+   the one that counts. */
+function recolour(from, to) {
+  const at = decodeDesign(S.design).colours.indexOf(from);
+  if (at < 0) return;
+  const start = 2 + 12 + at * 6; // past the 0x and the six bytes before the colours
+  S.design = `${S.design.slice(0, start)}${to.slice(1).toLowerCase()}${S.design.slice(start + 6)}`;
+  paintStill();
+}
+function nudged() {
+  const c = S.palette[SEL.i];
+  if (!c) return;
+  const hex = fromHsl(Number($('nH').value), Number($('nS').value), Number($('nL').value));
+  if (hex === c.hex || hex === RED_LINE || S.palette.some((x) => x !== c && x.hex === hex)) return;
+  if (S.design) recolour(c.hex, hex);
+  c.hex = hex;
+  S.preset = null;
+  paintNos();
+  const sw = document.querySelector(`#sws .sw[data-i="${SEL.i}"]`);
+  sw.style.background = hex;
+  sw.title = said(hex);
+  sw.setAttribute('aria-label', said(hex));
+  const row = document.querySelector(`#pal .pal-row[data-i="${SEL.i}"]`);
+  row.querySelector('.pal-dot').style.background = hex;
+  row.querySelector('input[type=text]').value = hex;
+  $('nudgeHex').value = hex;
+  $('nudgeName').textContent = said(hex).replace(hex, '').trim();
+  paintSelection();
+  soon();
+}
+['nH', 'nS', 'nL'].forEach((id) => $(id).addEventListener('input', nudged));
+$('nudgeHex').addEventListener('change', (ev) => {
+  if (!validHex(ev.target.value)) { say('A colour is a hex like #AABBCC'); fillNudge(); return; }
+  setColour(SEL.i, clean(ev.target.value));
+  fillNudge();
+});
 $('redReset').addEventListener('click', () => moveRed(16));
 
+/* ---------- the test signal ----------
+   The engine the renderer ships, on this page, over this design. It shows how a
+   signal behaves and promises nothing: the real word is drawn at mint and can't
+   be chosen or previewed, so nothing here names a state or a chance. It reads
+   the design and touches nothing a mint uses. */
+const PASS_SECONDS = 9;
+const PASSES = [0, 1, 2]; // calm, middling, heavy: the engine's rhythms, in order
+const SIG = { on: false, held: false, raf: 0, timer: 0, design: null, pass: -1, word: '', traits: null, began: 0, ends: 0, first: 0 };
+const clock = () => performance.now() / 1000;
+const randomWord = () => `0x${[...crypto.getRandomValues(new Uint8Array(32))].map(hex2).join('')}`;
+
+function nextPass() {
+  SIG.pass = (SIG.pass + 1) % PASSES.length;
+  let word, traits;
+  /* in colour, because the point is seeing it on their palette */
+  do { word = randomWord(); traits = traitsOf(word); } while (traits.rhythm !== PASSES[SIG.pass] || traits.mono);
+  /* start just before something happens, or a calm pass may hold still throughout */
+  let t = 0;
+  while (t < 200 && !schedule(word, traits, t + 1)) t += .25;
+  Object.assign(SIG, { word, traits, began: clock() - t, ends: clock() + PASS_SECONDS, first: t + 1 });
+  $('signal').dataset.pass = SIG.pass;
+}
+function signalAt(t) {
+  const ctx = $('sigCanvas').getContext('2d');
+  const e = schedule(SIG.word, SIG.traits, t);
+  if (e) renderFrame(ctx, SIG.design, e.id, e.p, { t: e.t });
+  else renderStill(ctx, SIG.design, false);
+}
+function signalLoop() {
+  if (clock() >= SIG.ends) nextPass();
+  signalAt(clock() - SIG.began);
+  SIG.raf = requestAnimationFrame(signalLoop);
+}
+/* The canvas takes the strip's own shape, so the signal fills it edge to edge. */
+function sizeSignal() {
+  const box = surface.getBoundingClientRect();
+  const k = Math.min(1, 960 / Math.max(box.width, box.height));
+  $('sigCanvas').width = Math.max(2, Math.round(box.width * k));
+  $('sigCanvas').height = Math.max(2, Math.round(box.height * k));
+}
+function setSignal(on) {
+  if (on === SIG.on || (on && !S.design)) return;
+  SIG.on = on;
+  $('testSignal').setAttribute('aria-pressed', String(on));
+  $('signal').hidden = !on;
+  cancelAnimationFrame(SIG.raf);
+  clearInterval(SIG.timer);
+  if (!on) { SIG.pass = -1; return; }
+  deselect();
+  SIG.design = decodeDesign(S.design);
+  SIG.held = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  sizeSignal();
+  nextPass();
+  if (!SIG.held) { signalLoop(); return; }
+  /* asked not to move: one frame of each pass, held, and no flicker */
+  signalAt(SIG.first);
+  SIG.timer = setInterval(() => { nextPass(); signalAt(SIG.first); }, PASS_SECONDS * 1000);
+}
+$('testSignal').addEventListener('click', () => setSignal(!SIG.on));
+addEventListener('resize', () => { if (SIG.on) { sizeSignal(); if (SIG.held) signalAt(SIG.first); } });
+
 /* ---------- words ---------- */
+const PAUSED = { text: 'Mint //STRIP · paused', off: true, row: 'Paused' };
 function mintLabel() {
   const st = CHAIN.state;
-  if (!st || !st.deployed || !st.open) return { text: 'Mint · soon', off: true };
+  if (!st || !st.deployed || !st.open) return { text: 'Mint //STRIP · soon', off: true };
+  /* Fail closed. If the free mints can't be read, someone who's owed one can't
+     be told, so nobody is shown a price. Not knowing never reads as paying. */
+  if (!st.claims_ok) return PAUSED;
   if (st.public_minted >= PUBLIC_CAP) return { text: 'Sold out', off: true };
   if (S.taken) return { text: 'Design taken', off: true };
-  if (CHAIN.free && CHAIN.free.left > 0) return { text: 'Mint · free', off: false };
-  return { text: 'Mint · 0.009 ETH', off: false };
+  if (CHAIN.who) {
+    if (!CHAIN.free || CHAIN.free.unavailable) return PAUSED;
+    if (CHAIN.free.left > 0) return { text: 'Mint //STRIP · free', off: false, row: 'Free' };
+  } else if (st.claim_live) return { text: 'Connect to mint', off: false, row: '0.009 ETH' };
+  if (!st.paid_left) return { text: 'Sold out', off: true };
+  return { text: 'Mint //STRIP', off: false, row: '0.009 ETH' };
 }
 function words() {
-  $('pTotal').textContent = priceLine(priceOf());
   $('vibVal').textContent = S.gamma.toFixed(2);
   $('redVal').textContent = S.redLine === 16 ? '16 (standard)' : `${S.redLine} of ${S.strips || S.count}`;
   const m = mintLabel();
   $('mint').textContent = m.text;
   $('mint').disabled = m.off;
+  /* Neither button while the mint is paused. */
+  $('png').disabled = m === PAUSED;
+  $('pMint').textContent = m.row || '';
+  $('cost').hidden = !m.row;
   const f = CHAIN.free, note = $('freeNote');
   note.hidden = true;
-  if (f && f.left > 0) {
+  if (m === PAUSED) {
+    note.textContent = 'Free mints can\'t be read just now, so minting has paused. Nothing has been lost.';
+    note.hidden = false;
+  } else if (m.text === 'Design taken') {
+    note.textContent = 'Someone has minted this one. Press random, move the red line or change a colour to make it yours.';
+    note.hidden = false;
+  } else if (f && f.left > 0) {
     const days = Math.max(0, Math.ceil((f.deadline - Date.now() / 1000) / 86400));
     note.textContent = `${f.left} free ${f.left === 1 ? 'mint' : 'mints'} on this wallet ... ${days} ${days === 1 ? 'day' : 'days'} left to claim.`;
     note.hidden = false;
@@ -593,7 +1057,12 @@ $('mint').addEventListener('click', async () => {
   btn.disabled = true;
   try {
     const who = CHAIN.who || await MF.connect();
-    if (!CHAIN.who) { await readFree(who); }
+    if (!CHAIN.who) {
+      await readFree(who);
+      /* While a claim is running the first press only connects: the button then
+         says what this wallet pays, and the next press mints. */
+      if (CHAIN.state.claim_live || mintLabel().off) return;
+    }
     const free = Boolean(CHAIN.free && CHAIN.free.left > 0);
     const r = await fetch('/api/strips/mint/prepare', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...spec(), to: who, free }) });
     const j = await r.json().catch(() => ({}));
@@ -605,7 +1074,7 @@ $('mint').addEventListener('click', async () => {
     const receipt = await waitFor(hash);
     if (!receipt) throw new Error(`Still pending: ${hash}`);
     if (receipt.status !== 'success') throw new Error('The transaction failed');
-    if (receipt.token) location.href = `/c/strip-paintings/strips/${receipt.token}`;
+    if (receipt.token) minted(receipt.token);
     else say('Minted');
   } catch (err) {
     console.error('mint', err);
@@ -615,16 +1084,35 @@ $('mint').addEventListener('click', async () => {
   }
 });
 
+/* ---------- after the mint ----------
+   The painting is offered here and nowhere before: it's a reward for the mint,
+   not a decision in front of it. The order is the token's, read off the chain,
+   the same one the token page's Redeem makes. */
+function minted(id) {
+  MINTED = id;
+  LAID.clear();
+  setSignal(false);
+  deselect();
+  $('mintedNo').textContent = `//STRIP #${id} is yours.`;
+  $('seeToken').href = `/c/strip-paintings/strips/${id}`;
+  $('pTotal').textContent = priceLine(priceOf());
+  $('buy').hidden = true;
+  $('minted').hidden = false;
+  say('');
+  if (CHAIN.who) readFree(CHAIN.who);
+}
+$('again').addEventListener('click', () => {
+  MINTED = null;
+  $('minted').hidden = true;
+  $('buy').hidden = false;
+  setPalette(refreshed(S.palette));
+});
 $('commission').addEventListener('click', async () => {
   const btn = $('commission');
   if (btn.getAttribute('aria-busy') === 'true') return;
   btn.setAttribute('aria-busy', 'true');
   try {
-    const order = {
-      length_cm: S.length, width_cm: S.width, orientation: S.orient, frame: 'none', delivery: 'collect', palette_id: 'maker',
-      colours: S.palette.map((c) => ({ hex: c.hex, w: WEIGHT[c.amount] })), gamma: S.gamma, count: S.count, red_line: S.redLine,
-    };
-    const r = await fetch('/api/commission', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'create', spec: order }) });
+    const r = await fetch('/api/commission', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'create', spec: { token_id: MINTED } }) });
     const j = await r.json().catch(() => ({}));
     if (!r.ok || !j.id || !j.key) throw new Error(j.error || `commission ${r.status}`);
     location.href = `/commission/${encodeURIComponent(j.id)}#k=${encodeURIComponent(j.key)}`;
@@ -666,7 +1154,6 @@ function specText() {
   return [
     'MintFace //Strips ... configured spec',
     `${S.length} x ${S.width} cm | ${S.orient} | ${S.strips} strips | vibrancy ${S.gamma.toFixed(2)}`,
-    `commission ${priceLine(priceOf())}, collected from The Line`,
     `palette: ${S.palette.map((c) => `${c.hex} ${c.amount}`).join(' ')}`,
     `RED LINE: ${said(RED_LINE)} ... STRIP ${S.redLine} OF ${S.strips} FROM BASE`,
   ].join('\n');
@@ -674,7 +1161,7 @@ function specText() {
 
 /* ---------- wiring ---------- */
 let typing;
-const soon = () => { clearTimeout(typing); typing = setTimeout(draw, 250); };
+function soon() { clearTimeout(typing); typing = setTimeout(draw, 250); }
 const stepped = (v, min, max, step, fb) => { const n = Math.round(Number(v) / step) * step; return n >= min && n <= max ? n : fb; };
 $('length').addEventListener('input', (ev) => { S.length = stepped(ev.target.value, 80, 240, 10, S.length); soon(); });
 $('width').addEventListener('input', (ev) => { S.width = stepped(ev.target.value, 10, 120, 10, S.width); soon(); });

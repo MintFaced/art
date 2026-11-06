@@ -56,17 +56,17 @@ const chain = await startChain();
 let site; let browser; let tableServer;
 try {
   const { client } = chain;
-  const s = await deployStack(chain, { signer: privateKeyToAccount(process.env.STRIPS_VOUCHER_KEY).address });
-  const { core, ledger, send, ext, owner, estate, payout } = s;
-  process.env.STRIPS_DEPLOYMENT = JSON.stringify({ chain_id: 31337, core: core.address, extension: ext.address, ledger: ledger.address, renderer: s.renderer.address, first_block: 0 });
   const buyer = mnemonicToAccount(MNEMONIC, { addressIndex: 1 }).address;
   const collector = mnemonicToAccount(MNEMONIC, { addressIndex: 2 }).address;
 
   /* a snapshot that gives the collector two free mints */
-  const { allowances, rootOf } = await import('../../api/_lib/strips-snapshot.js');
+  const { allowances, forgetSnapshot, rootOf } = await import('../../api/_lib/strips-snapshot.js');
   const table = allowances([{ wallet: collector.toLowerCase(), tao_total: 420000 }, { wallet: `0x${'1'.repeat(40)}`, tao_total: 100000 }]);
-  await send(ledger, 'publishSnapshot', [rootOf(table), 1795000000n, 'ar://table', 'Snapshot 1']);
-  tableServer = createServer((_, res) => { res.setHeader('content-type', 'application/json'); res.end(JSON.stringify({ rows: table })); }).listen(0);
+  const s = await deployStack(chain, { signer: privateKeyToAccount(process.env.STRIPS_VOUCHER_KEY).address, snapshot: { root: rootOf(table), free_mints: 3 } });
+  const { core, ledger, send, ext, owner, estate, payout } = s;
+  process.env.STRIPS_DEPLOYMENT = JSON.stringify({ chain_id: 31337, core: core.address, extension: ext.address, ledger: ledger.address, renderer: s.renderer.address, first_block: 0 });
+  let serving = { rows: table };
+  tableServer = createServer((_, res) => { res.statusCode = serving ? 200 : 404; res.setHeader('content-type', 'application/json'); res.end(JSON.stringify(serving || {})); }).listen(0);
   await new Promise((ok) => tableServer.once('listening', ok));
   process.env.STRIPS_SNAPSHOT_URL = `http://127.0.0.1:${tableServer.address().port}/`;
 
@@ -115,10 +115,15 @@ try {
     await page.goto(`${site.url}${path}`);
     return { page, sent, set: (patch) => page.evaluate((p) => Object.assign(window.__wallet, p), patch) };
   };
-  const maker = async (account) => {
+  const label = (m) => m.page.textContent('#mint');
+  const maker = async (account, { connect = true } = {}) => {
     const m = await open(account, '/strip-painting-maker');
     await m.page.waitForFunction(() => document.getElementById('stripImg').src.startsWith('data:image/svg'));
-    await m.page.waitForFunction(() => document.getElementById('mint').textContent !== 'Mint · soon');
+    await m.page.waitForFunction(() => document.getElementById('mint').textContent !== 'Mint //STRIP · soon');
+    if (connect) {
+      await m.page.click('#mint');
+      await m.page.waitForFunction(() => /^Mint \/\/STRIP( · free)?$/.test(document.getElementById('mint').textContent));
+    }
     return m;
   };
   const clickMint = async (m) => {
@@ -127,6 +132,44 @@ try {
     await m.page.waitForFunction(() => !document.getElementById('mint').disabled);
   };
   const owns = (id) => client.readContract({ ...core, functionName: 'ownerOf', args: [id] }).then(getAddress).catch(() => null);
+
+  console.log('\n— the Maker, while free mints are being claimed —');
+  const stranger = await maker(collector, { connect: false });
+  is('before it knows who you are it asks you to connect, with the price in the row', [await label(stranger), await stranger.page.isDisabled('#mint'), await stranger.page.textContent('#pMint')], ['Connect to mint', false, '0.009 ETH']);
+  await stranger.page.click('#mint');
+  await stranger.page.waitForFunction(() => document.getElementById('mint').textContent === 'Mint //STRIP · free');
+  is('someone owed a free mint is shown a free mint', [await label(stranger), await stranger.page.textContent('#pMint')], ['Mint //STRIP · free', 'Free']);
+  is('and no price anywhere on the screen', /0\.009|ETH/.test(await stranger.page.locator('body').innerText()), false);
+  is('and connecting sends nothing', stranger.sent.length, 0);
+  await stranger.page.click('#testSignal');
+  is('the test signal changes neither the button nor the row', [await label(stranger), await stranger.page.isDisabled('#mint'), await stranger.page.textContent('#pMint'), await stranger.page.isVisible('#signal')], ['Mint //STRIP · free', false, 'Free', true]);
+  is('and shows no price', /0\.009|ETH/.test(await stranger.page.locator('body').innerText()), false);
+  await stranger.page.close();
+
+  console.log('\n— the Maker, when the free mints can\'t be read —');
+  serving = null;
+  forgetSnapshot();
+  const noTable = await maker(collector, { connect: false });
+  is('with no table deployed nobody gets a button', [await label(noTable), await noTable.page.isDisabled('#mint'), await noTable.page.isDisabled('#png'), await noTable.page.textContent('#pMint')], ['Mint //STRIP · paused', true, true, 'Paused']);
+  is('nor a price', /0\.009|ETH/.test(await noTable.page.locator('body').innerText()), false);
+  await noTable.page.click('#testSignal');
+  is('the test signal opens nothing', [await noTable.page.isVisible('#signal'), await noTable.page.isDisabled('#mint'), await noTable.page.isDisabled('#png'), await label(noTable)], [true, true, true, 'Mint //STRIP · paused']);
+  is('and it says why', (await noTable.page.textContent('#freeNote')).includes('can\'t be read'), true);
+  await noTable.page.close();
+  serving = { rows: table.slice(1) };
+  forgetSnapshot();
+  const wrongTable = await maker(buyer, { connect: false });
+  is('nor with a table that isn\'t the one on the ledger', [await label(wrongTable), await wrongTable.page.isDisabled('#png')], ['Mint //STRIP · paused', true]);
+  await wrongTable.page.close();
+
+  serving = { rows: table };
+  forgetSnapshot();
+  const midway = await maker(collector, { connect: false });
+  await midway.page.route('**/api/strips/free*', (r) => r.abort());
+  await midway.page.click('#mint');
+  await midway.page.waitForFunction(() => document.getElementById('mint').textContent === 'Mint //STRIP · paused');
+  is('if a wallet\'s own read fails, not knowing doesn\'t read as paying', [await label(midway), await midway.page.isDisabled('#png'), midway.sent.length], ['Mint //STRIP · paused', true, 0]);
+  await midway.page.close();
 
   console.log('\n— the Maker, when the wallet says no —');
   const m = await maker(buyer);
@@ -141,13 +184,37 @@ try {
   is('and the button comes back', await m.page.isDisabled('#mint'), false);
 
   console.log('\n— the Maker, paid —');
+  is('someone with no free mint is shown the price', await m.page.textContent('#pMint'), '0.009 ETH');
   await m.set({ chain: BASE, refuseSign: false });
   const before = await client.getBalance({ address: payout });
-  await Promise.all([m.page.waitForURL(/\/c\/strip-paintings\/strips\/1$/, { timeout: 30000 }), m.page.click('#mint')]);
+  is('the two buttons are all there is before the mint', [await m.page.isVisible('#commission'), await m.page.locator('.actions button:visible').count()], [false, 2]);
+  await m.page.click('#testSignal');
+  const prepared = m.page.waitForRequest((r) => r.url().endsWith('/api/strips/mint/prepare'));
+  await m.page.click('#mint');
+  const asked = JSON.parse((await prepared).postData());
+  is('a mint with the test signal running asks for what it always does', [asked.free, asked.to.toLowerCase(), asked.colours.length, 'word' in asked, 'signal' in asked], [false, buyer.toLowerCase(), 12, false, false]);
+  await m.page.waitForSelector('#minted:not([hidden])', { timeout: 30000 });
   is('on the wrong network it asks to move first, then sends there', m.sent.map((t) => t.on), [LOCAL]);
-  is('the page lands on the token', new URL(m.page.url()).pathname, '/c/strip-paintings/strips/1');
+  is('the mint ends on the offer, with the strip still on screen', [await m.page.textContent('#mintedNo'), await m.page.textContent('#commission'), await m.page.isVisible('#stripImg'), await m.page.isVisible('#mint')], ['//STRIP #1 is yours.', 'Commission the painting', true, false]);
+  is('the test signal has gone', await m.page.isVisible('#signal'), false);
+  is('the offer says what the painting costs', /ETH/.test(await m.page.textContent('#pTotal')), true);
+  is('and links to the token', await m.page.getAttribute('#seeToken', 'href'), '/c/strip-paintings/strips/1');
   is('the buyer holds it', await owns(1n), getAddress(buyer));
   is('the price arrived', (await client.getBalance({ address: payout })) - before, parseEther('0.009'));
+
+  console.log('\n— the commission, after the mint —');
+  const ordering = m.page.waitForRequest((r) => r.url().endsWith('/api/commission') && r.method() === 'POST');
+  await Promise.all([m.page.waitForURL(/\/commission\/SP-/, { timeout: 30000 }), m.page.click('#commission')]);
+  is('the order is the token\'s, read off the chain, not the page\'s', JSON.parse((await ordering).postData()), { action: 'create', spec: { token_id: 1 } });
+  const { getOrder } = await import('../../api/_lib/commissions.js');
+  const order = await getOrder(new URL(m.page.url()).pathname.split('/').pop());
+  const { decodeDesign } = await import('../../strips-design.js');
+  const onChain = decodeDesign(await client.readContract({ ...ext, functionName: 'designOf', args: [1n] }));
+  is('so it paints the twin of what was minted', [order.spec.token_id, order.strip_data.map((b) => b.hex.toUpperCase())], [1, onChain.bands.map((b) => b.hex.toUpperCase())]);
+  await m.page.goto(`${site.url}/strip-painting-maker`);
+  await m.page.waitForFunction(() => document.getElementById('mint').textContent !== 'Mint //STRIP · soon');
+  is('a fresh Maker offers no commission', await m.page.isVisible('#commission'), false);
+  await m.page.goto(`${site.url}/c/strip-paintings/strips/1`);
 
   console.log('\n— the token page —');
   await m.page.waitForSelector('#tell:not([hidden])');
@@ -164,18 +231,22 @@ try {
 
   console.log('\n— the Maker, free —');
   const f = await maker(collector);
-  is('the next visitor can mint straight away', await f.page.isDisabled('#mint'), false);
+  is('someone owed a free mint is never shown a price', [await label(f), /0\.009|ETH/.test(await f.page.locator('body').innerText())], ['Mint //STRIP · free', false]);
+  is('and can mint straight away', await f.page.isDisabled('#mint'), false);
   /* and if they reach a design that's gone, by hand, it says so */
+  await f.page.click('#custom summary');
   for (const [i, hex] of painted.entries()) {
     const input = f.page.locator('.pal-row').nth(i).locator('input[type=text]');
     await input.fill(hex);
     await input.blur();
   }
   await f.page.waitForFunction(() => document.getElementById('mint').textContent === 'Design taken');
-  is('the same design twice reads as taken', await f.page.isDisabled('#mint'), true);
+  is('the same design twice reads as taken, and says what to do', [await f.page.isDisabled('#mint'), (await f.page.textContent('#freeNote')).includes('move the red line')], [true, true]);
   await f.page.click('#refresh');
   await f.page.waitForFunction(() => !document.getElementById('mint').disabled);
-  await Promise.all([f.page.waitForURL(/\/c\/strip-paintings\/strips\/2$/, { timeout: 30000 }), f.page.click('#mint')]);
+  await f.page.click('#mint');
+  await f.page.waitForSelector('#minted:not([hidden])', { timeout: 30000 });
+  is('it ends on the offer too', [await f.page.textContent('#mintedNo'), await f.page.getAttribute('#seeToken', 'href')], ['//STRIP #2 is yours.', '/c/strip-paintings/strips/2']);
   is('a free mint asks for nothing', f.sent.map((t) => BigInt(t.value)), [0n]);
   is('and the collector holds it', await owns(2n), getAddress(collector));
   is('with one left on the ledger', await client.readContract({ ...ledger, functionName: 'claimed', args: [await client.readContract({ ...ledger, functionName: 'claimSnapshot' }), collector] }), 1n);
