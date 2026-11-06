@@ -11,9 +11,9 @@
  * POST /api/strips/refresh {id}              ask OpenSea to read a token again
  */
 import { encodeFunctionData, isAddress, parseAbi, parseAbiItem, parseEventLogs } from 'viem';
-import { chain, checkMintSpec, designOf, prepareMint, deployed, deployment, networkName, read, PRICE_WEI } from './_lib/strips.js';
-import { freeMintsFor } from './_lib/strips-snapshot.js';
-import { cardPNG, tokenFor } from './_lib/strips-token.js';
+import { chain, checkMintSpec, designOf, prepareMint, deployed, deployment, networkName, read, PRICE_WEI, PUBLIC_CAP } from './_lib/strips.js';
+import { claimState, freeMintsFor } from './_lib/strips-snapshot.js';
+import { cardPNG, refreshOpenSea, tokenFor } from './_lib/strips-token.js';
 import { readGallery, taoNow } from './_lib/strips-index.js';
 import { storeConfigured } from './_lib/kv.js';
 
@@ -38,15 +38,16 @@ export async function POST(request) {
     return json({ design, hash, strips, red_line: spec.red_line, taken });
   }
   if (path === 'mint/prepare') {
-    /* A free mint's allowance is read here, never taken from the page. */
-    let free = null;
-    if (body.free) {
-      if (!isAddress(String(body.to || ''))) return json({ error: 'connect a wallet first' }, 400);
-      const f = await freeMintsFor(body.to);
-      if (!f.left) return json({ error: 'no free mints left on this wallet' }, 403);
-      free = f;
-    }
-    const { status, error, ...rest } = await prepareMint({ ...body, free });
+    /* A free mint's allowance is read here, never taken from the page, and it's
+       read for a paid mint too: this is the door the fail-closed rule is held
+       at, whatever a page shows. If the free mints can't be read, nothing is
+       signed, and a wallet that's owed one isn't sold one. */
+    if (!isAddress(String(body.to || ''))) return json({ error: 'connect a wallet first' }, 400);
+    const f = await freeMintsFor(body.to);
+    if (f.unavailable) return json({ error: 'free mints can\'t be read just now, so minting has paused' }, 503);
+    if (body.free && !f.left) return json({ error: 'no free mints left on this wallet' }, 403);
+    if (!body.free && f.left) return json({ error: 'this wallet has a free mint waiting' }, 409);
+    const { status, error, ...rest } = await prepareMint({ ...body, free: body.free ? f : null });
     return json(error ? { error, ...rest } : rest, status);
   }
   /* The chain decides who may do these. This only spells the transaction. */
@@ -62,12 +63,7 @@ export async function POST(request) {
     return json({ error: 'no such op' }, 400);
   }
   /* The core has no ERC-4906, so a view change can't announce itself. */
-  if (path === 'refresh') {
-    const key = process.env.OPENSEA_API_KEY;
-    if (!deployed() || !key) return json({ refreshed: false });
-    const r = await fetch(`https://api.opensea.io/api/v2/chain/ethereum/contract/${deployment().core}/nfts/${Number(body.id) || 0}/refresh`, { method: 'POST', headers: { 'x-api-key': key }, signal: AbortSignal.timeout(6000) }).catch(() => null);
-    return json({ refreshed: Boolean(r && r.ok) });
-  }
+  if (path === 'refresh') return json({ refreshed: await refreshOpenSea(Number(body.id) || 0) });
   return json({ error: 'not found' }, 404);
 }
 
@@ -77,19 +73,21 @@ export async function GET(request) {
   if (path === 'state') {
     const d = deployment();
     if (!deployed()) return json({ deployed: false, network: networkName() }, 200, 'public, max-age=60');
-    const [open, publicMinted, streetMinted, deadline] = await Promise.all([
+    const [open, publicMinted, streetMinted, claim] = await Promise.all([
       read.extension('mintOpen'), read.extension('publicMinted'), read.extension('streetMinted'),
-      d.ledger ? read.ledger('claimDeadline').catch(() => 0n) : 0n,
+      claimState().catch(() => ({ ok: false, live: false, deadline: 0, reserved: 0 })),
     ]);
     return json({
       deployed: true, network: networkName(), chain_id: d.chain_id, core: d.core, extension: d.extension, ledger: d.ledger,
-      open, public_minted: Number(publicMinted), street_minted: Number(streetMinted), price_wei: PRICE_WEI.toString(), claim_deadline: Number(deadline),
+      open, public_minted: Number(publicMinted), street_minted: Number(streetMinted), price_wei: PRICE_WEI.toString(), claim_deadline: claim.deadline,
+      claims_ok: claim.ok, claim_live: claim.live, reserved: claim.reserved, paid_left: Math.max(0, PUBLIC_CAP - Number(publicMinted) - claim.reserved),
     }, 200, 'public, max-age=15');
   }
   if (path === 'free') {
     const wallet = url.searchParams.get('wallet') || '';
     if (!isAddress(wallet)) return json({ error: 'wallet' }, 400);
-    return json(await freeMintsFor(wallet));
+    const f = await freeMintsFor(wallet);
+    return json(f, f.unavailable ? 503 : 200);
   }
   /* Whether a transaction landed, asked here and not of the wallet: a phone
      over WalletConnect is only obliged to sign. */

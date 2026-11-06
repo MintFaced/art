@@ -15,6 +15,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { copiesOf } from '../../api/_lib/tao.js';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const VERBOSE = process.argv.includes('--verbose');
@@ -63,7 +64,7 @@ for (const f of fs.readdirSync(path.join(ROOT, 'data/tao/e')).filter((n) => n.en
     const k = `${c}|${token}`;
     if (!replayed.has(k)) replayed.set(k, new Map());
     const m = replayed.get(k);
-    const q = Number(qty) || 1;
+    const q = copiesOf(qty);
     if (from && !BURN.has(from)) m.set(from, (m.get(from) || 0) - q);
     if (to && !BURN.has(to)) m.set(to, (m.get(to) || 0) + q);
   }

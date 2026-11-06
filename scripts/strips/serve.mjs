@@ -9,7 +9,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.woff2': 'font/woff2', '.ico': 'image/x-icon', '.webp': 'image/webp' };
 const REWRITES = [
-  [/^\/api\/strips-admin$/, 'api/strips-admin.js'], [/^\/api\/strips\/.+/, 'api/strips.js'], [/^\/api\/strip-render/, 'api/strip-render.js'], [/^\/api\/strip-sites/, 'api/strip-sites.js'],
+  [/^\/api\/strips-admin$/, 'api/strips-admin.js'], [/^\/api\/strips\/.+/, 'api/strips.js'], [/^\/api\/strip-render/, 'api/strip-render.js'], [/^\/api\/strip-sites/, 'api/strip-sites.js'], [/^\/api\/commission$/, 'api/commission.js'],
 ];
 const PAGES = [[/^\/c\/strip-paintings\/strips\/\d+$/, 'strips-token.html'], [/^\/mintwork\/strips$/, 'mintwork/strips.html']];
 

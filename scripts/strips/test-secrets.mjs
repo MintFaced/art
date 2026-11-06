@@ -25,7 +25,7 @@ targets.push(['contracts/script/Deploy.s.sol', readFileSync(new URL('contracts/s
 targets.push(['contracts/README.md', readFileSync(new URL('contracts/README.md', root), 'utf8')]);
 targets.push(['strips-blink.js', readFileSync(new URL('strips-blink.js', root), 'utf8')]);
 targets.push(['contracts/build/engine.min.js', readFileSync(new URL('contracts/build/engine.min.js', root), 'utf8')]);
-for (const f of ['data/strips-snapshot-1.csv', 'data/strips-snapshot-1.json']) if (existsSync(new URL(f, root))) targets.push([f, readFileSync(new URL(f, root), 'utf8')]);
+for (const f of ['data/strips-snapshot-1.csv', 'data/strips-snapshot-1.json', 'data/strips-snapshot-1-exclusions.csv', 'data/strips-snapshot-1-audit.json', 'data/maker-presets.json']) if (existsSync(new URL(f, root))) targets.push([f, readFileSync(new URL(f, root), 'utf8')]);
 
 const chain = await startChain();
 try {

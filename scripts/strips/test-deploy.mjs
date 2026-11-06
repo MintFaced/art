@@ -12,11 +12,12 @@
  * it's the one that leaves ownership to be finished by hand.
  */
 import { spawn, spawnSync } from 'node:child_process';
+import { createServer } from 'node:http';
 import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createPublicClient, createWalletClient, decodeErrorResult, encodeFunctionData, http, parseAbi, parseEther, toHex } from 'viem';
 import { mainnet } from 'viem/chains';
-import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
+import { english, generateMnemonic, generatePrivateKey, mnemonicToAccount, privateKeyToAccount } from 'viem/accounts';
 import { artifact } from './chain.mjs';
 
 const FORK = process.env.FORK_URL || 'https://ethereum-rpc.publicnode.com';
@@ -29,6 +30,7 @@ const COORDINATOR = '0xD7f86b4b8Cae7D942340FF628F82735b7a20893a';
 const KEY_HASH = '0x3fd2fec10d06ee8f65e7f2e95f5c56511359ece3f33960ad8a866ae24a8ff10b';
 const MINTFACE = '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180';
 const ESTATE = '0x6e420B64bb329bE84a6627c68A7BdFf825139773';
+const ARTIST = '0xdD6B80649e8D472EB8fb52eb7eEcFd2Dc219AcE7';
 /* Fresh keys, never anvil's own. A fork keeps mainnet's state, and those public
    accounts carry a sweeper's EIP-7702 code there: it answers onERC721Received
    by taking the token, then fails the mint with empty revert data. */
@@ -49,6 +51,7 @@ const same = (a, b) => String(a).toLowerCase() === String(b).toLowerCase();
 
 const anvil = spawn(`${homedir()}/.foundry/bin/anvil`, ['--fork-url', FORK, '--port', String(PORT), '--silent'], { stdio: 'ignore' });
 const client = createPublicClient({ chain: mainnet, transport: http(RPC, { timeout: 120000 }) });
+let host;
 try {
   for (let i = 0; i < 300; i += 1) {
     try { await client.getChainId(); break; } catch { await new Promise((r) => setTimeout(r, 100)); }
@@ -92,10 +95,26 @@ try {
 
   console.log('\n— 3 and 4. the voucher key and the deploy script —');
   const signer = privateKeyToAccount(process.env.STRIPS_VOUCHER_KEY).address;
-  const forge = spawnSync(`${homedir()}/.foundry/bin/forge`, ['script', 'script/Deploy.s.sol', '--rpc-url', RPC, '--broadcast', '--private-key', DEPLOYER_KEY], {
+  const script = (args, extra = {}) => spawnSync(`${homedir()}/.foundry/bin/forge`, ['script', 'script/Deploy.s.sol', '--rpc-url', RPC, ...args], {
     cwd: CONTRACTS, encoding: 'utf8', timeout: 300000, maxBuffer: 1 << 26,
-    env: { ...process.env, CORE: core, OWNER: MINTFACE, PAYOUT: MINTFACE, ESTATE, VOUCHER_SIGNER: signer, VRF_SUB_ID: String(subId), VRF_COORDINATOR: COORDINATOR, VRF_KEY_HASH: KEY_HASH },
+    env: { ...process.env, CORE: core, OWNER: MINTFACE, ARTIST, PAYOUT: MINTFACE, ESTATE, VOUCHER_SIGNER: signer, VRF_SUB_ID: String(subId), VRF_COORDINATOR: COORDINATOR, VRF_KEY_HASH: KEY_HASH, ...extra },
   });
+
+  /* A hardware wallet is the one route where the script's msg.sender isn't the
+     signer. Mnemonics are the same class of signer, and need no device. */
+  const phrase = generateMnemonic(english);
+  const hardware = mnemonicToAccount(phrase).address;
+  await client.request({ method: 'anvil_setBalance', params: [hardware, toHex(parseEther('10'))] });
+  const signerArgs = ['--mnemonics', phrase, '--mnemonic-indexes', '0'];
+  is('the deploy simulates with a hardware-class signer and --sender', script([...signerArgs, '--sender', hardware]).status, 0);
+  is('and without --sender, which is how the old script failed', script(signerArgs).status, 0);
+
+  const short = script(['--private-key', DEPLOYER_KEY], { CLAIM_WINDOW: '3600' });
+  is('mainnet refuses any claim window but 30 days', [short.status !== 0, /30 days/.test(`${short.stdout}${short.stderr}`)], [true, true]);
+  const nowhere = script(['--private-key', DEPLOYER_KEY], { CORE: '0x000000000000000000000000000000000000c0DE' });
+  is('and a core that isn\'t there', [nowhere.status !== 0, /CORE has no code/.test(`${nowhere.stdout}${nowhere.stderr}`)], [true, true]);
+
+  const forge = script(['--broadcast', '--private-key', DEPLOYER_KEY]);
   is('forge script finishes', forge.status, 0);
   if (forge.status !== 0) { console.log(String(forge.stdout).slice(-1500), String(forge.stderr).slice(-1500)); throw new Error('no deployment to rehearse'); }
   const printed = (name) => (new RegExp(`${name}\\s+(0x[0-9a-fA-F]{40})`).exec(forge.stdout) || [])[1];
@@ -109,11 +128,13 @@ try {
   is('and the payout', same(await readExt('payout'), MINTFACE), true);
   is('and the voucher signer', same(await readExt('voucherSigner'), signer), true);
   is('and the core', same(await readExt('core'), core), true);
-  is('the ledger is the wallet\'s already', same(await readLedger('owner'), MINTFACE), true);
-  is('its minter is the extension', same(await readLedger('minter'), addr.extension), true);
-  is('the extension waits for the wallet', same(await readExt('owner'), deployer.address), true);
+  is('and ryanj.eth as the second free minter', same(await readExt('artist'), ARTIST), true);
+  is('the claim window is 30 days', await readLedger('CLAIM_WINDOW'), 2592000n);
+  is('the ledger\'s minter is the extension', same(await readLedger('minter'), addr.extension), true);
+  is('both wait for the wallet', [same(await readExt('owner'), deployer.address), same(await readLedger('owner'), deployer.address)], [true, true]);
   await done(await mintface.writeContract({ address: addr.extension, abi: ext, functionName: 'acceptOwnership' }));
-  is('and is the wallet\'s once it accepts', same(await readExt('owner'), MINTFACE), true);
+  await done(await mintface.writeContract({ address: addr.ledger, abi: ledger, functionName: 'acceptOwnership' }));
+  is('and are the wallet\'s once it accepts', [same(await readExt('owner'), MINTFACE), same(await readLedger('owner'), MINTFACE)], [true, true]);
 
   console.log('\n— 5. connect —');
   await done(await mintface.writeContract({ address: COORDINATOR, abi: VRF_ABI, functionName: 'addConsumer', args: [subId, addr.extension] }));
@@ -126,6 +147,23 @@ try {
   const { txFor } = await import('../../api/_lib/strips-console.js');
   const { tokenFor } = await import('../../api/_lib/strips-token.js');
   is('the site can see it', deployed(), true);
+
+  console.log('\n— 7. snapshot 1 —');
+  const { rootOf } = await import('../../api/_lib/strips-snapshot.js');
+  const claimant = privateKeyToAccount(generatePrivateKey());
+  const table = [{ wallet: claimant.address, tao_total: 420000, free_mints: 2 }, { wallet: `0x${'1'.repeat(40)}`, tao_total: 100000, free_mints: 1 }];
+  const file = { id: 1, label: 'Snapshot 1', taken_at: 1793914285, root: rootOf(table), rows: table };
+  let serving = null;
+  host = createServer((req, res) => { const body = serving && (req.url === '/audit' ? { ok: true, root: file.root } : serving); res.statusCode = body ? 200 : 404; res.setHeader('content-type', 'application/json'); res.end(JSON.stringify(body || {})); }).listen(0);
+  await new Promise((ok) => host.once('listening', ok));
+  process.env.STRIPS_SNAPSHOT_URL = `http://127.0.0.1:${host.address().port}/`;
+  process.env.STRIPS_SNAPSHOT_AUDIT_URL = `http://127.0.0.1:${host.address().port}/audit`;
+  process.env.STRIPS_ARWEAVE_GATEWAY = `http://127.0.0.1:${host.address().port}`;
+  is('the console won\'t publish a table the site doesn\'t have', /isn't on the site/.test((await txFor('snapshot', { root: file.root, uri: 'ar://t' })).error), true);
+  serving = file;
+  const publish = await txFor('snapshot', { root: file.root, uri: 'ar://t' });
+  await done(await mintface.sendTransaction({ to: publish.to, data: publish.data }));
+  is('published, the ledger holds back what the table owes', await readLedger('unclaimedReserve'), 3n);
 
   console.log('\n— 9. open —');
   const design = { to: buyerAccount.address, length_cm: 120, width_cm: 60, orientation: 'landscape', colours: [{ hex: '#112233' }, { hex: '#445566' }, { hex: '#778899' }, { hex: '#AA00BB', amount: 'more' }] };
@@ -154,6 +192,7 @@ try {
   fails += 1;
   console.log('FAIL', e.shortMessage || e.message);
 } finally {
+  host?.close();
   anvil.kill();
 }
 console.log(`\n${passes} passed, ${fails} failed`);

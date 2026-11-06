@@ -1,5 +1,5 @@
 import { readFile, writeFile } from '../_lib/repo.js';
-import { computeTao } from '../_lib/tao.js';
+import { computeTao, copiesOf } from '../_lib/tao.js';
 import { deployed as stripsDeployed, deployment as stripsDeployment } from '../_lib/strips.js';
 import { addToRegister, readGallery } from '../_lib/strips-index.js';
 import { storeConfigured } from '../_lib/kv.js';
@@ -251,7 +251,8 @@ async function run({ key, dry, started, prior, url }) {
           if (w.length < 2) continue;
           const id = BigInt(w[0]).toString();
           if (!t.tokens.has(id)) continue;
-          found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), Number(BigInt(w[1])), ts, blk, l.transactionHash]);
+          const value = Number(BigInt(w[1]));
+          if (value) found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), value, ts, blk, l.transactionHash]);
         } else {
           const w = words(l.data);
           if (w.length < 4) continue;
@@ -261,7 +262,8 @@ async function run({ key, dry, started, prior, url }) {
           for (let i = 0; i < n; i++) {
             const id = BigInt(w[idsAt + 1 + i] || '0x0').toString();
             if (!t.tokens.has(id)) continue;
-            found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), Number(BigInt(w[valsAt + 1 + i] || '0x0')), ts, blk, l.transactionHash]);
+            const value = Number(BigInt(w[valsAt + 1 + i] || '0x0'));
+            if (value) found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), value, ts, blk, l.transactionHash]);
           }
         }
       }
@@ -271,7 +273,7 @@ async function run({ key, dry, started, prior, url }) {
     cached.events = cached.events.concat(add).sort((a, b) => a[5] - b[5] || a[4] - b[4]);
     cached.cursor = HEAD;
     cached.updated = new Date().toISOString();
-    for (const e of add) arrived.push({ contract: addr, token: e[0], from: e[1], to: e[2], qty: Number(e[3]) || 1, ts: e[4], block: e[5], tx: e[6] });
+    for (const e of add) if (copiesOf(e[3])) arrived.push({ contract: addr, token: e[0], from: e[1], to: e[2], qty: copiesOf(e[3]), ts: e[4], block: e[5], tx: e[6] });
     files.set(addr, { data: cached, changed: add.length > 0 });
   }
   if (!Number.isFinite(scannedFrom)) scannedFrom = HEAD;
@@ -422,7 +424,7 @@ async function run({ key, dry, started, prior, url }) {
   const events = [];
   for (const [addr, { data }] of files) {
     for (const [token, from, to, qty, ts, blk, tx] of data.events) {
-      events.push({ contract: addr, token, from, to, qty: Number(qty) || 1, ts, block: blk, tx,
+      if (copiesOf(qty)) events.push({ contract: addr, token, from, to, qty: copiesOf(qty), ts, block: blk, tx,
         sale: Boolean(sales.tx[tx] && sales.tx[tx].sale) });
     }
   }

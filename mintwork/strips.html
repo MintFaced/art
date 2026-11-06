@@ -62,11 +62,18 @@ textarea{width:100%;min-height:130px}
     <button data-op="story">Add story</button><button data-op="redeem">Redeem (painted)</button><button data-op="retry">Ask for its word again</button>
   </div>
 
-  <h2>Commission twin</h2>
-  <div class="row"><input id="twDesign" placeholder="Design hex, from the order"><input id="twTo" placeholder="Buyer's wallet"><button data-op="twin">Mint twin</button></div>
+  <h2>Owner mint</h2>
+  <p class="note">Free, for a commission's twin or our own, from mintface.eth or ryanj.eth. It comes out of the 621 and stops at what's reserved for free mints.</p>
+  <div class="row"><input id="twDesign" placeholder="Design hex, from the order"><input id="twTo" placeholder="The wallet it goes to"><button data-op="twin">Mint</button></div>
 
   <h2>Snapshot</h2>
-  <div class="row"><input id="sRoot" placeholder="Root, from scripts/strips/snapshot.mjs"><input id="sTaken" placeholder="Taken at (unix)" inputmode="numeric"><input id="sUri" placeholder="ar://... the table"><input id="sLabel" placeholder="Label"><button data-op="snapshot">Publish</button></div>
+  <p class="note">The table has to be on the site and on Arweave first. The root is checked against both, and the free mints it reserves and its date are read from the table.</p>
+  <div class="row"><input id="sRoot" placeholder="Root, from scripts/strips/snapshot.mjs"><input id="sUri" placeholder="ar://... the table"><button data-op="snapshot">Publish</button></div>
+
+  <h2>Free mint claim</h2>
+  <p class="note" id="claimNote"></p>
+  <div class="row"><input id="cDays" placeholder="Days to add" inputmode="numeric"><button data-op="extend">Extend the deadline</button></div>
+  <div class="row"><input id="cSnapshot" placeholder="Corrected snapshot id" inputmode="numeric"><button data-op="correct">Point the claim at it</button></div>
 
   <h2>Public mint</h2>
   <div class="row"><button id="openMint"></button></div>
@@ -145,9 +152,12 @@ function paint() {
   $('sites').tBodies[0].innerHTML = V.sites.map((s) => `<tr><td>${s.no}</td><td>${e(s.address)}</td><td>${e(s.status)}</td><td>${e(s.design)}</td><td>${s.token_id ? `<a href="/c/strip-paintings/strips/${s.token_id}">#${s.token_id}</a>` : '...'}</td>
     <td><button data-edit="${s.no}">Design</button> <button data-mint="${s.no}" ${!V.deployed || s.token_id || s.design !== 'signed' ? 'disabled' : ''}>Mint</button></td></tr>`).join('');
   $('openMint').textContent = V.open ? 'Close the public mint' : 'Open the public mint';
-  $('openMint').disabled = !V.deployed;
+  const c = V.claim;
+  $('openMint').disabled = !V.deployed || (!V.open && !(c && c.snapshot));
+  $('claimNote').textContent = !c || !c.snapshot ? 'No snapshot yet, so the public mint can\'t open.'
+    : `Snapshot ${c.snapshot} · ${c.claimed} claimed · ${c.reserved} held back · ${c.live ? 'closes' : 'closed'} ${new Date(c.deadline * 1000).toUTCString()}${c.live && !c.ok ? ' · THE SITE HAS NO TABLE FOR THIS ROOT: nothing can mint until it does' : ''}`;
   const f = V.freeze;
-  $('freezeNote').textContent = f.frozen ? 'Frozen. The art can never change.' : `${f.minted} of ${f.need} mints. Permanent, and announced.`;
+  $('freezeNote').textContent = f.frozen ? 'Frozen. The renderer can never be swapped.' : `${f.minted} of ${f.need} mints. Permanent, and announced.`;
   $('checks').innerHTML = f.keys.map((k) => `<label class="row"><input type="checkbox" data-check="${k}" ${V.checks[k] ? 'checked' : ''}> Renders correctly on ${e(CHECK_NAMES[k])}</label>`).join('');
   $('freeze').disabled = !f.ready;
 }
@@ -165,7 +175,9 @@ document.addEventListener('click', (ev) => {
   if (b.dataset.mint) sign('street', { no: Number(b.dataset.mint) });
   const op = b.dataset.op;
   if (op === 'twin') sign('twin', { design: $('twDesign').value.trim(), to: $('twTo').value.trim() });
-  else if (op === 'snapshot') sign('snapshot', { root: $('sRoot').value.trim(), taken_at: Number($('sTaken').value), uri: $('sUri').value.trim(), label: $('sLabel').value.trim() });
+  else if (op === 'snapshot') sign('snapshot', { root: $('sRoot').value.trim(), uri: $('sUri').value.trim() });
+  else if (op === 'extend') { if (confirm('Extend the claim? A deadline can only move later, never back.')) sign('extend', { days: Number($('cDays').value) }); }
+  else if (op === 'correct') sign('correct', { snapshot: Number($('cSnapshot').value) });
   else if (op) sign(op, { id: Number($('tId').value), uri: $('tUri').value.trim(), text: $('tText').value, width_cm: Number($('tW').value), height_cm: Number($('tH').value) });
 });
 document.addEventListener('change', async (ev) => {
@@ -175,7 +187,7 @@ document.addEventListener('change', async (ev) => {
 });
 $('connect').addEventListener('click', async () => { try { who = await MF.connect(); $('who').textContent = who; } catch (err) { say(err.message); } });
 $('openMint').addEventListener('click', () => sign('open', { open: !V.open }));
-$('freeze').addEventListener('click', () => { if (confirm('Freeze the renderer? This is permanent. The art can never change after this.')) sign('freeze'); });
+$('freeze').addEventListener('click', () => { if (confirm('Freeze the renderer? This is permanent: it can never be swapped after this.')) sign('freeze'); });
 load();
 </script>
 </body>

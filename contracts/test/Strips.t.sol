@@ -165,7 +165,7 @@ contract MintTest is Base {
     function test_publicCap_stopsAt621_counterSharedWithTwins() public {
         for (uint256 i = 1; i <= 620; ++i) mintAs(buyer, i);
         vm.prank(mintface);
-        ext.mintTwin(design(621), other);
+        ext.ownerMint(design(621), other);
         assertEq(ext.publicMinted(), 621);
         bytes memory d = design(622);
         (StripsExtension.Voucher memory v, bytes memory s) = voucherFor(d, buyer);
@@ -174,7 +174,7 @@ contract MintTest is Base {
         ext.mint{value: 0.009 ether}(d, v, s);
         vm.prank(mintface);
         vm.expectRevert(StripsExtension.PublicSoldOut.selector);
-        ext.mintTwin(d, other);
+        ext.ownerMint(d, other);
         vm.prank(mintface);
         ext.mintStreet(d, 1, "320 West");
         assertEq(ext.streetMinted(), 1, "the public cap leaves the street allowance alone");
@@ -205,10 +205,10 @@ contract MintTest is Base {
         assertEq(ext.streetOf(id).site, "300 West Laneway");
     }
 
-    function test_twin_isOwnerOnly() public {
+    function test_ownerMint_isNotForTheBuyer() public {
         vm.prank(buyer);
-        vm.expectRevert("Only callable by owner");
-        ext.mintTwin(design(1), buyer);
+        vm.expectRevert(StripsExtension.NotOwnerMinter.selector);
+        ext.ownerMint(design(1), buyer);
     }
 
     function test_reentrancy_aHostileReceiverCannotMintTwice() public {
@@ -232,13 +232,11 @@ contract FreeMintTest is Base {
     bytes32 leafB;
     bytes32 root;
 
-    function setUp() public override {
-        super.setUp();
+    function firstSnapshot() internal override {
         leafA = ledger.leaf(buyer, 500_000, 2);
         leafB = ledger.leaf(other, 150_000, 1);
         root = hashPair(leafA, leafB);
-        vm.prank(mintface);
-        ledger.publishSnapshot(root, uint64(T0 - 1 days), "ar://table", "Snapshot 1");
+        ledger.publishSnapshot(root, uint64(T0 - 1 days), 3, "ar://table", "Snapshot 1");
     }
 
     function proofFor(bytes32 sibling) internal pure returns (bytes32[] memory p) {
@@ -310,7 +308,7 @@ contract FreeMintTest is Base {
 
     function test_ledger_laterSnapshotsAreRecordsNotClaims() public {
         vm.prank(mintface);
-        uint256 id = ledger.publishSnapshot(bytes32(uint256(7)), uint64(T0), "ar://two", "Snapshot 2");
+        uint256 id = ledger.publishSnapshot(bytes32(uint256(7)), uint64(T0), 0, "ar://two", "Snapshot 2");
         assertEq(id, 2);
         assertEq(ledger.claimSnapshot(), 1);
         assertEq(ledger.snapshot(2).claimUntil, 0);
@@ -324,21 +322,22 @@ contract FreeMintTest is Base {
     }
 
     function test_ledger_onlyTheOwnerPublishes() public {
-        vm.prank(buyer);
-        vm.expectRevert("Ownable: caller is not the owner");
-        ledger.publishSnapshot(root, 0, "", "");
-        vm.prank(buyer);
-        vm.expectRevert("Ownable: caller is not the owner");
+        vm.startPrank(buyer);
+        vm.expectRevert("Only callable by owner");
+        ledger.publishSnapshot(root, 0, 0, "", "");
+        vm.expectRevert("Only callable by owner");
         ledger.setMinter(buyer);
-        vm.prank(buyer);
-        vm.expectRevert("Ownable: caller is not the owner");
+        vm.expectRevert("Only callable by owner");
         ledger.setClaimSnapshot(1);
+        vm.expectRevert("Only callable by owner");
+        ledger.extendClaim(uint64(T0 + 40 days));
+        vm.stopPrank();
     }
 
     function test_ledger_aWrongRootCanBeCorrectedUntilSomeoneClaims() public {
         vm.startPrank(mintface);
         vm.warp(T0 + 2 days);
-        ledger.publishSnapshot(bytes32(uint256(7)), uint64(T0), "ar://fixed", "Snapshot 1, corrected");
+        ledger.publishSnapshot(bytes32(uint256(7)), uint64(T0), 3, "ar://fixed", "Snapshot 1, corrected");
         vm.expectRevert(TaoLedger.NoSuchSnapshot.selector);
         ledger.setClaimSnapshot(3);
         vm.expectRevert(TaoLedger.NoSuchSnapshot.selector);
@@ -355,7 +354,7 @@ contract FreeMintTest is Base {
     }
 
     function test_ledger_noSnapshotMeansNoClaim() public {
-        TaoLedger fresh = new TaoLedger(address(this));
+        TaoLedger fresh = new TaoLedger(address(this), 30 days);
         fresh.setMinter(address(this));
         vm.expectRevert(TaoLedger.ClaimClosed.selector);
         fresh.claim(buyer, 1, 1, new bytes32[](0));

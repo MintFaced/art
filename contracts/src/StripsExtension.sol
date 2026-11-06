@@ -43,6 +43,11 @@ contract StripsExtension is
     uint256 public constant STREET_CAP = 69;
     uint256 public constant PUBLIC_CAP = 621;
 
+    /// @notice The most ryanj.eth can ownerMint, ever, whoever holds that role.
+    ///         mintface.eth is cold and has no such limit. This is what a stolen
+    ///         hot key could take, and it leaves room for any table that fits.
+    uint256 public constant ARTIST_CAP = 69;
+
     /// @notice TAO in tenths, per day.
     uint256 public constant RATE_HELD = 42;
     uint256 public constant RATE_REDEEMED = 690;
@@ -101,11 +106,14 @@ contract StripsExtension is
     bool public rendererFrozen;
     address payable public payout;
     address public voucherSigner;
+    /// @notice ryanj.eth: mints free alongside the owner, and owns nothing else.
+    address public artist;
     bool public mintOpen;
     VrfConfig public vrf;
 
     uint256 public streetMinted;
     uint256 public publicMinted;
+    uint256 public artistMinted;
     uint256 public lastId;
 
     mapping(uint256 => Token) private _tokens;
@@ -131,6 +139,8 @@ contract StripsExtension is
     event MintOpenChanged(bool open);
     event PayoutChanged(address payout);
     event VoucherSignerChanged(address signer);
+    event ArtistChanged(address artist);
+    event VrfChanged(bytes32 keyHash, uint256 subId, uint16 confirmations, uint32 callbackGas, bool native);
 
     error NotCore();
     error MintClosed();
@@ -151,6 +161,10 @@ contract StripsExtension is
     error AlreadySeeded();
     error Frozen();
     error PayoutFailed();
+    error NotOwnerMinter();
+    error ArtistCapReached();
+    error NoSnapshot();
+    error NotARenderer();
 
     constructor(
         address core_,
@@ -163,6 +177,7 @@ contract StripsExtension is
         address vrfCoordinator_,
         VrfConfig memory vrf_
     ) VRFConsumerBaseV2Plus(vrfCoordinator_) {
+        if (estate_ == address(0) || payout_ == address(0)) revert ZeroAddress();
         core = IERC721CreatorCore(core_);
         ledger = ledger_;
         delegates = delegates_;
@@ -184,6 +199,7 @@ contract StripsExtension is
     {
         if (msg.value != PRICE) revert WrongPrice();
         _checkVoucher(design, v, sig);
+        _checkUnreserved();
         id = _mintPublic(v.to, design, false);
         (bool ok,) = payout.call{value: msg.value}("");
         if (!ok) revert PayoutFailed();
@@ -205,8 +221,18 @@ contract StripsExtension is
         id = _mintPublic(msg.sender, design, true);
     }
 
-    /// @notice A commission's free twin, from the public allowance, to its buyer.
-    function mintTwin(bytes calldata design, address to) external onlyOwner nonReentrant returns (uint256 id) {
+    /// @notice ryanj.eth and mintface.eth mint with no allowlist and no price,
+    ///         their own and a commission's free twin alike. It works before the
+    ///         public opens, and draws on the same allowance as any other mint,
+    ///         so it stops at what's reserved and at the cap. ryanj.eth stops
+    ///         sooner, at ARTIST_CAP.
+    function ownerMint(bytes calldata design, address to) external nonReentrant returns (uint256 id) {
+        if (msg.sender != owner()) {
+            if (msg.sender != artist) revert NotOwnerMinter();
+            if (artistMinted >= ARTIST_CAP) revert ArtistCapReached();
+            ++artistMinted;
+        }
+        _checkUnreserved();
         id = _mintPublic(to, design, true);
     }
 
@@ -232,6 +258,11 @@ contract StripsExtension is
         bytes32 digest =
             _hashTypedData(keccak256(abi.encode(VOUCHER_TYPEHASH, v.to, v.designHash, v.nonce, v.deadline)));
         if (ECDSA.recoverCalldata(digest, sig) != voucherSigner) revert BadVoucher();
+    }
+
+    /// @dev Everything but a claim stops short of what the snapshot is still owed.
+    function _checkUnreserved() private view {
+        if (publicMinted + ledger.unclaimedReserve() >= PUBLIC_CAP) revert PublicSoldOut();
     }
 
     function _mintPublic(address to, bytes calldata design, bool free) private returns (uint256) {
@@ -385,14 +416,25 @@ contract StripsExtension is
         );
     }
 
+    /// @notice Opening needs a snapshot, because until one is published nothing
+    ///         is reserved and a paid mint could take what's owed.
     function setMintOpen(bool open) external onlyOwner {
+        if (open && ledger.claimSnapshot() == 0) revert NoSnapshot();
         mintOpen = open;
         emit MintOpenChanged(open);
     }
 
     function setPayout(address payable payout_) external onlyOwner {
+        if (payout_ == address(0)) revert ZeroAddress();
         payout = payout_;
         emit PayoutChanged(payout_);
+    }
+
+    /// @notice Who else may ownerMint, up to ARTIST_CAP between them. A new wallet
+    ///         doesn't start the count again. Zero takes the right away.
+    function setArtist(address artist_) external onlyOwner {
+        artist = artist_;
+        emit ArtistChanged(artist_);
     }
 
     function setVoucherSigner(address signer) external onlyOwner {
@@ -402,15 +444,20 @@ contract StripsExtension is
 
     function setVrf(VrfConfig calldata c) external onlyOwner {
         vrf = c;
+        emit VrfChanged(c.keyHash, c.subId, c.confirmations, c.callbackGas, c.native);
     }
 
     function setRenderer(IStripsRenderer renderer_) external onlyOwner {
         if (rendererFrozen) revert Frozen();
+        if (address(renderer_).code.length == 0) revert NotARenderer();
         renderer = renderer_;
         emit RendererChanged(address(renderer_));
     }
 
-    /// @notice Permanent. After this the art can never change.
+    /// @notice Permanent: the renderer can never be swapped. It's the drawing
+    ///         that's frozen and nothing else. The owner keeps the VRF settings,
+    ///         so can still pick the word of a token that's still tuning, and the
+    ///         transfer hook, and the core's own powers. See contracts/README.md.
     function freezeRenderer() external onlyOwner {
         rendererFrozen = true;
         emit RendererFrozen(address(renderer));

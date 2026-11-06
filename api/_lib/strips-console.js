@@ -13,16 +13,18 @@ import palettesFile from '../../data/strip-palettes.json' with { type: 'json' };
 import sitesFile from '../../data/strip-sites.json' with { type: 'json' };
 import { pipe, storeConfigured } from './kv.js';
 import { layout, RED_LINE } from './strip-render.js';
-import { chain, deployed, deployment, networkName, read } from './strips.js';
+import { chain, deployed, deployment, networkName, read, storeKey } from './strips.js';
+import { checkPublish, claimState, forgetSnapshot, owedBy, tableFor } from './strips-snapshot.js';
 import { packStrips } from '../../strips-design.js';
 
 export const FREEZE_AFTER = 50;
 export const FREEZE_CHECKS = ['mintface', 'opensea', 'etherscan', 'wallet'];
 const LOW_NATIVE_WEI = 20_000_000_000_000_000n; // 0.02 ETH, about 200 fulfilments at today's gas
+const MAX_EXTEND_DAYS = 90; // a deadline can't come back in, so no big numbers by accident
 
 const ADMIN = parseAbi([
   'function mintStreet(bytes design, uint16 no, string site) returns (uint256)',
-  'function mintTwin(bytes design, address to) returns (uint256)',
+  'function ownerMint(bytes design, address to) returns (uint256)',
   'function addPhoto(uint256 id, string uri)',
   'function setArTarget(uint256 id, string uri, uint16 widthCm, uint16 heightCm)',
   'function addCreatorStory(uint256 id, string text)',
@@ -30,7 +32,9 @@ const ADMIN = parseAbi([
   'function retrySeed(uint256 id) returns (uint256)',
   'function setMintOpen(bool open)',
   'function freezeRenderer()',
-  'function publishSnapshot(bytes32 root, uint64 takenAt, string arweaveUri, string label) returns (uint256)',
+  'function publishSnapshot(bytes32 root, uint64 takenAt, uint64 freeMints, string arweaveUri, string label) returns (uint256)',
+  'function setClaimSnapshot(uint256 id)',
+  'function extendClaim(uint64 until)',
 ]);
 const VRF = parseAbi([
   'function vrf() view returns (bytes32 keyHash, uint256 subId, uint16 confirmations, uint32 callbackGas, bool native)',
@@ -39,7 +43,7 @@ const VRF = parseAbi([
 ]);
 const STREET_MINTED = parseAbiItem('event StreetMinted(uint256 indexed id, uint16 indexed no, string site)');
 
-const K = { design: (no) => `strips:street:${no}`, checks: 'strips:checks' };
+const K = { design: (no) => storeKey(`street:${no}`), get checks() { return storeKey('checks'); } };
 const first = (replies) => (replies && replies[0] && 'result' in Object(replies[0]) ? replies[0].result : replies && replies[0]);
 const getJson = async (key) => { const v = first(await pipe([['GET', key]])); return v ? JSON.parse(String(v)) : null; };
 const setJson = (key, value) => pipe([['SET', key, JSON.stringify(value)]]);
@@ -128,8 +132,9 @@ export async function consoleView() {
   }));
   const out = { deployed: live, network: networkName(), chain_id: deployment().chain_id, sites, checks, freeze: { need: FREEZE_AFTER, keys: FREEZE_CHECKS, minted: 0, frozen: false, ready: false } };
   if (!live) return out;
-  const [publicMinted, streetMinted, lastId, frozen, open, vrf] = await Promise.all([
+  const [publicMinted, streetMinted, lastId, frozen, open, vrf, claim, claimed] = await Promise.all([
     read.extension('publicMinted'), read.extension('streetMinted'), read.extension('lastId'), read.extension('rendererFrozen'), read.extension('mintOpen'), vrfHealth().catch(() => null),
+    claimState().catch(() => null), read.ledger('totalClaimed').catch(() => null),
   ]);
   const minted = Number(publicMinted) + Number(streetMinted);
   const ids = Array.from({ length: Number(lastId) }, (_, i) => i + 1);
@@ -137,6 +142,7 @@ export async function consoleView() {
   const tuning = ids.filter((_, i) => seeds[i] === 0n).slice(-20);
   return {
     ...out, open, public_minted: Number(publicMinted), street_minted: Number(streetMinted), vrf, tuning,
+    claim: claim && { snapshot: claim.snapshot, deadline: claim.deadline, reserved: claim.reserved, claimed: Number(claimed), live: claim.live, ok: claim.ok },
     freeze: { ...out.freeze, minted, frozen, ready: !frozen && minted >= FREEZE_AFTER && FREEZE_CHECKS.every((k) => checks[k]) },
   };
 }
@@ -153,6 +159,7 @@ export async function txFor(op, b = {}) {
   if (!deployed()) return { error: 'not deployed' };
   const d = deployment();
   const ext = (functionName, args) => ({ to: d.extension, data: encodeFunctionData({ abi: ADMIN, functionName, args }) });
+  const ledgerTx = (functionName, args) => ({ to: d.ledger, data: encodeFunctionData({ abi: ADMIN, functionName, args }) });
   const id = BigInt(Number(b.id) || 0);
   const uri = String(b.uri || '');
   const needUri = () => (/^(ar:\/\/|https:\/\/arweave\.net\/)/.test(uri) ? null : 'an Arweave URI, ar://...');
@@ -167,7 +174,7 @@ export async function txFor(op, b = {}) {
     case 'twin': {
       if (!isAddress(String(b.to || ''))) return { error: 'the twin needs the buyer\'s wallet' };
       if (!/^0x[0-9a-f]+$/i.test(String(b.design || ''))) return { error: 'no design' };
-      return ext('mintTwin', [b.design, getAddress(b.to)]);
+      return ext('ownerMint', [b.design, getAddress(b.to)]);
     }
     case 'photo': return needUri() ? { error: needUri() } : ext('addPhoto', [id, uri]);
     case 'target': return needUri() ? { error: needUri() } : ext('setArTarget', [id, uri, Number(b.width_cm) || 0, Number(b.height_cm) || 0]);
@@ -178,7 +185,25 @@ export async function txFor(op, b = {}) {
     case 'snapshot': {
       if (!/^0x[0-9a-f]{64}$/i.test(String(b.root || ''))) return { error: 'the root is 32 bytes of hex' };
       if (needUri()) return { error: needUri() };
-      return { to: d.ledger, data: encodeFunctionData({ abi: ADMIN, functionName: 'publishSnapshot', args: [b.root, BigInt(Number(b.taken_at) || 0), uri, String(b.label || 'Snapshot')] }) };
+      const next = Number(await read.ledger('snapshotCount')) + 1;
+      const checked = await checkPublish({ id: next, root: b.root, uri });
+      if (checked.error) return checked;
+      return ledgerTx('publishSnapshot', [b.root, BigInt(checked.taken_at), BigInt(checked.free_mints), uri, checked.label]);
+    }
+    /* a corrected table, before the first claim: the chain refuses it after */
+    case 'correct': {
+      const n = BigInt(Number(b.snapshot) || 0);
+      forgetSnapshot();
+      const [t, published] = await Promise.all([tableFor(Number(n)).catch(() => null), read.ledger('snapshot', [n])]);
+      if (!t || t.rebuilt !== published.root) return { error: `the site has no table for snapshot ${n} that rebuilds to its root. Deploy it first.` };
+      if (owedBy(t.rows) !== Number(published.freeMints)) return { error: `snapshot ${n} holds back ${published.freeMints} free mints and its table owes ${owedBy(t.rows)}. It can't be used: publish it again.` };
+      return ledgerTx('setClaimSnapshot', [n]);
+    }
+    case 'extend': {
+      const days = Number(b.days);
+      if (!Number.isInteger(days) || days < 1 || days > MAX_EXTEND_DAYS) return { error: `1 to ${MAX_EXTEND_DAYS} days` };
+      const deadline = Number(await read.ledger('claimDeadline'));
+      return ledgerTx('extendClaim', [BigInt(Math.max(deadline, Math.floor(Date.now() / 1000)) + days * 86400)]);
     }
     case 'freeze': {
       const v = await consoleView();

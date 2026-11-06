@@ -5,10 +5,18 @@
 import { parseAbi } from 'viem';
 import sitesFile from '../../data/strip-sites.json' with { type: 'json' };
 import { pipe } from './kv.js';
-import { ABI, chain, deployment, read } from './strips.js';
+import { ABI, chain, deployment, read, storeKey } from './strips.js';
 import { attributesOf, traitsOf, DISPLAY_NAMES, RHYTHM_NAMES } from '../../strips-design.js';
 
-export const K = { gallery: 'strips:gallery', cursor: 'strips:cursor', dirty: 'strips:dirty', arDay: 'strips:ar-day', tweeted: (kind, id) => `strips:tweeted:${kind}:${id}` };
+export const K = {
+  get gallery() { return storeKey('gallery'); },
+  get cursor() { return storeKey('cursor'); },
+  get dirty() { return storeKey('dirty'); },
+  get arDay() { return storeKey('ar-day'); },
+  get later() { return storeKey('tweet-later'); },
+  get lock() { return storeKey('cron-lock'); },
+  tweeted: (kind, id) => storeKey(`tweeted:${kind}:${id}`),
+};
 const OWNER = parseAbi(['function ownerOf(uint256) view returns (address)']);
 
 /* The same sum as StripsExtension.taoOf, for a list that isn't rebuilt every
@@ -25,11 +33,17 @@ export function taoNow({ held_since: since, redeemed_at: at }, now = Math.floor(
 async function one(id) {
   const d = deployment();
   const big = BigInt(id);
+  /* a token the core minted by itself sits in the numbering with no design here */
+  const t = await read.extension('tokenOf', [big]);
+  if (!t.mintedAt) return null;
   /* only ownerOf may fail, and only for a burned token. Anything else is the
      network, and a list with holes in it is worse than no new list. */
-  const [t, design, seed, redeemedAt, street, owner] = await Promise.all([
-    read.extension('tokenOf', [big]), read.extension('designOf', [big]), read.extension('seedOf', [big]), read.extension('redeemedAt', [big]), read.extension('streetOf', [big]),
-    chain().readContract({ address: d.core, abi: OWNER, functionName: 'ownerOf', args: [big] }).catch(() => null),
+  const [design, seed, redeemedAt, street, owner] = await Promise.all([
+    read.extension('designOf', [big]), read.extension('seedOf', [big]), read.extension('redeemedAt', [big]), read.extension('streetOf', [big]),
+    chain().readContract({ address: d.core, abi: OWNER, functionName: 'ownerOf', args: [big] }).catch((e) => {
+      if (e.walk && e.walk((x) => x.name === 'ContractFunctionRevertedError')?.name === 'ContractFunctionRevertedError') return null;
+      throw e;
+    }),
   ]);
   const word = seed ? `0x${seed.toString(16).padStart(64, '0')}` : '';
   const traits = word ? traitsOf(word) : null;
@@ -46,7 +60,7 @@ export async function allTokens() {
   const out = [];
   for (let id = 1; id <= last; id += 25) {
     const ids = Array.from({ length: Math.min(25, last - id + 1) }, (_, i) => id + i);
-    out.push(...(await Promise.all(ids.map(one))));
+    out.push(...(await Promise.all(ids.map(one))).filter(Boolean));
   }
   return out.sort((a, b) => (b.no ? 1 : 0) - (a.no ? 1 : 0) || (a.no - b.no) || a.id - b.id);
 }

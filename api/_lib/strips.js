@@ -16,9 +16,13 @@ import { LENGTH, WIDTH } from './commission-spec.js';
 import { packStrips, decodeDesign } from '../../strips-design.js';
 
 export const PRICE_WEI = 9_000_000_000_000_000n;
+export const PUBLIC_CAP = 621;
 export const STANDARD_RED_LINE = 16;
 export const COLOURS = { min: 3, max: 12 };
 export const VOUCHER_MINUTES = 30;
+/* A multi-sig gathers its signatures by hand. A voucher only says a design came
+   from the Maker, so a long one gives nothing away. */
+export const CONTRACT_VOUCHER_MINUTES = 24 * 60;
 
 /* What each amount is worth against the others. */
 const AMOUNTS = { less: 1, even: 2, more: 4 };
@@ -26,6 +30,8 @@ const ORIENT = ['portrait', 'landscape'];
 const HEX = /^#[0-9A-F]{6}$/;
 
 export const networkName = () => (process.env.STRIPS_NETWORK === 'sepolia' ? 'sepolia' : 'mainnet');
+/* A rehearsal can share a store with mainnet and touch none of its keys. */
+export const storeKey = (name) => `strips:${networkName() === 'mainnet' ? '' : `${networkName()}:`}${name}`;
 /* STRIPS_DEPLOYMENT overrides the file: a local chain in the tests, and a
    Sepolia run before anything's worth committing. */
 export const deployment = () => (process.env.STRIPS_DEPLOYMENT ? JSON.parse(process.env.STRIPS_DEPLOYMENT) : config.networks[networkName()]);
@@ -56,6 +62,10 @@ export const ABI = parseAbi([
   'function claimDeadline() view returns (uint64)',
   'function claimSnapshot() view returns (uint256)',
   'function claimed(uint256, address) view returns (uint256)',
+  'function unclaimedReserve() view returns (uint256)',
+  'function totalClaimed() view returns (uint256)',
+  'function snapshotCount() view returns (uint256)',
+  'function snapshot(uint256) view returns ((bytes32 root, uint64 takenAt, uint64 publishedAt, uint64 claimUntil, uint64 freeMints, string arweaveUri, string label))',
   'function ownerOf(uint256) view returns (address)',
 ]);
 
@@ -125,13 +135,13 @@ const VOUCHER_TYPES = {
 export const voucherConfigured = () => /^0x[0-9a-fA-F]{64}$/.test(process.env.STRIPS_VOUCHER_KEY || '');
 
 /** Signs that this design came from the Maker, for this wallet, for a while. */
-export async function signVoucher({ to, hash, now = Math.floor(Date.now() / 1000) }) {
+export async function signVoucher({ to, hash, now = Math.floor(Date.now() / 1000), minutes = VOUCHER_MINUTES }) {
   const account = privateKeyToAccount(process.env.STRIPS_VOUCHER_KEY);
   const message = {
     to: getAddress(to),
     designHash: hash,
     nonce: BigInt(`0x${randomBytes(16).toString('hex')}`),
-    deadline: BigInt(now + VOUCHER_MINUTES * 60),
+    deadline: BigInt(now + minutes * 60),
   };
   const d = deployment();
   const signature = await account.signTypedData({
@@ -152,7 +162,8 @@ export async function prepareMint(input, { taken = (hash) => onExtension('design
   if (!voucherConfigured()) return { status: 503, error: 'not minting yet' };
   const { design, hash } = designOf(spec);
   if (await taken(hash)) return { status: 409, error: 'that design has been minted', taken: true };
-  const { voucher, signature } = await signVoucher({ to: input.to, hash, now });
+  const code = await chain().getCode({ address: getAddress(input.to) }).catch(() => null);
+  const { voucher, signature } = await signVoucher({ to: input.to, hash, now, minutes: code && code !== '0x' ? CONTRACT_VOUCHER_MINUTES : VOUCHER_MINUTES });
   const v = { ...voucher, nonce: BigInt(voucher.nonce), deadline: BigInt(voucher.deadline) };
   const free = input.free || null;
   const data = free

@@ -21,6 +21,15 @@ export async function storiesFor(id) {
     .sort((a, b) => a.at[0] - b.at[0] || a.at[1] - b.at[1]);
 }
 
+/** Ask OpenSea to read a token again. The core has no ERC-4906, so nothing else
+    tells a marketplace a word has landed or a view has changed. */
+export async function refreshOpenSea(id) {
+  const key = process.env.OPENSEA_API_KEY;
+  if (!deployed() || !key) return false;
+  const r = await fetch(`https://api.opensea.io/api/v2/chain/ethereum/contract/${deployment().core}/nfts/${id}/refresh`, { method: 'POST', headers: { 'x-api-key': key }, signal: AbortSignal.timeout(6000) }).catch(() => null);
+  return Boolean(r && r.ok);
+}
+
 /** The strips a token paints as, at its own width, for a redemption order. */
 export function stripsOfToken(hex) {
   const d = decodeDesign(hex);

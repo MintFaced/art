@@ -15,5 +15,9 @@ fs_permissions = [{ access = "read", path = "./build" }, { access = "read", path
 [fuzz]
 runs = 512
 
+[etherscan]
+mainnet = { key = "${ETHERSCAN_API_KEY}", chain = 1 }
+sepolia = { key = "${ETHERSCAN_API_KEY}", chain = 11155111 }
+
 [profile.fork]
 match_path = "test/fork/*"

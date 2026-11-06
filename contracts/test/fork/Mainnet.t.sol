@@ -65,7 +65,7 @@ contract MainnetForkTest is Test {
         );
         subId = ICoordinator(COORDINATOR).createSubscription();
         ICoordinator(COORDINATOR).fundSubscriptionWithNative{value: 5 ether}(subId);
-        ledger = new TaoLedger(MINTFACE);
+        ledger = new TaoLedger(MINTFACE, 30 days);
         bytes[] memory parts = new bytes[](1);
         parts[0] = vm.readFileBinary("build/engine.js.gz");
         renderer = new StripsRenderer(new StripsEngine(parts));
@@ -88,6 +88,7 @@ contract MainnetForkTest is Test {
         uint256[] memory bps = new uint256[](1);
         bps[0] = 500;
         core.setRoyalties(to, bps);
+        ledger.publishSnapshot(bytes32(uint256(1)), uint64(block.timestamp), 0, "ar://table", "Snapshot 1");
         ext.setMintOpen(true);
         vm.stopPrank();
     }

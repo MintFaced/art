@@ -6,7 +6,7 @@
  */
 import { createServer } from 'node:http';
 import { readFileSync } from 'node:fs';
-import { parseEther, getAddress } from 'viem';
+import { decodeFunctionData, parseEther, getAddress } from 'viem';
 import { mnemonicToAccount } from 'viem/accounts';
 import { createWalletClient, http } from 'viem';
 import { foundry } from 'viem/chains';
@@ -101,18 +101,138 @@ try {
   is('tiers: 99,999 / 100,000 / 419,999 / 420,000', allowances([99999, 100000, 419999, 420000].map((t, i) => ({ wallet: `0x${String(i + 1).padStart(40, '0')}`, tao_total: t }))).map((r) => r.free_mints).sort(), [0, 1, 1, 2]);
 
   const root = rootOf(table);
-  await send(ledger, 'publishSnapshot', [root, 1795000000n, 'ar://table', 'Snapshot 1']);
+  const owed = BigInt(table.reduce((n, r) => n + r.free_mints, 0));
+  await send(ledger, 'publishSnapshot', [root, 1795000000n, owed, 'ar://table', 'Snapshot 1, corrected']);
+  await send(ledger, 'setClaimSnapshot', [2n]);
   const buyerRow = find(buyerAccount.address);
   let checked = 0, bad = 0;
   for (const row of [buyerRow, ...table.filter((_, i) => i % 97 === 0)]) {
-    const ok = await client.readContract({ ...ledger, functionName: 'verify', args: [1n, row.wallet, BigInt(row.tao_total), BigInt(row.free_mints), proofOf(table, row)] });
+    const ok = await client.readContract({ ...ledger, functionName: 'verify', args: [2n, row.wallet, BigInt(row.tao_total), BigInt(row.free_mints), proofOf(table, row)] });
     checked += 1; if (!ok) bad += 1;
   }
   is(`${checked} proofs from ${table.length} real rows verify on-chain`, bad, 0);
-  is('a forged row doesn\'t', await client.readContract({ ...ledger, functionName: 'verify', args: [1n, buyerRow.wallet, BigInt(buyerRow.tao_total + 1), BigInt(buyerRow.free_mints), proofOf(table, buyerRow)] }), false);
+  is('a forged row doesn\'t', await client.readContract({ ...ledger, functionName: 'verify', args: [2n, buyerRow.wallet, BigInt(buyerRow.tao_total + 1), BigInt(buyerRow.free_mints), proofOf(table, buyerRow)] }), false);
 
-  server = createServer((_, res) => { res.setHeader('content-type', 'application/json'); res.end(JSON.stringify({ rows: table })); }).listen(0);
-  process.env.STRIPS_SNAPSHOT_URL = `http://127.0.0.1:${server.address().port}/`;
+  /* the file the site reads, and the copy on Arweave */
+  let site = null;
+  let arweave = null;
+  let audited = null;
+  server = createServer((req, res) => {
+    const body = req.url.startsWith('/ar/') ? arweave : req.url === '/audit' ? audited : site;
+    res.statusCode = body ? 200 : 404;
+    res.setHeader('content-type', 'application/json');
+    res.end(JSON.stringify(body || {}));
+  }).listen(0);
+  await new Promise((ok) => server.once('listening', ok));
+  process.env.STRIPS_SNAPSHOT_URL = `http://127.0.0.1:${server.address().port}/table`;
+  process.env.STRIPS_SNAPSHOT_AUDIT_URL = `http://127.0.0.1:${server.address().port}/audit`;
+  process.env.STRIPS_ARWEAVE_GATEWAY = `http://127.0.0.1:${server.address().port}/ar`;
+
+  const { forgetSnapshot } = await import('../../api/_lib/strips-snapshot.js');
+  const { GET: route, POST: routePost } = await import('../../api/strips.js');
+  const prepare = (body) => routePost(new Request('http://x/api/strips/mint/prepare', { method: 'POST', body: JSON.stringify(body) }));
+  const state = async () => (await route(new Request('http://x/api/strips/state'))).json();
+  const stranger = '0x0000000000000000000000000000000000001234';
+  const row = () => ({ rows: table, root, id: 2, taken_at: 1795000000, label: 'Snapshot 1, corrected' });
+
+  console.log('\n— fail closed: no proofs, no price —');
+  forgetSnapshot();
+  is('no table deployed: the free route says it can\'t tell', (await freeMintsFor(buyerAccount.address)).unavailable, true);
+  is('and says so in its status', (await route(new Request(`http://x/api/strips/free?wallet=${buyerAccount.address}`))).status, 503);
+  is('the state says nobody can be sold to', (await state()).claims_ok, false);
+  is('a paid voucher is refused to someone owed a free mint', (await prepare(spec(20))).status, 503);
+  is('and to a stranger: the rule is for everyone', (await prepare({ ...spec(21), to: stranger })).status, 503);
+
+  site = { rows: table.slice(1) };
+  forgetSnapshot();
+  is('a table that doesn\'t rebuild to the ledger\'s root is no table', [(await freeMintsFor(buyerAccount.address)).unavailable, (await state()).claims_ok], [true, false]);
+  site = row();
+  site.root = root; site.rows = [...table].reverse().slice(1);
+  forgetSnapshot();
+  is('whatever its own root field claims', (await state()).claims_ok, false);
+
+  /* a figure that doesn't match, from anything but the console */
+  await send(ledger, 'publishSnapshot', [root, 1795000000n, owed - 1n, 'ar://low', 'understated']);
+  await send(ledger, 'setClaimSnapshot', [3n]);
+  site = row();
+  forgetSnapshot();
+  is('a ledger holding back less than the table owes pauses the mint', [(await state()).claims_ok, (await freeMintsFor(buyerAccount.address)).unavailable], [false, true]);
+  await send(ledger, 'publishSnapshot', [root, 1795000000n, owed + 1n, 'ar://high', 'overstated']);
+  await send(ledger, 'setClaimSnapshot', [4n]);
+  forgetSnapshot();
+  is('and so does one holding back more', (await state()).claims_ok, false);
+  await send(ledger, 'setClaimSnapshot', [2n]);
+  forgetSnapshot();
+
+  const open = await state();
+  is('with the right table, the mint is on', [open.claims_ok, open.claim_live], [true, true]);
+  is('the reserve is held back from what\'s for sale', [open.reserved, open.paid_left], [Number(owed), 621 - open.public_minted - Number(owed)]);
+  is('someone owed a free mint can\'t be sold one', (await prepare(spec(22))).status, 409);
+  is('a stranger can buy', (await prepare({ ...spec(23), to: stranger })).status, 200);
+  is('a free mint is prepared for who it\'s owed to', (await prepare({ ...spec(24), free: true })).status, 200);
+  is('and only them', (await prepare({ ...spec(25), to: stranger, free: true })).status, 403);
+
+  {
+    const realNow = Date.now;
+    Date.now = () => realNow() + 31 * 86400_000;
+    site = null;
+    forgetSnapshot();
+    const closed = await state();
+    is('once the claim has closed the table isn\'t needed', [closed.claims_ok, closed.claim_live, closed.reserved === Number(owed)], [true, false, true]);
+    is('nobody is owed anything, so a price is fine', (await prepare({ ...spec(26), to: stranger })).status, 200);
+    Date.now = realNow;
+    site = row();
+    forgetSnapshot();
+  }
+
+  console.log('\n— publishing, checked —');
+  const { txFor } = await import('../../api/_lib/strips-console.js');
+  const nextId = 5;
+  const next = { rows: table, root, id: nextId, taken_at: 1795000000, label: 'Snapshot 5' };
+  const publish = (over = {}) => txFor('snapshot', { root, uri: 'ar://abc', ...over });
+  const refused = async (name, got, re) => is(name, re.test(String((await got).error)), true);
+  site = null;
+  await refused('no table on the site, nothing to sign', publish(), /isn't on the site/);
+  site = { ...next, id: 7 };
+  await refused('a table with the wrong number', publish(), /snapshot 7/);
+  site = { ...next, root: `0x${'22'.repeat(32)}` };
+  await refused('a table that doesn\'t rebuild to its own root', publish({ root: `0x${'22'.repeat(32)}` }), /doesn't rebuild/);
+  site = next;
+  await refused('a root that isn\'t the table\'s', publish({ root: `0x${'33'.repeat(32)}` }), /isn't the deployed table/);
+  site = { ...next, taken_at: 0 };
+  await refused('a table with no date', publish(), /no taken_at/);
+  site = next;
+  await refused('no audit on the site', publish(), /Run the audit/);
+  audited = { ok: true, root: `0x${'33'.repeat(32)}` };
+  await refused('an audit of another table', publish(), /isn't a pass for this table/);
+  audited = { ok: false, root };
+  await refused('an audit that didn\'t pass', publish(), /isn't a pass for this table/);
+  audited = { ok: true, root };
+  await refused('nothing on Arweave yet', publish(), /couldn't read/);
+  arweave = { rows: table.slice(1) };
+  await refused('something else on Arweave', publish(), /doesn't rebuild/);
+  arweave = { rows: table };
+  const checkedTx = await publish();
+  const signed = decodeFunctionData({ abi: ledger.abi, data: checkedTx.data });
+  is('with everything right, the ledger gets what the table says', [signed.functionName, signed.args[0], signed.args[1], signed.args[2], signed.args[3], signed.args[4]], ['publishSnapshot', root, 1795000000n, owed, 'ar://abc', 'Snapshot 5']);
+  is('and it goes to the ledger', checkedTx.to, ledger.address);
+
+  site = row();
+  forgetSnapshot();
+  is('the deadline moves in days, within reason', [(await txFor('extend', { days: 0 })).error, (await txFor('extend', { days: 91 })).error], ['1 to 90 days', '1 to 90 days']);
+  const longer = await txFor('extend', { days: 10 });
+  const deadlineWas = await read.ledger('claimDeadline');
+  await client.waitForTransactionReceipt({ hash: await chain.wallet.sendTransaction({ to: longer.to, data: longer.data }) });
+  is('and it moves', (await read.ledger('claimDeadline')) - deadlineWas, 864000n);
+  await refused('a correction needs its table on the site', txFor('correct', { snapshot: 1 }), /no table for snapshot 1/);
+  is('the claim can be pointed at one that has it', (await txFor('correct', { snapshot: 2 })).to, ledger.address);
+  await refused('but not at one whose figure is wrong', txFor('correct', { snapshot: 3 }), /holds back/);
+  is('a contract wallet gets a voucher long enough to gather its signatures', Number((await prepareMint({ ...spec(30), to: ext.address })).voucher.deadline) - Math.floor(Date.now() / 1000) > 23 * 3600, true);
+  is('an ordinary wallet doesn\'t', Number((await prepareMint({ ...spec(31), to: stranger })).voucher.deadline) - Math.floor(Date.now() / 1000) <= 1800, true);
+
+  console.log('\n— free, spent —');
+  site = row();
+  forgetSnapshot();
   const free = await freeMintsFor(buyerAccount.address);
   is('the route says two left', [free.free_mints, free.left], [2, 2]);
   is('a vault is told where its allowance sits', (await freeMintsFor(vaultAccount.address)).on_hot_wallet, buyerAccount.address);
@@ -120,7 +240,6 @@ try {
   const f = await prepareMint(spec(4));
   const hf = await buyer.writeContract({ ...ext, functionName: 'mintFree', args: [f.design, voucherArg(f), f.signature, BigInt(buyerRow.tao_total), BigInt(buyerRow.free_mints), free.proof] });
   is('the free mint goes through at no cost', (await client.waitForTransactionReceipt({ hash: hf })).status, 'success');
-  const { forgetSnapshot } = await import('../../api/_lib/strips-snapshot.js');
   forgetSnapshot();
   is('and the route counts it', (await freeMintsFor(buyerAccount.address)).left, 1);
   is('supply', await read.extension('publicMinted'), 3n);

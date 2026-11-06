@@ -5,7 +5,7 @@
  */
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
-import { parseEther } from 'viem';
+import { decodeEventLog, parseEther } from 'viem';
 import { privateKeyToAccount, mnemonicToAccount } from 'viem/accounts';
 import { startChain, deployStack } from './chain.mjs';
 
@@ -26,7 +26,7 @@ const kv = createServer((req, res) => {
     const cmds = JSON.parse(Buffer.concat(chunks));
     const out = cmds.map(([op, key, ...rest]) => {
       if (op === 'GET') return { result: KV.has(key) ? KV.get(key) : null };
-      if (op === 'SET') { KV.set(key, rest[0]); return { result: 'OK' }; }
+      if (op === 'SET') { if (rest.includes('NX') && KV.has(key)) return { result: null }; KV.set(key, rest[0]); return { result: 'OK' }; }
       if (op === 'INCR') { const n = Number(KV.get(key) || 0) + 1; KV.set(key, String(n)); return { result: n }; }
       if (op === 'LPUSH') { KV.set(key, JSON.stringify([rest[0], ...JSON.parse(KV.get(key) || '[]')])); return { result: 1 }; }
       if (op === 'DEL') { KV.delete(key); return { result: 1 }; }
@@ -52,7 +52,7 @@ try {
   process.env.STRIPS_DEPLOYMENT = JSON.stringify({ chain_id: 31337, core: core.address, extension: ext.address, ledger: ledger.address, renderer: s.renderer.address, first_block: 0 });
 
   const { draftFor, saveDesign, signDesign, txFor, consoleView, sizeOfSite, setCheck } = await import('../../api/_lib/strips-console.js');
-  const { prepareMint, read } = await import('../../api/_lib/strips.js');
+  const { checkMintSpec, designOf, prepareMint, read } = await import('../../api/_lib/strips.js');
   const { run } = await import('../../api/cron/strips.js');
   const { addToRegister, readGallery, K } = await import('../../api/_lib/strips-index.js');
   const { tokenFor, storiesFor } = await import('../../api/_lib/strips-token.js');
@@ -91,19 +91,28 @@ try {
   await client.waitForTransactionReceipt({ hash: await buyer.sendTransaction({ to: p.tx.to, data: p.tx.data, value: parseEther('0.009') }) });
   const said = [];
   let refuse = 1;
-  const deps = { card: async () => 'media', tweet: async (text, media) => { if (refuse-- > 0) throw new Error('x said no'); said.push([text, media]); }, publish: async (m) => { deps.manifest = m; } };
+  const refreshed = [];
+  const deps = { depth: 0n, card: async () => 'media', tweet: async (text, media) => { if (refuse-- > 0) throw new Error('x said no'); said.push([text, media]); }, publish: async (m) => { deps.manifest = m; }, refresh: async (id) => { refreshed.push(id); } };
   await run(deps);
   is('nothing tweets while a token is tuning', said, []);
   await send(coordinator, 'fulfillRandomWordsWithOverride', [1n, ext.address, [1n << 100n]]);
   await send(coordinator, 'fulfillRandomWordsWithOverride', [2n, ext.address, [0xABCDEFn << 64n]]);
-  const failed = await run(deps).catch((e) => e.message);
-  is('a tweet X refuses stops the run', failed, 'x said no');
+  const failed = await run(deps);
+  is('X saying no doesn\'t stop the index', [failed.rebuilt, failed.later, said.length], [true, 2, 0]);
+  is('the gallery has the word even so', (await readGallery()).find((t) => t.id === 2).display !== null, true);
+  is('and OpenSea is asked to read each token again', refreshed, [1, 2]);
   await run(deps);
-  is('and is sent next time, every one once', said.map((x) => x[0].split(' · ').slice(0, 2).join(' · ')), ['MINTED · //STRIPS #1', 'MINTED · //STRIPS #2']);
+  is('the tweets go out next time, in order, every one once', said.map((x) => x[0].split(' · ').slice(0, 2).join(' · ')), ['MINTED · //STRIPS #1', 'MINTED · //STRIPS #2']);
   is('in the brief\'s shape', /^MINTED · \/\/STRIPS #2 · [A-Za-z&\- ]+ · (CALM|RESTLESS|HAYWIRE)$/.test(said[1][0]), true);
   is('with the still as the card', said[1][1], ['media']);
   await run(deps);
   is('a third run posts nothing', said.length, 2);
+  /* a tweet X will never take isn't offered for ever */
+  KV.set(K.later, JSON.stringify([{ kind: 'redeemed', id: 1 }]));
+  const refused = { ...deps, tweet: async () => { throw Object.assign(new Error('x tweet 403'), { retryable: false }); } };
+  is('a tweet X will never take is dropped', (await run(refused)).later, 0);
+  is('and marked, so it isn\'t tried again', KV.get(K.tweeted('redeemed', 1)), 'refused');
+
 
   /* a sale goes out through the wire, which fetches its picture by URL */
   const { GET: route } = await import('../../api/strips.js');
@@ -163,6 +172,13 @@ try {
   addToRegister(metas, new Map(), [{ id: 7 }], { core: '0xABC', first_block: 9 }, 'https://site');
   is('its sale tweet uses that picture', metas.get('0xabc|7').image, 'https://site/api/strips/card/7');
 
+  console.log('\n— a token the core minted by itself —');
+  const { allTokens } = await import('../../api/_lib/strips-index.js');
+  await send(core, 'mintBase', [owner.address]);
+  const q = await prepareMint({ to: buyerAccount.address, length_cm: 120, width_cm: 60, orientation: 'landscape', colours: [{ hex: '#223344' }, { hex: '#556677' }, { hex: '#8899AA' }] });
+  await client.waitForTransactionReceipt({ hash: await buyer.sendTransaction({ to: q.tx.to, data: q.tx.data, value: parseEther('0.009') }) });
+  is('the list steps over it and keeps going', (await allTokens()).map((t) => t.id), [1, 2, 4]);
+
   console.log('\n— the console is behind the password —');
   const admin = await import('../../api/strips-admin.js');
   is('no session, no console', (await admin.GET(new Request('http://x/api/strips-admin'))).status, 401);
@@ -195,6 +211,110 @@ try {
   is('and filters', await page.locator('.tok').count(), 1);
   if (SHOTS) await page.locator('#strips').screenshot({ path: `${SHOTS}/gallery.png` });
   is('no page errors from //STRIPS', errors.filter((m) => /strip/i.test(m)), []);
+
+  console.log('\n— a rush —');
+  const sleep = (ms) => new Promise((ok) => { setTimeout(ok, ms); });
+  const slow = [];
+  KV.set(K.later, JSON.stringify(Array.from({ length: 8 }, (_, i) => ({ kind: 'refresh', id: i + 100 }))));
+  const first = await run({ ...deps, budget: 120, refresh: async (id) => { await sleep(50); slow.push(id); } });
+  is('a run stops at its budget with the rest saved', [first.later > 0, slow.length < 8, JSON.parse(KV.get(K.later)).length === first.later], [true, true, true]);
+  const second = await run({ ...deps, refresh: async (id) => { slow.push(id); } });
+  is('the next one finishes the list, each job once', [second.later, [...slow].sort((x, y) => x - y)], [0, [100, 101, 102, 103, 104, 105, 106, 107]]);
+
+  console.log('\n— a quiet mint, and a run stopped halfway —');
+  const cursorWas = KV.get(K.cursor);
+  await send(ext, 'setMintOpen', [false]);
+  const spec = checkMintSpec({ length_cm: 120, width_cm: 60, orientation: 'landscape', colours: [{ hex: '#101112' }, { hex: '#202122' }, { hex: '#303132' }] }).spec;
+  const stopped = await sign(await txFor('twin', { design: designOf(spec).design, to: owner.address }));
+  const minted = stopped.logs.map((l) => { try { return decodeEventLog({ abi: ext.abi, data: l.data, topics: l.topics }); } catch { return null; } }).find((e) => e && e.eventName === 'Minted');
+  const quietWord = 7n << 90n;
+  await send(coordinator, 'fulfillRandomWordsWithOverride', [minted.args.requestId, ext.address, [quietWord]]);
+  const tweeted = said.length;
+  KV.delete(K.gallery);
+  /* Vercel saves nothing for a run it stops, so the order of the work is what protects it */
+  const killed = await run({ ...deps, refresh: async () => { throw new Error('stopped at 60 seconds'); } }).catch((e) => e.message);
+  is('a run stopped in the slow work', killed, 'stopped at 60 seconds');
+  is('has already moved the cursor', BigInt(KV.get(K.cursor)) > BigInt(cursorWas), true);
+  is('and built the gallery', (await readGallery()).some((t) => t.id === Number(minted.args.id)), true);
+  is('and left the work on the list, so the next run isn\'t starting over', JSON.parse(KV.get(K.later)), [{ kind: 'refresh', id: Number(minted.args.id) }]);
+  await run(deps);
+  is('a word that lands while the mint is closed isn\'t tweeted', said.length, tweeted);
+  await send(ext, 'setMintOpen', [true]);
+  await run(deps);
+  is('nor when it opens', said.length, tweeted);
+  is('OpenSea is still asked to read it', refreshed.at(-1), Number(minted.args.id));
+
+  KV.set(K.later, JSON.stringify([{ kind: 'minted', id: Number(minted.args.id), word: `0x${quietWord.toString(16).padStart(64, '0')}` }]));
+  const stuck = await run({ ...deps, timeout: 40, tweet: () => new Promise(() => {}) });
+  is('a hung X doesn\'t hold the run, and the tweet waits its turn', stuck.later, 1);
+  KV.set(K.later, JSON.stringify([{ kind: 'refresh', id: 5 }]));
+  let asked = 0;
+  for (let i = 0; i < 4; i += 1) await run({ ...deps, refresh: async () => { asked += 1; return false; } });
+  is('a failed refresh is tried three times, then let go', [asked, JSON.parse(KV.get(K.later))], [3, []]);
+
+  console.log('\n— when things go wrong —');
+  const quietId = Number(minted.args.id);
+  const word = `0x${quietWord.toString(16).padStart(64, '0')}`;
+  const queued = () => JSON.stringify([{ kind: 'minted', id: quietId, word }, { kind: 'redeemed', id: quietId }]);
+  const noKeys = Object.assign(new Error('x tweet 401'), { status: 401, retryable: false, credentials: true });
+  KV.set(K.later, queued());
+  const keyless = await run({ ...deps, tweet: async () => { throw noKeys; } });
+  is('keys X won\'t take burn nothing: the whole list waits', [keyless.later, KV.has(K.tweeted('minted', quietId)), KV.has(K.tweeted('redeemed', quietId))], [2, false, false]);
+  is('and the run says so', keyless.failed.some((f) => /refused the keys/.test(f)), true);
+  const sent = [];
+  process.env.X_BOT_PAUSED = '1';
+  const paused = await run({ ...deps, tweet: async (t) => { sent.push(t); } });
+  delete process.env.X_BOT_PAUSED;
+  is('X_BOT_PAUSED stops the tweets and the list keeps them', [sent, paused.later], [[], 2]);
+  KV.set(K.dirty, '1');
+  KV.delete(K.arDay);
+  const broken = await run({ ...deps, tokens: async () => { throw new Error('r2 is down'); }, publish: async () => { throw new Error('r2 is down'); }, tweet: async (t) => { sent.push(t); } });
+  is('a broken manifest or gallery doesn\'t stop the list', [sent.length, broken.later], [2, 0]);
+  is('and it says what broke, for the next run to try', [broken.failed.length, KV.has(K.dirty), KV.has(K.arDay)], [2, true, false]);
+  await run(deps);
+
+  KV.delete(K.tweeted('minted', quietId));
+  KV.set(K.later, queued());
+  const repeat = await run({ ...deps, tweet: async () => { throw Object.assign(new Error('x tweet 403'), { status: 403, retryable: false, duplicate: true }); } });
+  is('words X already has count as sent', [KV.get(K.tweeted('minted', quietId)), repeat.tweets], ['1', 0]);
+
+  let cut = false;
+  KV.delete(K.tweeted('minted', quietId));
+  KV.set(K.later, JSON.stringify([{ kind: 'minted', id: quietId, word }]));
+  await run({ ...deps, timeout: 40, tweet: (_t, _m, signal) => new Promise((_, no) => signal.addEventListener('abort', () => { cut = true; no(new Error('aborted')); })) });
+  is('a call that runs out of time is really stopped', cut, true);
+
+  KV.set(K.lock, '1');
+  const held = await run({ ...deps, tweet: async (t) => { sent.push(t); } });
+  is('a second run stands aside', [Boolean(held.skipped), sent.length], [true, 2]);
+  KV.delete(K.lock);
+  await run({ ...deps, tweet: async (t) => { sent.push(t); } });
+  is('and the lock goes when a run ends', [sent.length, KV.has(K.lock)], [3, false]);
+
+  KV.set(K.later, JSON.stringify([{ kind: 'minted', id: 9999, word }, { kind: 'redeemed', id: quietId }]));
+  KV.delete(K.tweeted('redeemed', quietId));
+  const stray = await run({ ...deps, tweet: async (t) => { sent.push(t); } });
+  is('a job that can\'t be read waits and holds nothing up', [stray.later, sent.length, stray.failed.length > 0], [1, 4, true]);
+  KV.set(K.later, '[]');
+
+  const home = K.cursor;
+  process.env.STRIPS_NETWORK = 'sepolia';
+  const rehearsal = [K.cursor, K.later, K.tweeted('minted', 1), K.gallery];
+  delete process.env.STRIPS_NETWORK;
+  is('a rehearsal has keys of its own', rehearsal, ['strips:sepolia:cursor', 'strips:sepolia:tweet-later', 'strips:sepolia:tweeted:minted:1', 'strips:sepolia:gallery']);
+  is('and mainnet\'s are as they were', [home, K.tweeted('minted', 1)], ['strips:cursor', 'strips:tweeted:minted:1']);
+
+  /* what X says, read the way X says it */
+  const { tweet: send1 } = await import('../../api/_lib/x.js');
+  const realFetch = globalThis.fetch;
+  for (const k of ['X_API_KEY', 'X_API_SECRET', 'X_ACCESS_TOKEN', 'X_ACCESS_SECRET']) process.env[k] = process.env[k] || 'test';
+  const answer = (status, body) => { globalThis.fetch = async () => new Response(JSON.stringify(body), { status }); return send1('words').catch((e) => e); };
+  const dupe = await answer(403, { detail: 'You are not allowed to create a Tweet with duplicate content.' });
+  const denied = await answer(403, { detail: 'Forbidden' });
+  const gone = await answer(401, { detail: 'Unauthorized' });
+  const wrong = await answer(400, { detail: 'too long' });
+  globalThis.fetch = realFetch;
+  is('X\'s answers are told apart', [[dupe.duplicate, dupe.credentials], [denied.duplicate, denied.credentials], [gone.duplicate, gone.credentials], [wrong.duplicate, wrong.credentials, wrong.retryable]], [[true, false], [false, true], [false, true], [false, false, false]]);
 } finally {
   if (browser) await browser.close();
   if (site) site.close();

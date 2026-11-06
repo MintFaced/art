@@ -41,7 +41,7 @@ export async function deployRenderer(chain) {
 
 /** Everything but the wiring a test wants to do itself: the real Manifold core,
     Chainlink's coordinator mock, the ledger, the renderer and the extension. */
-export async function deployStack(chain, { signer, estate = '0x6e420B64bb329bE84a6627c68A7BdFf825139773', payout = '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180' }) {
+export async function deployStack(chain, { signer, estate = '0x6e420B64bb329bE84a6627c68A7BdFf825139773', payout = '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180', snapshot = { root: `0x${'11'.repeat(32)}`, free_mints: 0n } }) {
   const { client, wallet, deploy } = chain;
   const owner = wallet.account;
   const core = await deploy('ERC721Creator', ['//STRIPS', 'STRIPS']);
@@ -51,14 +51,16 @@ export async function deployStack(chain, { signer, estate = '0x6e420B64bb329bE84
   const subId = BigInt(rcpt.logs[0].topics[1]);
   await send(coordinator, 'fundSubscription', [subId, parseEther('1000')]);
   await send(coordinator, 'fundSubscriptionWithNative', [subId], { value: parseEther('10') });
-  const ledger = await deploy('TaoLedger', [owner.address]);
+  const ledger = await deploy('TaoLedger', [owner.address, 2592000n]);
   const { renderer } = await deployRenderer(chain);
-  const delegates = await deploy('TaoLedger', [owner.address]); // any contract; nobody delegates here
+  const delegates = await deploy('TaoLedger', [owner.address, 2592000n]); // any contract; nobody delegates here
   const ext = await deploy('StripsExtension', [core.address, ledger.address, delegates.address, estate, payout, signer, renderer.address, coordinator.address,
     { keyHash: `0x${'01'.padStart(64, '0')}`, subId, confirmations: 3, callbackGas: 100000, native: true }]);
   await send(coordinator, 'addConsumer', [subId, ext.address]);
   await send(ledger, 'setMinter', [ext.address]);
   await send(core, 'registerExtension', [ext.address, '']);
+  /* the mint can't open without a snapshot */
+  await send(ledger, 'publishSnapshot', [snapshot.root, 1795000000n, BigInt(snapshot.free_mints), 'ar://table', 'Snapshot 1']);
   await send(ext, 'setMintOpen', [true]);
   return { core, coordinator, ledger, renderer, ext, send, owner, estate, payout };
 }

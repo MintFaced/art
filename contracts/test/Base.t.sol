@@ -41,6 +41,7 @@ abstract contract Base is Test {
     uint256 signerKey = 0xA11CE;
     address signer;
     address mintface = makeAddr("mintface.eth");
+    address ryan = makeAddr("ryanj.eth");
     address payable payoutTo = payable(makeAddr("payout"));
     address estate = makeAddr("mintestate.eth");
     address buyer = makeAddr("buyer");
@@ -60,7 +61,7 @@ abstract contract Base is Test {
         coordinator.fundSubscription(subId, 1_000_000 ether);
         vm.deal(mintface, 1_000_000 ether);
         coordinator.fundSubscriptionWithNative{value: 100_000 ether}(subId);
-        ledger = new TaoLedger(mintface);
+        ledger = new TaoLedger(mintface, 30 days);
         delegates = new FakeDelegates();
         bytes[] memory parts = new bytes[](2);
         parts[0] = hex"1f8b0800aabbcc";
@@ -87,10 +88,17 @@ abstract contract Base is Test {
         coordinator.addConsumer(subId, address(ext));
         ledger.setMinter(address(ext));
         core.registerExtension(address(ext), "");
+        ext.setArtist(ryan);
+        firstSnapshot();
         ext.setMintOpen(true);
         vm.stopPrank();
         vm.deal(buyer, 100 ether);
         vm.deal(other, 100 ether);
+    }
+
+    /// @dev The mint can't open without a snapshot. Runs as mintface.eth.
+    function firstSnapshot() internal virtual {
+        ledger.publishSnapshot(bytes32(uint256(1)), uint64(T0), 0, "ar://table", "Snapshot 1");
     }
 
     /* ---------- designs ---------- */

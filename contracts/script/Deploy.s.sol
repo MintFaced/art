@@ -14,13 +14,23 @@ import {TaoLedger} from "../src/TaoLedger.sol";
 ///           VOUCHER_SIGNER  the address of STRIPS_VOUCHER_KEY
 ///           VRF_COORDINATOR, VRF_KEY_HASH, VRF_SUB_ID
 ///           OWNER           the MintFace wallet
+///           ARTIST          ryanj.eth's address, resolved once
 ///           PAYOUT          mintface.eth's address, resolved once
 ///           ESTATE          mintestate.eth's address, resolved once
 ///           DELEGATES       delegate.xyz v2, optional
+///           CLAIM_WINDOW    seconds, optional, off mainnet only
 contract Deploy is Script {
+    uint64 constant MAINNET_WINDOW = 30 days;
+
     function run() external {
         address owner = vm.envAddress("OWNER");
         address delegates = vm.envOr("DELEGATES", 0x00000000000000447e69651d841bD8D104Bed493);
+        address coreAddress = vm.envAddress("CORE");
+        require(coreAddress.code.length != 0, "CORE has no code on this chain");
+
+        uint64 window = uint64(vm.envOr("CLAIM_WINDOW", uint256(MAINNET_WINDOW)));
+        require(window != 0, "the claim needs a window");
+        require(block.chainid != 1 || window == MAINNET_WINDOW, "mainnet's claim window is 30 days");
 
         bytes memory gz = vm.readFileBinary("build/engine.js.gz");
         require(gz.length <= 24_000, "split the engine into chunks");
@@ -28,11 +38,14 @@ contract Deploy is Script {
         parts[0] = gz;
 
         vm.startBroadcast();
+        /* Not msg.sender: with a hardware wallet that's Foundry's default sender
+           until --sender says otherwise, and the broadcast is someone else. */
+        (, address deployer,) = vm.readCallers();
         StripsEngine engine = new StripsEngine(parts);
         StripsRenderer renderer = new StripsRenderer(engine);
-        TaoLedger ledger = new TaoLedger(msg.sender);
+        TaoLedger ledger = new TaoLedger(deployer, window);
         StripsExtension ext = new StripsExtension(
-            vm.envAddress("CORE"),
+            coreAddress,
             ledger,
             IDelegateRegistry(delegates),
             vm.envAddress("ESTATE"),
@@ -49,9 +62,11 @@ contract Deploy is Script {
             })
         );
         ledger.setMinter(address(ext));
-        if (owner != msg.sender) {
+        ext.setArtist(vm.envAddress("ARTIST"));
+        if (owner != deployer) {
+            /* the owner finishes both with acceptOwnership() */
             ledger.transferOwnership(owner);
-            ext.transferOwnership(owner); // the owner finishes with acceptOwnership()
+            ext.transferOwnership(owner);
         }
         vm.stopBroadcast();
 
