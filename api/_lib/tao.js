@@ -26,7 +26,9 @@ const DAY = 86400;
  * @param events  [{ contract, token, from, to, qty, ts, sale }] oldest first.
  *                `sale` is the exit classification: true when the transaction
  *                carried consideration.
- * @param tokens  Map "contract|token" -> { unique, work, collection }
+ * @param tokens  Map "contract|token" -> { unique, work, collection, unique_from? }
+ *                `unique_from` is when a token became a 1/1: a //STRIP accrues
+ *                as an edition copy until it's redeemed as a painting.
  * @param cfg     parsed data/source/tao.json
  * @param now     unix seconds to accrue up to
  */
@@ -44,6 +46,12 @@ export function computeTao(events, tokens, cfg, now = Math.floor(Date.now() / 10
 
   // A 1/1 accrues at the flat rate; an edition accrues per copy held.
   const perDay = (meta, qty) => (meta.unique ? rate1 : rateE * qty);
+  const earnedOver = (meta, qty, from, to) => {
+    const at = meta.unique_from;
+    if (at == null || to <= at) return ((to - from) / DAY) * perDay(meta, qty);
+    if (from >= at) return ((to - from) / DAY) * rate1;
+    return ((at - from) / DAY) * perDay(meta, qty) + ((to - at) / DAY) * rate1;
+  };
   const bump = (w, workId, v) => w.works.set(workId, (w.works.get(workId) || 0) + v);
 
   /* One open holding per wallet per token, carrying the quantity, the moment
@@ -57,7 +65,7 @@ export function computeTao(events, tokens, cfg, now = Math.floor(Date.now() / 10
   const realise = (h, addr, c, t, at) => {
     const meta = tokens.get(`${c}|${t}`);
     if (!meta || at <= h.since) return;
-    const gain = ((at - h.since) / DAY) * perDay(meta, h.qty);
+    const gain = earnedOver(meta, h.qty, h.since, at);
     h.earned += gain;
     h.since = at;
     const w = of(addr);
@@ -124,7 +132,7 @@ export function computeTao(events, tokens, cfg, now = Math.floor(Date.now() / 10
     const meta = tokens.get(`${c}|${t}`);
     if (!meta) continue;
     realise(h, addr, c, t, now);
-    of(addr).rate += perDay(meta, h.qty);
+    of(addr).rate += meta.unique_from != null && now >= meta.unique_from ? rate1 : perDay(meta, h.qty);
   }
 
   const wallet = (w) => ({

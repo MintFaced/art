@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>//STRIPS ... MintFace</title>
+<meta name="description" content="A //STRIP: a still design and a signal of its own, drawn from data stored on Ethereum.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.wrap{max-width:980px;margin:0 auto;padding:52px 28px 70px}
+h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(30px,4.6vw,48px);line-height:1.04;margin:0 0 6px;letter-spacing:-.02em}
+.sub{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 26px}
+.stage{height:min(62vh,560px);background:#000;display:flex;align-items:center;justify-content:center}
+.stage img{max-width:100%;max-height:100%;display:block}
+.who{display:flex;align-items:center;gap:10px;margin:22px 0;font-family:var(--font-mono);font-size:12px}
+.views{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+.views button,.acts a,.acts button,.tell button{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-3);padding:9px 12px;cursor:pointer;text-decoration:none}
+.views button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+h2{font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:38px 0 12px}
+table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:13px}
+td{padding:9px 0;border-bottom:1px solid var(--rule);vertical-align:top;overflow-wrap:anywhere}
+td.k{color:var(--muted);width:150px}
+.story{border-bottom:1px solid var(--rule);padding:12px 0}
+.story p{margin:0 0 4px}
+.story small{font-family:var(--font-mono);font-size:10px;color:var(--muted)}
+.tell textarea{width:100%;min-height:72px;font:inherit;background:none;color:var(--ink);border:1px solid var(--rule);padding:8px;box-sizing:border-box}
+.links{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-family:var(--font-mono);font-size:11px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.said{font-family:var(--font-mono);font-size:11px;color:var(--muted);min-height:16px;margin-top:10px}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<header class="nav" id="nav"></header>
+<main class="wrap" id="main">
+  <h1 id="title">//STRIPS</h1>
+  <p class="sub" id="sub"></p>
+  <div class="stage" id="stage"></div>
+  <div class="who" id="who"></div>
+  <div class="views" id="views" role="group" aria-label="Which view" hidden></div>
+  <h2>Traits</h2>
+  <table id="traits"></table>
+  <div class="links" id="links"></div>
+  <div class="acts" id="acts" hidden><a id="redeem" href="#">Redeem as a painting →</a></div>
+  <h2 id="storiesH" hidden>Stories</h2>
+  <div id="stories"></div>
+  <div class="tell" id="tell" hidden>
+    <h2>Tell its story</h2>
+    <textarea id="storyText" maxlength="280" aria-label="A story, up to 280 characters"></textarea>
+    <button type="button" id="storySend">Add the story</button>
+  </div>
+  <div class="said" id="said" aria-live="polite"></div>
+</main>
+<script src="/mintface.js"></script>
+<script type="module">
+/* One //STRIP. Everything here is read off the chain through /api/strips/token.
+   The holder's two buttons send transactions the chain checks for itself. */
+import { play } from '/strips-blink.js';
+
+const $ = (id) => document.getElementById(id);
+const e = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const id = Number(location.pathname.split('/').pop());
+const ARWEAVE = (uri) => String(uri).replace(/^ar:\/\//, 'https://arweave.net/');
+let T = null, stop = null, shown = null, who = null, state = null;
+
+function show(n) {
+  shown = n;
+  if (stop) { stop(); stop = null; }
+  const stage = $('stage');
+  stage.innerHTML = '';
+  if (n === 0) stop = play(stage, { design: T.design, word: T.word, minted: T.minted });
+  else {
+    const img = document.createElement('img');
+    img.alt = n === 1 ? 'The still' : 'A photograph of this work';
+    img.src = n === 1 ? `data:image/svg+xml;base64,${btoa(T.still)}` : ARWEAVE(T.photos[n - 2]);
+    stage.append(img);
+  }
+  paintViews();
+}
+
+function paintViews() {
+  const names = ['Animated', 'Still', ...T.photos.map((_, i) => (T.photos.length > 1 ? `Photo ${i + 1}` : 'Photo'))];
+  $('views').innerHTML = names.map((name, i) => `<button type="button" data-n="${i}" aria-pressed="${i === shown}">${e(name)}</button>`).join('');
+  $('views').hidden = false;
+}
+
+function paint() {
+  document.title = `//STRIPS #${T.id} ... MintFace`;
+  $('title').textContent = `//STRIPS #${T.id}`;
+  $('sub').textContent = T.no ? `No.${T.no} · ${T.site}` : (T.word ? '' : 'Tuning');
+  const a = (T.owner || '').toLowerCase();
+  const face = a && window.MF && MF.pfp ? MF.pfp.html(a, 32) : '';
+  $('who').innerHTML = `${face}<span>${e(a ? `${a.slice(0, 6)}…${a.slice(-4)}` : '')}</span><span>· ${T.tao.toFixed(1)} TAO</span>`;
+  if (face) MF.pfp.load();
+  const rows = T.attributes.map((t) => [t.trait_type, t.value]);
+  if (T.word) rows.push(['VRF word', T.word]);
+  $('traits').innerHTML = rows.map(([k, v]) => `<tr><td class="k">${e(k)}</td><td>${e(v)}</td></tr>`).join('');
+  const base = state && state.network === 'sepolia' ? 'https://sepolia.etherscan.io' : 'https://etherscan.io';
+  $('links').innerHTML = [`<a href="${base}/nft/${e(T.core)}/${T.id}">Etherscan</a>`, `<a href="${base}/address/${e(T.extension)}#events">VRF proof and events</a>`, ...T.photos.map((u, i) => `<a href="${e(ARWEAVE(u))}">Arweave ${i + 1}</a>`)].join('');
+  const stories = T.stories || [];
+  $('storiesH').hidden = !stories.length;
+  $('stories').innerHTML = stories.map((s) => `<div class="story"><p>${e(s.text)}</p><small>${e(s.by === 'MintFace' ? 'MintFace' : `${s.by.slice(0, 6)}…${s.by.slice(-4)}`)}</small></div>`).join('');
+  const mine = who && a === who.toLowerCase();
+  $('tell').hidden = !mine;
+  $('acts').hidden = !(mine && !T.redeemed && !T.no);
+}
+
+const provider = () => (MF._wallet && MF._wallet.provider) || window.ethereum;
+const send = async (body) => {
+  const r = await fetch('/api/strips/tx', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id, ...body }) });
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || 'That can\'t be sent');
+  const from = who || await MF.connect();
+  who = from;
+  await MF.onChain(state.chain_id);
+  const hash = await provider().request({ method: 'eth_sendTransaction', params: [{ from, to: j.to, data: j.data }] }, `eip155:${state.chain_id}`);
+  say('Sent. It shows here once it lands.');
+  return hash;
+};
+let timer;
+function say(m) { $('said').textContent = m; clearTimeout(timer); timer = setTimeout(() => { $('said').textContent = ''; }, 6000); }
+
+$('views').addEventListener('click', async (ev) => {
+  const b = ev.target.closest('[data-n]');
+  if (!b) return;
+  const n = Number(b.dataset.n);
+  show(n);
+  /* the holder's choice is what everywhere else will show */
+  if (who && (T.owner || '').toLowerCase() === who.toLowerCase() && n !== T.view) {
+    try {
+      await send({ op: 'view', n });
+      T.view = n;
+      fetch('/api/strips/refresh', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id }) }).catch(() => {});
+    } catch (err) { say(err.message); }
+  }
+});
+$('storySend').addEventListener('click', async () => {
+  try { await send({ op: 'story', text: $('storyText').value }); $('storyText').value = ''; } catch (err) { say(err.message); }
+});
+$('redeem').addEventListener('click', async (ev) => {
+  ev.preventDefault();
+  try {
+    const r = await fetch('/api/commission', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'create', spec: { token_id: id } }) });
+    const j = await r.json();
+    if (!r.ok || !j.id) throw new Error(j.error || 'The order could not be made');
+    location.href = `/commission/${encodeURIComponent(j.id)}#k=${encodeURIComponent(j.key)}`;
+  } catch (err) { say(err.message); }
+});
+
+(async () => {
+  const [t, s] = await Promise.all([fetch(`/api/strips/token/${id}`), fetch('/api/strips/state')]);
+  state = await s.json().catch(() => ({}));
+  if (!t.ok) { $('title').textContent = 'No such //STRIP'; return; }
+  T = await t.json();
+  if (window.ethereum) { const [a] = await window.ethereum.request({ method: 'eth_accounts' }).catch(() => []); who = a || null; }
+  paint();
+  show(T.view);
+  /* a token still tuning flips to its traits when the word lands */
+  if (!T.word) {
+    const poll = setInterval(async () => {
+      const r = await fetch(`/api/strips/token/${id}`);
+      if (!r.ok) return;
+      const next = await r.json();
+      if (next.word) { clearInterval(poll); T = next; paint(); show(T.view); }
+    }, 8000);
+  }
+})();
+</script>
+</body>
+</html>

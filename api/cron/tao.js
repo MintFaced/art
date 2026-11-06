@@ -1,5 +1,8 @@
 import { readFile, writeFile } from '../_lib/repo.js';
 import { computeTao } from '../_lib/tao.js';
+import { deployed as stripsDeployed, deployment as stripsDeployment } from '../_lib/strips.js';
+import { addToRegister, readGallery } from '../_lib/strips-index.js';
+import { storeConfigured } from '../_lib/kv.js';
 import { deriveCollectors, registerFile, heldFile } from '../_lib/collectors.js';
 import { loadRuns, saveRuns, hoursSince } from '../_lib/runs.js';
 import { send } from '../_lib/email.js';
@@ -191,6 +194,15 @@ async function run({ key, dry, started, prior, url }) {
     }
   }
 
+  /* //STRIPS aren't in the catalogue. The every-minute cron keeps their list, so
+     tonight's run is one read of the store rather than thousands of the chain.
+     A list that can't be read costs those holders a night: every figure here is
+     recomputed from the whole history tomorrow. */
+  if (stripsDeployed() && storeConfigured()) {
+    try { addToRegister(tokens, targets, await readGallery(), stripsDeployment(), site); }
+    catch (e) { console.error('tao: no //STRIPS list tonight', e.message); }
+  }
+
   /* ================= Phase A ... the ownership diff =================
      What moved, and how it left. Before any TAO arithmetic, because the
      arithmetic is only worth reading if the movement it rests on is written
@@ -204,7 +216,14 @@ async function run({ key, dry, started, prior, url }) {
 
   for (const [addr, t] of targets) {
     let cached = null;
-    try { cached = await get(`data/tao/e/${addr}.json`); } catch (e) { /* never backfilled */ }
+    try { cached = await get(`data/tao/e/${addr}.json`); } catch (e) {
+      /* never backfilled. A contract that knows its first block needs no
+         backfill, but only a real 404 means that: started over after a blip,
+         every old transfer would arrive again and every old sale tweet twice. */
+      if (t.first_block && /: 404$/.test(e.message)) {
+        cached = { contract: addr, standard: t.std, collections: ['strip-paintings'], cursor: t.first_block - 1, events: [] };
+      }
+    }
     // the first backfill reads shared contracts one token at a time and is far
     // too slow for a function; scripts/tao/fetch-events.mjs does that by hand
     if (!cached || !cached.cursor) { neverBackfilled.push(addr); continue; }
@@ -225,7 +244,7 @@ async function run({ key, dry, started, prior, url }) {
         if (topic === T721) {
           if (!l.topics || l.topics.length < 4) continue;
           const id = BigInt(l.topics[3]).toString();
-          if (!t.tokens.has(id)) continue;
+          if (!t.all && !t.tokens.has(id)) continue;
           found.push([id, addrOf(l.topics[1]), addrOf(l.topics[2]), 1, ts, blk, l.transactionHash]);
         } else if (topic === T1155_ONE) {
           const w = words(l.data);
@@ -381,8 +400,8 @@ async function run({ key, dry, started, prior, url }) {
         await wire('sale', {
           id: meta.work, title: meta.title, collection: meta.collection,
           price: `${Number(paid.toFixed(4))} ETH`, address: e.to || null,
-          url: `${site}/w/${encodeURIComponent(meta.work)}`,
-          image: `${site}/api/og?work=${encodeURIComponent(meta.work)}`,
+          url: meta.url || `${site}/w/${encodeURIComponent(meta.work)}`,
+          image: meta.url ? meta.image : `${site}/api/og?work=${encodeURIComponent(meta.work)}`,
           tx: e.tx,
         }, { at: e.ts * 1000 });
       } else {

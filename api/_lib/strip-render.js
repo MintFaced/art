@@ -31,23 +31,26 @@ export function fitOf(acrossMM, count = STRIPS) {
 }
 
 /** The colours in order of how much of the street each covers, with shares. */
-function ranked(colours) {
+function ranked(colours, keepOrder) {
   const k = colours.length;
   const given = colours.every((c) => Number(c.w) > 0);
   const list = colours.map((c, i) => ({ hex: String(c.hex).toUpperCase(), w: given ? Number(c.w) : (k - i), i }));
-  list.sort((a, b) => b.w - a.w || a.i - b.i);
+  if (!keepOrder) list.sort((a, b) => b.w - a.w || a.i - b.i);
   const total = list.reduce((s, c) => s + c.w, 0) || 1;
   return list.map((c) => ({ hex: c.hex, share: c.w / total }));
 }
 
 /**
  * The full layout: { strips:[{hex, mm}], height, count }, bottom first.
- * `gamma` is the vibrancy, 1.0 calm to 1.6 punchy.
+ * `gamma` is the vibrancy, 1.0 calm to 1.6 punchy. `redLine` moves the red line
+ * to that strip from the bottom, 16th unless somebody is marking a moment, and
+ * `keepOrder` holds the colours in the order given rather than by their shares.
  */
-export function layout(colours, acrossMM, { gamma = GAMMA.calm, count = STRIPS } = {}) {
-  const seq = ranked(colours);
+export function layout(colours, acrossMM, { gamma = GAMMA.calm, count = STRIPS, redLine, keepOrder = false } = {}) {
+  const seq = ranked(colours, keepOrder);
   const g = Math.min(GAMMA.punchy, Math.max(GAMMA.calm, Number(gamma) || GAMMA.calm));
   const { height: H, count: N } = fitOf(acrossMM, count);
+  const redAt = redLine == null ? RED_AT : Math.min(N, Math.max(1, Math.round(Number(redLine)) || RED_AT + 1)) - 1;
 
   /* the order: the sequence, then the sequence back again, over and over */
   const run = [...seq, ...seq.slice().reverse()];
@@ -55,7 +58,7 @@ export function layout(colours, acrossMM, { gamma = GAMMA.calm, count = STRIPS }
 
   /* the heights: share to the power of the vibrancy, scaled to the measure
      the coloured strips have, each snapped to the nearest of 6, 12, 24 */
-  const idx = stack.map((_, i) => i).filter((i) => i !== RED_AT);
+  const idx = stack.map((_, i) => i).filter((i) => i !== redAt);
   const raw = new Map(idx.map((i) => [i, stack[i].share ** g]));
   const sumRaw = [...raw.values()].reduce((s, v) => s + v, 0) || 1;
   const room = H - RED_H;
@@ -86,7 +89,7 @@ export function layout(colours, acrossMM, { gamma = GAMMA.calm, count = STRIPS }
     h.set(pool[0].i, pool[0].to);
   }
 
-  const strips = stack.map((c, i) => (i === RED_AT ? { hex: RED_LINE, mm: RED_H } : { hex: c.hex, mm: h.get(i) }));
+  const strips = stack.map((c, i) => (i === redAt ? { hex: RED_LINE, mm: RED_H } : { hex: c.hex, mm: h.get(i) }));
   return { strips, height: H, count: N };
 }
 

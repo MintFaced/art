@@ -1507,6 +1507,35 @@ const MF = {
   },
 
   /**
+   * Put the wallet on a chain before it signs, or stop. A transaction sent from
+   * the wrong network still goes: it pays an address with no contract behind
+   * it, on a chain nobody here is watching, and it can't be fetched back. So a
+   * refused switch ends it here, and the wallet's own word is checked after.
+   *
+   * The relay is never asked, for the reason chain() gives. It's pinned to
+   * mainnet, so mainnet needs nothing and anything else it can't reach.
+   */
+  async onChain(id) {
+    const want = Number(id);
+    const name = want === 1 ? 'Ethereum' : want === 11155111 ? 'Sepolia' : `chain ${want}`;
+    const wrong = () => new Error(`Your wallet is on another network. Switch it to ${name} and try again.`);
+    if (this.wc.is(this._wallet)) {
+      if (want !== 1) throw wrong();
+      return;
+    }
+    const provider = (this._wallet && this._wallet.provider) || window.ethereum;
+    const now = async () => {
+      const hex = await provider.request({ method: 'eth_chainId' });
+      return typeof hex === 'string' && hex.startsWith('0x') ? parseInt(hex, 16) : Number(hex);
+    };
+    if ((await now()) === want) return;
+    try {
+      await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: `0x${want.toString(16)}` }] });
+    } catch (e) { throw wrong(); }
+    if ((await now()) !== want) throw wrong();
+  },
+
+  /**
    * How the connected wallet writes this address. Its own answer, asked for,
    * rather than a checksum computed here ... a wallet that returns lowercase
    * should be handed lowercase, and one that returns EIP-55 should be handed

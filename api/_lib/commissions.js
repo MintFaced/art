@@ -18,6 +18,8 @@ import crypto from 'node:crypto';
 import QRCode from 'qrcode';
 import { pipe, one, storeConfigured } from './kv.js';
 import { checkSpec, stripsOf, nzdOf, weiOf, ethText, specLine } from './commission-spec.js';
+import { tokenFor, stripsOfToken } from './strips-token.js';
+import { decodeDesign } from '../../strips-design.js';
 import { stripPNG } from './strip-png.js';
 import { putObject, r2Configured } from './r2.js';
 import { send } from './email.js';
@@ -98,8 +100,24 @@ function reprice(o) {
 
 /** COMMISSION: a checked spec becomes an order, with its render. */
 export async function createOrder(input) {
+  /* Redeem as a painting: the token's own design and size, read off the chain,
+     never taken from the page. */
+  let redeeming = null;
+  if (input && input.token_id != null) {
+    const t = await tokenFor(Number(input.token_id));
+    if (!t) return { error: 'no such token' };
+    if (t.redeemed) return { error: 'that token is already a painting' };
+    if (t.no) return { error: 'a street work is already a painting' };
+    const d = decodeDesign(t.design);
+    redeeming = { id: t.id, strips: stripsOfToken(t.design) };
+    input = {
+      length_cm: d.length, width_cm: d.width, orientation: d.portrait ? 'portrait' : 'landscape',
+      frame: input.frame, delivery: input.delivery, palette_id: 'maker', colours: d.colours.map((hex) => ({ hex, w: 10 })),
+    };
+  }
   const { spec, error } = checkSpec(input || {});
   if (error) return { error };
+  if (redeeming) spec.token_id = redeeming.id;
   const year = nzYear();
   const seq = await one('INCR', K.seq(year));
   const id = `SP-${year}-${String(seq).padStart(4, '0')}`;
@@ -109,7 +127,7 @@ export async function createOrder(input) {
   const t = now();
   const o = {
     id, key_hash: sha(key), created: iso(t), updated: iso(t), status: 'pending_payment',
-    spec, strip_data: stripsOf(spec), render_key: null,
+    spec, strip_data: redeeming ? redeeming.strips : stripsOf(spec), render_key: null,
     price: { nzd: 0, eth: '0', wei: '0', usd: null, usd_rate: usdRate, fx_at: usdRate ? iso(t) : null, eth_rate: STRIP_ETH_NZD },
     email: null, name: null, ship_to: null, mention: false, x_handle: null,
     method: null, currency: null, payment_ref: null, paid_at: null, paid_amount: null,

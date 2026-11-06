@@ -114,7 +114,7 @@ export async function POST(request) {
     .filter((c) => c && HEX.test(String(c.hex)))
     .map((c) => ({ hex: String(c.hex).toUpperCase(), w: Math.min(1000, Math.max(1, Number(c.w) || 1)) }))
     .slice(0, 12) : [];
-  if (new Set(colours.map((c) => c.hex)).size < 4) return json({ error: 'four colours at the least' }, 400, 'no-store');
+  if (new Set(colours.map((c) => c.hex)).size < (maker ? 3 : 4)) return json({ error: maker ? 'three colours at the least' : 'four colours at the least' }, 400, 'no-store');
   const opts = maker ? { mm, gamma: body.gamma, count: body.count } : {};
   return json(painted({ id: maker ? 'maker' : 'photo', colours }, width, opts), 200, 'no-store');
 }

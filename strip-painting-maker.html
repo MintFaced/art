@@ -154,6 +154,37 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
   .field input[type=number]{width:100%;min-width:120px}
   .shot,.dropzone{max-width:100%}
 }
+
+/* ---------- the palette ---------- */
+.pal{display:grid;gap:8px}
+.pal-row{display:grid;grid-template-columns:34px 92px minmax(0,1fr) auto;gap:10px;align-items:center}
+.pal-row input[type=color]{width:34px;height:34px;padding:0;border:1px solid var(--rule);background:none;border-radius:0;cursor:pointer}
+.pal-row input[type=text]{font-family:var(--font-mono);font-size:13px;width:100%;background:none;border:0;border-bottom:1px solid var(--rule);padding:6px 0;color:var(--ink);border-radius:0;text-transform:uppercase}
+.pal-row input[type=text]:focus{outline:0;border-bottom-color:var(--ink)}
+.seg{display:inline-flex;justify-self:start;border:1px solid var(--rule)}
+#pTotal,#pMint{font-size:14px;line-height:1.5}
+.seg button{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:0;color:var(--muted);padding:7px 10px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.pal-acts{display:flex;gap:2px}
+.pal-acts button{font-family:var(--font-mono);font-size:12px;width:30px;height:30px;background:none;border:1px solid transparent;color:var(--muted);cursor:pointer}
+.pal-acts button:hover{border-color:var(--rule);color:var(--ink)}
+.pal-acts button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.pal-acts button:disabled{opacity:.3;cursor:default}
+.pal-tools,.street{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.pal-tools button,.pal-tools .tool,.street button{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-3);padding:8px 11px;cursor:pointer}
+.pal-tools button:hover,.pal-tools .tool:hover,.street button:hover{border-color:var(--ink);color:var(--ink)}
+.quiet{display:inline-block;background:none;border:0;padding:0;margin-top:16px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.quiet:hover{color:var(--ink)}
+.moment{display:flex;align-items:center;gap:12px;margin-top:12px}
+.moment[hidden]{display:none}
+.moment button:not(.quiet){font-family:var(--font-mono);width:32px;height:32px;background:none;border:1px solid var(--rule);color:var(--ink);cursor:pointer}
+.moment .quiet{margin-top:0}
+.moment output{font-family:var(--font-mono);font-size:13px;min-width:13ch;text-align:center;font-variant-numeric:tabular-nums}
+.signal{height:240px;background:#000}
+.strips{height:auto !important;display:flex;justify-content:center}
+.strips img{width:auto !important;height:auto !important;max-width:100%;max-height:440px;object-fit:contain !important}
+.actions button:disabled{opacity:.45;cursor:default}
+@media(max-width:560px){.pal-row{grid-template-columns:34px 76px minmax(0,1fr)}.pal-acts{grid-column:1/-1;justify-content:flex-end}}
 </style>
 </head>
 <body>
@@ -162,90 +193,102 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 
 <main class="wrap">
   <h1>//Strips Maker</h1>
-  <p class="intro">Design a colourway for your //Strips by MintFace. Colours are sampled from the neighbouring signs and the facade above after uploading a photo. The colours are yours; the rhythm is the one every //Strips follows, and the same choices always make the same painting.</p>
+  <p class="intro">Build a palette, set the size, and the Maker lays the strips. Mint it on Ethereum, or commission the painting.</p>
 
   <div class="rule"></div>
 
   <section class="sect">
-    <h2>The wall</h2>
+    <h2>Palette</h2>
+    <div class="pal" id="pal"></div>
+    <div class="pal-tools">
+      <button type="button" id="add">Add a colour</button>
+      <button type="button" id="refresh">Refresh</button>
+      <button type="button" id="community">Community palette</button>
+      <label class="tool" for="file">From a photo</label>
+      <input type="file" id="file" accept="image/*" hidden>
+    </div>
+    <div class="street" id="street" aria-label="A street work's palette"></div>
+    <p class="swatch-note">Three to twelve colours. Your photo stays on your device: only the colours are kept.</p>
+    <div class="shot" id="shotWrap" hidden>
+      <img id="shot" alt="Your photograph">
+      <div class="hint">Tap the photo to take a colour</div>
+    </div>
+    <button type="button" class="quiet" id="moment" aria-expanded="false">Marking a moment? Move the red line.</button>
+    <div class="moment" id="momentBox" hidden>
+      <button type="button" id="redDown" aria-label="Move the red line down a strip">&minus;</button>
+      <output id="redVal" aria-live="polite"></output>
+      <button type="button" id="redUp" aria-label="Move the red line up a strip">+</button>
+      <button type="button" class="quiet" id="redReset">Back to 16</button>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>The strip</h2>
     <div class="fields">
       <label class="field">
-        <span class="lab">Width</span>
-        <input type="number" id="width" value="6" min="0.5" step="0.5" inputmode="decimal">
-        <span class="unit">metres</span>
+        <span class="lab">Length</span>
+        <input type="number" id="length" value="120" min="80" max="240" step="10" inputmode="numeric">
+        <span class="unit">cm · 80 to 240</span>
       </label>
       <label class="field">
-        <span class="lab">Height</span>
-        <input type="number" id="height" value="600" min="102" step="6" inputmode="numeric">
-        <span class="unit">millimetres · on the 6 mm grid</span>
+        <span class="lab">Width</span>
+        <input type="number" id="width" value="60" min="10" max="120" step="10" inputmode="numeric">
+        <span class="unit">cm · 10 to 120</span>
       </label>
       <label class="field">
         <span class="lab">Strips</span>
-        <input type="number" id="count" value="55" min="16" max="400" step="1" inputmode="numeric">
-        <span class="unit" id="countNote">red line 16th from the bottom</span>
+        <input type="number" id="count" value="55" min="16" max="199" step="1" inputmode="numeric">
+        <span class="unit" id="countNote"></span>
       </label>
+      <div class="field">
+        <span class="lab">Orientation</span>
+        <div class="seg" role="group" aria-label="Orientation">
+          <button type="button" data-orient="landscape" aria-pressed="true">Landscape</button>
+          <button type="button" data-orient="portrait" aria-pressed="false">Portrait</button>
+        </div>
+      </div>
     </div>
     <div class="tier-note" id="fitNote" aria-live="polite"></div>
-
     <div class="slider" style="margin-top:30px">
-      <label for="vib" class="lab" style="font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px">Vibrancy</label>
+      <label for="vib" class="lab" style="font-family:var(--font-sans);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px">Vibrancy</label>
       <input type="range" id="vib" min="1" max="1.6" step="0.05" value="1">
       <div class="ends"><span>Calm</span><span id="vibVal">1.00</span><span>Punchy</span></div>
     </div>
   </section>
 
-  <!-- Straight under the vibrancy, so the slider and what it does are on
-       screen together. -->
   <section class="sect">
-    <h2>Preview</h2>
+    <h2>The still</h2>
     <div class="preview"><div class="strips" id="strips">
       <img id="stripImg" alt="The //Strips as configured">
-      <span class="redmark" id="redMark" hidden></span>
     </div></div>
-    <div class="preview-note" id="previewNote">Preview not to scale</div>
-  </section>
-
-  <div class="rule"></div>
-
-  <section class="sect">
-    <h2>The street</h2>
-    <div class="photo">
-      <label class="dropzone" id="drop">
-        <input type="file" id="file" accept="image/*">
-        Upload a photo of the site... the neighbouring signs and the facade above. The palette is read from it.
-      </label>
-      <div class="shot" id="shotWrap" hidden>
-        <img id="shot" alt="The site photograph">
-        <div class="hint">Tap the photo to take a colour</div>
-      </div>
-    </div>
+    <div class="preview-note" id="previewNote"></div>
   </section>
 
   <section class="sect">
-    <h2>Palette</h2>
-    <div class="swatches" id="swatches"></div>
-    <p class="swatch-note">Tap a swatch to drop it, minimum four. The red line sits outside the palette and never changes.</p>
+    <h2>The signal</h2>
+    <div class="signal" id="signal"></div>
+    <div class="preview-note">Your signal is drawn at mint.</div>
   </section>
 
   <section class="price">
     <table class="rows">
-      <tr><td class="what">Size</td><td id="pSize"></td></tr>
-      <tr><td class="what">Estimated days on site</td><td id="pDays"></td></tr>
-      <tr><td class="what">Price</td><td id="pTotal"></td></tr>
+      <tr><td class="what">Mint</td><td id="pMint">0.009 ETH</td></tr>
+      <tr><td class="what">Commission</td><td id="pTotal"></td></tr>
     </table>
-    <p class="price-note">Collected from The Line, Hastings. Vibrancy and the strip count change the painting, never the price. A frame or worldwide shipping is added when you order.</p>
+    <p class="price-note" id="freeNote" hidden></p>
+    <p class="price-note">A mint is the //STRIP on Ethereum: this still and a signal of its own. A commission is the painting, collected from The Line, Hastings. Vibrancy and the strip count change the design, never the price.</p>
   </section>
 
   <div class="actions">
+    <button type="button" class="go" id="mint" disabled>Mint &middot; 0.009 ETH</button>
+    <button type="button" class="go" id="commission">Commission</button>
     <button type="button" id="copy">Copy spec</button>
     <button type="button" id="png">Download PNG</button>
-    <a class="go" id="enquire" href="#">Send this to the studio</a>
   </div>
-  <div class="said" id="said"></div>
+  <div class="said" id="said" aria-live="polite"></div>
 
   <canvas id="cv" hidden></canvas>
-  <!-- Where the file is drawn. Never shown: what the page shows is the <img>
-       above, which is this canvas after it has been through PNG. -->
+  <!-- Where the file is drawn. Never shown. -->
   <canvas id="out" hidden></canvas>
 </main>
 
@@ -260,43 +303,41 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(34px,5.4vw,60px)
 
 <script src="/mintface.js"></script>
 <script type="module">
-/* The Strip Painting Maker. The colours are the visitor's; the layout is the
-   rhythm every Strip Painting follows, laid on the server (/api/strip-render)
-   and handed back as strips, a colour and a height each. Nothing here is
-   random and nothing here lays a strip: the same palette, height, vibrancy
-   and count make the same painting, every time.
+/* The //Strips Maker. The colours and how much of each are the visitor's; the
+   layout is the rhythm every //STRIP follows, laid on the server, which hands
+   back the packed design and never the rule. The still on screen is drawn from
+   those bytes by the same function the chain uses (strips-design.js), so what
+   you see is what you mint.
 
-   The price is the home page's, from the one function both read
-   (strip-price.js): the same painting is never two prices. */
+   The signal is not the visitor's to choose: the screen below the still plays
+   samples, and the real one is drawn from a random word after the mint. */
 import { stripPrice, fmtNZD, fmtETH, fmtUSD, STRIP_ETH_NZD } from '/strip-price.js';
+import { stillSVG, decodeDesign } from '/strips-design.js';
+import { play, schedule, traitsOf } from '/strips-blink.js';
 
 const RED_LINE = '#D32011';
-const DAYS_PER_M = 1.17; // on site, a metre at 550 mm
+const AMOUNTS = ['less', 'even', 'more'];
+const WEIGHT = { less: 1, even: 2, more: 4 };
+const MIN = 3, MAX = 12, PUBLIC_CAP = 621;
 
-// Strip Painting No. 1, with each colour weighted by its millimetres on the wall
-const DEFAULT_PALETTE = [
-  { hex: '#e16448', w: 120 }, { hex: '#82b2ce', w: 60 }, { hex: '#5fb25b', w: 60 },
-  { hex: '#d5c089', w: 60 },  { hex: '#4c4040', w: 60 }, { hex: '#b4bbae', w: 36 },
-  { hex: '#6d392e', w: 30 },  { hex: '#2f1f1d', w: 24 }, { hex: '#b87556', w: 24 },
-  { hex: '#2a6529', w: 24 },  { hex: '#878082', w: 24 }, { hex: '#edbfb7', w: 18 },
-];
+/* Twelve rows, their colours fresh on every visit. A design can only be minted
+   once, so one opening design would greet everyone after the first with a
+   taken one. */
+const START = ['more', 'more', 'even', 'even', 'even', 'even', 'less', 'less', 'less', 'less', 'less', 'less']
+  .map((amount) => ({ hex: '', amount, locked: false }));
 
 const hex2 = (n) => n.toString(16).padStart(2, '0');
-const rgbToHex = (r, g, b) => `#${hex2(r)}${hex2(g)}${hex2(b)}`;
-const dist2 = (a, b) => {
-  const dr = a[0] - b[0], dg = a[1] - b[1], db = a[2] - b[2];
-  return dr * dr + dg * dg + db * db;
-};
+const rgbToHex = (r, g, b) => `#${hex2(r)}${hex2(g)}${hex2(b)}`.toUpperCase();
+const dist2 = (a, b) => { const dr = a[0] - b[0], dg = a[1] - b[1], db = a[2] - b[2]; return dr * dr + dg * dg + db * db; };
 
 // downsample, bucket to 4 bits a channel, keep the twelve most common that are
-// actually distinct from one another, each weighted by its share
+// actually distinct from one another
 function extractPalette(imgData) {
   const buckets = new Map();
   const d = imgData.data;
   for (let i = 0; i < d.length; i += 4) {
     if (d[i + 3] < 200) continue;
-    const r = d[i] & 0xf0, g = d[i + 1] & 0xf0, b = d[i + 2] & 0xf0;
-    const key = (r << 16) | (g << 8) | b;
+    const key = ((d[i] & 0xf0) << 16) | ((d[i + 1] & 0xf0) << 8) | (d[i + 2] & 0xf0);
     const cur = buckets.get(key);
     if (cur) { cur.n++; cur.r += d[i]; cur.g += d[i + 1]; cur.b += d[i + 2]; }
     else buckets.set(key, { n: 1, r: d[i], g: d[i + 1], b: d[i + 2] });
@@ -306,203 +347,344 @@ function extractPalette(imgData) {
     .sort((a, b) => b.n - a.n);
   const picked = [];
   for (const c of sorted) {
-    if (picked.length >= 12) break;
+    if (picked.length >= MAX) break;
     if (picked.every((p) => dist2(p.rgb, c.rgb) > 1600)) picked.push(c);
   }
-  const total = picked.reduce((s, p) => s + p.n, 0) || 1;
-  return picked.map((p) => ({ hex: rgbToHex(...p.rgb), w: Math.max(1, Math.round((p.n / total) * 100)) }));
+  return fromShares(picked.map((p) => ({ hex: rgbToHex(...p.rgb), w: p.n })));
+}
+
+/* Measured shares, read as the three amounts. */
+function fromShares(list) {
+  const mean = list.reduce((s, c) => s + c.w, 0) / (list.length || 1);
+  return list.map((c) => ({ hex: c.hex.toUpperCase(), amount: c.w >= mean * 1.5 ? 'more' : c.w <= mean * .6 ? 'less' : 'even', locked: false }));
 }
 
 /* ---------- state ---------- */
 const S = {
-  widthM: 6, heightMM: 600, count: 55, gamma: 1,
-  palette: DEFAULT_PALETTE.slice(), strips: [], laid: null,
+  length: 120, width: 60, orient: 'landscape', count: 55, gamma: 1, redLine: 16,
+  palette: refreshed(START), design: null, strips: 0, taken: false,
 };
+const CHAIN = { state: null, free: null, who: null };
 const FX = { usd: null };
 const $ = (id) => document.getElementById(id);
-/* A colour with the nearest Pantone or standard name after it. A spec sheet of
-   bare hexes is a sheet nobody can talk through on a scaffold. */
-const said = (hex) => {
-  const n = MF.colour.name(String(hex).toUpperCase());
-  return n ? `${String(hex).toUpperCase()} ${n.label}` : String(hex).toUpperCase();
-};
 const e = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const said = (hex) => { const n = MF.colour.name(String(hex).toUpperCase()); return n ? `${String(hex).toUpperCase()} ${n.label}` : String(hex).toUpperCase(); };
 
-/* The wall's width is the painting's length, its height the measure the
-   strips are laid across. Past what the price function covers, it is a talk. */
-const priceOf = () => stripPrice({ lengthCm: S.widthM * 100, widthCm: S.heightMM / 10 });
+const spec = () => ({
+  length_cm: S.length, width_cm: S.width, orientation: S.orient, gamma: S.gamma, count: S.count, red_line: S.redLine,
+  colours: S.palette.map((c) => ({ hex: c.hex, amount: c.amount })),
+});
+const priceOf = () => stripPrice({ lengthCm: S.length, widthCm: S.width });
 const priceLine = (nzd) => (nzd == null ? 'Quoted after we talk'
   : [fmtNZD(nzd), `${fmtETH(nzd)} at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH`, fmtUSD(nzd, FX.usd)].filter(Boolean).join(' · '));
-const redAt = () => S.strips.findIndex((x) => x.hex.toUpperCase() === RED_LINE) + 1;
 
-/* ---------- the layout, from the server ---------- */
-const LAID = new Map();
+/* ---------- the palette ---------- */
+function paintPalette() {
+  $('pal').innerHTML = S.palette.map((c, i) => `
+    <div class="pal-row" data-i="${i}">
+      <input type="color" value="${e(c.hex.toLowerCase())}" aria-label="Colour ${i + 1}">
+      <input type="text" value="${e(c.hex)}" maxlength="7" spellcheck="false" aria-label="Colour ${i + 1} as hex" title="${e(said(c.hex))}">
+      <div class="seg" role="group" aria-label="How much of colour ${i + 1}">${AMOUNTS.map((a) => `<button type="button" data-amount="${a}" aria-pressed="${c.amount === a}">${a}</button>`).join('')}</div>
+      <div class="pal-acts">
+        <button type="button" data-act="lock" aria-pressed="${c.locked}" aria-label="Keep this colour on refresh" title="Keep on refresh">${c.locked ? '●' : '○'}</button>
+        <button type="button" data-act="up" aria-label="Move up" ${i === 0 ? 'disabled' : ''}>↑</button>
+        <button type="button" data-act="down" aria-label="Move down" ${i === S.palette.length - 1 ? 'disabled' : ''}>↓</button>
+        <button type="button" data-act="drop" aria-label="Remove" ${S.palette.length <= MIN ? 'disabled' : ''}>×</button>
+      </div>
+    </div>`).join('');
+  $('add').disabled = S.palette.length >= MAX;
+}
+const setPalette = (list) => { S.palette = list.slice(0, MAX); paintPalette(); draw(); };
+const validHex = (v) => /^#?[0-9a-f]{6}$/i.test(v.trim());
+const clean = (v) => `#${v.trim().replace('#', '').toUpperCase()}`;
+function setColour(i, hex) {
+  if (hex === RED_LINE) { say('That red is the red line\'s'); paintPalette(); return; }
+  if (S.palette.some((c, n) => n !== i && c.hex === hex)) { say(`${hex} is already in`); paintPalette(); return; }
+  S.palette[i].hex = hex;
+  paintPalette();
+  draw();
+}
+function randomColour() {
+  const h = Math.random() * 360, s = 25 + Math.random() * 65, l = 18 + Math.random() * 66;
+  const k = (n) => (n + h / 30) % 12, a = (s / 100) * Math.min(l / 100, 1 - l / 100);
+  const f = (n) => Math.round(255 * (l / 100 - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1))));
+  return rgbToHex(f(0), f(8), f(4));
+}
+
+/* A new colour on every row that isn't locked: never the red line's, never twice. */
+function refreshed(list) {
+  const seen = new Set([RED_LINE, ...list.filter((c) => c.locked).map((c) => c.hex)]);
+  return list.map((c) => {
+    if (c.locked) return c;
+    let hex;
+    do { hex = randomColour(); } while (seen.has(hex));
+    seen.add(hex);
+    return { ...c, hex };
+  });
+}
+
+$('pal').addEventListener('click', (ev) => {
+  const row = ev.target.closest('.pal-row');
+  if (!row) return;
+  const i = Number(row.dataset.i);
+  const amount = ev.target.closest('[data-amount]');
+  if (amount) { S.palette[i].amount = amount.dataset.amount; paintPalette(); draw(); return; }
+  const act = ev.target.closest('[data-act]');
+  if (!act || act.disabled) return;
+  const p = S.palette;
+  if (act.dataset.act === 'lock') { p[i].locked = !p[i].locked; paintPalette(); return; }
+  if (act.dataset.act === 'drop') p.splice(i, 1);
+  if (act.dataset.act === 'up') [p[i - 1], p[i]] = [p[i], p[i - 1]];
+  if (act.dataset.act === 'down') [p[i + 1], p[i]] = [p[i], p[i + 1]];
+  paintPalette();
+  draw();
+});
+$('pal').addEventListener('change', (ev) => {
+  const row = ev.target.closest('.pal-row');
+  if (!row) return;
+  const i = Number(row.dataset.i);
+  if (!validHex(ev.target.value)) { say('A colour is a hex like #AABBCC'); paintPalette(); return; }
+  setColour(i, clean(ev.target.value));
+});
+$('add').addEventListener('click', () => { if (S.palette.length < MAX) setPalette([...S.palette, { hex: randomColour(), amount: 'even', locked: false }]); });
+$('refresh').addEventListener('click', () => setPalette(refreshed(S.palette)));
+$('community').addEventListener('click', async () => {
+  try {
+    const r = await fetch('/api/nudge', { headers: { accept: 'application/json' } });
+    const j = await r.json();
+    const hexes = [...new Set(((j.series && j.series.locked) || []).map((x) => String(x.hex).toUpperCase()))].filter((h) => /^#[0-9A-F]{6}$/.test(h) && h !== RED_LINE);
+    if (hexes.length < MIN) { say('The community palette has too few colours so far'); return; }
+    setPalette(hexes.map((hex) => ({ hex, amount: 'even', locked: false })));
+    say(`${hexes.length} colours the collectors locked`);
+  } catch { say('Could not reach the community palette'); }
+});
+
+/* a street work's palette, in one tap */
+(async () => {
+  try {
+    const [pf, sf] = await Promise.all([fetch('/data/strip-palettes.json').then((r) => r.json()), fetch('/api/strip-sites').then((r) => r.json())]);
+    const sites = sf.sites || sf;
+    const works = sites.filter((s) => s.work_id).sort((a, b) => a.no - b.no);
+    const list = works.map((s) => ({ s, p: pf.palettes.find((x) => x.work === s.work_id) })).filter((x) => x.p);
+    $('street').innerHTML = list.map(({ s, p }) => `<button type="button" data-p="${e(p.id)}" title="${e(s.address)}">No.${e(s.no)}</button>`).join('');
+    $('street').addEventListener('click', (ev) => {
+      const b = ev.target.closest('[data-p]');
+      if (!b) return;
+      const p = pf.palettes.find((x) => x.id === b.dataset.p);
+      setPalette(fromShares(p.colours.filter((c) => c.hex.toUpperCase() !== RED_LINE)));
+    });
+  } catch { /* the street palettes are a shortcut, not the Maker */ }
+})();
+
+/* ---------- the design, from the server ---------- */
 let asked = 0;
+const LAID = new Map();
 async function layOut() {
-  const body = JSON.stringify({ height_mm: S.heightMM, gamma: S.gamma, count: S.count, colours: S.palette.map((c) => ({ hex: c.hex, w: c.w })) });
+  const body = JSON.stringify(spec());
   if (LAID.has(body)) return LAID.get(body);
-  const r = await fetch('/api/strip-render', { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+  const r = await fetch('/api/strips/preview', { method: 'POST', headers: { 'content-type': 'application/json' }, body });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(j.error || `strip-render ${r.status}`);
+  if (!r.ok) throw new Error(j.error || `preview ${r.status}`);
   LAID.set(body, j);
   return j;
-}
-
-/* ---------- the file ----------
- *
- * The painting, drawn to its own proportions at a size worth looking at, and
- * nothing else in the frame. Every edge is the running total rounded once, so
- * adjacent bands share the exact integer and the seams are hard: a painting
- * made entirely of boundaries cannot have colours along them that are in
- * neither strip. The smallest strip always gets a whole pixel.
- */
-const EXPORT_LONG = 3000;
-
-function exportCanvas() {
-  const cv = $('out');
-  const wMM = S.widthM * 1000;
-  const hMM = S.laid ? S.laid.height : S.heightMM;
-  let scale = EXPORT_LONG / Math.max(wMM, hMM);
-  const minMM = Math.min(...S.strips.map((x) => x.mm));
-  if (minMM * scale < 1) scale = 1 / minMM;
-  const W = Math.round(wMM * scale);
-  const H = Math.round(hMM * scale);
-  cv.width = W;
-  cv.height = H;
-  const ctx = cv.getContext('2d', { alpha: false });
-  ctx.imageSmoothingEnabled = false;
-  /* bottom up, the way it is painted and the way the strips arrive */
-  let mm = 0;
-  for (const st of S.strips) {
-    const y0 = H - Math.round((mm + st.mm) * scale);
-    const y1 = H - Math.round(mm * scale);
-    ctx.fillStyle = st.hex;
-    ctx.fillRect(0, y0, W, y1 - y0);
-    mm += st.mm;
-  }
-  return cv;
-}
-
-/* What the file is called: the wall it is for and the strips it has. */
-function exportName() {
-  const h = S.laid ? S.laid.height : S.heightMM;
-  return `strip-painting-${S.widthM}m-${h}mm-${S.strips.length}strips-redline${redAt()}.png`;
-}
-
-/* The preview and the download are one blob. The old picture stays up until
-   the new one has decoded, so the preview never blinks white mid-drag. */
-const SHOT = { url: null, timer: null, name: '' };
-
-function paintPreview() {
-  const img = $('stripImg');
-  if (!img || !S.strips.length) return;
-  exportCanvas().toBlob((blob) => {
-    if (!blob) return;
-    const url = URL.createObjectURL(blob);
-    const old = SHOT.url;
-    SHOT.url = url;
-    img.onload = () => { if (old) URL.revokeObjectURL(old); };
-    img.src = url;
-  }, 'image/png');
-}
-function refreshShot() {
-  clearTimeout(SHOT.timer);
-  SHOT.timer = setTimeout(paintPreview, 90);
-}
-
-/* Everything that does not wait on the layout, then the layout. */
-function words() {
-  const nzd = priceOf();
-  const days = DAYS_PER_M * S.widthM * (S.heightMM / 550);
-  $('pSize').textContent = `${S.widthM} m × ${S.laid ? S.laid.height : S.heightMM} mm`;
-  $('pDays').textContent = days.toFixed(1);
-  $('pTotal').textContent = priceLine(nzd);
-  $('vibVal').textContent = S.gamma.toFixed(2);
-  $('swatches').innerHTML = S.palette.map((c) =>
-    `<button class="sw" type="button" data-hex="${e(c.hex)}" style="background:${e(c.hex)}" title="${e(said(c.hex))} ... tap to drop"></button>`).join('')
-    + `<button class="sw sw-red" type="button" disabled style="background:${RED_LINE}"
-        title="${e(said(RED_LINE))} ... the constant, 16th from the bottom, on every one of these paintings"><span class="n">red line</span></button>`;
-  $('enquire').href = mailto();
 }
 
 async function draw() {
   words();
   const my = ++asked;
-  try {
-    const j = await layOut();
-    if (my !== asked) return; // a later change has already asked again
-    S.strips = j.strips;
-    S.laid = { height: j.height_mm, count: j.count };
-  } catch (err) {
-    console.error('layout', err);
-    say('The painting could not be laid out just now');
+  let j;
+  try { j = await layOut(); } catch (err) {
+    if (my === asked) say(err.message || 'The design could not be laid out just now');
     return;
   }
-  const n = S.strips.length;
-  const at = redAt();
-  SHOT.name = exportName();
-  $('stripImg').alt = `//Strips, ${S.widthM} m by ${S.laid.height} mm, ${n} strips, red line ${at} from the base`;
-  refreshShot();
-  /* the red line's number, put where the red line is */
-  const total = S.strips.reduce((s, x) => s + x.mm, 0) || 1;
-  const red = S.strips[at - 1];
-  const above = S.strips.slice(at).reduce((s, x) => s + x.mm, 0);
-  const mark = $('redMark');
-  if (red) {
-    mark.hidden = false;
-    mark.textContent = String(at);
-    mark.style.top = `${((above + red.mm / 2) / total * 100).toFixed(3)}%`;
-  } else { mark.hidden = true; }
-  $('previewNote').textContent = `${n} strips ... red line at ${at} from base ... preview not to scale`;
-  /* where the wall had to give: a height off the grid, a count it cannot hold */
-  const notes = [];
-  if (S.laid.height !== S.heightMM) notes.push(`laid at ${S.laid.height} mm, on the 6 mm grid`);
-  if (S.laid.count !== S.count) notes.push(`${S.laid.height} mm holds ${S.laid.count} strips here`);
-  $('fitNote').textContent = notes.join(' ... ');
+  if (my !== asked) return; // a later change has already asked again
+  S.design = j.design; S.strips = j.strips; S.taken = j.taken;
+  if (S.redLine > S.strips) S.redLine = S.strips;
+  const svg = stillSVG(S.design);
+  $('stripImg').src = `data:image/svg+xml;base64,${btoa(svg)}`;
+  $('stripImg').alt = `//Strips, ${S.length} by ${S.width} cm, ${S.strips} strips, red line ${S.redLine} from the base`;
+  $('previewNote').textContent = `${S.strips} strips ... red line ${S.redLine} from the base ... this still is the one on-chain`;
+  $('fitNote').textContent = S.count !== S.strips ? `${S.width} cm holds ${S.strips} strips` : '';
+  $('countNote').textContent = S.taken ? 'this design is taken' : '';
   words();
+  sample();
 }
 
+/* ---------- the sample signal ----------
+   A word out of the air and a different set each time. Never the token's: the
+   real word doesn't exist until the mint does. */
+let stop = null, turn = 0;
+const randomWord = () => `0x${[...crypto.getRandomValues(new Uint8Array(32))].map(hex2).join('')}`;
+function sample() {
+  clearTimeout(turn);
+  if (!S.design) return;
+  const word = randomWord();
+  const traits = traitsOf(word);
+  /* start just before something happens, or the sample may hold still throughout */
+  let t = 0;
+  while (t < 200 && !schedule(word, traits, t + 1)) t += .25;
+  if (stop) stop();
+  stop = play($('signal'), { design: S.design, word, minted: Date.now() / 1000 - t, long: 800 });
+  turn = setTimeout(sample, 9000);
+}
+
+/* ---------- the red line ---------- */
+function moveRed(to) {
+  S.redLine = Math.max(1, Math.min(S.strips || 16, to));
+  draw();
+}
+$('moment').addEventListener('click', () => {
+  const box = $('momentBox');
+  box.hidden = !box.hidden;
+  $('moment').setAttribute('aria-expanded', String(!box.hidden));
+});
+$('redDown').addEventListener('click', () => moveRed(S.redLine - 1));
+$('redUp').addEventListener('click', () => moveRed(S.redLine + 1));
+$('redReset').addEventListener('click', () => moveRed(16));
+
+/* ---------- words ---------- */
+function mintLabel() {
+  const st = CHAIN.state;
+  if (!st || !st.deployed || !st.open) return { text: 'Mint · soon', off: true };
+  if (st.public_minted >= PUBLIC_CAP) return { text: 'Sold out', off: true };
+  if (S.taken) return { text: 'Design taken', off: true };
+  if (CHAIN.free && CHAIN.free.left > 0) return { text: 'Mint · free', off: false };
+  return { text: 'Mint · 0.009 ETH', off: false };
+}
+function words() {
+  $('pTotal').textContent = priceLine(priceOf());
+  $('vibVal').textContent = S.gamma.toFixed(2);
+  $('redVal').textContent = S.redLine === 16 ? '16 (standard)' : `${S.redLine} of ${S.strips || S.count}`;
+  const m = mintLabel();
+  $('mint').textContent = m.text;
+  $('mint').disabled = m.off;
+  const f = CHAIN.free, note = $('freeNote');
+  note.hidden = true;
+  if (f && f.left > 0) {
+    const days = Math.max(0, Math.ceil((f.deadline - Date.now() / 1000) / 86400));
+    note.textContent = `${f.left} free ${f.left === 1 ? 'mint' : 'mints'} on this wallet ... ${days} ${days === 1 ? 'day' : 'days'} left to claim.`;
+    note.hidden = false;
+  } else if (f && f.on_hot_wallet) {
+    note.textContent = `This wallet's free mints sit on its COMBO's hot wallet, ${f.on_hot_wallet.slice(0, 8)}…`;
+    note.hidden = false;
+  }
+}
+
+/* ---------- minting ---------- */
+const provider = () => (MF._wallet && MF._wallet.provider) || window.ethereum;
+const ask = (method, params = []) => provider().request({ method, params }, `eip155:${CHAIN.state.chain_id}`);
+
+async function readFree(who) {
+  CHAIN.who = who;
+  try { CHAIN.free = await (await fetch(`/api/strips/free?wallet=${who}`)).json(); } catch { CHAIN.free = null; }
+  words();
+}
+async function waitFor(hash) {
+  for (let i = 0; i < 300; i += 1) {
+    const r = await fetch(`/api/strips/receipt?hash=${hash}`).then((x) => x.json()).catch(() => null);
+    if (r && r.status) return r;
+    await new Promise((ok) => setTimeout(ok, 3000));
+  }
+  return null;
+}
+$('mint').addEventListener('click', async () => {
+  const btn = $('mint');
+  if (btn.disabled || !S.design) return;
+  btn.disabled = true;
+  try {
+    const who = CHAIN.who || await MF.connect();
+    if (!CHAIN.who) { await readFree(who); }
+    const free = Boolean(CHAIN.free && CHAIN.free.left > 0);
+    const r = await fetch('/api/strips/mint/prepare', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...spec(), to: who, free }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || `prepare ${r.status}`);
+    await MF.onChain(CHAIN.state.chain_id);
+    say('Confirm in your wallet');
+    const hash = await ask('eth_sendTransaction', [{ from: who, to: j.tx.to, data: j.tx.data, value: j.tx.value }]);
+    say('Minting ...');
+    const receipt = await waitFor(hash);
+    if (!receipt) throw new Error(`Still pending: ${hash}`);
+    if (receipt.status !== 'success') throw new Error('The transaction failed');
+    if (receipt.token) location.href = `/c/strip-paintings/strips/${receipt.token}`;
+    else say('Minted');
+  } catch (err) {
+    console.error('mint', err);
+    say(err.message || 'The mint did not go through');
+  } finally {
+    words();
+  }
+});
+
+$('commission').addEventListener('click', async () => {
+  const btn = $('commission');
+  if (btn.getAttribute('aria-busy') === 'true') return;
+  btn.setAttribute('aria-busy', 'true');
+  try {
+    const order = {
+      length_cm: S.length, width_cm: S.width, orientation: S.orient, frame: 'none', delivery: 'collect', palette_id: 'maker',
+      colours: S.palette.map((c) => ({ hex: c.hex, w: WEIGHT[c.amount] })), gamma: S.gamma, count: S.count, red_line: S.redLine,
+    };
+    const r = await fetch('/api/commission', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'create', spec: order }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.id || !j.key) throw new Error(j.error || `commission ${r.status}`);
+    location.href = `/commission/${encodeURIComponent(j.id)}#k=${encodeURIComponent(j.key)}`;
+  } catch (err) {
+    console.error('commission', err);
+    say(err.message || 'The order could not be made just now');
+    btn.removeAttribute('aria-busy');
+  }
+});
+
+/* ---------- the file ----------
+   Every edge is the running total rounded once, so adjacent bands share the
+   exact integer and the seams are hard. */
+const EXPORT_LONG = 3000;
+function exportCanvas() {
+  const d = decodeDesign(S.design);
+  const cv = $('out');
+  const long = Math.max(d.length, d.width);
+  const along = Math.round((d.length / long) * EXPORT_LONG);
+  const across = Math.round((d.width / long) * EXPORT_LONG);
+  cv.width = d.portrait ? across : along;
+  cv.height = d.portrait ? along : across;
+  const ctx = cv.getContext('2d', { alpha: false });
+  const total = d.bands.reduce((s, b) => s + b.u, 0);
+  let run = 0;
+  for (const b of d.bands) {
+    const a = Math.round((run / total) * across);
+    run += b.u;
+    const z = Math.round((run / total) * across);
+    ctx.fillStyle = b.hex;
+    if (d.portrait) ctx.fillRect(a, 0, z - a, cv.height);
+    else ctx.fillRect(0, across - z, cv.width, z - a);
+  }
+  return cv;
+}
+const exportName = () => `strips-${S.length}x${S.width}cm-${S.strips}strips-redline${S.redLine}.png`;
+
 function specText() {
-  const at = redAt();
-  const h = S.laid ? S.laid.height : S.heightMM;
   return [
     'MintFace //Strips ... configured spec',
-    `${S.widthM}m x ${h}mm | ${S.strips.length} strips | vibrancy ${S.gamma.toFixed(2)}`,
-    `price ${priceLine(priceOf())}, collected from The Line | est ${(DAYS_PER_M * S.widthM * (S.heightMM / 550)).toFixed(1)} days on site`,
-    `palette: ${S.palette.map((c) => c.hex).join(' ')}`,
-    `RED LINE: ${said(RED_LINE)} ... STRIP ${at} OF ${S.strips.length} FROM BASE`,
-    '',
-    'strips, bottom up:',
-    ...S.strips.map((s, i) =>
-      `${String(i + 1).padStart(2)}  ${said(s.hex).padEnd(28)}  ${String(s.mm).padStart(2)}mm${s.hex.toUpperCase() === RED_LINE ? `  RED LINE (strip ${at} of ${S.strips.length} from base)` : ''}`),
+    `${S.length} x ${S.width} cm | ${S.orient} | ${S.strips} strips | vibrancy ${S.gamma.toFixed(2)}`,
+    `commission ${priceLine(priceOf())}, collected from The Line`,
+    `palette: ${S.palette.map((c) => `${c.hex} ${c.amount}`).join(' ')}`,
+    `RED LINE: ${said(RED_LINE)} ... STRIP ${S.redLine} OF ${S.strips} FROM BASE`,
   ].join('\n');
 }
 
-// TODO: Ryan to settle the enquiry path. This is v1: it opens a mail with the
-// spec in the body. The commission checkout takes over once the Maker's
-// paintings can be ordered from (STRIP-MAKER).
-function mailto() {
-  const subject = `//Strips ... ${S.widthM}m x ${S.laid ? S.laid.height : S.heightMM}mm, ${S.strips.length || S.count} strips`;
-  return `mailto:ryan@mintface.art?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(S.strips.length ? specText() : '')}`;
-}
-
 /* ---------- wiring ---------- */
-const num = (v, fb) => { const n = parseFloat(v); return isNaN(n) || n <= 0 ? fb : n; };
 let typing;
 const soon = () => { clearTimeout(typing); typing = setTimeout(draw, 250); };
-
-$('width').addEventListener('input', (ev) => { S.widthM = num(ev.target.value, 6); words(); refreshShot(); });
-$('height').addEventListener('input', (ev) => { S.heightMM = Math.round(num(ev.target.value, 600)); soon(); });
-$('count').addEventListener('input', (ev) => { S.count = Math.round(num(ev.target.value, 55)); soon(); });
-$('vib').addEventListener('input', (ev) => { S.gamma = Number(ev.target.value); draw(); });
-
-$('swatches').addEventListener('click', (ev) => {
-  const b = ev.target.closest('.sw');
-  if (!b || b.disabled) return;
-  if (S.palette.length <= 4) { say('Four colours is the minimum'); return; }
-  S.palette = S.palette.filter((c) => c.hex !== b.dataset.hex);
+const stepped = (v, min, max, step, fb) => { const n = Math.round(Number(v) / step) * step; return n >= min && n <= max ? n : fb; };
+$('length').addEventListener('input', (ev) => { S.length = stepped(ev.target.value, 80, 240, 10, S.length); soon(); });
+$('width').addEventListener('input', (ev) => { S.width = stepped(ev.target.value, 10, 120, 10, S.width); soon(); });
+$('count').addEventListener('input', (ev) => { S.count = stepped(ev.target.value, 16, 199, 1, S.count); soon(); });
+$('vib').addEventListener('input', (ev) => { S.gamma = Number(ev.target.value); soon(); });
+document.querySelectorAll('[data-orient]').forEach((b) => b.addEventListener('click', () => {
+  S.orient = b.dataset.orient;
+  document.querySelectorAll('[data-orient]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
   draw();
-});
+}));
 
 $('file').addEventListener('change', (ev) => {
   const f = ev.target.files && ev.target.files[0];
@@ -515,18 +697,16 @@ $('file').addEventListener('change', (ev) => {
     cv.width = Math.round(img.width * scale);
     cv.height = Math.round(img.height * scale);
     cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
-    const extracted = extractPalette(cv.getContext('2d').getImageData(0, 0, cv.width, cv.height));
-    // a photograph that yields almost nothing leaves the default alone
-    if (extracted.length >= 4) { S.palette = extracted; say(`${extracted.length} colours off the street`); }
+    const extracted = extractPalette(cv.getContext('2d').getImageData(0, 0, cv.width, cv.height)).filter((c) => c.hex !== RED_LINE);
+    if (extracted.length >= MIN) { setPalette(extracted); say(`${extracted.length} colours from the photo`); }
     else say('Not enough colour in that one ... palette kept');
     $('shot').src = url;
     $('shotWrap').hidden = false;
-    draw();
   };
   img.src = url;
 });
 
-// tap the photo to take a colour, replacing the least dominant when full
+// tap the photo to take a colour
 $('shot').addEventListener('click', (ev) => {
   const cv = $('cv');
   const img = $('shot');
@@ -536,45 +716,27 @@ $('shot').addEventListener('click', (ev) => {
   const y = Math.floor(((ev.clientY - rect.top) / rect.height) * cv.height);
   const px = cv.getContext('2d').getImageData(Math.max(0, x), Math.max(0, y), 1, 1).data;
   const hex = rgbToHex(px[0], px[1], px[2]);
-  if (S.palette.some((c) => c.hex === hex)) { say(`${hex} is already in`); return; }
-  const next = [...S.palette].sort((a, b) => b.w - a.w);
-  if (next.length >= 12) next.pop();
-  next.push({ hex, w: Math.max(8, Math.round(next[0].w * 0.4)) });
-  S.palette = next;
-  draw();
+  if (hex === RED_LINE || S.palette.some((c) => c.hex === hex)) { say(`${hex} is already in`); return; }
+  const next = [...S.palette];
+  if (next.length >= MAX) next.pop();
+  next.push({ hex, amount: 'even', locked: false });
+  setPalette(next);
   say(`${hex} taken`);
 });
 
 $('copy').addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText(specText());
-    say('Spec copied');
-  } catch {
-    say('Could not reach the clipboard');
-  }
+  try { await navigator.clipboard.writeText(specText()); say('Spec copied'); } catch { say('Could not reach the clipboard'); }
 });
-
-/* The same blob the preview is showing, handed over under a name that says
-   what it is. Not a fresh render: a button that quietly drew its own copy
-   could hand somebody a file that is not the picture they were looking at. */
 $('png').addEventListener('click', () => {
-  if (!S.strips.length) return;
-  const go = (url, name) => {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  };
-  const name = SHOT.name || exportName();
-  if (SHOT.url) { go(SHOT.url, name); say(`Saved ${name}`); return; }
+  if (!S.design) return;
   exportCanvas().toBlob((blob) => {
     if (!blob) { say('Could not draw the file'); return; }
     const url = URL.createObjectURL(blob);
-    go(url, name);
+    const a = document.createElement('a');
+    a.href = url; a.download = exportName();
+    document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 20000);
-    say(`Saved ${name}`);
+    say(`Saved ${exportName()}`);
   }, 'image/png');
 });
 
@@ -582,11 +744,21 @@ let sayTimer;
 function say(msg) {
   $('said').textContent = msg;
   clearTimeout(sayTimer);
-  sayTimer = setTimeout(() => { $('said').textContent = ''; }, 2200);
+  sayTimer = setTimeout(() => { $('said').textContent = ''; }, 4000);
 }
 
+paintPalette();
 draw();
 MF.fx().then((fx) => { FX.usd = fx && fx.usd ? fx.usd : null; words(); }).catch(() => {});
+fetch('/api/strips/state').then((r) => r.json()).then(async (st) => {
+  CHAIN.state = st;
+  words();
+  /* a wallet already connected here asks for nothing */
+  if (st.deployed && window.ethereum) {
+    const [who] = await window.ethereum.request({ method: 'eth_accounts' }).catch(() => []);
+    if (who) readFree(who);
+  }
+}).catch(() => {});
 </script>
 </body>
 </html>

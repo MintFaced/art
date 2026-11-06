@@ -1,0 +1,17 @@
+{
+  "name": "strips-contracts",
+  "private": true,
+  "description": "//STRIPS on-chain: the Manifold extension, renderer and ledger. Solidity dependencies only; nothing here is the website.",
+  "dependencies": {
+    "@chainlink/contracts": "1.5.0",
+    "@manifoldxyz/creator-core-solidity": "3.0.0",
+    "@manifoldxyz/libraries-solidity": "1.0.4",
+    "@openzeppelin/contracts": "4.9.6",
+    "@openzeppelin/contracts-upgradeable": "4.9.6",
+    "forge-std": "github:foundry-rs/forge-std#v1.9.7",
+    "solady": "0.1.26"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

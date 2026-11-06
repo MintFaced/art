@@ -195,6 +195,7 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
 
   <section class="nudges-admin">
     <h2 class="sec">Commissions</h2>
+    <p class="note"><a href="/mintwork/strips">//STRIPS on-chain</a> ... street works, photographs, stories, redemptions, snapshots, the freeze.</p>
     <p class="note"><a href="/mintwork/commissions">//Strips commissions</a> ... orders, payments, photographs, shipping.</p>
   </section>
 
