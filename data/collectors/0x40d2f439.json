@@ -1,10 +1,10 @@
 {
  "address": "0x40d2f4399d23f9afb82d0a6b73055f13208614f9",
- "ens": "mintsafe.eth",
+ "ens": null,
  "fwd": null,
  "display_name": null,
  "x": null,
- "slug": "mintsafe.eth",
+ "slug": "0x40d2f439",
  "private": false,
  "has_page": true,
  "counts": {
@@ -15,7 +15,7 @@
  },
  "first_collected": "2022-08-03T00:24:09.000000Z",
  "last_collected": "2025-09-08T04:53:35.000Z",
- "tao": 545199,
+ "tao": 557379,
  "tao_rate": 420,
  "tao_rank": 12,
  "collections": [
@@ -35,13 +35,8 @@
    "works": 3
   },
   {
-   "slug": "roads-and-rivers",
-   "title": "Roads & Rivers",
-   "works": 1
-  },
-  {
-   "slug": "geodetic-memory",
-   "title": "Geodetic Memory",
+   "slug": "2022-10k",
+   "title": "2022 (10k Project)",
    "works": 1
   },
   {
@@ -50,8 +45,13 @@
    "works": 1
   },
   {
-   "slug": "2022-10k",
-   "title": "2022 (10k Project)",
+   "slug": "geodetic-memory",
+   "title": "Geodetic Memory",
+   "works": 1
+  },
+  {
+   "slug": "roads-and-rivers",
+   "title": "Roads & Rivers",
    "works": 1
   }
  ],
@@ -66,7 +66,7 @@
    "unique": false,
    "image": "geodetic-memory/geodetic-memory-geodetic-memory-display.webp",
    "orientation": "landscape",
-   "tao": 11778
+   "tao": 12143
   },
   {
    "id": "geodetic-home-5",
@@ -78,7 +78,7 @@
    "unique": false,
    "image": "geodetic-home/geodetic-home-5-display.webp",
    "orientation": null,
-   "tao": 1657
+   "tao": 1779
   },
   {
    "id": "xlife-66",
@@ -90,7 +90,7 @@
    "unique": false,
    "image": "xlife/xlife-66-image.gif",
    "orientation": null,
-   "tao": 2090
+   "tao": 2212
   },
   {
    "id": "geodetic-onchain-3",
@@ -102,7 +102,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-3-display.webp",
    "orientation": null,
-   "tao": 67662
+   "tao": 69002
   },
   {
    "id": "xlife-43",
@@ -114,7 +114,7 @@
    "unique": false,
    "image": "xlife/xlife-43-image.webp",
    "orientation": null,
-   "tao": 4240
+   "tao": 4362
   },
   {
    "id": "xlife-34",
@@ -126,7 +126,7 @@
    "unique": false,
    "image": "xlife/xlife-34-image.gif",
    "orientation": null,
-   "tao": 27184
+   "tao": 27915
   },
   {
    "id": "roads-or-rivers-42-below",
@@ -138,7 +138,7 @@
    "unique": false,
    "image": "roads-and-rivers/roads-or-rivers-42-below-image.jpg",
    "orientation": null,
-   "tao": 237715
+   "tao": 242831
   },
   {
    "id": "geodetic-onchain-2",
@@ -150,7 +150,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-2-display.png",
    "orientation": null,
-   "tao": 63956
+   "tao": 65174
   },
   {
    "id": "geodetic-onchain-1",
@@ -162,7 +162,7 @@
    "unique": false,
    "image": "geodetic-onchain/geodetic-onchain-1-display.png",
    "orientation": null,
-   "tao": 63956
+   "tao": 65174
   },
   {
    "id": "2022-10k-1",
@@ -174,7 +174,31 @@
    "unique": false,
    "image": "2022-10k/2022-10k-1-display.webp",
    "orientation": null,
-   "tao": 6412
+   "tao": 6534
+  },
+  {
+   "id": "xlife-63",
+   "title": "Metadata Wars",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-63-image.png",
+   "orientation": null,
+   "tao": 14987
+  },
+  {
+   "id": "xlife-28",
+   "title": "Swap Anyway",
+   "collection": "xlife",
+   "group": "archive",
+   "genre": null,
+   "acquired": null,
+   "unique": false,
+   "image": "xlife/xlife-28-image.gif",
+   "orientation": null,
+   "tao": 32226
   },
   {
    "id": "xnouns-150",
@@ -208,30 +232,6 @@
    "unique": true,
    "image": "xnouns/xnouns-0-image.avif",
    "orientation": null
-  },
-  {
-   "id": "xlife-63",
-   "title": "Metadata Wars",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-63-image.png",
-   "orientation": null,
-   "tao": 14256
-  },
-  {
-   "id": "xlife-28",
-   "title": "Swap Anyway",
-   "collection": "xlife",
-   "group": "archive",
-   "genre": null,
-   "acquired": null,
-   "unique": false,
-   "image": "xlife/xlife-28-image.gif",
-   "orientation": null,
-   "tao": 31495
   }
  ]
 }
