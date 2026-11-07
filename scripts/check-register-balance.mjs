@@ -20,6 +20,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { copiesOf } from '../api/_lib/tao.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const KEY = process.env.ETHERSCAN_API_KEY;
@@ -89,7 +90,7 @@ const cached = new Set();
 for (const f of fs.readdirSync(path.join(ROOT, 'data/tao/e')).filter((n) => n.endsWith('.json'))) {
   const d = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/tao/e', f), 'utf8'));
   cached.add(d.contract);
-  for (const [token, from, to, qty] of d.events) put(d.contract, token, from, to, Number(qty) || 1);
+  for (const [token, from, to, qty] of d.events) put(d.contract, token, from, to, copiesOf(qty));
 }
 
 // and the contracts TAO deliberately leaves out, which the register still counts

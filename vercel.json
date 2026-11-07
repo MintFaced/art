@@ -46,6 +46,9 @@
     },
     "api/cron/commissions.js": {
       "maxDuration": 60
+    },
+    "api/cron/strips.js": {
+      "maxDuration": 60
     }
   },
   "redirects": [
@@ -76,6 +79,14 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/strips/:path+",
+      "destination": "/api/strips"
+    },
+    {
+      "source": "/c/strip-paintings/strips/:id",
+      "destination": "/strips-token"
+    },
     {
       "source": "/api/stripe-webhook",
       "destination": "/api/webhook"
@@ -200,6 +211,10 @@
     },
     {
       "path": "/api/cron/commissions",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/strips",
       "schedule": "* * * * *"
     }
   ],

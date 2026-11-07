@@ -1,5 +1,8 @@
 import { readFile, writeFile } from '../_lib/repo.js';
-import { computeTao } from '../_lib/tao.js';
+import { computeTao, copiesOf } from '../_lib/tao.js';
+import { deployed as stripsDeployed, deployment as stripsDeployment } from '../_lib/strips.js';
+import { addToRegister, readGallery } from '../_lib/strips-index.js';
+import { storeConfigured } from '../_lib/kv.js';
 import { deriveCollectors, registerFile, heldFile } from '../_lib/collectors.js';
 import { loadRuns, saveRuns, hoursSince } from '../_lib/runs.js';
 import { send } from '../_lib/email.js';
@@ -191,6 +194,15 @@ async function run({ key, dry, started, prior, url }) {
     }
   }
 
+  /* //STRIPS aren't in the catalogue. The every-minute cron keeps their list, so
+     tonight's run is one read of the store rather than thousands of the chain.
+     A list that can't be read costs those holders a night: every figure here is
+     recomputed from the whole history tomorrow. */
+  if (stripsDeployed() && storeConfigured()) {
+    try { addToRegister(tokens, targets, await readGallery(), stripsDeployment(), site); }
+    catch (e) { console.error('tao: no //STRIPS list tonight', e.message); }
+  }
+
   /* ================= Phase A ... the ownership diff =================
      What moved, and how it left. Before any TAO arithmetic, because the
      arithmetic is only worth reading if the movement it rests on is written
@@ -204,7 +216,14 @@ async function run({ key, dry, started, prior, url }) {
 
   for (const [addr, t] of targets) {
     let cached = null;
-    try { cached = await get(`data/tao/e/${addr}.json`); } catch (e) { /* never backfilled */ }
+    try { cached = await get(`data/tao/e/${addr}.json`); } catch (e) {
+      /* never backfilled. A contract that knows its first block needs no
+         backfill, but only a real 404 means that: started over after a blip,
+         every old transfer would arrive again and every old sale tweet twice. */
+      if (t.first_block && /: 404$/.test(e.message)) {
+        cached = { contract: addr, standard: t.std, collections: ['strip-paintings'], cursor: t.first_block - 1, events: [] };
+      }
+    }
     // the first backfill reads shared contracts one token at a time and is far
     // too slow for a function; scripts/tao/fetch-events.mjs does that by hand
     if (!cached || !cached.cursor) { neverBackfilled.push(addr); continue; }
@@ -225,14 +244,15 @@ async function run({ key, dry, started, prior, url }) {
         if (topic === T721) {
           if (!l.topics || l.topics.length < 4) continue;
           const id = BigInt(l.topics[3]).toString();
-          if (!t.tokens.has(id)) continue;
+          if (!t.all && !t.tokens.has(id)) continue;
           found.push([id, addrOf(l.topics[1]), addrOf(l.topics[2]), 1, ts, blk, l.transactionHash]);
         } else if (topic === T1155_ONE) {
           const w = words(l.data);
           if (w.length < 2) continue;
           const id = BigInt(w[0]).toString();
           if (!t.tokens.has(id)) continue;
-          found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), Number(BigInt(w[1])), ts, blk, l.transactionHash]);
+          const value = Number(BigInt(w[1]));
+          if (value) found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), value, ts, blk, l.transactionHash]);
         } else {
           const w = words(l.data);
           if (w.length < 4) continue;
@@ -242,7 +262,8 @@ async function run({ key, dry, started, prior, url }) {
           for (let i = 0; i < n; i++) {
             const id = BigInt(w[idsAt + 1 + i] || '0x0').toString();
             if (!t.tokens.has(id)) continue;
-            found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), Number(BigInt(w[valsAt + 1 + i] || '0x0')), ts, blk, l.transactionHash]);
+            const value = Number(BigInt(w[valsAt + 1 + i] || '0x0'));
+            if (value) found.push([id, addrOf(l.topics[2]), addrOf(l.topics[3]), value, ts, blk, l.transactionHash]);
           }
         }
       }
@@ -252,7 +273,7 @@ async function run({ key, dry, started, prior, url }) {
     cached.events = cached.events.concat(add).sort((a, b) => a[5] - b[5] || a[4] - b[4]);
     cached.cursor = HEAD;
     cached.updated = new Date().toISOString();
-    for (const e of add) arrived.push({ contract: addr, token: e[0], from: e[1], to: e[2], qty: Number(e[3]) || 1, ts: e[4], block: e[5], tx: e[6] });
+    for (const e of add) if (copiesOf(e[3])) arrived.push({ contract: addr, token: e[0], from: e[1], to: e[2], qty: copiesOf(e[3]), ts: e[4], block: e[5], tx: e[6] });
     files.set(addr, { data: cached, changed: add.length > 0 });
   }
   if (!Number.isFinite(scannedFrom)) scannedFrom = HEAD;
@@ -381,8 +402,8 @@ async function run({ key, dry, started, prior, url }) {
         await wire('sale', {
           id: meta.work, title: meta.title, collection: meta.collection,
           price: `${Number(paid.toFixed(4))} ETH`, address: e.to || null,
-          url: `${site}/w/${encodeURIComponent(meta.work)}`,
-          image: `${site}/api/og?work=${encodeURIComponent(meta.work)}`,
+          url: meta.url || `${site}/w/${encodeURIComponent(meta.work)}`,
+          image: meta.url ? meta.image : `${site}/api/og?work=${encodeURIComponent(meta.work)}`,
           tx: e.tx,
         }, { at: e.ts * 1000 });
       } else {
@@ -403,7 +424,7 @@ async function run({ key, dry, started, prior, url }) {
   const events = [];
   for (const [addr, { data }] of files) {
     for (const [token, from, to, qty, ts, blk, tx] of data.events) {
-      events.push({ contract: addr, token, from, to, qty: Number(qty) || 1, ts, block: blk, tx,
+      if (copiesOf(qty)) events.push({ contract: addr, token, from, to, qty: copiesOf(qty), ts, block: blk, tx,
         sale: Boolean(sales.tx[tx] && sales.tx[tx].sale) });
     }
   }

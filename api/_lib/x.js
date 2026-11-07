@@ -73,7 +73,7 @@ export async function uploadMedia(bytes, type = 'image/png') {
 }
 
 /** The tweet itself. Returns the id X assigned, which is what is recorded. */
-export async function tweet(text, mediaIds = []) {
+export async function tweet(text, mediaIds = [], signal) {
   const c = creds();
   const url = `${API}/2/tweets`;
   const payload = { text, ...(mediaIds && mediaIds.length ? { media: { media_ids: mediaIds } } : {}) };
@@ -81,11 +81,16 @@ export async function tweet(text, mediaIds = []) {
     method: 'POST',
     headers: { authorization: sign('POST', url, {}, c), 'content-type': 'application/json' },
     body: JSON.stringify(payload),
+    signal,
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) {
     const err = new Error(`x tweet ${r.status}: ${JSON.stringify(j).slice(0, 240)}`);
     err.status = r.status;
+    /* X refuses the same words twice, so these words are already out. */
+    err.duplicate = r.status === 403 && /duplicate/i.test(JSON.stringify(j));
+    /* Anything else in these two is about the keys, not about this tweet. */
+    err.credentials = (r.status === 401 || r.status === 403) && !err.duplicate;
     /* 429 is the rate limit and 5xx is X having a moment: both are worth
        waiting on rather than giving up over. A 4xx that is not 429 means this
        tweet will never send, however many times it is offered. */

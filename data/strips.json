@@ -1,0 +1,7 @@
+{
+  "_note": "Where //STRIPS lives on each chain. Empty until deployed: the Maker's MINT button stays off and everything else still works. STRIPS_NETWORK picks the network, mainnet unless it says otherwise.",
+  "networks": {
+    "mainnet": { "chain_id": 1, "core": null, "extension": null, "ledger": null, "renderer": null, "first_block": null },
+    "sepolia": { "chain_id": 11155111, "core": null, "extension": null, "ledger": null, "renderer": null, "first_block": null }
+  }
+}

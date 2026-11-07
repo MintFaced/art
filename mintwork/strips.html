@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>//STRIPS ... console</title>
+<meta name="theme-color" content="#faf9f6">
+<script>(function(){try{
+var c=document.cookie.match(/(?:^|;\s*)mf_theme=(day|night)/),
+    t=c?c[1]:localStorage.getItem('mf_theme');
+if(t!=='day'&&t!=='night')t=null;
+if(t)document.documentElement.setAttribute('data-theme',t);
+var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
+document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
+}catch(e){}})();</script>
+<link rel="stylesheet" href="/mintface.css">
+<style>
+.wrap{max-width:1040px;margin:0 auto;padding:40px 24px 70px}
+h1{font-weight:400;font-size:32px;margin:0 0 4px}
+h2{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:34px 0 10px}
+.note{color:var(--muted);font-size:13px;margin:4px 0}
+.warn{color:#b3261e;font-family:var(--font-mono);font-size:12px}
+table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:12px}
+th{text-align:left;color:var(--muted);font-weight:400;padding:6px 8px 6px 0;border-bottom:1px solid var(--ink)}
+td{padding:7px 8px 7px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+button{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink);padding:6px 9px;cursor:pointer}
+button:disabled{opacity:.4;cursor:default}
+input,textarea{font-family:var(--font-mono);font-size:12px;background:none;color:var(--ink);border:1px solid var(--rule);padding:6px;box-sizing:border-box}
+textarea{width:100%;min-height:130px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.row input{flex:1;min-width:150px}
+#said{position:sticky;bottom:0;background:var(--paper);font-family:var(--font-mono);font-size:12px;padding:8px 0;min-height:18px}
+.still{max-width:100%;max-height:220px;display:block;margin:8px 0}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>//STRIPS</h1>
+  <p class="note" id="where"></p>
+  <div class="row"><button id="connect">Connect the MintFace wallet</button><span class="note" id="who"></span></div>
+
+  <h2>Signal</h2>
+  <div id="vrf"></div>
+
+  <h2>Street works</h2>
+  <table id="sites"><thead><tr><th>No.</th><th>Address</th><th>Status</th><th>Design</th><th>Token</th><th></th></tr></thead><tbody></tbody></table>
+  <div id="editor" hidden>
+    <h2 id="editorH"></h2>
+    <p class="note">Check this against the After photograph. The painted panel is the truth, not the formula: correct the strips here until it matches, then sign it off.</p>
+    <img class="still" id="editStill" alt="The design as it would mint">
+    <textarea id="editJson" spellcheck="false" aria-label="The design as JSON"></textarea>
+    <div class="row"><button id="editSave">Save</button><button id="editSign">Sign off</button></div>
+  </div>
+
+  <h2>A token</h2>
+  <p class="note">Photographs and crops go up to Arweave first (ArDrive). Paste the ar:// URI here.</p>
+  <div class="row"><input id="tId" placeholder="Token id" inputmode="numeric"><input id="tUri" placeholder="ar://..."><input id="tText" placeholder="Story text"></div>
+  <div class="row"><input id="tW" placeholder="Installed width cm" inputmode="numeric"><input id="tH" placeholder="Installed height cm" inputmode="numeric"></div>
+  <div class="row">
+    <button data-op="photo">Add installed photo</button><button data-op="target">Set AR target</button>
+    <button data-op="story">Add story</button><button data-op="redeem">Redeem (painted)</button><button data-op="retry">Ask for its word again</button>
+  </div>
+
+  <h2>Owner mint</h2>
+  <p class="note">Free, for a commission's twin or our own, from mintface.eth or ryanj.eth. It comes out of the 621 and stops at what's reserved for free mints.</p>
+  <div class="row"><input id="twDesign" placeholder="Design hex, from the order"><input id="twTo" placeholder="The wallet it goes to"><button data-op="twin">Mint</button></div>
+
+  <h2>Snapshot</h2>
+  <p class="note">The table has to be on the site and on Arweave first. The root is checked against both, and the free mints it reserves and its date are read from the table.</p>
+  <div class="row"><input id="sRoot" placeholder="Root, from scripts/strips/snapshot.mjs"><input id="sUri" placeholder="ar://... the table"><button data-op="snapshot">Publish</button></div>
+
+  <h2>Free mint claim</h2>
+  <p class="note" id="claimNote"></p>
+  <div class="row"><input id="cDays" placeholder="Days to add" inputmode="numeric"><button data-op="extend">Extend the deadline</button></div>
+  <div class="row"><input id="cSnapshot" placeholder="Corrected snapshot id" inputmode="numeric"><button data-op="correct">Point the claim at it</button></div>
+
+  <h2>Public mint</h2>
+  <div class="row"><button id="openMint"></button></div>
+
+  <h2>Freeze</h2>
+  <p class="note" id="freezeNote"></p>
+  <div id="checks"></div>
+  <div class="row"><button id="freeze" disabled>Freeze the renderer</button></div>
+  <div id="said" aria-live="polite"></div>
+</main>
+<script src="/mintface.js"></script>
+<script type="module">
+import { stillSVG } from '/strips-design.js';
+const $ = (id) => document.getElementById(id);
+const e = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const say = (m) => { $('said').textContent = m; };
+const post = async (body) => {
+  const r = await fetch('/api/strips-admin', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || `error ${r.status}`);
+  return j;
+};
+const CHECK_NAMES = { mintface: 'mintface.art', opensea: 'OpenSea', etherscan: 'Etherscan\'s data URI', wallet: 'A phone wallet' };
+let V = null, who = null, editing = null;
+const provider = () => (MF._wallet && MF._wallet.provider) || window.ethereum;
+
+/* Nothing is sent from the server. The wallet in this browser signs or doesn't. */
+async function sign(op, extra = {}) {
+  try {
+    const tx = await post({ action: 'tx', op, ...extra });
+    who = who || await MF.connect();
+    $('who').textContent = who;
+    await MF.onChain(V.chain_id);
+    say('Confirm in the wallet');
+    const hash = await provider().request({ method: 'eth_sendTransaction', params: [{ from: who, to: tx.to, data: tx.data }] }, `eip155:${V.chain_id}`);
+    say(`Sent: ${hash}`);
+    /* what the chain made of it, and the page as it now stands */
+    for (let i = 0; i < 40; i += 1) {
+      const r = await fetch(`/api/strips/receipt?hash=${hash}`).then((x) => x.json()).catch(() => null);
+      if (r && r.status) { say(`${r.status === 'success' ? 'Done' : 'Failed on chain'}: ${hash}`); break; }
+      await new Promise((ok) => setTimeout(ok, 3000));
+    }
+    await load();
+  } catch (err) { say(err.message); }
+}
+
+async function edit(no) {
+  const site = V.sites.find((s) => s.no === no);
+  let rec = site.record;
+  try { if (!rec) rec = await post({ action: 'draft', no }); } catch (err) { say(err.message); return; }
+  editing = no;
+  $('editor').hidden = false;
+  $('editorH').textContent = `No.${no} · ${site.address}${rec.signed ? ' · signed off' : ''}`;
+  $('editJson').value = JSON.stringify(rec, null, 1);
+  preview(rec);
+}
+async function preview(rec) {
+  try {
+    const { packStrips } = await import('/strips-design.js');
+    const hex = packStrips(rec.strips, rec, '#D32011');
+    $('editStill').src = `data:image/svg+xml;base64,${btoa(stillSVG(hex))}`;
+  } catch { /* not a design yet */ }
+}
+$('editJson').addEventListener('input', () => { try { preview(JSON.parse($('editJson').value)); } catch { /* still typing */ } });
+$('editSave').addEventListener('click', async () => {
+  try { await post({ action: 'design', no: editing, design: JSON.parse($('editJson').value) }); say('Saved, unsigned'); load(); } catch (err) { say(err.message); }
+});
+$('editSign').addEventListener('click', async () => {
+  try { await post({ action: 'design', no: editing, design: JSON.parse($('editJson').value) }); await post({ action: 'sign', no: editing }); say('Signed off'); load(); } catch (err) { say(err.message); }
+});
+
+function paint() {
+  $('where').textContent = V.deployed ? `${V.network} · ${V.public_minted} public, ${V.street_minted} street` : `Not deployed on ${V.network} yet: data/strips.json is empty. Designs can be prepared now.`;
+  $('vrf').innerHTML = !V.vrf ? '<p class="note">No subscription to read yet.</p>'
+    : `<p class="note">${(Number(V.vrf.native_wei) / 1e18).toFixed(4)} ETH · ${(Number(V.vrf.link_juels) / 1e18).toFixed(2)} LINK · ${V.vrf.requests} requests</p>${V.vrf.low ? '<p class="warn">The VRF subscription is low. Tokens will sit on TUNING until it is funded.</p>' : ''}${V.tuning && V.tuning.length ? `<p class="note">Still tuning: ${V.tuning.map(e).join(', ')}</p>` : ''}`;
+  $('sites').tBodies[0].innerHTML = V.sites.map((s) => `<tr><td>${s.no}</td><td>${e(s.address)}</td><td>${e(s.status)}</td><td>${e(s.design)}</td><td>${s.token_id ? `<a href="/c/strip-paintings/strips/${s.token_id}">#${s.token_id}</a>` : '...'}</td>
+    <td><button data-edit="${s.no}">Design</button> <button data-mint="${s.no}" ${!V.deployed || s.token_id || s.design !== 'signed' ? 'disabled' : ''}>Mint</button></td></tr>`).join('');
+  $('openMint').textContent = V.open ? 'Close the public mint' : 'Open the public mint';
+  const c = V.claim;
+  $('openMint').disabled = !V.deployed || (!V.open && !(c && c.snapshot));
+  $('claimNote').textContent = !c || !c.snapshot ? 'No snapshot yet, so the public mint can\'t open.'
+    : `Snapshot ${c.snapshot} · ${c.claimed} claimed · ${c.reserved} held back · ${c.live ? 'closes' : 'closed'} ${new Date(c.deadline * 1000).toUTCString()}${c.live && !c.ok ? ' · THE SITE HAS NO TABLE FOR THIS ROOT: nothing can mint until it does' : ''}`;
+  const f = V.freeze;
+  $('freezeNote').textContent = f.frozen ? 'Frozen. The renderer can never be swapped.' : `${f.minted} of ${f.need} mints. Permanent, and announced.`;
+  $('checks').innerHTML = f.keys.map((k) => `<label class="row"><input type="checkbox" data-check="${k}" ${V.checks[k] ? 'checked' : ''}> Renders correctly on ${e(CHECK_NAMES[k])}</label>`).join('');
+  $('freeze').disabled = !f.ready;
+}
+async function load() {
+  const r = await fetch('/api/strips-admin');
+  if (r.status === 401) { say('Sign in at the console first'); return; }
+  V = await r.json();
+  paint();
+}
+
+document.addEventListener('click', (ev) => {
+  const b = ev.target.closest('button');
+  if (!b) return;
+  if (b.dataset.edit) edit(Number(b.dataset.edit));
+  if (b.dataset.mint) sign('street', { no: Number(b.dataset.mint) });
+  const op = b.dataset.op;
+  if (op === 'twin') sign('twin', { design: $('twDesign').value.trim(), to: $('twTo').value.trim() });
+  else if (op === 'snapshot') sign('snapshot', { root: $('sRoot').value.trim(), uri: $('sUri').value.trim() });
+  else if (op === 'extend') { if (confirm('Extend the claim? A deadline can only move later, never back.')) sign('extend', { days: Number($('cDays').value) }); }
+  else if (op === 'correct') sign('correct', { snapshot: Number($('cSnapshot').value) });
+  else if (op) sign(op, { id: Number($('tId').value), uri: $('tUri').value.trim(), text: $('tText').value, width_cm: Number($('tW').value), height_cm: Number($('tH').value) });
+});
+document.addEventListener('change', async (ev) => {
+  const k = ev.target.dataset && ev.target.dataset.check;
+  if (!k) return;
+  try { await post({ action: 'check', key: k, value: ev.target.checked }); load(); } catch (err) { say(err.message); }
+});
+$('connect').addEventListener('click', async () => { try { who = await MF.connect(); $('who').textContent = who; } catch (err) { say(err.message); } });
+$('openMint').addEventListener('click', () => sign('open', { open: !V.open }));
+$('freeze').addEventListener('click', () => { if (confirm('Freeze the renderer? This is permanent: it can never be swapped after this.')) sign('freeze'); });
+load();
+</script>
+</body>
+</html>

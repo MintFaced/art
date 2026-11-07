@@ -38,8 +38,8 @@ console.log('\n— the Maker reads the same function —');
 const maker = read('strip-painting-maker.html');
 is('it imports strip-price.js and asks it', /from '\/strip-price\.js'/.test(maker) && /stripPrice\(/.test(maker), true);
 is('the old tiers, rate and height factor are gone', /rate: (650|800|1000)|Height factor|\$1,000\/m/.test(maker), false);
-is('the Maker lays no strip itself: it asks the server, by the millimetre', [/mulberry32|pickColour|layStrips|streamFor|Regenerate/.test(maker), /\/api\/strip-render/.test(maker) && /height_mm/.test(maker)], [false, true]);
-is('its dials are the rhythm\'s: strips, vibrancy 1.0 to 1.6, height on the 6 mm grid', [/id="count"/.test(maker), /id="vib" min="1" max="1.6"/.test(maker), /id="height" value="600" min="102" step="6"/.test(maker)], [true, true, true]);
+is('the Maker lays no strip itself: it asks the server, and draws the bytes it gets back', [/GRID|snap6/.test(maker), /\/api\/strips\/preview/.test(maker), /stillSVG\(S\.design\)/.test(maker)], [false, true, true]);
+is('its dials are the rhythm\'s: strips, vibrancy 1.0 to 1.6, and the commission sizes', [/id="count"/.test(maker), /id="vib" min="1" max="1.6"/.test(maker), /id="length" value="120" min="80" max="240" step="10"/.test(maker), /id="width" value="60" min="10" max="120" step="10"/.test(maker)], [true, true, true, true]);
 
 console.log('\n— the rhythm (strip-rhythm-spec) —');
 const twelve = Array.from({ length: 12 }, (_, i) => ({ hex: `#${(0x0f0f0f * (i + 1)).toString(16).padStart(6, '0').slice(-6).toUpperCase()}` }));

@@ -23,6 +23,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { copiesOf } from '../../api/_lib/tao.js';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const DRY = process.argv.includes('--dry');
@@ -182,7 +183,8 @@ async function viaToken(addr, t, cached) {
         const blk = Number(it.block_number);
         if (blk <= since) { older = true; continue; }
         const ts = Math.floor(new Date(it.timestamp).getTime() / 1000);
-        const qty = Number((it.total && it.total.value) || 1) || 1;
+        const qty = copiesOf(it.total && it.total.value);
+        if (!qty) continue;
         events.push([String(id), String(it.from?.hash || '').toLowerCase(), String(it.to?.hash || '').toLowerCase(), qty, ts, blk, it.transaction_hash]);
       }
       if (older || !j.next_page_params) break;

@@ -208,6 +208,12 @@ section.s{padding-top:112px}
   .dossier{margin-top:72px;padding-top:56px;padding-bottom:56px}
   .dossier .btn{width:100%}
 }
+.tok-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px 16px;margin-top:18px}
+.tok{display:grid;gap:8px;text-decoration:none;color:inherit}
+.tok .frame{position:relative;display:block;aspect-ratio:4/3;background:#000}
+.tok .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.tok .frame>div{position:absolute;inset:0}
+.strips-gallery [data-filters]{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
 </style>
 </head>
 <body>
@@ -282,6 +288,12 @@ section.s{padding-top:112px}
 
   <!-- 6 · Built for the footpath. Generic on purpose: what the work is made
        of, never how the sequence is made. -->
+  <section class="s wrap strips-gallery" id="strips" aria-labelledby="strips-h" hidden>
+    <h2 id="strips-h">//STRIPS on-chain.</h2>
+    <div class="mono" data-filters></div>
+    <div class="tok-grid" data-grid></div>
+  </section>
+
   <section class="s wrap foot-path" aria-labelledby="fp-h">
     <div class="copy">
       <h2 id="fp-h">Built for the footpath.</h2>
@@ -310,7 +322,7 @@ section.s{padding-top:112px}
     <h2 class="vh" id="doors-h">Collect, commission or rent</h2>
     <div class="doors">
       <div><h3>Collect.</h3><p>Own a //Strips outright. ETH, NZD or USD. Card or crypto.</p><a href="#works">Works for sale</a></div>
-      <div><h3>Commission.</h3><p id="commission">Choose the colours. We paint it.</p><a href="/strip-painting-maker">Design yours</a></div>
+      <div><h3>Commission.</h3><p id="commission">Choose the colours. We paint it.</p><a href="/#stripHome">Design yours</a></div>
       <div><h3>Rent.</h3><p id="rent">A //Strips on your vacant fascia.</p><a id="rentLink" href="mailto:art@mintface.art?subject=Renting%20a%20%2F%2FStrips">For buildings</a></div>
     </div>
   </section>
@@ -502,6 +514,10 @@ settle('tiles', () => {
 
 /* a link from elsewhere to #plate-N or #site-N lands once the plates exist */
 if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+</script>
+<script type="module">
+import { mountGallery } from '/strips-gallery.js';
+mountGallery(document.getElementById('strips')).catch(() => {});
 </script>
 </body>
 </html>

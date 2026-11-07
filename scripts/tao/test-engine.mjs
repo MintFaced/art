@@ -63,6 +63,15 @@ is('3 edition copies, 100 days = 1260',
   is('1 copy 100d then 3 copies 100d = 420 + 1260', r.wallets[0].tao_total, 1680); }
 
 // mint interval accrues to nobody
+{ const r = run([ev({ token: '1', from: ZERO, to: A, qty: 1, ts: T0 }),
+                 ev({ token: '1', from: B, to: A, qty: 0, ts: T0 + 10 * D }),
+                 ev({ token: '2', from: B, to: A, qty: 0, ts: T0 + 10 * D }),
+                 ev({ token: '1', from: A, to: B, qty: 0, ts: T0 + 20 * D, sale: true })], 100);
+  is('a quantity of nothing moves nothing', r.wallets.find((w) => w.address === A).tao_total, 6900);
+  is('and gives the other side nothing', r.wallets.filter((w) => w.address === B).length, 0);
+  is('and takes no exit', r.exits.length, 0); }
+{ const r = run([ev({ token: '1', from: ZERO, to: A, ts: T0 })], 100);
+  is('a record with no quantity is still one copy', r.wallets[0].tao_total, 6900); }
 { const r = run([ev({ token: '1', from: ZERO, to: ZERO, qty: 1, ts: T0 })], 100);
   is('zero address never accrues', r.wallets.length, 0); }
 

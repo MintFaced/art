@@ -10,7 +10,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { computeTao } from '../../api/_lib/tao.js';
+import { computeTao, copiesOf } from '../../api/_lib/tao.js';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const DRY = process.argv.includes('--dry');
@@ -43,7 +43,7 @@ const events = [];
 for (const f of fs.readdirSync(path.join(ROOT, 'data/tao/e')).filter((n) => n.endsWith('.json'))) {
   const d = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/tao/e', f), 'utf8'));
   for (const [token, from, to, qty, ts, block, tx] of d.events) {
-    events.push({ contract: d.contract, token, from, to, qty: Number(qty) || 1, ts, block, tx,
+    if (copiesOf(qty)) events.push({ contract: d.contract, token, from, to, qty: copiesOf(qty), ts, block, tx,
       sale: Boolean(sales.tx[tx] && sales.tx[tx].sale) });
   }
 }

@@ -10,7 +10,7 @@
  */
 import palettesFile from '../../data/strip-palettes.json' with { type: 'json' };
 import { stripPrice, STRIP_ETH_NZD } from '../../strip-price.js';
-import { layStrips } from './strip-render.js';
+import { layStrips, fitOf, GAMMA, STRIPS } from './strip-render.js';
 
 export const LENGTH = { min: 80, max: 240, step: 10 };
 export const WIDTH = { min: 10, max: 120, step: 10 };
@@ -40,22 +40,33 @@ export function checkSpec(input = {}) {
   let colours;
   const site = palettesFile.palettes.find((p) => p.id === id);
   if (site) colours = site.colours.map((c) => ({ hex: c.hex.toUpperCase(), w: c.w }));
-  else if (id === 'collectors' || id === 'photo') {
+  else if (id === 'collectors' || id === 'photo' || id === 'maker') {
     const given = Array.isArray(input.colours) ? input.colours : [];
     colours = given.map((c) => (typeof c === 'string' ? { hex: c, w: 10 } : c))
       .filter((c) => c && HEX.test(String(c.hex).toUpperCase()))
       .map((c) => ({ hex: String(c.hex).toUpperCase(), w: Math.min(1000, Math.max(1, Number(c.w) || 10)) }))
       .slice(0, 12);
-    if (new Set(colours.map((c) => c.hex)).size < 4) return { error: 'four colours at the least' };
+    if (new Set(colours.map((c) => c.hex)).size < (id === 'maker' ? 3 : 4)) return { error: id === 'maker' ? 'three colours at the least' : 'four colours at the least' };
   } else return { error: 'no such palette' };
 
+  /* The Maker's own dials, so the painting is the still that was on screen. */
+  const made = {};
+  if (id === 'maker') {
+    made.gamma = Math.min(GAMMA.punchy, Math.max(GAMMA.calm, Number(input.gamma) || GAMMA.calm));
+    made.count = fitOf(width * 10, input.count == null ? STRIPS : Number(input.count)).count;
+    const red = Number(input.red_line);
+    made.red_line = Number.isInteger(red) && red >= 1 && red <= made.count ? red : 16;
+  }
+
   return {
-    spec: { length_cm: length, width_cm: width, orientation: input.orientation, frame, delivery, palette_id: id, colours },
+    spec: { length_cm: length, width_cm: width, orientation: input.orientation, frame, delivery, palette_id: id, colours, ...made },
   };
 }
 
 /** The strips the spec paints as, first to last across its width. */
-export const stripsOf = (spec) => layStrips(spec.colours, spec.width_cm * 10);
+export const stripsOf = (spec) => layStrips(spec.colours, spec.width_cm * 10, spec.palette_id === 'maker'
+  ? { gamma: spec.gamma, count: spec.count, redLine: spec.red_line, keepOrder: true }
+  : {});
 
 /** NZD for the spec as it stands, delivery included. */
 export const nzdOf = (spec) => stripPrice({
