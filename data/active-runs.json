@@ -3,6 +3,75 @@
  "keep": 60,
  "runs": [
   {
+   "run_id": "amw5jsfv4",
+   "at": "2026-11-06T22:30:15.376Z",
+   "ok": true,
+   "ms": 236826,
+   "chain": {
+    "asked": 676,
+    "moved": 57,
+    "unknown": 39,
+    "refused": 781,
+    "rate": 3.89,
+    "due": 825,
+    "due_left": 149,
+    "paged": 805,
+    "of": 3680,
+    "covered": 3688
+   },
+   "studio": {
+    "lit": 7,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
+   "run_id": "amw44clin",
+   "at": "2026-11-05T22:30:15.791Z",
+   "ok": true,
+   "ms": 237160,
+   "chain": {
+    "asked": 674,
+    "moved": 53,
+    "unknown": 32,
+    "refused": 773,
+    "rate": 4.74,
+    "due": 953,
+    "due_left": 279,
+    "paged": 805,
+    "of": 3680,
+    "covered": 3688
+   },
+   "studio": {
+    "lit": 7,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
+   "run_id": "amw2owqj7",
+   "at": "2026-11-04T22:30:15.379Z",
+   "ok": true,
+   "ms": 238143,
+   "chain": {
+    "asked": 684,
+    "moved": 117,
+    "unknown": 37,
+    "refused": 780,
+    "rate": 4.11,
+    "due": 983,
+    "due_left": 299,
+    "paged": 805,
+    "of": 3679,
+    "covered": 3687
+   },
+   "studio": {
+    "lit": 7,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
    "run_id": "amw19gvva",
    "at": "2026-11-03T22:30:15.382Z",
    "ok": true,

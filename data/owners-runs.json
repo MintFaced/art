@@ -2,6 +2,34 @@
  "_note": "One line per sweep. A run that changes nothing while the chain is busy is the signal that something has stopped seeing.",
  "runs": [
   {
+   "at": "2026-11-06T21:00:37.534Z",
+   "since": 26351232,
+   "head": 26358407,
+   "applied": 0,
+   "flagged": 0,
+   "born": 0,
+   "editions": 0,
+   "editions_skipped": 0,
+   "chain_events": 194,
+   "ms": 34076,
+   "ok": true,
+   "gap_hours": 24
+  },
+  {
+   "at": "2026-11-05T21:02:16.324Z",
+   "since": 26344049,
+   "head": 26351232,
+   "applied": 1,
+   "flagged": 0,
+   "born": 0,
+   "editions": 1,
+   "editions_skipped": 0,
+   "chain_events": 295,
+   "ms": 132898,
+   "ok": true,
+   "gap_hours": 24
+  },
+  {
    "at": "2026-11-04T21:00:38.737Z",
    "since": 26336874,
    "head": 26344049,
@@ -390,34 +418,6 @@
    "editions_skipped": 0,
    "chain_events": 235,
    "ms": 105317,
-   "ok": true,
-   "gap_hours": 24
-  },
-  {
-   "at": "2026-10-07T21:00:57.779Z",
-   "since": 26135934,
-   "head": 26143108,
-   "applied": 1,
-   "flagged": 0,
-   "born": 0,
-   "editions": 1,
-   "editions_skipped": 0,
-   "chain_events": 212,
-   "ms": 54551,
-   "ok": true,
-   "gap_hours": 24
-  },
-  {
-   "at": "2026-10-06T21:01:57.716Z",
-   "since": 26128767,
-   "head": 26135934,
-   "applied": 1,
-   "flagged": 0,
-   "born": 0,
-   "editions": 1,
-   "editions_skipped": 0,
-   "chain_events": 253,
-   "ms": 114409,
    "ok": true,
    "gap_hours": 24
   }
