@@ -238,6 +238,13 @@ try {
   is('all the same twelve colours', four.every((v) => String([...new Set(bandsIn(v).map((b) => b.fill))].sort()) === String(three)), true);
   is('all mirrored, each with one red line', four.every((v) => mirrored(bandsIn(v)) && bandsIn(v).filter((b) => b.fill === RED).length === 1), true);
   is('every strip on the measure, the red line at its own', four.every((v) => canon(bandsIn(v))), true);
+  const rolls = new Set();
+  for (let i = 0; i < 4; i += 1) {
+    await op('random');
+    await settled();
+    rolls.add(JSON.stringify(lastPost().colours.map((c) => c.amount).slice().sort()));
+  }
+  is('random re-rolls the widths as well as the order', rolls.size > 1, true);
   is('bigly has fewer bands and the fields lead', [bigBands.length < base3.length, mm(bigBands).filter((v) => v === 24).length > mm(base3).filter((v) => v === 24).length], [true, true]);
   await number(3);
   await settled();

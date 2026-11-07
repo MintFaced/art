@@ -420,6 +420,8 @@ async function fillStrips() {
   try {
     const { mount } = await import('/strip-home.js');
     mount(document.getElementById('stripHome'));
+    /* A link to this door lands after the page has already looked for it. */
+    if (location.hash === '#stripHome') document.getElementById('stripSection').scrollIntoView();
   } catch (err) {
     console.error('strip home', err);
     const section = document.getElementById('stripSection');

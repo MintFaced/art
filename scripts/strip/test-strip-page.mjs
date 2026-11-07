@@ -109,6 +109,7 @@ is('no edition line until the tokens exist', [editionLine(site(1)), editionLine(
 const ed = editionLine(site(1, { edition: { contract: '0xabc', tokens: [1, 2, 3] } }));
 is('then: estate, for sale, gifted to the tenant', [ed.text, ed.parts[0].text, ed.parts[1].link.label, ed.parts[2].text],
   ['Photograph edition of 3', '1/3 mintestate.eth', 'Collect →', '3/3 gifted to the tenant']);
+is('the Commission door goes to the home page, where a painting needs no mint', /<h3>Commission\.<\/h3>[\s\S]{0,120}href="\/#stripHome"/.test(read('c/strip-paintings.html')), true);
 is('commission from 1.2 m at NZ$1,500 a metre: 1,800 and 0.36 ETH', [fromNZD(), ethAtStripRate(fromNZD())], [1800, 0.36]);
 
 console.log('\n— hero and palette —');
