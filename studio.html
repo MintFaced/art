@@ -30,6 +30,16 @@ if(t)document.documentElement.setAttribute('data-theme',t);
 var n=(t||(matchMedia('(prefers-color-scheme:dark)').matches?'night':'day'))==='night';
 document.querySelector('meta[name="theme-color"]').setAttribute('content',n?'#1a1814':'#faf9f6');
 }catch(e){}})();</script>
+<!-- Opening at the latest. The room is drawn and put at its foot behind this
+     class, and only then shown, so nobody reads the masthead and is thrown
+     down a page. The timer is the promise that it never stays hidden. Once
+     the room's own script is running it takes the reveal over, with a longer
+     limit of its own; a page whose script never runs is shown at four seconds
+     regardless. No class without JavaScript, so a page without it hides
+     nothing. -->
+<script>document.documentElement.classList.add('opening');
+history.scrollRestoration='manual';
+window.OPENING=setTimeout(function(){document.documentElement.classList.remove('opening')},4000);</script>
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/mintface.css">
@@ -84,7 +94,10 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(40px,8vw,84px);l
 .nudges .head .q{flex:1 1 auto;min-width:0}
 .nudges .note{font-size:15px;line-height:1.65;color:var(--ink-4);margin:16px 0 0;max-width:34em}
 .nudges .shot{margin:16px 0 0;max-width:520px}
-.nudges .shot img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+/* A fixed height, because the board sends no size: on a phone this card sits
+   between the room and the composer, and a picture landing late would push
+   the composer off the foot. */
+.nudges .shot img{width:100%;height:240px;object-fit:contain;display:block;border:1px solid var(--rule);background:var(--sunk)}
 
 /* The terms, behind a (?) beside the question. */
 .nudges .help{position:relative;flex:none}
@@ -404,18 +417,33 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
   .pot .hx{display:none}
 }
 
-/* ---------- back to the top ----------
+/* ---------- opening at the latest ----------
+   The page is laid out and scrolled while it cannot be seen, which is why
+   this is visibility and not display: the boxes are all there to be measured.
+   The nav stays, so the screen is never blank, and one quiet line stands
+   where the newest posts are about to be. */
+.arriving{display:none}
+.opening #main,.opening .foot,.opening #totop{visibility:hidden}
+.opening .arriving{display:block;position:fixed;left:0;right:0;bottom:24vh;margin:0;text-align:center;
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);pointer-events:none}
+.opened #main,.opened .foot{animation:arrive .12s ease-out}
+@keyframes arrive{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.opened #main,.opened .foot{animation:none}}
+
+/* ---------- top, and back down ----------
    This page opens at the foot of a log kept forever, which puts the shelf,
    the open question and the masthead a long way up. The nav is sticky and
    takes you to another page; nothing took you back to the head of this one
-   but the whole journey.
+   but the whole journey, and nothing took you back down again.
 
    It is the `Earlier` button's voice at the other end of the same log: mono
-   smallcaps, one hairline, one arrow. It is not drawn until there is
-   somewhere to go back to ... a control that says TOP while you are at the
-   top is furniture. And it sits inside the 110px of air under the composer,
-   so at the very foot of the page it is beside the SAY IT button rather than
-   on top of it. */
+   smallcaps, one hairline, one arrow. It is there whenever the page is more
+   than a viewport and a half tall, and it is one button with two words: TOP
+   until you reach the head, BOTTOM until you are back at the latest, and in
+   between it keeps whichever it last said, so it never flickers mid-scroll.
+   It sits inside the 110px of air under the composer, so at the very foot of
+   the page it is beside the SAY IT button rather than on top of it. */
 .totop{position:fixed;right:20px;bottom:20px;z-index:40;
   font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--muted);background:var(--paper);border:1px solid var(--rule);border-radius:0;
@@ -501,6 +529,11 @@ button.pot:focus-visible,a.pot:focus-visible{outline:1px solid var(--ink);outlin
    image on this site gets. */
 .m .shot{display:block;margin:11px 0 0;max-width:100%;max-height:320px;width:auto;height:auto;
   border:1px solid var(--rule);cursor:zoom-in;background:var(--sunk)}
+/* ITS BOX BEFORE ITS BYTES. A picture with a stored size is given its shape
+   inline (card() does it), so it takes its height the moment it is drawn
+   rather than when it lands. One without, from before sizes were kept, gets a
+   fixed height to sit in: the room must not grow under somebody reading it. */
+.m .shot.unsized{height:240px;object-fit:contain}
 .m .shot:focus-visible{outline:none;border-color:var(--ink)}
 
 /* What is about to go up with a message: the picture and what it is. The
@@ -812,6 +845,9 @@ body.resizing{user-select:none;-webkit-user-select:none;cursor:col-resize}
 
 <header class="nav" id="nav"></header>
 
+<!-- Shown only while the room is being put at its foot (.opening). -->
+<p class="arriving">Loading</p>
+
 <main id="main">
   <!-- The masthead is the page's own, and static: it is the only part of this
        surface nothing rewrites, so it is written once in HTML rather than
@@ -834,7 +870,7 @@ body.resizing{user-select:none;-webkit-user-select:none;cursor:col-resize}
   <!-- Four owners, four containers, and none of them redraws another. The room
        is rebuilt whenever somebody speaks; the nudges hold a half-typed number
        and must not be. -->
-  <section class="room" id="log"><div class="loading">Loading</div></section>
+  <section class="room" id="log"></section>
 
   <!-- What the studio is asking now, at the foot of the room, where the reader
        already is. A page that opens at the latest message and kept its open
@@ -856,11 +892,11 @@ body.resizing{user-select:none;-webkit-user-select:none;cursor:col-resize}
      panel somebody is searching in should not go with it. -->
 <div class="picker" id="picker" hidden></div>
 
-<!-- Back to the head of the page. Written in the HTML rather than drawn,
-     because draw() rebuilds the room and the composer every time anybody
-     speaks and this belongs to neither of them. -->
-<button type="button" class="totop" id="totop" hidden>
-  <span class="arw" aria-hidden="true">&#8593;</span> Top
+<!-- Up to the head of the page, and back down to the latest. Written in the
+     HTML rather than drawn, because draw() rebuilds the room and the composer
+     every time anybody speaks and this belongs to neither of them. -->
+<button type="button" class="totop" id="totop" aria-label="Back to the top" hidden>
+  <span class="arw" aria-hidden="true">&#8593;</span> <span class="lab">Top</span>
 </button>
 
 <footer class="foot">
@@ -941,19 +977,44 @@ const TOUCH = (() => {
   catch (err) { return false; }
 })();
 
-/* Whether the reader is at the bottom of the room, asked before anything is
-   added to it. A message arriving should follow you down when you are at the
-   latest, and must not haul you there when you are reading last winter. */
-const nearBottom = (slack = 140) =>
-  window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - slack;
+/* THE FOOT, AND ONE MEANING OF IT.
+ *
+ * The foot is the bottom of the composer, and the air left under it for the
+ * button, sitting on the bottom of the screen. Not the bottom of the document:
+ * that is the footer, and a landing view that spends its height on Combo and
+ * Contact is a landing view with fewer posts in it. The footer waits just
+ * under the fold for anybody who goes on scrolling.
+ *
+ * Opening, following, a message arriving, the cards coming back and the
+ * Bottom button all go to this one place, so they cannot come to disagree
+ * about where the latest is. */
+function footY() {
+  const speak = document.getElementById('speak');
+  if (!speak) return 0;
+  const y = speak.getBoundingClientRect().bottom + window.scrollY - window.innerHeight;
+  return Math.max(0, Math.round(y));
+}
+const reduced = () => {
+  try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  catch (err) { return false; }
+};
+function toFoot({ smooth = false } = {}) {
+  if (smooth && !reduced()) window.scrollTo({ top: footY(), behavior: 'smooth' });
+  else window.scrollTo(0, footY());
+}
+/* Whether the reader is at the foot, asked before anything is added to the
+   room. A message arriving should follow you down when you are at the latest,
+   and must not haul you there when you are reading last winter. Below the foot
+   counts: somebody looking at the footer is still at the latest. */
+const atFoot = (slack = 140) => window.scrollY >= footY() - slack;
 
 /* WHETHER THE ROOM IS STILL FOLLOWING THE FOOT OF THE LOG.
  *
- * nearBottom asks where the page is. This asks what the reader is doing, and
+ * atFoot asks where the page is. This asks what the reader is doing, and
  * they are not the same question. The room opens at the latest message and
  * then goes on loading link cards and marks for a second or two afterwards;
  * somebody who lands and immediately starts reading upward has moved eighty
- * pixels when the cards come back, which nearBottom's slack still counts as
+ * pixels when the cards come back, which atFoot's slack still counts as
  * the bottom ... so every one of them put the reader back at the foot, and
  * scrolling up read as a thing the page kept cancelling.
  *
@@ -962,14 +1023,40 @@ const nearBottom = (slack = 140) =>
  * off at the first upward scroll and back on the moment they return to the
  * foot under their own steam, so a reader parked at the latest is still
  * carried down by a new message, which is the half of it worth keeping. */
-const FOLLOW = { on: true, at: 0, settling: false };
-/* `settling` is the once-after-load half of it. The room jumps to the foot the
-   moment it has rows, and then goes on getting taller for a second or two as
-   the link cards and the pictures arrive ... so the jump has to hold for that
-   long or the page lands a card's height short of the message it opened for.
-   It holds for the settle and then never again, and the reader scrolling up
-   ends it early: an opening position is a thing you can walk away from. */
-const following = () => FOLLOW.on && (FOLLOW.settling || nearBottom());
+const FOLLOW = { on: true, at: 0 };
+const following = () => FOLLOW.on && atFoot();
+
+/* Whether the page has been shown yet. Until it has, it is being laid out and
+   put in place behind .opening, and nothing that reads the scroll position
+   ... the button, the head of the log ... should take the top of a page that
+   has not been put anywhere for somewhere a reader went. */
+const OPEN = { done: false, net: 0 };
+
+/* HOLDING THE FOOT WHILE THE ROOM FINISHES ARRIVING.
+ *
+ * The room is shown at its foot, and then things still land: a card that
+ * came back after the wait, the shelf on a slow board, a face, a font. Each
+ * one makes the page taller above the reader, and on a phone that used to
+ * mean landing a card's height short of the latest. A timer cannot know when
+ * the last of them is in, so the page watches its own height instead, and
+ * every change puts the foot back where it was.
+ *
+ * It holds for six seconds or until the reader scrolls up, whichever is
+ * first, and then never again. Not the browser's own scroll anchoring: Safari
+ * on a phone does not keep it the way Chrome does, and this is the one
+ * position the page has promised. */
+const HOLD = { ro: null, timer: 0 };
+function holdFoot() {
+  letGo();
+  if (!window.ResizeObserver) return;
+  HOLD.ro = new ResizeObserver(() => { if (FOLLOW.on) toFoot(); else letGo(); });
+  HOLD.ro.observe(document.getElementById('main'));
+  HOLD.timer = setTimeout(letGo, 6000);
+}
+function letGo() {
+  if (HOLD.ro) { HOLD.ro.disconnect(); HOLD.ro = null; }
+  clearTimeout(HOLD.timer);
+}
 
 /* And whether the log is allowed to load more of itself right now.
  *
@@ -979,22 +1066,30 @@ const following = () => FOLLOW.on && (FOLLOW.settling || nearBottom());
  * Earlier button, a year of history is prepended, and the scrollBy that keeps
  * a reader's place puts them back where they started. Asking for the top is
  * not asking for more history. The watcher stands down for the journey and is
- * re-armed the next time the reader goes back down into the log. */
-const TOP = { held: false, arrived: false };
+ * re-armed the next time the reader goes back down into the log.
+ *
+ * `down` is the same journey the other way, sent by the Bottom button: the
+ * hold stays on all the way down past the head of the log and comes off on
+ * arrival at the foot, or when the glide is over if something stopped it. */
+const TOP = { held: false, arrived: false, down: false, downTimer: 0 };
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
   /* Upward, by more than a rounding error: the reader has the scroll now. */
-  if (y < FOLLOW.at - 2) { FOLLOW.on = false; FOLLOW.settling = false; }
-  /* Back at the foot. A tighter slack than nearBottom's, because this is a
+  if (y < FOLLOW.at - 2) FOLLOW.on = false;
+  /* Back at the foot. A tighter slack than following's, because this is a
      decision to follow rather than a guess about where somebody is looking. */
-  if (nearBottom(24)) FOLLOW.on = true;
-  /* The hold ends when the journey is over AND the reader has gone back down
-     into the log ... a whole viewport of it, deliberately. Not on the first
-     downward pixel: a smooth scroll is not reliably monotonic, and reading one
-     backwards step as `more history please` is what dropped the reader into
-     the middle of a year they never asked for, half way up. */
-  if (TOP.held) {
+  if (atFoot(24)) FOLLOW.on = true;
+  /* The opening hold is the reader's to end, and the first scroll up ends it. */
+  if (!FOLLOW.on) letGo();
+  if (TOP.down) {
+    if (atFoot(24)) arrivedAtFoot();
+  } else if (TOP.held) {
+    /* The hold ends when the journey is over AND the reader has gone back down
+       into the log ... a whole viewport of it, deliberately. Not on the first
+       downward pixel: a smooth scroll is not reliably monotonic, and reading one
+       backwards step as `more history please` is what dropped the reader into
+       the middle of a year they never asked for, half way up. */
     if (y < 60) TOP.arrived = true;
     else if (TOP.arrived && y > window.innerHeight) { TOP.held = false; watchTop(); }
   }
@@ -1003,16 +1098,44 @@ window.addEventListener('scroll', () => {
   if (PICK.n != null) placePicker();
 }, { passive: true });
 
+/* Down at the latest by the Bottom button: following again, and the head of
+   the log may load history again the next time somebody reads up to it. */
+function arrivedAtFoot() {
+  clearTimeout(TOP.downTimer);
+  TOP.down = false;
+  TOP.held = false;
+  FOLLOW.on = true;
+  watchTop();
+}
+
 /* A window that changed shape is a panel pointing at the wrong place, and on a
    phone it may have changed from a panel into a sheet. */
 window.addEventListener('resize', () => { topButton(); if (PICK.n != null) placePicker(); });
 
-/* The button is there once there is a page above worth going back to, and
-   gone again at the head of it. A viewport and a half: far enough that it is
-   not blinking on and off while somebody nudges the wheel near the top. */
+/* The button is there whenever the page has somewhere to travel: more than a
+   viewport and a half of it. What it says is where it will take you, and it
+   changes only at the two ends ... BOTTOM once you are at the head, TOP once
+   you are back at the foot, by the button or by hand ... so a slow scroll
+   through the middle never sets it flickering. Left alone while the page is
+   still opening, when the page is at the top only because it has not been
+   put anywhere yet. */
+const BTN = { down: false };
 function topButton() {
   const el = document.getElementById('totop');
-  if (el) el.hidden = window.scrollY < window.innerHeight * 1.5;
+  if (!el) return;
+  el.hidden = document.documentElement.scrollHeight <= window.innerHeight * 1.5;
+  if (!OPEN.done) return;
+  if (window.scrollY < 60) sayButton(true);
+  else if (atFoot(24)) sayButton(false);
+}
+function sayButton(down) {
+  if (BTN.down === down) return;
+  BTN.down = down;
+  const el = document.getElementById('totop');
+  if (!el) return;
+  el.querySelector('.arw').innerHTML = down ? '&#8595;' : '&#8593;';
+  el.querySelector('.lab').textContent = down ? 'Bottom' : 'Top';
+  el.setAttribute('aria-label', down ? 'Down to the latest' : 'Back to the top');
 }
 
 const short = (a) => `${String(a).slice(0, 6)}…${String(a).slice(-4)}`;
@@ -1077,10 +1200,15 @@ const api = async (qs) => {
  * beginning is a room you scroll through years of to reach this afternoon.
  * So: the newest page, drawn, and the view put at the foot of it before the
  * first paint. Earlier arrives upward, a page at a time, when a reader goes
- * looking for it. */
+ * looking for it.
+ *
+ * What it hands back is the cards still on their way, for the opening to wait
+ * on. Wrapped, because an async function returning a promise would wait on it
+ * here, and the opening's wait has a limit this one would not. */
 async function load({ bottom = false } = {}) {
   const d = await api();
-  if (!d) { ROOM.rows = []; draw(); return; }
+  if (!d) { ROOM.rows = []; ROOM.failed = true; draw({ toBottom: bottom }); return { cards: null }; }
+  ROOM.failed = false;
   ROOM.rows = d.messages || [];
   ROOM.total = d.total || 0;
   ROOM.start = d.start || 0;
@@ -1111,14 +1239,7 @@ async function load({ bottom = false } = {}) {
      the place that knows the number first. */
   MF.nav.mentions(ROOM.waiting, ROOM.next);
   draw({ toBottom: bottom });
-  /* Opening at the latest message, and holding there while the room finishes
-     arriving. Two and a half seconds, or until the reader scrolls up ...
-     whichever comes first, and it is usually them. */
-  if (bottom) {
-    FOLLOW.settling = true;
-    setTimeout(() => { FOLLOW.settling = false; }, 2500);
-  }
-  askCards();
+  return { cards: askCards() };
 }
 
 /* Read. Sent by the cherry, and by nothing else: it is the notifier, so it is
@@ -1164,6 +1285,10 @@ async function poll() {
   // never under an open @ list, or under somebody's hands: a redraw would take
   // the list, the caret and the half-written sentence with it
   if (ROOM.busy || document.hidden || ROOM.tag.open) return;
+  /* A room that never loaded is asked for again, whole. Polling it from
+     message nought would be asking for the first hundred things ever said and
+     putting them where the latest should be. */
+  if (ROOM.failed) return void retryRoom();
   const d = await api({ since: String(ROOM.total) });
   if (!d) return;
   /* The marks, in one number. Where it has moved, and only there, the page
@@ -1251,7 +1376,20 @@ async function askCards() {
     const box = document.getElementById(`cards-${m.n}`);
     if (box) box.innerHTML = cardsFor(m.links);
   }
-  if (follow) window.scrollTo(0, document.documentElement.scrollHeight);
+  if (follow) toFoot();
+}
+
+/* The room, asked for again after a first load that failed. Busy while it is
+   out, so the next poll does not send a second one beside it; and put at the
+   foot when it arrives unless the reader has gone somewhere since. */
+async function retryRoom() {
+  ROOM.busy = true;
+  try {
+    const follow = FOLLOW.on;
+    await load();
+    if (!ROOM.failed && follow && FOLLOW.on) toFoot();
+  } catch (err) { /* the next poll asks again */ }
+  finally { ROOM.busy = false; }
 }
 
 /* What is under the messages on screen now.
@@ -1326,9 +1464,16 @@ function card(m, prev) {
   /* Modest, and clickable. The room is for words; a picture in it is a thing
      somebody is showing you, not the page's subject, so it takes a few lines
      of height and opens properly when it is actually being looked at. */
+  /* Its box is drawn with it. The same look as ever ... never taller than
+     320, never wider than the column, never past its own pixels ... but said
+     as a shape the browser knows before the picture has arrived, because the
+     width and height attributes alone are thrown away by `width:auto`. */
+  const iw = m.image ? Math.round(Number(m.image.w)) : 0;
+  const ih = m.image ? Math.round(Number(m.image.h)) : 0;
+  const sized = iw > 0 && ih > 0;
   const shot = m.image
-    ? `<img class="shot" src="${e(m.image.url)}" alt="" loading="lazy" decoding="async"
-        ${m.image.w && m.image.h ? `width="${m.image.w}" height="${m.image.h}"` : ''}
+    ? `<img class="shot${sized ? '' : ' unsized'}" src="${e(m.image.url)}" alt="" loading="lazy" decoding="async"
+        ${sized ? `width="${iw}" height="${ih}" style="aspect-ratio:${iw} / ${ih};width:min(100%, ${Math.round(320 * iw / ih)}px, ${iw}px);height:auto"` : ''}
         data-act="shot" data-src="${e(m.image.url)}" tabindex="0" role="button"
         aria-label="Open this picture">`
     : '';
@@ -1865,16 +2010,18 @@ function draw({ keep = false, toEnd = false, toBottom = false } = {}) {
      rebuild every time somebody says something. */
   document.getElementById('log').innerHTML = `
     ${ROOM.more ? '<button class="earlier" id="earlier" data-act="earlier">&#8593; Earlier</button>' : ''}
-    ${ROOM.rows.length ? ROOM.rows.map((m, i) => card(m, ROOM.rows[i - 1])).join('') : '<div class="quiet-log">Nobody has said anything yet.</div>'}`;
+    ${ROOM.rows.length ? ROOM.rows.map((m, i) => card(m, ROOM.rows[i - 1])).join('')
+      : `<div class="quiet-log">${ROOM.failed ? 'The room could not be reached. Studio will keep trying.' : 'Nobody has said anything yet.'}</div>`}`;
   document.getElementById('speak').innerHTML = `${composer()}${say}`;
 
   if (keep) window.scrollBy(0, document.documentElement.scrollHeight - before);
   /* The foot of the room, without the journey. Opening at the latest message
      is the whole point of it, and gliding there through a year of history is
      both slower and stranger than simply being there. */
-  if (toBottom) window.scrollTo(0, document.documentElement.scrollHeight);
-  if (toEnd) window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  if (toBottom) toFoot();
+  if (toEnd) toFoot({ smooth: true });
   watchTop();
+  topButton();
   const t = document.getElementById('text');
   /* A redraw rebuilds the box, and rebuilding the box puts the caret at the
      start of somebody's half-written sentence. Where it was is remembered and
@@ -1925,11 +2072,16 @@ async function saveEdit(b) {
  *
  * The observer is hung on a fresh button every draw, so it fires once as it is
  * hung. That is right: after a page is added the button sits a page further up
- * and out of view, and it says nothing more until somebody goes back to it. */
+ * and out of view, and it says nothing more until somebody goes back to it.
+ *
+ * Not while the page is opening. An observer does not care that the room is
+ * hidden, and a room drawn at the top of a page that has not been put at its
+ * foot yet has its Earlier button in view: that is a year of history, a page
+ * at a time, loaded behind the curtain. The reveal hangs it. */
 let watcher = null;
 function watchTop() {
   if (watcher) { watcher.disconnect(); watcher = null; }
-  if (TOP.held) return;
+  if (TOP.held || !OPEN.done) return;
   const el = document.getElementById('earlier');
   if (!el || !ROOM.more || !window.IntersectionObserver) return;
   watcher = new IntersectionObserver((entries) => {
@@ -1942,19 +2094,31 @@ function watchTop() {
  *
  * A reply points at a message number, and the room only holds the pages it has
  * been asked for. So it walks backwards a page at a time until the number is
- * in hand, which is the same walk a reader would make and rather quicker. */
-async function goTo(n) {
+ * in hand, which is the same walk a reader would make and rather quicker.
+ *
+ * `jump` is for a page that is not on screen yet: there is no glide to watch,
+ * so it is simply there. A walk can be called off (stopWalk) by whoever is
+ * waiting on it, and one that has been stops at the next page and goes
+ * nowhere, rather than arriving later and taking the reader with it. */
+const TOO_FAR = 'That message is further back than Studio could reach.';
+let walk = 0;
+const stopWalk = () => { walk += 1; };
+async function goTo(n, { jump = false } = {}) {
   const want = Number(n);
-  if (!Number.isFinite(want)) return;
+  if (!Number.isFinite(want)) return false;
+  const mine = ++walk;
   let guard = 0;
   while (!rowAt(want) && ROOM.more && ROOM.start > want && guard++ < 60) {
     if (!(await pullEarlier())) break;
+    if (mine !== walk) return false;
   }
+  if (mine !== walk) return false;
   const el = document.getElementById(`m-${want}`);
-  if (!el) { status('That message is further back than Studio could reach.', true); return; }
-  el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  if (!el) { status(TOO_FAR, true); return false; }
+  el.scrollIntoView({ block: 'center', behavior: jump ? 'auto' : 'smooth' });
   el.classList.add('found');
   setTimeout(() => el.classList.remove('found'), 1400);
+  return true;
 }
 
 /* Connecting connects, and nothing else. No signature is asked for here, and
@@ -2429,7 +2593,7 @@ async function sayIt(b) {
     ROOM.focus = true;
     await load();
     status(null);
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    toFoot({ smooth: true });
   });
 }
 
@@ -4118,33 +4282,163 @@ SPLIT.start();
 /* Back to the top, and the room stops following the foot while somebody is on
    their way to the head of the page ... a message arriving mid-journey and
    hauling them back down is the same cancelled scroll, wearing a poll for a
-   hat. */
+   hat.
+   And back down to the latest. The head of the log stays held on the way
+   past it, or the glide down would load a year of history as it went by, and
+   the composer is not focused on arrival: on a phone that is a keyboard
+   nobody asked for, over the posts they came down to read. */
 document.getElementById('totop').addEventListener('click', () => {
-  FOLLOW.on = false;
+  const smooth = !reduced();
+  clearTimeout(TOP.downTimer);
   TOP.held = true;
-  TOP.arrived = false;
+  if (!BTN.down) {
+    FOLLOW.on = false;
+    TOP.arrived = false;
+    TOP.down = false;
+    watchTop();
+    if (smooth) window.scrollTo({ top: 0, behavior: 'smooth' });
+    else window.scrollTo(0, 0);
+    return;
+  }
+  TOP.down = true;
   watchTop();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  toFoot({ smooth });
+  /* A glide somebody stopped with their own hand never arrives. When it is
+     over the journey down is treated as if they had scrolled it, and the
+     ordinary rule decides when the head of the log is let go. */
+  TOP.downTimer = setTimeout(() => {
+    if (!TOP.down) return;
+    if (atFoot(24)) { arrivedAtFoot(); return; }
+    TOP.down = false;
+    TOP.arrived = true;
+  }, 3000);
 });
 
-/* Open at the bottom. The room is a log kept forever, and a log kept forever
-   that opens at its first line is a room nobody reaches the end of. */
-/* Both halves, together. The nudges are asked for beside the room rather than
-   after it: they are two requests to two routes and neither waits on the
-   other, and the page is drawn by whichever answers first. */
-loadNudges();
-load({ bottom: sent == null }).then(async () => {
+/* ═══════════════════════════════════════════════════════════════
+   OPENING
+   The room opens at the latest thing anybody said, with the composer at the
+   bottom of the screen, and the reader never sees the page get there.
+
+   Everything below happens behind .opening. Both halves are asked for at
+   once; the room is drawn as soon as it answers; then the page waits a short
+   while for the things that would move it ... the shelf and the open
+   question, the link cards, the fonts ... and puts itself at its foot, and
+   only then is shown. Whatever is later than the wait lands under the hold.
+
+   A link that names a message, or a nudge, is shown where it points instead,
+   and never at the foot first.
+   ═══════════════════════════════════════════════════════════════ */
+const wait = (ms) => new Promise((ok) => setTimeout(ok, ms));
+const settled = (p) => Promise.resolve(p).then(() => null, () => null);
+
+/* Shown. Never before the page is in place, and on the frame after it, with
+   the place taken once more in that frame in case anything moved between. */
+function reveal({ foot = false } = {}) {
+  if (OPEN.done) return;
+  OPEN.done = true;
+  clearTimeout(OPEN.net);
+  requestAnimationFrame(() => {
+    if (foot) { toFoot(); holdFoot(); }
+    FOLLOW.at = window.scrollY;
+    const root = document.documentElement;
+    root.classList.add('opened');
+    root.classList.remove('opening');
+    setTimeout(() => root.classList.remove('opened'), 400);
+    watchTop();
+    topButton();
+  });
+}
+
+/* Under the sticky nav, with a little air. */
+const underNav = (el) => {
+  const nav = document.getElementById('nav');
+  const top = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+  return Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - top - 16));
+};
+
+/* Where a #nudge- link lands. A banked one is behind its pot, so the page is
+   put at the shelf with that pot open. An open one is its card: on a phone
+   that card is in the column, so the page goes to it; on a wide screen it is
+   docked beside the room and already on screen, so the page goes to the foot
+   like any other. False for a link the board does not know. */
+function landOnNudge(id) {
+  const x = nudgeById(id);
+  if (!x) return false;
+  if (!x.open && NUDGE.pot === x.id) {
+    const shelf = document.getElementById('pots');
+    if (!shelf) return false;
+    /* At the head of the page by a link is at the head of the page: the log
+       must not load history under a reader who is looking at the shelf, which
+       would push the shelf away from them. The same hold the Top button
+       takes, let go the same way, by going back down into the log. */
+    TOP.held = true;
+    TOP.arrived = true;
+    window.scrollTo(0, underNav(shelf));
+    return true;
+  }
+  const card = x.open ? document.getElementById(`nudge-${x.id}`) : null;
+  const open = document.getElementById('open');
+  if (!card || !open || getComputedStyle(open).position === 'sticky') return false;
+  window.scrollTo(0, underNav(card));
+  return true;
+}
+
+async function opening() {
+  /* The script is running, so it takes the reveal over from the timer in the
+     head. Its own limit is longer, because it is no longer guarding against a
+     script that never ran: only against a room that never answers, which is
+     still shown, with whatever it has, rather than kept behind the curtain. */
+  clearTimeout(window.OPENING);
+  OPEN.net = setTimeout(() => reveal({ foot: true }), 8000);
+
+  const potLink = /^#nudge-(.+)$/.exec(location.hash || '');
+  const toFootFirst = sent == null && !potLink;
+  const nudged = loadNudges().catch(() => null);
+  let cards = null;
+  try {
+    ({ cards } = await load({ bottom: toFootFirst }));
+  } catch (err) {
+    ROOM.rows = [];
+    ROOM.failed = true;
+    draw({ toBottom: toFootFirst });
+  }
+  /* Faces once the room is up, into boxes already their size. */
+  MF.pfp.load();
+
+  /* What would move the page, together, and no longer than this. */
+  await Promise.race([
+    Promise.all([settled(nudged), settled(cards), settled(document.fonts && document.fonts.ready)]),
+    wait(1200),
+  ]);
+
   if (sent != null) {
     ROOM.waiting = 0;
     ROOM.next = null;
     MF.nav.mentions(0, null);
     markSeen();
-    await goTo(Number(sent));
+    /* Three seconds to find it. A walk still out after that is called off, and
+       the page opens at the foot with the line that says it was too far. */
+    const found = await Promise.race([goTo(Number(sent), { jump: true }), wait(3000).then(() => null)]);
+    if (found) { reveal(); return; }
+    if (found === null) { stopWalk(); status(TOO_FAR, true); }
+    reveal({ foot: true });
+    return;
   }
+
+  if (potLink) {
+    /* The shelf has to be drawn before it can be landed on. */
+    await Promise.race([nudged, wait(3000)]);
+    let id = potLink[1];
+    try { id = decodeURIComponent(id); } catch (err) { /* as written */ }
+    if (landOnNudge(id)) { reveal(); return; }
+  }
+
+  reveal({ foot: true });
+}
+
+opening().catch(() => reveal({ foot: true })).finally(() => {
   ROOM.timer = setInterval(poll, 6000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
-  /* Faces once the room is up, into boxes already their size. */
-  MF.pfp.load();
 });
 </script>
 </body>
