@@ -1,6 +1,6 @@
 {
  "_note": "Nudges: artist-authored questions the collectors weigh TAO behind. Authored in the studio, banked by api/cron/nudges.js. A nudge steers, it never commands ... except where the studio says otherwise on the nudge itself, which is what `promise` is for. A nudge with kind: candidates has no sides: collectors propose the answers and weigh on them, and at close the colour with the most TAO locks: `lock.voters` collectors AND `lock.tao` TAO carry it outright, and a lock short of either says so (`locked_by: close`, or `artist` where the studio locked it from the console). A tie the tie-break cannot settle waits for the artist. `series` is the arc a nudge belongs to and `slot` is the colour it fills; the series block below is also the maker's community palette, so when the last slot locks the palette is simply complete. See docs/AVS-NUDGES.md. `rev` counts every write: /api/nudge reads the newer of the deployment and the store copy written with it (api/_lib/nudge-file.js).",
- "next_number": 7,
+ "next_number": 8,
  "nudges": [
   {
    "id": "nudge-1",
@@ -1584,6 +1584,24 @@
     ],
     "banked_at": "2026-11-11T00:05:42.670Z"
    }
+  },
+  {
+   "id": "nudge-7",
+   "number": 7,
+   "question": "Weigh in on the 7th colour.",
+   "kind": "candidates",
+   "series": "strip-palette",
+   "slot": 7,
+   "lock": {
+    "voters": 5,
+    "tao": 500000
+   },
+   "promise": "MintFace will paint the colour this locks. A nudge steers; this one decides.",
+   "note": "Propose a colour, or put your TAO behind one already on the board. Weighed TAO is never spent and never moves.",
+   "image": null,
+   "opens": "2026-11-14T05:50:17.226Z",
+   "closes": "2026-11-25T00:00:00.000Z",
+   "published": true
   }
  ],
  "series": {
@@ -1620,5 +1638,5 @@
   ],
   "field_share": 0.25
  },
- "rev": 2
+ "rev": 3
 }
