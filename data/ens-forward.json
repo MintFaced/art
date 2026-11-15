@@ -1,6 +1,6 @@
 {
  "_note": "Names that resolve forward to a wallet which publishes no reverse record. One name or none: a wallet two names point at is left as an address. Rebuilt by this sweep, which is what re-verifies them. See docs/NAMES.md.",
- "generated": "2026-11-05T21:00:56.169Z",
+ "generated": "2026-11-15T21:03:50.655Z",
  "source": "ens-subgraph",
  "names": {
   "0xcb748f312b8e0557587862225697aae325052f7d": "gregwhitton.eth",
@@ -8,7 +8,6 @@
   "0xd70150a7a5a42d4cd25974dae077a79a1547fcf2": "ggroogle.eth",
   "0x2afc032aaf6d7ead33fb05f9d42d874874dfb9d1": "vault.cryptospecie.eth",
   "0xafaca46f253c85d4ba372f82a8a4f4b0dd5d7dfc": "peternitsch.eth",
-  "0x4525b5402a6d9eefc656e828b9391aa9dff2446c": "paymydoctor.eth",
   "0x00550704a94cd95ed3a7b915e8ac8b505aec2553": "0xsparked.eth",
   "0xa8174abc36b3298356d273e512cd87223a2b3ffa": "vault.hafftka.eth",
   "0xc73ffb72eb85059908b6f72ef4b0d3b38d46e0ad": "magnivault.eth",
@@ -238,8 +237,7 @@
    "teclado.eth",
    "sustentavel.eth",
    "votegreen.eth",
-   "fvckdegendao.eth",
-   "corretor.eth"
+   "fvckdegendao.eth"
   ],
   "0x61d9d9cc8c3203dab7100ea79ced77587201c990": [
    "klinefelter.eth",
@@ -256,13 +254,6 @@
    "vinedao.eth",
    "nftebys.eth",
    "realvisionaries.eth"
-  ],
-  "0xe8050bb4811d73ce52141d8fc9306a2c17636b36": [
-   "veltre.eth",
-   "denie.eth",
-   "brystal.eth",
-   "dylans.eth",
-   "saral.eth"
   ],
   "0xab81be93f28664daf0c1638b483e4f9d2539446e": [
    "richcaldwell.eth",
@@ -331,6 +322,13 @@
    "voidtickler.eth",
    "thegrokwallet.eth"
   ],
+  "0xe8050bb4811d73ce52141d8fc9306a2c17636b36": [
+   "veltre.eth",
+   "denie.eth",
+   "brystal.eth",
+   "dylans.eth",
+   "saral.eth"
+  ],
   "0x136bbfe37988f82f8585ed155615b75371489d45": [
    "athenaresearch.eth",
    "8706.eth"
@@ -365,11 +363,6 @@
    "gourmetspicy.eth",
    "nounsies.eth"
   ],
-  "0x2a878245b52a2d46cb4327541cbc96e403a84791": [
-   "ryderripps.eth",
-   "jasonclineshow.eth",
-   "pelipper.eth"
-  ],
   "0x178ef526bd5f8c10f980ef8e74a1fdcc84132fc4": [
    "donverga.eth",
    "juancuevas.eth"
@@ -397,6 +390,11 @@
    "dontfeedwolf.eth",
    "017.earth.eth",
    "dontfeedthewolf.eth"
+  ],
+  "0x2a878245b52a2d46cb4327541cbc96e403a84791": [
+   "ryderripps.eth",
+   "jasonclineshow.eth",
+   "pelipper.eth"
   ],
   "0x36ab75710650754c32e4850d2ad050849ebb5899": [
    "sudo.g3rm.eth",
@@ -610,8 +608,8 @@
   ]
  },
  "counts": {
-  "asked": 2469,
-  "named": 159,
+  "asked": 2470,
+  "named": 158,
   "ambiguous": 73
  }
 }
