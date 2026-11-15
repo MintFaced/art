@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-11-14T21:31:35.473Z",
+ "generated": "2026-11-15T21:03:52.242Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -15,7 +15,7 @@
  },
  "counts": {
   "collectors": 3680,
-  "with_page": 805,
+  "with_page": 806,
   "private": 0,
   "named": 1210
  },
@@ -498,9 +498,9 @@
    "private": false,
    "has_page": true,
    "counts": {
-    "works": 24,
+    "works": 25,
     "one_of_ones": 0,
-    "editions": 24,
+    "editions": 25,
     "collections": 5
    },
    "first_collected": "2022-05-11T05:33:24.000000Z",
@@ -529,6 +529,27 @@
    "tao": 582887,
    "tao_rate": 870,
    "tao_rank": 8
+  },
+  {
+   "address": "0xc839de0fed241607d50aa4107ae582443b906e4c",
+   "ens": "hugofaz.eth",
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "hugofaz.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 23,
+    "one_of_ones": 1,
+    "editions": 22,
+    "collections": 8
+   },
+   "first_collected": "2022-02-28T22:20:02.000000Z",
+   "last_collected": "2024-10-01T02:12:35.000000Z",
+   "tao": 252492,
+   "tao_rate": 174,
+   "tao_rank": 44
   },
   {
    "address": "0x41254fe73d3b49f0fe3cc7743b4d40ef26bb338e",
@@ -592,27 +613,6 @@
    "tao": 169415,
    "tao_rate": 351.6,
    "tao_rank": 74
-  },
-  {
-   "address": "0xc839de0fed241607d50aa4107ae582443b906e4c",
-   "ens": "hugofaz.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "hugofaz.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 22,
-    "one_of_ones": 1,
-    "editions": 21,
-    "collections": 8
-   },
-   "first_collected": "2022-02-28T22:20:02.000000Z",
-   "last_collected": "2024-10-01T02:12:35.000000Z",
-   "tao": 252492,
-   "tao_rate": 174,
-   "tao_rank": 44
   },
   {
    "address": "0xafccebed934565586a749c66ff352b0fc871042b",
@@ -2633,27 +2633,6 @@
    "tao_rank": 184
   },
   {
-   "address": "0xa38cd368705648904200675f3b10960be3975cf5",
-   "ens": null,
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "0xa38cd368",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 9,
-    "one_of_ones": 0,
-    "editions": 9,
-    "collections": 3
-   },
-   "first_collected": "2022-05-12T20:16:16.000000Z",
-   "last_collected": "2022-12-20T00:32:35.000Z",
-   "tao": 79990,
-   "tao_rate": 50.4,
-   "tao_rank": 201
-  },
-  {
    "address": "0xaec3f7e735505c2b787b05d67f4adaefe3dfd678",
    "ens": null,
    "fwd": null,
@@ -2969,6 +2948,27 @@
    "tao_rank": 326
   },
   {
+   "address": "0xa38cd368705648904200675f3b10960be3975cf5",
+   "ens": null,
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "0xa38cd368",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 8,
+    "one_of_ones": 0,
+    "editions": 8,
+    "collections": 3
+   },
+   "first_collected": "2022-05-12T20:16:16.000000Z",
+   "last_collected": "2022-12-20T00:32:35.000Z",
+   "tao": 79990,
+   "tao_rate": 50.4,
+   "tao_rank": 201
+  },
+  {
    "address": "0xa8174abc36b3298356d273e512cd87223a2b3ffa",
    "ens": null,
    "fwd": "vault.hafftka.eth",
@@ -3198,6 +3198,27 @@
    "tao": 101786,
    "tao_rate": 67.2,
    "tao_rank": 167
+  },
+  {
+   "address": "0xaf12a9af19331fa9b89915537ce9d41bce5e4c5d",
+   "ens": "scottrsmith.eth",
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "scottrsmith.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 8,
+    "one_of_ones": 0,
+    "editions": 8,
+    "collections": 4
+   },
+   "first_collected": "2022-08-18T03:09:22.000000Z",
+   "last_collected": "2022-12-27T03:29:59.000000Z",
+   "tao": 37711,
+   "tao_rate": 25.2,
+   "tao_rank": 354
   },
   {
    "address": "0x91e8be20d0dfb2293b97317e906223c1fa833a48",
@@ -3786,27 +3807,6 @@
    "tao": 42146,
    "tao_rate": 29.4,
    "tao_rank": 335
-  },
-  {
-   "address": "0xaf12a9af19331fa9b89915537ce9d41bce5e4c5d",
-   "ens": "scottrsmith.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "scottrsmith.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 7,
-    "one_of_ones": 0,
-    "editions": 7,
-    "collections": 4
-   },
-   "first_collected": "2022-08-18T03:09:22.000000Z",
-   "last_collected": "2022-12-27T03:29:59.000000Z",
-   "tao": 37711,
-   "tao_rate": 25.2,
-   "tao_rank": 354
   },
   {
    "address": "0x4614865abd4748096b9aa924c4f8d2ed636b2df7",
@@ -9589,7 +9589,7 @@
   {
    "address": "0x4525b5402a6d9eefc656e828b9391aa9dff2446c",
    "ens": null,
-   "fwd": "paymydoctor.eth",
+   "fwd": null,
    "display_name": null,
    "x": null,
    "slug": "0x4525b540",
@@ -10572,6 +10572,27 @@
    "tao": 29816,
    "tao_rate": 21,
    "tao_rank": 397
+  },
+  {
+   "address": "0xff0b01309ef6944ebe047c20b41d925dd8c521e4",
+   "ens": null,
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "0xff0b0130",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 3,
+    "one_of_ones": 0,
+    "editions": 3,
+    "collections": 3
+   },
+   "first_collected": "2022-05-10T12:30:13.000000Z",
+   "last_collected": "2022-08-19T02:02:48.000Z",
+   "tao": 26725,
+   "tao_rate": 16.8,
+   "tao_rank": 412
   },
   {
    "address": "0xff7528c341e2374c68eb37272dba892ff5d2f91d",
