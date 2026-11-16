@@ -3,6 +3,104 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmwjs1u5z",
+   "at": "2026-11-16T21:30:17.207Z",
+   "ok": true,
+   "ms": 94437,
+   "blocks": {
+    "from": 25820496,
+    "to": 26430291,
+    "scanned": 609796
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 2,
+    "sales": 1,
+    "transfers": 1,
+    "mints": 0
+   },
+   "wallets_affected": 3,
+   "tao": {
+    "live": 77247778,
+    "was": 77182729,
+    "delta": 65049,
+    "lost_to_sales": 304983,
+    "wallets": 3441
+   },
+   "register": {
+    "collectors": 3680,
+    "with_page": 806,
+    "private": 0,
+    "named": 1209
+   },
+   "classified": 2,
+   "unclassified": 0,
+   "events": 13072,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 101,
+   "files": 8,
+   "pages": 0,
+   "movements": [
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-11-16T18:32:35.000Z",
+     "block": 26429405,
+     "tx": "0xe6bbbab552c2440e3383d7138cebe56ac7bf9a3ce33d4a70614befd08915a275",
+     "from": "0x0cbe1fba05102c34365a742af159efc5a93d1a68",
+     "to": "0xec060105b57f8b0e9c01a5ef08906ea99f43220a",
+     "how": "sale",
+     "effect": "the seller loses every day this holding earned them; the buyer starts from zero",
+     "why": "Seaport 1.6"
+    },
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-11-16T18:37:47.000Z",
+     "block": 26429431,
+     "tx": "0x4302e86aa8fadfe7f9e9ad0fac53aaa2fe01693efb8378fe6cff164c5433fd5d",
+     "from": "0xec060105b57f8b0e9c01a5ef08906ea99f43220a",
+     "to": "0x3365b7f0f3d9bfa8aa91bd8bb6cf7013aacdadd2",
+     "how": "transfer",
+     "effect": "the sender keeps what it banked and stops accruing; the receiver starts from zero",
+     "why": "no marketplace and no payment found"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0x0cbe1fba05102c34365a742af159efc5a93d1a68",
+     "before": 117,
+     "after": 0,
+     "delta": -117,
+     "gained": 0,
+     "sales": 1,
+     "transfers": 0
+    },
+    {
+     "address": "0xec060105b57f8b0e9c01a5ef08906ea99f43220a",
+     "before": 0,
+     "after": 0,
+     "delta": 0,
+     "gained": 1,
+     "sales": 0,
+     "transfers": 1
+    },
+    {
+     "address": "0x3365b7f0f3d9bfa8aa91bd8bb6cf7013aacdadd2",
+     "before": 0,
+     "after": 0,
+     "delta": 0,
+     "gained": 1
+    }
+   ]
+  },
+  {
    "run_id": "rmwiclzg8",
    "at": "2026-11-15T21:30:17.144Z",
    "ok": true,
