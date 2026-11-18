@@ -9,8 +9,8 @@
  "statement": "Nouns with the X factor. A new XNouns is born every 8 hours, 8 minutes and 8 seconds, auctioned one at a time. The work is a CC0 derivative celebrating the glitch origins of XCOPY and the artistic freedom of Nouns, made by and for XCOPY-enjoyooors. xnouns.xyz",
  "notes": "Collector-tracked. Enumerated from chain; holders feed the collector register. Not shown on mintface.art until Ryan says otherwise.",
  "counts": {
-  "works": 538,
-  "acquired": 392,
+  "works": 539,
+  "acquired": 393,
   "burned": 51,
   "available": 84,
   "vaulted": 11
@@ -21376,6 +21376,53 @@
     "display_name": null,
     "note": null,
     "acquired": "2026-10-21T04:52:11.000Z"
+   }
+  },
+  {
+   "minted_onchain": "2026-11-18T08:12:47.000Z",
+   "mint_tx": "0xb6058c23ce06e18e16a8de779cf2acd4ace63b34d7606ecab820c1a55eaf7f40",
+   "id": "xnouns-538",
+   "collection": "xnouns",
+   "title": "XNouns #538",
+   "statement": "XNouns celebrates the glitch origins of XCOPY combined with the artistic freedom of Nouns.",
+   "edition": {
+    "type": "1/1"
+   },
+   "digital": {
+    "chain": "ethereum",
+    "standard": "ERC-721",
+    "contract": "0x2969Eca285C9acD0B7EeDEbE7714C4D913700794",
+    "token_id": "538",
+    "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=538&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-warm.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-green.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-body-gradient-dawn.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-pie.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",
+    "animation": null,
+    "image_details": null,
+    "external_url": null
+   },
+   "physical": {
+    "exists": null,
+    "width_cm": null,
+    "height_cm": null,
+    "depth_cm": null,
+    "ready_to_hang": null,
+    "framed": null,
+    "certificate": null,
+    "packaging": "Ships boxed/crated, freight included"
+   },
+   "pricing_nzd": {
+    "digital": null,
+    "painting": null,
+    "both": null
+   },
+   "status": "acquired",
+   "held_by": null,
+   "listed_on": null,
+   "reserve": null,
+   "collector": {
+    "address": "0x73924Aa28f23256D994E20803a6C63d9dd056d7d",
+    "ens": null,
+    "display_name": null,
+    "note": null,
+    "acquired": "2026-11-18T08:12:47.000Z"
    }
   }
  ],
