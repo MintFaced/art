@@ -8,24 +8,35 @@
  "private": false,
  "has_page": true,
  "counts": {
-  "works": 6,
-  "one_of_ones": 6,
+  "works": 7,
+  "one_of_ones": 7,
   "editions": 0,
   "collections": 1
  },
  "first_collected": "2026-10-17T10:07:59.000Z",
- "last_collected": "2026-10-21T04:52:11.000Z",
+ "last_collected": "2026-11-18T08:12:47.000Z",
  "tao": 0,
  "tao_rate": 0,
- "tao_rank": 3224,
+ "tao_rank": 3228,
  "collections": [
   {
    "slug": "xnouns",
    "title": "XNouns",
-   "works": 6
+   "works": 7
   }
  ],
  "works": [
+  {
+   "id": "xnouns-538",
+   "title": "XNouns #538",
+   "collection": "xnouns",
+   "group": "experiments",
+   "genre": "Design",
+   "acquired": "2026-11-18T08:12:47.000Z",
+   "unique": true,
+   "image": "https://api.zora.co/renderer/stack-images?contractAddress=0x8404010b9f9423b952ae74c0e51459ff18a049d2&tokenId=538&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f0_backgrounds%2fbg-warm.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f4_bodies%2fbody-green.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f3_accessories%2faccessory-body-gradient-dawn.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f1_heads%2fhead-pie.png&images=ipfs%3a%2f%2fbafybeiee6nlphylqmempvpxhfvmfc2avmtqfejwqokkceraepam4mn4swe%2f2_glasses%2fglasses-square-pink.png",
+   "orientation": null
+  },
   {
    "id": "xnouns-537",
    "title": "XNouns #537",
