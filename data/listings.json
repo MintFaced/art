@@ -1,18 +1,18 @@
 {
  "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
- "generated": "2026-11-19T20:03:40.760Z",
+ "generated": "2026-11-20T20:03:58.564Z",
  "sources": [
   "foundation",
   "opensea"
  ],
  "counts": {
   "checked": 1414,
-  "owner_unresolved": 69,
+  "owner_unresolved": 67,
   "escrowed": 30,
-  "priced": 76,
+  "priced": 68,
   "auction": 21,
-  "opensea": 67,
-  "carried_forward": 1
+  "opensea": 59,
+  "carried_forward": 0
  },
  "works": {
   "geodetic-world-2": {
@@ -145,6 +145,14 @@
    "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
    "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/91080"
   },
+  "foundation-109050": {
+   "venue": "foundation",
+   "kind": "buy-now",
+   "price_eth": 1,
+   "price_wei": "1000000000000000000",
+   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/109050"
+  },
   "foundation-132520": {
    "venue": "foundation",
    "kind": "buy-now",
@@ -204,78 +212,6 @@
    "price_wei": "30000000000000000",
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "url": "https://foundation.app/mint/eth/0xe63f4E6CE4110A2faD3DE9ed38e7eA5858EB953b/2882"
-  },
-  "artificial-flowers-21": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/21"
-  },
-  "artificial-flowers-22": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/22"
-  },
-  "artificial-flowers-20": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/20"
-  },
-  "artificial-flowers-7": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/7"
-  },
-  "artificial-flowers-17": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/17"
-  },
-  "artificial-flowers-2": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/2"
-  },
-  "artificial-flowers-15": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/15"
-  },
-  "artificial-flowers-1": {
-   "venue": "opensea",
-   "kind": "buy-now",
-   "price_eth": 0.1,
-   "price_wei": "100000000000000000",
-   "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
-   "expires": "2026-11-20T01:06:19.000Z",
-   "url": "https://opensea.io/item/ethereum/0xd64ac59835a9951f34472239ba70b44c5bebe90d/1"
   },
   "geodetic-illusions-7": {
    "venue": "opensea",
@@ -807,15 +743,6 @@
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "expires": "2027-02-19T06:29:25.000Z",
    "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
-  },
-  "foundation-109050": {
-   "venue": "foundation",
-   "kind": "buy-now",
-   "price_eth": 1,
-   "price_wei": "1000000000000000000",
-   "seller": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
-   "url": "https://foundation.app/mint/eth/0x3B3ee1931Dc30C1957379FAc9aba94D1C48a5405/109050",
-   "carried_forward": true
   }
  }
 }
