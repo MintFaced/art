@@ -9,9 +9,19 @@
  * POST {id, action:'note', note}
  * POST {id, action:'mark-paid', method, ref?, note}   paid by hand, once
  * POST {id, action:'photo', data, type}               a photograph of it, to R2
+ *
+ * The WestSide rate (COMMISSION-WESTSIDE):
+ * POST {id, action:'discount', pct?, building, note}   by hand, no code; reopens a lapsed order
+ * POST {id, action:'undiscount', note}
+ * GET  ?codes=1                                        every code, with its uses
+ * POST {action:'code-create', code, pct?, label?, max_uses?, ends?}
+ * POST {action:'code-active', code, active}
  */
 import { sessionOk, sessionFrom } from './_lib/studio.js';
-import { listOrders, getOrder, studioUpdate, markPaid, renderUrl, STATUSES, commissionsConfigured } from './_lib/commissions.js';
+import {
+  listOrders, getOrder, studioUpdate, markPaid, renderUrl, STATUSES, commissionsConfigured,
+  studioDiscount, studioUndiscount, createCode, setCodeActive, listCodes,
+} from './_lib/commissions.js';
 import { specLine } from './_lib/commission-spec.js';
 import { putObject, r2Configured } from './_lib/r2.js';
 
@@ -32,6 +42,7 @@ export async function GET(request) {
   const stop = gate(request);
   if (stop) return stop;
   const url = new URL(request.url);
+  if (url.searchParams.get('codes') === '1') return json({ codes: await listCodes() });
   const id = url.searchParams.get('id');
   if (id) {
     const o = await getOrder(id);
@@ -50,6 +61,7 @@ export async function GET(request) {
     orders: orders.map((o) => ({
       id: o.id, created: o.created, spec_line: specLine(o.spec), method: o.method, status: o.status,
       nzd: o.price.nzd, eth: o.price.eth, paid_amount: o.paid_amount, name: o.name,
+      discount: o.discount ? { label: o.discount.label, pct: o.discount.pct } : null,
     })),
   });
 }
@@ -82,6 +94,26 @@ export async function POST(request) {
     const r = await studioUpdate(id, { photo: key }, 'studio');
     if (r.error) return json({ error: r.error }, r.status || 400);
     return json({ order: whole(r.order) });
+  }
+
+  if (b.action === 'discount' || b.action === 'undiscount') {
+    const r = b.action === 'discount'
+      ? await studioDiscount(id, { pct: b.pct, building: b.building, note: b.note })
+      : await studioUndiscount(id, { note: b.note });
+    if (r.error) return json({ error: r.error }, r.status || 400);
+    return json({ order: whole(r.order) });
+  }
+
+  if (b.action === 'code-create') {
+    const r = await createCode({ code: b.code, pct: b.pct, label: b.label, max_uses: b.max_uses, ends: b.ends });
+    if (r.error) return json({ error: r.error }, r.status || 400);
+    return json({ code: r.code }, 201);
+  }
+
+  if (b.action === 'code-active') {
+    const r = await setCodeActive(b.code, b.active);
+    if (r.error) return json({ error: r.error }, r.status || 400);
+    return json({ code: r.code });
   }
 
   if (b.action === 'status' || b.action === 'note') {

@@ -43,6 +43,9 @@ const view = async () => {
 
 const nzd = (n) => `NZD ${Number(n).toLocaleString('en-NZ')}`;
 const priceLine = (o) => [nzd(o.price.nzd), `${o.price.eth} ETH`, o.price.usd ? `USD ${Number(o.price.usd).toLocaleString('en-US')}` : null].filter(Boolean).join(' · ');
+/* At the WestSide rate the list price stands struck through before it. */
+const priceHTML = (o) => `${o.discount && o.price.list_nzd ? `<s>${e(nzd(o.price.list_nzd))}</s> ` : ''}${e(priceLine(o))}`;
+const rateWords = (o) => `${o.discount.label} rate · ${o.discount.pct}% off`;
 const PAID_STATES = ['paid', 'in_studio', 'painted', 'shipped', 'collected', 'complete'];
 
 /* The painting, from the order's own strips: portrait stands them up,
@@ -81,8 +84,9 @@ function artColumn(o) {
   return `<div class="cm-art">
     <canvas data-art role="img"></canvas>
     <p class="cm-ref">${e(o.id)}</p>
-    <p class="cm-line">${e(o.spec_line)}</p>
-    <p class="cm-line">${e(priceLine(o))}</p>
+    <p class="cm-line" data-specline>${e(o.spec_line)}</p>
+    <p class="cm-line" data-price>${priceHTML(o)}</p>
+    <p class="cm-rate" data-rate ${o.discount ? '' : 'hidden'}>${o.discount ? e(rateWords(o)) : ''}</p>
   </div>`;
 }
 function paintArt(o) {
@@ -140,6 +144,16 @@ function showPay(o) {
         <label>Email<input type="email" name="email" autocomplete="email" value="${e(o.email || '')}"></label>
         <label data-ship-field ${o.spec.delivery === 'shipped' ? '' : 'hidden'}>Ship to<textarea name="ship_to" autocomplete="street-address" rows="4">${e(o.ship_to || '')}</textarea></label>
         <p class="grey" style="margin:0"><span data-ship-say></span> <button type="button" class="cm-quiet" data-ship></button></p>
+        <div data-code-wrap>
+          <button type="button" class="cm-quiet" data-code-open aria-expanded="false" aria-controls="cm-code">Have a code?</button>
+          <div class="cm-code" id="cm-code" data-codebox hidden>
+            <label>Code<input type="text" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
+            <label>Building address<input type="text" name="building" autocomplete="off"><span class="cm-hint">In the Hastings CBD</span></label>
+            <label class="check"><input type="checkbox" name="fixed"> This painting will be fixed to this building</label>
+            <div class="cm-doors"><button type="button" class="cm-btn ghost" data-apply>Apply</button></div>
+            <p class="cm-say" data-code-say role="status" aria-live="polite"></p>
+          </div>
+        </div>
         <label class="check"><input type="checkbox" name="mention" ${o.mention ? 'checked' : ''}> Mention me on X</label>
         <label data-handle ${o.mention ? '' : 'hidden'}>X handle<input type="text" name="x_handle" value="${e(o.x_handle ? `@${o.x_handle}` : '')}" placeholder="@"></label>
         <div class="cm-doors" data-doors>
@@ -157,11 +171,17 @@ function showPay(o) {
 
   const words = () => {
     const shipped = S.o.spec.delivery === 'shipped';
+    const off = Boolean(S.o.discount);
     $('[data-ship-say]').textContent = shipped ? 'Shipped worldwide, boxed.' : 'Collected from The Line, Hastings.';
     $('[data-ship]').textContent = shipped ? 'Collect from The Line instead →' : 'Ship it worldwide, boxed →';
+    $('[data-ship]').hidden = off; // the WestSide rate is collected, never shipped
     $('[data-ship-field]').hidden = !shipped;
-    main.querySelectorAll('.cm-line')[0].textContent = S.o.spec_line;
-    main.querySelectorAll('.cm-line')[1].textContent = priceLine(S.o);
+    $('[data-code-wrap]').hidden = off;
+    $('[data-specline]').textContent = S.o.spec_line;
+    $('[data-price]').innerHTML = priceHTML(S.o);
+    const rate = $('[data-rate]');
+    rate.hidden = !off;
+    rate.innerHTML = off ? `${e(rateWords(S.o))}, for paintings fixed to a Hastings CBD building. <button type="button" class="cm-quiet" data-uncode>Remove</button>` : '';
     for (const b of main.querySelectorAll('[data-cur]')) b.setAttribute('aria-pressed', String(b.dataset.cur === S.currency));
     for (const b of main.querySelectorAll('[data-cur]')) b.style.color = b.dataset.cur === S.currency ? 'var(--ink)' : '';
   };
@@ -177,6 +197,7 @@ function showPay(o) {
     try { S.o = await api({ action: 'update', ...fields() }); say(''); return true; } catch (err) { say(err.message, true); return false; }
   };
   $('[data-form]').addEventListener('input', (ev) => {
+    if (ev.target.closest('[data-codebox]')) return; // a code is applied, never saved as it is typed
     if (ev.target.name === 'mention') $('[data-handle]').hidden = !ev.target.checked;
     clearTimeout(saving);
     saving = setTimeout(saveNow, 600);
@@ -189,6 +210,39 @@ function showPay(o) {
     } catch (err) { say(err.message, true); }
   });
   for (const b of main.querySelectorAll('[data-cur]')) b.addEventListener('click', () => { S.currency = b.dataset.cur; words(); });
+
+  /* The WestSide rate: a code string goes up, the order's new price comes back. */
+  const codeSay = (msg, err = false) => { const p = $('[data-code-say]'); p.textContent = msg || ''; p.classList.toggle('err', err); };
+  const setCode = async (body) => {
+    const ethOpen = !$('[data-ethbox]').hidden;
+    S.o = await api(body);
+    words();
+    if (ethOpen) await openEth(); // the amount moved with the price
+  };
+  $('[data-code-open]').addEventListener('click', (ev) => {
+    const box = $('[data-codebox]');
+    box.hidden = !box.hidden;
+    ev.currentTarget.setAttribute('aria-expanded', String(!box.hidden));
+    if (!box.hidden) $('[data-form]').code.focus();
+  });
+  const apply = async () => {
+    const f = $('[data-form]');
+    const btn = $('[data-apply]');
+    btn.disabled = true;
+    codeSay('');
+    try {
+      await setCode({ action: 'code', code: f.code.value, building: f.building.value, fixed: f.fixed.checked });
+      $('[data-codebox]').hidden = true; // Remove brings back "Have a code?", folded
+      $('[data-code-open]').setAttribute('aria-expanded', 'false');
+      say('');
+    } catch (err) { codeSay(err.message, true); } finally { btn.disabled = false; }
+  };
+  $('[data-apply]').addEventListener('click', apply);
+  $('[data-codebox]').addEventListener('keydown', (ev) => { if (ev.key === 'Enter' && ev.target.type === 'text') { ev.preventDefault(); apply(); } });
+  $('[data-rate]').addEventListener('click', async (ev) => {
+    if (!ev.target.closest('[data-uncode]')) return;
+    try { await setCode({ action: 'uncode' }); codeSay(''); } catch (err) { say(err.message, true); }
+  });
 
   $('[data-card]').addEventListener('click', async (ev) => {
     const btn = ev.currentTarget;

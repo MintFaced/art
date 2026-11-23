@@ -50,6 +50,9 @@ const K = {
   tx: (hash) => `commission:tx:${String(hash).toLowerCase()}`,
   evt: (id) => `commission:evt:${id}`,
   eth: 'commission:eth',
+  code: (text) => `commission:code:${text}`,
+  codes: 'commission:codes',
+  codeUses: (codeId) => `commission:code-uses:${codeId}`,
 };
 
 export const commissionsConfigured = () => storeConfigured();
@@ -91,8 +94,12 @@ export const renderUrl = (o) => (o.render_key ? `${ASSETS}/${o.render_key}` : nu
 export const sizeLine = (o) => `${o.spec.length_cm} × ${o.spec.width_cm} cm ${o.spec.orientation}`;
 const orderData = (id) => `0x${Buffer.from(id).toString('hex')}`;
 
-function reprice(o) {
-  o.price.nzd = nzdOf(o.spec);
+/* The list price, less the WestSide rate where the order carries it: the rate
+   comes off the whole commission, frame included. ETH and USD follow the NZD. */
+export function reprice(o) {
+  const list = nzdOf(o.spec);
+  o.price.list_nzd = list;
+  o.price.nzd = o.discount ? Math.round((list * (100 - o.discount.pct)) / 100) : list;
   o.price.wei = weiOf(o.price.nzd).toString();
   o.price.eth = ethText(BigInt(o.price.wei));
   o.price.usd = o.price.usd_rate ? Math.round(o.price.nzd * o.price.usd_rate) : null;
@@ -131,7 +138,7 @@ export async function createOrder(input) {
     price: { nzd: 0, eth: '0', wei: '0', usd: null, usd_rate: usdRate, fx_at: usdRate ? iso(t) : null, eth_rate: STRIP_ETH_NZD },
     email: null, name: null, ship_to: null, mention: false, x_handle: null,
     method: null, currency: null, payment_ref: null, paid_at: null, paid_amount: null,
-    deposit: false, balance_due: 0,
+    deposit: false, balance_due: 0, discount: null, code_tries: 0, code_locked_until: null,
     expires_at: iso(t + HOLD.card),
     eth: null, notes: [], tracking: null, photos: [], history: [{ at: iso(t), what: 'ordered' }],
   };
@@ -148,13 +155,15 @@ export async function createOrder(input) {
 
 export const renderOf = (o) => stripPNG({ ...o.spec, strips: o.strip_data });
 
-/** What anybody holding the reference may see: nothing personal. */
+/** What anybody holding the reference may see: nothing personal. The WestSide
+    rate shows as its name and its percentage, never the code or the building. */
 export async function publicView(o) {
   const out = {
     id: o.id, status: o.status, created: o.created, expires_at: o.expires_at,
     spec: { length_cm: o.spec.length_cm, width_cm: o.spec.width_cm, orientation: o.spec.orientation, frame: o.spec.frame, delivery: o.spec.delivery, palette_id: o.spec.palette_id },
     spec_line: specLine(o.spec), strips: o.strip_data, render_url: renderUrl(o),
-    price: { nzd: o.price.nzd, eth: o.price.eth, usd: o.price.usd, eth_rate: o.price.eth_rate },
+    price: { nzd: o.price.nzd, eth: o.price.eth, usd: o.price.usd, eth_rate: o.price.eth_rate, ...(o.discount ? { list_nzd: o.price.list_nzd } : {}) },
+    discount: o.discount ? { label: o.discount.label, pct: o.discount.pct } : null,
     method: o.method, currency: o.currency, paid_at: o.paid_at, lead_weeks: LEAD_WEEKS, deposit: false,
   };
   if (o.eth && o.status === 'pending_payment') {
@@ -174,6 +183,7 @@ export async function publicView(o) {
 /** And what the person who made it may see, with the key. */
 export const privateView = async (o) => ({
   ...(await publicView(o)), name: o.name, email: o.email, ship_to: o.ship_to, mention: o.mention, x_handle: o.x_handle,
+  discount: o.discount ? { label: o.discount.label, pct: o.discount.pct, building: o.discount.building, by: o.discount.by, applied_at: o.discount.applied_at } : null,
 });
 
 /* -------------------------------------------------------- before payment */
@@ -202,7 +212,8 @@ export async function updateOrder(id, key, fields = {}) {
   }
   if ('delivery' in fields && fields.delivery !== o.spec.delivery) {
     if (!['collect', 'shipped'].includes(fields.delivery)) return { error: 'delivery is collect or shipped', status: 400 };
-    if (o.eth && BigInt(o.eth.received_wei || '0') > 0n) return { error: 'ETH has already arrived for this order; write to the studio to change it', status: 409 };
+    if (ethArrived(o)) return { error: SAY.ethArrived, status: 409 };
+    if (fields.delivery === 'shipped' && o.discount) return { error: SAY.shipped, status: 409 };
     o.spec.delivery = fields.delivery;
     reprice(o);
     await save(o, `delivery: ${fields.delivery}`);
@@ -218,6 +229,202 @@ export function readyToPay(o) {
   if (!o.email) return 'an email, please';
   if (o.spec.delivery === 'shipped' && !o.ship_to) return 'where to ship it, please';
   return null;
+}
+
+/* ------------------------------------------------------ the WestSide rate */
+
+/* COMMISSION-WESTSIDE. A painting that will be fixed to a building in the
+ * Hastings CBD is 40% off. The buyer brings a code, or the studio gives the
+ * rate by hand. The code's text lives in the store and nowhere else, since the
+ * repository is public, and an order keeps only the code's id. The building is
+ * private: the public view says "WestSide rate · 40% off" and no more. A
+ * painting fixed to a wall here is collected, never shipped. Refunds stay by
+ * hand: nothing here touches an order that is paid, or has ETH on it. */
+
+const SAY = {
+  unknown: "That code isn't one of ours.",
+  ended: 'That code has ended.',
+  locked: 'Too many tries. Try again in an hour, or write to the studio.',
+  fixed: "Tick the box if it's going on the building.",
+  building: 'Which building? The street address, please.',
+  shipped: "The WestSide rate is for paintings fixed to a Hastings CBD building, so it's collected, not shipped. Remove the code to ship it.",
+  ethArrived: 'ETH has already arrived for this order; write to the studio to change it',
+  paid: 'already paid: refund the difference by hand in Stripe or ETH',
+};
+const CODE_TEXT = /^[A-Z0-9-]{4,24}$/;
+const CODE_TRIES = 10;
+const REOPEN = 7 * DAY;
+const ethArrived = (o) => Boolean(o.eth && BigInt(o.eth.received_wei || '0') > 0n);
+const codeText = (c) => String(c == null ? '' : c).trim().toUpperCase();
+const buildingOf = (b) => {
+  const s = String(b == null ? '' : b).trim().replace(/\s+/g, ' ');
+  return s.length >= 8 && s.length <= 200 ? s : null;
+};
+const readCode = async (text) => { const raw = await one('GET', K.code(text)); return raw ? JSON.parse(raw) : null; };
+const usesOf = async (codeId) => (await one('LRANGE', K.codeUses(codeId), '0', '-1')) || [];
+const ended = (c) => !c.active || Boolean(c.ends && Date.parse(c.ends) < now());
+/** "WestSide rate, 40% off NZD 2,028", for the card line and the emails. */
+const rateLine = (o) => `${o.discount.label} rate, ${o.discount.pct}% off NZD ${Number(o.price.list_nzd).toLocaleString('en-NZ')}`;
+
+/** The buyer's code: checked, then the order is collect and repriced. */
+export async function applyCode(id, key, { code, building, fixed } = {}) {
+  const o = await getOrder(id);
+  if (!o) return { error: 'no such order', status: 404 };
+  if (!keyOk(o, key)) return { error: 'this order belongs to another browser', status: 403 };
+  if (o.status !== 'pending_payment') return { error: `this order is ${o.status.replace('_', ' ')}`, status: 409 };
+  if (ethArrived(o)) return { error: SAY.ethArrived, status: 409 };
+  if (o.code_locked_until) {
+    if (Date.parse(o.code_locked_until) > now()) return { error: SAY.locked, status: 429 };
+    o.code_locked_until = null;
+    o.code_tries = 0;
+  }
+  const text = codeText(code);
+  const c = CODE_TEXT.test(text) ? await readCode(text) : null;
+  const holding = Boolean(c && o.discount && o.discount.code_id === c.id);
+  let refused = null;
+  if (!c) refused = SAY.unknown;
+  else if (ended(c)) refused = SAY.ended;
+  else if (c.max_uses != null && !holding && (await usesOf(c.id)).length >= c.max_uses) refused = SAY.ended;
+  if (refused) {
+    /* ten wrong tries, then an hour without: nobody walks the alphabet */
+    if (text) {
+      o.code_tries = (o.code_tries || 0) + 1;
+      if (o.code_tries >= CODE_TRIES) o.code_locked_until = iso(now() + HOUR);
+      await save(o, o.code_locked_until ? 'locked out of codes for an hour' : null);
+    }
+    return { error: refused, status: 400 };
+  }
+  let place = null;
+  if (c.rule === 'cbd') {
+    place = buildingOf(building);
+    if (!place) return { error: SAY.building, status: 400 };
+    if (fixed !== true) return { error: SAY.fixed, status: 400 };
+    o.spec.delivery = 'collect';
+  }
+  o.discount = { code_id: c.id, label: c.label, pct: c.pct, building: place, applied_at: iso(), by: 'buyer' };
+  o.code_tries = 0;
+  reprice(o);
+  await save(o, `${c.label} rate applied`);
+  return { order: o };
+}
+
+/** The buyer takes the code off: back to the list price. */
+export async function removeCode(id, key) {
+  const o = await getOrder(id);
+  if (!o) return { error: 'no such order', status: 404 };
+  if (!keyOk(o, key)) return { error: 'this order belongs to another browser', status: 403 };
+  if (o.status !== 'pending_payment') return { error: `this order is ${o.status.replace('_', ' ')}`, status: 409 };
+  if (ethArrived(o)) return { error: SAY.ethArrived, status: 409 };
+  if (!o.discount) return { order: o };
+  const was = o.discount.label;
+  o.discount = null;
+  reprice(o);
+  await save(o, `${was} rate removed`);
+  return { order: o };
+}
+
+/**
+ * The studio gives the WestSide rate by hand, no code. An order that lapsed
+ * opens again for a week; a paid one is refunded by hand, never here.
+ */
+export async function studioDiscount(id, { pct = 40, building, note } = {}) {
+  const o = await getOrder(id);
+  if (!o) return { error: 'no such order', status: 404 };
+  if (!['pending_payment', 'expired'].includes(o.status)) return { error: SAY.paid, status: 409 };
+  if (ethArrived(o)) return { error: SAY.ethArrived, status: 409 };
+  const p = pct == null || pct === '' ? 40 : Number(pct);
+  if (!Number.isInteger(p) || p < 1 || p > 90) return { error: 'pct is a whole number from 1 to 90', status: 400 };
+  const place = buildingOf(building);
+  if (!place) return { error: SAY.building, status: 400 };
+  if (!String(note || '').trim()) return { error: 'say why, in the note', status: 400 };
+  const at = iso();
+  if (o.status === 'expired') {
+    o.status = 'pending_payment';
+    o.expires_at = iso(now() + REOPEN);
+    /* An ETH quote that lapsed with nothing on it starts again from the page,
+       at the new amount, with a fresh watch on the chain. */
+    if (o.eth) { o.eth = null; o.method = null; await one('SREM', K.eth, o.id); }
+    o.history.push({ at, what: 'reopened for the WestSide rate' });
+  }
+  o.discount = { code_id: null, label: 'WestSide', pct: p, building: place, applied_at: at, by: 'studio' };
+  o.spec.delivery = 'collect';
+  o.notes.push({ at, note: String(note).slice(0, 2000), by: 'studio' });
+  reprice(o);
+  await save(o, `WestSide rate applied by the studio (${p}%)`, String(note).slice(0, 2000));
+  return { order: o };
+}
+
+export async function studioUndiscount(id, { note } = {}) {
+  const o = await getOrder(id);
+  if (!o) return { error: 'no such order', status: 404 };
+  if (!['pending_payment', 'expired'].includes(o.status)) return { error: `this order is ${o.status.replace('_', ' ')}; its price is settled`, status: 409 };
+  if (ethArrived(o)) return { error: SAY.ethArrived, status: 409 };
+  if (!String(note || '').trim()) return { error: 'say why, in the note', status: 400 };
+  if (!o.discount) return { order: o };
+  const was = o.discount.label;
+  o.discount = null;
+  o.notes.push({ at: iso(), note: String(note).slice(0, 2000), by: 'studio' });
+  reprice(o);
+  await save(o, `${was} rate removed by the studio`, String(note).slice(0, 2000));
+  return { order: o };
+}
+
+/* An end date from the console is a day: it runs to midnight in Hastings. */
+function endsAt(v) {
+  if (v == null || v === '') return null;
+  const s = String(v).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    const t = Date.parse(`${s}T23:59:59Z`);
+    if (Number.isNaN(t)) return undefined;
+    const off = new Intl.DateTimeFormat('en-US', { timeZone: 'Pacific/Auckland', timeZoneName: 'longOffset' })
+      .formatToParts(new Date(t)).find((x) => x.type === 'timeZoneName').value;
+    const m = /([+-])(\d{2}):(\d{2})/.exec(off);
+    const mins = m ? (m[1] === '-' ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3])) : 0;
+    return iso(t - mins * 60000);
+  }
+  const t = Date.parse(s);
+  return Number.isNaN(t) ? undefined : iso(t);
+}
+
+/** A code, made in the console. Its text is kept in the store only. */
+export async function createCode({ code, pct = 40, label = 'WestSide', max_uses = null, ends = null } = {}) {
+  const text = codeText(code);
+  if (!CODE_TEXT.test(text)) return { error: 'a code is 4 to 24 characters: A to Z, 0 to 9 or -', status: 400 };
+  const p = pct == null || pct === '' ? 40 : Number(pct);
+  if (!Number.isInteger(p) || p < 1 || p > 90) return { error: 'pct is a whole number from 1 to 90', status: 400 };
+  const max = max_uses == null || max_uses === '' ? null : Number(max_uses);
+  if (max !== null && !(Number.isInteger(max) && max >= 1)) return { error: 'max uses is a whole number, or empty for no limit', status: 400 };
+  const end = endsAt(ends);
+  if (end === undefined) return { error: 'the end date does not read as a date', status: 400 };
+  const c = {
+    id: crypto.randomBytes(6).toString('hex'), code: text, label: String(label || '').trim().slice(0, 40) || 'WestSide',
+    pct: p, rule: 'cbd', active: true, max_uses: max, ends: end, created: iso(),
+  };
+  if ((await one('SET', K.code(text), JSON.stringify(c), 'NX')) !== 'OK') return { error: 'that code already exists', status: 409 };
+  await one('SADD', K.codes, text);
+  return { code: c };
+}
+
+export async function setCodeActive(code, active) {
+  const text = codeText(code);
+  const c = CODE_TEXT.test(text) ? await readCode(text) : null;
+  if (!c) return { error: 'no such code', status: 404 };
+  c.active = Boolean(active);
+  await one('SET', K.code(text), JSON.stringify(c));
+  return { code: c };
+}
+
+/** Every code, newest first, with the orders that paid with it. */
+export async function listCodes() {
+  const texts = (await one('SMEMBERS', K.codes)) || [];
+  const codes = (await pipe(texts.map((t) => ['GET', K.code(t)]))).filter(Boolean).map((r) => JSON.parse(r));
+  for (const c of codes) {
+    const ids = await usesOf(c.id);
+    const orders = (await pipe(ids.map((x) => ['GET', K.order(x)]))).filter(Boolean).map((r) => JSON.parse(r));
+    c.uses = ids;
+    c.paid_nzd = orders.reduce((n, o) => n + (o.price.nzd || 0), 0);
+  }
+  return codes.sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
 }
 
 /* ------------------------------------------------------------------ card */
@@ -245,7 +452,7 @@ export async function cardSession(stripe, o, { currency = 'NZD', origin = SITE()
         unit_amount: Math.round(amount * 100),
         product_data: {
           name: `//Strips commission · ${o.id} · ${sizeLine(o)}`,
-          description: specLine(o.spec),
+          description: o.discount ? `${specLine(o.spec)} · ${rateLine(o)}` : specLine(o.spec),
           ...(image ? { images: [image] } : {}),
         },
       },
@@ -253,7 +460,10 @@ export async function cardSession(stripe, o, { currency = 'NZD', origin = SITE()
     customer_email: o.email,
     payment_intent_data: { receipt_email: o.email, metadata: { kind: 'commission', commission: o.id } },
     client_reference_id: o.id,
-    metadata: { kind: 'commission', commission: o.id, nzd: String(o.price.nzd), currency: cur },
+    metadata: {
+      kind: 'commission', commission: o.id, nzd: String(o.price.nzd), currency: cur,
+      ...(o.discount ? { discount: `${o.discount.label.toLowerCase()}-${o.discount.pct}` } : {}),
+    },
     success_url: `${origin}/commission/${o.id}/paid?session={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/commission/${o.id}`,
     expires_at: Math.floor(now() / 1000) + 60 * 60,
@@ -450,14 +660,21 @@ export async function markPaid(id, { method, ref, amount, note = null, by = null
   }
   const first = await one('SET', K.paid(id), iso(), 'NX');
   if (first !== 'OK') return { order: o, already: true };
+  /* a code's use is counted here, behind the same once-only mark as the emails */
+  const codeId = o.discount && o.discount.code_id;
   await Promise.all([
+    codeId ? one('LPUSH', K.codeUses(codeId), id).catch((e) => console.error('commission code use', id, e.message)) : null,
     emailBuyerPaid(o).catch((e) => console.error('commission buyer email', id, e.message)),
     emailArtistPaid(o).catch((e) => console.error('commission artist email', id, e.message)),
   ]);
-  /* ETH only: card sales stay off the timeline, as every fiat sale does */
+  /* ETH only: card sales stay off the timeline, as every fiat sale does. The
+     WestSide rate keeps its price off it too, so the public price list is
+     never undercut in public. */
   if (o.method === 'eth') {
     await enqueue('commission', {
-      id: o.id, size: `${o.spec.length_cm} × ${o.spec.width_cm} cm`, price: `${Number(o.price.eth).toFixed(2)} ETH`,
+      id: o.id, size: `${o.spec.length_cm} × ${o.spec.width_cm} cm`,
+      price: o.discount ? null : `${Number(o.price.eth).toFixed(2)} ETH`,
+      where: o.discount ? 'for a wall in the Hastings CBD' : null,
       image: renderUrl(o), handle: o.mention && o.x_handle ? o.x_handle : null, url: SITE(),
     });
   }
@@ -483,7 +700,7 @@ async function emailBuyerPaid(o) {
 Reference: ${o.id}
 ${specLine(o.spec)}
 Colours: ${o.spec.palette_id} (${o.spec.colours.map((c) => c.hex).join(' ')})
-Paid: ${paidLine(o)} by ${o.method === 'eth' ? 'ETH' : 'card'}
+Paid: ${paidLine(o)} by ${o.method === 'eth' ? 'ETH' : 'card'}${o.discount ? `\n${o.discount.label} rate, ${o.discount.pct}% off (list NZD ${Number(o.price.list_nzd).toLocaleString('en-NZ')}).` : ''}
 
 ${deliveryLine(o)}
 
@@ -505,7 +722,9 @@ async function emailArtistPaid(o) {
 
 ${specLine(o.spec)}
 Colours: ${o.spec.palette_id} (${o.spec.colours.map((c) => c.hex).join(' ')})
-Paid: ${paidLine(o)} by ${o.method}${o.payment_ref ? `\nRef: ${o.payment_ref}` : ''}
+Paid: ${paidLine(o)} by ${o.method}${o.payment_ref ? `\nRef: ${o.payment_ref}` : ''}${o.discount ? `
+Rate: ${rateLine(o)}, applied ${o.discount.by === 'studio' ? 'by the studio' : 'with the buyer\'s code'}
+Building: ${o.discount.building || '-'}` : ''}
 
 Name: ${o.name || '-'}
 Email: ${o.email || '-'}

@@ -7,6 +7,8 @@
  *   node scripts/strip/test-commission.mjs
  */
 import { readFileSync, existsSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import crypto from 'node:crypto';
 
 let pass = 0, fail = 0;
 const is = (label, got, want) => {
@@ -194,6 +196,162 @@ const st = await (await asStudio('https://mintface.art/api/commission-admin', { 
 is('shipped with tracking: kept, and the buyer is told', [st.order.status, st.order.tracking, mail[mail.length - 1].subject.endsWith('shipped')], ['shipped', 'NZP123', true]);
 const strips = await asStudio(`https://mintface.art/api/commission-admin?id=${A.id}&strips=1`);
 is('DOWNLOAD STRIP DATA is a file of colours and widths', [/attachment/.test(strips.headers.get('content-disposition')), Object.keys((await strips.json()).strips[0]).sort()], [true, ['hex', 'mm']]);
+
+/* COMMISSION-WESTSIDE. Every code here is made up as the test runs, in the
+   test store, and checked for afterwards; none is written in this file. */
+const studio = async (body) => { const r = await asStudio('https://mintface.art/api/commission-admin', body); return { status: r.status, j: await r.json() }; };
+const madeUp = (p) => `${p}-${crypto.randomBytes(5).toString('hex').toUpperCase()}`;
+const BUILDING = '201 Heretaunga Street West, Hastings';
+const WEI = (nzdn) => ((BigInt(nzdn) * 10n ** 18n) / 5000n).toString();
+const orderRec = (id) => JSON.parse(KV.get(`commission:o:${id}`));
+const keep = (o) => KV.set(`commission:o:${o.id}`, JSON.stringify(o));
+
+console.log('\n— the WestSide rate: the price —');
+const priced = (s, discount = null) => { const x = { spec: s, discount, price: { usd_rate: 0.56 } }; C.reprice(x); return x.price; };
+const atList = priced(spec());
+const atRate = priced(spec(), { pct: 40 });
+is('without a discount, reprice is as it was: 2,028 · 0.4056 ETH · USD at the rate', [atList.nzd, atList.eth, atList.wei, atList.usd], [2028, '0.4056', WEI(2028), Math.round(2028 * 0.56)]);
+is('with 40% off: round(list × 0.6) = 1,217, wei exact at 5,000, USD from the discounted NZD', [atRate.list_nzd, atRate.nzd, atRate.eth, atRate.wei, atRate.usd], [2028, 1217, '0.2434', WEI(1217), Math.round(1217 * 0.56)]);
+const framed = priced(spec({ frame: 'black' })).nzd;
+is('the 40% comes off the frame too', priced(spec({ frame: 'black' }), { pct: 40 }).nzd, Math.round((framed * 60) / 100));
+
+console.log('\n— the WestSide rate: codes, made in the console —');
+const CODE = madeUp('T');
+is('code-create refuses bad text: short, a space, an underscore, too long', await Promise.all(['AB1', 'WEST SIDE', 'WEST_SIDE', 'X'.repeat(25)].map(async (code) => (await studio({ action: 'code-create', code })).status)), [400, 400, 400, 400]);
+const mk = await studio({ action: 'code-create', code: CODE.toLowerCase() });
+is('a good one is kept upper case: WestSide, 40%, the cbd rule, on', [mk.status, mk.j.code.code, mk.j.code.label, mk.j.code.pct, mk.j.code.rule, mk.j.code.active], [201, CODE, 'WestSide', 40, 'cbd', true]);
+is('the same code twice is refused', (await studio({ action: 'code-create', code: CODE })).status, 409);
+const uses = () => KV.get(`commission:code-uses:${mk.j.code.id}`) || [];
+
+console.log('\n— the WestSide rate: a buyer\'s code —');
+const W = (await post({ action: 'create', spec: spec({ palette_id: 'site-4', delivery: 'shipped' }) })).j;
+await post({ action: 'update', id: W.id, key: W.key, name: 'Wi', email: 'wi@example.test', ship_to: '9 Somewhere Rd, Auckland' });
+let c1 = await post({ action: 'code', id: W.id, key: W.key, code: madeUp('NOPE'), building: BUILDING, fixed: true });
+is('a wrong code: 400, "That code isn\'t one of ours.", one try counted', [c1.status, c1.j.error, orderRec(W.id).code_tries], [400, "That code isn't one of ours.", 1]);
+c1 = await post({ action: 'code', id: W.id, key: W.key, code: CODE, fixed: true });
+is('the right code without a building: "Which building? …"', [c1.status, c1.j.error], [400, 'Which building? The street address, please.']);
+c1 = await post({ action: 'code', id: W.id, key: W.key, code: CODE, building: BUILDING });
+is('… and without the tick: "Tick the box …"', [c1.status, c1.j.error], [400, "Tick the box if it's going on the building."]);
+c1 = await post({ action: 'code', id: W.id, key: W.key, code: ` ${CODE.toLowerCase()} `, building: BUILDING, fixed: true });
+is('with both, in any case: shipped becomes collected, NZD 2,028 → 1,217 · 0.2434 ETH', [c1.status, c1.j.spec.delivery, c1.j.price.list_nzd, c1.j.price.nzd, c1.j.price.eth, c1.j.discount.label, c1.j.discount.pct], [200, 'collect', 2028, 1217, '0.2434', 'WestSide', 40]);
+is('the private view has the building; the tries are cleared', [c1.j.discount.building, orderRec(W.id).code_tries], [BUILDING, 0]);
+const toShip = await post({ action: 'update', id: W.id, key: W.key, delivery: 'shipped' });
+is('shipping it afterwards is refused, in Ryan\'s words', [toShip.status, toShip.j.error], [409, "The WestSide rate is for paintings fixed to a Hastings CBD building, so it's collected, not shipped. Remove the code to ship it."]);
+const pubW = (await get(W.id)).j;
+const pubWText = JSON.stringify(pubW);
+is('the public view says WestSide 40%, with neither the code nor the building', [pubW.discount, pubWText.toUpperCase().includes(CODE), pubWText.includes(BUILDING), pubWText.includes('Heretaunga')], [{ label: 'WestSide', pct: 40 }, false, false, false]);
+const adminW = await (await asStudio(`https://mintface.art/api/commission-admin?id=${W.id}`)).json();
+is('the studio\'s view has the building; the record holds the code\'s id, never its text', [adminW.order.discount.building, adminW.order.discount.by, adminW.order.discount.code_id, KV.get(`commission:o:${W.id}`).toUpperCase().includes(CODE)], [BUILDING, 'buyer', mk.j.code.id, false]);
+const off1 = await post({ action: 'uncode', id: W.id, key: W.key });
+is('uncode brings back the list price', [off1.status, off1.j.price.nzd, off1.j.discount], [200, 2028, null]);
+
+console.log('\n— the WestSide rate: paid by card —');
+await post({ action: 'code', id: W.id, key: W.key, code: CODE, building: BUILDING, fixed: true });
+const asked = [];
+const fakeStripe = { checkout: { sessions: { create: async (p) => { asked.push(p); return { id: `cs_test_w${asked.length}`, url: 'https://checkout.stripe.test/w' }; } } } };
+await C.cardSession(fakeStripe, await C.getOrder(W.id), { currency: 'NZD' });
+const lineW = asked[0].line_items[0].price_data;
+is('the card line is the discounted NZD × 100, and names the rate', [lineW.currency, lineW.unit_amount, lineW.product_data.description.endsWith(' · WestSide rate, 40% off NZD 2,028'), asked[0].metadata.discount], ['nzd', 121700, true, 'westside-40']);
+await C.cardSession(fakeStripe, await C.getOrder(W.id), { currency: 'USD' });
+is('… and in USD it is the discounted NZD at the rate', [asked[1].line_items[0].price_data.currency, asked[1].line_items[0].price_data.unit_amount], ['usd', Math.round(1217 * 0.56) * 100]);
+const mW = mail.length;
+const evW = { id: 'evt_w1', type: 'checkout.session.completed', data: { object: { id: 'cs_test_w1', object: 'checkout.session', payment_status: 'paid', amount_total: 121700, currency: 'nzd', payment_intent: 'pi_test_w', metadata: { kind: 'commission', commission: W.id, discount: 'westside-40' } } } };
+await hook(evW);
+await hook(evW);
+await hook({ ...evW, id: 'evt_w2' });
+is('paid by card, and the use counted once however the webhook repeats', [(await get(W.id)).j.status, uses()], ['paid', [W.id]]);
+const mailW = mail.slice(mW);
+const buyerW = mailW.find((m) => m.to === 'wi@example.test');
+const studioW = mailW.find((m) => m.to === 'studio@example.test');
+is('the buyer\'s email has the rate under the price', [mailW.length, buyerW.text.includes('by card\nWestSide rate, 40% off (list NZD 2,028).')], [2, true]);
+is('the studio\'s has the rate, the building, and the buyer\'s code as the hand', [studioW.text.includes('Rate: WestSide rate, 40% off NZD 2,028'), studioW.text.includes(`Building: ${BUILDING}`), studioW.text.includes('with the buyer\'s code')], [true, true, true]);
+is('neither email has the code in it', mailW.some((m) => `${m.subject}\n${m.text}`.toUpperCase().includes(CODE)), false);
+is('once paid, the code cannot come off', (await post({ action: 'uncode', id: W.id, key: W.key })).status, 409);
+
+console.log('\n— the WestSide rate: paid in ETH —');
+const X = (await post({ action: 'create', spec: spec({ palette_id: 'site-5' }) })).j;
+await post({ action: 'update', id: X.id, key: X.key, name: 'Xi', email: 'xi@example.test', mention: true, x_handle: 'xi_walls' });
+const ethX0 = (await post({ action: 'eth', id: X.id, key: X.key })).j.eth;
+await post({ action: 'code', id: X.id, key: X.key, code: CODE, building: BUILDING, fixed: true });
+const ethX = (await post({ action: 'eth', id: X.id, key: X.key })).j.eth;
+is('the ETH box moves with the code: 0.4056 → 0.2434, the wei exact, the QR too', [ethX0.amount, ethX.amount, ethX.wei, ethX.uri.endsWith(`value=${WEI(1217)}`)], ['0.4056', '0.2434', WEI(1217), true]);
+const named = `0x${Buffer.from(X.id).toString('hex')}`;
+const halfX = BigInt(ethX.wei) / 2n;
+chain.scan = [{ hash: `0x${'1'.repeat(64)}`, to: PAY_TO, value: halfX.toString(), blockNumber: String(chain.head - 2), input: named, isError: '0' }];
+await cron.GET(new Request('https://mintface.art/api/cron/commissions', auth));
+is('once ETH has arrived, the code can neither come off nor go on', [(await post({ action: 'uncode', id: X.id, key: X.key })).j.error, (await post({ action: 'code', id: X.id, key: X.key, code: CODE, building: BUILDING, fixed: true })).status], ['ETH has already arrived for this order; write to the studio to change it', 409]);
+chain.scan.push({ hash: `0x${'2'.repeat(64)}`, to: PAY_TO, value: (BigInt(ethX.wei) - halfX).toString(), blockNumber: String(chain.head - 2), input: '0x', isError: '0' });
+await cron.GET(new Request('https://mintface.art/api/cron/commissions', auth));
+is('the watcher matched the discounted wei: paid, and one more use', [(await get(X.id)).j.status, uses().length], ['paid', 2]);
+const wireX = wireQueue().filter((ev) => ev.kind === 'commission').pop();
+is('the X post leaves the price out and says where it is going', [wireX.payload.price, compose(wireX).text.split('\n')[0]], [null, 'COMMISSIONED · //STRIPS · 120 × 60 CM · FOR A WALL IN THE HASTINGS CBD · @xi_walls']);
+is('… with neither the code nor the building in it', [JSON.stringify(wireX).toUpperCase().includes(CODE), JSON.stringify(wireX).includes('Heretaunga')], [false, false]);
+
+console.log('\n— the WestSide rate: wrong guesses —');
+const G = (await post({ action: 'create', spec: spec() })).j;
+const guesses = [];
+for (let i = 0; i < 10; i += 1) guesses.push((await post({ action: 'code', id: G.id, key: G.key, code: madeUp('GUESS'), building: BUILDING, fixed: true })).status);
+is('ten wrong codes: ten 400s, each counted on the order', [guesses.filter((s) => s === 400).length, orderRec(G.id).code_tries], [10, 10]);
+const g11 = await post({ action: 'code', id: G.id, key: G.key, code: CODE, building: BUILDING, fixed: true });
+is('the 11th try is locked out for an hour, the right code or not', [g11.status, g11.j.error, Math.round((Date.parse(orderRec(G.id).code_locked_until) - Date.now()) / 6e4)], [429, 'Too many tries. Try again in an hour, or write to the studio.', 60]);
+const lockedG = orderRec(G.id);
+lockedG.code_locked_until = new Date(Date.now() - 1000).toISOString();
+keep(lockedG);
+is('an hour on, the right code works', (await post({ action: 'code', id: G.id, key: G.key, code: CODE, building: BUILDING, fixed: true })).j.price.nzd, 1217);
+
+console.log('\n— the WestSide rate: ended, switched off, used up —');
+const ENDED = madeUp('E');
+const OFF = madeUp('O');
+const ONE = madeUp('N');
+await studio({ action: 'code-create', code: ENDED, ends: '2020-01-31' });
+await studio({ action: 'code-create', code: OFF });
+await studio({ action: 'code-create', code: ONE, max_uses: 1 });
+const offd = await studio({ action: 'code-active', code: OFF, active: false });
+const tryOn = async (who, code) => post({ action: 'code', id: who.id, key: who.key, code, building: BUILDING, fixed: true });
+const L = (await post({ action: 'create', spec: spec() })).j;
+const endedSay = await tryOn(L, ENDED);
+is('an ended code is refused, and says so differently from an unknown one', [endedSay.status, endedSay.j.error], [400, 'That code has ended.']);
+is('a code switched off is refused', [offd.j.code.active, (await tryOn(L, OFF)).j.error], [false, 'That code has ended.']);
+const P1 = (await post({ action: 'create', spec: spec() })).j;
+const P2 = (await post({ action: 'create', spec: spec() })).j;
+is('a code with one use left goes on two waiting orders', [(await tryOn(P1, ONE)).status, (await tryOn(P2, ONE)).status], [200, 200]);
+await studio({ id: P2.id, action: 'mark-paid', method: 'bank', note: 'test: paid by transfer' });
+is('one pays: the code is at its limit, and a new order is refused', (await tryOn(L, ONE)).j.error, 'That code has ended.');
+await hook({ id: 'evt_p1', type: 'checkout.session.completed', data: { object: { id: 'cs_test_p1', object: 'checkout.session', payment_status: 'paid', amount_total: 121700, currency: 'nzd', payment_intent: 'pi_test_p1', metadata: { kind: 'commission', commission: P1.id } } } });
+is('… but the order already holding it still pays, at its rate', [(await get(P1.id)).j.status, (await get(P1.id)).j.price.nzd], ['paid', 1217]);
+
+console.log('\n— the WestSide rate: the studio\'s hand —');
+const H = (await post({ action: 'create', spec: spec({ delivery: 'shipped' }) })).j;
+await post({ action: 'update', id: H.id, key: H.key, name: 'Hu', email: 'hu@example.test', ship_to: '3 Away Lane, Napier' });
+await post({ action: 'eth', id: H.id, key: H.key });
+const lapse = orderRec(H.id);
+lapse.expires_at = new Date(Date.now() - 1000).toISOString();
+keep(lapse);
+is('an ETH quote that lapsed reads expired', (await get(H.id)).j.status, 'expired');
+is('the studio\'s rate needs a building and a note', [(await studio({ id: H.id, action: 'discount', note: 'x' })).status, (await studio({ id: H.id, action: 'discount', building: BUILDING })).status], [400, 400]);
+is('… and a pct from 1 to 90', (await studio({ id: H.id, action: 'discount', pct: 95, building: BUILDING, note: 'x' })).status, 400);
+const dH = (await studio({ id: H.id, action: 'discount', building: BUILDING, note: 'WestSide, fixed to the test building' })).j.order;
+is('on a lapsed order it reopens it for 7 days: collected, 40% off, by the studio', [dH.status, Math.round((Date.parse(dH.expires_at) - Date.now()) / 36e5), dH.spec.delivery, dH.price.nzd, dH.discount.by, dH.discount.code_id, dH.history.some((h) => h.what === 'reopened for the WestSide rate')], ['pending_payment', 168, 'collect', 1217, 'studio', null, true]);
+is('… the lapsed ETH quote cleared, to start again at the new amount', [dH.eth, dH.method, (KV.get('commission:eth') || new Set()).has(H.id)], [null, null, false]);
+const readH = (await post({ action: 'read', id: H.id, key: H.key })).j;
+is('the buyer\'s page has the new price on reload', [readH.status, readH.price.nzd, readH.discount.by], ['pending_payment', 1217, 'studio']);
+is('removing it needs a note too, then the list price is back', [(await studio({ id: H.id, action: 'undiscount' })).status, (await studio({ id: H.id, action: 'undiscount', note: 'test' })).j.order.price.nzd], [400, 2028]);
+const dPaid = await studio({ id: F.id, action: 'discount', building: BUILDING, note: 'too late' });
+is('on a paid order it is refused, with the refund wording', [dPaid.status, dPaid.j.error], [409, 'already paid: refund the difference by hand in Stripe or ETH']);
+const listed = await (await asStudio('https://mintface.art/api/commission-admin')).json();
+is('the console list tags the WestSide orders', [listed.orders.find((x) => x.id === W.id).discount, listed.orders.find((x) => x.id === A.id).discount], [{ label: 'WestSide', pct: 40 }, null]);
+const codesNow = (await (await asStudio('https://mintface.art/api/commission-admin?codes=1')).json()).codes;
+const ours = codesNow.find((c) => c.code === CODE);
+is('?codes=1: every code, with the orders that paid with it and their NZD', [codesNow.length, ours.uses.slice().sort(), ours.paid_nzd], [4, [W.id, X.id].sort(), 1217 * 2]);
+is('… and the studio\'s own rate counts as no code\'s use', codesNow.every((c) => !c.uses.includes(H.id)), true);
+
+console.log('\n— the WestSide rate: no code in the repo —');
+const codeTerms = [CODE, ENDED, OFF, ONE, ['WEST', 'SIDE', '40'].join('')];
+const root = new URL('../../', import.meta.url).pathname;
+const found = spawnSync('git', ['grep', '-I', '-i', '-l', '-F', ...codeTerms.flatMap((t) => ['-e', t])], { cwd: root, encoding: 'utf8' });
+if (found.status === 0 || found.status === 1) is('no tracked file holds a made-up code, or the suggested one', found.stdout.trim(), '');
+else console.log('  skip the repo grep: no git here');
+is('no email, wire event or order record holds one either', codeTerms.slice(0, 4).filter((t) => [...mail.map((m) => `${m.subject}\n${m.text}`), ...wireQueue().map((ev) => JSON.stringify(ev)), ...[...KV.keys()].filter((k) => k.startsWith('commission:o:')).map((k) => KV.get(k))].join('\n').toUpperCase().includes(t)), []);
 
 console.log('\n— nothing personal in public, and the secret kept —');
 const state = readFileSync(new URL('../../data/state.json', import.meta.url), 'utf8');

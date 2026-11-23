@@ -10,14 +10,17 @@
  * POST {action:'card',   id, key, currency}   a Stripe Checkout session
  * POST {action:'eth',    id, key}    pay with ETH: address, exact amount, QR
  * POST {action:'eth-tx', id, key, hash}       a connected wallet's transaction
+ * POST {action:'code',   id, key, code, building, fixed:true}   the WestSide rate
+ * POST {action:'uncode', id, key}    back to the list price
  *
- * The browser never sends an amount. Every price here is the order's.
+ * The browser never sends an amount, nor a percentage: a code is a string, and
+ * every price here is the order's.
  */
 import Stripe from 'stripe';
 import { useRequestOrigin, siteOrigin } from './_lib/data.js';
 import {
   commissionsConfigured, createOrder, getOrder, publicView, privateView, updateOrder,
-  readyToPay, cardSession, chooseEth, reportTx, checkPendingTx, keyOk,
+  readyToPay, cardSession, chooseEth, reportTx, checkPendingTx, keyOk, applyCode, removeCode,
 } from './_lib/commissions.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
@@ -89,6 +92,14 @@ export async function POST(request) {
 
   if (action === 'eth-tx') {
     const r = await reportTx(b.id, b.key, b.hash);
+    if (r.error) return json({ error: r.error }, r.status || 400);
+    return json(await privateView(r.order));
+  }
+
+  if (action === 'code' || action === 'uncode') {
+    const r = action === 'code'
+      ? await applyCode(b.id, b.key, { code: b.code, building: b.building, fixed: b.fixed })
+      : await removeCode(b.id, b.key);
     if (r.error) return json({ error: r.error }, r.status || 400);
     return json(await privateView(r.order));
   }
