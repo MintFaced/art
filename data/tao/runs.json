@@ -3,6 +3,80 @@
  "keep": 90,
  "runs": [
   {
+   "run_id": "rmwts4tfd",
+   "at": "2026-11-23T21:30:17.977Z",
+   "ok": true,
+   "ms": 96413,
+   "blocks": {
+    "from": 25820496,
+    "to": 26480533,
+    "scanned": 660038
+   },
+   "chain_events": 0,
+   "changed_hands": {
+    "works": 1,
+    "sales": 0,
+    "transfers": 1,
+    "mints": 0
+   },
+   "wallets_affected": 2,
+   "tao": {
+    "live": 77703969,
+    "was": 77638796,
+    "delta": 65173,
+    "lost_to_sales": 304983,
+    "wallets": 3443
+   },
+   "register": {
+    "collectors": 3657,
+    "with_page": 803,
+    "private": 0,
+    "named": 1198
+   },
+   "classified": 1,
+   "unclassified": 0,
+   "events": 13073,
+   "owners_cursor_age_hours": 0.5,
+   "owners_cursor_blocks_behind": 100,
+   "files": 8,
+   "pages": 0,
+   "movements": [
+    {
+     "work": "id-please-362",
+     "title": "ID Please",
+     "token": "362",
+     "contract": "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+     "qty": 1,
+     "at": "2026-11-23T01:10:35.000Z",
+     "block": 26474456,
+     "tx": "0x896539ba30f781bd68325073d69824404ec5f23d4162c9477f683744ca52e3d5",
+     "from": "0xe4d4e920b818d648bce1bd41aed39ad92cc27fb0",
+     "to": "0xfe4da73ff6543b17b2b18e0e5d94bc87bd79f527",
+     "how": "transfer",
+     "effect": "the sender keeps what it banked and stops accruing; the receiver starts from zero",
+     "why": "no marketplace and no payment found"
+    }
+   ],
+   "movers": [
+    {
+     "address": "0xfe4da73ff6543b17b2b18e0e5d94bc87bd79f527",
+     "before": 0,
+     "after": 3,
+     "delta": 3,
+     "gained": 1
+    },
+    {
+     "address": "0xe4d4e920b818d648bce1bd41aed39ad92cc27fb0",
+     "before": 373,
+     "after": 373,
+     "delta": 0,
+     "gained": 0,
+     "sales": 0,
+     "transfers": 1
+    }
+   ]
+  },
+  {
    "run_id": "rmwscoyfo",
    "at": "2026-11-22T21:30:17.556Z",
    "ok": true,
