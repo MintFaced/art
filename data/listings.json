@@ -1,13 +1,13 @@
 {
  "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
- "generated": "2026-11-22T20:03:26.669Z",
+ "generated": "2026-11-23T20:03:21.599Z",
  "sources": [
   "foundation",
   "opensea"
  ],
  "counts": {
   "checked": 1414,
-  "owner_unresolved": 66,
+  "owner_unresolved": 68,
   "escrowed": 30,
   "priced": 68,
   "auction": 21,
