@@ -26,6 +26,10 @@ if (fromHash) {
   history.replaceState(null, '', location.pathname + location.search);
 }
 const KEY = fromHash || keyStore.get(ID);
+/* A pay link opened in a tab already on this order changes only the part
+   after the #, which a browser treats as a jump within the page, not a new
+   page: reload, so the new key is read. */
+window.addEventListener('hashchange', () => { if (new URLSearchParams(location.hash.slice(1)).get('k')) location.reload(); });
 
 const api = async (body) => {
   const r = await fetch('/api/commission', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: ID, key: KEY, ...body }) });
@@ -116,9 +120,18 @@ function showExpired(o) {
   paintArt(o);
 }
 
+/* Three ways to arrive without the order's key, each said plainly: no key at
+   all, a key this browser kept that a newer pay link has replaced, or a link
+   whose key is old or lost its end on the way (some apps cut links short). */
 function showElsewhere(o) {
+  const studio = (words) => `<a href="mailto:art@mintface.art?subject=${encodeURIComponent(o.id)}">${words}</a>`;
+  const say = !KEY
+    ? `This order was started in another browser. Open its link there, ${studio('ask the studio')} for a new one, or <a href="${START_AGAIN}">start again →</a>`
+    : fromHash
+      ? `This link has been replaced by a newer one, or lost its end on the way. ${studio('Ask the studio')} for a fresh link.`
+      : `This order has a newer link. Open the latest one the studio sent you, or ${studio('write to the studio')}.`;
   main.innerHTML = `<div class="cm-grid">${artColumn(o)}
-    <div class="cm-done"><h1>Commission.</h1><p>This order was started in another browser. Open its link there, or <a href="${START_AGAIN}">start again →</a></p></div></div>`;
+    <div class="cm-done"><h1>Commission.</h1><p>${say}</p></div></div>`;
   paintArt(o);
 }
 

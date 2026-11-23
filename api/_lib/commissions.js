@@ -781,7 +781,9 @@ export async function newPayLink(id) {
   const o = await getOrder(id);
   if (!o) return { error: 'no such order', status: 404 };
   if (o.status !== 'pending_payment') return { error: `this order is ${o.status.replace('_', ' ')}; a pay link only opens a waiting order`, status: 409 };
-  const key = crypto.randomBytes(18).toString('base64url');
+  /* letters and digits only: a link pasted into a message survives whole,
+     where a - or _ at the end can be cut off or read as formatting */
+  const key = crypto.randomBytes(16).toString('hex');
   o.key_hash = sha(key);
   await save(o, 'new pay link made by the studio (the old link no longer opens it)');
   return { order: o, key };
