@@ -14,7 +14,10 @@ const rgb = (hex) => [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 1
 /** PNG bytes for {length_cm, width_cm, orientation, strips:[{hex, mm}]}. */
 export async function stripPNG({ length_cm: L, width_cm: Wd, orientation, strips }) {
   const portrait = orientation === 'portrait';
-  const k = LONG_PX / Math.max(L, Wd);
+  /* Past 240 cm (a studio-made order) the short side keeps 600 px or more, so
+     a strip stays at least a pixel: 400 × 60 cm is 4000 × 600. Flat colour, so
+     the file stays small. */
+  const k = L > 240 ? Math.max(LONG_PX / Math.max(L, Wd), 600 / Math.min(L, Wd)) : LONG_PX / Math.max(L, Wd);
   const W = Math.max(1, Math.round((portrait ? Wd : L) * k));
   const H = Math.max(1, Math.round((portrait ? L : Wd) * k));
   const px = Buffer.alloc(W * H * 3);

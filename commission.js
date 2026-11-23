@@ -184,17 +184,23 @@ function showPay(o) {
 
   const words = () => {
     const shipped = S.o.spec.delivery === 'shipped';
+    const installed = S.o.spec.delivery === 'installed';
     const off = Boolean(S.o.discount);
-    $('[data-ship-say]').textContent = shipped ? 'Shipped worldwide, boxed.' : 'Collected from The Line, Hastings.';
+    $('[data-ship-say]').textContent = installed ? 'Installed by Sign Central, mounting system included.' : shipped ? 'Shipped worldwide, boxed.' : 'Collected from The Line, Hastings.';
     $('[data-ship]').textContent = shipped ? 'Collect from The Line instead →' : 'Ship it worldwide, boxed →';
-    $('[data-ship]').hidden = off; // the WestSide rate is collected, never shipped
+    /* no toggle at a rate (collected or installed, never shipped), for an
+       installed one, or past 240 cm, where shipping has no price */
+    $('[data-ship]').hidden = !shipped && (off || installed || S.o.spec.length_cm > 240);
     $('[data-ship-field]').hidden = !shipped;
     $('[data-code-wrap]').hidden = off;
     $('[data-specline]').textContent = S.o.spec_line;
     $('[data-price]').innerHTML = priceHTML(S.o);
     const rate = $('[data-rate]');
     rate.hidden = !off;
-    rate.innerHTML = off ? `${e(rateWords(S.o))}, for paintings fixed to a Hastings CBD building. <button type="button" class="cm-quiet" data-uncode>Remove</button>` : '';
+    /* a buyer's code can come off again; a rate the studio set is the order's own */
+    rate.innerHTML = !off ? '' : S.o.discount.by === 'buyer'
+      ? `${e(rateWords(S.o))}, for paintings fixed to a Hastings CBD building. <button type="button" class="cm-quiet" data-uncode>Remove</button>`
+      : e(rateWords(S.o));
     for (const b of main.querySelectorAll('[data-cur]')) b.setAttribute('aria-pressed', String(b.dataset.cur === S.currency));
     for (const b of main.querySelectorAll('[data-cur]')) b.style.color = b.dataset.cur === S.currency ? 'var(--ink)' : '';
   };

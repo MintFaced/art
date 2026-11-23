@@ -17,7 +17,7 @@
 import crypto from 'node:crypto';
 import QRCode from 'qrcode';
 import { pipe, one, storeConfigured } from './kv.js';
-import { checkSpec, stripsOf, nzdOf, weiOf, ethText, specLine } from './commission-spec.js';
+import { checkSpec, checkStudioSpec, stepped, STUDIO_LENGTH, WIDTH, stripsOf, nzdOf, weiOf, ethText, specLine } from './commission-spec.js';
 import { tokenFor, stripsOfToken } from './strips-token.js';
 import { decodeDesign } from '../../strips-design.js';
 import { stripPNG } from './strip-png.js';
@@ -25,7 +25,7 @@ import { putObject, r2Configured } from './r2.js';
 import { send } from './email.js';
 import { nzdToUsd } from './fx.js';
 import { enqueue } from './wire.js';
-import { STRIP_ETH_NZD } from '../../strip-price.js';
+import { STRIP_ETH_NZD, LENGTH_MAX_CM } from '../../strip-price.js';
 
 export const LEAD_WEEKS = 4;
 export const PAY_TO = (process.env.ETH_RECEIVE_ADDRESS || '0xd40B63bF04a44e43fBFE5784bCf22ACaAB34a180');
@@ -94,10 +94,12 @@ export const renderUrl = (o) => (o.render_key ? `${ASSETS}/${o.render_key}` : nu
 export const sizeLine = (o) => `${o.spec.length_cm} × ${o.spec.width_cm} cm ${o.spec.orientation}`;
 const orderData = (id) => `0x${Buffer.from(id).toString('hex')}`;
 
-/* The list price, less the WestSide rate where the order carries it: the rate
-   comes off the whole commission, frame included. ETH and USD follow the NZD. */
+/* The list price, less the rate where the order carries one: the rate comes
+   off the whole commission, frame included. ETH and USD follow the NZD. A
+   studio-made order can be priced as another size (priced_as); its frame and
+   delivery stay its own, and the buyer sees only the list price and the rate. */
 export function reprice(o) {
-  const list = nzdOf(o.spec);
+  const list = nzdOf(o.priced_as ? { ...o.spec, length_cm: o.priced_as.length_cm, width_cm: o.priced_as.width_cm } : o.spec);
   o.price.list_nzd = list;
   o.price.nzd = o.discount ? Math.round((list * (100 - o.discount.pct)) / 100) : list;
   o.price.wei = weiOf(o.price.nzd).toString();
@@ -125,6 +127,12 @@ export async function createOrder(input) {
   const { spec, error } = checkSpec(input || {});
   if (error) return { error };
   if (redeeming) spec.token_id = redeeming.id;
+  return storeOrder({ spec, strips: redeeming ? redeeming.strips : stripsOf(spec), holdMs: HOLD.card, first: { what: 'ordered' } });
+}
+
+/* An order written: numbered, keyed, priced, its render kept. The key is
+   handed back once, and only its hash is kept. */
+async function storeOrder({ spec, strips, holdMs, first, fields = {} }) {
   const year = nzYear();
   const seq = await one('INCR', K.seq(year));
   const id = `SP-${year}-${String(seq).padStart(4, '0')}`;
@@ -134,13 +142,14 @@ export async function createOrder(input) {
   const t = now();
   const o = {
     id, key_hash: sha(key), created: iso(t), updated: iso(t), status: 'pending_payment',
-    spec, strip_data: redeeming ? redeeming.strips : stripsOf(spec), render_key: null,
+    spec, strip_data: strips, render_key: null,
     price: { nzd: 0, eth: '0', wei: '0', usd: null, usd_rate: usdRate, fx_at: usdRate ? iso(t) : null, eth_rate: STRIP_ETH_NZD },
     email: null, name: null, ship_to: null, mention: false, x_handle: null,
     method: null, currency: null, payment_ref: null, paid_at: null, paid_amount: null,
-    deposit: false, balance_due: 0, discount: null, code_tries: 0, code_locked_until: null,
-    expires_at: iso(t + HOLD.card),
-    eth: null, notes: [], tracking: null, photos: [], history: [{ at: iso(t), what: 'ordered' }],
+    deposit: false, balance_due: 0, discount: null, priced_as: null, code_tries: 0, code_locked_until: null,
+    expires_at: iso(t + holdMs),
+    eth: null, notes: [], tracking: null, photos: [], history: [{ at: iso(t), ...first }],
+    ...fields,
   };
   reprice(o);
   /* the picture they saw, kept at the moment they asked for it */
@@ -151,6 +160,59 @@ export async function createOrder(input) {
   }
   await pipe([['SET', K.order(id), JSON.stringify(o)], ['LPUSH', K.ids, id]]);
   return { order: o, key };
+}
+
+/* ------------------------------------------------------ made in the studio */
+
+/* COMMISSION-CUSTOM. The studio makes an order the Maker can't: any design
+ * (its strips read off an image in the console), up to 600 cm, installed by
+ * Sign Central, priced as another size, with a rate. The design's strips live
+ * in the order record and nowhere else: never in a log, a file or a message.
+ * `dry` checks it all and prices it without writing anything. */
+export function studioDraft({ spec, strips, priced_as = null, discount = null, name = null, email = null, hold_days = 14 } = {}, { dry = false } = {}) {
+  const c = checkStudioSpec({ ...(spec || {}), strips }, { needStrips: !dry });
+  if (c.error) return { error: c.error };
+  let pricedAs = null;
+  if (priced_as && (priced_as.length_cm || priced_as.width_cm)) {
+    const L = stepped(priced_as.length_cm, STUDIO_LENGTH);
+    const W = stepped(priced_as.width_cm, WIDTH);
+    if (!L || !W) return { error: 'price it as a length and a width, both in steps of 10 cm' };
+    pricedAs = { length_cm: L, width_cm: W };
+    if (nzdOf({ ...c.spec, ...pricedAs }) == null) return { error: `${L} × ${W} cm has no price of its own with this frame and delivery` };
+  }
+  let disc = null;
+  if (discount) {
+    const pct = Number(discount.pct);
+    if (!Number.isInteger(pct) || pct < 1 || pct > 90) return { error: 'the rate is a whole number from 1 to 90' };
+    const label = String(discount.label || '').trim().slice(0, 40);
+    if (!label) return { error: 'the rate needs a name, as the buyer will read it' };
+    let place = null;
+    if (discount.building) { place = buildingOf(discount.building); if (!place) return { error: SAY.building }; }
+    disc = { code_id: null, label, pct, building: place, applied_at: iso(), by: 'studio' };
+  }
+  const e = String(email || '').trim();
+  if (e && !EMAIL.test(e)) return { error: 'that email does not look right' };
+  const hold = hold_days == null || hold_days === '' ? 14 : Number(hold_days);
+  if (!Number.isInteger(hold) || hold < 1 || hold > 60) return { error: 'hold days is a whole number from 1 to 60' };
+  return { spec: c.spec, strips: c.strips, priced_as: pricedAs, discount: disc, name: String(name || '').trim().slice(0, 120) || null, email: e || null, hold };
+}
+
+/** The price a draft would have, without writing anything. */
+export function draftPrice(d) {
+  const x = { spec: d.spec, priced_as: d.priced_as, discount: d.discount, price: { usd_rate: null } };
+  reprice(x);
+  return { list_nzd: x.price.list_nzd, nzd: x.price.nzd, eth: x.price.eth, wei: x.price.wei };
+}
+
+export async function createStudioOrder(input = {}) {
+  const d = studioDraft(input);
+  if (d.error) return { error: d.error, status: 400 };
+  const note = String(input.note || '').trim().slice(0, 2000);
+  if (!note) return { error: 'say why, in the note', status: 400 };
+  return storeOrder({
+    spec: d.spec, strips: d.strips, holdMs: d.hold * DAY, first: { what: 'made in the studio', note },
+    fields: { priced_as: d.priced_as, discount: d.discount, name: d.name, email: d.email },
+  });
 }
 
 export const renderOf = (o) => stripPNG({ ...o.spec, strips: o.strip_data });
@@ -211,9 +273,11 @@ export async function updateOrder(id, key, fields = {}) {
     o.x_handle = h ? h.replace(/^@/, '') : null;
   }
   if ('delivery' in fields && fields.delivery !== o.spec.delivery) {
+    if (o.spec.delivery === 'installed') return { error: SAY.installed, status: 409 };
     if (!['collect', 'shipped'].includes(fields.delivery)) return { error: 'delivery is collect or shipped', status: 400 };
     if (ethArrived(o)) return { error: SAY.ethArrived, status: 409 };
     if (fields.delivery === 'shipped' && o.discount) return { error: SAY.shipped, status: 409 };
+    if (fields.delivery === 'shipped' && o.spec.length_cm > LENGTH_MAX_CM) return { error: SAY.tooLongToShip, status: 409 };
     o.spec.delivery = fields.delivery;
     reprice(o);
     await save(o, `delivery: ${fields.delivery}`);
@@ -250,6 +314,8 @@ const SAY = {
   shipped: "The WestSide rate is for paintings fixed to a Hastings CBD building, so it's collected, not shipped. Remove the code to ship it.",
   ethArrived: 'ETH has already arrived for this order; write to the studio to change it',
   paid: 'already paid: refund the difference by hand in Stripe or ETH',
+  installed: 'This one is installed by Sign Central. Write to the studio to change it.',
+  tooLongToShip: `Shipping past ${LENGTH_MAX_CM} cm has no price yet. Write to the studio.`,
 };
 const CODE_TEXT = /^[A-Z0-9-]{4,24}$/;
 const CODE_TRIES = 10;
@@ -299,7 +365,7 @@ export async function applyCode(id, key, { code, building, fixed } = {}) {
     place = buildingOf(building);
     if (!place) return { error: SAY.building, status: 400 };
     if (fixed !== true) return { error: SAY.fixed, status: 400 };
-    o.spec.delivery = 'collect';
+    if (o.spec.delivery === 'shipped') o.spec.delivery = 'collect'; // a CBD wall is collected or installed, never shipped
   }
   o.discount = { code_id: c.id, label: c.label, pct: c.pct, building: place, applied_at: iso(), by: 'buyer' };
   o.code_tries = 0;
@@ -347,7 +413,7 @@ export async function studioDiscount(id, { pct = 40, building, note } = {}) {
     o.history.push({ at, what: 'reopened for the WestSide rate' });
   }
   o.discount = { code_id: null, label: 'WestSide', pct: p, building: place, applied_at: at, by: 'studio' };
-  o.spec.delivery = 'collect';
+  if (o.spec.delivery === 'shipped') o.spec.delivery = 'collect';
   o.notes.push({ at, note: String(note).slice(0, 2000), by: 'studio' });
   reprice(o);
   await save(o, `WestSide rate applied by the studio (${p}%)`, String(note).slice(0, 2000));
@@ -683,7 +749,9 @@ export async function markPaid(id, { method, ref, amount, note = null, by = null
 
 /* ---------------------------------------------------------------- emails */
 
-const deliveryLine = (o) => (o.spec.delivery === 'shipped' ? `Shipped worldwide, boxed, to:\n${o.ship_to}` : 'Collected from The Line, Hastings. We will write when it is ready.');
+const deliveryLine = (o) => (o.spec.delivery === 'shipped' ? `Shipped worldwide, boxed, to:\n${o.ship_to}`
+  : o.spec.delivery === 'installed' ? 'Installed by Sign Central, mounting system included. We will write to arrange it.'
+    : 'Collected from The Line, Hastings. We will write when it is ready.');
 const paidLine = (o) => {
   if (o.method === 'eth') return `${o.paid_amount || `${o.price.eth} ETH`} (at ${STRIP_ETH_NZD.toLocaleString('en-NZ')} NZD per ETH)`;
   return o.paid_amount || `NZD ${o.price.nzd.toLocaleString('en-NZ')}`;
@@ -722,7 +790,7 @@ async function emailArtistPaid(o) {
 
 ${specLine(o.spec)}
 Colours: ${o.spec.palette_id} (${o.spec.colours.map((c) => c.hex).join(' ')})
-Paid: ${paidLine(o)} by ${o.method}${o.payment_ref ? `\nRef: ${o.payment_ref}` : ''}${o.discount ? `
+Paid: ${paidLine(o)} by ${o.method}${o.payment_ref ? `\nRef: ${o.payment_ref}` : ''}${o.priced_as ? `\nPriced as ${o.priced_as.length_cm} × ${o.priced_as.width_cm} cm` : ''}${o.discount ? `
 Rate: ${rateLine(o)}, applied ${o.discount.by === 'studio' ? 'by the studio' : 'with the buyer\'s code'}
 Building: ${o.discount.building || '-'}` : ''}
 
@@ -772,20 +840,20 @@ export async function listOrders({ status = null, limit = 200 } = {}) {
 }
 
 /**
- * A new pay link, for a buyer who can't open the order in the browser that
- * made it (or an order the studio made for them). The key is new, so the old
- * browser's stops working. It is handed back once, to the console, and only
- * its hash is kept: never the key, in the record, the history or a log.
+ * Hand-over: a new buyer key for a waiting order, for a buyer who can't open
+ * it in the browser that made it (or an order made in the studio). The old
+ * key stops working. The new one is handed back once, to the console, and only
+ * its hash is kept: never the key, in the record, the history or a log. Letters
+ * and digits only, so a link pasted into a message survives whole.
  */
-export async function newPayLink(id) {
+export async function handOver(id, { note = null } = {}) {
   const o = await getOrder(id);
   if (!o) return { error: 'no such order', status: 404 };
   if (o.status !== 'pending_payment') return { error: `this order is ${o.status.replace('_', ' ')}; a pay link only opens a waiting order`, status: 409 };
-  /* letters and digits only: a link pasted into a message survives whole,
-     where a - or _ at the end can be cut off or read as formatting */
   const key = crypto.randomBytes(16).toString('hex');
   o.key_hash = sha(key);
-  await save(o, 'new pay link made by the studio (the old link no longer opens it)');
+  const why = String(note || '').trim().slice(0, 2000) || null;
+  await save(o, 'new pay link made by the studio (the old link no longer opens it)', why);
   return { order: o, key };
 }
 
@@ -805,7 +873,7 @@ export async function studioUpdate(id, { status, note, tracking, photo } = {}, b
     await send({
       to: o.email,
       subject: `//Strips ${o.id} ... painted`,
-      text: `It is painted. Here it is.\n\n${ASSETS}/${last.key}\n\n${o.spec.delivery === 'shipped' ? 'It ships next, boxed. We will send the tracking.' : 'Ready to collect from The Line, Hastings. Reply to arrange a time.'}\n\nRyan\nMintFace`,
+      text: `It is painted. Here it is.\n\n${ASSETS}/${last.key}\n\n${o.spec.delivery === 'shipped' ? 'It ships next, boxed. We will send the tracking.' : o.spec.delivery === 'installed' ? 'Sign Central installs it next. Reply to arrange a time.' : 'Ready to collect from The Line, Hastings. Reply to arrange a time.'}\n\nRyan\nMintFace`,
     }).catch((e) => console.error('commission painted email', id, e.message));
   }
   if (status === 'shipped' && was !== 'shipped' && o.email) {

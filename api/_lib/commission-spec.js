@@ -9,7 +9,7 @@
  * on the colours, which is why that is safe.
  */
 import palettesFile from '../../data/strip-palettes.json' with { type: 'json' };
-import { stripPrice, STRIP_ETH_NZD } from '../../strip-price.js';
+import { stripPrice, STRIP_ETH_NZD, LENGTH_MAX_CM } from '../../strip-price.js';
 import { layStrips, fitOf, GAMMA, STRIPS } from './strip-render.js';
 
 export const LENGTH = { min: 80, max: 240, step: 10 };
@@ -19,7 +19,10 @@ const FRAMES = ['none', 'black', 'white'];
 const DELIVERY = ['collect', 'shipped'];
 const HEX = /^#[0-9A-F]{6}$/;
 
-const stepped = (v, { min, max, step }) => {
+export const STUDIO_LENGTH = { min: 80, max: 600, step: 10 };
+const STUDIO_DELIVERY = ['collect', 'shipped', 'installed'];
+
+export const stepped = (v, { min, max, step }) => {
   const n = Number(v);
   return Number.isInteger(n) && n >= min && n <= max && n % step === 0 ? n : null;
 };
@@ -63,6 +66,40 @@ export function checkSpec(input = {}) {
   };
 }
 
+/**
+ * A studio-made order (COMMISSION-CUSTOM): any design, up to 600 cm long, and
+ * delivery `installed`. Only the console reaches this; checkSpec, which the
+ * Maker and the home page use, is unchanged. Past 240 cm a frame or shipping
+ * has no price, so nzdOf comes back null and the spec is refused.
+ * `strips` are the design's own, first to last across the width.
+ */
+export function checkStudioSpec(input = {}, { needStrips = true } = {}) {
+  const length = stepped(input.length_cm, STUDIO_LENGTH);
+  const width = stepped(input.width_cm, WIDTH);
+  if (!length) return { error: `length_cm is ${STUDIO_LENGTH.min} to ${STUDIO_LENGTH.max} in steps of ${STUDIO_LENGTH.step}` };
+  if (!width) return { error: `width_cm is ${WIDTH.min} to ${WIDTH.max} in steps of ${WIDTH.step}` };
+  if (!ORIENT.includes(input.orientation)) return { error: 'orientation is portrait or landscape' };
+  const frame = input.frame || 'none';
+  if (!FRAMES.includes(frame)) return { error: 'frame is none, black or white' };
+  if (frame !== 'none' && length > LENGTH_MAX_CM) return { error: `a frame past ${LENGTH_MAX_CM} cm has no price yet` };
+  const delivery = input.delivery || 'collect';
+  if (!STUDIO_DELIVERY.includes(delivery)) return { error: 'delivery is collect, shipped or installed' };
+  if (delivery === 'shipped' && length > LENGTH_MAX_CM) return { error: `shipping past ${LENGTH_MAX_CM} cm has no price yet` };
+  const spec = { length_cm: length, width_cm: width, orientation: input.orientation, frame, delivery, palette_id: 'custom', colours: [] };
+  if (nzdOf(spec) == null) return { error: 'that size has no price' };
+  if (!needStrips && input.strips == null) return { spec, strips: null };
+  const strips = input.strips;
+  if (!Array.isArray(strips) || strips.length < 2 || strips.length > 200) return { error: 'strips: 2 to 200 of them' };
+  for (const s of strips) {
+    if (!s || !HEX.test(String(s.hex))) return { error: 'every strip is an upper-case #RRGGBB' };
+    if (!Number.isInteger(s.mm) || s.mm < 1) return { error: 'every strip is a whole, positive number of mm' };
+  }
+  const total = strips.reduce((n, s) => n + s.mm, 0);
+  if (total !== width * 10) return { error: `the strips add up to ${total} mm; ${width} cm wide is ${width * 10} mm` };
+  spec.colours = [...new Set(strips.map((s) => s.hex))].map((hex) => ({ hex, w: 10 }));
+  return { spec, strips: strips.map((s) => ({ hex: s.hex, mm: s.mm })) };
+}
+
 /** The strips the spec paints as, first to last across its width. */
 export const stripsOf = (spec) => layStrips(spec.colours, spec.width_cm * 10, spec.palette_id === 'maker'
   ? { gamma: spec.gamma, count: spec.count, redLine: spec.red_line, keepOrder: true }
@@ -86,6 +123,7 @@ export const ethText = (wei) => {
 export function specLine(spec) {
   const bits = [`${spec.length_cm} × ${spec.width_cm} cm`, spec.orientation];
   if (spec.frame !== 'none') bits.push(`${spec.frame} frame`);
-  bits.push(spec.delivery === 'shipped' ? 'shipped worldwide, boxed' : 'collected from The Line');
+  bits.push(spec.delivery === 'shipped' ? 'shipped worldwide, boxed'
+    : spec.delivery === 'installed' ? 'installed by Sign Central, mounting system included' : 'collected from The Line');
   return bits.join(' · ');
 }

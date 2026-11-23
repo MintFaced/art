@@ -9,7 +9,11 @@
  * POST {id, action:'note', note}
  * POST {id, action:'mark-paid', method, ref?, note}   paid by hand, once
  * POST {id, action:'photo', data, type}               a photograph of it, to R2
- * POST {id, action:'pay-link'}                         a new key: a link that opens it in any browser
+ * POST {id, action:'handover', note?}                  a new buyer key: a link that opens it in any browser
+ *
+ * Made in the studio (COMMISSION-CUSTOM):
+ * POST {action:'custom', dry?, spec, strips, priced_as?, discount?, name?, email?, hold_days?, note}
+ *      dry: the price, nothing written. Otherwise {id, link}: the key in the link is shown once.
  *
  * The WestSide rate (COMMISSION-WESTSIDE):
  * POST {id, action:'discount', pct?, building, note}   by hand, no code; reopens a lapsed order
@@ -21,7 +25,8 @@
 import { sessionOk, sessionFrom } from './_lib/studio.js';
 import {
   listOrders, getOrder, studioUpdate, markPaid, renderUrl, STATUSES, commissionsConfigured,
-  studioDiscount, studioUndiscount, createCode, setCodeActive, listCodes, newPayLink,
+  studioDiscount, studioUndiscount, createCode, setCodeActive, listCodes, handOver,
+  studioDraft, draftPrice, createStudioOrder,
 } from './_lib/commissions.js';
 import { specLine } from './_lib/commission-spec.js';
 import { putObject, r2Configured } from './_lib/r2.js';
@@ -105,11 +110,25 @@ export async function POST(request) {
     return json({ order: whole(r.order) });
   }
 
-  if (b.action === 'pay-link') {
-    const r = await newPayLink(id);
+  /* a buyer's link: the key travels after a #, so it is never sent to the server or logged */
+  const linkTo = (o, key) => `${new URL(request.url).origin}/commission/${o.id}#k=${key}`;
+
+  if (b.action === 'handover') {
+    const r = await handOver(id, { note: b.note });
     if (r.error) return json({ error: r.error }, r.status || 400);
-    /* the key travels after a #, so it is never sent to the server or logged */
-    return json({ order: whole(r.order), url: `${new URL(request.url).origin}/commission/${r.order.id}#k=${r.key}` });
+    return json({ order: whole(r.order), link: linkTo(r.order, r.key) });
+  }
+
+  if (b.action === 'custom') {
+    const input = { spec: b.spec, strips: b.strips, priced_as: b.priced_as, discount: b.discount, name: b.name, email: b.email, hold_days: b.hold_days, note: b.note };
+    if (b.dry) {
+      const d = studioDraft(input, { dry: true });
+      if (d.error) return json({ error: d.error }, 400);
+      return json({ price: draftPrice(d) });
+    }
+    const r = await createStudioOrder(input);
+    if (r.error) return json({ error: r.error }, r.status || 400);
+    return json({ id: r.order.id, link: linkTo(r.order, r.key), order: whole(r.order) }, 201);
   }
 
   if (b.action === 'code-create') {

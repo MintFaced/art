@@ -345,15 +345,135 @@ const ours = codesNow.find((c) => c.code === CODE);
 is('?codes=1: every code, with the orders that paid with it and their NZD', [codesNow.length, ours.uses.slice().sort(), ours.paid_nzd], [4, [W.id, X.id].sort(), 1217 * 2]);
 is('… and the studio\'s own rate counts as no code\'s use', codesNow.every((c) => !c.uses.includes(H.id)), true);
 
-console.log('\n— a new pay link, from the console —');
-const pl = await studio({ id: H.id, action: 'pay-link' });
-const newKey = pl.status === 200 ? new URL(pl.j.url).hash.replace(/^#k=/, '') : '';
-is('NEW PAY LINK: the order\'s page with a fresh key after the #, letters and digits only', [pl.status, pl.j.url.startsWith(`https://mintface.art/commission/${H.id}#k=`), /^[0-9a-f]{32}$/.test(newKey), newKey !== H.key], [200, true, true, true]);
+console.log('\n— hand-over: a new pay link, from the console —');
+const pl = await studio({ id: H.id, action: 'handover', note: 'test: the buyer is on another phone' });
+const newKey = pl.status === 200 ? new URL(pl.j.link).hash.replace(/^#k=/, '') : '';
+is('NEW PAY LINK: the order\'s page with a fresh key after the #, letters and digits only', [pl.status, pl.j.link.startsWith(`https://mintface.art/commission/${H.id}#k=`), /^[0-9a-f]{32}$/.test(newKey), newKey !== H.key], [200, true, true, true]);
 is('the new key opens the order in any browser; the old one no longer does', [(await post({ action: 'read', id: H.id, key: newKey })).status, (await post({ action: 'read', id: H.id, key: H.key })).status], [200, 403]);
 is('the key is kept only as its hash: not in the record, its history, or the studio\'s view', [KV.get(`commission:o:${H.id}`).includes(newKey), JSON.stringify(pl.j.order).includes(newKey), 'key_hash' in pl.j.order, orderRec(H.id).history.at(-1).what], [false, false, false, 'new pay link made by the studio (the old link no longer opens it)']);
 is('the buyer pays with it as before', (await post({ action: 'update', id: H.id, key: newKey, name: 'Hu Again' })).j.name, 'Hu Again');
-is('a paid order gets no pay link', [(await studio({ id: F.id, action: 'pay-link' })).status], [409]);
-is('… and nobody without the studio\'s session gets one', (await admin.POST(new Request('https://mintface.art/api/commission-admin', { method: 'POST', body: JSON.stringify({ id: H.id, action: 'pay-link' }) }))).status, 401);
+is('a paid order gets no pay link', [(await studio({ id: F.id, action: 'handover' })).status], [409]);
+is('… and nobody without the studio\'s session gets one', (await admin.POST(new Request('https://mintface.art/api/commission-admin', { method: 'POST', body: JSON.stringify({ id: H.id, action: 'handover' }) }))).status, 401);
+
+/* COMMISSION-CUSTOM. Every design here is made up as the test runs. */
+const S = await import('../../api/_lib/commission-spec.js');
+const { stripPrice } = await import('../../strip-price.js');
+const { stripPNG } = await import('../../api/_lib/strip-png.js');
+const { bandsOf } = await import('../../strip-bands.js');
+const { default: sharp } = await import('sharp');
+let seed = 20261123;
+const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 2 ** 32; };
+const madeUpStrips = (widthMm, min = 6, max = 40) => {
+  const out = [];
+  let left = widthMm;
+  const colour = (prev) => {
+    for (;;) {
+      const c = [0, 0, 0].map(() => Math.floor(rand() * 256));
+      if (!prev || Math.max(...c.map((v, i) => Math.abs(v - prev[i]))) >= 48) return c;
+    }
+  };
+  while (left > 0) {
+    let mm = min + Math.floor(rand() * (max - min + 1));
+    if (left - mm < min) mm = left;
+    const rgb = colour(out.length ? out[out.length - 1].rgb : null);
+    out.push({ rgb, mm, hex: `#${rgb.map((v) => v.toString(16).padStart(2, '0')).join('')}`.toUpperCase() });
+    left -= mm;
+  }
+  return out;
+};
+const asStrips = (xs) => xs.map(({ hex, mm }) => ({ hex, mm }));
+const rgbClose = (a, b, d) => [1, 3, 5].every((i) => Math.abs(parseInt(a.slice(i, i + 2), 16) - parseInt(b.slice(i, i + 2), 16)) <= d);
+const customSpec = (o = {}) => ({ length_cm: 400, width_cm: 60, orientation: 'landscape', frame: 'none', delivery: 'installed', ...o });
+const design = asStrips(madeUpStrips(600));
+
+console.log('\n— made in the studio: the spec —');
+const ok400 = S.checkStudioSpec({ ...customSpec(), strips: design });
+is('400 × 60 installed, no frame, is accepted, as palette custom', [ok400.error || null, ok400.spec && ok400.spec.palette_id, ok400.strips && ok400.strips.length === design.length], [null, 'custom', true]);
+is('400 with a frame is refused: no price', S.checkStudioSpec({ ...customSpec({ frame: 'black' }), strips: design }).error, 'a frame past 240 cm has no price yet');
+is('400 shipped is refused', S.checkStudioSpec({ ...customSpec({ delivery: 'shipped' }), strips: design }).error, 'shipping past 240 cm has no price yet');
+const short = design.slice(0, -1);
+is('the strips must add up to the width', /^the strips add up to \d+ mm; 60 cm wide is 600 mm$/.test(S.checkStudioSpec({ ...customSpec(), strips: short }).error || ''), true);
+is('a bad hex is refused, lower case included', [{ hex: '#12345', mm: 300 }, { hex: design[0].hex.toLowerCase(), mm: 300 }].map((bad) => S.checkStudioSpec({ ...customSpec(), strips: [bad, { hex: '#FFFFFF', mm: 300 }] }).error), ['every strip is an upper-case #RRGGBB', 'every strip is an upper-case #RRGGBB']);
+is('the public checkSpec still refuses 400 cm, installed and a custom palette', [S.checkSpec(spec({ length_cm: 400 })).error, S.checkSpec(spec({ delivery: 'installed' })).error, S.checkSpec(spec({ palette_id: 'custom' })).error], ['length_cm is 80 to 240 in steps of 10', 'delivery is collect or shipped', 'no such palette']);
+is('installed reads "installed by Sign Central, mounting system included"', S.specLine(ok400.spec), '400 × 60 cm · landscape · installed by Sign Central, mounting system included');
+
+console.log('\n— made in the studio: the price —');
+const asIs = C.draftPrice(C.studioDraft({ spec: customSpec(), strips: design }));
+const pricedAs = C.draftPrice(C.studioDraft({ spec: customSpec(), strips: design, priced_as: { length_cm: 240, width_cm: 60 } }));
+const walk = C.draftPrice(C.studioDraft({ spec: customSpec(), strips: design, priced_as: { length_cm: 240, width_cm: 60 }, discount: { pct: 40, label: 'Walk The Line' } }));
+is('400 × 60 at its own size lists at NZD 6,760', asIs.list_nzd, 6760);
+is('priced as 240 × 60 it lists at 4,056, the 240 × 60 price', [pricedAs.list_nzd, stripPrice({ lengthCm: 240, widthCm: 60 })], [4056, 4056]);
+is('… and with 40% off: NZD 2,434, 0.4868 ETH, the wei exact', [walk.list_nzd, walk.nzd, walk.eth, walk.wei], [4056, 2434, '0.4868', WEI(2434)]);
+is('priced-as has to be a priced size of its own', C.studioDraft({ spec: customSpec(), strips: design, priced_as: { length_cm: 240, width_cm: 130 } }).error, 'price it as a length and a width, both in steps of 10 cm');
+
+console.log('\n— made in the studio: the order and its link —');
+is('custom needs a note', (await studio({ action: 'custom', spec: customSpec(), strips: design })).status, 400);
+const dry = await studio({ action: 'custom', dry: true, spec: customSpec(), priced_as: { length_cm: 240, width_cm: 60 }, discount: { pct: 40, label: 'Walk The Line', building: BUILDING } });
+const idsBefore = (KV.get('commission:ids') || []).length;
+is('a dry run prices it and writes nothing', [dry.status, dry.j.price.list_nzd, dry.j.price.nzd, dry.j.price.eth, (KV.get('commission:ids') || []).length], [200, 4056, 2434, '0.4868', idsBefore]);
+const cu = await studio({ action: 'custom', spec: customSpec(), strips: design, priced_as: { length_cm: 240, width_cm: 60 }, discount: { pct: 40, label: 'Walk The Line', building: BUILDING }, name: 'Ni', email: 'ni@example.test', hold_days: 14, note: 'test: a long one, installed' });
+const cuKey = cu.status === 201 ? new URL(cu.j.link).hash.replace(/^#k=/, '') : '';
+const N = cu.j.id;
+const cuRead = await post({ action: 'read', id: N, key: cuKey });
+is('custom makes the order and a link whose key reads it', [cu.status, cu.j.link.startsWith(`https://mintface.art/commission/${N}#k=`), cuRead.status, cuRead.j.name], [201, true, 200, 'Ni']);
+const cuRec = orderRec(N);
+is('the order: the strips exactly as given, held 14 days, "made in the studio"', [JSON.stringify(cuRec.strip_data) === JSON.stringify(design), Math.round((Date.parse(cuRec.expires_at) - Date.now()) / 36e5), cuRec.history[0].what, cuRec.history[0].note], [true, 14 * 24, 'made in the studio', 'test: a long one, installed']);
+is('the buyer sees NZD 4,056 struck to 2,434, the Walk The Line rate, installed', [cuRead.j.price.list_nzd, cuRead.j.price.nzd, cuRead.j.price.eth, cuRead.j.discount.label, cuRead.j.discount.by, cuRead.j.spec_line], [4056, 2434, '0.4868', 'Walk The Line', 'studio', '400 × 60 cm · landscape · installed by Sign Central, mounting system included']);
+const cuPub = (await get(N)).j;
+is('priced-as is in neither the public nor the private view; the studio\'s has it', ['priced_as' in cuPub, JSON.stringify(cuPub).includes('240'), 'priced_as' in cuRead.j, JSON.stringify(cuRead.j).includes('240 ×'), cu.j.order.priced_as], [false, false, false, false, { length_cm: 240, width_cm: 60 }]);
+const sneaky = (await post({ action: 'create', spec: spec({ priced_as: { length_cm: 80, width_cm: 10 } }) })).j;
+is('the public COMMISSION ignores a priced_as sent from the browser', [sneaky.order.price.nzd, 'priced_as' in sneaky.order, orderRec(sneaky.id).priced_as], [2028, false, null]);
+const moved = await post({ action: 'update', id: N, key: cuKey, delivery: 'collect' });
+is('an installed order\'s delivery cannot change', [moved.status, moved.j.error], [409, 'This one is installed by Sign Central. Write to the studio to change it.']);
+const plain = await studio({ action: 'custom', spec: customSpec({ length_cm: 200 }), strips: design, note: 'test: installed, no rate' });
+const plainKey = new URL(plain.j.link).hash.replace(/^#k=/, '');
+is('a buyer\'s code on an installed order leaves it installed', (await post({ action: 'code', id: plain.j.id, key: plainKey, code: CODE, building: BUILDING, fixed: true })).j.spec.delivery, 'installed');
+const longCollect = await studio({ action: 'custom', spec: customSpec({ delivery: 'collect' }), strips: design, note: 'test: long, collected' });
+is('a collected order past 240 cm cannot be switched to shipped', (await post({ action: 'update', id: longCollect.j.id, key: new URL(longCollect.j.link).hash.replace(/^#k=/, ''), delivery: 'shipped' })).j.error, 'Shipping past 240 cm has no price yet. Write to the studio.');
+asked.length = 0;
+await C.cardSession(fakeStripe, await C.getOrder(N), { currency: 'NZD' });
+const lineN = asked[0].line_items[0].price_data;
+is('the card line: 2,434 × 100, 400 × 60 installed, the rate on the 4,056 list', [lineN.unit_amount, lineN.product_data.name.includes('400 × 60 cm landscape'), lineN.product_data.description, asked[0].metadata.discount], [243400, true, '400 × 60 cm · landscape · installed by Sign Central, mounting system included · Walk The Line rate, 40% off NZD 4,056', 'walk the line-40']);
+const ethN = (await post({ action: 'eth', id: N, key: cuKey })).j.eth;
+is('ETH opens at 0.4868, the wei exact', [ethN.amount, ethN.wei], ['0.4868', WEI(2434)]);
+const ho = await studio({ id: N, action: 'handover', note: 'test: lost link' });
+const hoKey = new URL(ho.j.link).hash.replace(/^#k=/, '');
+is('handover: the old key 403s, the new one opens it', [(await post({ action: 'read', id: N, key: cuKey })).status, (await post({ action: 'read', id: N, key: hoKey })).status], [403, 200]);
+const mN = mail.length;
+await studio({ id: N, action: 'mark-paid', method: 'bank', note: 'test: paid by transfer' });
+const studioN = mail.slice(mN).find((m) => m.to === 'studio@example.test');
+const buyerN = mail.slice(mN).find((m) => m.to === 'ni@example.test');
+is('the studio\'s email says "Priced as 240 × 60 cm"; the buyer\'s doesn\'t', [studioN.text.includes('Priced as 240 × 60 cm'), buyerN.text.includes('240'), buyerN.text.includes('Installed by Sign Central, mounting system included.')], [true, false, true]);
+is('… and once paid, no handover', (await studio({ id: N, action: 'handover' })).status, 409);
+
+console.log('\n— made in the studio: reading strips off an image —');
+for (const [label, pxPerMm, along] of [['1 px a mm', 1, 1200], ['1.5 px a mm', 1.5, 900]]) {
+  const truth = madeUpStrips(600);
+  const tall = Math.round(600 * pxPerMm);
+  const raw = Buffer.alloc(along * tall * 3);
+  /* landscape: the first strip at the bottom, so top-down is the list reversed */
+  const rows = [];
+  let mm = 0;
+  for (const s of truth) { const a = Math.round(mm * pxPerMm); const b = Math.round((mm + s.mm) * pxPerMm); for (let y = a; y < b; y += 1) rows[tall - 1 - y] = s.rgb.slice(); mm += s.mm; }
+  for (let y = 1; y < tall; y += 1) {
+    const up = rows[y - 1]; const here = rows[y];
+    if (up.some((v, i) => v !== here[i]) && (y < 2 || rows[y - 2].every((v, i) => v === up[i]))) rows[y] = up.map((v, i) => Math.round((v + here[i]) / 2)); // a 1 px edge
+  }
+  for (let y = 0; y < tall; y += 1) for (let x = 0; x < along; x += 1) for (let c = 0; c < 3; c += 1) raw[(y * along + x) * 3 + c] = Math.max(0, Math.min(255, rows[y][c] + Math.round((rand() - 0.5) * 8)));
+  const jpeg = await sharp(raw, { raw: { width: along, height: tall, channels: 3 } }).jpeg({ quality: 90 }).toBuffer(); // JPEG's usual 4:2:0, which smears colour at the edges
+  const { data, info } = await sharp(jpeg).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const got = bandsOf({ data, width: info.width, height: info.height }, { widthMm: 600 });
+  const sameCount = got.strips.length === truth.length;
+  is(`${label}: every strip back, within ±1 mm, bottom to top, the colours close`, [sameCount, sameCount && truth.every((t, i) => Math.abs(t.mm - got.strips[i].mm) <= 1), sameCount && truth.every((t, i) => rgbClose(t.hex, got.strips[i].hex, 16))], [true, true, true]);
+  is(`${label}: the total exact`, got.strips.reduce((n, s) => n + s.mm, 0), 600);
+}
+
+console.log('\n— made in the studio: the render —');
+const png = await stripPNG({ length_cm: 400, width_cm: 60, orientation: 'landscape', strips: design });
+const meta = await sharp(png).metadata();
+is('stripPNG at 400 × 60 is 4000 × 600', [meta.width, meta.height], [4000, 600]);
+const png120 = await sharp(await stripPNG({ length_cm: 120, width_cm: 60, orientation: 'landscape', strips: design })).metadata();
+is('… and a Maker size is drawn as it was: 120 × 60 is 1600 × 800', [png120.width, png120.height], [1600, 800]);
 
 console.log('\n— the WestSide rate: no code in the repo —');
 const codeTerms = [CODE, ENDED, OFF, ONE, ['WEST', 'SIDE', '40'].join('')];
@@ -376,7 +496,7 @@ if (!terms.length && existsSync(spec2)) {
 }
 if (!terms.length) console.log('  skip the secret grep: no docs/STRIP-PAGE.md here and no STRIP_SECRET_TERMS');
 else {
-  const bundle = [readSrc('commission.html'), readSrc('commission.js'), readSrc('mintwork/commissions.html'), JSON.stringify(pub),
+  const bundle = [readSrc('commission.html'), readSrc('commission.js'), readSrc('mintwork/commissions.html'), readSrc('strip-bands.js'), JSON.stringify(pub),
     ...mail.map((m) => `${m.subject}\n${m.text}\n${(m.attachments || []).filter((a) => /json/.test(a.filename)).map((a) => Buffer.from(a.content.data || a.content).toString()).join('\n')}`)].join('\n');
   is(`none of the ${terms.length} guarded terms is in the checkout, the console or the emails`, terms.filter((t) => bundle.includes(t)).length, 0);
 }
