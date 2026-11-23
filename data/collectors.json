@@ -1,6 +1,6 @@
 {
  "_note": "Derived from data/c/*.json. collectors.mintface.art reads this; nothing here is edited by hand. Fix the work record and rebuild.",
- "generated": "2026-11-22T21:31:40.666Z",
+ "generated": "2026-11-23T21:01:02.890Z",
  "threshold": {
   "min_works": 3,
   "or_any_unique": true
@@ -14,10 +14,10 @@
   "wallets": 3442
  },
  "counts": {
-  "collectors": 3680,
-  "with_page": 806,
+  "collectors": 3657,
+  "with_page": 803,
   "private": 0,
-  "named": 1209
+  "named": 1198
  },
  "collectors": [
   {
@@ -117,10 +117,10 @@
    "private": false,
    "has_page": true,
    "counts": {
-    "works": 46,
+    "works": 45,
     "one_of_ones": 0,
-    "editions": 46,
-    "collections": 2
+    "editions": 45,
+    "collections": 1
    },
    "first_collected": "2022-12-07T02:43:59.000Z",
    "last_collected": "2022-12-20T00:32:35.000Z",
@@ -801,7 +801,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xa891fde42e982148b5f2f6b06f04be8e706a190e",
@@ -822,7 +822,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x33a34e27a81436ba9d79276406a285e89a8bd8a8",
@@ -1032,7 +1032,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xfcab2f0f8e64bbda95e1c65d368e6cb22bc5a808",
@@ -1557,7 +1557,7 @@
    "last_collected": "2026-10-21T04:52:11.000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x257984b6b5bcfd665532649450242d4df1eb304f",
@@ -1809,7 +1809,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x3d91ad906c3969f86c588c988f721d5a735c6f81",
@@ -3302,7 +3302,7 @@
    "last_collected": "2026-11-18T08:12:47.000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xcbfb9a917c2b45fbd8e820e66602ef26dff9cd40",
@@ -3596,7 +3596,7 @@
    "last_collected": "2026-09-05T21:53:35.000Z",
    "tao": 1703,
    "tao_rate": 29.4,
-   "tao_rank": 3170
+   "tao_rank": 3150
   },
   {
    "address": "0xb814f14996dd967a04e858ebe36120784ced4e36",
@@ -3932,7 +3932,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xd9c1780ff96a463d97cbb2f62e4dae0ccf8791e4",
@@ -4311,27 +4311,6 @@
    "tao": 39878,
    "tao_rate": 25.2,
    "tao_rank": 344
-  },
-  {
-   "address": "0x1b6265a40839a331ace2d81bc82b6104703c0426",
-   "ens": "chagozzinovault.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "chagozzinovault.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 6,
-    "one_of_ones": 0,
-    "editions": 6,
-    "collections": 4
-   },
-   "first_collected": "2022-06-01T19:27:53.000000Z",
-   "last_collected": "2022-12-16T12:10:11.000Z",
-   "tao": 34562,
-   "tao_rate": 25.2,
-   "tao_rank": 364
   },
   {
    "address": "0xc84d2bc55399de1f181c5adc01ee9b4e9a1f5efd",
@@ -4793,7 +4772,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xbd96ce810533583090b27afe327de711b401840e",
@@ -4814,7 +4793,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x20be2aff79b1f330a798983c78c0e056f8627623",
@@ -4835,7 +4814,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x360bd0e8ef21909115d520b924e72de923eff47e",
@@ -4899,27 +4878,6 @@
    "tao": 109142,
    "tao_rate": 219.6,
    "tao_rank": 148
-  },
-  {
-   "address": "0x1a6f0dddb884854355023a2dfe26e9174f8e0290",
-   "ens": "rabobi.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "rabobi.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 5,
-    "one_of_ones": 3,
-    "editions": 2,
-    "collections": 3
-   },
-   "first_collected": "2022-12-07T15:48:35.000Z",
-   "last_collected": "2022-12-07T15:48:35.000Z",
-   "tao": 8406,
-   "tao_rate": 8.4,
-   "tao_rank": 1305
   },
   {
    "address": "0x89ecbbf60f39c8a6a345464958f88ba4d28cd37c",
@@ -5486,7 +5444,7 @@
    "last_collected": null,
    "tao": 1326,
    "tao_rate": 29.4,
-   "tao_rank": 3177
+   "tao_rank": 3156
   },
   {
    "address": "0xd37905283adf21d3e628b423cbe20c4583ba9979",
@@ -5718,6 +5676,27 @@
    "tao": 38401,
    "tao_rate": 29.4,
    "tao_rank": 348
+  },
+  {
+   "address": "0x1b6265a40839a331ace2d81bc82b6104703c0426",
+   "ens": "chagozzinovault.eth",
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "chagozzinovault.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 5,
+    "one_of_ones": 0,
+    "editions": 5,
+    "collections": 3
+   },
+   "first_collected": "2022-06-01T19:27:53.000000Z",
+   "last_collected": "2022-12-16T12:10:11.000Z",
+   "tao": 34562,
+   "tao_rate": 25.2,
+   "tao_rank": 364
   },
   {
    "address": "0x7037f550b8176f4794e667c13516dc6a25f5c75a",
@@ -6221,7 +6200,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x24055d456255f02e5b6287efe2d4111900e69d39",
@@ -6242,7 +6221,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xbe8fe12b9eb1ca2a593e6c070c71c294b6fe9f00",
@@ -6306,6 +6285,27 @@
    "tao": 175644,
    "tao_rate": 215.4,
    "tao_rank": 71
+  },
+  {
+   "address": "0x1a6f0dddb884854355023a2dfe26e9174f8e0290",
+   "ens": "rabobi.eth",
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "rabobi.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 4,
+    "one_of_ones": 3,
+    "editions": 1,
+    "collections": 2
+   },
+   "first_collected": "2022-12-07T15:48:35.000Z",
+   "last_collected": "2022-12-07T15:48:35.000Z",
+   "tao": 8406,
+   "tao_rate": 8.4,
+   "tao_rank": 1305
   },
   {
    "address": "0x6a886cbe6e1a062c1f4b179c8c8ede4847a04a70",
@@ -8576,7 +8576,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xd5f20543784f105f93ec06e918ae2d5e195b4438",
@@ -8597,7 +8597,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x1b2ff803d6dbea011ef30938e2c22260d0774dca",
@@ -8618,7 +8618,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x49df36a77f819190a41368bc8aca8a54fb6d760d",
@@ -8660,7 +8660,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x10d503ffe3b10fc43285396de53d4df66a7a15e5",
@@ -8999,27 +8999,6 @@
    "tao_rank": 143
   },
   {
-   "address": "0x09bc641b6fa2308b030c312653f9675dfaa58e2b",
-   "ens": "baiwei.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "baiwei.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 1,
-    "editions": 2,
-    "collections": 3
-   },
-   "first_collected": "2026-08-21T23:52:35.000Z",
-   "last_collected": "2026-08-21T23:52:35.000Z",
-   "tao": 8743,
-   "tao_rate": 73.2,
-   "tao_rank": 1299
-  },
-  {
    "address": "0xe39ad57a33244300c2e0acfca24292434e2b9bae",
    "ens": "crimsonovoidchucker.eth",
    "fwd": null,
@@ -9269,7 +9248,7 @@
    "last_collected": "2025-07-27T23:33:23.000000Z",
    "tao": 2028,
    "tao_rate": 4.2,
-   "tao_rank": 3148
+   "tao_rank": 3131
   },
   {
    "address": "0x00ba0b79fbf0c18034b753d3e2eedaae7bdf2aa2",
@@ -9731,7 +9710,7 @@
    "last_collected": "2025-04-24T00:52:23.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x5c5edb285b7451b2155ec13c5d2eaff2ec6779ca",
@@ -9920,7 +9899,7 @@
    "last_collected": "2026-06-07T17:42:47.000Z",
    "tao": 2118,
    "tao_rate": 12.6,
-   "tao_rank": 3143
+   "tao_rank": 3127
   },
   {
    "address": "0x75775181080b3684cc3be770ba070d1ecc1ec50d",
@@ -10424,7 +10403,7 @@
    "last_collected": "2025-07-07T06:49:59.000000Z",
    "tao": 2115,
    "tao_rate": 4.2,
-   "tao_rank": 3144
+   "tao_rank": 3128
   },
   {
    "address": "0xe47b7432dd2cb6120bd8b08eac3dc50f766ff69a",
@@ -10635,27 +10614,6 @@
    "tao": 5992,
    "tao_rate": 4.2,
    "tao_rank": 2483
-  },
-  {
-   "address": "0x0843e80240f9304f3fe7059f25f3e1a66886a0eb",
-   "ens": "adege.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "adege.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 2
-   },
-   "first_collected": "2023-01-03T13:54:11.000000Z",
-   "last_collected": "2023-01-03T13:54:11.000000Z",
-   "tao": 14255,
-   "tao_rate": 12.6,
-   "tao_rank": 609
   },
   {
    "address": "0x7bc7481751d7fcb76d08f596b03ba1e42378ea27",
@@ -11453,7 +11411,7 @@
    "last_collected": "2023-07-03T06:00:35.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x757a21fbd39cccaff681e1930e273b9add0008db",
@@ -11748,27 +11706,6 @@
    "tao": 29964,
    "tao_rate": 21,
    "tao_rank": 398
-  },
-  {
-   "address": "0x0220e0b5a23bf2419e643de74649a01bf77960ee",
-   "ens": "hifomaxi.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "hifomaxi.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 2
-   },
-   "first_collected": "2025-01-06T03:48:11.000000Z",
-   "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 9781,
-   "tao_rate": 16.8,
-   "tao_rank": 1278
   },
   {
    "address": "0x7c2f06ab61a94fe9760cc8d9ad35a33c0472cb8e",
@@ -12338,27 +12275,6 @@
    "tao_rank": 2642
   },
   {
-   "address": "0x13928eb9a86c8278a45b6ff2935c7730b58ac675",
-   "ens": "maxmy.eth",
-   "fwd": null,
-   "display_name": null,
-   "x": null,
-   "slug": "maxmy.eth",
-   "private": false,
-   "has_page": true,
-   "counts": {
-    "works": 3,
-    "one_of_ones": 0,
-    "editions": 3,
-    "collections": 2
-   },
-   "first_collected": "2024-10-01T03:32:35.000000Z",
-   "last_collected": "2025-05-27T23:55:23.000000Z",
-   "tao": 14757,
-   "tao_rate": 25.2,
-   "tao_rank": 601
-  },
-  {
    "address": "0xd04fff37bfefd4b2439322620262a25cc17d0b91",
    "ens": "meeshuno.eth",
    "fwd": null,
@@ -12713,7 +12629,7 @@
    "last_collected": "2023-05-21T04:42:23.000000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x147fcaeada9baee1da242d8b823ee809aa93b691",
@@ -13364,7 +13280,7 @@
    "last_collected": "2026-08-22T00:02:23.000Z",
    "tao": 390,
    "tao_rate": 4.2,
-   "tao_rank": 3204
+   "tao_rank": 3181
   },
   {
    "address": "0x942dfb0c7e87fb5f07e25ec7ff805e7f973cf929",
@@ -13847,7 +13763,7 @@
    "last_collected": "2022-11-29T12:46:23.000Z",
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x11c632014d1cc64f73bc84e4e9768bf0fb5ac7f6",
@@ -13868,7 +13784,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x2afc032aaf6d7ead33fb05f9d42d874874dfb9d1",
@@ -13889,7 +13805,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x3b33605a49803ce5bf936d61ec34a82dc9a8af67",
@@ -13931,7 +13847,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x8c0ca6b72104dbb7095d8b349bccc2f60f24bf41",
@@ -13952,7 +13868,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xa7604f08cc11a23c42e5217ea17e9a70e9a43919",
@@ -13973,7 +13889,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xb681de23608f3b016abf32e7c9ac16e85c644c1d",
@@ -13994,7 +13910,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xbb261e9c522d826886cf9d03b200e268a7ca36cb",
@@ -14036,7 +13952,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xf853294251a3213d23fdfed4efe54903caebc985",
@@ -14057,7 +13973,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xae291acb5941a8629f44b91c8edd3613401b03ab",
@@ -14099,7 +14015,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xedc1a397589a0236c4810883b7d559288a5fe7e1",
@@ -14120,7 +14036,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x8fbe34a4a6c38d44fd7642440908ee44067c00e4",
@@ -14141,7 +14057,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x2d9cbc4ecfbd1b8f66aa798fd51585ae058daa8b",
@@ -14162,7 +14078,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xe5358cab95014e2306815743793f16c93a8a5c70",
@@ -14183,7 +14099,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x08db792f0dc2492c67ba901adbe136e76648341c",
@@ -14564,6 +14480,27 @@
    "tao_rank": 1282
   },
   {
+   "address": "0x09bc641b6fa2308b030c312653f9675dfaa58e2b",
+   "ens": "baiwei.eth",
+   "fwd": null,
+   "display_name": null,
+   "x": null,
+   "slug": "baiwei.eth",
+   "private": false,
+   "has_page": true,
+   "counts": {
+    "works": 2,
+    "one_of_ones": 1,
+    "editions": 1,
+    "collections": 2
+   },
+   "first_collected": "2026-08-21T23:52:35.000Z",
+   "last_collected": "2026-08-21T23:52:35.000Z",
+   "tao": 8743,
+   "tao_rate": 73.2,
+   "tao_rank": 1299
+  },
+  {
    "address": "0xc9cc85d6a45ddc91ebca87c6ba86f5993821c5a8",
    "ens": "dabb3r.eth",
    "fwd": null,
@@ -14750,7 +14687,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xd35f84a9f82fbec2082b2b6c9afd20b4a8f7c959",
@@ -14876,7 +14813,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x26874d5915fb831e4771d647a5048561da3c0874",
@@ -14897,7 +14834,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xfde5124db26916a8cd5f4d41d15deb50d68504dc",
@@ -14918,7 +14855,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x01d5aad69b4f303671abd48e5e3cd20c368c566f",
@@ -15002,7 +14939,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x1b9c993f2962d8f0faea3387b368a011f2b9d0ee",
@@ -15044,7 +14981,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x2443e22cbf5b6607e9a2df68a35b5f18cf525a76",
@@ -15086,7 +15023,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x2ac8ffa449827c507deea7072edf19edb6c4b1ba",
@@ -15212,7 +15149,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x45515827641e2091a73f747486ee9629ebd2e902",
@@ -15233,7 +15170,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x45be0696852f129f42cbd772ab04b7c3c4a1e168",
@@ -15254,7 +15191,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x4745c1bf30a55d4903592206bb142003e884f8a4",
@@ -15296,7 +15233,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x4cbc4bac934f00c6b60b76dc63afd7d2e0c0ae7f",
@@ -15338,7 +15275,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x62ebc6375df0ff1bfcaa81185c1b113c1fd5483c",
@@ -15422,7 +15359,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x72703b554a7089f93ff1fc6cc6c0e623900a7b80",
@@ -15464,7 +15401,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x80b89390028cc3856e371cf4c35d0182c83c811d",
@@ -15506,7 +15443,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x908c6a54dd6d892ab6cb48dbc892baf713224382",
@@ -15527,7 +15464,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x93e318478f731c8ba93f2d2b64f722319151e9fd",
@@ -15548,7 +15485,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x999b5b1c6998a974a3684d89a995122304d11b2b",
@@ -15653,7 +15590,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xaf9cbe42d3fd186b5d0d04b0a1d424e6562fd7ba",
@@ -15716,7 +15653,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xbc15ac912c4af743eed5c0f033824de9de95cd4f",
@@ -15737,7 +15674,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xc4d4125c83d1108df969dda998227fca80fd82dc",
@@ -15800,7 +15737,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xd67527ee8aef11f4264c54effd5dbb8e9a4c3800",
@@ -15863,7 +15800,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xe175336c11b3e6ba4177084342644ed920f48189",
@@ -15905,7 +15842,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xf6e9c766cad8b6ecf06accf64b57f92995be6e50",
@@ -15968,7 +15905,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xb43d184ec7d4d2acb4ebc8db53f4031bca9319a4",
@@ -15989,7 +15926,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x22f057b5189d796e9b56159774a701b563280b2c",
@@ -16031,7 +15968,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x140d199e098d59b807566c4004233b34ed254121",
@@ -16094,7 +16031,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x997953c94ac188051a8cf4318e6cd90ec48fb795",
@@ -16115,7 +16052,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xd42d52b709829926531c64a32f2713b4dc8ea6f6",
@@ -16220,7 +16157,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x000ab07b26c48ef3caf9ec23520d86794c9fd74a",
@@ -16241,7 +16178,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xcfc9336910420e2fb7b9c19f62a38bbac34dc352",
@@ -16304,7 +16241,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xa00e4ba46907fcbf84b3ba22c7b5689e6db827a0",
@@ -16325,7 +16262,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x657c1f8421ae93e88fb3171f019779e87b0263ca",
@@ -16367,7 +16304,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xd38919a385cf9bbade3249dad91b8d880b42bee0",
@@ -16409,7 +16346,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x30734d5ae63a2f368acfb3d3a15e180169254b8a",
@@ -16430,7 +16367,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xf1f476f144df01480297dca47efca565e8b0c9f1",
@@ -16472,7 +16409,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x38545d73e9f15e92d21f1ddc71a109e8a67f6291",
@@ -16493,7 +16430,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x3b3136d269480017d8b7a050deb0d7ed979b8075",
@@ -16514,7 +16451,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x8f6504b48c66eea4e9fbf64fe220e02f1cc4934e",
@@ -16640,7 +16577,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x5091081516c8695dfa1bfde3d7b33480c2cb2fca",
@@ -16682,7 +16619,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x0f9c4213c040a39db2ba6f833472f739e61710b4",
@@ -16724,7 +16661,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x610d72c32e3ed5ba381851d25a6c1b543622e4d8",
@@ -16766,7 +16703,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x5efdb6d8c798c2c2bea5b1961982a5944f92a5c1",
@@ -16808,7 +16745,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x32eb30cae36e1c2e9271ca1c02da64e5c27cb465",
@@ -16829,7 +16766,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0xff7609cc6c9743b6299f86df1e966da5c664401d",
@@ -16850,7 +16787,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x0f81bcfd6de8145d1cc6097622b07f23f1221648",
@@ -16892,7 +16829,7 @@
    "last_collected": null,
    "tao": 0,
    "tao_rate": 0,
-   "tao_rank": 3228
+   "tao_rank": 3204
   },
   {
    "address": "0x87d9c2d9990a9f3a18f1377ff20d9945f9eb3792",
