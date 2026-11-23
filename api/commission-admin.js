@@ -9,6 +9,7 @@
  * POST {id, action:'note', note}
  * POST {id, action:'mark-paid', method, ref?, note}   paid by hand, once
  * POST {id, action:'photo', data, type}               a photograph of it, to R2
+ * POST {id, action:'pay-link'}                         a new key: a link that opens it in any browser
  *
  * The WestSide rate (COMMISSION-WESTSIDE):
  * POST {id, action:'discount', pct?, building, note}   by hand, no code; reopens a lapsed order
@@ -20,7 +21,7 @@
 import { sessionOk, sessionFrom } from './_lib/studio.js';
 import {
   listOrders, getOrder, studioUpdate, markPaid, renderUrl, STATUSES, commissionsConfigured,
-  studioDiscount, studioUndiscount, createCode, setCodeActive, listCodes,
+  studioDiscount, studioUndiscount, createCode, setCodeActive, listCodes, newPayLink,
 } from './_lib/commissions.js';
 import { specLine } from './_lib/commission-spec.js';
 import { putObject, r2Configured } from './_lib/r2.js';
@@ -102,6 +103,13 @@ export async function POST(request) {
       : await studioUndiscount(id, { note: b.note });
     if (r.error) return json({ error: r.error }, r.status || 400);
     return json({ order: whole(r.order) });
+  }
+
+  if (b.action === 'pay-link') {
+    const r = await newPayLink(id);
+    if (r.error) return json({ error: r.error }, r.status || 400);
+    /* the key travels after a #, so it is never sent to the server or logged */
+    return json({ order: whole(r.order), url: `${new URL(request.url).origin}/commission/${r.order.id}#k=${r.key}` });
   }
 
   if (b.action === 'code-create') {

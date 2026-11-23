@@ -771,6 +771,22 @@ export async function listOrders({ status = null, limit = 200 } = {}) {
     .filter((o) => !status || o.status === status);
 }
 
+/**
+ * A new pay link, for a buyer who can't open the order in the browser that
+ * made it (or an order the studio made for them). The key is new, so the old
+ * browser's stops working. It is handed back once, to the console, and only
+ * its hash is kept: never the key, in the record, the history or a log.
+ */
+export async function newPayLink(id) {
+  const o = await getOrder(id);
+  if (!o) return { error: 'no such order', status: 404 };
+  if (o.status !== 'pending_payment') return { error: `this order is ${o.status.replace('_', ' ')}; a pay link only opens a waiting order`, status: 409 };
+  const key = crypto.randomBytes(18).toString('base64url');
+  o.key_hash = sha(key);
+  await save(o, 'new pay link made by the studio (the old link no longer opens it)');
+  return { order: o, key };
+}
+
 /** The studio's hand on an order: a status, a note, tracking, a photograph. */
 export async function studioUpdate(id, { status, note, tracking, photo } = {}, by = 'studio') {
   const o = await getOrder(id);

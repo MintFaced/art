@@ -345,6 +345,16 @@ const ours = codesNow.find((c) => c.code === CODE);
 is('?codes=1: every code, with the orders that paid with it and their NZD', [codesNow.length, ours.uses.slice().sort(), ours.paid_nzd], [4, [W.id, X.id].sort(), 1217 * 2]);
 is('… and the studio\'s own rate counts as no code\'s use', codesNow.every((c) => !c.uses.includes(H.id)), true);
 
+console.log('\n— a new pay link, from the console —');
+const pl = await studio({ id: H.id, action: 'pay-link' });
+const newKey = pl.status === 200 ? new URL(pl.j.url).hash.replace(/^#k=/, '') : '';
+is('NEW PAY LINK: the order\'s page with a fresh key after the #', [pl.status, pl.j.url.startsWith(`https://mintface.art/commission/${H.id}#k=`), newKey.length > 20, newKey !== H.key], [200, true, true, true]);
+is('the new key opens the order in any browser; the old one no longer does', [(await post({ action: 'read', id: H.id, key: newKey })).status, (await post({ action: 'read', id: H.id, key: H.key })).status], [200, 403]);
+is('the key is kept only as its hash: not in the record, its history, or the studio\'s view', [KV.get(`commission:o:${H.id}`).includes(newKey), JSON.stringify(pl.j.order).includes(newKey), 'key_hash' in pl.j.order, orderRec(H.id).history.at(-1).what], [false, false, false, 'new pay link made by the studio (the old link no longer opens it)']);
+is('the buyer pays with it as before', (await post({ action: 'update', id: H.id, key: newKey, name: 'Hu Again' })).j.name, 'Hu Again');
+is('a paid order gets no pay link', [(await studio({ id: F.id, action: 'pay-link' })).status], [409]);
+is('… and nobody without the studio\'s session gets one', (await admin.POST(new Request('https://mintface.art/api/commission-admin', { method: 'POST', body: JSON.stringify({ id: H.id, action: 'pay-link' }) }))).status, 401);
+
 console.log('\n— the WestSide rate: no code in the repo —');
 const codeTerms = [CODE, ENDED, OFF, ONE, ['WEST', 'SIDE', '40'].join('')];
 const root = new URL('../../', import.meta.url).pathname;

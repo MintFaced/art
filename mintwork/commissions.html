@@ -138,7 +138,9 @@ function draw(canvas, o) {
   }
 }
 
-async function detail(id) {
+/* payUrl is a new pay link, drawn once straight after it is made and never
+   kept: the page forgets it on the next render. */
+async function detail(id, payUrl = null) {
   const { order: o, statuses } = await api(`?id=${encodeURIComponent(id)}`);
   const eth = o.eth ? `${o.eth.received_wei !== '0' ? `received ${(Number(BigInt(o.eth.received_wei) / 10n ** 12n) / 1e6)} of ${o.price.eth} ETH` : `${o.price.eth} ETH, nothing yet`}${o.eth.surplus_wei ? ` · SURPLUS to refund by hand` : ''}${(o.eth.txs || []).map((t) => `\n${t.hash} (${t.how})`).join('')}` : '';
   const row = (k, v) => (v ? `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>` : '');
@@ -166,6 +168,10 @@ async function detail(id) {
           <label>Tracking<input name="tracking" value="${esc(o.tracking || '')}"></label><label>Note<textarea name="note" rows="2"></textarea></label>
           <button class="btn">Save</button><p class="grey" style="font-size:13px;margin:0">Painted emails the buyer the latest photograph; shipped emails the tracking.</p></form>
         <form class="box" id="ph"><label>Photograph of the painting<input type="file" name="f" accept="image/*"></label><button class="btn ghost">Upload</button></form>
+        ${o.status === 'pending_payment' ? `<div class="box"><button type="button" class="btn ghost" id="paylink">New pay link</button>
+          ${payUrl ? `<label>Send this to the buyer<input id="payurl" readonly value="${esc(payUrl)}"></label><button type="button" class="btn" id="paycopy">Copy link</button>
+          <p class="grey" style="font-size:13px;margin:0">It opens the order in any browser. The buyer's old link no longer does. This page won't show it again: if it's lost, make another.</p>`
+    : `<p class="grey" style="font-size:13px;margin:0">For a buyer who can't open the order in the browser that made it, or an order made for them. The link they have now stops working.</p>`}</div>` : ''}
         ${['pending_payment', 'expired'].includes(o.status) ? (o.discount
     ? `<div class="box"><button type="button" class="btn ghost" id="undisc">Remove rate</button></div>`
     : `<div class="box"><button type="button" class="btn ghost" id="disc-open">WestSide rate</button>
@@ -196,6 +202,17 @@ async function detail(id) {
       await api('', { id: o.id, action: 'photo', type: 'image/jpeg', data });
       detail(o.id);
     } catch (err) { say(err.message); }
+  });
+  const payLink = document.getElementById('paylink');
+  if (payLink) payLink.addEventListener('click', async () => {
+    if (!confirm(`Make a new pay link for ${o.id}? The link the buyer has now stops opening the order.`)) return;
+    try { const j = await api('', { id: o.id, action: 'pay-link' }); await detail(o.id, j.url); } catch (err) { say(err.message); }
+  });
+  const payCopy = document.getElementById('paycopy');
+  if (payCopy) payCopy.addEventListener('click', async () => {
+    const input = document.getElementById('payurl');
+    input.select();
+    try { await navigator.clipboard.writeText(input.value); say('Link copied'); } catch { say('Select the link and copy it'); }
   });
   const discOpen = document.getElementById('disc-open');
   if (discOpen) discOpen.addEventListener('click', () => { const f = document.getElementById('disc'); f.hidden = !f.hidden; if (!f.hidden) f.building.focus(); });
