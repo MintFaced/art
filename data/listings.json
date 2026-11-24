@@ -1,18 +1,18 @@
 {
  "_note": "Live listing prices read from chain. Written by api/cron/listings.js and scripts/sync-listings.mjs; the site prefers these over the catalogue figure.",
- "generated": "2026-11-23T20:03:21.599Z",
+ "generated": "2026-11-24T20:03:24.307Z",
  "sources": [
   "foundation",
   "opensea"
  ],
  "counts": {
   "checked": 1414,
-  "owner_unresolved": 68,
+  "owner_unresolved": 67,
   "escrowed": 30,
   "priced": 68,
   "auction": 21,
   "opensea": 59,
-  "carried_forward": 0
+  "carried_forward": 1
  },
  "works": {
   "geodetic-world-2": {
@@ -88,12 +88,6 @@
    "kind": "auction",
    "auction_id": "358491",
    "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/26"
-  },
-  "geodetic-world-30": {
-   "venue": "foundation",
-   "kind": "auction",
-   "auction_id": "358493",
-   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/30"
   },
   "geodetic-world-31": {
    "venue": "foundation",
@@ -743,6 +737,13 @@
    "seller": "0xd40b63bf04a44e43fbfe5784bcf22acaab34a180",
    "expires": "2027-02-19T06:29:25.000Z",
    "url": "https://opensea.io/item/ethereum/0x3ee441f307c4bf147849d15457339d6116bb8373/1"
+  },
+  "geodetic-world-30": {
+   "venue": "foundation",
+   "kind": "auction",
+   "auction_id": "358493",
+   "url": "https://foundation.app/mint/eth/0xE16c77A770C6De5439F617e6E2F9fD46BB15D396/30",
+   "carried_forward": true
   }
  }
 }
