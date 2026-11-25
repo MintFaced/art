@@ -1601,7 +1601,99 @@
    "image": null,
    "opens": "2026-11-14T05:50:17.226Z",
    "closes": "2026-11-25T00:00:00.000Z",
-   "published": true
+   "published": true,
+   "banked": {
+    "number": 7,
+    "kind": "candidates",
+    "rule": {
+     "voters": 5,
+     "tao": 500000
+    },
+    "total": 222222,
+    "collectors": 1,
+    "leader": {
+     "hex": "#BBBCDE",
+     "total": 222222,
+     "voters": 1
+    },
+    "locked": {
+     "hex": "#BBBCDE",
+     "total": 222222,
+     "voters": 1
+    },
+    "locked_by": "close",
+    "locked_at": "2026-11-25T00:05:42.485Z",
+    "met": {
+     "voters": false,
+     "tao": false
+    },
+    "closed_early": null,
+    "why": null,
+    "progress": {
+     "voters": {
+      "at": 1,
+      "of": 5
+     },
+     "tao": {
+      "at": 222222,
+      "of": 500000
+     }
+    },
+    "ledger": [
+     {
+      "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "name": "piercedcat.eth",
+      "candidate": "#BBBCDE",
+      "at": "2026-11-19T12:57:26.637Z",
+      "clamped": false
+     },
+     {
+      "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "name": "MintFace",
+      "candidate": "#707070",
+      "at": "2026-11-19T04:07:38.794Z",
+      "clamped": false
+     }
+    ],
+    "candidates": [
+     {
+      "hex": "#BBBCDE",
+      "total": 222222,
+      "voters": 1,
+      "share": 1,
+      "proposed_by": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+      "proposed_name": "piercedcat.eth",
+      "wallets": [
+       {
+        "address": "0xdafa9e3dae493f0b9d6872eff4fda0f40d1b7488",
+        "name": "piercedcat.eth",
+        "amount": 222222,
+        "weight": 222222,
+        "clamped": false
+       }
+      ]
+     },
+     {
+      "hex": "#707070",
+      "total": 0,
+      "voters": 0,
+      "share": 0,
+      "proposed_by": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+      "proposed_name": "MintFace",
+      "wallets": [
+       {
+        "address": "0xdd6b80649e8d472eb8fb52eb7eecfd2dc219ace7",
+        "name": "MintFace",
+        "amount": 69000,
+        "weight": 69000,
+        "clamped": false,
+        "artist": true
+       }
+      ]
+     }
+    ],
+    "banked_at": "2026-11-25T00:05:42.485Z"
+   }
   }
  ],
  "series": {
@@ -1638,5 +1730,5 @@
   ],
   "field_share": 0.25
  },
- "rev": 3
+ "rev": 4
 }
