@@ -436,6 +436,32 @@ dedicated({ slug: 'wallet', title: 'WALLΞT', group: 'ai-studies', year: '2022',
   });
 }
 
+// ---- COMPOSITION 32 (a painting, already collected; its token is not minted yet) ----
+// Written by hand, like FROGDNA: nothing on chain to enumerate. The price, the
+// collector and the closed offers are Ryan's hand data, in the overlay. When the
+// token is minted its chain, contract and token id go in `digital` here.
+{
+  const works = [{
+    id: 'composition-32-1', collection: 'composition-32', title: 'Composition 32',
+    made: '2026-07-19', year: '2026', medium: 'Acrylic on canvas',
+    edition: { type: '1/1' },
+    digital: { image: '/composition-32-by-mintface.jpg' },
+    physical: { exists: true, width_cm: 120, height_cm: 60, depth_cm: null, ready_to_hang: true, framed: false, certificate: true },
+    pricing_nzd: { digital: null, painting: 1000, both: null },
+    gst_inclusive: true,
+    status: 'acquired',
+    offers: { digital: false, painting: false, both: false },
+  }];
+  const t = tally(works); stats['composition-32'] = t;
+  push({
+    slug: 'composition-32', title: 'Composition 32', group: 'core', year: '2026', medium: 'Acrylic on canvas', physical: true,
+    statement: null,
+    notes: 'One canvas, 1200 x 600 mm, of 32 squares of 150 mm. A 1/1 painting plus a token; the token is not minted yet. Shown at The Line, Hastings.',
+    counts: { works: works.length, ...t },
+    works,
+  });
+}
+
 // ---- ID PLEASE (Meme Card 362 inside 6529's The Memes) ----
 {
   const t = R('raw/id-please-token.json');

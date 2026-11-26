@@ -133,8 +133,8 @@ h1{font-family:var(--font-sans);font-weight:400;font-size:clamp(44px,9.5vw,112px
 const e = MF.escape;
 
 function which() {
-  const m = location.pathname.match(/^\/(genesis|10k|frogdna)\/?$/)
-    || location.pathname.match(/^\/c\/(frogdna)\/?$/);
+  const m = location.pathname.match(/^\/(genesis|10k|frogdna|composition-32)\/?$/)
+    || location.pathname.match(/^\/c\/(frogdna|composition-32)\/?$/);
   if (m) return m[1];
   return new URLSearchParams(location.search).get('f') || 'genesis';
 }
@@ -248,22 +248,12 @@ async function render(feature) {
   }
   flushProse();
 
+  // the digital work on offer (FROGDNA), or the painting and who collected it
   if (feature.checkout) {
     const hit = await MF.work(feature.checkout);
     if (hit) {
-      const w = hit.work;
-      const eth = w.wrapped ? `${w.wrapped.artist_held} of the wrapped editions are still with the artist` : null;
-      const price = w.pricing_nzd && w.pricing_nzd.digital != null
-        ? `$${Math.round(w.pricing_nzd.digital).toLocaleString('en-NZ')}`
-        : null;
-      parts.push(`<div class="prose buy">
-        <div class="buy-row">
-          <span class="what">The digital work</span>
-          ${price ? `<span class="amt">${e(price)}</span>` : ''}
-        </div>
-        <a class="btn" href="/w/${encodeURIComponent(w.id)}">Acquire this artwork</a>
-        <p class="note">Eighty-eight editions on Bitcoin as a Counterparty asset${eth ? `, and ${e(eth)} on Ethereum` : ''}. Paying in Bitcoin is arranged directly; the wrapped edition goes through the wallet.</p>
-      </div>`);
+      const { buyBlock } = await import('/f-buy.js');
+      parts.push(buyBlock(hit.work, e));
     }
   }
 

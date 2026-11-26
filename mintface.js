@@ -979,7 +979,7 @@ const MF = {
 
   // groups, in the order the catalog gives them, with the locked geodetic run
   groupOrder: {
-    core: ['pixelarcade', 'strip-paintings', 'artificial-flowers', 'patrimora', 'frogdna', 'two-burdens', 'recursive-mind', 'hidden-landscapes', 'roads-and-rivers'],
+    core: ['pixelarcade', 'strip-paintings', 'artificial-flowers', 'patrimora', 'frogdna', 'composition-32', 'two-burdens', 'recursive-mind', 'hidden-landscapes', 'roads-and-rivers'],
     archive: ['seize-and-share', 'id-please'],
     geodetic: ['geodetic-onchain', 'geodetic-world', 'geodetica', 'geodetic-moments', 'geodetic-home', 'geodetic-memory'],
     studies: ['visual-language', 'panoptic', 'wallet', 'geodetic-illusions'],

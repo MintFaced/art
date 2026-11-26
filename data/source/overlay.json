@@ -2668,6 +2668,32 @@
         "platform": null
       },
       "notes": "1/1 physical, 88 digital editions"
+    },
+    "composition-32-1": {
+      "pricing_nzd": {
+        "digital": null,
+        "painting": 1000,
+        "both": null
+      },
+      "physical": {
+        "exists": true,
+        "width_cm": 120,
+        "height_cm": 60,
+        "depth_cm": null,
+        "ready_to_hang": true,
+        "framed": false,
+        "certificate": true,
+        "sold": true,
+        "collector": "Shaun Peterson"
+      },
+      "status": "acquired",
+      "collector_display_name": "Shaun Peterson",
+      "offers": {
+        "digital": false,
+        "painting": false,
+        "both": false
+      },
+      "notes": "1/1 painting, NZD 1,000 incl. GST; token not minted yet"
     }
   }
 }
