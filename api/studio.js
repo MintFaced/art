@@ -199,6 +199,13 @@ input[type=number]{font-family:var(--font-mono);font-variant-numeric:tabular-num
     <p class="note"><a href="/mintwork/commissions">//Strips commissions</a> ... orders, payments, photographs, shipping.</p>
   </section>
 
+  <!-- Private offers: one work, one buyer, one price, behind a link only they
+       get. The link is shown once, on that page. -->
+  <section class="nudges-admin">
+    <h2 class="sec">Private offers</h2>
+    <p class="note"><a href="/mintwork/offers">Private offers</a> ... a pay link for one named buyer, with a GST receipt.</p>
+  </section>
+
   <!-- Agent notes: what bots wrote to /ai/feedback. Untrusted text, drawn as
        text; nothing in a note is opened, rendered or followed. -->
   <section id="agentNotes" class="nudges-admin">

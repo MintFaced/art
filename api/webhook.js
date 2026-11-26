@@ -3,6 +3,7 @@ import { findWork, useRequestOrigin, siteOrigin, includesPainting, describeWhat 
 import { writeWorkState, workState } from './_lib/state.js';
 import { send, templates } from './_lib/email.js';
 import { cardPaid } from './_lib/commissions.js';
+import { offerPaid } from './_lib/offers.js';
 import { keepContact } from './_lib/contacts.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-07-29.dahlia' });
@@ -32,13 +33,16 @@ export async function POST(request) {
         /* A Strip Painting commission pays its own order, once per event and
            once per order however Stripe retries (api/_lib/commissions.js). */
         if (session.metadata?.kind === 'commission') { await cardPaid(session, event.id); break; }
+        /* A private offer likewise pays itself once (api/_lib/offers.js). */
+        if (session.metadata?.kind === 'offer') { await offerPaid(session, event.id); break; }
         await fulfil(session);
         break;
       }
       case 'checkout.session.async_payment_failed':
       case 'checkout.session.expired':
-        // an abandoned commission session leaves its order waiting, on its own clock
-        if (event.data.object.metadata?.kind === 'commission') break;
+        // an abandoned commission session leaves its order waiting, on its own clock,
+        // and an abandoned offer session leaves the offer open until its own date
+        if (['commission', 'offer'].includes(event.data.object.metadata?.kind)) break;
         await release(event.data.object, event.type.endsWith('failed') ? 'payment failed' : 'checkout abandoned');
         break;
       default:

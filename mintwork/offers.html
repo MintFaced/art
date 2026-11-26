@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- The studio's private offers (COMPOSITION-32): /mintwork/offers. Behind the
+     console password. A buyer's link is shown once, when it is made, and kept
+     nowhere: not in the store, not in this page after it is closed. -->
+<title>Private offers ... MintFace studio</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/mintface.css">
+<style>
+body{background:var(--paper)}
+.ck{max-width:1200px;margin:0 auto;padding:36px 24px 80px;font-family:var(--font-sans);color:var(--ink)}
+.ck h1{font-weight:400;font-size:32px;letter-spacing:-.02em;margin:0 0 18px}
+.ck h2{font-weight:400;font-size:20px;letter-spacing:-.01em;margin:0}
+.ck .grey{color:var(--muted)}
+.ck a{color:var(--ink)}
+.ck [hidden]{display:none!important}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);font-size:14px;vertical-align:top}
+th{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400}
+td.m{font-family:var(--font-mono);font-size:12px}
+.box{border-top:1px solid var(--rule);padding-top:16px;margin-top:28px;display:flex;flex-direction:column;gap:10px}
+.box label{display:flex;flex-direction:column;gap:4px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.box label.tick{flex-direction:row;align-items:center;gap:8px}
+.box input,.box select,.box textarea{font-family:var(--font-sans);font-size:14px;padding:8px;border:1px solid var(--rule);background:none;color:var(--ink);text-transform:none;letter-spacing:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;align-items:end}
+.btn{align-self:flex-start;min-height:40px;padding:0 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink)}
+.quiet{background:none;border:0;padding:4px 0;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;text-align:left}
+.quiet:hover{color:var(--ink)}
+.say{min-height:18px;font-size:13px;color:var(--muted)}
+.link{border:1px solid var(--ink);padding:14px;margin:18px 0;display:flex;flex-direction:column;gap:10px}
+.link code{font-family:var(--font-mono);font-size:13px;word-break:break-all}
+.warn{border-left:2px solid var(--ink);padding:6px 0 6px 12px;font-size:14px;margin:0 0 18px}
+@media(max-width:820px){table,tbody,tr,td{display:block}thead{display:none}td{border:0;padding:3px 0}tr{border-bottom:1px solid var(--rule);padding:10px 0}}
+</style>
+</head>
+<body>
+<main class="ck" id="main"><p class="grey">Loading</p></main>
+<script>
+/* Plain text in, plain text out: every value from an offer goes through esc. */
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const main = document.getElementById('main');
+const nzd = (n) => `NZD ${Number(n).toLocaleString('en-NZ', { maximumFractionDigits: 2 })}`;
+const day = (t) => (t ? new Date(t).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' }) : '');
+let shown = null; // the one link just made, until the page is left
+
+async function api(q, body) {
+  const r = await fetch(`/api/offer-admin${q || ''}`, body ? { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) } : {});
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401) { login(); throw new Error('sign in first'); }
+  if (!r.ok) throw new Error(j.error || `error ${r.status}`);
+  return j;
+}
+
+function login() {
+  main.innerHTML = `<h1>Private offers</h1><form id="in" class="box" style="max-width:320px"><label>Studio password<input type="password" name="p" autocomplete="current-password"></label><button class="btn">Sign in</button><p class="say" id="say"></p></form>`;
+  document.getElementById('in').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const r = await fetch('/api/studio-api?do=login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: ev.target.p.value }) });
+    if (r.ok) list(); else document.getElementById('say').textContent = r.status === 429 ? 'Too many tries. Wait a few minutes.' : 'No.';
+  });
+}
+
+function linkBox() {
+  if (!shown) return '';
+  return `<div class="link" id="linkBox"><span class="grey" style="font-size:13px">${esc(shown.id)} · the link for ${esc(shown.name)}. It is shown this once: copy it now.</span>
+    <code id="theLink">${esc(shown.link)}</code>
+    <div><button type="button" class="btn" id="copy">Copy</button> <a class="quiet" href="${esc(shown.link)}" target="_blank" rel="noopener">Open it</a></div></div>`;
+}
+
+async function list() {
+  const j = await api('');
+  const rows = j.offers;
+  const can = (o) => o.state === 'open' || o.state === 'expired';
+  main.innerHTML = `<h1>Private offers</h1>
+    <p class="grey" style="margin:-8px 0 18px"><a class="quiet" href="/mintwork">Back to the studio</a></p>
+    ${j.gst_number_set ? '' : '<p class="warn">MINTFACE_GST_NUMBER is not set in Vercel, so a GST-inclusive offer can&rsquo;t be made yet.</p>'}
+    ${linkBox()}
+    ${rows.length ? `<table><thead><tr><th>Offer</th><th>Work</th><th>Buyer</th><th>Amount</th><th>State</th><th>Ends</th><th>Paid</th><th></th></tr></thead><tbody>
+    ${rows.map((o) => `<tr><td class="m">${esc(o.id)}<br><span class="grey">${esc(day(o.created))}</span></td>
+      <td>${esc(o.title)}<br><span class="grey m">${esc(o.workId)} · ${esc(o.what)}</span></td>
+      <td>${esc(o.buyer_name)}${o.buyer_email ? `<br><span class="grey">${esc(o.buyer_email)}</span>` : ''}<br><span class="grey m">${esc(o.delivery)}</span></td>
+      <td class="m">${esc(nzd(o.nzd))}${o.gst_inclusive ? ' incl. GST' : ''}</td>
+      <td class="m">${esc(o.state)}</td><td class="m">${esc(day(o.expires))}</td><td class="m">${esc(day(o.paid_at))}</td>
+      <td>${can(o) ? `<button type="button" class="quiet" data-new="${esc(o.id)}">New link</button><br><button type="button" class="quiet" data-cancel="${esc(o.id)}">Cancel</button>` : ''}</td></tr>`).join('')}
+    </tbody></table>` : '<p class="grey">No offers yet.</p>'}
+    <p class="say" id="lsay"></p>
+    <section class="box"><h2>Create</h2>
+      <form id="make" class="grid">
+        <label>Work id<input name="workId" required placeholder="composition-32-1" autocomplete="off" spellcheck="false"></label>
+        <label>NZD amount<input name="nzd" type="number" min="0.01" step="0.01" required></label>
+        <label class="tick"><input type="checkbox" name="gst" checked> GST inclusive</label>
+        <label>Buyer name<input name="buyer_name" required autocomplete="off"></label>
+        <label>Email (optional)<input name="buyer_email" type="email" autocomplete="off"></label>
+        <label>What<select name="what"><option value="painting">Painting</option><option value="both">Painting and token</option><option value="digital">Token only</option></select></label>
+        <label>Delivery<select name="delivery"><option value="collect">Collect from The Line</option><option value="shipped">Shipped</option></select></label>
+        <label>Days open<input name="days" type="number" min="1" max="90" value="14"></label>
+        <label style="grid-column:1/-1">Note<textarea name="note" rows="2"></textarea></label>
+        <button class="btn">Create</button>
+      </form>
+      <p class="say" id="msay"></p>
+    </section>`;
+
+  const lsay = (m) => { document.getElementById('lsay').textContent = m; };
+  const copy = document.getElementById('copy');
+  if (copy) copy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(shown.link); copy.textContent = 'Copied'; } catch { lsay('Copy it by hand: select the link above.'); }
+  });
+  main.querySelectorAll('[data-new]').forEach((b) => b.addEventListener('click', async () => {
+    if (!confirm(`A new link for ${b.dataset.new}? The old link stops working, and the clock starts again.`)) return;
+    try {
+      const r = await api('', { action: 'newlink', id: b.dataset.new });
+      shown = { id: r.offer.id, name: r.offer.buyer_name, link: r.link };
+      list();
+    } catch (err) { lsay(err.message); }
+  }));
+  main.querySelectorAll('[data-cancel]').forEach((b) => b.addEventListener('click', async () => {
+    if (!confirm(`Cancel ${b.dataset.cancel}? Its link stops working.`)) return;
+    try { await api('', { action: 'cancel', id: b.dataset.cancel }); shown = null; list(); } catch (err) { lsay(err.message); }
+  }));
+  document.getElementById('make').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const f = ev.target;
+    const msay = document.getElementById('msay');
+    msay.textContent = 'Making it';
+    try {
+      const r = await api('', {
+        action: 'create', workId: f.workId.value.trim(), nzd: Number(f.nzd.value), gst_inclusive: f.gst.checked,
+        buyer_name: f.buyer_name.value, buyer_email: f.buyer_email.value || null, what: f.what.value,
+        delivery: f.delivery.value, days: Number(f.days.value || 14), note: f.note.value || null,
+      });
+      shown = { id: r.offer.id, name: r.offer.buyer_name, link: r.link };
+      list();
+      window.scrollTo(0, 0);
+    } catch (err) { msay.textContent = err.message; }
+  });
+}
+
+list().catch((err) => { if (err.message !== 'sign in first') main.innerHTML = `<h1>Private offers</h1><p>${esc(err.message)}</p>`; });
+</script>
+</body>
+</html>

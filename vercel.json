@@ -176,6 +176,10 @@
       "destination": "/mintwork/commissions"
     },
     {
+      "source": "/pay/:id",
+      "destination": "/pay"
+    },
+    {
       "source": "/:key",
       "destination": "/api/studio"
     }
