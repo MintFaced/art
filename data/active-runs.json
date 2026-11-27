@@ -3,6 +3,29 @@
  "keep": 60,
  "runs": [
   {
+   "run_id": "amwzk1bw3",
+   "at": "2026-11-27T22:30:15.411Z",
+   "ok": true,
+   "ms": 237183,
+   "chain": {
+    "asked": 674,
+    "moved": 103,
+    "unknown": 23,
+    "refused": 771,
+    "rate": 4.37,
+    "due": 849,
+    "due_left": 175,
+    "paged": 803,
+    "of": 3657,
+    "covered": 3690
+   },
+   "studio": {
+    "lit": 5,
+    "window_days": 30,
+    "store": true
+   }
+  },
+  {
    "run_id": "amwy4lh4n",
    "at": "2026-11-26T22:30:15.287Z",
    "ok": true,
@@ -1350,29 +1373,6 @@
     "due": 196,
     "due_left": 0,
     "paged": 808,
-    "of": 3677,
-    "covered": 3678
-   },
-   "studio": {
-    "lit": 14,
-    "window_days": 30,
-    "store": true
-   }
-  },
-  {
-   "run_id": "amultm7s2",
-   "at": "2026-09-28T22:30:15.266Z",
-   "ok": true,
-   "ms": 131322,
-   "chain": {
-    "asked": 372,
-    "moved": 93,
-    "unknown": 23,
-    "refused": 422,
-    "rate": 4.3,
-    "due": 372,
-    "due_left": 0,
-    "paged": 807,
     "of": 3677,
     "covered": 3678
    },
